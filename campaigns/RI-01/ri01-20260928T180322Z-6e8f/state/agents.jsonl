@@ -84,3 +84,11 @@
 {"recorded_at": "2026-09-28T20:39:55.620667+00:00", "task_id": "REVIEW-R05", "actual_agent_id": "/root/ri01_review_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "Independent research reviewer"}
 {"recorded_at": "2026-09-28T20:47:22.066610+00:00", "task_id": "REVIEW-R05", "actual_agent_id": "/root/ri01_review_privacy", "event": "COMPLETED_QUIESCENT"}
 {"recorded_at": "2026-09-28T20:47:22.066610+00:00", "task_id": "R11", "actual_agent_id": "/root/ri01_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_researcher"}
+{"recorded_at": "2026-09-28T20:51:41.223197+00:00", "task_id": "R09", "actual_agent_id": "/root/ri01_world", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:51:41.223197+00:00", "task_id": "REVIEW-R09", "actual_agent_id": "/root/ri01_daily", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
+{"recorded_at": "2026-09-28T20:54:08.271470+00:00", "task_id": "R14-READINESS", "actual_agent_id": "/root/ri01_mmav", "event": "RETROSPECTIVE_BOUNDED_DISPATCH_ACCOUNTING", "note": "Successful native followup requested readiness and retained MM-AV context before full R14 brief; counted separately conservatively, no scientific acceptance."}
+{"recorded_at": "2026-09-28T20:54:08.271470+00:00", "task_id": "REVIEW-MM-AV-CLAR1", "actual_agent_id": "/root/ri01_review_privacy", "event": "RETROSPECTIVE_BOUNDED_DISPATCH_ACCOUNTING", "note": "Additional bounded review dispatched through actual message during REVIEW-R05; counted conservatively as separate assignment, same native agent; parent MM-AV task holds acceptance/closure."}
+{"recorded_at": "2026-09-28T21:00:00.082064+00:00", "task_id": "REVIEW-R09", "actual_agent_id": "/root/ri01_daily", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T21:00:00.082064+00:00", "task_id": "R15-AUDIT", "actual_agent_id": "/root/ri01_runtime_probe", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "Source integration specialist"}
+{"recorded_at": "2026-09-28T21:07:01.933119+00:00", "task_id": "R14", "actual_agent_id": "/root/ri01_mmav", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T21:07:01.933119+00:00", "task_id": "REVIEW-R14", "actual_agent_id": "/root/ri01_review_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}

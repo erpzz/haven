@@ -1,0 +1,427 @@
+{
+  "status": "Original selected records preserved without changed IDs/owners/statements/status",
+  "requirements": [
+    {
+      "id": "REQ-AI-02",
+      "name": "Cheap model routing",
+      "statement": "Use qualified local/cheap hosted/strong models per task and privacy.",
+      "owner": "H02",
+      "document": "docs/04_INTELLIGENCE_AND_COST.md",
+      "acceptance_tests": [
+        "AT-AI-02"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-RF-08",
+      "name": "Spatial fusion contract",
+      "statement": "Calibrations, coordinate transforms, timestamps and uncertainty are explicit.",
+      "owner": "H08",
+      "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+      "acceptance_tests": [
+        "AT-RF-08"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-COMMS-06",
+      "name": "Data ferry",
+      "statement": "Explore store-and-forward robot mobility separately from permanent connectivity.",
+      "owner": "H11",
+      "document": "docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+      "acceptance_tests": [
+        "AT-COMMS-06"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ROBOT-01",
+      "name": "Ground embodiment",
+      "statement": "Keep rover/arm/telepresence/sensor-carrier branches alongside aircraft.",
+      "owner": "H10",
+      "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "acceptance_tests": [
+        "AT-ROBOT-01"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ROBOT-02",
+      "name": "Teleop to skills",
+      "statement": "Progress from safe manual operation through demonstrations to constrained learned behavior.",
+      "owner": "H10",
+      "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "acceptance_tests": [
+        "AT-ROBOT-02"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ROBOT-03",
+      "name": "Independent stop",
+      "statement": "Device-specific stopping/recovery remains outside LLM control.",
+      "owner": "H10",
+      "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "acceptance_tests": [
+        "AT-ROBOT-03"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ROBOT-04",
+      "name": "Embodiment qualification",
+      "statement": "Match model observations/action-space/calibration/resources to hardware.",
+      "owner": "H10",
+      "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "acceptance_tests": [
+        "AT-ROBOT-04"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ROBOT-05",
+      "name": "Future robotics research",
+      "statement": "Explore perching, tactile/compliant, event-camera and multimodal ideas with primary evidence.",
+      "owner": "H10",
+      "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "acceptance_tests": [
+        "AT-ROBOT-05"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ENG-08",
+      "name": "Physical artifact chain",
+      "statement": "Trace CAD/material/process/assembly/calibration/test versions.",
+      "owner": "H09",
+      "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+      "acceptance_tests": [
+        "AT-ENG-08"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "AT-ROBOT-01",
+      "title": "Ground embodiment",
+      "requirement_ids": [
+        "REQ-ROBOT-01"
+      ],
+      "owner": "H10",
+      "reviewer": "H06",
+      "setup": "A task can use a stationary or wheeled platform.",
+      "expected_result": "Compare utility/risk without forcing flight.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ROBOT-02",
+      "title": "Teleop to skills",
+      "requirement_ids": [
+        "REQ-ROBOT-02"
+      ],
+      "owner": "H10",
+      "reviewer": "H06",
+      "setup": "A trained skill faces unseen inert-object placement.",
+      "expected_result": "Evaluate held-out success and failure; no general-household claim.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ROBOT-03",
+      "title": "Independent stop",
+      "requirement_ids": [
+        "REQ-ROBOT-03"
+      ],
+      "owner": "H10",
+      "reviewer": "H06",
+      "setup": "Policy/network freezes during a supervised safe skill test.",
+      "expected_result": "Appropriate tested stop/recovery, with outcome observed.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ROBOT-04",
+      "title": "Embodiment qualification",
+      "requirement_ids": [
+        "REQ-ROBOT-04"
+      ],
+      "owner": "H10",
+      "reviewer": "H06",
+      "setup": "A pretrained policy assumes incompatible robot joints/cameras.",
+      "expected_result": "Do not run; require adapter/training/qualification.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ROBOT-05",
+      "title": "Future robotics research",
+      "requirement_ids": [
+        "REQ-ROBOT-05"
+      ],
+      "owner": "H10",
+      "reviewer": "H06",
+      "setup": "New attractive demo appears without code/hardware access.",
+      "expected_result": "Record research lead and a bounded useful experiment, not a production dependency.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "EX16",
+      "name": "Sensor enclosure effect",
+      "owner": "H09",
+      "requirement_ids": [
+        "REQ-ENG-08"
+      ],
+      "source_ids": [
+        "R17"
+      ],
+      "prerequisites": "Exact sensor and approved enclosure fixture",
+      "hypothesis": "A protective housing does not materially degrade the measurement under defined conditions.",
+      "baseline": "Bare sensor in same environment",
+      "method": "Compare bare/enclosed repeated sessions; record temperature/airflow/optical/RF effects relevant to that sensor.",
+      "metrics": "Bias/repeatability and useful response time",
+      "scope": "Safe ambient conditions only",
+      "stop_conditions": "No smoke/gas/hazard exposure generation",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX17",
+      "name": "Multimodal degradation replay",
+      "owner": "H10",
+      "requirement_ids": [
+        "REQ-RF-08"
+      ],
+      "source_ids": [
+        "R06"
+      ],
+      "prerequisites": "Synthetic/authorized aligned streams",
+      "hypothesis": "Fusion can detect when one modality becomes misleading.",
+      "baseline": "Best single-sensor baseline",
+      "method": "Remove/corrupt one stream, drift timestamps and invalidate calibration; require explicit degraded state.",
+      "metrics": "Error and time to detect invalid modality",
+      "scope": "Offline only first",
+      "stop_conditions": "No averaging inconsistent evidence into false safety",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX24",
+      "name": "Relay and data-ferry replay",
+      "owner": "H11",
+      "requirement_ids": [
+        "REQ-COMMS-06"
+      ],
+      "source_ids": [
+        "R20",
+        "R21"
+      ],
+      "prerequisites": "Synthetic contact schedule and test recipients",
+      "hypothesis": "Store-and-forward can improve deadline delivery under intermittent contacts.",
+      "baseline": "Stationary relay-only schedule",
+      "method": "Inject duplicate/lost contacts, expiry, cancellation and recipient nonacknowledgement.",
+      "metrics": "Delivery by deadline; duplicate suppression; accurate status",
+      "scope": "No radio/flight required",
+      "stop_conditions": "Do not infer internet or human help from relay receipt",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX25",
+      "name": "Robot safe-state mock",
+      "owner": "H10",
+      "requirement_ids": [
+        "REQ-ROBOT-03"
+      ],
+      "source_ids": [
+        "R08",
+        "R09"
+      ],
+      "prerequisites": "Mock adapter and defined device-specific state model",
+      "hypothesis": "Each task has a deterministic safe recovery contract.",
+      "baseline": "Manual operator reference sequence",
+      "method": "Freeze planner/network or inject unknown gripper/pose; verify the design refuses unsafe continuation.",
+      "metrics": "Correct recovery/unknown states; no second owner",
+      "scope": "No actuator connection",
+      "stop_conditions": "No universal motor-off behavior across all devices",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX26",
+      "name": "Teleoperation and bounded inert-object skill",
+      "owner": "H10",
+      "requirement_ids": [
+        "REQ-ROBOT-02"
+      ],
+      "source_ids": [
+        "R07",
+        "R09"
+      ],
+      "prerequisites": "Separately reviewed complete platform and physical stop",
+      "hypothesis": "A small household-relevant skill can be learned or replayed safely in a controlled workspace.",
+      "baseline": "Supervised teleoperation",
+      "method": "Collect demonstrations; test held-out inert-object positions; record every failure and intervention.",
+      "metrics": "Task success, interventions, placement error and recovery",
+      "scope": "No hot/sharp/medical/human-support task",
+      "stop_conditions": "Stop on boundary/force/stability violation",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "test": "AT-ROBOT-01",
+      "sections": [
+        "PLATFORMS P1/P2",
+        "REPORT D01/D03"
+      ],
+      "requirement": "REQ-ROBOT-01"
+    },
+    {
+      "test": "AT-ROBOT-02",
+      "sections": [
+        "PLATFORMS P3",
+        "EXPERIMENTS E09-B/E09-C"
+      ],
+      "requirement": "REQ-ROBOT-02"
+    },
+    {
+      "test": "AT-ROBOT-03",
+      "sections": [
+        "CONTRACTS C05",
+        "EXPERIMENTS E09-A"
+      ],
+      "requirement": "REQ-ROBOT-03"
+    },
+    {
+      "test": "AT-ROBOT-04",
+      "sections": [
+        "CONTRACTS C01/C03",
+        "PLATFORMS P3"
+      ],
+      "requirement": "REQ-ROBOT-04"
+    },
+    {
+      "test": "AT-ROBOT-05",
+      "sections": [
+        "PLATFORMS P5",
+        "EXPERIMENTS E09-D"
+      ],
+      "requirement": "REQ-ROBOT-05"
+    }
+  ],
+  "all_test_status": "NOT_EXECUTED",
+  "original_register_count": 102
+}

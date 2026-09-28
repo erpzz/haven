@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28T20:47:22.066610+00:00",
+  "generated_at": "2026-09-28T21:07:01.933119+00:00",
   "meaning": "Scoped documentary/design dispositions, not experimental acceptance or execution permission; read amendments and retained gates.",
   "entries": [
     {
@@ -335,6 +335,27 @@
       ]
     },
     {
+      "task_id": "R09",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_world",
+      "scope": "ACCEPT_FOR_SYNTHESIS: bounded robotics research/contracts/inert evaluation; no physical/model/runtime qualification or implementation authorization.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R09/REPORT.md",
+          "sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb"
+        },
+        {
+          "path": "reviews/REVIEW-R09/REVIEW.md",
+          "sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81"
+        }
+      ],
+      "open_findings": [
+        "LOW R09-L01: recovered-copy absence only; canonical robotics chapter exists, reviewer read it, original author consumption UNKNOWN. Add exact canonical input to synthesis without backfilling original38pins.",
+        "LOW R09-L02: leader/follower gearing differs; supply is motor/variant-specific, unresolved electrical compatibility remains adoption gate."
+      ]
+    },
+    {
       "task_id": "EVIDENCE-0",
       "status": "ACCEPTED_FOR_SYNTHESIS",
       "author_or_reviewer": "/root/ri01_evidence",
@@ -622,6 +643,20 @@
         {
           "path": "reviews/REVIEW-R05/REPORT.md",
           "sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R09",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_daily",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS: bounded robotics research/contracts/inert evaluation; no physical/model/runtime qualification or implementation authorization.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R09/REVIEW.md",
+          "sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81"
         }
       ],
       "open_findings": null

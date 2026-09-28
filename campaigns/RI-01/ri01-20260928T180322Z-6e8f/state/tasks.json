@@ -797,7 +797,7 @@
       ],
       "kind": "research",
       "research": "R09",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_world",
       "attempt_count": 1,
       "started_at": "2026-09-28T20:31:17.609235+00:00",
@@ -827,6 +827,20 @@
           "review_path": "reviews/REVIEW-R08-P00/REVIEW.md",
           "review_sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
         }
+      ],
+      "completed_at": "2026-09-28T20:51:41.223197+00:00",
+      "artifact": "research/R09/REPORT.md",
+      "artifact_sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb",
+      "manifest": "research/R09/HANDOFF_MANIFEST.json",
+      "manifest_sha256": "8162e008ee6c2909cfb0bf5dff9e926fea4b6dd4d2dc8ea8952244f4b1616fc8",
+      "accepted_at": "2026-09-28T21:00:00.082064+00:00",
+      "acceptance_scope": "ACCEPT_FOR_SYNTHESIS: bounded robotics research/contracts/inert evaluation; no physical/model/runtime qualification or implementation authorization.",
+      "review_artifact": "reviews/REVIEW-R09/REVIEW.md",
+      "review_sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81",
+      "reviewer": "/root/ri01_daily",
+      "open_findings": [
+        "LOW R09-L01: recovered-copy absence only; canonical robotics chapter exists, reviewer read it, original author consumption UNKNOWN. Add exact canonical input to synthesis without backfilling original38pins.",
+        "LOW R09-L02: leader/follower gearing differs; supply is motor/variant-specific, unresolved electrical compatibility remains adoption gate."
       ]
     },
     {
@@ -898,7 +912,7 @@
       ],
       "kind": "research",
       "research": "R14",
-      "status": "RUNNING",
+      "status": "DRAFT_READY",
       "actual_agent_id": "/root/ri01_mmav",
       "attempt_count": 1,
       "started_at": "2026-09-28T20:39:01.077857+00:00",
@@ -928,7 +942,12 @@
           "review_path": "reviews/REVIEW-MM-AV/REVIEW.md",
           "review_sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025"
         }
-      ]
+      ],
+      "completed_at": "2026-09-28T21:07:01.933119+00:00",
+      "artifact": "research/R14/R14_HANDOFF.md",
+      "artifact_sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
+      "manifest": "research/R14/HANDOFF_MANIFEST.json",
+      "manifest_sha256": "e99367a0d96ae3398b02821752c9256b705d6931050a9c7dfcca5ec10f25ac79"
     },
     {
       "id": "MM-FUSION",
@@ -1607,6 +1626,104 @@
       "artifact": "reviews/REVIEW-R05/REPORT.md",
       "artifact_sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7",
       "review_disposition": "ACCEPT_FOR_SYNTHESIS: documentary personal-tools/scheduling design, proposed tests unexecuted, no account or implementation authority."
+    },
+    {
+      "id": "REVIEW-R09",
+      "hard": [
+        "R09"
+      ],
+      "soft": [],
+      "role": "haven_research_reviewer",
+      "kind": "review",
+      "actual_agent_id": "/root/ri01_daily",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T20:51:41.223197+00:00",
+      "allowed_output_prefix": "reviews/REVIEW-R09",
+      "budgets": {
+        "minutes": 25
+      },
+      "hard_inputs": [
+        {
+          "task_id": "R09",
+          "path": "research/R09/REPORT.md",
+          "sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ],
+      "completed_at": "2026-09-28T21:00:00.082064+00:00",
+      "artifact": "reviews/REVIEW-R09/REVIEW.md",
+      "artifact_sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81",
+      "review_disposition": "ACCEPT_FOR_SYNTHESIS: bounded robotics research/contracts/inert evaluation; no physical/model/runtime qualification or implementation authorization."
+    },
+    {
+      "hard": [],
+      "soft": [],
+      "completed_at": "2026-09-28T20:54:08.271470+00:00",
+      "accounting_recorded_at": "2026-09-28T20:54:08.271470+00:00",
+      "id": "R14-READINESS",
+      "role": "Author readiness coordination",
+      "actual_agent_id": "/root/ri01_mmav",
+      "status": "COMPLETED_COORDINATION",
+      "kind": "coordination",
+      "note": "Successful native followup requested readiness and retained MM-AV context before full R14 brief; counted separately conservatively, no scientific acceptance."
+    },
+    {
+      "hard": [],
+      "soft": [],
+      "completed_at": "2026-09-28T20:54:08.271470+00:00",
+      "accounting_recorded_at": "2026-09-28T20:54:08.271470+00:00",
+      "id": "REVIEW-MM-AV-CLAR1",
+      "role": "Independent bounded protocol amendment review",
+      "actual_agent_id": "/root/ri01_review_privacy",
+      "status": "COMPLETED_REVIEW_ADDENDUM",
+      "kind": "review",
+      "artifact": "reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+      "artifact_sha256": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593",
+      "note": "Additional bounded review dispatched through actual message during REVIEW-R05; counted conservatively as separate assignment, same native agent; parent MM-AV task holds acceptance/closure."
+    },
+    {
+      "id": "R15-AUDIT",
+      "hard": [],
+      "soft": [],
+      "role": "Source integration specialist",
+      "kind": "source_audit_prework",
+      "actual_agent_id": "/root/ri01_runtime_probe",
+      "status": "RUNNING",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T21:00:00.082064+00:00",
+      "allowed_output_prefix": "research/R15-AUDIT",
+      "budgets": {
+        "minutes": 18
+      },
+      "hard_inputs": []
+    },
+    {
+      "id": "REVIEW-R14",
+      "hard": [
+        "R14"
+      ],
+      "soft": [],
+      "role": "haven_research_reviewer",
+      "kind": "review",
+      "actual_agent_id": "/root/ri01_review_privacy",
+      "status": "RUNNING",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T21:07:01.933119+00:00",
+      "allowed_output_prefix": "reviews/REVIEW-R14",
+      "budgets": {
+        "minutes": 25
+      },
+      "hard_inputs": [
+        {
+          "task_id": "R14",
+          "path": "research/R14/R14_HANDOFF.md",
+          "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ]
     }
   ]
 }

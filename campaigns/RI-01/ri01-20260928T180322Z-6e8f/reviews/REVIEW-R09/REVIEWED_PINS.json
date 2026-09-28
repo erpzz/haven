@@ -1,0 +1,570 @@
+{
+  "schema": "ri01.independent-document-review.v1",
+  "task": "REVIEW-R09",
+  "reviewer": "/root/ri01_daily",
+  "recorded_at_utc": "2026-09-28T20:58:22.9041226Z",
+  "scope": "PowerShell JSON parsing, exact SHA256/size checks, complete original-record comparison and regex inventory only",
+  "runtime_scientific_physical_tests": "NOT_EXECUTED",
+  "no_application_code_changed": true,
+  "manifest_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/HANDOFF_MANIFEST.json",
+  "manifest_sha256": "8162e008ee6c2909cfb0bf5dff9e926fea4b6dd4d2dc8ea8952244f4b1616fc8",
+  "manifest_matches_dispatch": true,
+  "payloads": [
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/CONSULTATIONS.md",
+      "expected_bytes": 5132,
+      "actual_bytes": 5132,
+      "expected_sha256": "e80432c7f0076796de0b1a7b3f393598601ca86365a4970a0f3ce8d6e59dca6e",
+      "actual_sha256": "e80432c7f0076796de0b1a7b3f393598601ca86365a4970a0f3ce8d6e59dca6e",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/CONTRACTS.md",
+      "expected_bytes": 12012,
+      "actual_bytes": 12012,
+      "expected_sha256": "854d05a470581289537df387a959c817cf9be6b05d46c0686f93a6f82aa948a1",
+      "actual_sha256": "854d05a470581289537df387a959c817cf9be6b05d46c0686f93a6f82aa948a1",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/EXPERIMENTS.md",
+      "expected_bytes": 10361,
+      "actual_bytes": 10361,
+      "expected_sha256": "1ae38826040db0b9202f89dd6c2097ed9b2fc822edc783092ed267bbf1827d9d",
+      "actual_sha256": "1ae38826040db0b9202f89dd6c2097ed9b2fc822edc783092ed267bbf1827d9d",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/INPUT_RECEIPT.md",
+      "expected_bytes": 4163,
+      "actual_bytes": 4163,
+      "expected_sha256": "37616fbc8f219ac359f3c00bdcd9e68f27b8a4eceeeff1899bfa120b9853e042",
+      "actual_sha256": "37616fbc8f219ac359f3c00bdcd9e68f27b8a4eceeeff1899bfa120b9853e042",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/INPUT_USE.json",
+      "expected_bytes": 18888,
+      "actual_bytes": 18888,
+      "expected_sha256": "7106289e929d3ffe1183b28d01dabd5ca0850d29d5cb95cdfe16880ae5076719",
+      "actual_sha256": "7106289e929d3ffe1183b28d01dabd5ca0850d29d5cb95cdfe16880ae5076719",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/MODALITY.md",
+      "expected_bytes": 2170,
+      "actual_bytes": 2170,
+      "expected_sha256": "6ce8b290a590533cfa84e27b92546cd66bd64bb0adfd7838516c3da10842e10a",
+      "actual_sha256": "6ce8b290a590533cfa84e27b92546cd66bd64bb0adfd7838516c3da10842e10a",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/NEXT_PACKAGE.md",
+      "expected_bytes": 4212,
+      "actual_bytes": 4212,
+      "expected_sha256": "ca701c590d12eafe42f810ce67b3766bf7a9dc7aa3869da070a7ad88b6f94084",
+      "actual_sha256": "ca701c590d12eafe42f810ce67b3766bf7a9dc7aa3869da070a7ad88b6f94084",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/PLATFORMS.md",
+      "expected_bytes": 11868,
+      "actual_bytes": 11868,
+      "expected_sha256": "d058e034a7da9543653eb9a5c64fc520eb0a64c829652cf5903d4f7b0a88554e",
+      "actual_sha256": "d058e034a7da9543653eb9a5c64fc520eb0a64c829652cf5903d4f7b0a88554e",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/REPORT.md",
+      "expected_bytes": 8336,
+      "actual_bytes": 8336,
+      "expected_sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb",
+      "actual_sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/REQUIREMENTS.json",
+      "expected_bytes": 17271,
+      "actual_bytes": 17271,
+      "expected_sha256": "75747451c1513c81fad99012b4819686e40298447788e316eae900ad6dd45970",
+      "actual_sha256": "75747451c1513c81fad99012b4819686e40298447788e316eae900ad6dd45970",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/SOURCES.md",
+      "expected_bytes": 7996,
+      "actual_bytes": 7996,
+      "expected_sha256": "00976279e8e6fd8795f0af5627f1ecdf60e59483b6695290c2cac3db972b5fde",
+      "actual_sha256": "00976279e8e6fd8795f0af5627f1ecdf60e59483b6695290c2cac3db972b5fde",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/VALIDATION.md",
+      "expected_bytes": 3301,
+      "actual_bytes": 3301,
+      "expected_sha256": "e8ef692e03ba9938af09e29cffbf40133f6d40882b5c7dde16b4453b6ced6628",
+      "actual_sha256": "e8ef692e03ba9938af09e29cffbf40133f6d40882b5c7dde16b4453b6ced6628",
+      "match": true
+    }
+  ],
+  "inputs": [
+    {
+      "path": "AGENTS.md",
+      "upstream_section": "Authority; evidence; RI-01 exception",
+      "expected_sha256": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281",
+      "actual_sha256": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281",
+      "match": true
+    },
+    {
+      "path": "START_HERE.md",
+      "upstream_section": "Original sources and current authority",
+      "expected_sha256": "aec6a160969d1ade3725f262f7bca76fead1a34730d6cda299b4cc018f64de7c",
+      "actual_sha256": "aec6a160969d1ade3725f262f7bca76fead1a34730d6cda299b4cc018f64de7c",
+      "match": true
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "upstream_section": "Precedence and changes",
+      "expected_sha256": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc",
+      "actual_sha256": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc",
+      "match": true
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "upstream_section": "Current repository status",
+      "expected_sha256": "bf4745153beff5687207f8e733809567e72080f0645241a1840c2cfb13a4ae16",
+      "actual_sha256": "bf4745153beff5687207f8e733809567e72080f0645241a1840c2cfb13a4ae16",
+      "match": true
+    },
+    {
+      "path": "coordination/PROTOCOL.md",
+      "upstream_section": "Research handback and ownership",
+      "expected_sha256": "40fbb4f282155cb2762a67c2d970b2332ff37dcc3f303dc823d4b6e00db712dc",
+      "actual_sha256": "40fbb4f282155cb2762a67c2d970b2332ff37dcc3f303dc823d4b6e00db712dc",
+      "match": true
+    },
+    {
+      "path": "coordination/HANDBACK_METADATA.md",
+      "upstream_section": "All metadata requirements",
+      "expected_sha256": "27a8d0b5bc8aec1eeeb5c7fc178b7a977016e96aaf69f5f62f63a39a3731c3a7",
+      "actual_sha256": "27a8d0b5bc8aec1eeeb5c7fc178b7a977016e96aaf69f5f62f63a39a3731c3a7",
+      "match": true
+    },
+    {
+      "path": ".codex/agents/haven_researcher.toml",
+      "upstream_section": "developer_instructions",
+      "expected_sha256": "877878aedac04b2e8b599c0968de95d755abecc60032ad77a11b8585d9e09c6f",
+      "actual_sha256": "877878aedac04b2e8b599c0968de95d755abecc60032ad77a11b8585d9e09c6f",
+      "match": true
+    },
+    {
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "upstream_section": "Research envelope and exclusions",
+      "expected_sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+      "actual_sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+      "match": true
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "upstream_section": "Dependency reuse; actual consultation; independent reviews",
+      "expected_sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+      "actual_sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+      "match": true
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "upstream_section": "V03,V04,V07,V09,V10,V11,V12,V15,V16",
+      "expected_sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "actual_sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "match": true
+    },
+    {
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "upstream_section": "R09 Ground robotics and embodied skills",
+      "expected_sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+      "actual_sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+      "match": true
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "upstream_section": "A; B; C; D; E; F",
+      "expected_sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "actual_sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/INVENTORY.md",
+      "upstream_section": "Exact source gaps and recovered originals",
+      "expected_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+      "actual_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H10_STARTER.md",
+      "upstream_section": "Owned work; exact assignment; exclusions",
+      "expected_sha256": "0b3a8705af1952c7f173ec6c6c2654222454c80da1adf3757f86fdee6ea598e8",
+      "actual_sha256": "0b3a8705af1952c7f173ec6c6c2654222454c80da1adf3757f86fdee6ea598e8",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/HANDOFF_TEMPLATE.md",
+      "upstream_section": "Decisions; Evidence; Interface; Acceptance; Risks; Next",
+      "expected_sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+      "actual_sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/COVERAGE.md",
+      "upstream_section": "ROBOT and adjacent owner mappings",
+      "expected_sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "actual_sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "upstream_section": "REQ-ROBOT-01..05; RF08; ENG08; COMMS06; AI02",
+      "expected_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "actual_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "upstream_section": "AT-ROBOT-01..05",
+      "expected_sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "actual_sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "upstream_section": "EX16,17,24,25,26",
+      "expected_sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "actual_sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/README.md",
+      "upstream_section": "Draft boundaries; M0 coexistence",
+      "expected_sha256": "84e46ea3a07c3dfb9ca4d8bc95453171d9e51b4e72b8c8dc5113561962a40615",
+      "actual_sha256": "84e46ea3a07c3dfb9ca4d8bc95453171d9e51b4e72b8c8dc5113561962a40615",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "upstream_section": "Accepted manifest identity",
+      "expected_sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "actual_sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "upstream_section": "Layering and domain boundary (retained reading; rehashed)",
+      "expected_sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "actual_sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "upstream_section": "I01-I07; provisional spatial adapters",
+      "expected_sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "actual_sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/HANDOFF_MANIFEST.json",
+      "upstream_section": "Accepted manifest",
+      "expected_sha256": "2db5745bfc5626f38542b1b4608e63b00458b21f4a38c1b05f2437414cf9bfc8",
+      "actual_sha256": "2db5745bfc5626f38542b1b4608e63b00458b21f4a38c1b05f2437414cf9bfc8",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONTRACTS.md",
+      "upstream_section": "CR-R07-01..04",
+      "expected_sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+      "actual_sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R07/REVIEW.md",
+      "upstream_section": "Bounded acceptance; L01,L02",
+      "expected_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+      "actual_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/HANDOFF_MANIFEST.json",
+      "upstream_section": "Accepted manifest",
+      "expected_sha256": "75bff7a70d5593c9d0f0283e9ec095585f972e6a8a11b8a41b1cb936ea47640b",
+      "actual_sha256": "75bff7a70d5593c9d0f0283e9ec095585f972e6a8a11b8a41b1cb936ea47640b",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CONTRACT_DELTA.md",
+      "upstream_section": "Inert scalar profile; invalidation; unsupported pose",
+      "expected_sha256": "642ea41d2a218ab018b62d1edc92e317c4edd72c972a80a258fd71d556f8045a",
+      "actual_sha256": "642ea41d2a218ab018b62d1edc92e317c4edd72c972a80a258fd71d556f8045a",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/MEASUREMENT_PLAN.md",
+      "upstream_section": "Decision before CAD; measurand/invalidation; scope limits",
+      "expected_sha256": "636e176b2016e119b5098828b9ac42fbabedc8312d9f3fb560a0bfb2788fc24b",
+      "actual_sha256": "636e176b2016e119b5098828b9ac42fbabedc8312d9f3fb560a0bfb2788fc24b",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R08-P00/REVIEW.md",
+      "upstream_section": "E01 estimand/bootstrap/uncertainty freeze gates",
+      "expected_sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0",
+      "actual_sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/CONTRACTS.md",
+      "upstream_section": "MV-C1,C2 and current-authority/spatial boundaries",
+      "expected_sha256": "97a6a0ab83297bbe30905d0b22b4f45bd9caf1fb7092d8f98b4eb25a27268038",
+      "actual_sha256": "97a6a0ab83297bbe30905d0b22b4f45bd9caf1fb7092d8f98b4eb25a27268038",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-VISION/REVIEW.md",
+      "upstream_section": "Exact artifact/lifecycle/evaluator/48attempt/spatial/native gates",
+      "expected_sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660",
+      "actual_sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/MANIFEST.json",
+      "upstream_section": "Accepted documentary packet",
+      "expected_sha256": "a880c3eea7584036651c280a8d4a71f28a0d5645471a4e064c8df6ff27e541c1",
+      "actual_sha256": "a880c3eea7584036651c280a8d4a71f28a0d5645471a4e064c8df6ff27e541c1",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/REPORT.md",
+      "upstream_section": "Decisions; CR-R10-01..04; original simulator/M4",
+      "expected_sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "actual_sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R10/REVIEW.md",
+      "upstream_section": "Findings1-4; original milestones",
+      "expected_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+      "actual_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/HANDOFF_MANIFEST.json",
+      "upstream_section": "Accepted packet identity",
+      "expected_sha256": "fec9c4c223fa2370db6bcbe8fd61980d284d92a31a22b37d707dcd48db0a8d77",
+      "actual_sha256": "fec9c4c223fa2370db6bcbe8fd61980d284d92a31a22b37d707dcd48db0a8d77",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "upstream_section": "O01 only",
+      "expected_sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "actual_sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "upstream_section": "Whole240x120 static image",
+      "expected_sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "actual_sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "match": true
+    }
+  ],
+  "unavailable_inputs": [
+    {
+      "input": "Original R09 prompt in HAVEN_Research_Thread_Prompts_v1.zip",
+      "status": "SOURCE_UNAVAILABLE",
+      "sha256": null,
+      "basis": "Frozen INTAKE plus root correction",
+      "decision": "Use authorized R09 queue brief and recovered original REQ/AT/EX, never regenerate"
+    },
+    {
+      "input": "inputs/recovered/starter/docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "status": "SOURCE_UNAVAILABLE_AT_EXACT_RECOVERED_PATH",
+      "sha256": null,
+      "decision": "H10 starter and exact original rows consumed; missing prose not claimed read"
+    }
+  ],
+  "original_record_comparisons": [
+    {
+      "kind": "requirements",
+      "id": "REQ-AI-02",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "requirements",
+      "id": "REQ-RF-08",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "requirements",
+      "id": "REQ-COMMS-06",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "requirements",
+      "id": "REQ-ROBOT-01",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "requirements",
+      "id": "REQ-ROBOT-02",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "requirements",
+      "id": "REQ-ROBOT-03",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "requirements",
+      "id": "REQ-ROBOT-04",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "requirements",
+      "id": "REQ-ROBOT-05",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "requirements",
+      "id": "REQ-ENG-08",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "acceptance",
+      "id": "AT-ROBOT-01",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "acceptance",
+      "id": "AT-ROBOT-02",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "acceptance",
+      "id": "AT-ROBOT-03",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "acceptance",
+      "id": "AT-ROBOT-04",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "acceptance",
+      "id": "AT-ROBOT-05",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "experiments",
+      "id": "EX16",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "experiments",
+      "id": "EX17",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "experiments",
+      "id": "EX24",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "experiments",
+      "id": "EX25",
+      "matches_original_complete_record": true
+    },
+    {
+      "kind": "experiments",
+      "id": "EX26",
+      "matches_original_complete_record": true
+    }
+  ],
+  "proposed_case_ids": [
+    "R09-T01",
+    "R09-T02",
+    "R09-T03",
+    "R09-T04",
+    "R09-T05",
+    "R09-T06",
+    "R09-T07",
+    "R09-T08",
+    "R09-T09",
+    "R09-T10",
+    "R09-T11",
+    "R09-T12",
+    "R09-T13",
+    "R09-T14",
+    "R09-T15",
+    "R09-T16",
+    "R09-T17",
+    "R09-T18",
+    "R09-T19",
+    "R09-T20",
+    "R09-T21",
+    "R09-T22",
+    "R09-T23",
+    "R09-T24"
+  ],
+  "source_ids": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17",
+    "S18",
+    "S19",
+    "S20",
+    "S21",
+    "S22",
+    "S23"
+  ],
+  "additional_reviewer_inputs": [
+    {
+      "path": "baseline/cumulative-v1.0/docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "sha256": "0cab226c8382f240f6488fd33818ee8c4afd01fe9627e1beda2bd0222b824cae",
+      "use": "Additional reviewer input; not backfilled into author consumption"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "use": "Additional reviewer input; not backfilled into author consumption"
+    },
+    {
+      "path": ".codex/agents/haven_research_reviewer.toml",
+      "sha256": "f8cade789e2baf6afda61eecacd36734b4072aad1f1a3d9bd0ed4528c495457c",
+      "use": "Additional reviewer input; not backfilled into author consumption"
+    }
+  ],
+  "summary": {
+    "payload_count": 12,
+    "original_experiment_count": 5,
+    "payload_mismatches": 0,
+    "original_acceptance_count": 5,
+    "unique_source_rows": 23,
+    "input_count": 38,
+    "original_requirement_count": 9,
+    "unique_proposed_cases": 24,
+    "original_record_mismatches": 0,
+    "input_mismatches": 0
+  }
+}

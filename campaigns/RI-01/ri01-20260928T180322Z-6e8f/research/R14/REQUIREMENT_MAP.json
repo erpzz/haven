@@ -1,0 +1,1114 @@
+{
+  "task": "R14",
+  "status": "SOURCE_PRESERVATION_ONLY_NOT_EXECUTED",
+  "scope": "Selected original rows referenced by R14; full 102 REQ/AT and 32 EX scope remains under accepted CORE",
+  "requirements": [
+    {
+      "id": "REQ-DAILY-02",
+      "name": "Planning and reminders",
+      "statement": "Help plan days and schedule durable, understandable reminders.",
+      "owner": "H01",
+      "document": "docs/02_DAILY_ASSISTANT.md",
+      "acceptance_tests": [
+        "AT-DAILY-02"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-DAILY-03",
+      "name": "Research and files",
+      "statement": "Retrieve authorized documents/web findings with source evidence.",
+      "owner": "H01",
+      "document": "docs/02_DAILY_ASSISTANT.md",
+      "acceptance_tests": [
+        "AT-DAILY-03"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-DAILY-09",
+      "name": "Voice and interruption",
+      "statement": "Distinguish stop speech, cancel task, stop investigation and request physical recovery.",
+      "owner": "H01",
+      "document": "docs/02_DAILY_ASSISTANT.md",
+      "acceptance_tests": [
+        "AT-DAILY-09"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-PRIV-01",
+      "name": "Two independent users",
+      "statement": "Eric and Kennedy have independent private identities and stores.",
+      "owner": "H04",
+      "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+      "acceptance_tests": [
+        "AT-PRIV-01"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-PRIV-04",
+      "name": "Revocation and deletion",
+      "statement": "Apply changes to pending jobs, caches, summaries and documented backups.",
+      "owner": "H04",
+      "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+      "acceptance_tests": [
+        "AT-PRIV-04"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-PRIV-06",
+      "name": "Device identity",
+      "statement": "Borrowed/lost/swapped devices do not inherit another person's authority.",
+      "owner": "H04",
+      "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+      "acceptance_tests": [
+        "AT-PRIV-06"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-PRIV-08",
+      "name": "Prompt-injection isolation",
+      "statement": "Untrusted documents/images/audio/memory/tool descriptions cannot add authority.",
+      "owner": "H04",
+      "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+      "acceptance_tests": [
+        "AT-PRIV-08"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-WEAR-03",
+      "name": "Health freshness",
+      "statement": "Keep capture/sample and arrival times; absent samples remain unknown.",
+      "owner": "H07",
+      "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+      "acceptance_tests": [
+        "AT-WEAR-03"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-WEAR-05",
+      "name": "Glasses interfaces",
+      "statement": "Inventory camera/audio/display/input/motion independently per exact SKU/release.",
+      "owner": "H07",
+      "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+      "acceptance_tests": [
+        "AT-WEAR-05"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-WEAR-06",
+      "name": "Explicit capture",
+      "statement": "Preserve wearer/recording state, bystander privacy and bounded media.",
+      "owner": "H07",
+      "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+      "acceptance_tests": [
+        "AT-WEAR-06"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-WEAR-08",
+      "name": "Wearable physical validation",
+      "statement": "Mock/desktop tests do not qualify actual phone/glasses/Watch performance.",
+      "owner": "H07",
+      "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+      "acceptance_tests": [
+        "AT-WEAR-08"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-RF-05",
+      "name": "Semantic target",
+      "statement": "Treat scene interpretation as inference linked to measured structure.",
+      "owner": "H08",
+      "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+      "acceptance_tests": [
+        "AT-RF-05"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-RF-07",
+      "name": "Evidence origin separation",
+      "statement": "Through-obstruction, other-side sensor and historical map are distinct.",
+      "owner": "H08",
+      "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+      "acceptance_tests": [
+        "AT-RF-07"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-RF-08",
+      "name": "Spatial fusion contract",
+      "statement": "Calibrations, coordinate transforms, timestamps and uncertainty are explicit.",
+      "owner": "H08",
+      "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+      "acceptance_tests": [
+        "AT-RF-08"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ROBOT-01",
+      "name": "Ground embodiment",
+      "statement": "Keep rover/arm/telepresence/sensor-carrier branches alongside aircraft.",
+      "owner": "H10",
+      "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "acceptance_tests": [
+        "AT-ROBOT-01"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ROBOT-02",
+      "name": "Teleop to skills",
+      "statement": "Progress from safe manual operation through demonstrations to constrained learned behavior.",
+      "owner": "H10",
+      "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "acceptance_tests": [
+        "AT-ROBOT-02"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ROBOT-03",
+      "name": "Independent stop",
+      "statement": "Device-specific stopping/recovery remains outside LLM control.",
+      "owner": "H10",
+      "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "acceptance_tests": [
+        "AT-ROBOT-03"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ROBOT-04",
+      "name": "Embodiment qualification",
+      "statement": "Match model observations/action-space/calibration/resources to hardware.",
+      "owner": "H10",
+      "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "acceptance_tests": [
+        "AT-ROBOT-04"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ENG-03",
+      "name": "Design-build-test loop",
+      "statement": "Use physical measurements to drive iterative improvement.",
+      "owner": "H09",
+      "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+      "acceptance_tests": [
+        "AT-ENG-03"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ENG-04",
+      "name": "Independent acceptance",
+      "statement": "Designer/optimizing model cannot own the only success criterion.",
+      "owner": "H09",
+      "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+      "acceptance_tests": [
+        "AT-ENG-04"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ENG-08",
+      "name": "Physical artifact chain",
+      "statement": "Trace CAD/material/process/assembly/calibration/test versions.",
+      "owner": "H09",
+      "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+      "acceptance_tests": [
+        "AT-ENG-08"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-ENG-10",
+      "name": "Low-risk first",
+      "statement": "Start with fixtures/enclosures/trays rather than life-critical printed devices.",
+      "owner": "H09",
+      "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+      "acceptance_tests": [
+        "AT-ENG-10"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    }
+  ],
+  "acceptance_tests": [
+    {
+      "id": "AT-DAILY-02",
+      "title": "Planning and reminders",
+      "requirement_ids": [
+        "REQ-DAILY-02"
+      ],
+      "owner": "H01",
+      "reviewer": "H06",
+      "setup": "Schedule across restart and a daylight-saving boundary using explicit timezone intent.",
+      "expected_result": "Committed schedule/due/missed/cancelled states remain correct without AI availability.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-DAILY-03",
+      "title": "Research and files",
+      "requirement_ids": [
+        "REQ-DAILY-03"
+      ],
+      "owner": "H01",
+      "reviewer": "H06",
+      "setup": "Use mixed relevant, stale and malicious research snippets.",
+      "expected_result": "Answer cites actual permitted content and rejects embedded tool instructions.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-DAILY-09",
+      "title": "Voice and interruption",
+      "requirement_ids": [
+        "REQ-DAILY-09"
+      ],
+      "owner": "H01",
+      "reviewer": "H06",
+      "setup": "Issue ambiguous stop wording during narration of an active simulated task.",
+      "expected_result": "Clarify or route explicitly; no arbitrary power cut or silent mission cancellation.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-PRIV-01",
+      "title": "Two independent users",
+      "requirement_ids": [
+        "REQ-PRIV-01"
+      ],
+      "owner": "H04",
+      "reviewer": "H06",
+      "setup": "User A asks for user B private calendar or health summary.",
+      "expected_result": "Access denied without B's applicable grant; no inferred marital permission.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-PRIV-04",
+      "title": "Revocation and deletion",
+      "requirement_ids": [
+        "REQ-PRIV-04"
+      ],
+      "owner": "H04",
+      "reviewer": "H06",
+      "setup": "Revoke sharing while a model completion is queued.",
+      "expected_result": "Now-disallowed publication is blocked; derivatives marked/invalidation recorded.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-PRIV-06",
+      "title": "Device identity",
+      "requirement_ids": [
+        "REQ-PRIV-06"
+      ],
+      "owner": "H04",
+      "reviewer": "H06",
+      "setup": "Swap glasses or revoke a stolen phone session.",
+      "expected_result": "Current actor is verified; stale device grants do not authorize new reads/writes.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-PRIV-08",
+      "title": "Prompt-injection isolation",
+      "requirement_ids": [
+        "REQ-PRIV-08"
+      ],
+      "owner": "H04",
+      "reviewer": "H06",
+      "setup": "A research result asks for private export and raw flight control.",
+      "expected_result": "No privilege change or executable command; content retained as untrusted data.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-WEAR-03",
+      "title": "Health freshness",
+      "requirement_ids": [
+        "REQ-WEAR-03"
+      ],
+      "owner": "H07",
+      "reviewer": "H06",
+      "setup": "Deliver a stale sample now and remove readable samples.",
+      "expected_result": "No fresh/live/zero/normal/incapacitated label from missing or old data.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-WEAR-05",
+      "title": "Glasses interfaces",
+      "requirement_ids": [
+        "REQ-WEAR-05"
+      ],
+      "owner": "H07",
+      "reviewer": "H06",
+      "setup": "Selected glasses lack display or a feature is preview-only.",
+      "expected_result": "Use supported fallback rather than claim complete functionality.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-WEAR-06",
+      "title": "Explicit capture",
+      "requirement_ids": [
+        "REQ-WEAR-06"
+      ],
+      "owner": "H07",
+      "reviewer": "H06",
+      "setup": "Capture is paused or glasses are removed/swapped.",
+      "expected_result": "Collection stops or becomes unavailable; no covert continuation.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-WEAR-08",
+      "title": "Wearable physical validation",
+      "requirement_ids": [
+        "REQ-WEAR-08"
+      ],
+      "owner": "H07",
+      "reviewer": "H06",
+      "setup": "Mock device succeeds but real path has not run.",
+      "expected_result": "PENDING_OPERATOR remains on native device acceptance.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-RF-05",
+      "title": "Semantic target",
+      "requirement_ids": [
+        "REQ-RF-05"
+      ],
+      "owner": "H08",
+      "reviewer": "H06",
+      "setup": "Ask for object identity where RF geometry is ambiguous.",
+      "expected_result": "Hypotheses/abstention preserved; generative plausibility not observed fact.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-RF-07",
+      "title": "Evidence origin separation",
+      "requirement_ids": [
+        "REQ-RF-07"
+      ],
+      "owner": "H08",
+      "reviewer": "H06",
+      "setup": "Fuse an old room scan with a new RF observation.",
+      "expected_result": "Provenance/time/coverage displayed for each source; old map not relabeled live.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-RF-08",
+      "title": "Spatial fusion contract",
+      "requirement_ids": [
+        "REQ-RF-08"
+      ],
+      "owner": "H08",
+      "reviewer": "H06",
+      "setup": "Attempt fusion of incompatible frames or expired calibration.",
+      "expected_result": "Reject/mark degraded; no silently aligned geometry.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ROBOT-01",
+      "title": "Ground embodiment",
+      "requirement_ids": [
+        "REQ-ROBOT-01"
+      ],
+      "owner": "H10",
+      "reviewer": "H06",
+      "setup": "A task can use a stationary or wheeled platform.",
+      "expected_result": "Compare utility/risk without forcing flight.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ROBOT-02",
+      "title": "Teleop to skills",
+      "requirement_ids": [
+        "REQ-ROBOT-02"
+      ],
+      "owner": "H10",
+      "reviewer": "H06",
+      "setup": "A trained skill faces unseen inert-object placement.",
+      "expected_result": "Evaluate held-out success and failure; no general-household claim.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ROBOT-03",
+      "title": "Independent stop",
+      "requirement_ids": [
+        "REQ-ROBOT-03"
+      ],
+      "owner": "H10",
+      "reviewer": "H06",
+      "setup": "Policy/network freezes during a supervised safe skill test.",
+      "expected_result": "Appropriate tested stop/recovery, with outcome observed.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ROBOT-04",
+      "title": "Embodiment qualification",
+      "requirement_ids": [
+        "REQ-ROBOT-04"
+      ],
+      "owner": "H10",
+      "reviewer": "H06",
+      "setup": "A pretrained policy assumes incompatible robot joints/cameras.",
+      "expected_result": "Do not run; require adapter/training/qualification.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ENG-03",
+      "title": "Design-build-test loop",
+      "requirement_ids": [
+        "REQ-ENG-03"
+      ],
+      "owner": "H09",
+      "reviewer": "H06",
+      "setup": "Candidate has better predicted metric but worse measured repeatability.",
+      "expected_result": "Retain failure and revise/stop based on measurements.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ENG-04",
+      "title": "Independent acceptance",
+      "requirement_ids": [
+        "REQ-ENG-04"
+      ],
+      "owner": "H09",
+      "reviewer": "H06",
+      "setup": "Agent tries changing threshold after poor result.",
+      "expected_result": "Change rejected or explicitly reviewed; protected hold-out remains.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ENG-08",
+      "title": "Physical artifact chain",
+      "requirement_ids": [
+        "REQ-ENG-08"
+      ],
+      "owner": "H09",
+      "reviewer": "H06",
+      "setup": "Part material or mount orientation changes after acceptance.",
+      "expected_result": "Prior qualification reconsidered; no silent reuse.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-ENG-10",
+      "title": "Low-risk first",
+      "requirement_ids": [
+        "REQ-ENG-10"
+      ],
+      "owner": "H09",
+      "reviewer": "H06",
+      "setup": "Agent proposes clinical/flight-critical substitute without qualification.",
+      "expected_result": "Reject promotion; preserve legitimate low-risk research work.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "EX01",
+      "name": "Grounded daily notebook",
+      "owner": "H01",
+      "requirement_ids": [
+        "REQ-DAILY-03"
+      ],
+      "source_ids": [
+        "R27"
+      ],
+      "prerequisites": "Synthetic notes with deliberately conflicting revisions",
+      "hypothesis": "A scoped retrieval assistant can identify current decisions without inventing missing facts.",
+      "baseline": "Keyword/ID retrieval with deterministic source excerpts",
+      "method": "Ask a fixed set of questions; inject an old revision and unrelated note; compare evidence-linked answers.",
+      "metrics": "Correct answer/source rate; unsupported assertions; appropriate abstention",
+      "scope": "No private files or external model required",
+      "stop_conditions": "Stop on wrong-user disclosure; no claimed implementation results",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX02",
+      "name": "Two-user privacy challenge",
+      "owner": "H04",
+      "requirement_ids": [
+        "REQ-PRIV-01"
+      ],
+      "source_ids": [],
+      "prerequisites": "Synthetic private/shared records for two subjects",
+      "hypothesis": "Grant-aware context assembly prevents cross-user disclosure.",
+      "baseline": "Direct deterministic ACL filtering",
+      "method": "Request another subject's private data; revoke sharing during a queued answer; test shared speaker audience.",
+      "metrics": "Unauthorized content count; blocked publication trace",
+      "scope": "No real partner data",
+      "stop_conditions": "Any leakage blocks integration",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX05",
+      "name": "Durable daily reminders",
+      "owner": "H03",
+      "requirement_ids": [
+        "REQ-DAILY-02"
+      ],
+      "source_ids": [],
+      "prerequisites": "Separate prototype or accepted daily task module",
+      "hypothesis": "Reminder receipt and delivery state survive restart without inference.",
+      "baseline": "Deterministic scheduler fixture",
+      "method": "Schedule/cancel tasks across timezone transitions and simulated sleep; replay old state read-only.",
+      "metrics": "Correct due/cancelled/missed counts; duplicate delivery",
+      "scope": "Synthetic destination only",
+      "stop_conditions": "A duplicate or revived cancellation blocks promotion",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX06",
+      "name": "Voice uncertainty and interruption",
+      "owner": "H01",
+      "requirement_ids": [
+        "REQ-DAILY-09"
+      ],
+      "source_ids": [
+        "R37",
+        "R38"
+      ],
+      "prerequisites": "Consented or synthetic speech fixtures",
+      "hypothesis": "A staged voice interface distinguishes narration from action intent.",
+      "baseline": "Typed reference transcript",
+      "method": "Test names/noise/ambiguous stop commands and interrupted responses without any physical executor.",
+      "metrics": "Intent/clarification accuracy; latency; false side-effect proposals",
+      "scope": "No always-on microphone",
+      "stop_conditions": "Stop on a transcript being treated as authorization",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX07",
+      "name": "Watch stale-data semantics",
+      "owner": "H07",
+      "requirement_ids": [
+        "REQ-WEAR-03"
+      ],
+      "source_ids": [
+        "R39"
+      ],
+      "prerequisites": "Synthetic health observations only",
+      "hypothesis": "Original sample time and availability survive ingestion and summary.",
+      "baseline": "Deterministic normalized display",
+      "method": "Deliver old/out-of-order/missing samples and simulate denied/unknown provider visibility.",
+      "metrics": "No fabricated value/freshness; correct scope/unit/time",
+      "scope": "Native collection not required",
+      "stop_conditions": "Any diagnosis/incapacitation claim from absence blocks",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX08",
+      "name": "Glasses lifecycle mock",
+      "owner": "H07",
+      "requirement_ids": [
+        "REQ-WEAR-06"
+      ],
+      "source_ids": [
+        "R29"
+      ],
+      "prerequisites": "Mock wearer and feature capabilities",
+      "hypothesis": "Explicit capture state prevents unintended collection/disclosure.",
+      "baseline": "Phone explicit photo upload",
+      "method": "Swap wearer, pause session, remove display capability and revoke sharing mid-capture.",
+      "metrics": "Correct capability unavailable/privacy behavior",
+      "scope": "No physical glasses assumed",
+      "stop_conditions": "Do not count mock success as device acceptance",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX09",
+      "name": "Spatial origin and transform integrity",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-07"
+      ],
+      "source_ids": [
+        "R30"
+      ],
+      "prerequisites": "Synthetic old scan and new RF estimates",
+      "hypothesis": "The map can fuse references without relabeling old geometry as live.",
+      "baseline": "Separate uncombined layers",
+      "method": "Mix missing transforms, expired calibration and disjoint timestamps; require rejected/degraded fusion.",
+      "metrics": "Incorrect merge count; provenance visibility",
+      "scope": "No real floorplan needed",
+      "stop_conditions": "Any fabricated current-room claim blocks",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX13",
+      "name": "Printed fixture repeatability",
+      "owner": "H09",
+      "requirement_ids": [
+        "REQ-ENG-03"
+      ],
+      "source_ids": [
+        "R17",
+        "R34"
+      ],
+      "prerequisites": "Approved low-risk dimensions and workshop setup for physical phase",
+      "hypothesis": "A new mount reduces measurement-position variation.",
+      "baseline": "Existing mount measured with same method",
+      "method": "Generate CAD; independently review; human prints/assembles after approval; repeat measured placement blinded where practical.",
+      "metrics": "Position error and repeatability; material/time",
+      "scope": "CAD-only phase first; no real print now",
+      "stop_conditions": "Stop on unsafe setup, poor fit or maximum trial/time budget",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX16",
+      "name": "Sensor enclosure effect",
+      "owner": "H09",
+      "requirement_ids": [
+        "REQ-ENG-08"
+      ],
+      "source_ids": [
+        "R17"
+      ],
+      "prerequisites": "Exact sensor and approved enclosure fixture",
+      "hypothesis": "A protective housing does not materially degrade the measurement under defined conditions.",
+      "baseline": "Bare sensor in same environment",
+      "method": "Compare bare/enclosed repeated sessions; record temperature/airflow/optical/RF effects relevant to that sensor.",
+      "metrics": "Bias/repeatability and useful response time",
+      "scope": "Safe ambient conditions only",
+      "stop_conditions": "No smoke/gas/hazard exposure generation",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX17",
+      "name": "Multimodal degradation replay",
+      "owner": "H10",
+      "requirement_ids": [
+        "REQ-RF-08"
+      ],
+      "source_ids": [
+        "R06"
+      ],
+      "prerequisites": "Synthetic/authorized aligned streams",
+      "hypothesis": "Fusion can detect when one modality becomes misleading.",
+      "baseline": "Best single-sensor baseline",
+      "method": "Remove/corrupt one stream, drift timestamps and invalidate calibration; require explicit degraded state.",
+      "metrics": "Error and time to detect invalid modality",
+      "scope": "Offline only first",
+      "stop_conditions": "No averaging inconsistent evidence into false safety",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX31",
+      "name": "Map uncertainty in an accessible interface",
+      "owner": "H01",
+      "requirement_ids": [
+        "REQ-RF-05"
+      ],
+      "source_ids": [
+        "R30"
+      ],
+      "prerequisites": "Synthetic spatial layers and uncertainty regions",
+      "hypothesis": "Users can distinguish known, estimated and unobserved space.",
+      "baseline": "Text explanation",
+      "method": "Compare phone/mock-glasses presentations with old maps/conflicting evidence.",
+      "metrics": "Human comprehension; unsafe interpretation frequency",
+      "scope": "No real navigation guidance",
+      "stop_conditions": "Stop a display that implies safe passage without evidence",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX32",
+      "name": "Restore and revocation across domains",
+      "owner": "H06",
+      "requirement_ids": [
+        "REQ-PRIV-04"
+      ],
+      "source_ids": [],
+      "prerequisites": "Synthetic backups, tasks, grants and action histories",
+      "hypothesis": "Review restoration does not resurrect authority or deleted shared content.",
+      "baseline": "Fresh empty review instance",
+      "method": "Restore an old snapshot with consumed action, revoked grant and cancelled reminder; attempt review only.",
+      "metrics": "No execution replay or privacy resurrection; intact provenance",
+      "scope": "No active application overwrite",
+      "stop_conditions": "Any implicit external/physical effect blocks",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    }
+  ],
+  "new_proposals": "R14-PROP-* only; no replacement of original IDs or owners"
+}
