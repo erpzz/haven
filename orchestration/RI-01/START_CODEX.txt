@@ -1,0 +1,13 @@
+Execute RI-01 in https://github.com/erpzz/haven as an autonomous MULTI-AGENT research, review and integration campaign. This is an execution instruction, not a request for another plan.
+
+Read orchestration/RI-01/README.md, AUTHORIZATION.md and MASTER_PROMPT.md from the actual current repository, then follow the referenced protocol, task graph and multimodal requirements.
+
+Use real native subagents: one review assignment per actual research handback, researchers for remaining lanes, a separate integration manager, a vision guardian, a code reviewer, an evidence auditor, and vision/audio-video/sensor-fusion specialists. Have them consult through actual messages and use predecessor findings. Do not roleplay multiple agents.
+
+I authorize the scoped RI-01 autonomous delegation, public research, report creation, isolated campaign branch, checkpoint commits/pushes and consolidated PR. Respect the published 3-child concurrency, 8-hour run ceiling and bounded revision limits. Continue routine eligible work without asking after every handback.
+
+Preserve every Haven/ASTRA component, including full multimodal visual recognition, speech/audio, video, spatial/sensor understanding and relevant outputs. Check which modalities the actual tools support; never present transcript-only analysis as direct audio/video inspection.
+
+Do not change the active M0 or NIGHT-01/R1 workspaces, run retrieved application code, install packages/models, use new paid APIs, access private accounts/devices, activate workflows or perform physical actions. Do not merge the campaign into main or start product implementation. End with the integrated review PR and resumable state.
+
+Begin by verifying the actual host/repository and demonstrating a real subagent round trip, then inventory main AND incoming PR/branch research. If native delegation is unavailable, identify that specific blocker rather than substituting fictional agents.

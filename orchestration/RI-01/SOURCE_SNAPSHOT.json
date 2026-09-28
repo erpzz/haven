@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "observed_date": "2026-09-28",
+  "repository": "erpzz/haven",
+  "main_at_intake": "5295ae854301dda50d1c301341ccca3a7c4c8a7b",
+  "scope": "Live GitHub metadata, branch inventory and selected handback files; not full scientific review, code execution or source-import certification",
+  "refresh_required_at_launch": true,
+  "sources": [
+    {"id":"R02","pr":15,"state_observed":"open","head":"d9bc23e848be9af44b6d07f9526f7badf7245b52","branch":"research/r02-handback-publication-v2","path":"design/H02/R02/v2/","kind":"source_publication_of_research_v1","note":"Publication v2 repairs the reported benchmark omission; P01 is not complete."},
+    {"id":"R06","pr":14,"state_observed":"open","head":"5b85aa0e9106a484e4b5c571460c2d0010ce1eeb","branch":"research/r06-v1-import-20260928","path":"design/H08/R06/v1/","kind":"research_handback","note":"Source packet has nested design/H08 files; verify actual paths and manifest."},
+    {"id":"R08","pr":13,"state_observed":"open","head":"5be0910420a9afd786d2ffd65054e5c4830ba714","branch":"research/r08-v1-import-v2","path":"design/H09/R08/v1/","kind":"research_handback","note":"PR 11 reported superseded; P00 remains unexecuted."},
+    {"id":"R14","pr":9,"state_observed":"open","head":"cffc1168255f600206c53fd63d1ad3ffd963121d","branch":"research/r14-human-augmentation-prompt-v1","path":"prompts/R14_HUMAN_AUGMENTATION_CYBERNETICS.md","kind":"prompt_only","note":"Do not infer completed R14 research from publication of the prompt; discover any later result."},
+    {"id":"R15","prs":[10,16],"state_observed":"merged","head":"5295ae854301dda50d1c301341ccca3a7c4c8a7b","path":"prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md","kind":"prompt_and_brief_only","note":"Supporting brief-v1 and R15A-F are assignments, not completed integrated research."},
+    {"id":"GEV","repository":"erpzz/gods-eye-view","previously_inspected_head":"81eb44340d90feda5b5283438f6e5fdad5cabbdd","kind":"external_fork_source","note":"Re-resolve current fork and inspect pinned source; no execution or writes authorized."}
+  ],
+  "known_gaps": [
+    "Earlier complete source migration remains unverified. Root navigation may reference absent files.",
+    "No accepted R1 repair evidence established by this inventory.",
+    "No current M0 or complete N1/N2 code review can be claimed without actual supplied source.",
+    "No R03/R04/R05/R07/R09/R10/R11/R12/R13 result was established by the observed eight-branch inventory; refresh all authors' PRs/branches before assigning.",
+    "No native Codex subagent or multimodal run has been executed by publishing RI-01."
+  ]
+}
