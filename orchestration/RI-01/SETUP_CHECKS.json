@@ -1,0 +1,19 @@
+{
+  "candidate_commit": "803ea07cdfe47354fdef5bc6fb5d8d5e2f17e3eb",
+  "scope": "Static parsing and graph validation of text matched to GitHub-returned blob hashes; not a full clone or Codex execution",
+  "config_blob": "940ca8a7f087c83192953662396c9ab0901b9fd0",
+  "graph_blob": "ca5f6c4e631e4605128a1ac6c78e630cc66bfdfb",
+  "config_toml_parsed": "PASS",
+  "task_graph_json_parsed": "PASS",
+  "unique_task_ids": 28,
+  "all_dependency_references_exist": "PASS",
+  "hard_dependency_graph": "ACYCLIC",
+  "research_lanes": ["R01","R02","R03","R04","R05","R06","R07","R08","R09","R10","R11","R12","R13","R14","R15"],
+  "distinct_child_roles": 10,
+  "multimodal_tasks": ["MM-VISION","MM-AV","MM-FUSION"],
+  "concurrency_consistency": "PASS",
+  "public_archive_download": "BLOCKED_CONTAINER_DNS",
+  "individual_role_toml_runtime_loading": "NOT_EXECUTED",
+  "native_subagent_execution": "PENDING_USER_LAUNCH",
+  "Haven_models_or_device_tests": "NOT_EXECUTED"
+}
