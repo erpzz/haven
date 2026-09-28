@@ -1,0 +1,102 @@
+name: One-time Haven source import
+on:
+  push:
+    branches: [main]
+    paths: ['.import/RUN_ONCE.json']
+permissions:
+  contents: write
+concurrency:
+  group: haven-one-time-source-import
+  cancel-in-progress: false
+jobs:
+  import:
+    if: github.repository == 'erpzz/haven'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Verify sealed source bytes and create import branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64, hashlib, json, lzma, os, pathlib, urllib.request
+          repo = os.environ['GITHUB_REPOSITORY']
+          assert repo == 'erpzz/haven'
+          sha = os.environ['GITHUB_SHA']
+          token = os.environ['GH_TOKEN']
+          api_root = 'https://api.github.com/repos/' + repo
+          def api(path, body=None):
+              request = urllib.request.Request(api_root + path,
+                  data=None if body is None else json.dumps(body).encode('utf-8'),
+                  headers={'Authorization': 'Bearer ' + token,
+                      'Accept': 'application/vnd.github+json',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                      'Content-Type': 'application/json'})
+              with urllib.request.urlopen(request, timeout=90) as response:
+                  return json.load(response)
+          def file_at(path):
+              obj = api('/contents/' + path + '?ref=' + sha)
+              assert obj['encoding'] == 'base64'
+              return base64.b64decode(obj['content'], validate=False)
+          marker = json.loads(file_at('.import/RUN_ONCE.json'))
+          assert marker['compressed_sha256'] == 'fafcc9101b2315a0b1d5898c1e219110ccfb9b155a5d5cd9213f44ca4ef7bcab'
+          assert marker['parts'] == 38
+          encoded = b''.join(file_at('.import/part-%03d.b64' % i).strip() for i in range(38))
+          compressed = base64.b64decode(encoded, validate=True)
+          assert len(compressed) == 391800
+          assert hashlib.sha256(compressed).hexdigest() == marker['compressed_sha256']
+          decoder = lzma.LZMADecompressor(memlimit=134217728)
+          raw = decoder.decompress(compressed, max_length=3000000)
+          assert decoder.eof and not decoder.unused_data
+          assert hashlib.sha256(raw).hexdigest() == '4a9e22811e7c9eb98254a85b8b713b6d70285b2b86c8efb691cfe17212b221a4'
+          packet = json.loads(raw)
+          assert packet['format'] == 'HAVEN_SOURCE_IMPORT_1' and packet['repository'] == repo
+          assert len(packet['files']) == 330
+          contents = {}
+          for item in packet['files']:
+              path = item['path']
+              parts = pathlib.PurePosixPath(path)
+              assert not parts.is_absolute() and '..' not in parts.parts and '.git' not in parts.parts
+              assert '\\' not in path and path not in contents
+              assert not path.startswith(('.import/', '.github/workflows/'))
+              data = item['text'].encode('utf-8') if 'text' in item else base64.b64decode(item['base64'], validate=True)
+              assert len(data) == item['bytes'] and hashlib.sha256(data).hexdigest() == item['sha256']
+              contents[path] = data
+          manifest = json.loads(contents['coordination/SOURCE_IMPORT_MANIFEST.json'])
+          assert len(manifest) == 302
+          for entry in manifest:
+              data = contents[entry['path']]
+              assert len(data) == entry['bytes'] and hashlib.sha256(data).hexdigest() == entry['sha256']
+          base = api('/git/commits/' + sha)
+          elements = []
+          expected = {}
+          for path, data in contents.items():
+              expected[path] = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+              element = {'path': path, 'mode': '100644', 'type': 'blob'}
+              try:
+                  element['content'] = data.decode('utf-8')
+              except UnicodeDecodeError:
+                  blob = api('/git/blobs', {'content': base64.b64encode(data).decode(), 'encoding': 'base64'})
+                  assert blob['sha'] == expected[path]
+                  element['sha'] = blob['sha']
+              elements.append(element)
+          tree = api('/git/trees', {'base_tree': base['tree']['sha'], 'tree': elements})
+          fetched = api('/git/trees/' + tree['sha'] + '?recursive=1')
+          assert not fetched['truncated']
+          actual = {entry['path']: entry['sha'] for entry in fetched['tree'] if entry['type'] == 'blob'}
+          assert all(actual.get(path) == digest for path, digest in expected.items())
+          commit = api('/git/commits', {'message': 'Import 302 original Haven source files and coordination handoffs; preserve exact bytes', 'tree': tree['sha'], 'parents': [sha]})
+          branch = 'import/haven-complete-' + os.environ['GITHUB_RUN_ID']
+          api('/git/refs', {'ref': 'refs/heads/' + branch, 'sha': commit['sha']})
+          receipt = {'status': 'SOURCE_IMPORT_VERIFIED', 'repository': repo, 'branch': branch,
+              'commit': commit['sha'], 'tree': tree['sha'], 'parent': sha,
+              'source_files': 302, 'packet_files': 330, 'matched_git_blob_hashes': len(expected),
+              'source_archive_sha256': '310f7879413ad63cf5f803723f928b6762be968247dee8e41ded7807b9ac0123',
+              'compressed_payload_sha256': marker['compressed_sha256'],
+              'runtime_tests_executed': False, 'original_application_code_executed': False,
+              'main_updated': False, 'temporary_importer_cleanup_pending': True}
+          print(json.dumps(receipt, indent=2))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as report:
+              report.write('# Source import verified\n\n```json\n' + json.dumps(receipt, indent=2) + '\n```\n')
+          PY
