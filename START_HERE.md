@@ -32,3 +32,9 @@ For R15, use [coordination/R15_OBSERVATORY.md](coordination/R15_OBSERVATORY.md),
 The Observatory source brief is under `design/H00/R15/brief-v1/`. Completed research, when produced and authorized for publication, belongs under its own unused version directory, not in the brief. Actual GEV integration, models and devices remain unimplemented by this publication.
 
 The older complete-source import remains unverified. Some historical paths referenced above or inside issues may be missing; check the tree and state missing evidence explicitly. Do not re-create originals from summaries or call an input read when only its title was available. This limitation does not prevent a self-contained public-source R15 study from proceeding with declared assumptions.
+
+## Autonomous research team — RI-01
+
+The user has requested an autonomous, dependency-aware multi-agent campaign, including full multimodal design and visual inspection. Use [the RI-01 workspace](orchestration/RI-01/README.md), [launch prompt](orchestration/RI-01/START_CODEX.txt), and [coordination page](coordination/RI01_MULTI_AGENT.md). This is a new way to execute the remaining research, not a replacement for its vision or original handbacks.
+
+The setup authorizes delegation only when the campaign is explicitly launched. It has ten role profiles, three-child concurrency, real source/agent receipts, scoped autonomous consultation, separate integration/vision/code/evidence reviews, and checkpointed branch/PR delivery. Inspect pending PRs as well as main; the source snapshot is a dated lead, not a claim all research is merged. Existing M0, NIGHT-01/R1, physical testing and later coding remain separate.

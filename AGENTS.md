@@ -31,3 +31,7 @@ No purchases, real emergency messages, physical execution, models/frameworks ins
 ## Return format
 
 Use the original `baseline/cumulative-v1.0/agents/HANDOFF_TEMPLATE.md` headings plus `coordination/HANDBACK_METADATA.md`. Include a concise integration summary, exact contract changes, expected versus actual tests, conflicts, costs/limits and the next decision. Cite primary sources with date/version for volatile external claims. Do not claim automatic cross-chat memory or automatic wake-up from an issue.
+
+## Explicit RI-01 campaign exception
+
+When the user launches RI-01 using `orchestration/RI-01/START_CODEX.txt`, its root supervisor is expressly authorized to spawn and coordinate real native subagents, complete remaining public research, route peer consultations, make reversible design decisions, and advance eligible tasks without asking after each handback. Read `orchestration/RI-01/AUTHORIZATION.md` and `MASTER_PROMPT.md`. This narrow exception supersedes the older no-auto-agent and single-handback stopping instructions for that campaign only; it does not authorize recursive child spawning, application implementation, main-branch auto-merge, new paid APIs or physical/private-data activity. The ten `.codex/agents/` profiles are setup, not evidence they ran. Treat vision/audio/video/spatial/sensor inputs and outputs as first-class; document actual modality access and do not substitute fictional multi-agent or multimodal results.

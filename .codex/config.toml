@@ -1,0 +1,7 @@
+# RI-01 uses Codex's existing harness; this does not launch agents or install a service.
+# Inspect effective settings at launch. Keep the parent's permissions and model selection.
+web_search = "live"
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 3
