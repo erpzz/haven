@@ -1,0 +1,37 @@
+{
+  "task": "MM-VISION",
+  "checked_at": "2026-09-28T20:21:59.7020276Z",
+  "environment": "PowerShell existing host; documentation-only checks",
+  "commands": "Get-Content/ConvertFrom-Json/Get-FileHash; manifest equality, original-row JSON comparison, named-case count",
+  "expected": "All immutable input hashes match, core10 and R07 12 entries match, six REQ/six AT/three EX original rows unchanged,28 proposed case rows, JSON parses",
+  "actual": {
+    "r07_manifest_entries": 12,
+    "input_mismatches": [],
+    "case_rows": 28,
+    "experiment_rows": 3,
+    "json_parsed": [
+      "INPUT_USE.json",
+      "MODALITY.json",
+      "REQUIREMENT_MAP.json",
+      "SOURCE_FETCHES.json"
+    ],
+    "acceptance_rows": 6,
+    "immutable_inputs_checked": 36,
+    "core_manifest_entries": 10,
+    "map_mismatches": [],
+    "core_mismatches": [],
+    "requirement_rows": 6,
+    "r07_mismatches": []
+  },
+  "result": "DOCUMENT_INTEGRITY_ONLY",
+  "scientific_tests": "NOT_EXECUTED",
+  "model_runtime_tests": "NOT_EXECUTED",
+  "authority_enforcement": "NOT_EXECUTED",
+  "source_preservation": "Verified exact listed immutable inputs only; no Git/global filesystem audit",
+  "limitations": [
+    "No hardware inventory or model weights",
+    "No audio/video pixels or figure inspection",
+    "No independent review completed by author",
+    "Full original source bytes not retained for external text fingerprints"
+  ]
+}

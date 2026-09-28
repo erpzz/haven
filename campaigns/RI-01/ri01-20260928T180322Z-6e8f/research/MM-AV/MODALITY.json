@@ -1,0 +1,105 @@
+{
+  "task": "MM-AV",
+  "author": "/root/ri01_mmav",
+  "role": "haven_audio_video",
+  "profile_loading": "CUSTOM_PROFILE_FALLBACK exact role text read",
+  "effective_filesystem": "unrestricted; scoped writer rule is not isolation proof",
+  "inspection_date": "2026-09-28",
+  "model": "NOT_EXPOSED",
+  "agent_tools": [
+    {
+      "modality": "text/code/JSON",
+      "state": "EXERCISED",
+      "scope": "Read-only source and coordination data; documentation writes/hash/parse checks only"
+    },
+    {
+      "modality": "static image",
+      "tool": "view_image",
+      "state": "DIRECT_IMAGE_EXERCISED"
+    },
+    {
+      "modality": "direct audio",
+      "basis": "Current exposed session and root preflight; no listening",
+      "state": "TOOL_UNAVAILABLE"
+    },
+    {
+      "modality": "direct video",
+      "basis": "Current exposed session and root preflight; no playback",
+      "state": "TOOL_UNAVAILABLE"
+    },
+    {
+      "modality": "sampled video frames",
+      "basis": "Possible with approved existing decoder and image view; none decoded",
+      "state": "NOT_EXECUTED"
+    },
+    {
+      "modality": "waveform/spectrogram",
+      "basis": "Potential derived-image/numeric inspection is not listening",
+      "state": "NOT_EXECUTED"
+    },
+    {
+      "modality": "media decoder",
+      "basis": "Root runtime inventory reports existing Windows ffmpeg/ffprobe; exact build not checked here",
+      "state": "AVAILABLE_REPORTED_NOT_EXERCISED"
+    },
+    {
+      "modality": "PDF/browser screenshot",
+      "basis": "This child made no scientific figure inspection",
+      "state": "NOT_EXERCISED"
+    },
+    {
+      "modality": "spatial/sensors",
+      "basis": "Contracts only; no acquisition/geometry execution",
+      "state": "DOCUMENTATION_ONLY"
+    },
+    {
+      "modality": "generation",
+      "basis": "No generated audio/voice/video/image; potential generation is not observation",
+      "state": "NOT_EXECUTED"
+    }
+  ],
+  "inspections": [
+    {
+      "asset_id": "RI01-SYNTHETIC-VISION-001",
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/runtime/synthetic-vision-probe.png",
+      "sha256": "12a1ed92fe078247281f01f05edbde362110a562cd759e2f8f7f7244bd66e837",
+      "rights": "Campaign-authored synthetic geometric fixture",
+      "original_or_derived": "original",
+      "parents": [],
+      "transforms": [],
+      "inspection_mode": "DIRECT_IMAGE",
+      "region": "whole 360x180 image",
+      "tool": "view_image",
+      "inspector": "/root/ri01_mmav",
+      "observations": "Red filled rectangle left, blue filled circle right, separated on pale background",
+      "uncertainty": "Simple development smoke only; no pixel metrology, ASR, AV comprehension, motion, audio, runtime or native qualification",
+      "status": "INSPECTED"
+    }
+  ],
+  "future_haven": [
+    {
+      "profile": "selected speech",
+      "input": "eligible original and derived PCM/transcript",
+      "status": "PROPOSED",
+      "output": "grounded text and optional whole-output generated speech"
+    },
+    {
+      "profile": "selected video",
+      "input": "eligible original; exact-PTS frames/audio, gaps/time mapping",
+      "status": "PROPOSED",
+      "output": "source-linked event timeline with unknowns"
+    },
+    {
+      "profile": "simultaneous audio/video/sensors",
+      "input": "separate authorized clocked/correlated streams",
+      "status": "RESEARCH_PROPOSAL",
+      "output": "late-fused claims and typed proposals, no automatic physical action"
+    },
+    {
+      "profile": "live stream / chunked / multidestination",
+      "input": "requires separate accepted profile",
+      "status": "DEFERRED_UNSUPPORTED_IN_P0",
+      "output": "no implied one-use accounting permission"
+    }
+  ]
+}

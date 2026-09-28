@@ -1,9 +1,8 @@
 {
-  "observed_at": "2026-09-28T19:21:13.814417+00:00",
-  "scope": "Coordination metadata only, no application execution",
-  "task_nodes": 37,
+  "recorded_at": "2026-09-28T20:14:43.223776+00:00",
+  "task_nodes": 46,
+  "hard_cycles": 0,
+  "missing_dependencies": 0,
   "duplicate_ids": 0,
-  "missing_hard_nodes": [],
-  "hard_dependency_cycles": [],
-  "review_target_note": "A review target must be frozen/DRAFT_READY, not already accepted; acceptance gates apply to substantive downstream research/integration inputs. Review target links are inspection dependencies, not prior approval."
+  "qualification": "Graph/JSON check only, no scientific or application test; independent review tasks intentionally depend on draft authors."
 }

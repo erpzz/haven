@@ -1,0 +1,370 @@
+{
+  "task": "R07",
+  "status": "DESIGN_COVERAGE_ONLY",
+  "requirements": [
+    {
+      "id": "REQ-AI-07",
+      "name": "Grounding and abstention",
+      "owner": "H02",
+      "acceptance_tests": [
+        "AT-AI-07"
+      ]
+    },
+    {
+      "id": "REQ-RF-01",
+      "name": "Beyond WiFi heatmaps",
+      "owner": "H08",
+      "acceptance_tests": [
+        "AT-RF-01"
+      ]
+    },
+    {
+      "id": "REQ-RF-02",
+      "name": "Presence bridge",
+      "owner": "H08",
+      "acceptance_tests": [
+        "AT-RF-02"
+      ]
+    },
+    {
+      "id": "REQ-RF-03",
+      "name": "Localization bridge",
+      "owner": "H08",
+      "acceptance_tests": [
+        "AT-RF-03"
+      ]
+    },
+    {
+      "id": "REQ-RF-04",
+      "name": "Geometry target",
+      "owner": "H08",
+      "acceptance_tests": [
+        "AT-RF-04"
+      ]
+    },
+    {
+      "id": "REQ-RF-05",
+      "name": "Semantic target",
+      "owner": "H08",
+      "acceptance_tests": [
+        "AT-RF-05"
+      ]
+    },
+    {
+      "id": "REQ-RF-06",
+      "name": "Multiple sensing embodiments",
+      "owner": "H08",
+      "acceptance_tests": [
+        "AT-RF-06"
+      ]
+    },
+    {
+      "id": "REQ-RF-07",
+      "name": "Evidence origin separation",
+      "owner": "H08",
+      "acceptance_tests": [
+        "AT-RF-07"
+      ]
+    },
+    {
+      "id": "REQ-RF-08",
+      "name": "Spatial fusion contract",
+      "owner": "H08",
+      "acceptance_tests": [
+        "AT-RF-08"
+      ]
+    },
+    {
+      "id": "REQ-RF-09",
+      "name": "Active perception",
+      "owner": "H08",
+      "acceptance_tests": [
+        "AT-RF-09"
+      ]
+    },
+    {
+      "id": "REQ-RF-10",
+      "name": "Radio/privacy gates",
+      "owner": "H08",
+      "acceptance_tests": [
+        "AT-RF-10"
+      ]
+    },
+    {
+      "id": "REQ-DRONE-04",
+      "name": "Real evidence first",
+      "owner": "H05",
+      "acceptance_tests": [
+        "AT-DRONE-04"
+      ]
+    },
+    {
+      "id": "REQ-DRONE-05",
+      "name": "Deterministic mission boundary",
+      "owner": "H05",
+      "acceptance_tests": [
+        "AT-DRONE-05"
+      ]
+    },
+    {
+      "id": "REQ-DRONE-06",
+      "name": "Actual outcome and replay",
+      "owner": "H05",
+      "acceptance_tests": [
+        "AT-DRONE-06"
+      ]
+    },
+    {
+      "id": "REQ-ROBOT-01",
+      "name": "Ground embodiment",
+      "owner": "H10",
+      "acceptance_tests": [
+        "AT-ROBOT-01"
+      ]
+    },
+    {
+      "id": "REQ-ROBOT-03",
+      "name": "Independent stop",
+      "owner": "H10",
+      "acceptance_tests": [
+        "AT-ROBOT-03"
+      ]
+    },
+    {
+      "id": "REQ-ROBOT-04",
+      "name": "Embodiment qualification",
+      "owner": "H10",
+      "acceptance_tests": [
+        "AT-ROBOT-04"
+      ]
+    },
+    {
+      "id": "REQ-ENG-08",
+      "name": "Physical artifact chain",
+      "owner": "H09",
+      "acceptance_tests": [
+        "AT-ENG-08"
+      ]
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "AT-AI-07",
+      "owner": "H02",
+      "requirement_ids": [
+        "REQ-AI-07"
+      ],
+      "expected_result": "Reject invalid grounding; keep explicit no-answer/unknown states.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-RF-01",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-01"
+      ],
+      "expected_result": "Record acquisition aid, not completion of the spatial objective.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-RF-02",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-02"
+      ],
+      "expected_result": "Report false alarms/misses and generalization rather than one-room accuracy.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-RF-03",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-03"
+      ],
+      "expected_result": "Location error/coverage reported; no invented precision.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-RF-04",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-04"
+      ],
+      "expected_result": "Geometry compared to ground truth; unsupported detailed imagery rejected.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-RF-05",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-05"
+      ],
+      "expected_result": "Hypotheses/abstention preserved; generative plausibility not observed fact.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-RF-06",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-06"
+      ],
+      "expected_result": "Alternative measurement architecture evaluated without deleting goal.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-RF-07",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-07"
+      ],
+      "expected_result": "Provenance/time/coverage displayed for each source; old map not relabeled live.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-RF-08",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-08"
+      ],
+      "expected_result": "Reject/mark degraded; no silently aligned geometry.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-RF-09",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-09"
+      ],
+      "expected_result": "Improvement or failure measured; no unapproved movement or scope increase.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-RF-10",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-10"
+      ],
+      "expected_result": "Simulation/docs continue; unapproved physical collection/transmission blocked.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-DRONE-04",
+      "owner": "H05",
+      "requirement_ids": [
+        "REQ-DRONE-04"
+      ],
+      "expected_result": "Separate results; no automatic mission authority.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-DRONE-05",
+      "owner": "H05",
+      "requirement_ids": [
+        "REQ-DRONE-05"
+      ],
+      "expected_result": "Reject outside schema/authority; no raw flight commands.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-DRONE-06",
+      "owner": "H05",
+      "requirement_ids": [
+        "REQ-DRONE-06"
+      ],
+      "expected_result": "No duplicate launch; correct observed/unknown transition.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-ROBOT-01",
+      "owner": "H10",
+      "requirement_ids": [
+        "REQ-ROBOT-01"
+      ],
+      "expected_result": "Compare utility/risk without forcing flight.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-ROBOT-03",
+      "owner": "H10",
+      "requirement_ids": [
+        "REQ-ROBOT-03"
+      ],
+      "expected_result": "Appropriate tested stop/recovery, with outcome observed.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-ROBOT-04",
+      "owner": "H10",
+      "requirement_ids": [
+        "REQ-ROBOT-04"
+      ],
+      "expected_result": "Do not run; require adapter/training/qualification.",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "id": "AT-ENG-08",
+      "owner": "H09",
+      "requirement_ids": [
+        "REQ-ENG-08"
+      ],
+      "expected_result": "Prior qualification reconsidered; no silent reuse.",
+      "status": "NOT_EXECUTED"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "EX09",
+      "name": "Spatial origin and transform integrity",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-07"
+      ],
+      "status": "PROPOSED_NOT_EXECUTED"
+    },
+    {
+      "id": "EX14",
+      "name": "Controlled edge reconstruction",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-04"
+      ],
+      "status": "PROPOSED_NOT_EXECUTED"
+    },
+    {
+      "id": "EX15",
+      "name": "Adaptive next observation",
+      "owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-09"
+      ],
+      "status": "PROPOSED_NOT_EXECUTED"
+    },
+    {
+      "id": "EX16",
+      "name": "Sensor enclosure effect",
+      "owner": "H09",
+      "requirement_ids": [
+        "REQ-ENG-08"
+      ],
+      "status": "PROPOSED_NOT_EXECUTED"
+    },
+    {
+      "id": "EX17",
+      "name": "Multimodal degradation replay",
+      "owner": "H10",
+      "requirement_ids": [
+        "REQ-RF-08"
+      ],
+      "status": "PROPOSED_NOT_EXECUTED"
+    },
+    {
+      "id": "EX31",
+      "name": "Map uncertainty in an accessible interface",
+      "owner": "H01",
+      "requirement_ids": [
+        "REQ-RF-05"
+      ],
+      "status": "PROPOSED_NOT_EXECUTED"
+    }
+  ]
+}

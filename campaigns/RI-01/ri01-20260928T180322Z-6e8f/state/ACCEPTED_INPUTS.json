@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T19:54:24.064171+00:00",
-  "meaning": "Scoped research review dispositions, not experimental acceptance or execution permission. Read composite amendments and retained gates.",
+  "generated_at": "2026-09-28T20:24:36.112093+00:00",
+  "meaning": "Scoped documentary/design dispositions, not experimental acceptance or execution permission; read amendments and retained gates.",
   "entries": [
     {
       "task_id": "INTAKE",
@@ -196,6 +196,73 @@
         }
       ],
       "open_findings": null
+    },
+    {
+      "task_id": "R04",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Bounded documentation/contracts/proposed experiments. No mandatory source amendment; exact native tuple/access ambiguity/output accounting/application path/inference/SDK cost-rights promotion gates retained.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R04/REPORT.md",
+          "sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479"
+        },
+        {
+          "path": "reviews/REVIEW-R04/REVIEW.md",
+          "sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956"
+        }
+      ],
+      "open_findings": [
+        "R04-G1_NATIVE_EVIDENCE",
+        "R04-G2_ACCESS_WITHDRAWAL",
+        "R04-G3_OUTPUT_ACCOUNTING",
+        "R04-G4_PATH_INFERENCE",
+        "R04-G5_RIGHTS_COSTS"
+      ]
+    },
+    {
+      "task_id": "R07",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_world",
+      "scope": "Bounded typed evidence/world-model documentary design; no runtime or physical qualification. E07-B separately versioned experiment before freeze; E07-A/P0 and downstream research unblocked.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0"
+        },
+        {
+          "path": "reviews/REVIEW-R07/REVIEW.md",
+          "sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        }
+      ],
+      "open_findings": [
+        "R07-L01_EXPERIMENT_VARIANT_BEFORE_FREEZE",
+        "R07-L02_ADOPTION_GATES"
+      ]
+    },
+    {
+      "task_id": "R08-P00",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": "Bounded reconciliation and inert scalar/correction design. No mandatory amendment. E01 method/estimand/interval/uncertainty freeze, physical inputs and independent implementation acceptance remain unqualified.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R08-P00/REPORT.md",
+          "sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7"
+        },
+        {
+          "path": "reviews/REVIEW-R08-P00/REVIEW.md",
+          "sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+        }
+      ],
+      "open_findings": [
+        "R08P00-G1_E01_METHOD_FREEZE",
+        "R08P00-G2_PHYSICAL_METROLOGY",
+        "R08P00-G3_IMPLEMENTATION_ACCEPTANCE"
+      ]
     },
     {
       "task_id": "EVIDENCE-0",
@@ -403,6 +470,48 @@
       "scope": null,
       "disposition": null,
       "artifacts": [],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R07",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_vision",
+      "scope": null,
+      "disposition": "Bounded typed evidence/world-model documentary design; no runtime or physical qualification. E07-B separately versioned experiment before freeze; E07-A/P0 and downstream research unblocked.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R07/REVIEW.md",
+          "sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R04",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": "Bounded documentation/contracts/proposed experiments. No mandatory source amendment; exact native tuple/access ambiguity/output accounting/application path/inference/SDK cost-rights promotion gates retained.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R04/REVIEW.md",
+          "sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R08-P00",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": "Bounded reconciliation and inert scalar/correction design. No mandatory amendment. E01 method/estimand/interval/uncertainty freeze, physical inputs and independent implementation acceptance remain unqualified.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R08-P00/REVIEW.md",
+          "sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+        }
+      ],
       "open_findings": null
     }
   ]

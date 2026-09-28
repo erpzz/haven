@@ -1,12 +1,13 @@
 {
-  "recorded_at": "2026-09-28T19:54:24.064171+00:00",
+  "recorded_at": "2026-09-28T20:24:36.112093+00:00",
   "ready": [
-    "R05"
+    "R09",
+    "R11"
   ],
   "active": [
-    "R04",
-    "R07",
-    "R08-P00"
+    "R05",
+    "REVIEW-MM-VISION",
+    "REVIEW-MM-AV"
   ],
-  "next_priority": "R05 and independent reviews of completed research; do not bypass hard review gates"
+  "rule": "Do not bypass exact independent review gates; retain hard versus soft distinction."
 }
