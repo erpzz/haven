@@ -1,0 +1,237 @@
+{
+  "task": "R02-P01-A1",
+  "status": "PROPOSED_NOT_EXECUTED",
+  "author_agent": "/root/ri01_runtime_probe",
+  "date": "2026-09-28",
+  "symbols": "O-A, O-B, C-A1, C-B1, C-B2 and M-B are symbolic exact digests to be replaced by hashed synthetic fixture bytes before future execution. They are not hashes of inspected assets.",
+  "authority": "Append-only receipt/observation facts; current eligibility is separate and never a reusable permit. DISPLAY/PLAYBACK_REPORTED means authenticated reporter evidence, not proven human perception.",
+  "binding_fields": [
+    "output_digest",
+    "canonicalization_version",
+    "chunk_manifest_digest",
+    "chunk_id",
+    "chunk_index",
+    "chunk_digest",
+    "destination_ref",
+    "destination_epoch",
+    "route_profile_revision",
+    "audience_revision",
+    "release_sequence",
+    "consumption_sequence_if_present",
+    "complete_checked_authority_vector",
+    "authority_instance_epoch",
+    "restore_epoch",
+    "cancel_scope_epochs",
+    "nonce_for_consumption"
+  ],
+  "traces": [
+    {
+      "id": "A1-TRACE-A",
+      "name": "Authorized then lost acknowledgment then revocation",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "binding": {
+        "output_digest": "O-A",
+        "chunk_manifest_digest": "M-A",
+        "chunk_id": "chunk1",
+        "chunk_index": 1,
+        "chunk_digest": "C-A1",
+        "destination_ref": "D-A",
+        "destination_epoch": 1,
+        "route_profile_revision": 1,
+        "audience_revision": 1,
+        "authority_instance_epoch": 1,
+        "restore_epoch": 1,
+        "canonicalization_version": 1
+      },
+      "events": [
+        {
+          "sequence": 100,
+          "kind": "RELEASE_AUTHORIZATION_COMMIT",
+          "release_id": "R-A",
+          "checked_vector": "V1",
+          "decision": "RELEASE_AUTHORIZED"
+        },
+        {
+          "sequence": 101,
+          "kind": "CONSUMPTION_COMMIT",
+          "release_id": "R-A",
+          "permit_id": "P-A",
+          "nonce": "N-A",
+          "checked_vector": "V1",
+          "release_sequence": 100,
+          "decision": "CONSUMED"
+        },
+        {
+          "sequence": null,
+          "kind": "DELIVERY_OBSERVATION",
+          "permit_id": "P-A",
+          "release_sequence": 100,
+          "consumption_sequence": 101,
+          "checked_vector": "V1",
+          "event": "SENT_UNACKNOWLEDGED"
+        },
+        {
+          "sequence": null,
+          "kind": "DELIVERY_OBSERVATION",
+          "permit_id": "P-A",
+          "event": "DELIVERY_UNKNOWN",
+          "reason": "Acknowledgment lost; presentation may have happened"
+        },
+        {
+          "sequence": 102,
+          "kind": "GRANT_REVOKED",
+          "current_vector": "V2",
+          "changed_field": "grant_dependencies[relevant_grant].revocation_epoch",
+          "new_value": 2
+        },
+        {
+          "sequence": 103,
+          "kind": "ELIGIBILITY_CHECK",
+          "target": "new consumption/replay for O-A at D-A",
+          "expected_vector": "V1",
+          "current_vector": "V2",
+          "decision": "DENIED",
+          "reason": "Relevant grant revoked"
+        }
+      ],
+      "terminal_facts": {
+        "release": "R-A remains historically RELEASE_AUTHORIZED",
+        "consumption": "P-A remains consumed",
+        "delivery": "chunk1 DELIVERY_UNKNOWN until additional authenticated evidence",
+        "future_eligibility": "DENIED",
+        "compute": "Independent observation; UNKNOWN if no termination evidence",
+        "billing": "Unknown admitted exposure retained if applicable"
+      },
+      "required_assertions": [
+        "No authorization/consumption receipt is rewritten after revoke",
+        "No new consume/replay permit issued under revoked authority",
+        "Lost ACK never proves NOT_SENT or SUPPRESSED",
+        "Late DISPLAY_REPORTED appends history without restoring future eligibility",
+        "Wrong tuple/nonce cannot settle another chunk",
+        "No instantaneous recall assertion"
+      ],
+      "variant": "If consumption/send never occurred, a post-revoke consume attempt is DENIED with no new permit. That branch cannot be substituted for this lost-ACK branch."
+    },
+    {
+      "id": "A1-TRACE-B",
+      "name": "Played first chunk then cancel suppresses only future chunk",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "binding": {
+        "output_digest": "O-B",
+        "chunk_manifest_digest": "M-B",
+        "chunks": [
+          {
+            "chunk_id": "chunk1",
+            "chunk_index": 1,
+            "chunk_digest": "C-B1"
+          },
+          {
+            "chunk_id": "chunk2",
+            "chunk_index": 2,
+            "chunk_digest": "C-B2"
+          }
+        ],
+        "destination_ref": "D-B",
+        "destination_epoch": 1,
+        "route_profile_revision": 1,
+        "audience_revision": 1,
+        "authority_instance_epoch": 1,
+        "restore_epoch": 1,
+        "canonicalization_version": 1
+      },
+      "events": [
+        {
+          "sequence": 201,
+          "kind": "RELEASE_AUTHORIZATION_COMMIT",
+          "release_id": "R-B",
+          "checked_vector": "V1",
+          "decision": "RELEASE_AUTHORIZED"
+        },
+        {
+          "sequence": 202,
+          "kind": "CONSUMPTION_COMMIT",
+          "release_id": "R-B",
+          "permit_id": "P-B1",
+          "chunk_id": "chunk1",
+          "chunk_digest": "C-B1",
+          "nonce": "N-B1",
+          "checked_vector": "V1",
+          "decision": "CONSUMED"
+        },
+        {
+          "sequence": null,
+          "kind": "DELIVERY_OBSERVATION",
+          "release_id": "R-B",
+          "permit_id": "P-B1",
+          "release_sequence": 201,
+          "consumption_sequence": 202,
+          "chunk_id": "chunk1",
+          "chunk_digest": "C-B1",
+          "event": "PLAYBACK_REPORTED",
+          "reporter": "Authenticated destination D-B"
+        },
+        {
+          "sequence": 203,
+          "kind": "JOB_CANCEL",
+          "current_vector": "V2",
+          "changed_field": "cancel_scope_epochs[reasoning_job]",
+          "new_value": 2
+        },
+        {
+          "sequence": 204,
+          "kind": "ELIGIBILITY_CHECK",
+          "target": "chunk2 consumption at D-B",
+          "current_vector": "V2",
+          "decision": "DENIED"
+        },
+        {
+          "sequence": null,
+          "kind": "DELIVERY_OBSERVATION",
+          "release_id": "R-B",
+          "permit_id": null,
+          "chunk_id": "chunk2",
+          "chunk_digest": "C-B2",
+          "event": "SUPPRESSED",
+          "reason": "No permit consumed and no transfer admitted for chunk2"
+        },
+        {
+          "sequence": null,
+          "kind": "COMPUTE_OBSERVATION",
+          "event": "STOP_REQUESTED",
+          "stop_evidence_ref": null
+        }
+      ],
+      "terminal_facts": {
+        "release": "R-B remains historically RELEASE_AUTHORIZED",
+        "consumption": "P-B1 remains consumed; no P-B2 exists in this modeled branch",
+        "delivery": "chunk1 PLAYBACK_REPORTED retained; chunk2 SUPPRESSED",
+        "future_eligibility": "DENIED",
+        "compute": "STOP_REQUESTED or UNKNOWN; no STOP_CONFIRMED without independent receipt",
+        "billing": "Separate settlement; cancellation never implies zero"
+      },
+      "required_assertions": [
+        "Do not rewrite chunk1 playback as SUPPRESSED",
+        "Chunk2 suppression requires evidence of no consumption/transfer",
+        "If chunk2 already in flight, replace that conclusion with potential/unknown disclosure, retain history",
+        "STOP_REPORTED cannot erase played audio",
+        "Current denial does not mutate past authorization",
+        "Stop request does not confirm computation termination"
+      ],
+      "variant": "After cancellation an authenticated STOP_REPORTED event may be appended for playback scope; it is not a claim that earlier samples were never exposed."
+    }
+  ],
+  "non_authoritative_projection_example": {
+    "release_history": "authorized",
+    "delivery_history": "unknown",
+    "current_future_eligibility": "denied",
+    "label": "Previously authorized; delivery unknown; future delivery denied",
+    "may_grant_permission": false,
+    "may_overwrite_history": false
+  },
+  "scope_limits": [
+    "No application tests executed",
+    "No media/payload asset inspected",
+    "No R03 independent acceptance implied",
+    "No modification of original44-test crosswalk"
+  ]
+}

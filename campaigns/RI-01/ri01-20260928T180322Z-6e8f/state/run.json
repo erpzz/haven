@@ -25,7 +25,7 @@
   "close_tool": "NOT_EXPOSED; native completed turns quiescent; report completion/interrupt state, never claim explicit closure",
   "exact_model": "NOT_EXPOSED; inherited defaults",
   "git_transport": "Existing authenticated GitHub CLI/HTTPS; connector fetch_file failed Unknown tool; no credentials changed",
-  "assignments_dispatched": 16,
+  "assignments_dispatched": 24,
   "modalities": {
     "text_code": "EXERCISED",
     "image": "DIRECT_IMAGE_EXERCISED",
@@ -41,8 +41,8 @@
   },
   "failed_spawn_attempts": 1,
   "thread_limit_observation": "Capacity-dependent: an earlier spawn and later message-to-quiescent child were rejected at thread limit; after completion, fresh privacy/code children spawned successfully. No explicit close tool. Keep at most3 active children under platform4-agent total and recheck actual handles.",
-  "published_checkpoint": "d1f4a278bea62d391f74c54d3936d45f6d1bf9d7",
-  "publication_verified_by": "git ls-remote exactbranch",
+  "published_checkpoint": "d0211b3a54419a358b42cc80ed167658ed3345f7",
+  "publication_verified_by": "git ls-remote exact remote ref; 230 committed campaign blobs compared byte-for-byte to local, zero mismatches",
   "issue_receipt": "https://github.com/erpzz/haven/issues/17#issuecomment-5876199637",
   "git_transport_note": "Default credential helper waited without publishing; owned command cancelled. Per-command existing gh auth git-credential succeeded; no persistent credential/settings change.",
   "private_public_research_assets_bytes": 13349284

@@ -25,3 +25,21 @@
 {"actual_agent_id":"/root/ri01_review_p01","event":"SPAWNED","role":"haven_research_reviewer","task_id":"REVIEW-R02-P01","recorded_at":"2026-09-28T18:57:05.1525112Z"}
 {"event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_privacy","recorded_at":"2026-09-28T18:58:01.9031666Z","task_id":"R03"}
 {"event":"SPAWNED","recorded_at":"2026-09-28T18:58:01.9031666Z","actual_agent_id":"/root/ri01_review_privacy","role":"haven_research_reviewer","task_id":"REVIEW-R03"}
+{"recorded_at":"2026-09-28T19:02:34.6949665Z","task_id":"REVIEW-R02-P01","actual_agent_id":"/root/ri01_review_p01","event":"COMPLETED_QUIESCENT"}
+{"recorded_at":"2026-09-28T19:02:34.6949665Z","task_id":"R02-P01-A1","actual_agent_id":"/root/ri01_runtime_probe","event":"RESUMED_ASSIGNMENT","role":"haven_researcher"}
+{"task_id":"REVIEW-R03","actual_agent_id":"/root/ri01_review_privacy","event":"COMPLETED_QUIESCENT","recorded_at":"2026-09-28T19:06:03.7974010Z"}
+{"reason":"Agent thread limit reached; no assignment counted or new agent created","attempted_fresh_author_spawns":1,"event":"DISPATCH_NOT_DELIVERED","recorded_at":"2026-09-28T19:06:03.7974010Z","attempted_original_author_followups":2,"task_id":"R03-A1","next_action":"Retry when runtime capacity frees; original finite-use review finding remains queued"}
+{"task_id":"R03-A1","event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_privacy","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"task_id":"RECHECK-R02-P01-A1","event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_review_p01","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"task_id":"REVIEW-R01","event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_review_privacy","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"task_id":"R01","event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_daily","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"task_id":"R02-P01-A1","event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_runtime_probe","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"task_id":"REVIEW-R01","reason":"Thread capacity; later successfully reused independent R03 reviewer","event":"FRESH_SPAWN_FAILED","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"event":"COMPLETED_QUIESCENT","task_id":"RECHECK-R02-P01-A1","actual_agent_id":"/root/ri01_review_p01","recorded_at":"2026-09-28T19:10:33.7147153Z"}
+{"event":"RESUMED_ASSIGNMENT","task_id":"R12","actual_agent_id":"/root/ri01_review_p01","role":"haven_researcher","recorded_at":"2026-09-28T19:10:33.7147153Z"}
+{"recorded_at":"2026-09-28T19:12:24.1462879Z","task_id":"R03-A1","actual_agent_id":"/root/ri01_privacy","event":"COMPLETED_QUIESCENT"}
+{"recorded_at":"2026-09-28T19:12:24.1462879Z","task_id":"R10","role":"haven_researcher","actual_agent_id":"/root/ri01_privacy","event":"RESUMED_ASSIGNMENT"}
+{"recorded_at":"2026-09-28T19:15:01.3583990Z","task_id":"REVIEW-R01","event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_review_privacy"}
+{"recorded_at":"2026-09-28T19:15:01.3583990Z","task_id":"RECHECK-R03-A1","event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_review_privacy"}
+{"recorded_at":"2026-09-28T19:17:36.0656143Z","actual_agent_id":"/root/ri01_review_privacy","task_id":"RECHECK-R03-A1","event":"COMPLETED_QUIESCENT"}
+{"recorded_at":"2026-09-28T19:17:36.0656143Z","actual_agent_id":"/root/night01_review","event":"RESUMED_ASSIGNMENT","task_id":"CORE","role":"haven_integration_manager"}

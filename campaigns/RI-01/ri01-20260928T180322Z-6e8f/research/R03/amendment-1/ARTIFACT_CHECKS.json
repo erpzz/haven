@@ -1,0 +1,83 @@
+{
+  "task": "R03-A1",
+  "author": "/root/ri01_privacy",
+  "checked_at_utc": "2026-09-28T19:10:11.6980853Z",
+  "input_use_records": 5,
+  "original_files_checked": 11,
+  "original_mismatches": 0,
+  "preservation": [
+    {
+      "file": "ARTIFACT_CHECKS.json",
+      "expected_sha256": "870ffcfeb2ae4da085e06f926aa40b3eb706ebe9938a177e999a3140169a2baa",
+      "actual_sha256": "870ffcfeb2ae4da085e06f926aa40b3eb706ebe9938a177e999a3140169a2baa",
+      "unchanged": true
+    },
+    {
+      "file": "CONSULTATIONS.md",
+      "expected_sha256": "473fc43f4eb8340992b450b74e12c1315ddacf2eaa4e9c743744bae3b1cab6d5",
+      "actual_sha256": "473fc43f4eb8340992b450b74e12c1315ddacf2eaa4e9c743744bae3b1cab6d5",
+      "unchanged": true
+    },
+    {
+      "file": "CONTRACTS.md",
+      "expected_sha256": "cfd271d1650e40daa735651ddc2ab28ca4ccdcb17f117c96cc5602975bad5eea",
+      "actual_sha256": "cfd271d1650e40daa735651ddc2ab28ca4ccdcb17f117c96cc5602975bad5eea",
+      "unchanged": true
+    },
+    {
+      "file": "EXPERIMENTS.md",
+      "expected_sha256": "275f68e9d1c4c6c668adbd568768e7f10b3cb491007a70a6a4904e76d3161511",
+      "actual_sha256": "275f68e9d1c4c6c668adbd568768e7f10b3cb491007a70a6a4904e76d3161511",
+      "unchanged": true
+    },
+    {
+      "file": "INPUT_RECEIPT.md",
+      "expected_sha256": "a5531e66a433eb0348c60a82c0f398078314db41a8a542fbd92a8f5d21eb04ea",
+      "actual_sha256": "a5531e66a433eb0348c60a82c0f398078314db41a8a542fbd92a8f5d21eb04ea",
+      "unchanged": true
+    },
+    {
+      "file": "INPUT_USE.json",
+      "expected_sha256": "42e57e4531e1c2b80e487c17ca7876af8c6b18c263094f749660396926eb060e",
+      "actual_sha256": "42e57e4531e1c2b80e487c17ca7876af8c6b18c263094f749660396926eb060e",
+      "unchanged": true
+    },
+    {
+      "file": "MODALITY.json",
+      "expected_sha256": "43d9e6f553a492ba68307b920f36a75a7686601b740522e13bcfb6568eb15d52",
+      "actual_sha256": "43d9e6f553a492ba68307b920f36a75a7686601b740522e13bcfb6568eb15d52",
+      "unchanged": true
+    },
+    {
+      "file": "NEXT_PACKAGE.md",
+      "expected_sha256": "070e7e09ec91c4ccd565f25716d95a812332a377d240538b993fc1f2558c9df8",
+      "actual_sha256": "070e7e09ec91c4ccd565f25716d95a812332a377d240538b993fc1f2558c9df8",
+      "unchanged": true
+    },
+    {
+      "file": "REPORT.md",
+      "expected_sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+      "actual_sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+      "unchanged": true
+    },
+    {
+      "file": "SOURCES.md",
+      "expected_sha256": "89d1ae4b50550fac061d3794b4e85535330bf1c3d0063d76bbbb513650cab8fa",
+      "actual_sha256": "89d1ae4b50550fac061d3794b4e85535330bf1c3d0063d76bbbb513650cab8fa",
+      "unchanged": true
+    },
+    {
+      "file": "MANIFEST.sha256",
+      "expected_sha256": "e154d038cd1eedf1dcfa7acefc29ddb31c88cd5d36b56573a3dc5e344405a4ac",
+      "actual_sha256": "e154d038cd1eedf1dcfa7acefc29ddb31c88cd5d36b56573a3dc5e344405a4ac",
+      "unchanged": true
+    }
+  ],
+  "proposed_subcases": 16,
+  "application_tests": "NOT_EXECUTED",
+  "physical_tests": "NOT_EXECUTED",
+  "tool_modality": "DOCUMENTATION_ONLY: text reading, hashing and JSON parsing",
+  "writes": "research/R03/amendment-1 only",
+  "review_status": "SUBMITTED_FOR_INDEPENDENT_RECHECK",
+  "publication": "NOT_UPLOADED_BY_CHILD"
+}

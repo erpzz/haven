@@ -229,7 +229,7 @@
       ],
       "kind": "research",
       "research": "R01",
-      "status": "RUNNING",
+      "status": "CHANGES_REQUIRED",
       "actual_agent_id": "/root/ri01_daily",
       "attempt_count": 1,
       "allowed_output_prefix": "research/R01/",
@@ -237,7 +237,16 @@
         "minutes": 25
       },
       "started_at": "2026-09-28T18:57:05.1525112Z",
-      "note": "Dispatch preceded persistence; actual native author on reviewed intake/vision."
+      "note": "Dispatch preceded persistence; actual native author on reviewed intake/vision.",
+      "completed_at": "2026-09-28T19:08:11.1863806Z",
+      "artifact": "research/R01/REPORT.md",
+      "artifact_sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+      "reviewer": "/root/ri01_review_privacy",
+      "open_findings": [
+        "REVIEW-R01-F01",
+        "REVIEW-R01-L01"
+      ],
+      "next_action": "Versioned author amendment then independent focused closure; original v1 unchanged"
     },
     {
       "id": "R02-P01",
@@ -251,7 +260,7 @@
       ],
       "kind": "reconciliation",
       "research": "R02",
-      "status": "IN_REVIEW",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_runtime_probe",
       "attempt_count": 1,
       "started_at": "2026-09-28T14:41:22.063285-04:00",
@@ -266,10 +275,18 @@
         "minutes": 25
       },
       "reviewer_role": "different native research reviewer",
-      "completed_at": "2026-09-28T18:57:05.1525112Z",
+      "completed_at": "2026-09-28T19:10:33.7147153Z",
       "reviewer": "/root/ri01_review_p01",
       "artifact": "research/R02-P01/REPORT.md",
-      "artifact_sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7"
+      "artifact_sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+      "open_findings": [],
+      "acceptance_scope": "Composite v1 plus amendment1; P01 M1/L1 closed; parent-death and downstream R03/CORE implementation gates remain",
+      "closed_findings": [
+        "REVIEW-R02-P01-M1",
+        "REVIEW-R02-P01-L1"
+      ],
+      "closure_artifact": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+      "closure_sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
     },
     {
       "id": "R03",
@@ -285,7 +302,7 @@
       ],
       "kind": "research",
       "research": "R03",
-      "status": "IN_REVIEW",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_privacy",
       "attempt_count": 1,
       "started_at": "2026-09-28T14:44:59.508799-04:00",
@@ -309,10 +326,18 @@
         }
       ],
       "reviewer_role": "different native research reviewer",
-      "completed_at": "2026-09-28T18:58:01.9031666Z",
+      "completed_at": "2026-09-28T19:17:36.0656143Z",
       "artifact": "research/R03/REPORT.md",
       "artifact_sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
-      "reviewer": "/root/ri01_review_privacy"
+      "reviewer": "/root/ri01_review_privacy",
+      "open_findings": [],
+      "closed_findings": [
+        "REVIEW-R03-F01",
+        "REVIEW-R03-L01"
+      ],
+      "closure_artifact": "reviews/REVIEW-R03/CLOSURE-1.md",
+      "closure_sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "acceptance_scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization"
     },
     {
       "id": "CORE",
@@ -326,7 +351,25 @@
         "CODE-0"
       ],
       "kind": "integration",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/night01_review",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T19:17:36.0656143Z",
+      "allowed_output_prefix": "integration/core-v1/",
+      "budgets": {
+        "minutes": 20
+      },
+      "objective": "Reconcile accepted composite P01/R03 with prior R06/R08 and retained vision; preserve published CORE-PRE",
+      "hard_inputs": [
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        },
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        }
+      ]
     },
     {
       "id": "R10",
@@ -342,7 +385,15 @@
       ],
       "kind": "research",
       "research": "R10",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_privacy",
+      "started_at": "2026-09-28T19:12:24.1462879Z",
+      "attempt_count": 1,
+      "budgets": {
+        "minutes": 25
+      },
+      "allowed_output_prefix": "research/R10/",
+      "objective": "Public aircraft exact interface/cost/compatibility research; EC120 unverified, physical operation forbidden"
     },
     {
       "id": "R12",
@@ -358,7 +409,16 @@
       ],
       "kind": "research",
       "research": "R12",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_review_p01",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T19:10:33.7147153Z",
+      "budgets": {
+        "minutes": 25
+      },
+      "allowed_output_prefix": "research/R12/",
+      "objective": "Finite8-12primary-sourced frontier opportunities with bounded owner updates and useful entry experiments",
+      "role_transition": "Former P01 reviewer now unrelated R12 author; cannot review own R12"
     },
     {
       "id": "R04",
@@ -678,7 +738,7 @@
       "kind": "review",
       "actual_agent_id": "/root/ri01_review_p01",
       "started_at": "2026-09-28T18:57:05.1525112Z",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "hard_inputs": [
         {
           "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
@@ -695,12 +755,16 @@
       "id": "REVIEW-R02-P01",
       "budgets": {
         "minutes": 20
-      }
+      },
+      "review_disposition": "AMEND M1 before contract freeze; historical crosswalk/evidence and other specified subsets accepted",
+      "completed_at": "2026-09-28T19:02:34.6949665Z",
+      "artifact": "reviews/REVIEW-R02-P01/REVIEW.md",
+      "artifact_sha256": "1634b53af3fe0799bcabd5adfbef5658d64812e9d2425c457bc09f3e7faa8589"
     },
     {
       "write_mode": "read-only full handback returned for root persistence",
       "started_at": "2026-09-28T18:58:01.9031666Z",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "role": "haven_research_reviewer",
       "actual_agent_id": "/root/ri01_review_privacy",
       "budgets": {
@@ -720,7 +784,145 @@
       ],
       "id": "REVIEW-R03",
       "attempt_count": 1,
-      "kind": "review"
+      "kind": "review",
+      "review_disposition": "AMEND finite-use semantics before freeze; bounded identity/lineage/deletion/release architecture accepted",
+      "completed_at": "2026-09-28T19:06:03.797401Z",
+      "artifact": "reviews/REVIEW-R03/REVIEW.md",
+      "artifact_sha256": "cc393683b0db1ff0723cc6688196bfe11871b6844019cf2d3ecd4b29ab330952"
+    },
+    {
+      "id": "R02-P01-A1",
+      "revision_round": 1,
+      "soft": [
+        "R03"
+      ],
+      "started_at": "2026-09-28T19:02:34.6949665Z",
+      "budgets": {
+        "minutes": 10
+      },
+      "objective": "Preserve v1; clarify orthogonal release/delivery/eligibility facts and transition traces",
+      "role": "haven_researcher",
+      "attempt_count": 1,
+      "kind": "revision",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "allowed_output_prefix": "research/R02-P01/amendment-1/",
+      "actual_agent_id": "/root/ri01_runtime_probe",
+      "hard": [
+        "REVIEW-R02-P01"
+      ],
+      "completed_at": "2026-09-28T19:10:33.7147153Z",
+      "artifact": "research/R02-P01/amendment-1/AMENDMENT.md",
+      "artifact_sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "reviewer": "/root/ri01_review_p01",
+      "acceptance_scope": "Composite v1 plus amendment1; P01 M1/L1 closed; parent-death and downstream R03/CORE implementation gates remain",
+      "closed_findings": [
+        "REVIEW-R02-P01-M1",
+        "REVIEW-R02-P01-L1"
+      ],
+      "open_findings": [],
+      "closure_artifact": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+      "closure_sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+    },
+    {
+      "attempt_count": 1,
+      "started_at": "2026-09-28T19:08:11.1863806Z",
+      "role": "haven_researcher",
+      "id": "R03-A1",
+      "kind": "revision",
+      "actual_agent_id": "/root/ri01_privacy",
+      "objective": "Clarify finite-use accounting and fresh redemption checks, preserve v1",
+      "hard": [
+        "REVIEW-R03"
+      ],
+      "revision_round": 1,
+      "budgets": {
+        "minutes": 10
+      },
+      "allowed_output_prefix": "research/R03/amendment-1/",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "completed_at": "2026-09-28T19:17:36.0656143Z",
+      "artifact": "research/R03/amendment-1/AMENDMENT.md",
+      "artifact_sha256": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "reviewer": "/root/ri01_review_privacy",
+      "closed_findings": [
+        "REVIEW-R03-F01",
+        "REVIEW-R03-L01"
+      ],
+      "open_findings": [],
+      "closure_artifact": "reviews/REVIEW-R03/CLOSURE-1.md",
+      "closure_sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "acceptance_scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization"
+    },
+    {
+      "write_mode": "read-only root persistence",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T19:08:11.1863806Z",
+      "role": "haven_research_reviewer",
+      "id": "RECHECK-R02-P01-A1",
+      "kind": "review",
+      "actual_agent_id": "/root/ri01_review_p01",
+      "hard": [
+        "R02-P01-A1"
+      ],
+      "budgets": {
+        "minutes": 8
+      },
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "completed_at": "2026-09-28T19:10:33.7147153Z",
+      "acceptance_scope": "Composite v1 plus amendment1; P01 M1/L1 closed; parent-death and downstream R03/CORE implementation gates remain",
+      "closed_findings": [
+        "REVIEW-R02-P01-M1",
+        "REVIEW-R02-P01-L1"
+      ],
+      "open_findings": [],
+      "closure_artifact": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+      "closure_sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+    },
+    {
+      "write_mode": "read-only root persistence",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T19:08:11.1863806Z",
+      "role": "haven_research_reviewer",
+      "id": "REVIEW-R01",
+      "kind": "review",
+      "actual_agent_id": "/root/ri01_review_privacy",
+      "hard": [
+        "R01"
+      ],
+      "budgets": {
+        "minutes": 15
+      },
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "completed_at": "2026-09-28T19:15:01.358399Z",
+      "review_disposition": "AMEND localized receipt precondition; scenarios/coverage/experiments accepted bounded",
+      "artifact": "reviews/REVIEW-R01/REVIEW.md",
+      "artifact_sha256": "27503c8aceb2ef43afc35fe4d3ffa352f9df4fbe3482f3562c825ff59990839b"
+    },
+    {
+      "write_mode": "read-only root persistence",
+      "hard": [
+        "R03-A1"
+      ],
+      "attempt_count": 1,
+      "role": "haven_research_reviewer",
+      "kind": "review",
+      "started_at": "2026-09-28T19:15:01.358399Z",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "objective": "Check finite-use claim and original preservation, close F01/L01 if supported",
+      "id": "RECHECK-R03-A1",
+      "budgets": {
+        "minutes": 8
+      },
+      "actual_agent_id": "/root/ri01_review_privacy",
+      "completed_at": "2026-09-28T19:17:36.0656143Z",
+      "closed_findings": [
+        "REVIEW-R03-F01",
+        "REVIEW-R03-L01"
+      ],
+      "open_findings": [],
+      "closure_artifact": "reviews/REVIEW-R03/CLOSURE-1.md",
+      "closure_sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "acceptance_scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization"
     }
   ]
 }
