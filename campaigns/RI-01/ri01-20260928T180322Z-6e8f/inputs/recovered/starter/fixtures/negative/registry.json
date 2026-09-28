@@ -1,0 +1,58 @@
+[
+  {
+    "name": "raw_command_in_proposal",
+    "schema": "contracts/physical_action_proposal.schema.json",
+    "path": "fixtures/negative/raw_command_in_proposal.json",
+    "expected": "REJECT",
+    "reason": "Unknown fields cannot introduce raw commands"
+  },
+  {
+    "name": "fabrication_enabled",
+    "schema": "contracts/physical_action_proposal.schema.json",
+    "path": "fixtures/negative/fabrication_enabled.json",
+    "expected": "REJECT",
+    "reason": "Draft fixture never enables real execution"
+  },
+  {
+    "name": "unknown_health_with_value",
+    "schema": "contracts/health_observation.schema.json",
+    "path": "fixtures/negative/unknown_health_with_value.json",
+    "expected": "REJECT",
+    "reason": "Unavailable sample must not carry fabricated value"
+  },
+  {
+    "name": "missing_spatial_frame",
+    "schema": "contracts/spatial_estimate.schema.json",
+    "path": "fixtures/negative/missing_spatial_frame.json",
+    "expected": "REJECT",
+    "reason": "Coordinates need a frame"
+  },
+  {
+    "name": "unknown_uncertainty_numeric",
+    "schema": "contracts/spatial_estimate.schema.json",
+    "path": "fixtures/negative/unknown_uncertainty_numeric.json",
+    "expected": "REJECT",
+    "reason": "Unknown uncertainty cannot invent precision"
+  },
+  {
+    "name": "real_dispatch_claim",
+    "schema": "contracts/delivery_receipt.schema.json",
+    "path": "fixtures/negative/real_dispatch_claim.json",
+    "expected": "REJECT",
+    "reason": "Mock receipt cannot claim dispatch"
+  },
+  {
+    "name": "job_budget_negative",
+    "schema": "contracts/agent_job.schema.json",
+    "path": "fixtures/negative/job_budget_negative.json",
+    "expected": "REJECT",
+    "reason": "Budget must be nonnegative"
+  },
+  {
+    "name": "job_network_enabled",
+    "schema": "contracts/agent_job.schema.json",
+    "path": "fixtures/negative/job_network_enabled.json",
+    "expected": "REJECT",
+    "reason": "Design fixture cannot enable network"
+  }
+]

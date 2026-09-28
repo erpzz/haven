@@ -1,0 +1,43 @@
+{
+  "run_id": "ri01-20260928T180322Z-6e8f",
+  "started_at": "2026-09-28T18:03:22+00:00",
+  "hard_deadline": "2026-09-29T02:03:22+00:00",
+  "stop_new_work_at": "2026-09-29T01:48:22+00:00",
+  "base_commit": "376031e182c57495912baf6727093b0b188da568",
+  "branch": "campaign/ri01-20260928T180322Z-6e8f",
+  "host_class": "Windows desktop with Ubuntu WSL; public-safe metadata only",
+  "effective_permissions": {
+    "filesystem": "unrestricted",
+    "network": true,
+    "approval_policy": "never",
+    "scope": "User-authorized research/docs/publication only; no permission settings changed"
+  },
+  "limits": {
+    "active_children": 3,
+    "assignments": 64,
+    "revision_rounds": 2,
+    "public_assets_mib": 250,
+    "user_child_concurrency": "Lifted by user during execution; platform remains max3 children plus root",
+    "platform_total_concurrency": 4
+  },
+  "status": "RUNNING",
+  "custom_profiles": "CUSTOM_PROFILE_FALLBACK; exact role text supplied to native children, automatic project-profile loading not exposed",
+  "close_tool": "NOT_EXPOSED; native completed turns quiescent; report completion/interrupt state, never claim explicit closure",
+  "exact_model": "NOT_EXPOSED; inherited defaults",
+  "git_transport": "Existing authenticated GitHub CLI/HTTPS; connector fetch_file failed Unknown tool; no credentials changed",
+  "assignments_dispatched": 9,
+  "modalities": {
+    "text_code": "EXERCISED",
+    "image": "DIRECT_IMAGE_EXERCISED",
+    "web_pdf_screenshot": "AVAILABLE_NOT_YET_EXERCISED",
+    "browser_screenshot": "AVAILABLE_NOT_YET_EXERCISED",
+    "direct_audio": "TOOL_UNAVAILABLE",
+    "direct_video": "TOOL_UNAVAILABLE",
+    "waveform": "Python standard library synthetic numeric/plot transform possible; NOT_EXECUTED",
+    "spatial": "Structured file reading available; runtime spatial validation NOT_EXECUTED",
+    "media_decoders": "Ubuntu ffmpeg/ffprobe/pdftoppm/sox not found on PATH; no install",
+    "generation": "Image generation tool exposed but NOT_EXECUTED; generation is not observation"
+  },
+  "failed_spawn_attempts": 1,
+  "thread_limit_observation": "New child spawn rejected agent thread limit after four child handles existed; explicit close not exposed. Reuse existing completed handles under distinct scoped assignments; preserve author/reviewer independence."
+}

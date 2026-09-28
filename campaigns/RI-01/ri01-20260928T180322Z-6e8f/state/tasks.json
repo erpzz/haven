@@ -1,0 +1,549 @@
+{
+  "schema_version": 1,
+  "campaign": "RI-01",
+  "mode": "review_research_integrate",
+  "status": "RUNNING",
+  "limits": {
+    "max_open_children": 3,
+    "wall_clock_hours": 8,
+    "max_assignments": 64,
+    "max_revision_rounds": 2,
+    "new_provider_spend_usd": 0
+  },
+  "dependency_gate": "ACCEPTED_FOR_SYNTHESIS_AT_EXACT_INPUT_REVISION",
+  "dynamic_rule": "Add one review task for every additional distinct handback discovered at intake; map equivalent existing research rather than silently dropping a task.",
+  "tasks": [
+    {
+      "id": "INTAKE",
+      "role": "haven_intake",
+      "hard": [],
+      "soft": [],
+      "kind": "inventory",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "actual_agent_id": "/root/ri01_runtime_probe",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T18:13:31.470934+00:00",
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "hard_inputs": [],
+      "soft_inputs": [],
+      "allowed_output_prefix": null,
+      "write_mode": "read-only return for root persistence",
+      "budgets": {
+        "minutes": 20
+      },
+      "reviewer_role": "root_inventory_verifier",
+      "note": "Inventory independently refreshed byroot; not research acceptance",
+      "completed_at": "2026-09-28T18:24:23.230818+00:00",
+      "artifact": "inputs/INTAKE/INVENTORY.md",
+      "artifact_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4"
+    },
+    {
+      "id": "VISION-0",
+      "role": "haven_vision_guardian",
+      "hard": [
+        "INTAKE"
+      ],
+      "soft": [],
+      "kind": "review",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "actual_agent_id": "/root/ri01_vision",
+      "attempt_count": 2,
+      "started_at": "2026-09-28T18:13:31.470934+00:00",
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "hard_inputs": [],
+      "soft_inputs": [],
+      "allowed_output_prefix": null,
+      "write_mode": "read-only return for root persistence",
+      "budgets": {
+        "minutes": 20
+      },
+      "reviewer_role": "independent_vision_guardian",
+      "note": "VISION-0 provisional until consumes frozen intake",
+      "completed_at": "2026-09-28T18:29:30.972385+00:00",
+      "artifact": "reviews/VISION-0/CLOSURE-1.md",
+      "artifact_sha256": "151e22a9030be0d50643261dbec081f12f343460b790ec15839e30381f5aeabf",
+      "review_result": "PASS for intakevisiononly"
+    },
+    {
+      "id": "REV-R02",
+      "role": "haven_research_reviewer",
+      "hard": [
+        "INTAKE"
+      ],
+      "soft": [],
+      "kind": "review",
+      "research": "R02",
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_runtime_probe",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T18:27:45.411179+00:00",
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "hard_inputs": [
+        {
+          "path": "inputs/INTAKE/INVENTORY.md",
+          "sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4"
+        },
+        {
+          "path": "inputs/incoming/MANIFEST.json",
+          "sha256": "844ce400a5511204156d5b5df5b7105862e9c22c2d9ab97652ec67d9bd54625c"
+        }
+      ],
+      "budgets": {
+        "minutes": 20
+      },
+      "allowed_output_prefix": null,
+      "write_mode": "READ_ONLY_RETURN_TO_ROOT",
+      "deliverables": [
+        "reviews/REV-R02/REVIEW.md"
+      ]
+    },
+    {
+      "id": "REV-R06",
+      "role": "haven_research_reviewer",
+      "hard": [
+        "INTAKE"
+      ],
+      "soft": [],
+      "kind": "review",
+      "research": "R06",
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_vision",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T18:29:30.972385+00:00",
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "hard_inputs": [
+        {
+          "path": "inputs/INTAKE/INVENTORY.md",
+          "sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4"
+        },
+        {
+          "path": "inputs/INTAKE/SOURCE_MANIFEST.json",
+          "sha256": "687b25a3934b351d9ff20a2ce472587ca6dd90a9c8809bf5f74f7f6b0b160392"
+        }
+      ],
+      "allowed_output_prefix": null,
+      "write_mode": "READ_ONLY_RETURN_TO_ROOT",
+      "deliverables": [
+        "reviews/REV-R06/REVIEW.md"
+      ],
+      "budgets": {
+        "minutes": 20
+      }
+    },
+    {
+      "id": "REV-R08",
+      "role": "haven_research_reviewer",
+      "hard": [
+        "INTAKE"
+      ],
+      "soft": [],
+      "kind": "review",
+      "research": "R08",
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_evidence",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T18:29:30.972385+00:00",
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "hard_inputs": [
+        {
+          "path": "inputs/INTAKE/INVENTORY.md",
+          "sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4"
+        },
+        {
+          "path": "inputs/INTAKE/SOURCE_MANIFEST.json",
+          "sha256": "687b25a3934b351d9ff20a2ce472587ca6dd90a9c8809bf5f74f7f6b0b160392"
+        }
+      ],
+      "allowed_output_prefix": null,
+      "write_mode": "READ_ONLY_RETURN_TO_ROOT",
+      "deliverables": [
+        "reviews/REV-R08/REVIEW.md"
+      ],
+      "budgets": {
+        "minutes": 20
+      }
+    },
+    {
+      "id": "CODE-0",
+      "role": "haven_code_reviewer",
+      "hard": [
+        "INTAKE"
+      ],
+      "soft": [],
+      "kind": "review",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R01",
+      "role": "haven_researcher",
+      "hard": [
+        "INTAKE",
+        "VISION-0"
+      ],
+      "soft": [
+        "CORE",
+        "MM-FUSION"
+      ],
+      "kind": "research",
+      "research": "R01",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R02-P01",
+      "role": "haven_researcher",
+      "hard": [
+        "REV-R02"
+      ],
+      "soft": [
+        "R03",
+        "CODE-0"
+      ],
+      "kind": "reconciliation",
+      "research": "R02",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R03",
+      "role": "haven_researcher",
+      "hard": [
+        "REV-R02",
+        "REV-R06",
+        "REV-R08"
+      ],
+      "soft": [
+        "R02-P01",
+        "R01"
+      ],
+      "kind": "research",
+      "research": "R03",
+      "status": "QUEUED"
+    },
+    {
+      "id": "CORE",
+      "role": "haven_integration_manager",
+      "hard": [
+        "R02-P01",
+        "R03"
+      ],
+      "soft": [
+        "R01",
+        "CODE-0"
+      ],
+      "kind": "integration",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R10",
+      "role": "haven_researcher",
+      "hard": [
+        "INTAKE",
+        "REV-R06"
+      ],
+      "soft": [
+        "CORE",
+        "R07",
+        "R12"
+      ],
+      "kind": "research",
+      "research": "R10",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R12",
+      "role": "haven_researcher",
+      "hard": [
+        "INTAKE",
+        "VISION-0"
+      ],
+      "soft": [
+        "REV-R02",
+        "REV-R06",
+        "REV-R08"
+      ],
+      "kind": "research",
+      "research": "R12",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R04",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R01"
+      ],
+      "soft": [
+        "R12"
+      ],
+      "kind": "research",
+      "research": "R04",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R05",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R01"
+      ],
+      "soft": [],
+      "kind": "research",
+      "research": "R05",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R07",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "REV-R06"
+      ],
+      "soft": [
+        "R10",
+        "R12"
+      ],
+      "kind": "research",
+      "research": "R07",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R08-P00",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "REV-R08",
+        "REV-R06"
+      ],
+      "soft": [
+        "R07",
+        "CODE-0"
+      ],
+      "kind": "reconciliation",
+      "research": "R08",
+      "status": "QUEUED"
+    },
+    {
+      "id": "MM-VISION",
+      "role": "haven_vision_perception",
+      "hard": [
+        "CORE",
+        "R07"
+      ],
+      "soft": [
+        "R04",
+        "R12"
+      ],
+      "kind": "multimodal",
+      "status": "QUEUED"
+    },
+    {
+      "id": "MM-AV",
+      "role": "haven_audio_video",
+      "hard": [
+        "CORE",
+        "R04"
+      ],
+      "soft": [
+        "R12"
+      ],
+      "kind": "multimodal",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R09",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R07",
+        "R08-P00"
+      ],
+      "soft": [
+        "R10",
+        "MM-VISION"
+      ],
+      "kind": "research",
+      "research": "R09",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R11",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R04",
+        "R07",
+        "R10"
+      ],
+      "soft": [
+        "R09",
+        "MM-AV"
+      ],
+      "kind": "research",
+      "research": "R11",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R14",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R04",
+        "MM-AV"
+      ],
+      "soft": [
+        "R09",
+        "MM-VISION",
+        "R12"
+      ],
+      "kind": "research",
+      "research": "R14",
+      "status": "QUEUED"
+    },
+    {
+      "id": "MM-FUSION",
+      "role": "haven_sensor_fusion",
+      "hard": [
+        "CORE",
+        "R07",
+        "MM-VISION",
+        "MM-AV",
+        "R14"
+      ],
+      "soft": [
+        "R09",
+        "R11"
+      ],
+      "kind": "multimodal",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R15",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R07",
+        "MM-FUSION",
+        "R01"
+      ],
+      "soft": [
+        "R09",
+        "R10",
+        "R11",
+        "R08-P00"
+      ],
+      "kind": "research",
+      "research": "R15",
+      "status": "QUEUED"
+    },
+    {
+      "id": "SYNTHESIS",
+      "role": "haven_integration_manager",
+      "hard": [
+        "R01",
+        "R02-P01",
+        "R03",
+        "R04",
+        "R05",
+        "REV-R06",
+        "R07",
+        "R08-P00",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R14",
+        "R15",
+        "MM-FUSION"
+      ],
+      "soft": [
+        "CODE-0"
+      ],
+      "kind": "integration",
+      "status": "QUEUED"
+    },
+    {
+      "id": "R13",
+      "role": "haven_evidence_auditor",
+      "hard": [
+        "SYNTHESIS"
+      ],
+      "soft": [],
+      "kind": "review",
+      "research": "R13",
+      "status": "QUEUED"
+    },
+    {
+      "id": "VISION-FINAL",
+      "role": "haven_vision_guardian",
+      "hard": [
+        "SYNTHESIS"
+      ],
+      "soft": [],
+      "kind": "review",
+      "status": "QUEUED"
+    },
+    {
+      "id": "CODE-FINAL",
+      "role": "haven_code_reviewer",
+      "hard": [
+        "SYNTHESIS"
+      ],
+      "soft": [],
+      "kind": "review",
+      "status": "QUEUED"
+    },
+    {
+      "id": "DELIVERY",
+      "role": "root_supervisor",
+      "hard": [
+        "R13",
+        "VISION-FINAL",
+        "CODE-FINAL"
+      ],
+      "soft": [],
+      "kind": "publication",
+      "status": "QUEUED"
+    },
+    {
+      "id": "EVIDENCE-0",
+      "role": "haven_evidence_auditor",
+      "kind": "review",
+      "hard": [],
+      "soft": [
+        "INTAKE"
+      ],
+      "objective": "Early source fidelity, public boundary and test equivalence audit of exact recovered artifacts; no application execution",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "actual_agent_id": "/root/ri01_evidence",
+      "attempt_count": 2,
+      "started_at": "2026-09-28T18:15:33.794833+00:00",
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "hard_inputs": [
+        {
+          "path": "inputs/recovered/PROVENANCE.json",
+          "sha256": "1d60bb74ab3e6de17274009a66d157b4a5edf59654f6e7ee6ea2dba0db3beb7d"
+        }
+      ],
+      "allowed_output_prefix": null,
+      "deliverables": [
+        "reviews/EVIDENCE-0/REVIEW.md"
+      ],
+      "budgets": {
+        "minutes": 20
+      },
+      "note": "Additional early evidence audit explicitly required by MASTER_PROMPT and R13 queue",
+      "review_disposition": "CHANGES_REQUIRED for unrestricted claims; scoped historical use supported",
+      "artifact": "reviews/EVIDENCE-0/REVIEW.md",
+      "artifact_sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d",
+      "open_findings": [
+        "E0-H1",
+        "E0-M1",
+        "E0-M2",
+        "E0-L1"
+      ],
+      "closed_findings": [
+        "E0-H2"
+      ],
+      "completed_at": "2026-09-28T18:27:45.411179+00:00"
+    }
+  ]
+}

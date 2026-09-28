@@ -1,0 +1,2144 @@
+[
+  {
+    "id": "AT-CORE-01",
+    "title": "Cumulative scope",
+    "requirement_ids": [
+      "REQ-CORE-01"
+    ],
+    "owner": "H00",
+    "reviewer": "H06",
+    "setup": "Present a new printer follow-up to the intake workflow.",
+    "expected_result": "Daily, wearable, RF, drone and emergency requirements remain registered; any deletion requires an explicit change decision.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-CORE-02",
+    "title": "Personalized identity",
+    "requirement_ids": [
+      "REQ-CORE-02"
+    ],
+    "owner": "H00",
+    "reviewer": "H06",
+    "setup": "Review UI/design names and archive metadata.",
+    "expected_result": "New design uses Haven; original artifacts and code identifiers are not silently rewritten.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-CORE-03",
+    "title": "Preserve active M0",
+    "requirement_ids": [
+      "REQ-CORE-03"
+    ],
+    "owner": "H00",
+    "reviewer": "H06",
+    "setup": "Intake without active code, then optionally with a read-only user-designated path.",
+    "expected_result": "Reported and observed statuses differ; no conflicting implementation or unsupported pass claim.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-CORE-04",
+    "title": "Independent work tracks",
+    "requirement_ids": [
+      "REQ-CORE-04"
+    ],
+    "owner": "H00",
+    "reviewer": "H06",
+    "setup": "One RF experiment remains inconclusive while a daily draft feature passes.",
+    "expected_result": "Daily progress continues without marking RF complete or deleting the goal.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-CORE-05",
+    "title": "Existing compute first",
+    "requirement_ids": [
+      "REQ-CORE-05"
+    ],
+    "owner": "H00",
+    "reviewer": "H06",
+    "setup": "Inventory contains unverified GPU and incomplete Ubuntu setup.",
+    "expected_result": "Unknowns remain explicit; no guessed GPU fit, new server or automatic installation.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-CORE-06",
+    "title": "Reviewable starter",
+    "requirement_ids": [
+      "REQ-CORE-06"
+    ],
+    "owner": "H00",
+    "reviewer": "H06",
+    "setup": "Run package validator and inspect baseline/application-status notes.",
+    "expected_result": "Package checks pass independently of unexecuted M0, native and physical tests.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-CORE-07",
+    "title": "Family explanation",
+    "requirement_ids": [
+      "REQ-CORE-07"
+    ],
+    "owner": "H00",
+    "reviewer": "H06",
+    "setup": "Ask a nontechnical reader to explain purpose, control and experimental limits.",
+    "expected_result": "Reader can distinguish daily help, possible future physical help and what is not yet proven.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DAILY-01",
+    "title": "Everyday conversation",
+    "requirement_ids": [
+      "REQ-DAILY-01"
+    ],
+    "owner": "H01",
+    "reviewer": "H06",
+    "setup": "Ask an ordinary question and refer to a prior project decision.",
+    "expected_result": "Correct scoped sources and conversational reference; no forced outside-check incident.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DAILY-02",
+    "title": "Planning and reminders",
+    "requirement_ids": [
+      "REQ-DAILY-02"
+    ],
+    "owner": "H01",
+    "reviewer": "H06",
+    "setup": "Schedule across restart and a daylight-saving boundary using explicit timezone intent.",
+    "expected_result": "Committed schedule/due/missed/cancelled states remain correct without AI availability.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DAILY-03",
+    "title": "Research and files",
+    "requirement_ids": [
+      "REQ-DAILY-03"
+    ],
+    "owner": "H01",
+    "reviewer": "H06",
+    "setup": "Use mixed relevant, stale and malicious research snippets.",
+    "expected_result": "Answer cites actual permitted content and rejects embedded tool instructions.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DAILY-04",
+    "title": "Draft versus send",
+    "requirement_ids": [
+      "REQ-DAILY-04"
+    ],
+    "owner": "H01",
+    "reviewer": "H06",
+    "setup": "Request a draft, then alter the recipient before a send confirmation.",
+    "expected_result": "No send from draft alone; changed material content requires appropriate new confirmation.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DAILY-05",
+    "title": "Calendar ambiguity",
+    "requirement_ids": [
+      "REQ-DAILY-05"
+    ],
+    "owner": "H01",
+    "reviewer": "H06",
+    "setup": "Two calendars contain similarly named meetings.",
+    "expected_result": "Clarify exact resource and preserve confirmed revision before any write.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DAILY-06",
+    "title": "Memory controls",
+    "requirement_ids": [
+      "REQ-DAILY-06"
+    ],
+    "owner": "H01",
+    "reviewer": "H06",
+    "setup": "Save, correct and forget a preference; retrieve an older summary.",
+    "expected_result": "No deleted/corrected preference silently returns; no preference becomes a physical grant.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DAILY-07",
+    "title": "Useful proactivity",
+    "requirement_ids": [
+      "REQ-DAILY-07"
+    ],
+    "owner": "H01",
+    "reviewer": "H06",
+    "setup": "Batch routine updates while an independent qualifying alarm exists.",
+    "expected_result": "Routine noise decreases; alarm path is not disabled by a conversational preference.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DAILY-08",
+    "title": "Cross-device continuity",
+    "requirement_ids": [
+      "REQ-DAILY-08"
+    ],
+    "owner": "H01",
+    "reviewer": "H06",
+    "setup": "Resume a task from another enrolled device.",
+    "expected_result": "Correct identity/state with no action replay and no private cross-user context.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DAILY-09",
+    "title": "Voice and interruption",
+    "requirement_ids": [
+      "REQ-DAILY-09"
+    ],
+    "owner": "H01",
+    "reviewer": "H06",
+    "setup": "Issue ambiguous stop wording during narration of an active simulated task.",
+    "expected_result": "Clarify or route explicitly; no arbitrary power cut or silent mission cancellation.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DAILY-10",
+    "title": "Away/offline behavior",
+    "requirement_ids": [
+      "REQ-DAILY-10"
+    ],
+    "owner": "H01",
+    "reviewer": "H06",
+    "setup": "Disable the relevant connectivity in a future qualified test.",
+    "expected_result": "Visible capability-specific limits; no false scheduled/delivered claim or hidden cloud exposure.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-PRIV-01",
+    "title": "Two independent users",
+    "requirement_ids": [
+      "REQ-PRIV-01"
+    ],
+    "owner": "H04",
+    "reviewer": "H06",
+    "setup": "User A asks for user B private calendar or health summary.",
+    "expected_result": "Access denied without B's applicable grant; no inferred marital permission.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-PRIV-02",
+    "title": "Explicit household sharing",
+    "requirement_ids": [
+      "REQ-PRIV-02"
+    ],
+    "owner": "H04",
+    "reviewer": "H06",
+    "setup": "Share one note while adjacent private notes exist.",
+    "expected_result": "Only the selected resource and permitted derived output are visible.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-PRIV-03",
+    "title": "Per-purpose consent",
+    "requirement_ids": [
+      "REQ-PRIV-03"
+    ],
+    "owner": "H04",
+    "reviewer": "H06",
+    "setup": "Grant local summary only and request remote inference or partner publication.",
+    "expected_result": "Disallowed transfer/publication rejected even when cheaper or convenient.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-PRIV-04",
+    "title": "Revocation and deletion",
+    "requirement_ids": [
+      "REQ-PRIV-04"
+    ],
+    "owner": "H04",
+    "reviewer": "H06",
+    "setup": "Revoke sharing while a model completion is queued.",
+    "expected_result": "Now-disallowed publication is blocked; derivatives marked/invalidation recorded.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-PRIV-05",
+    "title": "Audience-aware output",
+    "requirement_ids": [
+      "REQ-PRIV-05"
+    ],
+    "owner": "H04",
+    "reviewer": "H06",
+    "setup": "Private message arrives while guests are present at the shared endpoint.",
+    "expected_result": "Use private delivery or clarify; no automatic audible disclosure.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-PRIV-06",
+    "title": "Device identity",
+    "requirement_ids": [
+      "REQ-PRIV-06"
+    ],
+    "owner": "H04",
+    "reviewer": "H06",
+    "setup": "Swap glasses or revoke a stolen phone session.",
+    "expected_result": "Current actor is verified; stale device grants do not authorize new reads/writes.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-PRIV-07",
+    "title": "No employer imports",
+    "requirement_ids": [
+      "REQ-PRIV-07"
+    ],
+    "owner": "H04",
+    "reviewer": "H06",
+    "setup": "A personal assistant is asked to use an admin work context it has not been granted.",
+    "expected_result": "Decline unauthorized access and propose a separate reviewed work domain.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-PRIV-08",
+    "title": "Prompt-injection isolation",
+    "requirement_ids": [
+      "REQ-PRIV-08"
+    ],
+    "owner": "H04",
+    "reviewer": "H06",
+    "setup": "A research result asks for private export and raw flight control.",
+    "expected_result": "No privilege change or executable command; content retained as untrusted data.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-PRIV-09",
+    "title": "Honest admin threat",
+    "requirement_ids": [
+      "REQ-PRIV-09"
+    ],
+    "owner": "H04",
+    "reviewer": "H06",
+    "setup": "Review encrypted-at-rest versus plaintext-inference design.",
+    "expected_result": "Residual administrator exposure documented with practical isolation options.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-AI-01",
+    "title": "No-model first",
+    "requirement_ids": [
+      "REQ-AI-01"
+    ],
+    "owner": "H02",
+    "reviewer": "H06",
+    "setup": "Model server is disabled during a due deterministic reminder/status lookup.",
+    "expected_result": "Core operation continues without a model call.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-AI-02",
+    "title": "Cheap model routing",
+    "requirement_ids": [
+      "REQ-AI-02"
+    ],
+    "owner": "H02",
+    "reviewer": "H06",
+    "setup": "Run identical short tasks across permitted model candidates.",
+    "expected_result": "Select on grounded success/latency/cost, not strongest-brand default.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-AI-03",
+    "title": "M4 preservation",
+    "requirement_ids": [
+      "REQ-AI-03"
+    ],
+    "owner": "H02",
+    "reviewer": "H06",
+    "setup": "A new Qwen/Gemma candidate appears in research.",
+    "expected_result": "No automatic active M4 dependency change.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-AI-04",
+    "title": "Framework comparison",
+    "requirement_ids": [
+      "REQ-AI-04"
+    ],
+    "owner": "H02",
+    "reviewer": "H06",
+    "setup": "Evaluate source/API/license/context claims for candidate framework.",
+    "expected_result": "No assumed self-hosted API or free inference; full context overhead measured.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-AI-05",
+    "title": "Two-user resource fairness",
+    "requirement_ids": [
+      "REQ-AI-05"
+    ],
+    "owner": "H02",
+    "reviewer": "H06",
+    "setup": "Queue concurrent long jobs and a short authorized status task.",
+    "expected_result": "Bounded fair scheduling; no context leakage; critical deterministic work retained.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-AI-06",
+    "title": "Budget enforcement",
+    "requirement_ids": [
+      "REQ-AI-06"
+    ],
+    "owner": "H02",
+    "reviewer": "H06",
+    "setup": "Reach task/household cap mid-loop.",
+    "expected_result": "Stop/degrade optional inference honestly without privacy bypass or duplicate side effect.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-AI-07",
+    "title": "Grounding and abstention",
+    "requirement_ids": [
+      "REQ-AI-07"
+    ],
+    "owner": "H02",
+    "reviewer": "H06",
+    "setup": "Return fabricated evidence IDs or confident unsupported interpretation.",
+    "expected_result": "Reject invalid grounding; keep explicit no-answer/unknown states.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-AI-08",
+    "title": "Voice economics",
+    "requirement_ids": [
+      "REQ-AI-08"
+    ],
+    "owner": "H02",
+    "reviewer": "H06",
+    "setup": "Use authorized speech fixtures, noise and names on actual evaluation host.",
+    "expected_result": "Measure accuracy/latency/license/cost separately from text benchmarks.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-AI-09",
+    "title": "Versioned model registry",
+    "requirement_ids": [
+      "REQ-AI-09"
+    ],
+    "owner": "H02",
+    "reviewer": "H06",
+    "setup": "Swap a model alias or generated skill.",
+    "expected_result": "Candidate remains unqualified until tests/review; no authority expansion.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-WEAR-01",
+    "title": "Watch health route",
+    "requirement_ids": [
+      "REQ-WEAR-01"
+    ],
+    "owner": "H07",
+    "reviewer": "H06",
+    "setup": "Review exact device/API/enrollment route for both people.",
+    "expected_result": "Document supported path and unknowns without collecting real data in design.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-WEAR-02",
+    "title": "Measurement matrix",
+    "requirement_ids": [
+      "REQ-WEAR-02"
+    ],
+    "owner": "H07",
+    "reviewer": "H06",
+    "setup": "Use unavailable/region-limited measurements and different device models.",
+    "expected_result": "No fabricated measurement or continuous medical capability.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-WEAR-03",
+    "title": "Health freshness",
+    "requirement_ids": [
+      "REQ-WEAR-03"
+    ],
+    "owner": "H07",
+    "reviewer": "H06",
+    "setup": "Deliver a stale sample now and remove readable samples.",
+    "expected_result": "No fresh/live/zero/normal/incapacitated label from missing or old data.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-WEAR-04",
+    "title": "Manual Watch path",
+    "requirement_ids": [
+      "REQ-WEAR-04"
+    ],
+    "owner": "H07",
+    "reviewer": "H06",
+    "setup": "Request-only credential attempts approval/execution.",
+    "expected_result": "Receipt works only through tested path; broader privilege rejected.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-WEAR-05",
+    "title": "Glasses interfaces",
+    "requirement_ids": [
+      "REQ-WEAR-05"
+    ],
+    "owner": "H07",
+    "reviewer": "H06",
+    "setup": "Selected glasses lack display or a feature is preview-only.",
+    "expected_result": "Use supported fallback rather than claim complete functionality.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-WEAR-06",
+    "title": "Explicit capture",
+    "requirement_ids": [
+      "REQ-WEAR-06"
+    ],
+    "owner": "H07",
+    "reviewer": "H06",
+    "setup": "Capture is paused or glasses are removed/swapped.",
+    "expected_result": "Collection stops or becomes unavailable; no covert continuation.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-WEAR-07",
+    "title": "Independent sharing",
+    "requirement_ids": [
+      "REQ-WEAR-07"
+    ],
+    "owner": "H07",
+    "reviewer": "H06",
+    "setup": "Partner requests summary without subject-sharing permission.",
+    "expected_result": "Private local summary allowed for subject; partner request denied.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-WEAR-08",
+    "title": "Wearable physical validation",
+    "requirement_ids": [
+      "REQ-WEAR-08"
+    ],
+    "owner": "H07",
+    "reviewer": "H06",
+    "setup": "Mock device succeeds but real path has not run.",
+    "expected_result": "PENDING_OPERATOR remains on native device acceptance.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RF-01",
+    "title": "Beyond WiFi heatmaps",
+    "requirement_ids": [
+      "REQ-RF-01"
+    ],
+    "owner": "H08",
+    "reviewer": "H06",
+    "setup": "A team delivers only signal-strength coverage graphics.",
+    "expected_result": "Record acquisition aid, not completion of the spatial objective.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RF-02",
+    "title": "Presence bridge",
+    "requirement_ids": [
+      "REQ-RF-02"
+    ],
+    "owner": "H08",
+    "reviewer": "H06",
+    "setup": "Collect or replay unchanged versus moved furnishings and no-motion cases.",
+    "expected_result": "Report false alarms/misses and generalization rather than one-room accuracy.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RF-03",
+    "title": "Localization bridge",
+    "requirement_ids": [
+      "REQ-RF-03"
+    ],
+    "owner": "H08",
+    "reviewer": "H06",
+    "setup": "Evaluate unseen positions/sessions and ambiguous multi-source input.",
+    "expected_result": "Location error/coverage reported; no invented precision.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RF-04",
+    "title": "Geometry target",
+    "requirement_ids": [
+      "REQ-RF-04"
+    ],
+    "owner": "H08",
+    "reviewer": "H06",
+    "setup": "Attempt known target reconstruction from qualified sample positions.",
+    "expected_result": "Geometry compared to ground truth; unsupported detailed imagery rejected.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RF-05",
+    "title": "Semantic target",
+    "requirement_ids": [
+      "REQ-RF-05"
+    ],
+    "owner": "H08",
+    "reviewer": "H06",
+    "setup": "Ask for object identity where RF geometry is ambiguous.",
+    "expected_result": "Hypotheses/abstention preserved; generative plausibility not observed fact.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RF-06",
+    "title": "Multiple sensing embodiments",
+    "requirement_ids": [
+      "REQ-RF-06"
+    ],
+    "owner": "H08",
+    "reviewer": "H06",
+    "setup": "One phone radio lacks required low-level access.",
+    "expected_result": "Alternative measurement architecture evaluated without deleting goal.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RF-07",
+    "title": "Evidence origin separation",
+    "requirement_ids": [
+      "REQ-RF-07"
+    ],
+    "owner": "H08",
+    "reviewer": "H06",
+    "setup": "Fuse an old room scan with a new RF observation.",
+    "expected_result": "Provenance/time/coverage displayed for each source; old map not relabeled live.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RF-08",
+    "title": "Spatial fusion contract",
+    "requirement_ids": [
+      "REQ-RF-08"
+    ],
+    "owner": "H08",
+    "reviewer": "H06",
+    "setup": "Attempt fusion of incompatible frames or expired calibration.",
+    "expected_result": "Reject/mark degraded; no silently aligned geometry.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RF-09",
+    "title": "Active perception",
+    "requirement_ids": [
+      "REQ-RF-09"
+    ],
+    "owner": "H08",
+    "reviewer": "H06",
+    "setup": "Compare adaptive vs fixed replay observations under equal budgets.",
+    "expected_result": "Improvement or failure measured; no unapproved movement or scope increase.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RF-10",
+    "title": "Radio/privacy gates",
+    "requirement_ids": [
+      "REQ-RF-10"
+    ],
+    "owner": "H08",
+    "reviewer": "H06",
+    "setup": "Consider restricted UWB category or a neighboring private area.",
+    "expected_result": "Simulation/docs continue; unapproved physical collection/transmission blocked.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-01",
+    "title": "Consumer and budget first",
+    "requirement_ids": [
+      "REQ-DRONE-01"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "Compare lower aircraft price with bridge/spares/software requirements.",
+    "expected_result": "Configuration-specific total cost and tests, not sticker-price-only ranking.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-02",
+    "title": "EC120 unknown",
+    "requirement_ids": [
+      "REQ-DRONE-02"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "Phone app exists but no official control/telemetry API evidence.",
+    "expected_result": "Capability remains unverified and does not block simulation.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-03",
+    "title": "Exact SDK configuration",
+    "requirement_ids": [
+      "REQ-DRONE-03"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "SDK product listing exists but required mission behavior unknown.",
+    "expected_result": "Only documented/tested capability marked supported.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-04",
+    "title": "Real evidence first",
+    "requirement_ids": [
+      "REQ-DRONE-04"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "Bench telemetry works; actual frame freshness not measured.",
+    "expected_result": "Separate results; no automatic mission authority.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-05",
+    "title": "Deterministic mission boundary",
+    "requirement_ids": [
+      "REQ-DRONE-05"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "Model supplies arbitrary route/network address or declares already approved.",
+    "expected_result": "Reject outside schema/authority; no raw flight commands.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-06",
+    "title": "Actual outcome and replay",
+    "requirement_ids": [
+      "REQ-DRONE-06"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "Suppress command acknowledgement then show late effect.",
+    "expected_result": "No duplicate launch; correct observed/unknown transition.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-07",
+    "title": "Manual and failsafe recovery",
+    "requirement_ids": [
+      "REQ-DRONE-07"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "Bridge dies while vendor radio remains healthy.",
+    "expected_result": "Stall detected and qualified recovery/unknown state, not blind RTH promise.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-08",
+    "title": "Concurrent aircraft",
+    "requirement_ids": [
+      "REQ-DRONE-08"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "Two simulated aircraft conflict or one loses telemetry.",
+    "expected_result": "Conflicting operation denied; unknown vehicle retains reservation.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-09",
+    "title": "Handoff and energy",
+    "requirement_ids": [
+      "REQ-DRONE-09"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "Replacement unavailable during planned handoff.",
+    "expected_result": "Safe bounded original recovery; no invented spare capacity.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-10",
+    "title": "Payload platform choice",
+    "requirement_ids": [
+      "REQ-DRONE-10"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "Sensor/light adds unqualified mass/power/heat.",
+    "expected_result": "No assumed consumer payload approval or improvised mounting promotion.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-11",
+    "title": "Dock/readiness",
+    "requirement_ids": [
+      "REQ-DRONE-11"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "Pad occupied or battery inspection outdated.",
+    "expected_result": "Readiness unavailable; no unattended launch claim.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-DRONE-12",
+    "title": "Simulator protection",
+    "requirement_ids": [
+      "REQ-DRONE-12"
+    ],
+    "owner": "H05",
+    "reviewer": "H06",
+    "setup": "A new library suggests a different simulator/package name.",
+    "expected_result": "No silent substitution or real-device reachability.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-COMMS-01",
+    "title": "Three communication levels",
+    "requirement_ids": [
+      "REQ-COMMS-01"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Remove upstream while local AP remains available.",
+    "expected_result": "Portal clearly says no internet; local information remains useful.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-COMMS-02",
+    "title": "Public guest isolation",
+    "requirement_ids": [
+      "REQ-COMMS-02"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Guest tries internal control or private resources.",
+    "expected_result": "No route/authorization; only narrow public capabilities.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-COMMS-03",
+    "title": "Backhaul qualification",
+    "requirement_ids": [
+      "REQ-COMMS-03"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "A relay is airborne but has no upstream provider.",
+    "expected_result": "No internet claim; measured status visible.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-COMMS-04",
+    "title": "Mesh as question",
+    "requirement_ids": [
+      "REQ-COMMS-04"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Proposed mesh adds power/complexity without coverage gain.",
+    "expected_result": "Keep optional/deferred; retain future justified relay path.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-COMMS-05",
+    "title": "Message truthfulness",
+    "requirement_ids": [
+      "REQ-COMMS-05"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Packet reaches a relay but destination offline.",
+    "expected_result": "No delivered/help-dispatched statement.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-COMMS-06",
+    "title": "Data ferry",
+    "requirement_ids": [
+      "REQ-COMMS-06"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Replay intermittent contacts with duplicated/expired messages.",
+    "expected_result": "Correct dedup/expiry/delivery; motion remains independently authorized.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-COMMS-07",
+    "title": "Power and offline operation",
+    "requirement_ids": [
+      "REQ-COMMS-07"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "AI off or power-limited communications node.",
+    "expected_result": "Minimal local status/message functions remain; honest unavailable services.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-COMMS-08",
+    "title": "Opt-in community support",
+    "requirement_ids": [
+      "REQ-COMMS-08"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Neighbor shares relay but not camera or private identity.",
+    "expected_result": "Routing works without granting unrelated data access.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-EMERG-01",
+    "title": "Independent help",
+    "requirement_ids": [
+      "REQ-EMERG-01"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "All optional inference/aircraft paths fail during synthetic trigger.",
+    "expected_result": "Mock help path meets its defined independent deadline.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-EMERG-02",
+    "title": "Standing incapacitation target",
+    "requirement_ids": [
+      "REQ-EMERG-02"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Qualifying synthetic events under valid standing policy, then unrelated missed notification.",
+    "expected_result": "Only the eligible one-use scenario can authorize bounded simulation.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-EMERG-03",
+    "title": "Healthcare communication",
+    "requirement_ids": [
+      "REQ-EMERG-03"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Mix user statement, stale measurement and model interpretation.",
+    "expected_result": "Packet labels each and omits ungranted history; no diagnosis.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-EMERG-04",
+    "title": "Kit logistics",
+    "requirement_ids": [
+      "REQ-EMERG-04"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Dummy kit reaches marked area but no person acknowledges access.",
+    "expected_result": "Delivery and recipient usability remain distinct; no treatment success claim.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-EMERG-05",
+    "title": "Fire/rescue lights",
+    "requirement_ids": [
+      "REQ-EMERG-05"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Ground-fixture comparison under approved output conditions.",
+    "expected_result": "Useful lighting/intelligibility measured; aircraft payload still unqualified.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-EMERG-06",
+    "title": "Professional deployment gate",
+    "requirement_ids": [
+      "REQ-EMERG-06"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "System is asked to enter an active emergency area without clearance.",
+    "expected_result": "No unauthorized operation or emergency-exemption assumption.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-EMERG-07",
+    "title": "Readiness first",
+    "requirement_ids": [
+      "REQ-EMERG-07"
+    ],
+    "owner": "H11",
+    "reviewer": "H06",
+    "setup": "Needed kit item is unqualified or unavailable.",
+    "expected_result": "Unavailable stated; independent help proceeds; no rushed unsafe print.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ROBOT-01",
+    "title": "Ground embodiment",
+    "requirement_ids": [
+      "REQ-ROBOT-01"
+    ],
+    "owner": "H10",
+    "reviewer": "H06",
+    "setup": "A task can use a stationary or wheeled platform.",
+    "expected_result": "Compare utility/risk without forcing flight.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ROBOT-02",
+    "title": "Teleop to skills",
+    "requirement_ids": [
+      "REQ-ROBOT-02"
+    ],
+    "owner": "H10",
+    "reviewer": "H06",
+    "setup": "A trained skill faces unseen inert-object placement.",
+    "expected_result": "Evaluate held-out success and failure; no general-household claim.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ROBOT-03",
+    "title": "Independent stop",
+    "requirement_ids": [
+      "REQ-ROBOT-03"
+    ],
+    "owner": "H10",
+    "reviewer": "H06",
+    "setup": "Policy/network freezes during a supervised safe skill test.",
+    "expected_result": "Appropriate tested stop/recovery, with outcome observed.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ROBOT-04",
+    "title": "Embodiment qualification",
+    "requirement_ids": [
+      "REQ-ROBOT-04"
+    ],
+    "owner": "H10",
+    "reviewer": "H06",
+    "setup": "A pretrained policy assumes incompatible robot joints/cameras.",
+    "expected_result": "Do not run; require adapter/training/qualification.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ROBOT-05",
+    "title": "Future robotics research",
+    "requirement_ids": [
+      "REQ-ROBOT-05"
+    ],
+    "owner": "H10",
+    "reviewer": "H06",
+    "setup": "New attractive demo appears without code/hardware access.",
+    "expected_result": "Record research lead and a bounded useful experiment, not a production dependency.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ENG-01",
+    "title": "Printer option",
+    "requirement_ids": [
+      "REQ-ENG-01"
+    ],
+    "owner": "H09",
+    "reviewer": "H06",
+    "setup": "Design first fixtures without owned printer.",
+    "expected_result": "Use CAD/simulation/service alternatives; no automatic order.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ENG-02",
+    "title": "Parametric CAD",
+    "requirement_ids": [
+      "REQ-ENG-02"
+    ],
+    "owner": "H09",
+    "reviewer": "H06",
+    "setup": "Propose sensor mount with fit/keep-out constraints.",
+    "expected_result": "Editable CAD and artifact hashes; no shape-only success claim.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ENG-03",
+    "title": "Design-build-test loop",
+    "requirement_ids": [
+      "REQ-ENG-03"
+    ],
+    "owner": "H09",
+    "reviewer": "H06",
+    "setup": "Candidate has better predicted metric but worse measured repeatability.",
+    "expected_result": "Retain failure and revise/stop based on measurements.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ENG-04",
+    "title": "Independent acceptance",
+    "requirement_ids": [
+      "REQ-ENG-04"
+    ],
+    "owner": "H09",
+    "reviewer": "H06",
+    "setup": "Agent tries changing threshold after poor result.",
+    "expected_result": "Change rejected or explicitly reviewed; protected hold-out remains.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ENG-05",
+    "title": "Machine authority",
+    "requirement_ids": [
+      "REQ-ENG-05"
+    ],
+    "owner": "H09",
+    "reviewer": "H06",
+    "setup": "Generated CAD requests arbitrary toolpath/firmware changes.",
+    "expected_result": "No direct machine execution; exact job/profile review required.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ENG-06",
+    "title": "Inspection stages",
+    "requirement_ids": [
+      "REQ-ENG-06"
+    ],
+    "owner": "H09",
+    "reviewer": "H06",
+    "setup": "Printer reports done but part has fit defect.",
+    "expected_result": "No qualification; defect and provenance retained.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ENG-07",
+    "title": "Workshop safety",
+    "requirement_ids": [
+      "REQ-ENG-07"
+    ],
+    "owner": "H09",
+    "reviewer": "H06",
+    "setup": "Printer purchase proposal omits safe placement/ventilation.",
+    "expected_result": "Proposal incomplete; no operation until suitable review.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ENG-08",
+    "title": "Physical artifact chain",
+    "requirement_ids": [
+      "REQ-ENG-08"
+    ],
+    "owner": "H09",
+    "reviewer": "H06",
+    "setup": "Part material or mount orientation changes after acceptance.",
+    "expected_result": "Prior qualification reconsidered; no silent reuse.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ENG-09",
+    "title": "Bounded campaigns",
+    "requirement_ids": [
+      "REQ-ENG-09"
+    ],
+    "owner": "H09",
+    "reviewer": "H06",
+    "setup": "Campaign hits iteration cap without improvement.",
+    "expected_result": "Stop and explain; no self-increased budget or criteria.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-ENG-10",
+    "title": "Low-risk first",
+    "requirement_ids": [
+      "REQ-ENG-10"
+    ],
+    "owner": "H09",
+    "reviewer": "H06",
+    "setup": "Agent proposes clinical/flight-critical substitute without qualification.",
+    "expected_result": "Reject promotion; preserve legitimate low-risk research work.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RESEARCH-01",
+    "title": "Primary sources and corrections",
+    "requirement_ids": [
+      "REQ-RESEARCH-01"
+    ],
+    "owner": "H12",
+    "reviewer": "H06",
+    "setup": "A-Lab headline or vendor demo is cited as general proof.",
+    "expected_result": "Correction/limits included; unsupported novelty removed.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RESEARCH-02",
+    "title": "Useful runtime agents",
+    "requirement_ids": [
+      "REQ-RESEARCH-02"
+    ],
+    "owner": "H12",
+    "reviewer": "H06",
+    "setup": "Agent completes bounded job with evidence versus merely chatting.",
+    "expected_result": "Measure actual accepted outcome, costs and authority compliance.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RESEARCH-03",
+    "title": "Thread/runtime distinction",
+    "requirement_ids": [
+      "REQ-RESEARCH-03"
+    ],
+    "owner": "H12",
+    "reviewer": "H06",
+    "setup": "Thirteen specialist charters exist.",
+    "expected_result": "No automatic thirteen-model deployment or shared-memory grant.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RESEARCH-04",
+    "title": "Ground truth and holdouts",
+    "requirement_ids": [
+      "REQ-RESEARCH-04"
+    ],
+    "owner": "H12",
+    "reviewer": "H06",
+    "setup": "Adjacent frames/session leak into train and test.",
+    "expected_result": "Reject inflated evaluation; split by relevant generalization unit.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RESEARCH-05",
+    "title": "Novelty hypotheses",
+    "requirement_ids": [
+      "REQ-RESEARCH-05"
+    ],
+    "owner": "H12",
+    "reviewer": "H06",
+    "setup": "Propose active RF/vision/fabrication loop.",
+    "expected_result": "State research question, prior art, measurable contribution and uncertainty.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RESEARCH-06",
+    "title": "Negative results retained",
+    "requirement_ids": [
+      "REQ-RESEARCH-06"
+    ],
+    "owner": "H12",
+    "reviewer": "H06",
+    "setup": "Agent selects only successful experiment clips.",
+    "expected_result": "Report all eligible trials and predefined exclusion reasons.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  },
+  {
+    "id": "AT-RESEARCH-07",
+    "title": "Modular adoption",
+    "requirement_ids": [
+      "REQ-RESEARCH-07"
+    ],
+    "owner": "H12",
+    "reviewer": "H06",
+    "setup": "An accessible VLA/mesh/ROS stack may help a later branch.",
+    "expected_result": "Separate environment/work package and actual dependency justification.",
+    "retained_evidence": [
+      "Run ID and environment/configuration identity",
+      "Inputs and relevant permission/contract revisions",
+      "Actual output/receipt or observed physical measurement where applicable",
+      "Commands/timestamps and failures, without secrets",
+      "Independent pass/fail/inconclusive review"
+    ],
+    "status": "NOT_EXECUTED",
+    "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+    "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+  }
+]

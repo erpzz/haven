@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "evidence_id": "ev-synthetic-01",
+  "owner_scope": "RESEARCH_SYNTHETIC",
+  "origin": "SIMULATED",
+  "claim_class": "SENSOR_MEASUREMENT",
+  "captured_at": "2026-09-27T20:00:00Z",
+  "received_at": "2026-09-27T20:00:00Z",
+  "producer_id": "synthetic-fixture",
+  "producer_version": "1",
+  "calibration_id": null,
+  "frame_id": null,
+  "content_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "parent_evidence_ids": [],
+  "freshness": "UNKNOWN",
+  "payload_kind": "MEASUREMENT",
+  "qualified_for_physical_action": false
+}

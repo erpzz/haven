@@ -1,0 +1,114 @@
+{
+  "branches": [
+    {
+      "name": "docs/r15-observatory-publication-20260928",
+      "sha": "ba543849e2714291cac21d8ebfeeab241aa823c1"
+    },
+    {
+      "name": "main",
+      "sha": "376031e182c57495912baf6727093b0b188da568"
+    },
+    {
+      "name": "research/r02-handback-publication-v2",
+      "sha": "d9bc23e848be9af44b6d07f9526f7badf7245b52"
+    },
+    {
+      "name": "research/r06-v1-import-20260928",
+      "sha": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb"
+    },
+    {
+      "name": "research/r08-v1-import",
+      "sha": "658880e8b01517c3f19cabfd6bb2538c2b46ea2a"
+    },
+    {
+      "name": "research/r08-v1-import-v2",
+      "sha": "5be0910420a9afd786d2ffd65054e5c4830ba714"
+    },
+    {
+      "name": "research/r14-human-augmentation-prompt-v1",
+      "sha": "cffc1168255f600206c53fd63d1ad3ffd963121d"
+    },
+    {
+      "name": "research/r15-observatory-open-tools-prompt-v1",
+      "sha": "2cbbd9ff6c07c08b986bf9a4a3ae6b9a5cf2a326"
+    },
+    {
+      "name": "setup/ri01-autonomous-multimodal-20260928",
+      "sha": "dc1d6682c7d0fe7c4b989a9de1ac2628ddb16e9a"
+    }
+  ],
+  "recorded_by": "/root",
+  "main": "376031e182c57495912baf6727093b0b188da568",
+  "repository": "https://github.com/erpzz/haven",
+  "pagination": "gh api --paginate with all PR states; 8 PRs and 9 branches",
+  "revision": 1,
+  "provenance": "Exact API response fields; inventory is not substantive research acceptance",
+  "frozen_at": "2026-09-28T18:19:35.5779264Z",
+  "pulls": [
+    {
+      "base": "5295ae854301dda50d1c301341ccca3a7c4c8a7b",
+      "head": "dc1d6682c7d0fe7c4b989a9de1ac2628ddb16e9a",
+      "merged_at": "2026-09-28T17:05:20Z",
+      "number": 18,
+      "state": "closed",
+      "title": "[RI-01] Set up autonomous multimodal research, review and integration team"
+    },
+    {
+      "base": "bff72a5e8a2faf86a6ded43649e0a098e80337a6",
+      "head": "ba543849e2714291cac21d8ebfeeab241aa823c1",
+      "merged_at": "2026-09-28T16:23:07Z",
+      "number": 16,
+      "state": "closed",
+      "title": "[R15] Publish Observatory brief, six specialist prompts and coordination records"
+    },
+    {
+      "base": "bff72a5e8a2faf86a6ded43649e0a098e80337a6",
+      "head": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+      "merged_at": null,
+      "number": 15,
+      "state": "open",
+      "title": "[R02][publication-v2] Preserve exact handback and verify source import"
+    },
+    {
+      "base": "bff72a5e8a2faf86a6ded43649e0a098e80337a6",
+      "head": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+      "merged_at": null,
+      "number": 14,
+      "state": "open",
+      "title": "[R06][v1] Publish RF spatial research handback for review"
+    },
+    {
+      "base": "bff72a5e8a2faf86a6ded43649e0a098e80337a6",
+      "head": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "merged_at": null,
+      "number": 13,
+      "state": "open",
+      "title": "[R08][v1] Restore engineering handback and P00 continuation"
+    },
+    {
+      "base": "bff72a5e8a2faf86a6ded43649e0a098e80337a6",
+      "head": "658880e8b01517c3f19cabfd6bb2538c2b46ea2a",
+      "merged_at": null,
+      "number": 11,
+      "state": "closed",
+      "title": "[R08][v1] Restore engineering handback and P00 continuation"
+    },
+    {
+      "base": "dd7e7e3d8a01d5773424678376e1e52d71723da7",
+      "head": "2cbbd9ff6c07c08b986bf9a4a3ae6b9a5cf2a326",
+      "merged_at": "2026-09-28T16:15:15Z",
+      "number": 10,
+      "state": "closed",
+      "title": "[R15] Haven Observatory — God/Admin POV and open-tool integration research"
+    },
+    {
+      "base": "dd7e7e3d8a01d5773424678376e1e52d71723da7",
+      "head": "cffc1168255f600206c53fd63d1ad3ffd963121d",
+      "merged_at": null,
+      "number": 9,
+      "state": "open",
+      "title": "[R14] Human augmentation, cybernetics and new-senses research prompt"
+    }
+  ],
+  "independently_inventoried_by": "/root/ri01_runtime_probe"
+}

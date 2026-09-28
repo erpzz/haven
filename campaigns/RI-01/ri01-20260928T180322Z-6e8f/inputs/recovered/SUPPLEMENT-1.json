@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/logs/n1-20260928T032012Z-94d095.json",
+      "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+      "bytes": 15847,
+      "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied synthetic test evidence; scoped campaign publication"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/logs/n2-20260928T032102Z-341135.json",
+      "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+      "bytes": 6673,
+      "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied synthetic test evidence; scoped campaign publication"
+    }
+  ],
+  "note": "Exact logs requested by independent intake/evidence reviewers; original PROVENANCE.json remains unchanged"
+}

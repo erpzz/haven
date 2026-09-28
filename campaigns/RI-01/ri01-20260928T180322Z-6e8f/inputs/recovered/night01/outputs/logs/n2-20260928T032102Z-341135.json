@@ -1,0 +1,128 @@
+{
+  "label": "TEST DOUBLE / NOT LIVE AI",
+  "scope": "SYNTHETIC_LAB_ONLY",
+  "suite": "n2",
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "run_checks.py",
+    "n2"
+  ],
+  "started_at": "2026-09-28T03:21:02.194812+00:00",
+  "ended_at": "2026-09-28T03:21:02.238200+00:00",
+  "exit_code": 0,
+  "tests_run": 11,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "tests": [
+    {
+      "id": "test_n2.N2Tests.test_bad_dimensions_and_execution_fields_denied",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.194893+00:00",
+      "ended_at": "2026-09-28T03:21:02.195757+00:00",
+      "elapsed_seconds": 0.000862,
+      "detail": null
+    },
+    {
+      "id": "test_n2.N2Tests.test_design_identifiers_cannot_escape_artifact_directory",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.195778+00:00",
+      "ended_at": "2026-09-28T03:21:02.196171+00:00",
+      "elapsed_seconds": 0.000393,
+      "detail": null
+    },
+    {
+      "id": "test_n2.N2Tests.test_even_passing_synthetic_check_cannot_fabricate_or_accept",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.196186+00:00",
+      "ended_at": "2026-09-28T03:21:02.196687+00:00",
+      "elapsed_seconds": 0.000502,
+      "detail": null
+    },
+    {
+      "id": "test_n2.N2Tests.test_fixed_objective_expected_values_and_selection",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.196700+00:00",
+      "ended_at": "2026-09-28T03:21:02.196951+00:00",
+      "elapsed_seconds": 0.00025,
+      "detail": null
+    },
+    {
+      "id": "test_n2.N2Tests.test_max_five_and_metric_cannot_change",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.196963+00:00",
+      "ended_at": "2026-09-28T03:21:02.197412+00:00",
+      "elapsed_seconds": 0.00045,
+      "detail": null
+    },
+    {
+      "id": "test_n2.N2Tests.test_missing_rejected_and_mismatched_evaluation_never_accepted",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.197435+00:00",
+      "ended_at": "2026-09-28T03:21:02.197732+00:00",
+      "elapsed_seconds": 0.000296,
+      "detail": null
+    },
+    {
+      "id": "test_n2.N2Tests.test_n1_executed_gate_matches_source",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.197747+00:00",
+      "ended_at": "2026-09-28T03:21:02.206373+00:00",
+      "elapsed_seconds": 0.008626,
+      "detail": null
+    },
+    {
+      "id": "test_n2.N2Tests.test_n1_gate_rejects_failed_or_incomplete_evidence",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.206392+00:00",
+      "ended_at": "2026-09-28T03:21:02.237239+00:00",
+      "elapsed_seconds": 0.030848,
+      "detail": null
+    },
+    {
+      "id": "test_n2.N2Tests.test_negatives_rejections_and_original_inputs_retained",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.237264+00:00",
+      "ended_at": "2026-09-28T03:21:02.237777+00:00",
+      "elapsed_seconds": 0.000513,
+      "detail": null
+    },
+    {
+      "id": "test_n2.N2Tests.test_no_improvement_stops",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.237793+00:00",
+      "ended_at": "2026-09-28T03:21:02.238018+00:00",
+      "elapsed_seconds": 0.000224,
+      "detail": null
+    },
+    {
+      "id": "test_n2.N2Tests.test_provenance_and_metadata",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:21:02.238032+00:00",
+      "ended_at": "2026-09-28T03:21:02.238149+00:00",
+      "elapsed_seconds": 0.000117,
+      "detail": null
+    }
+  ],
+  "log": "test_bad_dimensions_and_execution_fields_denied (test_n2.N2Tests.test_bad_dimensions_and_execution_fields_denied) ... ok\ntest_design_identifiers_cannot_escape_artifact_directory (test_n2.N2Tests.test_design_identifiers_cannot_escape_artifact_directory) ... ok\ntest_even_passing_synthetic_check_cannot_fabricate_or_accept (test_n2.N2Tests.test_even_passing_synthetic_check_cannot_fabricate_or_accept) ... ok\ntest_fixed_objective_expected_values_and_selection (test_n2.N2Tests.test_fixed_objective_expected_values_and_selection) ... ok\ntest_max_five_and_metric_cannot_change (test_n2.N2Tests.test_max_five_and_metric_cannot_change) ... ok\ntest_missing_rejected_and_mismatched_evaluation_never_accepted (test_n2.N2Tests.test_missing_rejected_and_mismatched_evaluation_never_accepted) ... ok\ntest_n1_executed_gate_matches_source (test_n2.N2Tests.test_n1_executed_gate_matches_source) ... ok\ntest_n1_gate_rejects_failed_or_incomplete_evidence (test_n2.N2Tests.test_n1_gate_rejects_failed_or_incomplete_evidence) ... ok\ntest_negatives_rejections_and_original_inputs_retained (test_n2.N2Tests.test_negatives_rejections_and_original_inputs_retained) ... ok\ntest_no_improvement_stops (test_n2.N2Tests.test_no_improvement_stops) ... ok\ntest_provenance_and_metadata (test_n2.N2Tests.test_provenance_and_metadata) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 0.043s\n\nOK\n",
+  "source_sha256": {
+    "haven_lab/__init__.py": "16c4d5c0b3499ebaf385aa52b5edf573d50d57b8c8ff3f9104902763ab00b523",
+    "haven_lab/__main__.py": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+    "haven_lab/backend.py": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+    "haven_lab/cli.py": "9f72fe8ebd03e524711747ac2a1eb2bcff690197bfaa5f3631494eb621e19237",
+    "haven_lab/context.py": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+    "haven_lab/coordinator.py": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+    "haven_lab/design_check.py": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+    "haven_lab/notebook.py": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+    "haven_lab/render.py": "dae6b79597220dea72a661684b926d47d75f867ff738e36102bf0f3ccc05dd93",
+    "haven_lab/store.py": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+    "haven_lab/synthetic_score.py": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+    "haven_lab/types.py": "1830730ea641cc9d4b1997113816f293c12f40d5593b91da22f23058eb01b955",
+    "haven_lab/validation.py": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+    "tests/test_n1.py": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+    "tests/test_n2.py": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+    "fixtures/context.json": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+    "fixtures/engineering.json": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64"
+  }
+}

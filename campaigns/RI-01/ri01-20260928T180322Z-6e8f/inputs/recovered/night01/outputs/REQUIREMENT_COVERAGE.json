@@ -1,0 +1,1634 @@
+[
+  {
+    "id": "REQ-CORE-01",
+    "name": "Cumulative scope",
+    "statement": "Retain every prior branch; additions do not replace earlier targets.",
+    "owner": "H00",
+    "document": "docs/00_CHARTER.md",
+    "acceptance_tests": [
+      "AT-CORE-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-CORE-02",
+    "name": "Personalized identity",
+    "statement": "Haven is the daily assistant; ASTRA is the broader platform; preserve historical JARVIS documents without renaming active code silently.",
+    "owner": "H00",
+    "document": "docs/00_CHARTER.md",
+    "acceptance_tests": [
+      "AT-CORE-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-CORE-03",
+    "name": "Preserve active M0",
+    "statement": "A separate local Codex owns current M0; new agent does not duplicate or overwrite it.",
+    "owner": "H00",
+    "document": "docs/00_CHARTER.md",
+    "acceptance_tests": [
+      "AT-CORE-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-CORE-04",
+    "name": "Independent work tracks",
+    "statement": "Daily utility, physical qualification and ambitious research progress through separate evidence gates.",
+    "owner": "H00",
+    "document": "docs/00_CHARTER.md",
+    "acceptance_tests": [
+      "AT-CORE-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-CORE-05",
+    "name": "Existing compute first",
+    "statement": "Reuse reported hardware and measure host/model capacity before purchases.",
+    "owner": "H00",
+    "document": "docs/00_CHARTER.md",
+    "acceptance_tests": [
+      "AT-CORE-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-CORE-06",
+    "name": "Reviewable starter",
+    "statement": "Deliver a complete indexed, hash-verifiable repository without implying product completion.",
+    "owner": "H00",
+    "document": "docs/00_CHARTER.md",
+    "acceptance_tests": [
+      "AT-CORE-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-CORE-07",
+    "name": "Family explanation",
+    "statement": "Provide understandable ambition and uncertainty for Kennedy without technical overload or guaranteed medical claims.",
+    "owner": "H00",
+    "document": "docs/00_CHARTER.md",
+    "acceptance_tests": [
+      "AT-CORE-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DAILY-01",
+    "name": "Everyday conversation",
+    "statement": "Natural conversation, follow-ups, explanations and project continuity are first-class features.",
+    "owner": "H01",
+    "document": "docs/02_DAILY_ASSISTANT.md",
+    "acceptance_tests": [
+      "AT-DAILY-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DAILY-02",
+    "name": "Planning and reminders",
+    "statement": "Help plan days and schedule durable, understandable reminders.",
+    "owner": "H01",
+    "document": "docs/02_DAILY_ASSISTANT.md",
+    "acceptance_tests": [
+      "AT-DAILY-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DAILY-03",
+    "name": "Research and files",
+    "statement": "Retrieve authorized documents/web findings with source evidence.",
+    "owner": "H01",
+    "document": "docs/02_DAILY_ASSISTANT.md",
+    "acceptance_tests": [
+      "AT-DAILY-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DAILY-04",
+    "name": "Draft versus send",
+    "statement": "Drafting is distinct from sending email or performing other external writes.",
+    "owner": "H01",
+    "document": "docs/02_DAILY_ASSISTANT.md",
+    "acceptance_tests": [
+      "AT-DAILY-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DAILY-05",
+    "name": "Calendar ambiguity",
+    "statement": "Resolve account/time/recipient ambiguity before changing appointments.",
+    "owner": "H01",
+    "document": "docs/02_DAILY_ASSISTANT.md",
+    "acceptance_tests": [
+      "AT-DAILY-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DAILY-06",
+    "name": "Memory controls",
+    "statement": "Preferences/projects/conversation/operational state have different lifecycles.",
+    "owner": "H01",
+    "document": "docs/02_DAILY_ASSISTANT.md",
+    "acceptance_tests": [
+      "AT-DAILY-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DAILY-07",
+    "name": "Useful proactivity",
+    "statement": "Bound notifications and quiet hours without suppressing independent alarms.",
+    "owner": "H01",
+    "document": "docs/02_DAILY_ASSISTANT.md",
+    "acceptance_tests": [
+      "AT-DAILY-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DAILY-08",
+    "name": "Cross-device continuity",
+    "statement": "Phone, desktop, Watch and glasses refer to the same authorized conversation/task.",
+    "owner": "H01",
+    "document": "docs/02_DAILY_ASSISTANT.md",
+    "acceptance_tests": [
+      "AT-DAILY-08"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DAILY-09",
+    "name": "Voice and interruption",
+    "statement": "Distinguish stop speech, cancel task, stop investigation and request physical recovery.",
+    "owner": "H01",
+    "document": "docs/02_DAILY_ASSISTANT.md",
+    "acceptance_tests": [
+      "AT-DAILY-09"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DAILY-10",
+    "name": "Away/offline behavior",
+    "statement": "Explain which functions work when away from home, WAN down or desktop asleep.",
+    "owner": "H01",
+    "document": "docs/02_DAILY_ASSISTANT.md",
+    "acceptance_tests": [
+      "AT-DAILY-10"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-PRIV-01",
+    "name": "Two independent users",
+    "statement": "Eric and Kennedy have independent private identities and stores.",
+    "owner": "H04",
+    "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+    "acceptance_tests": [
+      "AT-PRIV-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-PRIV-02",
+    "name": "Explicit household sharing",
+    "statement": "Shared context is intentionally granted, not everything on the shared server.",
+    "owner": "H04",
+    "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+    "acceptance_tests": [
+      "AT-PRIV-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-PRIV-03",
+    "name": "Per-purpose consent",
+    "statement": "Read, retain, summarize, share, cloud transmit and emergency disclose are separate grants.",
+    "owner": "H04",
+    "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+    "acceptance_tests": [
+      "AT-PRIV-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-PRIV-04",
+    "name": "Revocation and deletion",
+    "statement": "Apply changes to pending jobs, caches, summaries and documented backups.",
+    "owner": "H04",
+    "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+    "acceptance_tests": [
+      "AT-PRIV-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-PRIV-05",
+    "name": "Audience-aware output",
+    "statement": "Shared speakers/displays do not leak private information.",
+    "owner": "H04",
+    "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+    "acceptance_tests": [
+      "AT-PRIV-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-PRIV-06",
+    "name": "Device identity",
+    "statement": "Borrowed/lost/swapped devices do not inherit another person's authority.",
+    "owner": "H04",
+    "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+    "acceptance_tests": [
+      "AT-PRIV-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-PRIV-07",
+    "name": "No employer imports",
+    "statement": "Personal system does not import workplace/customer data or credentials by association.",
+    "owner": "H04",
+    "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+    "acceptance_tests": [
+      "AT-PRIV-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-PRIV-08",
+    "name": "Prompt-injection isolation",
+    "statement": "Untrusted documents/images/audio/memory/tool descriptions cannot add authority.",
+    "owner": "H04",
+    "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+    "acceptance_tests": [
+      "AT-PRIV-08"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-PRIV-09",
+    "name": "Honest admin threat",
+    "statement": "Do not equate application scopes with privacy from the host administrator.",
+    "owner": "H04",
+    "document": "docs/03_PRIVACY_AND_AUTHORITY.md",
+    "acceptance_tests": [
+      "AT-PRIV-09"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-AI-01",
+    "name": "No-model first",
+    "statement": "Use deterministic code for bookkeeping, timing, units, safety and receipts.",
+    "owner": "H02",
+    "document": "docs/04_INTELLIGENCE_AND_COST.md",
+    "acceptance_tests": [
+      "AT-AI-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-AI-02",
+    "name": "Cheap model routing",
+    "statement": "Use qualified local/cheap hosted/strong models per task and privacy.",
+    "owner": "H02",
+    "document": "docs/04_INTELLIGENCE_AND_COST.md",
+    "acceptance_tests": [
+      "AT-AI-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-AI-03",
+    "name": "M4 preservation",
+    "statement": "Existing qwen2.5vl:3b advisory experiment remains unchanged absent approved amendment.",
+    "owner": "H02",
+    "document": "docs/04_INTELLIGENCE_AND_COST.md",
+    "acceptance_tests": [
+      "AT-AI-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-AI-04",
+    "name": "Framework comparison",
+    "statement": "Distinguish Muse product, Hermes framework, serving software and models.",
+    "owner": "H02",
+    "document": "docs/04_INTELLIGENCE_AND_COST.md",
+    "acceptance_tests": [
+      "AT-AI-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-AI-05",
+    "name": "Two-user resource fairness",
+    "statement": "Prevent research or one user from starving receipts or another user.",
+    "owner": "H02",
+    "document": "docs/04_INTELLIGENCE_AND_COST.md",
+    "acceptance_tests": [
+      "AT-AI-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-AI-06",
+    "name": "Budget enforcement",
+    "statement": "Account for tool steps, retries, media, reasoning and in-flight reservations.",
+    "owner": "H02",
+    "document": "docs/04_INTELLIGENCE_AND_COST.md",
+    "acceptance_tests": [
+      "AT-AI-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-AI-07",
+    "name": "Grounding and abstention",
+    "statement": "Schema-valid outputs require evidence and may remain uncertain.",
+    "owner": "H02",
+    "document": "docs/04_INTELLIGENCE_AND_COST.md",
+    "acceptance_tests": [
+      "AT-AI-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-AI-08",
+    "name": "Voice economics",
+    "statement": "Compare local transcription/synthesis with hosted alternatives without assuming equivalent latency.",
+    "owner": "H02",
+    "document": "docs/04_INTELLIGENCE_AND_COST.md",
+    "acceptance_tests": [
+      "AT-AI-08"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-AI-09",
+    "name": "Versioned model registry",
+    "statement": "Record exact model/runtime/prompt/digest and regression after changes.",
+    "owner": "H02",
+    "document": "docs/04_INTELLIGENCE_AND_COST.md",
+    "acceptance_tests": [
+      "AT-AI-09"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-WEAR-01",
+    "name": "Watch health route",
+    "statement": "Plan official native per-person data ingestion, not direct arbitrary browser/PC HealthKit access.",
+    "owner": "H07",
+    "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+    "acceptance_tests": [
+      "AT-WEAR-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-WEAR-02",
+    "name": "Measurement matrix",
+    "statement": "Treat heart rate, HRV, respiration, sleep, temperature, oxygen and ECG availability separately.",
+    "owner": "H07",
+    "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+    "acceptance_tests": [
+      "AT-WEAR-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-WEAR-03",
+    "name": "Health freshness",
+    "statement": "Keep capture/sample and arrival times; absent samples remain unknown.",
+    "owner": "H07",
+    "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+    "acceptance_tests": [
+      "AT-WEAR-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-WEAR-04",
+    "name": "Manual Watch path",
+    "statement": "Preserve M6 request-only manual entry after phone demo.",
+    "owner": "H07",
+    "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+    "acceptance_tests": [
+      "AT-WEAR-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-WEAR-05",
+    "name": "Glasses interfaces",
+    "statement": "Inventory camera/audio/display/input/motion independently per exact SKU/release.",
+    "owner": "H07",
+    "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+    "acceptance_tests": [
+      "AT-WEAR-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-WEAR-06",
+    "name": "Explicit capture",
+    "statement": "Preserve wearer/recording state, bystander privacy and bounded media.",
+    "owner": "H07",
+    "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+    "acceptance_tests": [
+      "AT-WEAR-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-WEAR-07",
+    "name": "Independent sharing",
+    "statement": "Both wearable users can remain private while using the same service.",
+    "owner": "H07",
+    "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+    "acceptance_tests": [
+      "AT-WEAR-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-WEAR-08",
+    "name": "Wearable physical validation",
+    "statement": "Mock/desktop tests do not qualify actual phone/glasses/Watch performance.",
+    "owner": "H07",
+    "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+    "acceptance_tests": [
+      "AT-WEAR-08"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RF-01",
+    "name": "Beyond WiFi heatmaps",
+    "statement": "Preserve presence/location/geometry/semantics beyond simple coverage analysis.",
+    "owner": "H08",
+    "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "acceptance_tests": [
+      "AT-RF-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RF-02",
+    "name": "Presence bridge",
+    "statement": "Investigate presence/motion with baseline and held-out environments.",
+    "owner": "H08",
+    "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "acceptance_tests": [
+      "AT-RF-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RF-03",
+    "name": "Localization bridge",
+    "statement": "Produce framed uncertainty regions or trajectories against physical ground truth.",
+    "owner": "H08",
+    "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "acceptance_tests": [
+      "AT-RF-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RF-04",
+    "name": "Geometry target",
+    "statement": "Investigate controlled reconstruction with exact measurement assumptions.",
+    "owner": "H08",
+    "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "acceptance_tests": [
+      "AT-RF-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RF-05",
+    "name": "Semantic target",
+    "statement": "Treat scene interpretation as inference linked to measured structure.",
+    "owner": "H08",
+    "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "acceptance_tests": [
+      "AT-RF-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RF-06",
+    "name": "Multiple sensing embodiments",
+    "statement": "Keep phone-accessory/fixed/handheld/fixture/rover/drone options.",
+    "owner": "H08",
+    "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "acceptance_tests": [
+      "AT-RF-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RF-07",
+    "name": "Evidence origin separation",
+    "statement": "Through-obstruction, other-side sensor and historical map are distinct.",
+    "owner": "H08",
+    "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "acceptance_tests": [
+      "AT-RF-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RF-08",
+    "name": "Spatial fusion contract",
+    "statement": "Calibrations, coordinate transforms, timestamps and uncertainty are explicit.",
+    "owner": "H08",
+    "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "acceptance_tests": [
+      "AT-RF-08"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RF-09",
+    "name": "Active perception",
+    "statement": "Choose additional permitted measurement by information value and bounded cost.",
+    "owner": "H08",
+    "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "acceptance_tests": [
+      "AT-RF-09"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RF-10",
+    "name": "Radio/privacy gates",
+    "statement": "Resolve exact equipment authorization and participants before physical sensing.",
+    "owner": "H08",
+    "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "acceptance_tests": [
+      "AT-RF-10"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-01",
+    "name": "Consumer and budget first",
+    "statement": "Retain affordable supported alternatives and complete-kit economics.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-02",
+    "name": "EC120 unknown",
+    "statement": "Run independent four-hour docs-only research; no inferred programmability.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-03",
+    "name": "Exact SDK configuration",
+    "statement": "Qualify aircraft/controller/OS/firmware/API and each needed function.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-04",
+    "name": "Real evidence first",
+    "statement": "Start physical integration with read-only telemetry/images and manual flight.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-05",
+    "name": "Deterministic mission boundary",
+    "statement": "AI proposes reviewed templates; policy owns bounds and authorization.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-06",
+    "name": "Actual outcome and replay",
+    "statement": "Distinguish ACK, observation and unknown; reconcile before retry.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-07",
+    "name": "Manual and failsafe recovery",
+    "statement": "Test configuration-specific takeover and independent failure modes.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-08",
+    "name": "Concurrent aircraft",
+    "statement": "Preserve simultaneous fleet with reserved corridors and landing capacity.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-08"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-09",
+    "name": "Handoff and energy",
+    "statement": "Battery-aware replacement and recovery are scheduled from measured readiness.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-09"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-10",
+    "name": "Payload platform choice",
+    "statement": "Choose ground/consumer/open/enterprise path based on actual payload need.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-10"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-11",
+    "name": "Dock/readiness",
+    "statement": "Keep eventual dock/charging/occupancy maintenance capabilities.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-11"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-DRONE-12",
+    "name": "Simulator protection",
+    "statement": "Preserve current Gen0 pins, namespaces and milestone separation.",
+    "owner": "H05",
+    "document": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "acceptance_tests": [
+      "AT-DRONE-12"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-COMMS-01",
+    "name": "Three communication levels",
+    "statement": "Separate offline local portal, low-bandwidth relay and real internet.",
+    "owner": "H11",
+    "document": "docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+    "acceptance_tests": [
+      "AT-COMMS-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-COMMS-02",
+    "name": "Public guest isolation",
+    "statement": "Easy access does not expose personal/health/control/admin systems.",
+    "owner": "H11",
+    "document": "docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+    "acceptance_tests": [
+      "AT-COMMS-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-COMMS-03",
+    "name": "Backhaul qualification",
+    "statement": "Use verified cellular/satellite/ground upstream when available.",
+    "owner": "H11",
+    "document": "docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+    "acceptance_tests": [
+      "AT-COMMS-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-COMMS-04",
+    "name": "Mesh as question",
+    "statement": "Choose star/mesh/point-to-point links based on measured need.",
+    "owner": "H11",
+    "document": "docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+    "acceptance_tests": [
+      "AT-COMMS-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-COMMS-05",
+    "name": "Message truthfulness",
+    "statement": "Track storage/relay/destination/recipient acknowledgements distinctly.",
+    "owner": "H11",
+    "document": "docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+    "acceptance_tests": [
+      "AT-COMMS-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-COMMS-06",
+    "name": "Data ferry",
+    "statement": "Explore store-and-forward robot mobility separately from permanent connectivity.",
+    "owner": "H11",
+    "document": "docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+    "acceptance_tests": [
+      "AT-COMMS-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-COMMS-07",
+    "name": "Power and offline operation",
+    "statement": "Measure ground station endurance and restart behavior.",
+    "owner": "H11",
+    "document": "docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+    "acceptance_tests": [
+      "AT-COMMS-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-COMMS-08",
+    "name": "Opt-in community support",
+    "statement": "Shared relays/observations expose only explicit capabilities.",
+    "owner": "H11",
+    "document": "docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+    "acceptance_tests": [
+      "AT-COMMS-08"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-EMERG-01",
+    "name": "Independent help",
+    "statement": "Emergency communication does not wait for AI/drone/printer/cloud budgets.",
+    "owner": "H11",
+    "document": "docs/10_EMERGENCY_SUPPORT.md",
+    "acceptance_tests": [
+      "AT-EMERG-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-EMERG-02",
+    "name": "Standing incapacitation target",
+    "statement": "Preserve separately reviewed preauthorized dispatch simulation.",
+    "owner": "H11",
+    "document": "docs/10_EMERGENCY_SUPPORT.md",
+    "acceptance_tests": [
+      "AT-EMERG-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-EMERG-03",
+    "name": "Healthcare communication",
+    "statement": "Prepare minimal consented facts and location/timestamps for a helper.",
+    "owner": "H11",
+    "document": "docs/10_EMERGENCY_SUPPORT.md",
+    "acceptance_tests": [
+      "AT-EMERG-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-EMERG-04",
+    "name": "Kit logistics",
+    "statement": "Explore delivery/access to predefined supplies with human factors.",
+    "owner": "H11",
+    "document": "docs/10_EMERGENCY_SUPPORT.md",
+    "acceptance_tests": [
+      "AT-EMERG-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-EMERG-05",
+    "name": "Fire/rescue lights",
+    "statement": "Explore bright lights, speakers and active illumination.",
+    "owner": "H11",
+    "document": "docs/10_EMERGENCY_SUPPORT.md",
+    "acceptance_tests": [
+      "AT-EMERG-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-EMERG-06",
+    "name": "Professional deployment gate",
+    "statement": "Separate simulation ambition from real fireground/medical/aviation permission.",
+    "owner": "H11",
+    "document": "docs/10_EMERGENCY_SUPPORT.md",
+    "acceptance_tests": [
+      "AT-EMERG-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-EMERG-07",
+    "name": "Readiness first",
+    "statement": "Prepare qualified equipment before a crisis rather than fabricate during one.",
+    "owner": "H11",
+    "document": "docs/10_EMERGENCY_SUPPORT.md",
+    "acceptance_tests": [
+      "AT-EMERG-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ROBOT-01",
+    "name": "Ground embodiment",
+    "statement": "Keep rover/arm/telepresence/sensor-carrier branches alongside aircraft.",
+    "owner": "H10",
+    "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+    "acceptance_tests": [
+      "AT-ROBOT-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ROBOT-02",
+    "name": "Teleop to skills",
+    "statement": "Progress from safe manual operation through demonstrations to constrained learned behavior.",
+    "owner": "H10",
+    "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+    "acceptance_tests": [
+      "AT-ROBOT-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ROBOT-03",
+    "name": "Independent stop",
+    "statement": "Device-specific stopping/recovery remains outside LLM control.",
+    "owner": "H10",
+    "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+    "acceptance_tests": [
+      "AT-ROBOT-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ROBOT-04",
+    "name": "Embodiment qualification",
+    "statement": "Match model observations/action-space/calibration/resources to hardware.",
+    "owner": "H10",
+    "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+    "acceptance_tests": [
+      "AT-ROBOT-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ROBOT-05",
+    "name": "Future robotics research",
+    "statement": "Explore perching, tactile/compliant, event-camera and multimodal ideas with primary evidence.",
+    "owner": "H10",
+    "document": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+    "acceptance_tests": [
+      "AT-ROBOT-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ENG-01",
+    "name": "Printer option",
+    "statement": "User is open to a 3D printer; preserve it as a candidate capability not purchased fact.",
+    "owner": "H09",
+    "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "acceptance_tests": [
+      "AT-ENG-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ENG-02",
+    "name": "Parametric CAD",
+    "statement": "Generate inspectable requirements-driven parts and fixtures.",
+    "owner": "H09",
+    "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "acceptance_tests": [
+      "AT-ENG-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ENG-03",
+    "name": "Design-build-test loop",
+    "statement": "Use physical measurements to drive iterative improvement.",
+    "owner": "H09",
+    "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "acceptance_tests": [
+      "AT-ENG-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ENG-04",
+    "name": "Independent acceptance",
+    "statement": "Designer/optimizing model cannot own the only success criterion.",
+    "owner": "H09",
+    "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "acceptance_tests": [
+      "AT-ENG-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ENG-05",
+    "name": "Machine authority",
+    "statement": "Bound approved fabrication jobs separately from design generation.",
+    "owner": "H09",
+    "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "acceptance_tests": [
+      "AT-ENG-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ENG-06",
+    "name": "Inspection stages",
+    "statement": "Print completed, inspected and qualified are separate states.",
+    "owner": "H09",
+    "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "acceptance_tests": [
+      "AT-ENG-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ENG-07",
+    "name": "Workshop safety",
+    "statement": "Account for ventilation, heat, power, material, noise and shared space.",
+    "owner": "H09",
+    "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "acceptance_tests": [
+      "AT-ENG-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ENG-08",
+    "name": "Physical artifact chain",
+    "statement": "Trace CAD/material/process/assembly/calibration/test versions.",
+    "owner": "H09",
+    "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "acceptance_tests": [
+      "AT-ENG-08"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ENG-09",
+    "name": "Bounded campaigns",
+    "statement": "Autonomy has trial/time/money/energy and no-progress stops.",
+    "owner": "H09",
+    "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "acceptance_tests": [
+      "AT-ENG-09"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-ENG-10",
+    "name": "Low-risk first",
+    "statement": "Start with fixtures/enclosures/trays rather than life-critical printed devices.",
+    "owner": "H09",
+    "document": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "acceptance_tests": [
+      "AT-ENG-10"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RESEARCH-01",
+    "name": "Primary sources and corrections",
+    "statement": "Learn from actual systems with maturity/access/correction labels.",
+    "owner": "H12",
+    "document": "docs/15_NOVELTY_AND_SCIENTIFIC_METHOD.md",
+    "acceptance_tests": [
+      "AT-RESEARCH-01"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "RETAINED_FUTURE_TARGET",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RESEARCH-02",
+    "name": "Useful runtime agents",
+    "statement": "Explore actual research/readiness/investigation/engineering/logistics workers.",
+    "owner": "H12",
+    "document": "docs/15_NOVELTY_AND_SCIENTIFIC_METHOD.md",
+    "acceptance_tests": [
+      "AT-RESEARCH-02"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RESEARCH-03",
+    "name": "Thread/runtime distinction",
+    "statement": "Development agents are not automatically deployed runtime agents.",
+    "owner": "H12",
+    "document": "docs/15_NOVELTY_AND_SCIENTIFIC_METHOD.md",
+    "acceptance_tests": [
+      "AT-RESEARCH-03"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RESEARCH-04",
+    "name": "Ground truth and holdouts",
+    "statement": "Use reproducible baselines, independent measurements and held-out data.",
+    "owner": "H12",
+    "document": "docs/15_NOVELTY_AND_SCIENTIFIC_METHOD.md",
+    "acceptance_tests": [
+      "AT-RESEARCH-04"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RESEARCH-05",
+    "name": "Novelty hypotheses",
+    "statement": "Investigate distinctive combinations without claiming unprecedented invention.",
+    "owner": "H12",
+    "document": "docs/15_NOVELTY_AND_SCIENTIFIC_METHOD.md",
+    "acceptance_tests": [
+      "AT-RESEARCH-05"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RESEARCH-06",
+    "name": "Negative results retained",
+    "statement": "Failures/inconclusive results remain useful and visible.",
+    "owner": "H12",
+    "document": "docs/15_NOVELTY_AND_SCIENTIFIC_METHOD.md",
+    "acceptance_tests": [
+      "AT-RESEARCH-06"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N2_SYNTHETIC_ORCHESTRATION_SUBSET_NOT_PHYSICAL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  },
+  {
+    "id": "REQ-RESEARCH-07",
+    "name": "Modular adoption",
+    "statement": "Keep new tech leads without installing every framework into M0.",
+    "owner": "H12",
+    "document": "docs/15_NOVELTY_AND_SCIENTIFIC_METHOD.md",
+    "acceptance_tests": [
+      "AT-RESEARCH-07"
+    ],
+    "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+    "status": "RETAINED_TARGET",
+    "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+    "change_rule": "Explicit owner decision required to remove or materially narrow",
+    "night01_scope": "N1_SYNTHETIC_SUBSET_NOT_FULL_ACCEPTANCE",
+    "original_acceptance_status": "NOT_EXECUTED"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "message_id": "message-fixture01",
+  "recipient_id": "TEST_CONTACT_A",
+  "sponsor_id": "synthetic-user-a",
+  "state": "STORED_LOCALLY",
+  "observed_at": "2026-09-27T20:00:00Z",
+  "source_component": "mock-outbox",
+  "prior_receipt_id": null,
+  "has_internet_backhaul": false,
+  "is_real_dispatch": false
+}

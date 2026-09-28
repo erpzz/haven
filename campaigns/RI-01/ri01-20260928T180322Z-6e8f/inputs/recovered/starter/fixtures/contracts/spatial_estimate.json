@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "estimate_id": "spatial-fixture01",
+  "map_revision": "map-synthetic01-r1",
+  "owner_scope": "RESEARCH_SYNTHETIC",
+  "frame_id": "test-room-local",
+  "frame_calibration_revision": "cal-test-r1",
+  "unit": "m",
+  "origin": "SIMULATED",
+  "estimate_kind": "PRESENCE_REGION",
+  "geometry": [],
+  "uncertainty_kind": "UNKNOWN",
+  "uncertainty_parameters": [],
+  "evidence_ids": [
+    "ev-synthetic-01"
+  ],
+  "method_version": "synthetic-no-estimator",
+  "observed_interval_start": "2026-09-27T20:00:00Z",
+  "observed_interval_end": "2026-09-27T20:00:00Z",
+  "supports_safe_route_claim": false
+}

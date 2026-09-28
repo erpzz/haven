@@ -1,0 +1,9 @@
+{
+  "artifact_kind": "REQUIREMENT_SPEC_ONLY",
+  "units": "mm",
+  "intent": "Hold a small mock sensor in repeatable poses",
+  "dimensions_status": "NOT_MEASURED",
+  "actual_cad_present": false,
+  "actual_toolpath_present": false,
+  "physical_execution_authorized": false
+}

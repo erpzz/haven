@@ -1,0 +1,321 @@
+[
+  {
+    "id": "CASE01",
+    "title": "Coordinated radio measurements before flying scanners",
+    "source_ids": [
+      "R01"
+    ],
+    "evidence_maturity": "CONTROLLED_RESEARCH",
+    "owner": "H08",
+    "design_lesson": "Spatially deliberate measurements matter more than simply adding a drone. Separate measurement geometry from transport networking.",
+    "proposed_first_experiment": "Replay a known synthetic target over alternative permitted sample positions. Compare fixed and adaptive selection without flying.",
+    "metrics": "Reconstruction error, coverage, number of observations, calibration sensitivity.",
+    "limits": "Do not present the study as an instant stock-phone room scanner.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE02",
+    "title": "Edges from diffraction, not a generative picture",
+    "source_ids": [
+      "R02"
+    ],
+    "evidence_maturity": "CONTROLLED_RESEARCH",
+    "owner": "H08",
+    "design_lesson": "A physics-based feature can support a narrower, more defensible output than a photorealistic scene.",
+    "proposed_first_experiment": "Define known edge targets and evaluate algorithm behavior on held-out synthetic geometry before any approved scanning fixture.",
+    "metrics": "Edge localization, missed/false edges and uncertainty under noisy observations.",
+    "limits": "Letter-shaped target recovery does not establish reading arbitrary documents.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE03",
+    "title": "Radio pose and cross-modal supervision",
+    "source_ids": [
+      "R03"
+    ],
+    "evidence_maturity": "CONTROLLED_RESEARCH",
+    "owner": "H08",
+    "design_lesson": "Training supervision and deployment observations can differ; collect ground truth carefully and test domain shift.",
+    "proposed_first_experiment": "Use licensed public/synthetic data to compare presence/localization with pose hypotheses; avoid real subject identification.",
+    "metrics": "Held-out subject/session error, ambiguity and abstention.",
+    "limits": "Pose estimates are not identity, medical diagnosis or generic WiFi support.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE04",
+    "title": "Low-cost CSI acquisition as a useful bridge",
+    "source_ids": [
+      "R04",
+      "R05"
+    ],
+    "evidence_maturity": "DEVELOPMENT_TOOLS_AND_STANDARD",
+    "owner": "H08",
+    "design_lesson": "Acquisition metadata and reproducible fixtures are reusable even if the later reconstruction method changes.",
+    "proposed_first_experiment": "Design a permitted node/fixture dataset with separate stationary/no-motion and moved-environment sessions.",
+    "metrics": "False alarms per hour, missed-presence cases, sensor drift and setup repeatability.",
+    "limits": "Standard publication and example code are not hardware compatibility or Haven accuracy.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE05",
+    "title": "Complementary sensing in degraded spaces",
+    "source_ids": [
+      "R06"
+    ],
+    "evidence_maturity": "AUTHOR_PREPRINT_WITH_FIELD_CONTEXT",
+    "owner": "H10",
+    "design_lesson": "Different sensors fail differently; fusion should expose degraded modes rather than average them into false confidence.",
+    "proposed_first_experiment": "Replay recorded/synthetic visual, depth and motion streams with one corrupted modality at a time.",
+    "metrics": "Localization error versus best single modality; time to flag degradation.",
+    "limits": "No simulated smoke or missing camera should be treated as qualified real-fire navigation.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE06",
+    "title": "Mobile manipulation learned from demonstration",
+    "source_ids": [
+      "R07"
+    ],
+    "evidence_maturity": "RESEARCH_DEMONSTRATIONS",
+    "owner": "H10",
+    "design_lesson": "Human-mediated demonstration can be a bridge between teleoperation and a bounded learned skill.",
+    "proposed_first_experiment": "Plan a light inert-object transfer on a supervised bench with held-out starting positions.",
+    "metrics": "Success across variations, manual interventions, dropped/ambiguous outcomes.",
+    "limits": "Do not copy hot/sharp demonstration tasks into an unqualified home robot.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE07",
+    "title": "Printed arm components with explicit calibration",
+    "source_ids": [
+      "R08"
+    ],
+    "evidence_maturity": "OPEN_DEVELOPMENT_PLATFORM",
+    "owner": "H09",
+    "design_lesson": "Fabrication is only one part of robotics; assembly, actuators and calibration need their own evidence.",
+    "proposed_first_experiment": "Create a BOM and calibration protocol for a non-actuated mock fixture before deciding on a complete arm.",
+    "metrics": "Dimensional fit, assembly repeatability and calibration traceability.",
+    "limits": "A printable design is not a finished robot or a force-safe device.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE08",
+    "title": "A rover as a movable sensor/communications station",
+    "source_ids": [
+      "R09"
+    ],
+    "evidence_maturity": "OPEN_DEVELOPMENT_PLATFORM",
+    "owner": "H10",
+    "design_lesson": "A grounded carrier may answer the practical question without aerial energy or flight integration.",
+    "proposed_first_experiment": "Design a teleoperated path between marked observation positions; first run the adapter on recorded data.",
+    "metrics": "Pose/arrival truth, acquisition repeatability, stop behavior and task usefulness.",
+    "limits": "Do not presume autonomous household navigation from platform assembly instructions.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE09",
+    "title": "Open visual-action policies and embodiment gaps",
+    "source_ids": [
+      "R10"
+    ],
+    "evidence_maturity": "OPEN_MODEL_SOFTWARE",
+    "owner": "H10",
+    "design_lesson": "A model checkpoint is meaningful only with matching sensors, action space, calibration and resources.",
+    "proposed_first_experiment": "Perform a paper interface/resource review and offline action-schema sanity checks with synthetic observations.",
+    "metrics": "Adapter mismatch detection, required data and actual resource feasibility.",
+    "limits": "System RAM is not GPU memory; no checkpoint is assumed qualified on Eric's hardware.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE10",
+    "title": "Emerging local robot intelligence with access limits",
+    "source_ids": [
+      "R11"
+    ],
+    "evidence_maturity": "RESTRICTED_ACCESS_VENDOR_RESEARCH",
+    "owner": "H12",
+    "design_lesson": "Track capable models without making unavailable products prerequisites.",
+    "proposed_first_experiment": "Create a capability/API/access watch card and a provider-neutral proposal contract; no installation.",
+    "metrics": "Documented access and a realistic future qualification plan.",
+    "limits": "Trusted-tester access is not general availability.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE11",
+    "title": "Learning in simulation and validating reality",
+    "source_ids": [
+      "R12"
+    ],
+    "evidence_maturity": "RESEARCH_FIELD_DEMONSTRATION",
+    "owner": "H05",
+    "design_lesson": "A strong specialized result motivates transfer testing, not a blanket claim of safe autonomy.",
+    "proposed_first_experiment": "Test sensitivity to dynamics and latency mismatch in the existing approved simulator only after that milestone is authorized.",
+    "metrics": "Policy robustness under modeled mismatch and explicit applicability limits.",
+    "limits": "Do not pursue racing speed or transplant policies into real rescue flight.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE12",
+    "title": "Generative mechanical design with requirements",
+    "source_ids": [
+      "R34"
+    ],
+    "evidence_maturity": "GOVERNMENT_ENGINEERING_PRACTICE",
+    "owner": "H09",
+    "design_lesson": "Encode attachment surfaces, keep-outs and loads before optimizing shape. Preserve independent engineering checks.",
+    "proposed_first_experiment": "Generate alternative low-risk sensor stands against a fixed interface and dimensional constraint set.",
+    "metrics": "Constraint violations, material use, fit and measured repeatability.",
+    "limits": "A generated shape or simulation is not structural qualification.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE13",
+    "title": "Autonomous lab loops and scientific correction",
+    "source_ids": [
+      "R13",
+      "R14",
+      "R15"
+    ],
+    "evidence_maturity": "LAB_AUTOMATION_AND_CORRECTION",
+    "owner": "H09",
+    "design_lesson": "Closed loops need protected metrics, independent observation and retained failed trials; impressive novelty claims can require correction.",
+    "proposed_first_experiment": "Use a benign fixture optimization campaign with an evaluator the proposing agent cannot edit.",
+    "metrics": "Verified improvement versus baseline, trial accounting and disagreement handling.",
+    "limits": "No chemistry replication or extrapolation of discovery claims into guaranteed engineering autonomy.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE14",
+    "title": "Drone AED delivery as a whole response chain",
+    "source_ids": [
+      "R16"
+    ],
+    "evidence_maturity": "PEER_REVIEWED_REAL_WORLD_OBSERVATIONAL",
+    "owner": "H11",
+    "design_lesson": "Useful delivery depends on eligibility, arrival, access, human understanding and communication—not flight speed alone.",
+    "proposed_first_experiment": "Simulate a dummy-kit request and human acknowledgement; model unavailability, inaccessible destination and late arrival.",
+    "metrics": "Time to understandable information/access; failed handoffs and independent-help continuity.",
+    "limits": "No claim of survival benefit for Haven, treatment advice or real dispatch authority.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE15",
+    "title": "Illumination and voice as useful payload categories",
+    "source_ids": [
+      "R31"
+    ],
+    "evidence_maturity": "MANUFACTURER_SUPPORTED_CATEGORY",
+    "owner": "H05",
+    "design_lesson": "Power/mass/thermal and human factors belong in the capability contract. Ground testing can answer value first.",
+    "proposed_first_experiment": "Plan a bounded ground light-angle and spoken-message experiment in an authorized area.",
+    "metrics": "Image usefulness, glare, intelligibility, energy and heating.",
+    "limits": "The documented enterprise accessories do not fit every consumer aircraft.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE16",
+    "title": "Off-grid short messages",
+    "source_ids": [
+      "R20"
+    ],
+    "evidence_maturity": "OPEN_COMMUNICATIONS_PLATFORM",
+    "owner": "H11",
+    "design_lesson": "Small truthful messages may have more utility than pretending to provide unavailable broadband.",
+    "proposed_first_experiment": "Use synthetic messages over a mocked contact schedule, then a separately approved node test.",
+    "metrics": "Deduplication, expiry, delivery state, energy and privacy exposure.",
+    "limits": "No universal radio range or emergency-response guarantee.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE17",
+    "title": "Store-and-forward mobility",
+    "source_ids": [
+      "R21"
+    ],
+    "evidence_maturity": "NETWORK_PROTOCOL_STANDARD",
+    "owner": "H11",
+    "design_lesson": "A useful communication task may tolerate delay; make the delay and recipient acknowledgement explicit.",
+    "proposed_first_experiment": "Compare stationary relay and data-ferry contact schedules in a simulator with loss/duplicates.",
+    "metrics": "Delivery probability within deadline, delay and resource cost.",
+    "limits": "Do not equate receipt by a mobile relay with responder dispatch.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE18",
+    "title": "Direct room scans as honest spatial ground truth",
+    "source_ids": [
+      "R30"
+    ],
+    "evidence_maturity": "DOCUMENTED_DEVICE_API",
+    "owner": "H08",
+    "design_lesson": "Known direct-view geometry can support calibration and later comparison without claiming it is a live through-wall observation.",
+    "proposed_first_experiment": "Use consented/synthetic room geometry to test map-origin/time labels and transforms.",
+    "metrics": "Geometry consistency, transform uncertainty and historical/live distinction.",
+    "limits": "Supported LiDAR hardware is required for that API; not every iPhone is assumed compatible.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE19",
+    "title": "Glasses as a requested observation interface",
+    "source_ids": [
+      "R29"
+    ],
+    "evidence_maturity": "DEVELOPER_PREVIEW",
+    "owner": "H07",
+    "design_lesson": "Separate display/audio/camera inputs and production availability before designing an experience around them.",
+    "proposed_first_experiment": "Mock wearer capture and private output; inventory exact supported hardware later.",
+    "metrics": "Capture state, wearer identity, origin timestamp and permission revocation.",
+    "limits": "Mock success and preview documentation are not real-device production qualification.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE20",
+    "title": "Personal-agent framework versus owned coordinator",
+    "source_ids": [
+      "R22",
+      "R23",
+      "R24"
+    ],
+    "evidence_maturity": "SOFTWARE_AND_HOSTED_PRODUCT_COMPARISON",
+    "owner": "H02",
+    "design_lesson": "Compare context/tool overhead, privacy and maintainability separately from model quality.",
+    "proposed_first_experiment": "Use the same small synthetic task set and limited capabilities in a framework evaluation and thin-coordinator design.",
+    "metrics": "Grounded success, context growth, cost, isolation and unapproved skill changes.",
+    "limits": "Open agent code does not provide free inference or make a hosted product self-hostable.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE21",
+    "title": "Compact models and separate speech components",
+    "source_ids": [
+      "R25",
+      "R26",
+      "R27",
+      "R37",
+      "R38"
+    ],
+    "evidence_maturity": "AVAILABLE_MODEL_SOFTWARE_CANDIDATES",
+    "owner": "H02",
+    "design_lesson": "Separate ordinary code, small-model tasks and strong reasoning; measure the entire interaction.",
+    "proposed_first_experiment": "Benchmark short sourced questions, structured intent and speech fixtures under bounded context.",
+    "metrics": "Latency, grounding, schema validity, memory, cost and privacy errors.",
+    "limits": "Model artifact size and schema validity do not prove runtime fit or correctness.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  },
+  {
+    "id": "CASE22",
+    "title": "A printer gateway is an actuator, not a chat tool",
+    "source_ids": [
+      "R17",
+      "R18",
+      "R19"
+    ],
+    "evidence_maturity": "CAD_AND_MACHINE_INTERFACE",
+    "owner": "H09",
+    "design_lesson": "Connect exact design/toolpath/profile versions through a separate approved machine job and inspection pipeline.",
+    "proposed_first_experiment": "Validate inert job manifests with changed hashes and interrupted states; no hardware execution.",
+    "metrics": "Rejection of unreviewed jobs, correct incomplete/inspection states and provenance.",
+    "limits": "No automatic heater operation or safety guarantee from a camera.",
+    "status": "RESEARCH_AND_PROPOSED_ADAPTATION_NOT_IMPLEMENTED"
+  }
+]

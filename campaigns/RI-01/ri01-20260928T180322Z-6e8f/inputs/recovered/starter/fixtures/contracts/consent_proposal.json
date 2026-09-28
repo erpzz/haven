@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "consent_id": "consent-synthetic01",
+  "subject_id": "synthetic-user-b",
+  "requesting_principal": "synthetic-user-b",
+  "resource_scope": "PERSONAL_B",
+  "purposes": [
+    "local_summary"
+  ],
+  "recipient_ids": [
+    "synthetic-user-b"
+  ],
+  "provider_ids": [],
+  "retention_days": 1,
+  "expires_at": "2026-09-28T20:00:00Z",
+  "revision": 1,
+  "state": "PROPOSED_NOT_GRANTED"
+}
