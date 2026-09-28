@@ -1,0 +1,19 @@
+Begin R15 — Haven Observatory: God/Admin POV and Open-Tool Integration.
+
+Use the GitHub connection to read:
+https://github.com/erpzz/haven/blob/main/coordination/R15_OBSERVATORY.md
+https://github.com/erpzz/haven/blob/main/prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md
+https://github.com/erpzz/haven/tree/main/design/H00/R15/brief-v1
+https://github.com/erpzz/haven/issues/12
+
+Resolve main once, record that commit, and fetch your input files at that fixed revision. Inspect my actual fork at https://github.com/erpzz/gods-eye-view and record its commit separately; do not silently substitute upstream.
+
+Embrace the spatial admin experience: a world inspector, retained-observation time machine, honest fog of war, qualified-resource board, scenario forks, engineering capability tree, cooperative field views and public environmental observatory. Preserve every existing Haven/ASTRA branch.
+
+Follow the complete prompt's source audit, open-tool comparison, code/data/service licensing, cost, interfaces, experiments and eight-file handback requirements. The supporting brief contains ideas and limited source-inspection notes, not completed research or accepted architecture.
+
+Use one integrated thread initially. The optional R15A–F prompts under prompts/r15/ are available for later explicit assignments; do not start them automatically.
+
+Public research, read-only source inspection and creation of design deliverables only. Do not install or run repository code, download models, call paid APIs, connect accounts/devices, collect personal data, deploy, run workflows or modify either repository. No full-source-import repair is part of R15.
+
+Return the research files for proposed design/H00/R15/v1/, a one-page integration summary, exact unresolved owner decisions and one smallest useful implementation proposal. Do not begin implementation. Do not claim runtime tests or publication that did not occur.

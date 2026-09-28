@@ -4,6 +4,12 @@ A cumulative, evidence-led design and coordination hub for an everyday assistant
 
 **Start with [START_HERE.md](START_HERE.md).** This is not a deployed assistant. Research proposals, synthetic laboratory results and accepted physical capabilities are different states.
 
+## Haven Observatory — new research branch
+
+The spatial God/admin POV is now part of the cumulative design: world inspection, time replay, honest fog of war, owned-resource coordination, scenario forks, engineering lineage, cooperative field views and public regional awareness. These are research targets, not implemented capabilities.
+
+**[Observatory entry point](coordination/R15_OBSERVATORY.md)** · [Full R15 prompt](prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md) · [Starting message](prompts/R15_START_MESSAGE.txt) · [Opportunity backlog](design/H00/R15/brief-v1/OPPORTUNITIES.md) · [Issue #12](https://github.com/erpzz/haven/issues/12)
+
 ## Where to go
 
 - [Current status](CURRENT_STATUS.md) and [thread queue](coordination/THREAD_STATUS.md)
@@ -23,11 +29,15 @@ A cumulative, evidence-led design and coordination hub for an everyday assistant
 
 Haven is a daily assistant for independently consenting people. Its retained branches include affordable model routing and memory; private/shared personal tools; phones, Watches and smart glasses; RF presence/localization toward geometry and semantic spatial understanding; sensor fusion and active perception; handheld/fixed/mobile instruments; aircraft fleets, lighting, speakers and bases; emergency communications and independent help; ground robotics; CAD, 3D printing and measured engineering campaigns; and continued scientific research.
 
+Human augmentation/new senses and the Observatory add to those branches. The original R14 prompt remains available at [its pinned commit](https://github.com/erpzz/haven/blob/cffc1168255f600206c53fd63d1ad3ffd963121d/prompts/R14_HUMAN_AUGMENTATION_CYBERNETICS.md); do not infer its merge or research completion from this reference.
+
 No research specialty replaces the project. No publication grants device, account, purchase, deployment or later coding authority.
 
 ## Repository boundaries
 
 Existing source documents are imported rather than rewritten. The `baseline/`, versioned `design/`, `review/` and `snapshots/` trees preserve their recorded provenance. New root and coordination files provide navigation and the shared work protocol. See [import status](coordination/IMPORT_STATUS.md) and the publication inventory for exact coverage and exclusions.
+
+**The earlier complete-source migration remains unverified.** The Observatory addition does not declare it finished. Some historical navigation targets may still be missing; verify actual paths before claiming an input was read. The current R15 entry point and supporting brief are separate published documentation.
 
 The active ASTRA M0 application is not this repository. The supplied NIGHT-01 code is a **historical synthetic snapshot**, not an integration into M0 or a current live working tree.
 

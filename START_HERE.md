@@ -24,3 +24,11 @@ The root coordination documents describe how to use those sources now. An accept
 - R07: use R06's proposed observation/transform semantics to design the shared world-model boundary after the first review.
 
 The R1 lifecycle repair and M0 acceptance remain separate coding tracks. Read their actual latest evidence from the authorized owners before asserting progress.
+
+## Observatory and additional exploration
+
+For R15, use [coordination/R15_OBSERVATORY.md](coordination/R15_OBSERVATORY.md), the [full prompt](prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md) and [starting message](prompts/R15_START_MESSAGE.txt). The [prompt index](prompts/README.md) also links R14 and the existing issue roster. R14/R15 add to the project; they do not cancel prior priorities or launch research automatically.
+
+The Observatory source brief is under `design/H00/R15/brief-v1/`. Completed research, when produced and authorized for publication, belongs under its own unused version directory, not in the brief. Actual GEV integration, models and devices remain unimplemented by this publication.
+
+The older complete-source import remains unverified. Some historical paths referenced above or inside issues may be missing; check the tree and state missing evidence explicitly. Do not re-create originals from summaries or call an input read when only its title was available. This limitation does not prevent a self-contained public-source R15 study from proceeding with declared assumptions.
