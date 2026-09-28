@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28T20:24:36.112093+00:00",
+  "generated_at": "2026-09-28T20:47:22.066610+00:00",
   "meaning": "Scoped documentary/design dispositions, not experimental acceptance or execution permission; read amendments and retained gates.",
   "entries": [
     {
@@ -222,6 +222,27 @@
       ]
     },
     {
+      "task_id": "R05",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_daily",
+      "scope": "ACCEPT_FOR_SYNTHESIS: documentary personal-tools/scheduling design, proposed tests unexecuted, no account or implementation authority.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R05/REPORT.md",
+          "sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1"
+        },
+        {
+          "path": "reviews/REVIEW-R05/REPORT.md",
+          "sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7"
+        }
+      ],
+      "open_findings": [
+        "LOW L01: AT-DAILY-08 cross-device task resume remains partial; account switching/A08/C09 are not equivalent. Add explicit mandatory device-handoff assertion in versioned future package before AT acceptance.",
+        "Q-R05-01 restart/restore clarification is root interpretation, not fresh upstream author assent."
+      ]
+    },
+    {
       "task_id": "R07",
       "status": "ACCEPTED_FOR_SYNTHESIS",
       "author_or_reviewer": "/root/ri01_world",
@@ -262,6 +283,55 @@
         "R08P00-G1_E01_METHOD_FREEZE",
         "R08P00-G2_PHYSICAL_METROLOGY",
         "R08P00-G3_IMPLEMENTATION_ACCEPTANCE"
+      ]
+    },
+    {
+      "task_id": "MM-VISION",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_mmvision",
+      "scope": "Exact documentary design, shortlist and proposed evaluations; no mandatory source amendment. Rights, lifecycle/decoder, independent oracle, route/attempt denominator and metric/native/human gates retained.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/MM-VISION/REPORT.md",
+          "sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd"
+        },
+        {
+          "path": "reviews/REVIEW-MM-VISION/REVIEW.md",
+          "sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660"
+        }
+      ],
+      "open_findings": [
+        "MV-G1_ARTIFACT_RIGHTS",
+        "MV-G2_LIFECYCLE_DECODER_NATIVE",
+        "MV-G3_ORACLE_SEMANTIC_UTILITY",
+        "MV-G4_ROUTE_ATTEMPT_DENOMINATORS",
+        "MV-G5_METRIC_TEMPORAL_HUMAN"
+      ]
+    },
+    {
+      "task_id": "MM-AV",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_mmav",
+      "scope": "ACCEPT_FOR_SYNTHESIS: documentary multimodal audio/video design only; no execution qualification or permission.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/MM-AV/REPORT.md",
+          "sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0"
+        },
+        {
+          "path": "reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+          "sha256": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593"
+        },
+        {
+          "path": "reviews/REVIEW-MM-AV/REVIEW.md",
+          "sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025"
+        }
+      ],
+      "open_findings": [
+        "H06 protocol freeze and all exact model/runtime/host/authorization prerequisites remain.",
+        "R12 review read-scope addendum retained in original MM-AV review."
       ]
     },
     {
@@ -510,6 +580,48 @@
         {
           "path": "reviews/REVIEW-R08-P00/REVIEW.md",
           "sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-MM-VISION",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_p01",
+      "scope": null,
+      "disposition": "Exact documentary design, shortlist and proposed evaluations; no mandatory source amendment. Rights, lifecycle/decoder, independent oracle, route/attempt denominator and metric/native/human gates retained.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-MM-VISION/REVIEW.md",
+          "sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-MM-AV",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS: documentary multimodal audio/video design only; no execution qualification or permission.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-MM-AV/REVIEW.md",
+          "sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R05",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS: documentary personal-tools/scheduling design, proposed tests unexecuted, no account or implementation authority.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R05/REPORT.md",
+          "sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7"
         }
       ],
       "open_findings": null

@@ -76,3 +76,11 @@
 {"recorded_at": "2026-09-28T20:24:36.112093+00:00", "task_id": "REVIEW-MM-VISION", "actual_agent_id": "/root/ri01_review_p01", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
 {"recorded_at": "2026-09-28T20:24:36.112093+00:00", "task_id": "MM-AV", "actual_agent_id": "/root/ri01_mmav", "event": "COMPLETED_QUIESCENT"}
 {"recorded_at": "2026-09-28T20:24:36.112093+00:00", "task_id": "REVIEW-MM-AV", "actual_agent_id": "/root/ri01_review_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
+{"recorded_at": "2026-09-28T20:31:17.609235+00:00", "task_id": "R09", "actual_agent_id": "/root/ri01_world", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_researcher"}
+{"recorded_at": "2026-09-28T20:31:17.609235+00:00", "task_id": "REVIEW-MM-VISION", "actual_agent_id": "/root/ri01_review_p01", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:39:01.077857+00:00", "task_id": "REVIEW-MM-AV", "actual_agent_id": "/root/ri01_review_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:39:01.077857+00:00", "task_id": "R05", "actual_agent_id": "/root/ri01_daily", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:39:01.077857+00:00", "task_id": "R14", "actual_agent_id": "/root/ri01_mmav", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "Human augmentation specialist"}
+{"recorded_at": "2026-09-28T20:39:55.620667+00:00", "task_id": "REVIEW-R05", "actual_agent_id": "/root/ri01_review_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "Independent research reviewer"}
+{"recorded_at": "2026-09-28T20:47:22.066610+00:00", "task_id": "REVIEW-R05", "actual_agent_id": "/root/ri01_review_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:47:22.066610+00:00", "task_id": "R11", "actual_agent_id": "/root/ri01_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_researcher"}

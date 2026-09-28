@@ -25,7 +25,7 @@
   "close_tool": "NOT_EXPOSED; native completed turns quiescent; report completion/interrupt state, never claim explicit closure",
   "exact_model": "NOT_EXPOSED; inherited defaults",
   "git_transport": "Existing authenticated GitHub CLI/HTTPS; connector fetch_file failed Unknown tool; no credentials changed",
-  "assignments_dispatched": 41,
+  "assignments_dispatched": 45,
   "modalities": {
     "text_code": "EXERCISED",
     "image": "DIRECT_IMAGE_EXERCISED",
@@ -41,15 +41,15 @@
   },
   "failed_spawn_attempts": 3,
   "thread_limit_observation": "Capacity-dependent: an earlier spawn and later message-to-quiescent child were rejected at thread limit; after completion, fresh privacy/code children spawned successfully. No explicit close tool. Keep at most3 active children under platform4-agent total and recheck actual handles.",
-  "published_checkpoint": "693edd34f80fac4a5f5ec141950dc1ff202bd290",
-  "publication_verified_by": "git push plus git ls-remote exact campaign ref",
+  "published_checkpoint": "d2b627b88c346b90b1688c4884396432a86bc84b",
+  "publication_verified_by": "Successful push and exact git ls-remote campaign ref",
   "issue_receipt": "https://github.com/erpzz/haven/issues/17#issuecomment-5877412035",
   "git_transport_note": "Default credential helper waited without publishing; owned command cancelled. Per-command existing gh auth git-credential succeeded; no persistent credential/settings change.",
   "private_public_research_assets_bytes": 15303654,
   "failed_dispatch_observation": "Three native spawn rejections observed (initial REV-R02, R03 amendment fallback, R01 reviewer fallback); two R03 author reactivation attempts rejected; an earlier Q-CORE-04 message rejected. Failed attempts created no assignments. Later reactivation/reuse succeeded as capacity freed.",
   "last_checkpoint_at": "2026-09-28T19:54:24.064171+00:00",
   "coordination_policy": "Root routes early specialist questions; active agents continue independent soft-input work. Four total active-agent platform limit. No fabricated consultation or recursive dispatch.",
-  "last_metadata_update_at": "2026-09-28T20:24:36.112093+00:00",
+  "last_metadata_update_at": "2026-09-28T20:47:22.066610+00:00",
   "private_source_cache_bytes": 1954370,
   "private_source_cache_note": "151 exact Git-blob-verified Observatory code/document files; read-only cache, not executed or republished"
 }

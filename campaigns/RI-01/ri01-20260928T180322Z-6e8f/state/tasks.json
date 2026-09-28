@@ -519,7 +519,7 @@
       "soft": [],
       "kind": "research",
       "research": "R05",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_daily",
       "attempt_count": 1,
       "started_at": "2026-09-28T20:22:20.774402+00:00",
@@ -542,6 +542,20 @@
           "review_path": null,
           "review_sha256": null
         }
+      ],
+      "completed_at": "2026-09-28T20:39:01.077857+00:00",
+      "artifact": "research/R05/REPORT.md",
+      "artifact_sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1",
+      "manifest": "research/R05/MANIFEST.sha256",
+      "manifest_sha256": "5e84dc6232a2e48b16e2ddee2dbfa8ee54248b4c28ef458e0b1b7dde0875097a",
+      "accepted_at": "2026-09-28T20:47:22.066610+00:00",
+      "acceptance_scope": "ACCEPT_FOR_SYNTHESIS: documentary personal-tools/scheduling design, proposed tests unexecuted, no account or implementation authority.",
+      "review_artifact": "reviews/REVIEW-R05/REPORT.md",
+      "review_sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7",
+      "reviewer": "/root/ri01_review_privacy",
+      "open_findings": [
+        "LOW L01: AT-DAILY-08 cross-device task resume remains partial; account switching/A08/C09 are not equivalent. Add explicit mandatory device-handoff assertion in versioned future package before AT acceptance.",
+        "Q-R05-01 restart/restore clarification is root interpretation, not fresh upstream author assent."
       ]
     },
     {
@@ -674,7 +688,7 @@
         "R12"
       ],
       "kind": "multimodal",
-      "status": "IN_REVIEW",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_mmvision",
       "attempt_count": 1,
       "started_at": "2026-09-28T20:07:41.361513+00:00",
@@ -702,7 +716,19 @@
       "artifact": "research/MM-VISION/REPORT.md",
       "artifact_sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd",
       "manifest": "research/MM-VISION/HANDOFF_MANIFEST.json",
-      "manifest_sha256": "8e9cdac5e012c2fa76cd27b29204158719cee95b2cc7d0663382d003d5b80703"
+      "manifest_sha256": "8e9cdac5e012c2fa76cd27b29204158719cee95b2cc7d0663382d003d5b80703",
+      "accepted_at": "2026-09-28T20:31:17.609235+00:00",
+      "acceptance_scope": "Exact documentary design, shortlist and proposed evaluations; no mandatory source amendment. Rights, lifecycle/decoder, independent oracle, route/attempt denominator and metric/native/human gates retained.",
+      "review_artifact": "reviews/REVIEW-MM-VISION/REVIEW.md",
+      "review_sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660",
+      "reviewer": "/root/ri01_review_p01",
+      "open_findings": [
+        "MV-G1_ARTIFACT_RIGHTS",
+        "MV-G2_LIFECYCLE_DECODER_NATIVE",
+        "MV-G3_ORACLE_SEMANTIC_UTILITY",
+        "MV-G4_ROUTE_ATTEMPT_DENOMINATORS",
+        "MV-G5_METRIC_TEMPORAL_HUMAN"
+      ]
     },
     {
       "id": "MM-AV",
@@ -715,7 +741,7 @@
         "R12"
       ],
       "kind": "multimodal",
-      "status": "IN_REVIEW",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_mmav",
       "attempt_count": 1,
       "started_at": "2026-09-28T20:09:01.087274+00:00",
@@ -743,7 +769,19 @@
       "artifact": "research/MM-AV/REPORT.md",
       "artifact_sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0",
       "manifest": "research/MM-AV/HANDOFF_MANIFEST.json",
-      "manifest_sha256": "1cb85927411aefaf3ba16a39e4b2465b53ee12dfd5f7d240da3112128d19cc64"
+      "manifest_sha256": "1cb85927411aefaf3ba16a39e4b2465b53ee12dfd5f7d240da3112128d19cc64",
+      "accepted_at": "2026-09-28T20:39:01.077857+00:00",
+      "acceptance_scope": "ACCEPT_FOR_SYNTHESIS: documentary multimodal audio/video design only; no execution qualification or permission.",
+      "review_artifact": "reviews/REVIEW-MM-AV/REVIEW.md",
+      "review_sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025",
+      "reviewer": "/root/ri01_review_privacy",
+      "open_findings": [
+        "H06 protocol freeze and all exact model/runtime/host/authorization prerequisites remain.",
+        "R12 review read-scope addendum retained in original MM-AV review."
+      ],
+      "closure_artifact": "reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+      "closure_sha256": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593",
+      "closure_status": "L01_CLOSED_FOR_SYNTHESIS_BY_MATERIAL_PROTOCOL_AMENDMENT"
     },
     {
       "id": "R09",
@@ -759,7 +797,37 @@
       ],
       "kind": "research",
       "research": "R09",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_world",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T20:31:17.609235+00:00",
+      "allowed_output_prefix": "research/R09/",
+      "budgets": {
+        "minutes": 30
+      },
+      "hard_inputs": [
+        {
+          "task_id": "CORE",
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+          "review_path": "reviews/VISION-ARCH/REVIEW.md",
+          "review_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        },
+        {
+          "task_id": "R07",
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+          "review_path": "reviews/REVIEW-R07/REVIEW.md",
+          "review_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        },
+        {
+          "task_id": "R08-P00",
+          "path": "research/R08-P00/REPORT.md",
+          "sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7",
+          "review_path": "reviews/REVIEW-R08-P00/REVIEW.md",
+          "review_sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+        }
+      ]
     },
     {
       "id": "R11",
@@ -776,11 +844,48 @@
       ],
       "kind": "research",
       "research": "R11",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_privacy",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T20:47:22.066610+00:00",
+      "allowed_output_prefix": "research/R11",
+      "budgets": {
+        "minutes": 35
+      },
+      "hard_inputs": [
+        {
+          "task_id": "CORE",
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+          "review_path": "reviews/VISION-ARCH/REVIEW.md",
+          "review_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        },
+        {
+          "task_id": "R04",
+          "path": "research/R04/REPORT.md",
+          "sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+          "review_path": "reviews/REVIEW-R04/REVIEW.md",
+          "review_sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956"
+        },
+        {
+          "task_id": "R07",
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+          "review_path": "reviews/REVIEW-R07/REVIEW.md",
+          "review_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        },
+        {
+          "task_id": "R10",
+          "path": "research/R10/REPORT.md",
+          "sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+          "review_path": "reviews/REVIEW-R10/REVIEW.md",
+          "review_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8"
+        }
+      ]
     },
     {
       "id": "R14",
-      "role": "haven_researcher",
+      "role": "Human augmentation specialist",
       "hard": [
         "CORE",
         "R04",
@@ -793,7 +898,37 @@
       ],
       "kind": "research",
       "research": "R14",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_mmav",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T20:39:01.077857+00:00",
+      "allowed_output_prefix": "research/R14",
+      "budgets": {
+        "minutes": 40
+      },
+      "hard_inputs": [
+        {
+          "task_id": "CORE",
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+          "review_path": "reviews/VISION-ARCH/REVIEW.md",
+          "review_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        },
+        {
+          "task_id": "R04",
+          "path": "research/R04/REPORT.md",
+          "sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+          "review_path": "reviews/REVIEW-R04/REVIEW.md",
+          "review_sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956"
+        },
+        {
+          "task_id": "MM-AV",
+          "path": "research/MM-AV/REPORT.md",
+          "sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0",
+          "review_path": "reviews/REVIEW-MM-AV/REVIEW.md",
+          "review_sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025"
+        }
+      ]
     },
     {
       "id": "MM-FUSION",
@@ -1392,7 +1527,7 @@
       "role": "haven_research_reviewer",
       "kind": "review",
       "actual_agent_id": "/root/ri01_review_p01",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "attempt_count": 1,
       "started_at": "2026-09-28T20:24:36.112093+00:00",
       "allowed_output_prefix": "reviews/REVIEW-MM-VISION/",
@@ -1407,7 +1542,11 @@
           "review_path": null,
           "review_sha256": null
         }
-      ]
+      ],
+      "completed_at": "2026-09-28T20:31:17.609235+00:00",
+      "artifact": "reviews/REVIEW-MM-VISION/REVIEW.md",
+      "artifact_sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660",
+      "review_disposition": "Exact documentary design, shortlist and proposed evaluations; no mandatory source amendment. Rights, lifecycle/decoder, independent oracle, route/attempt denominator and metric/native/human gates retained."
     },
     {
       "id": "REVIEW-MM-AV",
@@ -1418,7 +1557,7 @@
       "role": "haven_research_reviewer",
       "kind": "review",
       "actual_agent_id": "/root/ri01_review_privacy",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "attempt_count": 1,
       "started_at": "2026-09-28T20:24:36.112093+00:00",
       "allowed_output_prefix": "reviews/REVIEW-MM-AV/",
@@ -1433,7 +1572,41 @@
           "review_path": null,
           "review_sha256": null
         }
-      ]
+      ],
+      "completed_at": "2026-09-28T20:39:01.077857+00:00",
+      "artifact": "reviews/REVIEW-MM-AV/REVIEW.md",
+      "artifact_sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025",
+      "review_disposition": "ACCEPT_FOR_SYNTHESIS: documentary multimodal audio/video design only; no execution qualification or permission."
+    },
+    {
+      "id": "REVIEW-R05",
+      "hard": [
+        "R05"
+      ],
+      "soft": [],
+      "role": "Independent research reviewer",
+      "kind": "review",
+      "actual_agent_id": "/root/ri01_review_privacy",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T20:39:55.620667+00:00",
+      "allowed_output_prefix": "reviews/REVIEW-R05",
+      "budgets": {
+        "minutes": 25
+      },
+      "hard_inputs": [
+        {
+          "task_id": "R05",
+          "path": "research/R05/REPORT.md",
+          "sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ],
+      "completed_at": "2026-09-28T20:47:22.066610+00:00",
+      "artifact": "reviews/REVIEW-R05/REPORT.md",
+      "artifact_sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7",
+      "review_disposition": "ACCEPT_FOR_SYNTHESIS: documentary personal-tools/scheduling design, proposed tests unexecuted, no account or implementation authority."
     }
   ]
 }

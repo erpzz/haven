@@ -1,13 +1,10 @@
 {
-  "recorded_at": "2026-09-28T20:24:36.112093+00:00",
-  "ready": [
-    "R09",
-    "R11"
-  ],
+  "recorded_at": "2026-09-28T20:47:22.066610+00:00",
+  "ready": [],
   "active": [
-    "R05",
-    "REVIEW-MM-VISION",
-    "REVIEW-MM-AV"
+    "R09",
+    "R11",
+    "R14"
   ],
   "rule": "Do not bypass exact independent review gates; retain hard versus soft distinction."
 }
