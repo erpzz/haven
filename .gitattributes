@@ -1,0 +1,6 @@
+# Preserve imported source bytes; no automatic line-ending conversion.
+baseline/** -text
+design/** -text
+review/** -text
+snapshots/** -text
+research-prompts/original-v1/** -text
