@@ -1,0 +1,402 @@
+[
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "claim_id": "102 canonical REQ entries; REQ-PRIV-01 through09"
+    },
+    "artifact_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+    "finding": "102 canonical REQ entries; REQ-PRIV-01 through09",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Acceptance; EXPERIMENTS original mapping",
+    "design_effect": "Preserve all102 IDs; explicit nine privacy acceptance rows",
+    "reason": "Current task narrows implementation slice, not retained vision",
+    "review_state": "RETAINED_TARGET"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "baseline/cumulative-v1.0/docs/03_PRIVACY_AND_AUTHORITY.md",
+      "claim_id": "Two independent users, purpose consent, admin residual risk, standing policy"
+    },
+    "artifact_sha256": "500f2ed36d932dfba5520f18027138fcd2aa38508a1d45be205a7e9f328ff2bf",
+    "finding": "Two independent users, purpose consent, admin residual risk, standing policy",
+    "disposition": "AMENDED",
+    "downstream_section": "REPORT D01-D07",
+    "design_effect": "Separate ownership/subjects; define ordering and deletion",
+    "reason": "Original principle needs concrete cross-domain semantics",
+    "review_state": "DESIGN_PROPOSAL"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/ACCEPTANCE_CATALOG.md",
+      "claim_id": "AT-PRIV-01 through09"
+    },
+    "artifact_sha256": "abb6deaf4d945c3f6daafc86d5107ac28a9953fcde5ea26c5430a536eb87e387",
+    "finding": "AT-PRIV-01 through09",
+    "disposition": "REUSED",
+    "downstream_section": "EXPERIMENTS mapping",
+    "design_effect": "All nine NOT_EXECUTED, concrete proposed test families",
+    "reason": "No source-read or design equals executed acceptance",
+    "review_state": "NOT_EXECUTED"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/EXPERIMENTS.md",
+      "claim_id": "EX02 and EX32"
+    },
+    "artifact_sha256": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521",
+    "finding": "EX02 and EX32",
+    "disposition": "AMENDED",
+    "downstream_section": "EXPERIMENTS E01/E03",
+    "design_effect": "Two-user and restore experiments expanded with vector/device/unknown cases",
+    "reason": "Retain exact original identifiers and stop gates",
+    "review_state": "PROPOSED_NOT_EXECUTED"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/context_packet.schema.json",
+      "claim_id": "context_packet inert v1"
+    },
+    "artifact_sha256": "9ebbf9c8fe0b620db89d3348c31f38580f11b7244b24897a6f200e82e9aba925",
+    "finding": "context_packet inert v1",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Interface changes; CONTRACTS",
+    "design_effect": "Preserve proposal-only/private-data/execution restrictions; explicit future mapping",
+    "reason": "No synthetic-to-production flag conversion",
+    "review_state": "DESIGN_ONLY"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/consent_proposal.schema.json",
+      "claim_id": "consent_proposal inert v1"
+    },
+    "artifact_sha256": "d48d26aac261eb77c9d9f4ecb9d93c6b0a0efdb2358f83c3e613f6419005defb",
+    "finding": "consent_proposal inert v1",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Interface changes; CONTRACTS",
+    "design_effect": "Preserve proposal-only/private-data/execution restrictions; explicit future mapping",
+    "reason": "No synthetic-to-production flag conversion",
+    "review_state": "DESIGN_ONLY"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/agent_job.schema.json",
+      "claim_id": "agent_job inert v1"
+    },
+    "artifact_sha256": "fbc33699cebf0f095a5e6da2c5ab3c64554bcb499be2442aa6f62ba1c8047b93",
+    "finding": "agent_job inert v1",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Interface changes; CONTRACTS",
+    "design_effect": "Preserve proposal-only/private-data/execution restrictions; explicit future mapping",
+    "reason": "No synthetic-to-production flag conversion",
+    "review_state": "DESIGN_ONLY"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/evidence.schema.json",
+      "claim_id": "evidence inert v1"
+    },
+    "artifact_sha256": "241d0f2bb00cbbb1e59472a92b66b53b893135f410e4c88bd2712d061e1a1c29",
+    "finding": "evidence inert v1",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Interface changes; CONTRACTS",
+    "design_effect": "Preserve proposal-only/private-data/execution restrictions; explicit future mapping",
+    "reason": "No synthetic-to-production flag conversion",
+    "review_state": "DESIGN_ONLY"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/physical_action_proposal.schema.json",
+      "claim_id": "physical_action_proposal inert v1"
+    },
+    "artifact_sha256": "6e72a18ed05eb120dd02cc4787f52e0ae5d153539ec89f4dcb3602bbfe478d5c",
+    "finding": "physical_action_proposal inert v1",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Interface changes; CONTRACTS",
+    "design_effect": "Preserve proposal-only/private-data/execution restrictions; explicit future mapping",
+    "reason": "No synthetic-to-production flag conversion",
+    "review_state": "DESIGN_ONLY"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F01"
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "REV-R02-F01",
+    "disposition": "AMENDED",
+    "downstream_section": "D03/CONTRACTS E",
+    "design_effect": "Define release and consume ordering; remote race and unknown delivery",
+    "reason": "Carry exact reviewer amendment without claiming tests ran",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS_WITH_AMENDMENTS"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F02"
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "REV-R02-F02",
+    "disposition": "AMENDED",
+    "downstream_section": "D03/CONTRACTS G",
+    "design_effect": "Separate admission/output/compute/billing/acquisition stop; no containment claim",
+    "reason": "Carry exact reviewer amendment without claiming tests ran",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS_WITH_AMENDMENTS"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F03"
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "REV-R02-F03",
+    "disposition": "AMENDED",
+    "downstream_section": "D06/EXPERIMENTS E02",
+    "design_effect": "Independent semantic scoring separate from quote and authority checks",
+    "reason": "Carry exact reviewer amendment without claiming tests ran",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS_WITH_AMENDMENTS"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F04"
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "REV-R02-F04",
+    "disposition": "AMENDED",
+    "downstream_section": "D02/D05/EXPERIMENTS E02",
+    "design_effect": "Typed modality profiles, inherited parents and output audiences",
+    "reason": "Carry exact reviewer amendment without claiming tests ran",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS_WITH_AMENDMENTS"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F05"
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "REV-R02-F05",
+    "disposition": "AMENDED",
+    "downstream_section": "EXPERIMENTS E01/E02",
+    "design_effect": "Frozen family oracle, utility cases and independent review",
+    "reason": "Carry exact reviewer amendment without claiming tests ran",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS_WITH_AMENDMENTS"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F06"
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "REV-R02-F06",
+    "disposition": "AMENDED",
+    "downstream_section": "CONTRACTS G",
+    "design_effect": "Admitted unknown exposure retained; idempotent conservative settlement",
+    "reason": "Carry exact reviewer amendment without claiming tests ran",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS_WITH_AMENDMENTS"
+  },
+  {
+    "upstream_task": "R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/CONTRACT_DESIGN.md",
+      "claim_id": "CR-R02-01 through05; C01 throughC11"
+    },
+    "artifact_sha256": "9cc1ce4ce5d2d240b244513aa7680ba0015d86829216497877f3f90cd51856d7",
+    "finding": "CR-R02-01 through05; C01 throughC11",
+    "disposition": "AMENDED",
+    "downstream_section": "REPORT CR matrix; CONTRACTS A-H",
+    "design_effect": "All5 dispositions; trusted vector, separate output/dispatch and source closure",
+    "reason": "Close H04 contracts while retaining H02/domain ownership",
+    "review_state": "REVIEWED_BOUNDED_SUBSET"
+  },
+  {
+    "upstream_task": "R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/SOURCES.md",
+      "claim_id": "Framework authority and shared-admin boundaries; source register excerpt"
+    },
+    "artifact_sha256": "05d2e874c971dc21952fecb0cbbee6d25051173e432382ed8f33ed9b0afa9afa",
+    "finding": "Framework authority and shared-admin boundaries; source register excerpt",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Evidence/D05/D06",
+    "design_effect": "Primary-source upstream limits retained; no framework/adoption claim",
+    "reason": "Avoid repeating external survey beyond R03 relevance",
+    "review_state": "UPSTREAM_REVIEWED"
+  },
+  {
+    "upstream_task": "REV-R06",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/REVIEW.md",
+      "claim_id": "AMEND-R06-01"
+    },
+    "artifact_sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+    "finding": "AMEND-R06-01",
+    "disposition": "AMENDED",
+    "downstream_section": "REPORT D07/CR matrix",
+    "design_effect": "60 seconds TOTAL E0 episode;8 attempted selections",
+    "reason": "Reject eightfold deadline expansion",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS_WITH_AMENDMENTS"
+  },
+  {
+    "upstream_task": "REV-R06",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/REVIEW.md",
+      "claim_id": "AMEND-R06-02"
+    },
+    "artifact_sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+    "finding": "AMEND-R06-02",
+    "disposition": "AMENDED",
+    "downstream_section": "REPORT D03/D07; CONTRACTS G;P23",
+    "design_effect": "Separate revoked admission/output from confirmed acquisition cessation",
+    "reason": "Lease loss is not physical stop evidence",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS_WITH_AMENDMENTS"
+  },
+  {
+    "upstream_task": "R06",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/CONTRACT_PROPOSALS.md",
+      "claim_id": "CR-R06-01 through05; AccessBinding"
+    },
+    "artifact_sha256": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13",
+    "finding": "CR-R06-01 through05; AccessBinding",
+    "disposition": "AMENDED",
+    "downstream_section": "REPORT CR matrix; CONTRACTS C/D/G",
+    "design_effect": "All5 dispositions; rights/subject footprint intersection and separate motion/sensing permits",
+    "reason": "No public-human-as-synthetic or cropped-footprint fiction",
+    "review_state": "REVIEWED_BOUNDED_SUBSET"
+  },
+  {
+    "upstream_task": "REV-R06",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/SOURCES.json",
+      "claim_id": "Source evidence/footprint/calibration limits"
+    },
+    "artifact_sha256": "53314bb656c7f6127e3dfaa0def4acb3d43daae3125f055cf5854e996c5df453",
+    "finding": "Source evidence/footprint/calibration limits",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Evidence/D02/D07",
+    "design_effect": "Do not promote non-camera sensing to privacy or RF accuracy guarantee",
+    "reason": "Source documentation is not current device capability",
+    "review_state": "DOCUMENTATION_ONLY_WITH_REVIEWER_MEDIA_RECEIPT"
+  },
+  {
+    "upstream_task": "REV-R08",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R08/REVIEW.md",
+      "claim_id": "M1-M5/L1; independent evaluator/physical gate"
+    },
+    "artifact_sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+    "finding": "M1-M5/L1; independent evaluator/physical gate",
+    "disposition": "AMENDED",
+    "downstream_section": "REPORT CR matrix/review findings; CONTRACTS G",
+    "design_effect": "Retain source gaps, pose/qualification invalidation, template-only, protected reviewer and stop observations",
+    "reason": "No physical threshold or qualification invented by H04",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS_WITH_AMENDMENTS"
+  },
+  {
+    "upstream_task": "R08",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/INTERFACES_AND_CONTRACTS.md",
+      "claim_id": "CR-R08-01 through05; C05"
+    },
+    "artifact_sha256": "01ed60d55591b3d4a2a03cafaf4c299d24c1c9f47d406d68bd3dd2bac6d02f03",
+    "finding": "CR-R08-01 through05; C05",
+    "disposition": "AMENDED",
+    "downstream_section": "REPORT CR matrix; CONTRACTS C/G",
+    "design_effect": "All5 dispositions; shared vector separate dispatch consumed-once exact machine/seal/boot/supervision",
+    "reason": "Publication permission is not physical start permission",
+    "review_state": "REVIEWED_BOUNDED_SUBSET"
+  },
+  {
+    "upstream_task": "REV-R08",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R08/SOURCES.json",
+      "claim_id": "Controller, license and qualification limitations"
+    },
+    "artifact_sha256": "f3e50f51c162483f3190944fc7fd2c2f895573de98dc24eb6c1042acb1ed72fc",
+    "finding": "Controller, license and qualification limitations",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT D07/Evidence",
+    "design_effect": "Attributed observations and source licenses stay narrower than grants/safety",
+    "reason": "No hardware or license approval transferred",
+    "review_state": "DOCUMENTATION_ONLY"
+  },
+  {
+    "upstream_task": "CODE-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "Root-relayed native message from /root/ri01_code_review; final artifact pending",
+      "claim_id": "Context/raw rejected output/metadata retained; revocation is not erasure"
+    },
+    "artifact_sha256": null,
+    "finding": "Static snapshot production-transfer gap, attributed interim message",
+    "disposition": "AMENDED",
+    "downstream_section": "REPORT Evidence; CONTRACTS F",
+    "design_effect": "Retention/deletion/access covers request text, context, rejected output, attempts, timestamps, backend identity, exports and derivatives",
+    "reason": "Synthetic audit-history limit acknowledged; no source rerun by R03",
+    "review_state": "INTERIM_MESSAGE_FINAL_ARTIFACT_PENDING"
+  }
+]

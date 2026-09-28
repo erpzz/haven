@@ -22,7 +22,7 @@
       "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_runtime_probe",
       "attempt_count": 1,
-      "started_at": "2026-09-28T18:13:31.470934+00:00",
+      "started_at": "2026-09-28T14:13:31.470934-04:00",
       "base_commit": "376031e182c57495912baf6727093b0b188da568",
       "hard_inputs": [],
       "soft_inputs": [],
@@ -33,7 +33,7 @@
       },
       "reviewer_role": "root_inventory_verifier",
       "note": "Inventory independently refreshed byroot; not research acceptance",
-      "completed_at": "2026-09-28T18:24:23.230818+00:00",
+      "completed_at": "2026-09-28T14:24:23.230818-04:00",
       "artifact": "inputs/INTAKE/INVENTORY.md",
       "artifact_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4"
     },
@@ -48,7 +48,7 @@
       "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_vision",
       "attempt_count": 2,
-      "started_at": "2026-09-28T18:13:31.470934+00:00",
+      "started_at": "2026-09-28T14:13:31.470934-04:00",
       "base_commit": "376031e182c57495912baf6727093b0b188da568",
       "hard_inputs": [],
       "soft_inputs": [],
@@ -59,7 +59,7 @@
       },
       "reviewer_role": "independent_vision_guardian",
       "note": "VISION-0 provisional until consumes frozen intake",
-      "completed_at": "2026-09-28T18:29:30.972385+00:00",
+      "completed_at": "2026-09-28T14:29:30.972385-04:00",
       "artifact": "reviews/VISION-0/CLOSURE-1.md",
       "artifact_sha256": "151e22a9030be0d50643261dbec081f12f343460b790ec15839e30381f5aeabf",
       "review_result": "PASS for intakevisiononly"
@@ -73,10 +73,10 @@
       "soft": [],
       "kind": "review",
       "research": "R02",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_runtime_probe",
       "attempt_count": 1,
-      "started_at": "2026-09-28T18:27:45.411179+00:00",
+      "started_at": "2026-09-28T14:27:45.411179-04:00",
       "base_commit": "376031e182c57495912baf6727093b0b188da568",
       "hard_inputs": [
         {
@@ -95,6 +95,18 @@
       "write_mode": "READ_ONLY_RETURN_TO_ROOT",
       "deliverables": [
         "reviews/REV-R02/REVIEW.md"
+      ],
+      "review_result": "AMEND; only enumerated conceptual subset accepted, F01-F06 required downstream",
+      "artifact": "reviews/REV-R02/REVIEW.md",
+      "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+      "completed_at": "2026-09-28T14:36:14.543774-04:00",
+      "findings": [
+        "REV-R02-F01",
+        "REV-R02-F02",
+        "REV-R02-F03",
+        "REV-R02-F04",
+        "REV-R02-F05",
+        "REV-R02-F06"
       ]
     },
     {
@@ -106,10 +118,10 @@
       "soft": [],
       "kind": "review",
       "research": "R06",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_vision",
       "attempt_count": 1,
-      "started_at": "2026-09-28T18:29:30.972385+00:00",
+      "started_at": "2026-09-28T14:29:30.972385-04:00",
       "base_commit": "376031e182c57495912baf6727093b0b188da568",
       "hard_inputs": [
         {
@@ -128,7 +140,11 @@
       ],
       "budgets": {
         "minutes": 20
-      }
+      },
+      "review_result": "AMEND; bounded conceptual subset only, required downstream amendments retained",
+      "artifact": "reviews/REV-R06/REVIEW.md",
+      "artifact_sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+      "completed_at": "2026-09-28T14:41:22.063285-04:00"
     },
     {
       "id": "REV-R08",
@@ -139,10 +155,10 @@
       "soft": [],
       "kind": "review",
       "research": "R08",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_evidence",
       "attempt_count": 1,
-      "started_at": "2026-09-28T18:29:30.972385+00:00",
+      "started_at": "2026-09-28T14:29:30.972385-04:00",
       "base_commit": "376031e182c57495912baf6727093b0b188da568",
       "hard_inputs": [
         {
@@ -161,7 +177,11 @@
       ],
       "budgets": {
         "minutes": 20
-      }
+      },
+      "review_result": "AMEND; bounded conceptual subset only, required downstream amendments retained",
+      "artifact": "reviews/REV-R08/REVIEW.md",
+      "artifact_sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+      "completed_at": "2026-09-28T14:41:22.063285-04:00"
     },
     {
       "id": "CODE-0",
@@ -171,7 +191,30 @@
       ],
       "soft": [],
       "kind": "review",
-      "status": "QUEUED"
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "actual_agent_id": "/root/ri01_code_review",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T14:44:59.508799-04:00",
+      "allowed_output_prefix": null,
+      "write_mode": "READ_ONLY_RETURN_TO_ROOT",
+      "budgets": {
+        "minutes": 20
+      },
+      "objective": "Independent archived code, configuration and source/evidence review; no application execution",
+      "hard_inputs": [
+        {
+          "path": "inputs/INTAKE/INVENTORY.md",
+          "sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4"
+        },
+        {
+          "path": "inputs/recovered/PROVENANCE.json",
+          "sha256": "1d60bb74ab3e6de17274009a66d157b4a5edf59654f6e7ee6ea2dba0db3beb7d"
+        }
+      ],
+      "completed_at": "2026-09-28T18:57:05.1525112Z",
+      "artifact": "reviews/CODE-0/REVIEW.md",
+      "artifact_sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8",
+      "review_disposition": "Static historical review only; CODE-H1-H2 and CODE-M1-M5 remain implementation gaps; final candidate review still required."
     },
     {
       "id": "R01",
@@ -186,7 +229,15 @@
       ],
       "kind": "research",
       "research": "R01",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_daily",
+      "attempt_count": 1,
+      "allowed_output_prefix": "research/R01/",
+      "budgets": {
+        "minutes": 25
+      },
+      "started_at": "2026-09-28T18:57:05.1525112Z",
+      "note": "Dispatch preceded persistence; actual native author on reviewed intake/vision."
     },
     {
       "id": "R02-P01",
@@ -200,7 +251,25 @@
       ],
       "kind": "reconciliation",
       "research": "R02",
-      "status": "QUEUED"
+      "status": "IN_REVIEW",
+      "actual_agent_id": "/root/ri01_runtime_probe",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T14:41:22.063285-04:00",
+      "allowed_output_prefix": "research/R02-P01",
+      "hard_inputs": [
+        {
+          "path": "reviews/REV-R02/REVIEW.md",
+          "sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746"
+        }
+      ],
+      "budgets": {
+        "minutes": 25
+      },
+      "reviewer_role": "different native research reviewer",
+      "completed_at": "2026-09-28T18:57:05.1525112Z",
+      "reviewer": "/root/ri01_review_p01",
+      "artifact": "research/R02-P01/REPORT.md",
+      "artifact_sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7"
     },
     {
       "id": "R03",
@@ -216,7 +285,34 @@
       ],
       "kind": "research",
       "research": "R03",
-      "status": "QUEUED"
+      "status": "IN_REVIEW",
+      "actual_agent_id": "/root/ri01_privacy",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T14:44:59.508799-04:00",
+      "allowed_output_prefix": "research/R03/",
+      "budgets": {
+        "minutes": 30
+      },
+      "objective": "Resolve identity, consent, publication/revocation and cross-domain authority using reviewed CRs",
+      "hard_inputs": [
+        {
+          "path": "reviews/REV-R02/REVIEW.md",
+          "sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746"
+        },
+        {
+          "path": "reviews/REV-R06/REVIEW.md",
+          "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8"
+        },
+        {
+          "path": "reviews/REV-R08/REVIEW.md",
+          "sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41"
+        }
+      ],
+      "reviewer_role": "different native research reviewer",
+      "completed_at": "2026-09-28T18:58:01.9031666Z",
+      "artifact": "research/R03/REPORT.md",
+      "artifact_sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+      "reviewer": "/root/ri01_review_privacy"
     },
     {
       "id": "CORE",
@@ -515,7 +611,7 @@
       "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_evidence",
       "attempt_count": 2,
-      "started_at": "2026-09-28T18:15:33.794833+00:00",
+      "started_at": "2026-09-28T14:15:33.794833-04:00",
       "base_commit": "376031e182c57495912baf6727093b0b188da568",
       "hard_inputs": [
         {
@@ -543,7 +639,88 @@
       "closed_findings": [
         "E0-H2"
       ],
-      "completed_at": "2026-09-28T18:27:45.411179+00:00"
+      "completed_at": "2026-09-28T14:27:45.411179-04:00"
+    },
+    {
+      "id": "CORE-PRE",
+      "role": "haven_integration_manager",
+      "hard": [
+        "INTAKE",
+        "VISION-0"
+      ],
+      "soft": [
+        "REV-R02",
+        "REV-R06",
+        "REV-R08"
+      ],
+      "status": "DRAFT_READY",
+      "actual_agent_id": "/root/night01_review",
+      "objective": "Provisional dependency and contract map from reviewed intake/vision; not CORE completion",
+      "allowed_output_prefix": "integration/",
+      "attempt_count": 1,
+      "budgets": {
+        "minutes": 15
+      },
+      "completed_at": "2026-09-28T14:44:59.508799-04:00",
+      "artifacts": {
+        "CONTRACT_CROSSWALK.md": "64db8ea1c5ee1262a549bb589bbb7c0e36bc4dccd758e2e3a845e6d44844ec45",
+        "DEPENDENCIES.json": "3456d9b3f027ca0dc03e8af555dc4d58b44bbd53c7f5be2f4e45cb497c8a5e64",
+        "INPUT_USE.json": "0818baac652f2180e2a593ebe2667a666b3bddb05eaf8f48a8695589d56bf225",
+        "MANAGER_STATE.md": "27bb39fb236c4ebfe711ebc826fb68a6605535cb99ccfb2d960274eda49275ac"
+      },
+      "review_result": "Provisional integration only; CORE hard gates unsatisfied"
+    },
+    {
+      "write_mode": "read-only full report returned for root persistence",
+      "hard": [
+        "R02-P01"
+      ],
+      "kind": "review",
+      "actual_agent_id": "/root/ri01_review_p01",
+      "started_at": "2026-09-28T18:57:05.1525112Z",
+      "status": "RUNNING",
+      "hard_inputs": [
+        {
+          "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+          "path": "research/R02-P01/REPORT.md"
+        }
+      ],
+      "soft": [
+        "CODE-0"
+      ],
+      "role": "haven_research_reviewer",
+      "objective": "Independently review full P01, historical assertion crosswalk, current source claims and next package",
+      "allowed_output_prefix": null,
+      "attempt_count": 1,
+      "id": "REVIEW-R02-P01",
+      "budgets": {
+        "minutes": 20
+      }
+    },
+    {
+      "write_mode": "read-only full handback returned for root persistence",
+      "started_at": "2026-09-28T18:58:01.9031666Z",
+      "status": "RUNNING",
+      "role": "haven_research_reviewer",
+      "actual_agent_id": "/root/ri01_review_privacy",
+      "budgets": {
+        "minutes": 20
+      },
+      "soft": [
+        "CODE-0"
+      ],
+      "hard": [
+        "R03"
+      ],
+      "hard_inputs": [
+        {
+          "sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+          "path": "research/R03/REPORT.md"
+        }
+      ],
+      "id": "REVIEW-R03",
+      "attempt_count": 1,
+      "kind": "review"
     }
   ]
 }

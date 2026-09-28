@@ -1,8 +1,8 @@
 {
   "run_id": "ri01-20260928T180322Z-6e8f",
-  "started_at": "2026-09-28T18:03:22+00:00",
-  "hard_deadline": "2026-09-29T02:03:22+00:00",
-  "stop_new_work_at": "2026-09-29T01:48:22+00:00",
+  "started_at": "2026-09-28T14:03:22-04:00",
+  "hard_deadline": "2026-09-28T22:03:22-04:00",
+  "stop_new_work_at": "2026-09-28T21:48:22-04:00",
   "base_commit": "376031e182c57495912baf6727093b0b188da568",
   "branch": "campaign/ri01-20260928T180322Z-6e8f",
   "host_class": "Windows desktop with Ubuntu WSL; public-safe metadata only",
@@ -25,19 +25,25 @@
   "close_tool": "NOT_EXPOSED; native completed turns quiescent; report completion/interrupt state, never claim explicit closure",
   "exact_model": "NOT_EXPOSED; inherited defaults",
   "git_transport": "Existing authenticated GitHub CLI/HTTPS; connector fetch_file failed Unknown tool; no credentials changed",
-  "assignments_dispatched": 9,
+  "assignments_dispatched": 16,
   "modalities": {
     "text_code": "EXERCISED",
     "image": "DIRECT_IMAGE_EXERCISED",
-    "web_pdf_screenshot": "AVAILABLE_NOT_YET_EXERCISED",
+    "web_pdf_screenshot": "Attempted but returned textual references rather than viewable images; not counted as inspected",
     "browser_screenshot": "AVAILABLE_NOT_YET_EXERCISED",
     "direct_audio": "TOOL_UNAVAILABLE",
     "direct_video": "TOOL_UNAVAILABLE",
     "waveform": "Python standard library synthetic numeric/plot transform possible; NOT_EXECUTED",
     "spatial": "Structured file reading available; runtime spatial validation NOT_EXECUTED",
-    "media_decoders": "Ubuntu ffmpeg/ffprobe/pdftoppm/sox not found on PATH; no install",
-    "generation": "Image generation tool exposed but NOT_EXECUTED; generation is not observation"
+    "media_decoders": "Ubuntu PATH lacks ffmpeg/ffprobe/pdftoppm/sox; existing Windows bundled ffmpeg/ffprobe and Poppler available. PDF render exercised. Audio/video decoding not yet exercised; no installation.",
+    "generation": "Image generation tool exposed but NOT_EXECUTED; generation is not observation",
+    "local_pdf_render": "EXERCISED existing Windows bundled Poppler, PDF_PAGE_IMAGE via view_image by root and REV-R06"
   },
   "failed_spawn_attempts": 1,
-  "thread_limit_observation": "New child spawn rejected agent thread limit after four child handles existed; explicit close not exposed. Reuse existing completed handles under distinct scoped assignments; preserve author/reviewer independence."
+  "thread_limit_observation": "Capacity-dependent: an earlier spawn and later message-to-quiescent child were rejected at thread limit; after completion, fresh privacy/code children spawned successfully. No explicit close tool. Keep at most3 active children under platform4-agent total and recheck actual handles.",
+  "published_checkpoint": "d1f4a278bea62d391f74c54d3936d45f6d1bf9d7",
+  "publication_verified_by": "git ls-remote exactbranch",
+  "issue_receipt": "https://github.com/erpzz/haven/issues/17#issuecomment-5876199637",
+  "git_transport_note": "Default credential helper waited without publishing; owned command cancelled. Per-command existing gh auth git-credential succeeded; no persistent credential/settings change.",
+  "private_public_research_assets_bytes": 13349284
 }

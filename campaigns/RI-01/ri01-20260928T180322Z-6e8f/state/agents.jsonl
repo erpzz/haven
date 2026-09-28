@@ -10,3 +10,18 @@
 {"task_id": "VISION-0", "actual_agent_id": "/root/ri01_vision", "event": "CLOSURE_COMPLETED_PASS", "recorded_at": "2026-09-28T18:29:30.972385+00:00"}
 {"task_id": "REV-R06", "actual_agent_id": "/root/ri01_vision", "event": "FOLLOWUP_DISPATCHED", "recorded_at": "2026-09-28T18:29:30.972385+00:00"}
 {"task_id": "REV-R08", "actual_agent_id": "/root/ri01_evidence", "event": "FOLLOWUP_DISPATCHED", "recorded_at": "2026-09-28T18:29:30.972385+00:00"}
+{"task_id": "REV-R02", "actual_agent_id": "/root/ri01_runtime_probe", "event": "COMPLETED", "recorded_at": "2026-09-28T18:41:22.063285+00:00"}
+{"task_id": "REV-R06", "actual_agent_id": "/root/ri01_vision", "event": "COMPLETED", "recorded_at": "2026-09-28T18:41:22.063285+00:00"}
+{"task_id": "REV-R08", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED", "recorded_at": "2026-09-28T18:41:22.063285+00:00"}
+{"task_id": "CORE-PRE", "actual_agent_id": "/root/night01_review", "event": "FOLLOWUP_DISPATCHED", "recorded_at": "2026-09-28T18:41:22.063285+00:00"}
+{"task_id": "R02-P01", "actual_agent_id": "/root/ri01_runtime_probe", "event": "FOLLOWUP_DISPATCHED", "recorded_at": "2026-09-28T18:41:22.063285+00:00"}
+{"task_id": "CORE-PRE", "actual_agent_id": "/root/night01_review", "event": "COMPLETED_QUIESCENT", "recorded_at": "2026-09-28T18:44:59.508799+00:00"}
+{"task_id": "R03", "actual_agent_id": "/root/ri01_privacy", "role": "haven_researcher", "event": "SPAWNED", "recorded_at": "2026-09-28T18:44:59.508799+00:00"}
+{"task_id": "CODE-0", "actual_agent_id": "/root/ri01_code_review", "role": "haven_code_reviewer", "event": "SPAWNED", "recorded_at": "2026-09-28T18:44:59.508799+00:00"}
+{"task_id": "Q-CORE-04", "actual_agent_id": "/root/ri01_evidence", "event": "MESSAGE_NOT_DELIVERED", "reason": "agent thread limit reached; leave consultation queued for available slot", "recorded_at": "2026-09-28T18:44:59.508799+00:00"}
+{"actual_agent_id":"/root/ri01_daily","event":"SPAWNED","role":"haven_researcher","task_id":"R01","recorded_at":"2026-09-28T18:57:05.1525112Z"}
+{"actual_agent_id":"/root/ri01_code_review","event":"COMPLETED_QUIESCENT","task_id":"CODE-0","recorded_at":"2026-09-28T18:57:05.1525112Z"}
+{"actual_agent_id":"/root/ri01_runtime_probe","event":"COMPLETED_QUIESCENT","task_id":"R02-P01","recorded_at":"2026-09-28T18:57:05.1525112Z"}
+{"actual_agent_id":"/root/ri01_review_p01","event":"SPAWNED","role":"haven_research_reviewer","task_id":"REVIEW-R02-P01","recorded_at":"2026-09-28T18:57:05.1525112Z"}
+{"event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_privacy","recorded_at":"2026-09-28T18:58:01.9031666Z","task_id":"R03"}
+{"event":"SPAWNED","recorded_at":"2026-09-28T18:58:01.9031666Z","actual_agent_id":"/root/ri01_review_privacy","role":"haven_research_reviewer","task_id":"REVIEW-R03"}
