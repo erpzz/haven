@@ -43,3 +43,20 @@
 {"recorded_at":"2026-09-28T19:15:01.3583990Z","task_id":"RECHECK-R03-A1","event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_review_privacy"}
 {"recorded_at":"2026-09-28T19:17:36.0656143Z","actual_agent_id":"/root/ri01_review_privacy","task_id":"RECHECK-R03-A1","event":"COMPLETED_QUIESCENT"}
 {"recorded_at":"2026-09-28T19:17:36.0656143Z","actual_agent_id":"/root/night01_review","event":"RESUMED_ASSIGNMENT","task_id":"CORE","role":"haven_integration_manager"}
+{"recorded_at":"2026-09-28T19:25:37.4974045Z","task_id":"R12","event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_review_p01"}
+{"recorded_at":"2026-09-28T19:25:37.4974045Z","task_id":"R01-A1","event":"RESUMED_ASSIGNMENT","role":"haven_researcher","actual_agent_id":"/root/ri01_daily"}
+{"event":"COMPLETED_QUIESCENT","recorded_at":"2026-09-28T19:29:41.3016779Z","task_id":"R01-A1","actual_agent_id":"/root/ri01_daily"}
+{"event":"RESUMED_ASSIGNMENT","recorded_at":"2026-09-28T19:29:41.3016779Z","task_id":"RECHECK-R01-A1","actual_agent_id":"/root/ri01_review_privacy"}
+{"event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_review_privacy","task_id":"RECHECK-R01-A1","recorded_at":"2026-09-28T19:33:00.7174617Z"}
+{"event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_review_privacy","task_id":"REVIEW-R12","recorded_at":"2026-09-28T19:33:00.7174617Z"}
+{"event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/night01_review","task_id":"CORE","recorded_at":"2026-09-28T19:33:00.7174617Z"}
+{"event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_vision","task_id":"VISION-ARCH","recorded_at":"2026-09-28T19:33:00.7174617Z"}
+{"event":"COMPLETED_QUIESCENT","task_id":"R10","actual_agent_id":"/root/ri01_privacy","recorded_at":"2026-09-28T19:34:52.0625485Z"}
+{"event":"RESUMED_ASSIGNMENT","task_id":"REVIEW-R10","actual_agent_id":"/root/ri01_evidence","recorded_at":"2026-09-28T19:34:52.0625485Z"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "PEER-CHECKIN-01-CODE", "actual_agent_id": "/root/ri01_code_review", "event": "DISPATCH_RECONCILED_FROM_SUCCESSFUL_NATIVE_CALL", "status": "ACCEPTED_FOR_SYNTHESIS"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "R04", "actual_agent_id": "/root/ri01_privacy", "event": "DISPATCH_RECONCILED_FROM_SUCCESSFUL_NATIVE_CALL", "status": "RUNNING"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "R07", "actual_agent_id": "/root/ri01_world", "event": "DISPATCH_RECONCILED_FROM_SUCCESSFUL_NATIVE_CALL", "status": "RUNNING"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "R08-P00", "actual_agent_id": "/root/ri01_runtime_probe", "event": "DISPATCH_RECONCILED_FROM_SUCCESSFUL_NATIVE_CALL", "status": "RUNNING"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "VISION-ARCH", "event": "COMPLETED_QUIESCENT", "actual_agent_id": "/root/ri01_vision"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "REVIEW-R12", "event": "COMPLETED_QUIESCENT", "actual_agent_id": "/root/ri01_review_privacy"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "REVIEW-R10", "event": "COMPLETED_QUIESCENT", "actual_agent_id": "/root/ri01_evidence"}

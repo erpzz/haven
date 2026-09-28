@@ -1,0 +1,9 @@
+{
+  "observed_at": "2026-09-28T19:21:13.814417+00:00",
+  "scope": "Coordination metadata only, no application execution",
+  "task_nodes": 37,
+  "duplicate_ids": 0,
+  "missing_hard_nodes": [],
+  "hard_dependency_cycles": [],
+  "review_target_note": "A review target must be frozen/DRAFT_READY, not already accepted; acceptance gates apply to substantive downstream research/integration inputs. Review target links are inspection dependencies, not prior approval."
+}

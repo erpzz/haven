@@ -1,0 +1,31 @@
+# CORE manager state — candidate 1
+
+Task/role: CORE / H00 haven_integration_manager / `/root/night01_review`, distinct from root scheduler and independent reviewers. Assignment permits only campaign integration/core-v1 writes. No Git, source changes, app/model execution, installation, accounts, devices, active M0/R1/NIGHT-01 access or child agents. Existing four integration files remain byte-identical and published history remains intact. Root-reported CORE-PRE publication is d0211b3; this child did not Git-verify it.
+
+Status: REVIEW_READY_DESIGN_CANDIDATE. Hard inputs R02-P01 original+amendment-1 and R03 original+amendment-1 are independently accepted and consumed at exact hashes in INPUT_USE.json. This is not self-acceptance, campaign completion or implementation authority. Root may freeze these outputs for first independent architecture/vision review. Final SYNTHESIS remains later.
+
+## Decisions and evidence
+
+Seven minimal shared interfaces preserve current foundations and useful selected-image + typed-question + current authorized evidence. The complete AuthorityVector, immutable release/consume records, append-only delivery and current eligibility are separate. Finite use is charged at release once; consume transitions its exact slot without parent double debit. Whole-output single-destination is the finite-use first profile; future streaming remains explicitly retained. Unknown delivery survives revocation and cannot be relabeled NOT_SENT. Financial reservations remain separate.
+
+R02-P01 and R03 amendment closures resolve Q-CORE-01/02 coupling. Q-CORE-03 is actual independent reviewer advice, not schema-owner acceptance. Q-CORE-04 remains undelivered/unanswered: provisional versioned unit conversion rejects unsupported/unknown/lossy semantics unless exact bounded rounding is explicitly allowed. Actual R08 convention/metrology acceptance is deferred to R08-P00 hard closure. Q-R10-02 was answered through root; details are in CONTRACTS.md. No fabricated consultation or consensus.
+
+CODE-0 is a final accepted historical static subset, with active R1/M0 absent. Historical counts are not current execution or full broad-case equivalence. R01 review's bounded scenario subset is soft; localized receipt/evaluation amendment remains pending. R12 was announced as an unreviewed author handback during this pass and was not consumed as accepted evidence. INPUT_USE records exact bytes and read scope, including attribution when only independent review was consumed.
+
+Actual checks: source hashes, JSON parsing, retained mapping counts, original manifest entries and immutable CORE-PRE hashes. These are document integrity checks, not AT/EX/application tests. All 102 original requirement/AT relationships and32EX remain mapped, V01–V16 and five journeys retained,24baseline multimodal cases proposed, no qualification claimed.
+
+## Resuming and invalidation
+
+Quiesce at handback; resume only when root assigns the next finite pass. Read this file and INPUT_USE; verify changed sources by digest. New upstream revisions affect only named downstream conclusions, but affected independent review must repeat. Do not alter frozen core-v1 after root publication; use an amendment/new candidate. Preserve original/amendment/review histories and do not silently import unreviewed frontier recommendations.
+
+Immediate next step: independent first architecture/vision review of this frozen candidate, checking useful positive flow, all original scope, finite quota release/consume semantics, uncertain delivery, complete authority dependency vector and provisional adapter labeling. Implementation queue is entirely AUTHORIZATION_REQUIRED. CORE-P0 no-worker protocol can be proposed independently from current R1 lifecycle qualification; integrated worker guarantees require separately accepted lifecycle evidence.
+
+Later required synthesis artifacts: ARCHITECTURE.md, DECISIONS.md, VISION_COVERAGE.md, MODALITY_MATRIX.md, full MULTIMODAL.md, EVALUATION_PLAN.md, IMPLEMENTATION_QUEUE.md, RISKS_AND_DISSENT.md, SOURCE_USE_INDEX.json, updated CONTRACT_CROSSWALK/DEPENDENCIES and independent frozen-candidate code/evidence/vision reviews. This candidate's MULTIMODAL.md preserves the baseline but does not substitute for completed specialist synthesis.
+
+## PEER-CHECKIN-01
+
+Strongest: reconciled finite-use and orthogonal output histories from actual accepted amendments into one minimal boundary. Weakest: no implementation/evaluation evidence and provisional domain adapters; traceability coverage is not capability validation. Most useful peer artifact: R03 amendment-1/AMENDMENT.md SHA b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667, accepted by reviews/REVIEW-R03/CLOSURE-1.md SHA d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be.
+
+Biggest integration risk: accepted research language accidentally treated as live permission, useful intelligence, delivery certainty or physical qualification. Highest-value next action: independent review of these exact core-v1 files, then separately authorized synthetic positive/negative protocol tests. Confidence Medium: two accepted composites agree on central invariants, but current R1, model usefulness, domain metrology and deployment enforcement remain untested.
+
+Campaign health is converging on shared contracts; pending specialist outputs are bounded extensions rather than reasons for framework redesign. Critical path is CORE independent review followed by affected specialist synthesis; R1 blocks lifecycle claims only, while R08 unit/metrology closure blocks its domain metric acceptance. Capacity prevented Q-CORE-04 delivery; this is an observed scheduling constraint, not an operator authority dispute. No actual operator-level conflict was observed in consumed inputs. Accelerate frozen-candidate review and useful synthetic authority tests after authorization. Defer framework rewrite, live connector/device work, physical promotion and unreviewed frontier updates; retain them as explicit future branches where appropriate.

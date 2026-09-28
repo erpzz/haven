@@ -1,0 +1,409 @@
+{
+  "generated_at": "2026-09-28T19:54:24.064171+00:00",
+  "meaning": "Scoped research review dispositions, not experimental acceptance or execution permission. Read composite amendments and retained gates.",
+  "entries": [
+    {
+      "task_id": "INTAKE",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "inputs/INTAKE/INVENTORY.md",
+          "sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "VISION-0",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_vision",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/VISION-0/CLOSURE-1.md",
+          "sha256": "151e22a9030be0d50643261dbec081f12f343460b790ec15839e30381f5aeabf"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REV-R02",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REV-R02/REVIEW.md",
+          "sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REV-R06",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_vision",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REV-R06/REVIEW.md",
+          "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REV-R08",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REV-R08/REVIEW.md",
+          "sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "CODE-0",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_code_review",
+      "scope": null,
+      "disposition": "Static historical review only; CODE-H1-H2 and CODE-M1-M5 remain implementation gaps; final candidate review still required.",
+      "artifacts": [
+        {
+          "path": "reviews/CODE-0/REVIEW.md",
+          "sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "R01",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_daily",
+      "scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R01/REPORT.md",
+          "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283"
+        },
+        {
+          "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "R02-P01",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": "Composite v1 plus amendment1; P01 M1/L1 closed; parent-death and downstream R03/CORE implementation gates remain",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R02-P01/REPORT.md",
+          "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7"
+        },
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "R03",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R03/REPORT.md",
+          "sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d"
+        },
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "CORE",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/night01_review",
+      "scope": "First architecture and downstream research only; VA01 must close before P03 freeze, no application qualification",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82"
+        },
+        {
+          "path": "reviews/VISION-ARCH/REVIEW.md",
+          "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        }
+      ],
+      "open_findings": [
+        "VA-01_P03_FREEZE_ONLY",
+        "VA-02_LATER_RECEIPTS"
+      ]
+    },
+    {
+      "task_id": "R10",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Documentary/design subset; no aircraft/schema/cost/operation qualification",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R10/REPORT.md",
+          "sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90"
+        },
+        {
+          "path": "reviews/REVIEW-R10/REVIEW.md",
+          "sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "R12",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_p01",
+      "scope": "Finite frontier research; source-index and exact-license conditions retained",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R12/REPORT.md",
+          "sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5"
+        },
+        {
+          "path": "reviews/REVIEW-R12/REVIEW.md",
+          "sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "EVIDENCE-0",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": "CHANGES_REQUIRED for unrestricted claims; scoped historical use supported",
+      "artifacts": [
+        {
+          "path": "reviews/EVIDENCE-0/REVIEW.md",
+          "sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d"
+        }
+      ],
+      "open_findings": [
+        "E0-H1",
+        "E0-M1",
+        "E0-M2",
+        "E0-L1"
+      ]
+    },
+    {
+      "task_id": "REVIEW-R02-P01",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_p01",
+      "scope": null,
+      "disposition": "AMEND M1 before contract freeze; historical crosswalk/evidence and other specified subsets accepted",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R02-P01/REVIEW.md",
+          "sha256": "1634b53af3fe0799bcabd5adfbef5658d64812e9d2425c457bc09f3e7faa8589"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R03",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "AMEND finite-use semantics before freeze; bounded identity/lineage/deletion/release architecture accepted",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R03/REVIEW.md",
+          "sha256": "cc393683b0db1ff0723cc6688196bfe11871b6844019cf2d3ecd4b29ab330952"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "R02-P01-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": "Composite v1 plus amendment1; P01 M1/L1 closed; parent-death and downstream R03/CORE implementation gates remain",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R02-P01/amendment-1/AMENDMENT.md",
+          "sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605"
+        },
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "R03-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R03/amendment-1/AMENDMENT.md",
+          "sha256": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667"
+        },
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "RECHECK-R02-P01-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_p01",
+      "scope": "Composite v1 plus amendment1; P01 M1/L1 closed; parent-death and downstream R03/CORE implementation gates remain",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "REVIEW-R01",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "AMEND localized receipt precondition; scenarios/coverage/experiments accepted bounded",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R01/REVIEW.md",
+          "sha256": "27503c8aceb2ef43afc35fe4d3ffa352f9df4fbe3482f3562c825ff59990839b"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "RECHECK-R03-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "R01-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_daily",
+      "scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R01/amendment-1/AMENDMENT.md",
+          "sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535"
+        },
+        {
+          "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "RECHECK-R01-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "REVIEW-R12",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "Finite frontier research; source-index and exact-license conditions retained",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R12/REVIEW.md",
+          "sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "VISION-ARCH",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_vision",
+      "scope": null,
+      "disposition": "First architecture and downstream research only; VA01 must close before P03 freeze, no application qualification",
+      "artifacts": [
+        {
+          "path": "reviews/VISION-ARCH/REVIEW.md",
+          "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R10",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": "Documentary/design subset; no aircraft/schema/cost/operation qualification",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R10/REVIEW.md",
+          "sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "PEER-CHECKIN-01-CODE",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_code_review",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [],
+      "open_findings": null
+    }
+  ]
+}

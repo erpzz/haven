@@ -229,7 +229,7 @@
       ],
       "kind": "research",
       "research": "R01",
-      "status": "CHANGES_REQUIRED",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_daily",
       "attempt_count": 1,
       "allowed_output_prefix": "research/R01/",
@@ -238,15 +238,19 @@
       },
       "started_at": "2026-09-28T18:57:05.1525112Z",
       "note": "Dispatch preceded persistence; actual native author on reviewed intake/vision.",
-      "completed_at": "2026-09-28T19:08:11.1863806Z",
+      "completed_at": "2026-09-28T19:33:00.7174617Z",
       "artifact": "research/R01/REPORT.md",
       "artifact_sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
       "reviewer": "/root/ri01_review_privacy",
-      "open_findings": [
+      "open_findings": [],
+      "next_action": "Versioned author amendment then independent focused closure; original v1 unchanged",
+      "closed_findings": [
         "REVIEW-R01-F01",
         "REVIEW-R01-L01"
       ],
-      "next_action": "Versioned author amendment then independent focused closure; original v1 unchanged"
+      "closure_artifact": "reviews/REVIEW-R01/CLOSURE-1.md",
+      "closure_sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
+      "acceptance_scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance"
     },
     {
       "id": "R02-P01",
@@ -351,7 +355,7 @@
         "CODE-0"
       ],
       "kind": "integration",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/night01_review",
       "attempt_count": 1,
       "started_at": "2026-09-28T19:17:36.0656143Z",
@@ -369,6 +373,18 @@
           "path": "reviews/REVIEW-R03/CLOSURE-1.md",
           "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
         }
+      ],
+      "completed_at": "2026-09-28T19:33:00.7174617Z",
+      "artifact": "integration/core-v1/ARCHITECTURE.md",
+      "artifact_sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "reviewer": "/root/ri01_vision",
+      "review_artifact": "reviews/VISION-ARCH/REVIEW.md",
+      "review_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "acceptance_scope": "First architecture and downstream research only; VA01 must close before P03 freeze, no application qualification",
+      "accepted_at": "2026-09-28T19:54:24.064171+00:00",
+      "open_findings": [
+        "VA-01_P03_FREEZE_ONLY",
+        "VA-02_LATER_RECEIPTS"
       ]
     },
     {
@@ -385,7 +401,7 @@
       ],
       "kind": "research",
       "research": "R10",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_privacy",
       "started_at": "2026-09-28T19:12:24.1462879Z",
       "attempt_count": 1,
@@ -393,7 +409,15 @@
         "minutes": 25
       },
       "allowed_output_prefix": "research/R10/",
-      "objective": "Public aircraft exact interface/cost/compatibility research; EC120 unverified, physical operation forbidden"
+      "objective": "Public aircraft exact interface/cost/compatibility research; EC120 unverified, physical operation forbidden",
+      "completed_at": "2026-09-28T19:34:52.0625485Z",
+      "artifact": "research/R10/REPORT.md",
+      "artifact_sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "reviewer": "/root/ri01_evidence",
+      "review_artifact": "reviews/REVIEW-R10/REVIEW.md",
+      "review_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+      "acceptance_scope": "Documentary/design subset; no aircraft/schema/cost/operation qualification",
+      "accepted_at": "2026-09-28T19:54:24.064171+00:00"
     },
     {
       "id": "R12",
@@ -409,7 +433,7 @@
       ],
       "kind": "research",
       "research": "R12",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_review_p01",
       "attempt_count": 1,
       "started_at": "2026-09-28T19:10:33.7147153Z",
@@ -418,7 +442,16 @@
       },
       "allowed_output_prefix": "research/R12/",
       "objective": "Finite8-12primary-sourced frontier opportunities with bounded owner updates and useful entry experiments",
-      "role_transition": "Former P01 reviewer now unrelated R12 author; cannot review own R12"
+      "role_transition": "Former P01 reviewer now unrelated R12 author; cannot review own R12",
+      "completed_at": "2026-09-28T19:25:37.4974045Z",
+      "artifact": "research/R12/REPORT.md",
+      "artifact_sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+      "next_action": "Independent reviewer different from author; route at most3 materialupdates/task only after accepted review",
+      "reviewer": "/root/ri01_review_privacy",
+      "review_artifact": "reviews/REVIEW-R12/REVIEW.md",
+      "review_sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+      "acceptance_scope": "Finite frontier research; source-index and exact-license conditions retained",
+      "accepted_at": "2026-09-28T19:54:24.064171+00:00"
     },
     {
       "id": "R04",
@@ -432,7 +465,32 @@
       ],
       "kind": "research",
       "research": "R04",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_privacy",
+      "attempt_count": 1,
+      "dispatch_recorded_at": "2026-09-28T19:54:24.064171+00:00",
+      "budgets": {
+        "minutes": 30
+      },
+      "allowed_output_prefix": "research/R04/",
+      "hard_inputs": [
+        {
+          "task_id": "CORE",
+          "status": "ACCEPTED_FOR_SYNTHESIS",
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+          "review_path": "reviews/VISION-ARCH/REVIEW.md",
+          "review_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        },
+        {
+          "task_id": "R01",
+          "status": "ACCEPTED_FOR_SYNTHESIS",
+          "path": "research/R01/REPORT.md",
+          "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ]
     },
     {
       "id": "R05",
@@ -459,7 +517,32 @@
       ],
       "kind": "research",
       "research": "R07",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_world",
+      "attempt_count": 1,
+      "dispatch_recorded_at": "2026-09-28T19:54:24.064171+00:00",
+      "budgets": {
+        "minutes": 30
+      },
+      "allowed_output_prefix": "research/R07/",
+      "hard_inputs": [
+        {
+          "task_id": "CORE",
+          "status": "ACCEPTED_FOR_SYNTHESIS",
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+          "review_path": "reviews/VISION-ARCH/REVIEW.md",
+          "review_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        },
+        {
+          "task_id": "REV-R06",
+          "status": "ACCEPTED_FOR_SYNTHESIS",
+          "path": "reviews/REV-R06/REVIEW.md",
+          "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ]
     },
     {
       "id": "R08-P00",
@@ -475,7 +558,40 @@
       ],
       "kind": "reconciliation",
       "research": "R08",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_runtime_probe",
+      "attempt_count": 1,
+      "dispatch_recorded_at": "2026-09-28T19:54:24.064171+00:00",
+      "budgets": {
+        "minutes": 30
+      },
+      "allowed_output_prefix": "research/R08-P00/",
+      "hard_inputs": [
+        {
+          "task_id": "CORE",
+          "status": "ACCEPTED_FOR_SYNTHESIS",
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+          "review_path": "reviews/VISION-ARCH/REVIEW.md",
+          "review_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        },
+        {
+          "task_id": "REV-R08",
+          "status": "ACCEPTED_FOR_SYNTHESIS",
+          "path": "reviews/REV-R08/REVIEW.md",
+          "sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+          "review_path": null,
+          "review_sha256": null
+        },
+        {
+          "task_id": "REV-R06",
+          "status": "ACCEPTED_FOR_SYNTHESIS",
+          "path": "reviews/REV-R06/REVIEW.md",
+          "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ]
     },
     {
       "id": "MM-VISION",
@@ -923,6 +1039,140 @@
       "closure_artifact": "reviews/REVIEW-R03/CLOSURE-1.md",
       "closure_sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
       "acceptance_scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization"
+    },
+    {
+      "allowed_output_prefix": "research/R01/amendment-1/",
+      "id": "R01-A1",
+      "objective": "Correct not-sent versus unknown receipt preconditions and freeze evaluation denominator/layer labels; preserve v1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "started_at": "2026-09-28T19:25:37.4974045Z",
+      "revision_round": 1,
+      "kind": "revision",
+      "budgets": {
+        "minutes": 8
+      },
+      "attempt_count": 1,
+      "actual_agent_id": "/root/ri01_daily",
+      "hard": [
+        "REVIEW-R01"
+      ],
+      "role": "haven_researcher",
+      "completed_at": "2026-09-28T19:33:00.7174617Z",
+      "artifact": "research/R01/amendment-1/AMENDMENT.md",
+      "artifact_sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535",
+      "reviewer": "/root/ri01_review_privacy",
+      "closed_findings": [
+        "REVIEW-R01-F01",
+        "REVIEW-R01-L01"
+      ],
+      "open_findings": [],
+      "closure_artifact": "reviews/REVIEW-R01/CLOSURE-1.md",
+      "closure_sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
+      "acceptance_scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance"
+    },
+    {
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "write_mode": "read-only root persistence",
+      "budgets": {
+        "minutes": 6
+      },
+      "kind": "review",
+      "started_at": "2026-09-28T19:29:41.3016779Z",
+      "attempt_count": 1,
+      "objective": "Close receipt/scoring amendments without rerunning unchanged research",
+      "id": "RECHECK-R01-A1",
+      "hard": [
+        "R01-A1"
+      ],
+      "role": "haven_research_reviewer",
+      "actual_agent_id": "/root/ri01_review_privacy",
+      "completed_at": "2026-09-28T19:33:00.7174617Z",
+      "closed_findings": [
+        "REVIEW-R01-F01",
+        "REVIEW-R01-L01"
+      ],
+      "open_findings": [],
+      "closure_artifact": "reviews/REVIEW-R01/CLOSURE-1.md",
+      "closure_sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
+      "acceptance_scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance"
+    },
+    {
+      "role": "haven_research_reviewer",
+      "kind": "review",
+      "budgets": {
+        "minutes": 20
+      },
+      "objective": "Independent source/fidelity/rights review of finite frontier cards",
+      "write_mode": "read-only root persistence",
+      "id": "REVIEW-R12",
+      "actual_agent_id": "/root/ri01_review_privacy",
+      "hard": [
+        "R12"
+      ],
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T19:33:00.7174617Z",
+      "artifact": "reviews/REVIEW-R12/REVIEW.md",
+      "artifact_sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+      "completed_at": "2026-09-28T19:54:24.064171+00:00",
+      "review_disposition": "Finite frontier research; source-index and exact-license conditions retained"
+    },
+    {
+      "role": "haven_vision_guardian",
+      "kind": "review",
+      "budgets": {
+        "minutes": 20
+      },
+      "objective": "Independent first architecture coherence and cumulative vision review; also REVIEW-CORE",
+      "write_mode": "read-only root persistence",
+      "id": "VISION-ARCH",
+      "actual_agent_id": "/root/ri01_vision",
+      "hard": [
+        "CORE"
+      ],
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "attempt_count": 1,
+      "started_at": "2026-09-28T19:33:00.7174617Z",
+      "artifact": "reviews/VISION-ARCH/REVIEW.md",
+      "artifact_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "completed_at": "2026-09-28T19:54:24.064171+00:00",
+      "review_disposition": "First architecture and downstream research only; VA01 must close before P03 freeze, no application qualification"
+    },
+    {
+      "attempt_count": 1,
+      "kind": "review",
+      "hard": [
+        "R10"
+      ],
+      "write_mode": "read-only root persistence",
+      "started_at": "2026-09-28T19:34:52.0625485Z",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "id": "REVIEW-R10",
+      "budgets": {
+        "minutes": 20
+      },
+      "role": "haven_research_reviewer",
+      "objective": "Independent exact aircraft interface/source/cost/limit review; bounded Q-CORE-04 advice from previous R08 reviewer",
+      "actual_agent_id": "/root/ri01_evidence",
+      "artifact": "reviews/REVIEW-R10/REVIEW.md",
+      "artifact_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+      "completed_at": "2026-09-28T19:54:24.064171+00:00",
+      "review_disposition": "Documentary/design subset; no aircraft/schema/cost/operation qualification"
+    },
+    {
+      "id": "PEER-CHECKIN-01-CODE",
+      "hard": [],
+      "soft": [],
+      "actual_agent_id": "/root/ri01_code_review",
+      "role": "haven_code_reviewer",
+      "kind": "consultation",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "attempt_count": 1,
+      "dispatch_recorded_at": "2026-09-28T19:54:24.064171+00:00",
+      "budgets": {
+        "minutes": 5
+      },
+      "allowed_output_prefix": null
     }
   ]
 }

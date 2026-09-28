@@ -25,7 +25,7 @@
   "close_tool": "NOT_EXPOSED; native completed turns quiescent; report completion/interrupt state, never claim explicit closure",
   "exact_model": "NOT_EXPOSED; inherited defaults",
   "git_transport": "Existing authenticated GitHub CLI/HTTPS; connector fetch_file failed Unknown tool; no credentials changed",
-  "assignments_dispatched": 24,
+  "assignments_dispatched": 33,
   "modalities": {
     "text_code": "EXERCISED",
     "image": "DIRECT_IMAGE_EXERCISED",
@@ -39,11 +39,14 @@
     "generation": "Image generation tool exposed but NOT_EXECUTED; generation is not observation",
     "local_pdf_render": "EXERCISED existing Windows bundled Poppler, PDF_PAGE_IMAGE via view_image by root and REV-R06"
   },
-  "failed_spawn_attempts": 1,
+  "failed_spawn_attempts": 3,
   "thread_limit_observation": "Capacity-dependent: an earlier spawn and later message-to-quiescent child were rejected at thread limit; after completion, fresh privacy/code children spawned successfully. No explicit close tool. Keep at most3 active children under platform4-agent total and recheck actual handles.",
-  "published_checkpoint": "d0211b3a54419a358b42cc80ed167658ed3345f7",
-  "publication_verified_by": "git ls-remote exact remote ref; 230 committed campaign blobs compared byte-for-byte to local, zero mismatches",
+  "published_checkpoint": "06c836d4d68d8f59036cface543d3583d4da6c1f",
+  "publication_verified_by": "git ls-remote exact remote branch 06c836d; prior230blobbytecheck at d0211b3",
   "issue_receipt": "https://github.com/erpzz/haven/issues/17#issuecomment-5876199637",
   "git_transport_note": "Default credential helper waited without publishing; owned command cancelled. Per-command existing gh auth git-credential succeeded; no persistent credential/settings change.",
-  "private_public_research_assets_bytes": 13349284
+  "private_public_research_assets_bytes": 13349284,
+  "failed_dispatch_observation": "Three native spawn rejections observed (initial REV-R02, R03 amendment fallback, R01 reviewer fallback); two R03 author reactivation attempts rejected; an earlier Q-CORE-04 message rejected. Failed attempts created no assignments. Later reactivation/reuse succeeded as capacity freed.",
+  "last_checkpoint_at": "2026-09-28T19:54:24.064171+00:00",
+  "coordination_policy": "Root routes early specialist questions; active agents continue independent soft-input work. Four total active-agent platform limit. No fabricated consultation or recursive dispatch."
 }
