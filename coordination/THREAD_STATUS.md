@@ -17,7 +17,11 @@ These are source-based statuses, not a live agent monitor.
 | R11 | H11 | Emergency/comms | Later bounded independent-help and relay contracts |
 | R12 | H12 | Frontier scout | Finite opportunity scout after current integration batch |
 | R13 | H06 | Independent validation | Start a focused evidence/contract review; no competing implementation |
+| R14 | Proposed H12 with relevant domain owners | Human augmentation, intentional communication and new senses | [Pinned prompt](https://github.com/erpzz/haven/blob/cffc1168255f600206c53fd63d1ad3ffd963121d/prompts/R14_HUMAN_AUGMENTATION_CYBERNETICS.md) available; no completion evidence reviewed in this publication |
+| R15 | H00 integration with existing domain owners | Observatory / God-admin POV / open-tool integration | [Published entry point](R15_OBSERVATORY.md), [issue #12](https://github.com/erpzz/haven/issues/12); research brief ready, research not started by publication |
 
 Suggested concurrency: R03 plus R02 continuation, with R13 a limited independent review. Existing R06/R08 sessions can finish or answer specific review questions without being restarted. Do not open every thread at once.
 
-The R1 laboratory repair and M0 operator acceptance remain outside this research roster. No automatic agent launching or scheduling is installed.
+R14/R15 exploration can proceed independently as bounded optional research. They do not replace the earlier priorities or impose a new implementation dependency. R15A–F are optional specialist assignments, not automatically launched workers.
+
+The R1 laboratory repair and M0 operator acceptance remain outside this research roster. No automatic agent launching or scheduling is installed. Historical source-import completeness remains separately unverified; verify the actual files each task uses.

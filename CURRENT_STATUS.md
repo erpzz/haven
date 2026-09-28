@@ -26,3 +26,11 @@ The original M0 stack is Python 3.12, FastAPI, Pydantic 2, Jinja2, one Uvicorn w
 ## Coding queue
 
 R1 repair remains a separate narrow task. Finish/review M0 separately. Do not begin M1, live model integration, a framework migration or a physical campaign merely because a handback recommends it.
+
+## R15 publication update — 2026-09-28
+
+The original R15 Observatory prompt is now on main through [PR #10](https://github.com/erpzz/haven/pull/10), merge `bff72a5e8a2faf86a6ded43649e0a098e80337a6`; its content blob remains `28942162876c96d2c92c020ade1e5f59cca4ff02`. [The R15 entry point](coordination/R15_OBSERVATORY.md) links the supporting brief, source notes, opportunity backlog, starting message and optional R15A–F assignments. [Issue #12](https://github.com/erpzz/haven/issues/12) tracks the research handback.
+
+This records publication of instructions and proposed ideas, not a completed R15 study, deployed Observatory, runtime test, model evaluation or device capability. No research or background agent is started by adding the files. No new PC, M0, NIGHT-01 or R1 completion state is asserted. R14 remains referenced at its pinned original prompt; no completion evidence is reviewed here.
+
+The older full-source migration and its temporary importer are not verified or repaired by this addition. The existence of the earlier workflow is not proof that it ran. Imported baseline completeness and any remaining historical broken links stay separate from the new R15 documentation.
