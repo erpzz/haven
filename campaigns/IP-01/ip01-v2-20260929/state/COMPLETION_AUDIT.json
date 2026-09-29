@@ -1,0 +1,359 @@
+{
+  "basis": "Exact IP01 WORK_PACKAGE plus authorized START_HERE amendment; conditional model lane requires actual gate disposition",
+  "items": [
+    {
+      "id": "CAMPAIGN-01",
+      "requirement": "Exact setup and baseline ancestry; one root and reused branch/PR21",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "CAMPAIGN-02",
+      "requirement": "Fixed launch/deadline and last45min reserve",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "CAMPAIGN-03",
+      "requirement": "Root/H00 separation, targeted actual specialists, no recursive spawning",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "CAMPAIGN-04",
+      "requirement": "Actual bounded peer question/response and implementation disposition",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "CAMPAIGN-05",
+      "requirement": "Max3 active children, max24 assignments, six reserved final slots",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "CAMPAIGN-06",
+      "requirement": "Original workspace before/after identity unchanged and source-copy hashes",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "CAMPAIGN-07",
+      "requirement": "Tracked allowlist, private runtime exclusions, no forbidden actions",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "CAMPAIGN-08",
+      "requirement": "Allowance, acquisition/storage/RAM/time/call counters with unknowns retained",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-01",
+      "requirement": "Python3.12 FastAPI Pydantic2 Jinja2 one Uvicorn SQLite; runnable local server",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-02",
+      "requirement": "Versioned durable schema: two synthetic people, notes/revisions/grants/lineage/drafts/tasks/jobs/output",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-03",
+      "requirement": "Note create/edit/tombstone, explicit share and withdrawal; local draft/task edits",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-04",
+      "requirement": "Independent server-side sessions, simulated login visibly labeled",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-05",
+      "requirement": "A useful private current-evidence answer; B cannot retrieve private A data",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-06",
+      "requirement": "Explicitly shared eligible note supports useful B answer",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-07",
+      "requirement": "Complete uncited influencing closure and atomic current retrieval/admission/release checks",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-08",
+      "requirement": "Full AuthorityVector and bounded lab2/32/16/128/depth16/64KiB/256KiB rejection",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-09",
+      "requirement": "Four separate immutable release/consume/append-only delivery/current eligibility records",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-10",
+      "requirement": "One finite charge per release, single whole-output destination consume slot",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-11",
+      "requirement": "Concurrent quota, grant deduplication and all-or-none joint-grant transactions",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-12",
+      "requirement": "Duplicate/conflict/lost commit/lost consume reply/unknown ACK/replay semantics",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-13",
+      "requirement": "Correction/revoke/cancel/expiry fences stale newly released outputs; history retained",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-14",
+      "requirement": "Current restart vs rollback: fresh epoch review-only, no old jobs or permits replay",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-15",
+      "requirement": "Model route shares authority path and cannot grant identity/tools",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-16",
+      "requirement": "Bounded PNG/JPEG decode; no URLs/arbitrary paths; inert output/escaped content",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "APPLICATION-17",
+      "requirement": "CSRF/session binding, host/origin restriction, loopback8765-8767 only",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "LIFECYCLE-01",
+      "requirement": "Owned immutable request/job/worker birth/boot/nonce/fence/deadline and append-only events",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "LIFECYCLE-02",
+      "requirement": "Real NOT_STARTED/RUNNING/STOP_REQUESTED/STOP_CONFIRMED/UNKNOWN observations",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "LIFECYCLE-03",
+      "requirement": "Independent observer and frozen topology-specific targets before fault trials",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "LIFECYCLE-04",
+      "requirement": "Cancel before start and during work, duplicate cancel, timeout",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "LIFECYCLE-05",
+      "requirement": "Actual parent death, worker crash, delayed/duplicate result, stale fence",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "LIFECYCLE-06",
+      "requirement": "Restart recovery and capacity release; independent control survives",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "LIFECYCLE-07",
+      "requirement": "Dedicated model backend descendants/active computation/memory/termination observed separately",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "LIFECYCLE-08",
+      "requirement": "No unowned kills, no unrestricted worker tool/shell/capability surface",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "BROWSER-01",
+      "requirement": "Actual page render and screenshot/pixel inspection with no unhandled console errors",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "BROWSER-02",
+      "requirement": "Real note create/edit, A private/B forbidden/B shared workflows",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "BROWSER-03",
+      "requirement": "Revoke/correct queued or running work, finite-use/duplicate flows",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "BROWSER-04",
+      "requirement": "Saved draft reload/server-restart persistence, error presentation",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "BROWSER-05",
+      "requirement": "Visible real queue/status/cancel/crash and restore handling",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "BROWSER-06",
+      "requirement": "Selected-image answering when operational model gate met",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-01",
+      "requirement": "Single exact qwen2.5vl3b artifact/blob/quantization/license/template/preprocessing/runtime identity",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-02",
+      "requirement": "Owned dedicated server11435-11437, isolated directories, one loaded model/request, cloud off",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-03",
+      "requirement": "Owned launch/deadline/stop demonstrated before inference; unknown cleanup stops admission",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-04",
+      "requirement": "Freeze <=4096context/768output/one image/120sec/12GiBRAM and actual peaks",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-05",
+      "requirement": "Every admitted call counted16 readiness/8 fault/72 final,90min total, no borrowing",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-06",
+      "requirement": "24 families12 development12 protected, six text/six image each,3 repeats",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-07",
+      "requirement": "Protected per modality4 answerable2 unsupported; pixels/text actually independently inspected",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-08",
+      "requirement": "Frozen assertions/family/repeat threshold7of8 and4of4 with all errors retained",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-09",
+      "requirement": "Actual protection controls/exposure, EVALUATION_INCONCLUSIVE if unenforced",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-10",
+      "requirement": "Independent semantic scoring, per-modality usefulness/abstention/grounding/latency/memory",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "MODEL-11",
+      "requirement": "No canonical P03/CORE/MF/VA/R13 or physical promotion from pilot",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "DELIVERY-01",
+      "requirement": "At most3 final deterministic suite starts, frozen candidate/config/deps/environment/evaluator identity",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "DELIVERY-02",
+      "requirement": "Independent executable functional/lifecycle/browser report with failures retained",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "DELIVERY-03",
+      "requirement": "Distinct final code,vision,evidence reviewers at exact candidate; affected recheck after changes",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "DELIVERY-04",
+      "requirement": "Source, tests, migrations, lock, sanitized fixtures, runnable README/start/stop",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "DELIVERY-05",
+      "requirement": "Actual test reports/screenshots/immutable sanitized traces and offline last-run snapshot",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "DELIVERY-06",
+      "requirement": "MORNING_REPORT and RESUME answer exact scope/budgets/failures/next decision",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "DELIVERY-07",
+      "requirement": "Public-safe content scan and branch-only publication, <=4 issue20 checkpoints",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "DELIVERY-08",
+      "requirement": "Evaluated candidate SHA separate from later administrative SHA",
+      "status": "UNPROVEN",
+      "evidence": []
+    },
+    {
+      "id": "DELIVERY-09",
+      "requirement": "All owned app/model/test/native processes stopped by deadline with observed identities",
+      "status": "UNPROVEN",
+      "evidence": []
+    }
+  ]
+}

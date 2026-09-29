@@ -1,6 +1,6 @@
 {
   "campaign_id": "ip01-v2-20260929",
-  "status": "RUNNING_PREFLIGHT",
+  "status": "BUILD_SEAM",
   "issue": 20,
   "research_issue": 17,
   "dependency_pr": 19,
@@ -10,19 +10,21 @@
   "setup_revision": "8e1304caf82c0a889eeaea7691db7b9d7b98c526",
   "operator_launch_receipt": "receipts/OPERATOR_LAUNCH.md",
   "root_native_id": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
-  "integration_manager_native_id": null,
+  "integration_manager_native_id": "01a0eb61-9f2d-72c2-9acc-e1ac3845f9d7",
   "started_at": "2026-09-29T04:10:16Z",
   "hard_deadline": "2026-09-29T10:10:16Z",
   "stop_new_work_at": "2026-09-29T09:25:16Z",
   "deadline_rule": "Earlier of six elapsed hours and next 07:00 America/New_York from actual launch; reserve last 45 minutes; no renewal on resume.",
-  "assignments_dispatched": 1,
+  "assignments_dispatched": 6,
   "active_native_children": [
-    "01a0eb5c-f3bf-7c52-9bb1-90465cc30b24"
+    "01a0eb68-1eef-7890-a6bb-4d1dc1bc5a57",
+    "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
+    "01a0eb69-0092-74d3-9541-9aeb69de5d92"
   ],
   "native_profile_loading": "CUSTOM_PROFILE_FALLBACK: native spawn API exposes instructions, no profile selector; inherited model UNKNOWN",
   "model_identity": "NOT_CHECKED",
   "code_candidate_sha": null,
-  "latest_published_checkpoint": null,
+  "latest_published_checkpoint": "faaf8eaacca35548b816722162a15649363b3b1b",
   "model_attempts": {
     "readiness_development": 0,
     "lifecycle_fault": 0,
@@ -46,5 +48,11 @@
     "Initial state is configuration, not observed execution.",
     "Root binds actual setup/PR references from the verified Issue #20 receipt before work.",
     "No original workspace, main, RI-01 file or PR #19 metadata is changed by this setup."
-  ]
+  ],
+  "at": "2026-09-29T04:21:47.972632+00:00",
+  "runtime_checkpoints_published": 1,
+  "acquisition_debit_bytes": 1073741824,
+  "acquisition_debit_basis": "Conservative 1GiB Python/browser reserve, metadata transfer bytes unknown",
+  "runtime_storage_bytes_observed": 979742337,
+  "installed_ollama_version": "0.34.4"
 }

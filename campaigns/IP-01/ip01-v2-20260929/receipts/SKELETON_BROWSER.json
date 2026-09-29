@@ -1,0 +1,15 @@
+{
+  "at": "2026-09-29T04:29:14.106992+00:00",
+  "kind": "DEVELOPMENT_SKELETON_BROWSER_SMOKE",
+  "app_identity": {
+    "pid": 23896,
+    "process_birth": 1790656121.056172
+  },
+  "url": "http://127.0.0.1:8765",
+  "status": 200,
+  "title": "Haven",
+  "body": "Haven\n\nYour local workspace for notes, thoughtful answers, and next steps.\n\nSynthetic-person laboratory \u00b7 deterministic route \u00b7 application setup in progress",
+  "console_errors": [],
+  "screenshot_sha256": "274b0fa4a871ee86145e4679ca5f0aa2bc58ba93a3733d7434ae32d86e6f0755",
+  "scope": "Page load/nonblank title/content/error check only; no stateful journey or final qualification"
+}
