@@ -40,7 +40,7 @@
     "original_issue_checkpoint_cap": 4
   },
   "final_execution": "PARTIAL: deterministic composite complete; 54/72 pilot calls observed, 45 pass and 9 conservative failures; protected comparison EVALUATION_INCONCLUSIVE; 18 unrun remain unrun.",
-  "candidate": "Historical 487c672 worktree37 unchanged; exact Git materialization pending",
+  "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
   "external_coordination": {
     "latest_consumed": {
       "comment_id": 5898973462,
@@ -70,5 +70,6 @@
     "old_checkpoint_cap": "Preserved historically; current explicit operator mandatory boundaries govern continuation postings."
   },
   "processes": "APP stopped; gate disabled; original HALT retained; no active native children",
-  "status": "ESTABLISHED_RECONCILING_IDENTITY"
+  "status": "EXACT_CANDIDATE_RECONCILED_FINAL_EXECUTION_PARTIAL",
+  "at": "2026-09-29T21:27:32.940835+00:00"
 }

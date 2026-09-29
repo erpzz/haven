@@ -1,0 +1,32 @@
+{
+  "at": "2026-09-29 21:27:32 UTC",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "checkpoint": "A",
+  "outbound_id": 5899243588,
+  "outbound_url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899243588",
+  "comments_read": [
+    {
+      "id": 5883316643,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5883316643"
+    },
+    {
+      "id": 5883564936,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5883564936"
+    },
+    {
+      "id": 5884105889,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5884105889"
+    },
+    {
+      "id": 5898973462,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5898973462"
+    },
+    {
+      "id": 5899243588,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899243588"
+    }
+  ],
+  "latest_stewardship_id": 5898973462,
+  "newer_stewardship_found": false,
+  "disposition": "Proceed within closure scope; exact candidate gate next."
+}
