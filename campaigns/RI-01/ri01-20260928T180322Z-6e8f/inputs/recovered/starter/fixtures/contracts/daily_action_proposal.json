@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "action_id": "daily-test01",
+  "principal_id": "synthetic-user-a",
+  "kind": "PROPOSE_REMINDER",
+  "resource_id": "synthetic-task01",
+  "recipient_ids": [
+    "synthetic-user-a"
+  ],
+  "payload_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "timezone": "America/New_York",
+  "desired_local_time": "2026-09-28T08:00:00",
+  "state": "PROPOSED",
+  "execution_enabled": false
+}

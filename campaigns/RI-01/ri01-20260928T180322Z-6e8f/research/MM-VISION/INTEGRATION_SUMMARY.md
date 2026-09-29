@@ -1,0 +1,17 @@
+# MM-VISION integration receipt
+
+Recommend independent review for synthesis of this documentary design only. No product, model, device, scientific or runtime capability is qualified.
+
+1. Keep selected original image + typed question + current eligible evidence + useful grounded answer as first path. Original M4 `qwen2.5vl:3b` stays unchanged. Retain daily and later simultaneous video/audio/geometry/RF/IMU journeys.
+2. Use specialized detection, selected masks, temporary anonymous tracking, OCR, calibrated geometry, registered change and permission-aware retrieval as task-specific alternatives to VLM-only processing. Current primary shortlist includes RT-DETRv4/PP-OCRv6 with explicit older comparators and SAM2.1; no models downloaded.
+3. Add only proposed MV-C1–C4 evidence profiles to CORE/R07: original bytes and reversible/information-losing transforms, exact pixel convention and temporal support, full transitive influence/authority closure, typed score/uncertainty, correlation and nonmetric/metric separation. R15 gets currently authorized overlays with unknown/historical/inferred support visible. No raw score is covariance; no anonymous ID is identity.
+4. Actual MM-AV consultation requires native timebase/per-frame PTS, uncovered intervals, audio alignment uncertainty and explicit UNKNOWN_VISUAL_BETWEEN_SAMPLES even when audio suggests an event. No active MM-FUSION or R07 author signoff is claimed; root provided limited integration interpretation.
+5. Upstream Qwen2.5-VL-3B uses a Qwen Research License (agreement dated2024-09-19). Exact redistributed/quantized M4 artifact terms are unknown and must be pinned before an actual model pilot. This neither changes the baseline nor blocks model-free replay/UI proposals. Code, weights, data, dependencies and service billing remain separate in every shortlist entry.
+
+Actual modality: one full original synthetic PNG directly viewed; only image-tool access established. No audio/video, sampled frames, figure pixels, model or device experiment. Proposed evaluation includes 28 semantic profiles, an independently frozen selected-image study, a simultaneous multimodal replay study and separate metrology qualification. Positive usefulness and authority hard failures are reported separately; candidate cannot own its evaluator.
+
+Dependencies: accepted CORE manifest7c0349a…; accepted R07 manifest2db5745b… and review21b43e…; accepted R02-P01/R03 composites; explicit root acceptance of R04 retaining its five gates; R12 O02 only. INPUT_USE.json contains full hashes and finding-to-section-to-decision mappings. SOURCE_FETCHES.json distinguishes text-response fingerprints from executable pins. Original requirements/owners/AT/EX are retained in REQUIREMENT_MAP.json.
+
+Conflicts/gates: VA-01 lifecycle/adapter containment plus P01 repeat-family rule precede actual inference. R07 E07-B remains a separately versioned proposed variant, never an unchanged R06 replication. Exact model/decoder/host/rights and resource fit are unknown. No source/license/model choice is implementation authorization.
+
+Smallest next package MV-P0 freezes licensed/synthetic fixtures/oracle under independent review; MV-P1 separately requires authorization, exact artifact rights and containment before a ≤48-attempt offline comparison. $0 new provider spend is not zero total cost. Stop at review or any scope/resource/rights failure. All tests remain NOT_EXECUTED. Root owns final adoption/publication.

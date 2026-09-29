@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:consent_proposal:1",
+  "title": "consent_proposal — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "consent_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subject_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requesting_principal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resource_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purposes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "recipient_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "provider_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "retention_days": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "expires_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "state": {
+      "type": "string",
+      "const": "PROPOSED_NOT_GRANTED"
+    }
+  },
+  "required": [
+    "schema_version",
+    "consent_id",
+    "subject_id",
+    "requesting_principal",
+    "resource_scope",
+    "purposes",
+    "recipient_ids",
+    "provider_ids",
+    "retention_days",
+    "expires_at",
+    "revision",
+    "state"
+  ],
+  "additionalProperties": false
+}

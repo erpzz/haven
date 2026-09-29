@@ -1,0 +1,72 @@
+[
+  {
+    "path": "baseline/PROJECT_ASTRA_Reference_Architecture_v0.1.md",
+    "sha256": "ca5f2fdaca66a4ebe0e8226552b2505320ef057ea843bff1853d13463e4da5b6",
+    "bytes": 132066,
+    "preservation": "EXACT_BYTE_COPY",
+    "authority": "HISTORICAL_SOURCE_NOT_AUTOMATIC_IMPLEMENTATION_AUTHORIZATION"
+  },
+  {
+    "path": "baseline/PROJECT_ASTRA_Generation_0_Implementation_Validation_Plan.md",
+    "sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771",
+    "bytes": 61117,
+    "preservation": "EXACT_BYTE_COPY",
+    "authority": "HISTORICAL_SOURCE_NOT_AUTOMATIC_IMPLEMENTATION_AUTHORIZATION"
+  },
+  {
+    "path": "archive/PROJECT_ASTRA_Codex_PC.zip",
+    "sha256": "2b2c51f80a938c8e62772dfb037593e6260a67b6bf69b2e084f58ba93e79c1df",
+    "bytes": 99046,
+    "preservation": "EXACT_BYTE_COPY",
+    "authority": "HISTORICAL_SOURCE_NOT_AUTOMATIC_IMPLEMENTATION_AUTHORIZATION"
+  },
+  {
+    "path": "archive/PROJECT_ASTRA_Codex_Handoff.zip",
+    "sha256": "8b878b75acde68ac25fa53dc467b807d6f0c456968bb1438b6d2d2f9b0a3023e",
+    "bytes": 96978,
+    "preservation": "EXACT_BYTE_COPY",
+    "authority": "HISTORICAL_SOURCE_NOT_AUTOMATIC_IMPLEMENTATION_AUTHORIZATION"
+  },
+  {
+    "path": "archive/PROJECT_ASTRA_HAVEN_Design_Thread_v0.3.zip",
+    "sha256": "15e45d772a4123937e08ac4bccaf42d3a7436d925b2290ecaa0e9d23fb19dd8f",
+    "bytes": 122138,
+    "preservation": "EXACT_BYTE_COPY",
+    "authority": "HISTORICAL_SOURCE_NOT_AUTOMATIC_IMPLEMENTATION_AUTHORIZATION"
+  },
+  {
+    "path": "archive/PROJECT_ASTRA_M0_Preflight.zip",
+    "sha256": "fdbb6dc681868c158705b77d1bbc8846b3c6c39c16b4c883ec93fadc631e7599",
+    "bytes": 3350,
+    "preservation": "EXACT_BYTE_COPY",
+    "authority": "HISTORICAL_SOURCE_NOT_AUTOMATIC_IMPLEMENTATION_AUTHORIZATION"
+  },
+  {
+    "path": "archive/PROJECT_ASTRA_HAVEN_Master_Design_Prompt_v0.3.md",
+    "sha256": "f2510b1328d86ef109f0bb29223e8ca848c1a272c0f500c1418a85f4fdd9b2b2",
+    "bytes": 47242,
+    "preservation": "EXACT_BYTE_COPY",
+    "authority": "HISTORICAL_SOURCE_NOT_AUTOMATIC_IMPLEMENTATION_AUTHORIZATION"
+  },
+  {
+    "path": "archive/HAVEN_Low_Cost_AI_Research_2026-09-27.md",
+    "sha256": "302c1acc6d181ad0851b438f1bbc294f68ee8b3ea35bf7de1954e7649f4b254a",
+    "bytes": 11977,
+    "preservation": "EXACT_BYTE_COPY",
+    "authority": "HISTORICAL_SOURCE_NOT_AUTOMATIC_IMPLEMENTATION_AUTHORIZATION"
+  },
+  {
+    "path": "archive/PROJECT_ASTRA_Hardware_Roadmap_v0.1.md",
+    "sha256": "320654789574288cfefc34344e757ac7cad373172a9ffc38642fda3975527618",
+    "bytes": 14900,
+    "preservation": "EXACT_BYTE_COPY",
+    "authority": "HISTORICAL_SOURCE_NOT_AUTOMATIC_IMPLEMENTATION_AUTHORIZATION"
+  },
+  {
+    "path": "archive/PROJECT_ASTRA_Codex_Start_Prompt.md",
+    "sha256": "00527d621dd5334d4b79a9b2d3c33dd3e63edc003f6015f2df916060a6131a45",
+    "bytes": 3318,
+    "preservation": "EXACT_BYTE_COPY",
+    "authority": "HISTORICAL_SOURCE_NOT_AUTOMATIC_IMPLEMENTATION_AUTHORIZATION"
+  }
+]

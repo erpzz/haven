@@ -1,0 +1,496 @@
+{
+  "task": "R08-P00",
+  "checked_date_utc": "2026-09-28",
+  "original_main_from_frozen_intake": "376031e182c57495912baf6727093b0b188da568",
+  "git_commands_this_task": 0,
+  "entries": [
+    {
+      "path": ".codex/agents/haven_researcher.toml",
+      "sha256": "877878aedac04b2e8b599c0968de95d755abecc60032ad77a11b8585d9e09c6f",
+      "bytes": 1398,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/prompts/R08_CONTINUE_P00.md",
+      "sha256": "0357a3e84e2e23a44c8d1efa4c80d52e054b4e97900a1c36571a5f53696d5145",
+      "bytes": 2403,
+      "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "original_path": "prompts/R08_CONTINUE_P00.md",
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "bytes": 833,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "bytes": 6025,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "bytes": 13893,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/DEPENDENCIES.json",
+      "sha256": "ee5830be9f29115f0ee41b9f596d303adf895a1ec37380d33e866cdfb80a6c52",
+      "bytes": 88289,
+      "commit": null,
+      "original_path": null,
+      "inspection": "RETAINED_SCOPE_AND_REVIEW_PIN"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R08/REVIEW.md",
+      "sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+      "bytes": 8504,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/REVIEW.md",
+      "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+      "bytes": 8803,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R12/REVIEW.md",
+      "sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+      "bytes": 6811,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "bytes": 9636,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/HANDOFF_MANIFEST.json",
+      "sha256": "fec9c4c223fa2370db6bcbe8fd61980d284d92a31a22b37d707dcd48db0a8d77",
+      "bytes": 1555,
+      "commit": null,
+      "original_path": null,
+      "inspection": "IDENTITY_MANIFEST"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "bytes": 40289,
+      "commit": null,
+      "original_path": null,
+      "inspection": "O06_AND_S10_S11_ROWS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/SOURCES.json",
+      "sha256": "011d484891273a9fdadc0277b911ca6f32af9daee054089c6785e0de548de4a0",
+      "bytes": 13912,
+      "commit": null,
+      "original_path": null,
+      "inspection": "O06_AND_S10_S11_ROWS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "bytes": 1130,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/EXPERIMENTS_AND_ACCEPTANCE.md",
+      "sha256": "bfeff2b9e890c5e1e30833c748ea15b68567a9775e8ac062cb3ac6f716da60c8",
+      "bytes": 18641,
+      "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "original_path": "design/H09/R08/v1/EXPERIMENTS_AND_ACCEPTANCE.md",
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/INTEGRATION_AND_PACKAGES.md",
+      "sha256": "d088259de75b7aebe51c1a5e666051572ba653ccee93b664ac62434630fc456e",
+      "bytes": 4334,
+      "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "original_path": "design/H09/R08/v1/INTEGRATION_AND_PACKAGES.md",
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/INTEGRATION_SUMMARY.md",
+      "sha256": "4bb42851a887857f7e51b558ddab89d5099ee4b332e03f14b90baa57d10f004e",
+      "bytes": 3290,
+      "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "original_path": "design/H09/R08/v1/INTEGRATION_SUMMARY.md",
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/INTERFACES_AND_CONTRACTS.md",
+      "sha256": "01ed60d55591b3d4a2a03cafaf4c299d24c1c9f47d406d68bd3dd2bac6d02f03",
+      "bytes": 20270,
+      "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "original_path": "design/H09/R08/v1/INTERFACES_AND_CONTRACTS.md",
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/R08_HANDOFF.md",
+      "sha256": "40e4315fba2e26c9ab89daf81e2f1c18445c85ee25a5b3a5d15870d1660e4a43",
+      "bytes": 28816,
+      "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "original_path": "design/H09/R08/v1/R08_HANDOFF.md",
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/README.md",
+      "sha256": "cf6733d7aa0916d6260628ca9e66dcb7be5f3c0039fcf8db7bebf6430f3782e1",
+      "bytes": 1404,
+      "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "original_path": "design/H09/R08/v1/README.md",
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/SOURCES.md",
+      "sha256": "715c088178c56f692a371d71878e008156eb48ff2a3f328c7a2d69ce0898c73d",
+      "bytes": 9350,
+      "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "original_path": "design/H09/R08/v1/SOURCES.md",
+      "inspection": "RELEVANT_SOURCE_ROWS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/__init__.py",
+      "sha256": "16c4d5c0b3499ebaf385aa52b5edf573d50d57b8c8ff3f9104902763ab00b523",
+      "bytes": 127,
+      "commit": null,
+      "original_path": null,
+      "inspection": "HASH_ONLY_NOT_USED_AS_SUBSTANTIVE_SUPPORT"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/__main__.py",
+      "sha256": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+      "bytes": 47,
+      "commit": null,
+      "original_path": null,
+      "inspection": "HASH_ONLY_NOT_USED_AS_SUBSTANTIVE_SUPPORT"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/backend.py",
+      "sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+      "bytes": 2643,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/cli.py",
+      "sha256": "9f72fe8ebd03e524711747ac2a1eb2bcff690197bfaa5f3631494eb621e19237",
+      "bytes": 3009,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/context.py",
+      "sha256": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+      "bytes": 1227,
+      "commit": null,
+      "original_path": null,
+      "inspection": "HASH_ONLY_NOT_USED_AS_SUBSTANTIVE_SUPPORT"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/coordinator.py",
+      "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+      "bytes": 5970,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/design_check.py",
+      "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+      "bytes": 794,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/notebook.py",
+      "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+      "bytes": 10793,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/render.py",
+      "sha256": "dae6b79597220dea72a661684b926d47d75f867ff738e36102bf0f3ccc05dd93",
+      "bytes": 2054,
+      "commit": null,
+      "original_path": null,
+      "inspection": "HASH_ONLY_NOT_USED_AS_SUBSTANTIVE_SUPPORT"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/store.py",
+      "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+      "bytes": 11897,
+      "commit": null,
+      "original_path": null,
+      "inspection": "HASH_ONLY_NOT_USED_AS_SUBSTANTIVE_SUPPORT"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+      "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+      "bytes": 465,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/types.py",
+      "sha256": "1830730ea641cc9d4b1997113816f293c12f40d5593b91da22f23058eb01b955",
+      "bytes": 3182,
+      "commit": null,
+      "original_path": null,
+      "inspection": "HASH_ONLY_NOT_USED_AS_SUBSTANTIVE_SUPPORT"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/validation.py",
+      "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+      "bytes": 2036,
+      "commit": null,
+      "original_path": null,
+      "inspection": "HASH_ONLY_NOT_USED_AS_SUBSTANTIVE_SUPPORT"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+      "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+      "bytes": 19763,
+      "commit": null,
+      "original_path": null,
+      "inspection": "RELEVANT_ASSERTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+      "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+      "bytes": 4961,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/fixtures/engineering.json",
+      "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+      "bytes": 3037,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/REDACTION_MANIFEST.json",
+      "sha256": "a662d067ee7723b123ceb617bf6e529726787fd3bbd42e66747be5722e94aca0",
+      "bytes": 3211,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+      "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+      "bytes": 15847,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+      "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+      "bytes": 6673,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/results.json",
+      "sha256": "580cc97ba33a1f4c4a6ec3b1a0a0942e713b9175bc46771ca0a248d2846b6aa0",
+      "bytes": 11826,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/CODE-0/REVIEW.md",
+      "sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8",
+      "bytes": 18796,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/EVIDENCE-0/REVIEW.md",
+      "sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d",
+      "bytes": 9770,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SUBSTANTIVE_READ"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "bytes": 54675,
+      "commit": null,
+      "original_path": null,
+      "inspection": "RELEVANT_ENG_ROWS_AND_CORE_INDEPENDENT_MATRIX"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "bytes": 90815,
+      "commit": null,
+      "original_path": null,
+      "inspection": "RELEVANT_ENG_ROWS_AND_CORE_INDEPENDENT_MATRIX"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+      "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+      "bytes": 20784,
+      "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+      "original_path": "design/H02/R02/v2/BENCHMARK_AND_EXPERIMENTS.md",
+      "inspection": "R02_E02_SECTION"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/EXPERIMENTS.md",
+      "sha256": "f451458d9116b7e36fe17c61b72fcd83e788b472718e54db406f1a085013369f",
+      "bytes": 17951,
+      "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+      "original_path": "design/H08/R06/v1/design/H08/EXPERIMENTS.md",
+      "inspection": "ADAPTIVE_METRIC_SECTION"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/SOURCE_MANIFEST.json",
+      "sha256": "687b25a3934b351d9ff20a2ce472587ca6dd90a9c8809bf5f74f7f6b0b160392",
+      "bytes": 17882,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SOURCE_LINEAGE_AND_GAPS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/INVENTORY.md",
+      "sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+      "bytes": 7115,
+      "commit": null,
+      "original_path": null,
+      "inspection": "SOURCE_LINEAGE_AND_GAPS"
+    },
+    {
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+      "bytes": 5980,
+      "commit": null,
+      "original_path": null,
+      "inspection": "READ"
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+      "bytes": 7504,
+      "commit": null,
+      "original_path": null,
+      "inspection": "READ"
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "bytes": 5286,
+      "commit": null,
+      "original_path": null,
+      "inspection": "READ"
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "bytes": 9910,
+      "commit": null,
+      "original_path": null,
+      "inspection": "READ"
+    },
+    {
+      "path": "orchestration/RI-01/TEMPLATES.md",
+      "sha256": "7296a0c3b73437cae992788eea49bc6de1f693dc2198147a38fb729861529ae2",
+      "bytes": 4258,
+      "commit": null,
+      "original_path": null,
+      "inspection": "READ"
+    },
+    {
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+      "bytes": 12968,
+      "commit": null,
+      "original_path": null,
+      "inspection": "R08_P00_AND_DEPENDENT_ROWS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/MODALITY.md",
+      "sha256": "c2e70b2403390a05c244ceb64de4d04f02bf738dcd85835bdead20a304f0e097",
+      "bytes": 2214,
+      "commit": null,
+      "original_path": null,
+      "inspection": "FULL_DOCUMENT"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CONSULTATIONS.json",
+      "sha256": "31aae3d34486eec7856d9a697e0ede3c32c77e26a36ee1e799303d96a5aff0b8",
+      "bytes": 3703,
+      "commit": null,
+      "original_path": null,
+      "inspection": "AUTHOR_CAPTURE_OF_ACTUAL_ROUTED_MESSAGES"
+    }
+  ],
+  "web": [
+    {
+      "id": "W01",
+      "url": "https://www.nature.com/articles/s41586-025-09992-y.pdf",
+      "title": "Author Correction: An autonomous laboratory for the accelerated synthesis of inorganic materials",
+      "edition": "Published19January2026; Nature650,5February2026,E1",
+      "access": "Primary publisher indexed text inspected in search; directpage/PDF fetch failed via publisher redirect. No figure/image inspection.",
+      "sha256": null,
+      "claim": "36/40confirmed,4inconclusive;new-to-platform novelty;one training-included compound removed.",
+      "decision": "Append corrections/invalidation with preserved original lineage; not laboratory reproduction."
+    },
+    {
+      "id": "W02",
+      "url": "https://www.itl.nist.gov/div898/handbook/mpc/section4/mpc4.htm",
+      "title": "NIST e-Handbook2.4 Gauge R&R studies",
+      "access": "Primary page text directly read",
+      "sha256": null,
+      "claim": "Repeatability,reproducibility,stability,bias and configuration effects are distinct.",
+      "decision": "Require session/operator/configuration/uncertainty metadata; source does not set application tolerances."
+    },
+    {
+      "id": "W03",
+      "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-appendix-d4-measurand-defined-measurement-method",
+      "title": "NIST TN1297 AppendixD4",
+      "edition": "1994guidance;page updated12August2025",
+      "access": "Primary page text directly read after correcting an initial404URL via official parentpage",
+      "sha256": null,
+      "claim": "Method-defined measurand and reference uncertainty need explicit treatment.",
+      "decision": "Define datum/contact/reference method and uncertainty; source does not validate proposed bootstrap or physical thresholds."
+    }
+  ],
+  "volatile_claim_policy": "No new CAD/model/runtime price/version/licensing adoption claims made. Existing M4 baseline preserved. Public web bytes not downloaded/frozen; use access descriptions rather than invented hashes."
+}

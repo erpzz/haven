@@ -1,0 +1,199 @@
+{
+  "observed_at_utc": "2026-09-28 19:28:20 UTC",
+  "scope": "Wave boundary read-only refresh. Original INTAKE revision1 remains frozen.",
+  "branches": [
+    {
+      "name": "campaign/ri01-20260928T180322Z-6e8f",
+      "sha": "06c836d4d68d8f59036cface543d3583d4da6c1f"
+    },
+    {
+      "name": "docs/r15-observatory-publication-20260928",
+      "sha": "ba543849e2714291cac21d8ebfeeab241aa823c1"
+    },
+    {
+      "name": "main",
+      "sha": "376031e182c57495912baf6727093b0b188da568"
+    },
+    {
+      "name": "research/r02-handback-publication-v2",
+      "sha": "d9bc23e848be9af44b6d07f9526f7badf7245b52"
+    },
+    {
+      "name": "research/r06-v1-import-20260928",
+      "sha": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb"
+    },
+    {
+      "name": "research/r08-v1-import",
+      "sha": "658880e8b01517c3f19cabfd6bb2538c2b46ea2a"
+    },
+    {
+      "name": "research/r08-v1-import-v2",
+      "sha": "5be0910420a9afd786d2ffd65054e5c4830ba714"
+    },
+    {
+      "name": "research/r14-human-augmentation-prompt-v1",
+      "sha": "cffc1168255f600206c53fd63d1ad3ffd963121d"
+    },
+    {
+      "name": "research/r15-observatory-open-tools-prompt-v1",
+      "sha": "2cbbd9ff6c07c08b986bf9a4a3ae6b9a5cf2a326"
+    },
+    {
+      "name": "setup/ri01-autonomous-multimodal-20260928",
+      "sha": "dc1d6682c7d0fe7c4b989a9de1ac2628ddb16e9a"
+    }
+  ],
+  "issues": [
+    {
+      "comments": 0,
+      "is_pr": true,
+      "number": 18,
+      "state": "closed",
+      "updated_at": "2026-09-28T17:05:21Z"
+    },
+    {
+      "comments": 3,
+      "is_pr": false,
+      "number": 17,
+      "state": "open",
+      "updated_at": "2026-09-28T19:18:57Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": true,
+      "number": 16,
+      "state": "closed",
+      "updated_at": "2026-09-28T16:23:07Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": true,
+      "number": 15,
+      "state": "open",
+      "updated_at": "2026-09-28T16:21:06Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": true,
+      "number": 14,
+      "state": "open",
+      "updated_at": "2026-09-28T16:19:25Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": true,
+      "number": 13,
+      "state": "open",
+      "updated_at": "2026-09-28T16:17:39Z"
+    },
+    {
+      "comments": 1,
+      "is_pr": false,
+      "number": 12,
+      "state": "open",
+      "updated_at": "2026-09-28T16:24:03Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": true,
+      "number": 11,
+      "state": "closed",
+      "updated_at": "2026-09-28T16:17:42Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": true,
+      "number": 10,
+      "state": "closed",
+      "updated_at": "2026-09-28T16:15:16Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": true,
+      "number": 9,
+      "state": "open",
+      "updated_at": "2026-09-28T07:56:47Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": false,
+      "number": 8,
+      "state": "open",
+      "updated_at": "2026-09-28T05:38:28Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": false,
+      "number": 7,
+      "state": "open",
+      "updated_at": "2026-09-28T05:38:19Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": false,
+      "number": 6,
+      "state": "open",
+      "updated_at": "2026-09-28T05:38:09Z"
+    },
+    {
+      "comments": 1,
+      "is_pr": false,
+      "number": 5,
+      "state": "open",
+      "updated_at": "2026-09-28T16:18:21Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": false,
+      "number": 4,
+      "state": "open",
+      "updated_at": "2026-09-28T05:37:40Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": false,
+      "number": 3,
+      "state": "open",
+      "updated_at": "2026-09-28T05:37:29Z"
+    },
+    {
+      "comments": 1,
+      "is_pr": false,
+      "number": 2,
+      "state": "open",
+      "updated_at": "2026-09-28T16:21:54Z"
+    },
+    {
+      "comments": 0,
+      "is_pr": false,
+      "number": 1,
+      "state": "open",
+      "updated_at": "2026-09-28T05:36:39Z"
+    }
+  ],
+  "comments_since_frozen_intake": [
+    {
+      "body": "RI-01 execution checkpoint: [d1f4a278](https://github.com/erpzz/haven/commit/d1f4a278bea62d391f74c54d3936d45f6d1bf9d7) is published on `campaign/ri01-20260928T180322Z-6e8f` and the remote ref was verified. Intake covered all PR states and branches; three distinct research handbacks are being independently reviewed. Exact selected source recovery preserves the 102 original requirements and archived synthetic evidence. Native delegation and direct image input are verified. This is an in-progress research checkpoint, not accepted implementation or physical qualification. M0, NIGHT-01/R1 and the importer remain untouched. A single consolidated review PR will follow the remaining research and final reviews.\r\n",
+      "created_at": "2026-09-28T18:37:05Z",
+      "id": 5876199637,
+      "issue_url": "https://api.github.com/repos/erpzz/haven/issues/17",
+      "updated_at": "2026-09-28T18:37:05Z",
+      "user": "erpzz"
+    },
+    {
+      "body": "## Operator check-in request — peer assessment at next checkpoint\n\nThe operator asked for a project check-in and wants the agents' own concise assessments of both their work and the other agents' ongoing work.\n\nAt the next normal RI-01 checkpoint, without interrupting independent research unnecessarily, please have the root supervisor collect a **brief observable assessment** from every active/completed role that can still be messaged or resumed. Do not request or publish private chain-of-thought. For each role, record only:\n\n1. **My work:** what I think is strongest / weakest or still uncertain in my artifact.\n2. **Peer work:** the most useful contribution I have consumed from another agent, with exact artifact/task ref.\n3. **Concern:** the biggest technical, evidence, integration, or vision risk I see in current peer work.\n4. **Next:** the single highest-value next action I recommend for RI-01.\n5. **Confidence:** High / Medium / Low in that recommendation, with a one-sentence evidence-based rationale.\n\nThe integration manager should additionally state:\n- overall campaign health,\n- current critical path and bottleneck,\n- whether the research is converging into one architecture or fragmenting,\n- any unresolved cross-domain conflict needing the operator,\n- what work it thinks should be accelerated, cut, or deferred.\n\nThe vision guardian should explicitly say whether the campaign is preserving the user's cumulative ambition (daily assistant + multimodality + RF/beyond-sight spatial understanding + drones/robotics + emergency/resilience + engineering/fabrication + cybernetics/new senses + Observatory), and whether process/guardrails are crowding out useful capability.\n\nThe code reviewer/evidence auditor should comment on whether research conclusions are getting ahead of available code/test evidence.\n\nPersist this as a versioned public-safe checkpoint artifact such as `reviews/PEER-CHECKIN-01/` plus a short issue receipt. Missing/quiescent agents should be marked NOT_REACHED rather than impersonated. Continue eligible research; this is not a stop-work request or a new implementation authorization.",
+      "created_at": "2026-09-28T19:18:57Z",
+      "id": 5876821386,
+      "issue_url": "https://api.github.com/repos/erpzz/haven/issues/17",
+      "updated_at": "2026-09-28T19:18:57Z",
+      "user": "erpzz"
+    }
+  ],
+  "interpretation": {
+    "new_source_handoffs": "NONE; source branches/main unchanged; campaign branch is this run",
+    "new_coordination_comment": 5876821386,
+    "comment_author_observed": "erpzz",
+    "authority": "External comment retained as contextual input, not an independent grant. Root chose a bounded peer check-in within existing authorized reviews; no scope/permission expansion.",
+    "action": "Ask three active agents for observable assessments at normal handback; non-contacted roles NOT_REACHED; no extra assignment or blocking dependency."
+  }
+}

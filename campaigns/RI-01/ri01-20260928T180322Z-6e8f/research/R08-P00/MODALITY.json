@@ -1,0 +1,31 @@
+{
+  "task": "R08-P00",
+  "date_utc": "2026-09-28",
+  "asset_id": "R10-SMOKE-01",
+  "source": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+  "sha256_or_source_version": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+  "rights": "R10/MODALITY.md attributes original synthetic PowerShell/.NET fixture, no private/third-party source. Consumed existing asset; no new media generated.",
+  "original_or_derived": "ORIGINAL_SYNTHETIC_FIXTURE",
+  "parent_asset": null,
+  "transforms": [],
+  "inspection_mode": "DIRECT_IMAGE",
+  "tool_and_model_if_exposed": {
+    "tool": "view_image",
+    "model": "NOT_EXPOSED"
+  },
+  "page_frame_or_interval": "Full240x120PNG",
+  "observations": [
+    "Red square at left",
+    "Blue filled circle near centre",
+    "Thin black descending diagonal line at right",
+    "White background"
+  ],
+  "uncertainties": [
+    "No OCR/calibration/sensor/metric test; synthetic geometry observation only.",
+    "No Haven model/runtime qualification.",
+    "Audio/video/spatial/RF tools not exercised; no capability inference."
+  ],
+  "status": "INSPECTED",
+  "retained_modalities": "Core full multimodal scope preserved; first new data adapter restricted to synthetic scalar length. Images/CAD drawings, audio instructions, video inspection, pose/RF/telemetry and per-destination outputs require their own accepted profiles; no claim they are implemented here."
+}
+

@@ -1,0 +1,1326 @@
+{
+  "recovered_at": "2026-09-28T18:13:31.470934+00:00",
+  "method": "Python standard-library ZIP member read; no archive code executed; explicit member allowlist",
+  "files": [
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/LICENSE_NOTE.md",
+      "sha256": "73ad582341c1a02bfea24f9354d97c1597e59af298c261b4dad9242ce0e5a8f6",
+      "bytes": 767,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/LICENSE_NOTE.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/MANIFEST.sha256",
+      "sha256": "13fb44698155cad15c8e7dd30b508581007f9221eaff5225c3a3c7cfb8102aae",
+      "bytes": 14125,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/MANIFEST.sha256",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H00_STARTER.md",
+      "sha256": "870ab31fe15c457009be2420961b7af34a29d3f2ad7753c0279f390f5ef9ff20",
+      "bytes": 3253,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H00_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H01_STARTER.md",
+      "sha256": "84f0c0b463b20ce43ca466ee88ffd478ba2b5cbbe39bd9a8f936999ca1899de5",
+      "bytes": 3236,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H01_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H02_STARTER.md",
+      "sha256": "d74ae0a9cbef1f4f5fce76eb0a07ccee5905595d9e0629ba1cdb2740438775dc",
+      "bytes": 3256,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H02_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H03_STARTER.md",
+      "sha256": "f14a6ea51b8b694e18be47a7172c5e358fd071498089e76a664be0c49dad0815",
+      "bytes": 3214,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H03_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H04_STARTER.md",
+      "sha256": "9016ec69a08cc3460d891383d73700b56ac0193c0c4718e0198f8c60d41ca429",
+      "bytes": 3245,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H04_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H05_STARTER.md",
+      "sha256": "311bf94cb4e94f38970130b3b65ca96d7431296b2b9308bb74b85be93220a3e9",
+      "bytes": 3248,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H05_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H06_STARTER.md",
+      "sha256": "b0de32c2d1bddcac704ad10ea2c6d9300f3eb8b7f8dfa85b4087f4f68e205d73",
+      "bytes": 3287,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H06_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H07_STARTER.md",
+      "sha256": "c8cde36666adf3116dd7279b9f2cd3a564eded772fe968844e5ce0fcd752caa7",
+      "bytes": 3216,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H07_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H08_STARTER.md",
+      "sha256": "57ce0cbe2c55c31021aaed91bf8eaf52f46a633873a442c7948d441377acc02c",
+      "bytes": 3288,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H08_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H09_STARTER.md",
+      "sha256": "89913600abe03d818aa0b53f910287627bb30b2b8fde5db86da476ce61a7c22e",
+      "bytes": 3314,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H09_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H10_STARTER.md",
+      "sha256": "0b3a8705af1952c7f173ec6c6c2654222454c80da1adf3757f86fdee6ea598e8",
+      "bytes": 3254,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H10_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H11_STARTER.md",
+      "sha256": "f36294c4da92567bbb50be60252f8a60559ade80ecd5fe6a3e339c75652bee21",
+      "bytes": 3275,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H11_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/H12_STARTER.md",
+      "sha256": "69e9d33917bf75b07367fe98dbb613db704cb07d2ad35d04dc51dec382e6358a",
+      "bytes": 3318,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H12_STARTER.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/HANDOFF_TEMPLATE.md",
+      "sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+      "bytes": 1329,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/HANDOFF_TEMPLATE.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/THREAD_MAP.md",
+      "sha256": "dd75660375d2d1ff66c9f79117573188dc56392268ac25ae73318474bb997500",
+      "bytes": 3099,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/THREAD_MAP.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/agents/registry.json",
+      "sha256": "0863466295066f3c5e0fcfc66a8a474a39656ac1fb947dd5299c551ac2bd78fe",
+      "bytes": 10211,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/registry.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/baseline/M0_CURRENT_APPROVED_CONTEXT.md",
+      "sha256": "f84e6b6b04ae8c13b17eed43e9e2c1f3f1f56973862e29560d71b6c5f219b692",
+      "bytes": 4974,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/baseline/M0_CURRENT_APPROVED_CONTEXT.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/baseline/PROJECT_ASTRA_Generation_0_Implementation_Validation_Plan.md",
+      "sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771",
+      "bytes": 61117,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/baseline/PROJECT_ASTRA_Generation_0_Implementation_Validation_Plan.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/baseline/PROJECT_ASTRA_Reference_Architecture_v0.1.md",
+      "sha256": "ca5f2fdaca66a4ebe0e8226552b2505320ef057ea843bff1853d13463e4da5b6",
+      "bytes": 132066,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/baseline/PROJECT_ASTRA_Reference_Architecture_v0.1.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/baseline/SOURCE_MANIFEST.json",
+      "sha256": "1056af756760759a6d227b946f3c546bf56d1c7914afab2c6cbcd90a0edea4ef",
+      "bytes": 2939,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/baseline/SOURCE_MANIFEST.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/README.md",
+      "sha256": "84e46ea3a07c3dfb9ca4d8bc95453171d9e51b4e72b8c8dc5113561962a40615",
+      "bytes": 3604,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/README.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/agent_job.schema.json",
+      "sha256": "fbc33699cebf0f095a5e6da2c5ab3c64554bcb499be2442aa6f62ba1c8047b93",
+      "bytes": 2066,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/agent_job.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/capability_qualification.schema.json",
+      "sha256": "5a202cc524f0a5b4d38f526ef7bc8ea12a4b703fc9f1e6d8e554c816eee3cfd3",
+      "bytes": 1658,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/capability_qualification.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/consent_proposal.schema.json",
+      "sha256": "d48d26aac261eb77c9d9f4ecb9d93c6b0a0efdb2358f83c3e613f6419005defb",
+      "bytes": 1623,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/consent_proposal.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/context_packet.schema.json",
+      "sha256": "9ebbf9c8fe0b620db89d3348c31f38580f11b7244b24897a6f200e82e9aba925",
+      "bytes": 1781,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/context_packet.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/daily_action_proposal.schema.json",
+      "sha256": "da7b74e6349fd30df796aa6adc149d81c269aa4bc0b504e17eb47f95dcdc6d00",
+      "bytes": 1525,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/daily_action_proposal.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/delivery_receipt.schema.json",
+      "sha256": "06e49970f99d8bb4a37c2c8343c8e81e40e580aafbcb166f9f6c6f1050245779",
+      "bytes": 1367,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/delivery_receipt.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/design_artifact.schema.json",
+      "sha256": "b872628654d13e32ac1571c33790f68ecfc103c7d4fe9e9185f4ccaae7d6847b",
+      "bytes": 1730,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/design_artifact.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/evidence.schema.json",
+      "sha256": "241d0f2bb00cbbb1e59472a92b66b53b893135f410e4c88bd2712d061e1a1c29",
+      "bytes": 2422,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/evidence.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/experiment.schema.json",
+      "sha256": "14d7893c6728edcbdad7690373a72ea08ab2b1ef32e8285695f3f625afd0402b",
+      "bytes": 1844,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/experiment.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/health_observation.schema.json",
+      "sha256": "793918b305df534b79bd605525e8add2bb545fea9538307dd3b242a9277b70c1",
+      "bytes": 2167,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/health_observation.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/physical_action_proposal.schema.json",
+      "sha256": "6e72a18ed05eb120dd02cc4787f52e0ae5d153539ec89f4dcb3602bbfe478d5c",
+      "bytes": 1668,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/physical_action_proposal.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/registry.json",
+      "sha256": "a26d3cf9cb0451f32ba4152ff2382a1126204d0d21c27a179baf112836939873",
+      "bytes": 4397,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/registry.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/contracts/spatial_estimate.schema.json",
+      "sha256": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e",
+      "bytes": 2656,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/spatial_estimate.schema.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/agent_job.json",
+      "sha256": "07de57b46d6bd0c51ddb8a72d351656b231bfe54c758927eac77bcb369d12b42",
+      "bytes": 504,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/agent_job.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/capability_qualification.json",
+      "sha256": "0ef79f9d83a6bb8afcd0f95deb72e30bd32bb48b4faa74b6e29a05b320266f01",
+      "bytes": 394,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/capability_qualification.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/consent_proposal.json",
+      "sha256": "8293f15392b4f735c4364e22b5dd803c612742998f125b064e0e669396355c86",
+      "bytes": 408,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/consent_proposal.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/context_packet.json",
+      "sha256": "0579423bd145428bf3c3d954d655492ead75f7046dcff7e3708aa7c6bc6c677c",
+      "bytes": 449,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/context_packet.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/daily_action_proposal.json",
+      "sha256": "16ff2dd3945562f5f9ed7cb75e573d5893887d13dda548f28bae7c170d16a5a9",
+      "bytes": 433,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/daily_action_proposal.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/delivery_receipt.json",
+      "sha256": "0d584cf71c6ad862c1753a4a868d644e5cd83548e35387df42b3bacab714dbc3",
+      "bytes": 333,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/delivery_receipt.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/design_artifact.json",
+      "sha256": "d83fb37087d9c7e6d672d8aa004a247ba3641484bf569b2d285f9c804f7267c9",
+      "bytes": 446,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/design_artifact.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/evidence.json",
+      "sha256": "6fd771f3f6b01dc425c8ea1e1f469fab494e5a4b5f5fe4d6295706a54a3dfff5",
+      "bytes": 576,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/evidence.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/experiment.json",
+      "sha256": "06af1d566b4e07537cd0f64fe2e8cdc687014e9d91396827f6e34341f3abb2f3",
+      "bytes": 673,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/experiment.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/health_observation.json",
+      "sha256": "77d69d9240e7abd1779b5ec964d952bd8a6649fbe7ed904e1871940ff5b9d36a",
+      "bytes": 491,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/health_observation.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/physical_action_proposal.json",
+      "sha256": "4c1f0877aae81260bae7d89b57f9218745259da99c1fe9ece1ce703e8a78c2d8",
+      "bytes": 485,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/physical_action_proposal.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/contracts/spatial_estimate.json",
+      "sha256": "94416f16bb2cbb77db4d6b511e4797d1cac106f1ddb2350ce1aaf892621a6f2b",
+      "bytes": 619,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/contracts/spatial_estimate.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/designs/sensor_fixture_spec.json",
+      "sha256": "e5097349df3eafde93fb752333d7325eaa3708d092fb38b5f58db581aef1be54",
+      "bytes": 272,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/designs/sensor_fixture_spec.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/negative/fabrication_enabled.json",
+      "sha256": "6ce364f5ff70703ef4c2408c517b9a2b2aec1905209f6d7c8ed6a36ee37fce60",
+      "bytes": 484,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/negative/fabrication_enabled.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/negative/job_budget_negative.json",
+      "sha256": "8ca5154ce97b0378bb60d515e370b545a66d70343a78a41534790c0d0f6ce2c1",
+      "bytes": 505,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/negative/job_budget_negative.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/negative/job_network_enabled.json",
+      "sha256": "7dc6633d74a4b69d2217e880f4567b0c1fbf47aef0505531100f341395092aa7",
+      "bytes": 503,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/negative/job_network_enabled.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/negative/missing_spatial_frame.json",
+      "sha256": "163e73e8d8c4c7cdc9fa77be9223c5425490220381de1dcd7e2176af655ed65f",
+      "bytes": 604,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/negative/missing_spatial_frame.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/negative/raw_command_in_proposal.json",
+      "sha256": "be7d35855e0ed0799e0a5d1c336cf249eef6ff2e150ec46d409e3438972d5160",
+      "bytes": 525,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/negative/raw_command_in_proposal.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/negative/real_dispatch_claim.json",
+      "sha256": "07e74e54df5c292d6d1109ed8fc58aae68d6f5c2d94b3c0ed6754a69363e1f19",
+      "bytes": 332,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/negative/real_dispatch_claim.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/negative/registry.json",
+      "sha256": "5a41a8d57f8b6bd5ad95b8069ea15915c68165f2c3b2f40fa78348385d961253",
+      "bytes": 1954,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/negative/registry.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/negative/unknown_health_with_value.json",
+      "sha256": "bfe52b5628a0dc9337cd65a9b08faa108d619e94bb3f44faf798eef791808067",
+      "bytes": 489,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/negative/unknown_health_with_value.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/fixtures/negative/unknown_uncertainty_numeric.json",
+      "sha256": "e7f17aab11a51a922ff4fe6bfa6176bd150c4f2bb2eec606e62323c7362635fa",
+      "bytes": 632,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/fixtures/negative/unknown_uncertainty_numeric.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/policies/README.md",
+      "sha256": "f9e73ba78f20f8e960cadf745e42800ce770abaa119e846354e3567a737465ab",
+      "bytes": 434,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/policies/README.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/policies/defaults.example.json",
+      "sha256": "da79f207499b5f2a2877e56aee6da386f25e206a407c5c6051d7eb79756462be",
+      "bytes": 453,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/policies/defaults.example.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/policies/model_budget.example.json",
+      "sha256": "fa7cccec0b4f9b8bf9ba19b0b18884f672b46025124a67fa1168cf6ba9c753ca",
+      "bytes": 547,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/policies/model_budget.example.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/CLAIM_AUDIT.md",
+      "sha256": "c0dd7487829fcb003e26415894bb58fe7f2155d8178f5bb3b963cb4aed733858",
+      "bytes": 3146,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/CLAIM_AUDIT.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/EXPERIMENTS.md",
+      "sha256": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521",
+      "bytes": 25739,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/EXPERIMENTS.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/EXPERIMENT_PROTOCOL_TEMPLATE.md",
+      "sha256": "ef1bfb07dfb2e8586c24eed92747eec3b14fb4109a801d609226269ca379aaa2",
+      "bytes": 1092,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/EXPERIMENT_PROTOCOL_TEMPLATE.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/RESEARCH_ATLAS.md",
+      "sha256": "83a41775e6772e607d42da7a475801ed8675b222c5631b373f8b07fb38809b9d",
+      "bytes": 3858,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/RESEARCH_ATLAS.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/SOURCES.md",
+      "sha256": "3e5845789b4cb6185ecf41f5b0a67b71114fc387d0851912d37c2593d37108df",
+      "bytes": 21077,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/SOURCES.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE01.md",
+      "sha256": "00ac57370242c8c02177b6fc4203712736b12ec396a11f1f58bd8f3dbe666a03",
+      "bytes": 1476,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE01.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE02.md",
+      "sha256": "a4e2fafdc49ed77392af33e975132b2d58e270f01abe0b5cc9435e024422b4b0",
+      "bytes": 1449,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE02.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE03.md",
+      "sha256": "5877178400d141b225d2a765c64dba6dfa1b93ea2ffbe72797432353506dbc65",
+      "bytes": 1428,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE03.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE04.md",
+      "sha256": "9ebd4bca5514106ea1c95b8ccedcb6caea8fd2ffc4b8b9598ca13319393b1b8e",
+      "bytes": 1463,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE04.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE05.md",
+      "sha256": "e3cd8b204a28fc8ad15a262e17ed4197bf336b61f0c2a1fa7df4533601f85d42",
+      "bytes": 1453,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE05.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE06.md",
+      "sha256": "a90dfc13cb255a7bf1d2d97308d9b2fcd68df9540e5fd936b7cbfae90fe88ad0",
+      "bytes": 1404,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE06.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE07.md",
+      "sha256": "0f376b52e6cc1b5908764526f10d2877c4d0115f3a9b06d9c101d460150bf2ba",
+      "bytes": 1415,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE07.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE08.md",
+      "sha256": "b0f9824abd9736fb517ca2f2b3bc8946fb62001c9729ee5f0372fa25f3e5fb9c",
+      "bytes": 1441,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE08.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE09.md",
+      "sha256": "16208e13c9dea5429a80c1ed68fd5736c5026dc57d7d3d3db684238f8af1c522",
+      "bytes": 1436,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE09.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE10.md",
+      "sha256": "10110f6ab8d47a4e717c02816ee44ab0086fcc29e2d86af5ceed1b597ad3c4f1",
+      "bytes": 1367,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE10.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE11.md",
+      "sha256": "bb321ebee5d997d0b188c6b72ebf7402159528a647e6449e2806540f0ba78f90",
+      "bytes": 1441,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE11.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE12.md",
+      "sha256": "0ef670a3a6c7f3a06820e87d20192195a961ba0a0cd9a8804fabdd9d8f472978",
+      "bytes": 1424,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE12.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE13.md",
+      "sha256": "4eafb53e417b40d6f337cc49ec79c11a19c22919b5223a3e51aa9264de5e06d1",
+      "bytes": 1497,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE13.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE14.md",
+      "sha256": "e6c15882ad31531506feb54da984aef2377786dee1a37bd285802a3dbf7f2c29",
+      "bytes": 1498,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE14.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE15.md",
+      "sha256": "badf712af8016b0f4f4a1c3bab8754b6ba6df9398a87bce98af0527d47aa2022",
+      "bytes": 1413,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE15.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE16.md",
+      "sha256": "7bb6c15fdf5bc0c0a7d431f393658e52134adada59c005b5aa16ba78efd4b9b8",
+      "bytes": 1363,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE16.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE17.md",
+      "sha256": "e7b75fe5420d2c3f3d434401bfe40eb96a25e8aa53b710cb9c8e668df69004a2",
+      "bytes": 1374,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE17.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE18.md",
+      "sha256": "3408ee559b95bd64810a3e3892ad648025c01b36d6ba361691a9bfe21874c4f0",
+      "bytes": 1447,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE18.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE19.md",
+      "sha256": "fa951dba0feb9d42a9d9b59665c03a222204d46c891f45698aa38d6fc22a6cae",
+      "bytes": 1410,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE19.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE20.md",
+      "sha256": "3f11e0e15ebbff14f21b2de210029a5ded1cdfbd45ac0359c3594ad895a74ef0",
+      "bytes": 1470,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE20.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE21.md",
+      "sha256": "d6ad1fc1cdfa141a241be53a10400f49d34b102751eef76a69cd9999c1b14490",
+      "bytes": 1440,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE21.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases/CASE22.md",
+      "sha256": "2824571da0d69bc004acdd7e965726cc371c4a07d9ffd3333fdd5ea3e39af31d",
+      "bytes": 1437,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases/CASE22.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/cases.json",
+      "sha256": "055476b6e429706d842eed9f1683f5598a7166f0de0e227556f99df25f487f7e",
+      "bytes": 16171,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/cases.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/experiments.json",
+      "sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "bytes": 37277,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/research/sources.json",
+      "sha256": "8dfdb7f74b44d4595605533cb4dfc57a14b19569369008ff7047e7a1631889a0",
+      "bytes": 24362,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/sources.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/scope/CONVERSATION_PROVENANCE.md",
+      "sha256": "20e748cbac77a934b24885c21982c9e238b57d37fce73d333b4fa02544ff5e8d",
+      "bytes": 4331,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/CONVERSATION_PROVENANCE.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/scope/COVERAGE.md",
+      "sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "bytes": 21724,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/COVERAGE.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/scope/requirements.json",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "bytes": 54675,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/tests/ACCEPTANCE_CATALOG.md",
+      "sha256": "abb6deaf4d945c3f6daafc86d5107ac28a9953fcde5ea26c5430a536eb87e387",
+      "bytes": 53861,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/ACCEPTANCE_CATALOG.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/tests/RESULT_TEMPLATE.md",
+      "sha256": "bdf5efd45b5bad553795372da6b03ec92550a0685c7ec49a5ba107f6511c0d69",
+      "bytes": 828,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/RESULT_TEMPLATE.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/tests/acceptance_catalog.json",
+      "sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "bytes": 90815,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_Tonight.zip",
+      "archive_sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe",
+      "member": "haven-tonight/haven-astra-starter/tests/test_bundle_validator.py",
+      "sha256": "c00e7a8697000f130684bb8dee9ee9ab623885027b140823c7cf6fce6214ae14",
+      "bytes": 4573,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/test_bundle_validator.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/CONTRACT_MAPPING.json",
+      "sha256": "7cfadceae9a30c8f56df7d13a872dbd836bf76c7f8aa81b6435eb42e5e5d6790",
+      "bytes": 2327,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/CONTRACT_MAPPING.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/README.md",
+      "sha256": "1a9ac8ce41cef3cb3c13d0047ca26e8fd2fd642fd1d62c112203b221f287b847",
+      "bytes": 4925,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/README.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/fixtures/context.json",
+      "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+      "bytes": 3976,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/fixtures/context.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/fixtures/engineering.json",
+      "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+      "bytes": 3037,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/fixtures/engineering.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/__init__.py",
+      "sha256": "16c4d5c0b3499ebaf385aa52b5edf573d50d57b8c8ff3f9104902763ab00b523",
+      "bytes": 127,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/__init__.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/__main__.py",
+      "sha256": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+      "bytes": 47,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/__main__.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/backend.py",
+      "sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+      "bytes": 2643,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/backend.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/cli.py",
+      "sha256": "9f72fe8ebd03e524711747ac2a1eb2bcff690197bfaa5f3631494eb621e19237",
+      "bytes": 3009,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/cli.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/context.py",
+      "sha256": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+      "bytes": 1227,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/context.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/coordinator.py",
+      "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+      "bytes": 5970,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/coordinator.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/design_check.py",
+      "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+      "bytes": 794,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/design_check.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/notebook.py",
+      "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+      "bytes": 10793,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/notebook.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/render.py",
+      "sha256": "dae6b79597220dea72a661684b926d47d75f867ff738e36102bf0f3ccc05dd93",
+      "bytes": 2054,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/render.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/store.py",
+      "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+      "bytes": 11897,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/store.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/synthetic_score.py",
+      "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+      "bytes": 465,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/types.py",
+      "sha256": "1830730ea641cc9d4b1997113816f293c12f40d5593b91da22f23058eb01b955",
+      "bytes": 3182,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/types.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/haven_lab/validation.py",
+      "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+      "bytes": 2036,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/validation.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/requirements.txt",
+      "sha256": "64e075e72257bd94140f25d25b9ed05e0997323f50094293780f664b975930b9",
+      "bytes": 178,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/requirements.txt",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/run_checks.py",
+      "sha256": "0046d02c4fcf90a3e4ecdf586180c2fc77b91bb1152940aa7ac64a3a6557e412",
+      "bytes": 3267,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/run_checks.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/tests/test_n1.py",
+      "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+      "bytes": 19763,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/lab/tests/test_n2.py",
+      "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+      "bytes": 4961,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/ACCEPTANCE_MAP.json",
+      "sha256": "3ffbe7ddf4ee63a4f462f310cfbaedda148c9d2f056b8cafb8f7be62ad529818",
+      "bytes": 3344,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/ACCEPTANCE_MAP.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/N1_GATE.json",
+      "sha256": "d1e330280582a181a5a7750b24ff56b12ad9740b12a09d47e3adc1d9749da66c",
+      "bytes": 1709,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/N1_GATE.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/REQUIREMENT_COVERAGE.json",
+      "sha256": "16799d4b3db3644f763566ad4e3652f7f8110940a72fe8c496847f659bc5a54f",
+      "bytes": 65260,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/REQUIREMENT_COVERAGE.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/REVIEW_FINDINGS.md",
+      "sha256": "be0b48a67523a38935fd55cc61967332774dbb53d52ec0c942cf26b1eeefdede",
+      "bytes": 2490,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/REVIEW_FINDINGS.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/BASELINE.json",
+      "sha256": "c04fc5d75636cac5ab4eb1d6f427e58155f591668ebee1b593461e927cb8729f",
+      "bytes": 286,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/BASELINE.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/CANDIDATE_1.json",
+      "sha256": "c8e486b2b9341b6ad591189fa8d01093e88bd3a7f8168e296c6918ea6512a976",
+      "bytes": 299,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/CANDIDATE_1.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/CANDIDATE_2.json",
+      "sha256": "82fa6690ae7fb0aa98c2bc14bcdd93596dd04a5df960443af70562e3b0d25604",
+      "bytes": 299,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/CANDIDATE_2.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/CANDIDATE_3.json",
+      "sha256": "897e2048a70680595a22e1b2d7711511e8dea3016094ba1272d39f4a008fd024",
+      "bytes": 299,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/CANDIDATE_3.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/CANDIDATE_4.json",
+      "sha256": "0caaf69185fdaa5fbb6adbc9538e231a9221aa6158798e86ec6d70a0c4122a4d",
+      "bytes": 299,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/CANDIDATE_4.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/CANDIDATE_5.json",
+      "sha256": "4af35d665676b1f2de25b6f4314b52137516c34a3e214e45668bbae76b49e951",
+      "bytes": 299,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/CANDIDATE_5.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/REPORT.md",
+      "sha256": "206f7500a441793c8bd3ff5fbc826ee3f8505cc2d4f2cf766709ee211b3eca22",
+      "bytes": 1190,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/REPORT.md",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/original_inputs.json",
+      "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+      "bytes": 3037,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/original_inputs.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/results.json",
+      "sha256": "ca15ce03f22b7752bf11ebcedb13f06692b88ef001dbd372062e683daf3ef097",
+      "bytes": 11826,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf/results.json",
+      "status": "EXACT_BYTES_RECOVERED",
+      "rights": "User-supplied project artifact; scoped campaign publication authorization; third-party source links retained, no third-party media imported"
+    }
+  ]
+}

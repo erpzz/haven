@@ -1,0 +1,359 @@
+[
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/REV-R02/REVIEW.md",
+      "claim_id": "Accepted subset",
+      "provenance": null
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "Thin coordinator and advisory-model boundary accepted subset",
+    "disposition": "REUSED",
+    "downstream_section": "Decisions and alternatives; Minimal proposed interfaces",
+    "design_effect": "Keep logical interfaces within existing application; no framework installation",
+    "reason": "Exact reviewed packet already resolves broad architecture",
+    "review_state": "AMEND overall; accepted subset reused"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F01",
+      "provenance": null
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "Required amendment REV-R02-F01",
+    "disposition": "AMENDED",
+    "downstream_section": "F01: publication ordering",
+    "design_effect": "Specify server commit and distinct destination permit consumption; full authority/restore vector; actual R03 residual-race answer",
+    "reason": "Respond to exact independent-review finding without claiming implementation closure",
+    "review_state": "REVIEWED finding; P01 response awaits different reviewer"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F02",
+      "provenance": null
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "Required amendment REV-R02-F02",
+    "disposition": "AMENDED",
+    "downstream_section": "F02 / Q-CORE-01",
+    "design_effect": "Orthogonal publication/compute states and independent termination receipt; E0-H1 stays open",
+    "reason": "Respond to exact independent-review finding without claiming implementation closure",
+    "review_state": "REVIEWED finding; P01 response awaits different reviewer"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F03",
+      "provenance": null
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "Required amendment REV-R02-F03",
+    "disposition": "AMENDED",
+    "downstream_section": "F03: quotation validation",
+    "design_effect": "Keep exact-quote mode separate from independent semantic scoring",
+    "reason": "Respond to exact independent-review finding without claiming implementation closure",
+    "review_state": "REVIEWED finding; P01 response awaits different reviewer"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F04",
+      "provenance": null
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "Required amendment REV-R02-F04",
+    "disposition": "AMENDED",
+    "downstream_section": "F04: full modality profiles",
+    "design_effect": "Ten typed input/output profiles and27 future evaluation cells",
+    "reason": "Respond to exact independent-review finding without claiming implementation closure",
+    "review_state": "REVIEWED finding; P01 response awaits different reviewer"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F05",
+      "provenance": null
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "Required amendment REV-R02-F05",
+    "disposition": "AMENDED",
+    "downstream_section": "F05: finite first real-model evaluation",
+    "design_effect": "Freeze families/rubric/holdout; proposed72-call pilot with exact artifact prerequisite",
+    "reason": "Respond to exact independent-review finding without claiming implementation closure",
+    "review_state": "REVIEWED finding; P01 response awaits different reviewer"
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/REV-R02/REVIEW.md",
+      "claim_id": "REV-R02-F06",
+      "provenance": null
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "Required amendment REV-R02-F06",
+    "disposition": "AMENDED",
+    "downstream_section": "F06: conservative accounting",
+    "design_effect": "Separate admitted expiry from unused expiry, retain unknown exposure, deduplicate settlement and round conservatively",
+    "reason": "Respond to exact independent-review finding without claiming implementation closure",
+    "review_state": "REVIEWED finding; P01 response awaits different reviewer"
+  },
+  {
+    "upstream_task": "R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+      "path": "inputs/incoming/R02/CONTRACT_DESIGN.md",
+      "claim_id": null,
+      "provenance": null
+    },
+    "artifact_sha256": "9cc1ce4ce5d2d240b244513aa7680ba0015d86829216497877f3f90cd51856d7",
+    "finding": "C01–C11 and CR01–05 preserve inert v1 contracts",
+    "disposition": "AMENDED",
+    "downstream_section": "Minimal proposed interfaces",
+    "design_effect": "Consolidate logical boundaries; refine C05/C08/C09/C10; retain domain permits",
+    "reason": "Resolve interfaces instead of changing source",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "R02",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+      "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+      "claim_id": null,
+      "provenance": null
+    },
+    "artifact_sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+    "finding": "T01–12,E01/E02 and120-task plan are unexecuted",
+    "disposition": "AMENDED",
+    "downstream_section": "Evidence; F05",
+    "design_effect": "Map twelve groups to44 exact tests/gaps; pilot precedes120-task protocol",
+    "reason": "Counts do not establish equivalence",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "EVIDENCE-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/EVIDENCE-0/REVIEW.md",
+      "claim_id": null,
+      "provenance": null
+    },
+    "artifact_sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d",
+    "finding": "E0-H1 parent-finally cleanup not parent-death containment",
+    "disposition": "REUSED",
+    "downstream_section": "F02; NEXT_PACKAGE",
+    "design_effect": "Independent termination observer and lifecycle regression first",
+    "reason": "Withholding differs from stopped computation",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "EVIDENCE-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/EVIDENCE-0/REVIEW.md",
+      "claim_id": null,
+      "provenance": null
+    },
+    "artifact_sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d",
+    "finding": "E0-H2 redaction receipt closes historical publication lineage only",
+    "disposition": "REUSED",
+    "downstream_section": "Historical N2 lineage",
+    "design_effect": "Preserve both gate hashes and producer limitation",
+    "reason": "Private original bytes not independently inspected",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "EVIDENCE-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/EVIDENCE-0/REVIEW.md",
+      "claim_id": null,
+      "provenance": null
+    },
+    "artifact_sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d",
+    "finding": "102REQ/AT,32EX retained; AT not executed; selected recovery",
+    "disposition": "REUSED",
+    "downstream_section": "Handback; Acceptance",
+    "design_effect": "Retain T32–35 and research-testR01; no complete-import/currentM0 claim",
+    "reason": "Small slice cannot narrow scope",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "NIGHT01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+      "claim_id": null,
+      "provenance": "Designated archive recovery; see PROVENANCE/SUPPLEMENTS"
+    },
+    "artifact_sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+    "finding": "33 exact methods and assertions",
+    "disposition": "REUSED",
+    "downstream_section": "CASE_CROSSWALK",
+    "design_effect": "Map each method/code/fixture/assertion/log",
+    "reason": "Reuse narrower evidence",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "NIGHT01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+      "claim_id": null,
+      "provenance": "Designated archive recovery; see PROVENANCE/SUPPLEMENTS"
+    },
+    "artifact_sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+    "finding": "11 methods enforce fixed arithmetic/inert promotion",
+    "disposition": "REUSED",
+    "downstream_section": "CASE_CROSSWALK; N2",
+    "design_effect": "Preserve scores, rejection, finite iterations",
+    "reason": "Same-writer checker not independent metrology",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "NIGHT01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "inputs/recovered/night01/lab/haven_lab/validation.py",
+      "claim_id": null,
+      "provenance": "Designated archive recovery; see PROVENANCE/SUPPLEMENTS"
+    },
+    "artifact_sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+    "finding": "Selected IDs and exact quote equality only",
+    "disposition": "REUSED",
+    "downstream_section": "F03",
+    "design_effect": "Name quote mode; separate semantic rubric",
+    "reason": "Question meaning not evaluated",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "NIGHT01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "inputs/recovered/night01/outputs/REVIEW_FINDINGS.md",
+      "claim_id": null,
+      "provenance": "Designated archive recovery; see PROVENANCE/SUPPLEMENTS"
+    },
+    "artifact_sha256": "be0b48a67523a38935fd55cc61967332774dbb53d52ec0c942cf26b1eeefdede",
+    "finding": "Historical bounded peer review plus writer durability correction",
+    "disposition": "REUSED",
+    "downstream_section": "Metadata; Evidence",
+    "design_effect": "Do not substitute for missing H00/laterR1 reviews",
+    "reason": "Different source and scope",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "NIGHT01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "inputs/recovered/night01/REDACTION_MANIFEST.json",
+      "claim_id": null,
+      "provenance": "Designated archive recovery; see PROVENANCE/SUPPLEMENTS"
+    },
+    "artifact_sha256": "a662d067ee7723b123ceb617bf6e529726787fd3bbd42e66747be5722e94aca0",
+    "finding": "Original-to-review gate hash mapping",
+    "disposition": "REUSED",
+    "downstream_section": "N2 lineage",
+    "design_effect": "Preserve f2b62... to d1e330... mapping",
+    "reason": "Redaction not rerun",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "H00-original-review",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": null,
+      "claim_id": null,
+      "provenance": null
+    },
+    "artifact_sha256": null,
+    "finding": "Original R02 H00 review not supplied",
+    "disposition": "UNRESOLVED",
+    "downstream_section": "Metadata; Acceptance",
+    "design_effect": "No reconstruction or claimed use",
+    "reason": "Source unavailable",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "R1-independent-review",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": null,
+      "claim_id": null,
+      "provenance": null
+    },
+    "artifact_sha256": null,
+    "finding": "Later independent R1 review/current source not supplied",
+    "disposition": "UNRESOLVED",
+    "downstream_section": "Metadata; NEXT_PACKAGE",
+    "design_effect": "Do not close activeR1 or claim current state",
+    "reason": "Historical snapshot not active work",
+    "review_state": "SOURCE_BACKED; P01_UNREVIEWED"
+  },
+  {
+    "upstream_task": "R03",
+    "source_ref": {
+      "repo": null,
+      "commit": null,
+      "path": null,
+      "claim_id": "Q-R02P01-R03-01",
+      "provenance": "Actual consultation answer from /root/ri01_privacy relayed by /root on2026-09-28"
+    },
+    "artifact_sha256": null,
+    "finding": "Complete vector/receipt/outbox transaction; one-use destination consumption; in-flight race; joint restriction intersection; separate physical permit",
+    "disposition": "AMENDED",
+    "downstream_section": "F01 publication ordering",
+    "design_effect": "Session/device/restore/lease vector, online destination checks, old-permit discard, DELIVERY_UNKNOWN and separate physical authority",
+    "reason": "Actual peer answer changes provisional protocol; no fabricated report hash",
+    "review_state": "ACTUAL_PROVISIONAL_PEER_ANSWER; independent R03 review pending"
+  },
+  {
+    "upstream_task": "CODE-0",
+    "source_ref": {
+      "repo": null,
+      "commit": null,
+      "path": null,
+      "claim_id": "Static crosswalk anchors relayed by root",
+      "provenance": "Actual CODE-0 findings relayed by root; source subsequently read directly by P01"
+    },
+    "artifact_sha256": null,
+    "finding": "read/render release gap; startup before finally; raw rejected output retained; quote selection ignores question",
+    "disposition": "REUSED",
+    "downstream_section": "Evidence limits; F01/F02/F03; CASE_CROSSWALK",
+    "design_effect": "Add delayed-render and startup-failure cases; distinguish withholding from deletion; keep semantic gap",
+    "reason": "Exact static anchors refine analogous-test limits",
+    "review_state": "Actual preliminary independent findings; full CODE-0 report pending"
+  }
+]

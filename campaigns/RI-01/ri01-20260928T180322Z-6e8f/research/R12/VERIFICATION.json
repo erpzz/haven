@@ -1,0 +1,22 @@
+{
+  "task": "R12",
+  "checked_at_utc": "2026-09-28T19:23:53.2060104Z",
+  "kind": "DOCUMENT_STRUCTURE_AND_BYTE_HASH_CHECK_ONLY",
+  "application_code_or_tests_executed": false,
+  "json_parsed": [
+    "INPUT_USE.json",
+    "MODALITY.json",
+    "OPPORTUNITIES.json",
+    "SOURCES.json"
+  ],
+  "opportunity_count": 10,
+  "source_count": 24,
+  "canonical_requirements_count": 102,
+  "canonical_experiments_count": 32,
+  "unknown_requirement_experiment_source_refs": 0,
+  "exact_input_hashes_matched": 11,
+  "maximum_updates_per_affected_task": 3,
+  "synthetic_image_hash": "12a1ed92fe078247281f01f05edbde362110a562cd759e2f8f7f7244bd66e837",
+  "independent_review": "PENDING_DIFFERENT_AGENT",
+  "external_mutable_source_hashes": "NOT_CAPTURED"
+}

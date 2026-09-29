@@ -1,0 +1,83 @@
+{
+  "schema": "ri01.r15.validation.v1",
+  "task": "R15",
+  "status": "DOCUMENT_VALIDATION_ONLY",
+  "date_utc": "2026-09-29",
+  "checks": [
+    {
+      "check": "37 consumed artifact SHA256 and byte counts",
+      "result": "PASS",
+      "mismatches": 0
+    },
+    {
+      "check": "JSON parse of authored INPUT_AUDIT/INPUT_USE/MODALITY/REQUIREMENT_MAP",
+      "result": "PASS"
+    },
+    {
+      "check": "102 original requirements structurally equal canonical records",
+      "result": "PASS",
+      "source_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "bytes": 54675
+    },
+    {
+      "check": "102 original acceptance tests structurally equal canonical records",
+      "result": "PASS",
+      "source_sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "bytes": 90815
+    },
+    {
+      "check": "32 original experiments structurally equal canonical records",
+      "result": "PASS",
+      "source_sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "bytes": 37277
+    },
+    {
+      "check": "18 distinct opportunity card headings;5deepdives;3combinations",
+      "result": "PASS_DOCUMENT_COVERAGE"
+    },
+    {
+      "check": "10 selected tool rows,3cost profiles,3flow designs",
+      "result": "PASS_DOCUMENT_COVERAGE"
+    },
+    {
+      "check": "30 unique R15-T01-T30 case rows",
+      "result": "PASS_DOCUMENT_COVERAGE"
+    },
+    {
+      "check": "Eight required substantive deliverables present",
+      "result": "PASS_DOCUMENT_COVERAGE"
+    },
+    {
+      "check": "Public provenance scan for absolute host path/user name",
+      "result": "PASS_NO_HITS"
+    },
+    {
+      "check": "Independent MM-FUSION acceptance review exact hash read before freeze",
+      "result": "PASS",
+      "sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd"
+    },
+    {
+      "check": "Original R15-AUDIT A02 error explicitly superseded; immutable audit preserved",
+      "result": "CORRECTED_IN_R15_COMPOSITE; INDEPENDENT_VERIFICATION_PENDING"
+    }
+  ],
+  "limits": [
+    "No application, test suite, browser UI, feed acquisition, model, human study or physical experiment was run",
+    "No complete dependency/asset/legal audit claimed",
+    "No direct media inspection in R15",
+    "Document count/hash checks do not qualify any future implementation"
+  ],
+  "retained_pre_run_gates": [
+    "MF-L01 four named sidecar/reimport mutations frozen within76MMF invocations or versionallocation; R15-T28 has its own named assertions",
+    "CORE VA01 lifecycle/exact adapter containment before actual model work",
+    "Full current I01/I06 authority, rights, output/asset/lineage bounds",
+    "Source terms, exact build/egress proof, independent protected oracles",
+    "R07/R08 metric/calibration; R09/R10/R11/R14 domain/adoption gates"
+  ],
+  "authoring_incidents": [
+    "One no-op apply_patch hunk did not match after two preceding valid edits; no unintended file mutation",
+    "One oversized document write command was rejected by OS process creation before execution; exact small apply_patch updates succeeded"
+  ],
+  "publication": "Root owned; no Git commands or external publication by this author",
+  "implementation_authorization": "AUTHORIZATION_REQUIRED; no proposal implies permission"
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:agent_job:1",
+  "title": "agent_job — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "job_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sponsor_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runtime_role": {
+      "type": "string",
+      "enum": [
+        "RA01",
+        "RA02",
+        "RA03",
+        "RA04",
+        "RA05",
+        "RA06",
+        "RA07",
+        "RA08"
+      ]
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "allowed_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "max_iterations": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "max_tool_calls": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "wall_seconds_limit": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maximum_spend_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "PROPOSED",
+        "MOCK_RUNNING",
+        "MOCK_COMPLETED",
+        "MOCK_FAILED",
+        "CANCELLED"
+      ]
+    },
+    "physical_execution_enabled": {
+      "type": "boolean",
+      "const": false
+    },
+    "external_network_enabled": {
+      "type": "boolean",
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "job_id",
+    "sponsor_id",
+    "runtime_role",
+    "purpose",
+    "input_refs",
+    "allowed_capabilities",
+    "max_iterations",
+    "max_tool_calls",
+    "wall_seconds_limit",
+    "maximum_spend_usd",
+    "state",
+    "physical_execution_enabled",
+    "external_network_enabled"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,608 @@
+{
+  "task": "R12",
+  "author": "/root/ri01_review_p01",
+  "role": "haven_researcher",
+  "as_of": "2026-09-28",
+  "status": "RESEARCH_SUBMITTED_FOR_INDEPENDENT_REVIEW",
+  "not_executed": true,
+  "opportunities": [
+    {
+      "id": "O01",
+      "title": "Embodied policy efficiency needs embodiment-specific qualification",
+      "sources": [
+        "S01",
+        "S02"
+      ],
+      "dated_artifact": "OpenVLA-OFT paper arXiv:2502.19645 (2025); public repository inspected 2026-09-28, commit not frozen",
+      "evidence": "Author repository supplies fine-tuning/inference code and linked checkpoints for LIBERO/ALOHA. It lists about 16 GB inference VRAM for LIBERO and 18 GB for ALOHA; training configurations require substantially more. These are author environment requirements, not Haven measurements.",
+      "rights": {
+        "code": "MIT reported by repository",
+        "weights": "Exact chosen checkpoint NOT_VERIFIED; original OpenVLA derives from Llama 2 and has separate inherited weight terms",
+        "data": "LIBERO/ALOHA and training-data rights must be checked independently; UNKNOWN for a selected trial"
+      },
+      "maturity": "RELEASED_RESEARCH_ARTIFACT; no Haven execution or robot qualification",
+      "limits": "Simulation/author robot tasks do not establish household transfer, independent stopping, human safety, or compatibility with an owned robot. Action chunks can outlive the observation that produced them.",
+      "owner": "H10",
+      "route": [
+        "R09"
+      ],
+      "requirements": [
+        "REQ-ROBOT-02",
+        "REQ-ROBOT-03",
+        "REQ-ROBOT-04",
+        "REQ-AI-02"
+      ],
+      "experiments": [
+        "EX25",
+        "EX26"
+      ],
+      "anchors": [
+        "V03",
+        "V09",
+        "V12",
+        "V16"
+      ],
+      "proposed": "E01: hand-author 12 action-proposal traces with expiry, stale observation, unavailable stop channel and embodiment mismatch. Compare deterministic bounded teleoperation proposal with chunked policy proposal; admit zero physical commands. Metric: all four failure classes remain denied, histories preserved; no claim of policy task success.",
+      "entry": "No-model trace review on existing workstation. Later model comparison requires exact checkpoint/license/runtime/robot dossier.",
+      "hardware_known": "Author inference VRAM figures only; owned-host fit UNKNOWN",
+      "backlog": false,
+      "cost_profile": {
+        "status": "COMPLETE_DIMENSION_LIST_WITH_UNKNOWNS; not a price quote or feasibility result",
+        "entry_experiment_ceiling": "Proposed document/schema exercise: 60 minutes, at most 20 synthetic cases, 10 MiB new records, zero model/package/asset downloads, zero paid calls, zero new purchases; not executed",
+        "purchase": "0 new purchases for entry design; later apparatus/GPU purchase UNKNOWN",
+        "compute": "Author inference VRAM figures only; owned-host fit UNKNOWN",
+        "installation": "No installation for entry design; later dependency setup effort UNKNOWN",
+        "subscriptions": "No subscription started; later licensing/service subscriptions UNKNOWN",
+        "energy": "Not metered; future watts and Wh per useful result UNKNOWN",
+        "maintenance": "No new runtime to maintain now; future updates/calibration/consumables/replacement effort UNKNOWN",
+        "privacy": "Synthetic entry cases; later real assets require exact user/purpose/audience/retention/derived-lineage authorization; signal-specific burden in card",
+        "licensing": {
+          "code": "MIT reported by repository",
+          "weights": "Exact chosen checkpoint NOT_VERIFIED; original OpenVLA derives from Llama 2 and has separate inherited weight terms",
+          "data": "LIBERO/ALOHA and training-data rights must be checked independently; UNKNOWN for a selected trial"
+        },
+        "operator_time": "60-minute proposed design ceiling, not measured labor; future setup/training/review labor UNKNOWN",
+        "network_storage": "No new binary assets acquired; future model/data sizes, bandwidth and retention cost UNKNOWN"
+      }
+    },
+    {
+      "id": "O02",
+      "title": "Segment and track selected evidence without silently identifying people",
+      "sources": [
+        "S03"
+      ],
+      "dated_artifact": "SAM 2.1 release 2024-09-30; predictor update 2024-12-11; repository inspected 2026-09-28",
+      "evidence": "SAM 2 provides promptable image/video masks with streaming memory. The later predictor allows independent per-object inference and addition of objects after tracking begins. This is useful for a temporary selected-object evidence trail.",
+      "rights": {
+        "code": "Apache-2.0 for code and checkpoints per repository; font/optional-component notices differ",
+        "weights": "Apache-2.0 per repository; freeze exact checkpoint separately",
+        "data": "SA-V rights not established in this scout; use campaign-authored fixtures first"
+      },
+      "maturity": "RELEASED_RESEARCH_ARTIFACT; Haven documentation-only",
+      "limits": "A mask or track is not semantic truth, identity, continuous visibility through occlusion, or evidence about unsampled intervals. Published GPU FPS is not target-host latency.",
+      "owner": "H02 with H08 spatial boundary",
+      "route": [
+        "MM-VISION"
+      ],
+      "requirements": [
+        "REQ-AI-07",
+        "REQ-RF-05",
+        "REQ-RF-07",
+        "REQ-WEAR-06"
+      ],
+      "experiments": [
+        "EX08",
+        "EX17",
+        "EX31"
+      ],
+      "anchors": [
+        "V04",
+        "V05",
+        "V07"
+      ],
+      "proposed": "E02: author 12 selected-frame metadata cases: duplicate objects, occlusion, stale frame, frame injection and lost track. Baseline manual region IDs versus proposed temporary mask-track IDs; every uncertain association stays uncertain and per-frame support is retained.",
+      "entry": "Static fixture review first; later one pinned segmenter versus manual/classical baseline, not a full VLM replacement.",
+      "hardware_known": "Target inference RAM/VRAM/latency UNKNOWN; author A100 benchmark is not portable",
+      "backlog": false,
+      "cost_profile": {
+        "status": "COMPLETE_DIMENSION_LIST_WITH_UNKNOWNS; not a price quote or feasibility result",
+        "entry_experiment_ceiling": "Proposed document/schema exercise: 60 minutes, at most 20 synthetic cases, 10 MiB new records, zero model/package/asset downloads, zero paid calls, zero new purchases; not executed",
+        "purchase": "0 new purchases for entry design; later apparatus/GPU purchase UNKNOWN",
+        "compute": "Target inference RAM/VRAM/latency UNKNOWN; author A100 benchmark is not portable",
+        "installation": "No installation for entry design; later dependency setup effort UNKNOWN",
+        "subscriptions": "No subscription started; later licensing/service subscriptions UNKNOWN",
+        "energy": "Not metered; future watts and Wh per useful result UNKNOWN",
+        "maintenance": "No new runtime to maintain now; future updates/calibration/consumables/replacement effort UNKNOWN",
+        "privacy": "Synthetic entry cases; later real assets require exact user/purpose/audience/retention/derived-lineage authorization; signal-specific burden in card",
+        "licensing": {
+          "code": "Apache-2.0 for code and checkpoints per repository; font/optional-component notices differ",
+          "weights": "Apache-2.0 per repository; freeze exact checkpoint separately",
+          "data": "SA-V rights not established in this scout; use campaign-authored fixtures first"
+        },
+        "operator_time": "60-minute proposed design ceiling, not measured labor; future setup/training/review labor UNKNOWN",
+        "network_storage": "No new binary assets acquired; future model/data sizes, bandwidth and retention cost UNKNOWN"
+      }
+    },
+    {
+      "id": "O03",
+      "title": "Learned geometry needs scale and source semantics before a world-model adapter",
+      "sources": [
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "dated_artifact": "VGGT CVPR 2025 / arXiv:2503.11651; license version dated 2025-07-29; current README inspected 2026-09-28",
+      "evidence": "VGGT predicts cameras, depth, point maps and tracks. The documented camera convention is OpenCV camera-from-world. Current README separates the original noncommercial checkpoint from a gated commercial checkpoint; current code uses the custom VGGT license. Newer VGGT-Omega is a backlog lead, not evaluated here.",
+      "rights": {
+        "code": "Custom VGGT license, read; includes use restrictions requiring intended-use review",
+        "weights": "Original checkpoint noncommercial; VGGT-1B-Commercial separately gated; exact accepted terms UNKNOWN until chosen",
+        "data": "Training input reuse rights not established; public paper does not license every image"
+      },
+      "maturity": "RELEASED_RESEARCH_ARTIFACT; no Haven metric geometry claim",
+      "limits": "Predicted confidence is not calibrated covariance. Unmeasured scale, frame alignment and calibration must stay UNKNOWN. License compatibility for critical/physical use must be resolved before selection.",
+      "owner": "H08; H00 owns shared contract integration",
+      "route": [
+        "R07"
+      ],
+      "requirements": [
+        "REQ-RF-04",
+        "REQ-RF-07",
+        "REQ-RF-08"
+      ],
+      "experiments": [
+        "EX09",
+        "EX17",
+        "EX31"
+      ],
+      "anchors": [
+        "V04",
+        "V07",
+        "V13",
+        "V15"
+      ],
+      "proposed": "E03: 20 synthetic observation tuples pair SpatialSemantics ID/hash/version with evidence class, support mask, parent frame, calibration and known/unknown scale. Compare native predictor coordinates with an explicitly versioned adapter. Wrong transforms, missing metrology and correlated derivatives must never become independent measured evidence.",
+      "entry": "Owner-reviewed schema examples first; calibrated classical two-view geometry remains the low-cost baseline for later measured tests.",
+      "hardware_known": "Target GPU/RAM/latency/storage UNKNOWN; do not infer metric quality from paper figures",
+      "backlog": false,
+      "cost_profile": {
+        "status": "COMPLETE_DIMENSION_LIST_WITH_UNKNOWNS; not a price quote or feasibility result",
+        "entry_experiment_ceiling": "Proposed document/schema exercise: 60 minutes, at most 20 synthetic cases, 10 MiB new records, zero model/package/asset downloads, zero paid calls, zero new purchases; not executed",
+        "purchase": "0 new purchases for entry design; later apparatus/GPU purchase UNKNOWN",
+        "compute": "Target GPU/RAM/latency/storage UNKNOWN; do not infer metric quality from paper figures",
+        "installation": "No installation for entry design; later dependency setup effort UNKNOWN",
+        "subscriptions": "No subscription started; later licensing/service subscriptions UNKNOWN",
+        "energy": "Not metered; future watts and Wh per useful result UNKNOWN",
+        "maintenance": "No new runtime to maintain now; future updates/calibration/consumables/replacement effort UNKNOWN",
+        "privacy": "Synthetic entry cases; later real assets require exact user/purpose/audience/retention/derived-lineage authorization; signal-specific burden in card",
+        "licensing": {
+          "code": "Custom VGGT license, read; includes use restrictions requiring intended-use review",
+          "weights": "Original checkpoint noncommercial; VGGT-1B-Commercial separately gated; exact accepted terms UNKNOWN until chosen",
+          "data": "Training input reuse rights not established; public paper does not license every image"
+        },
+        "operator_time": "60-minute proposed design ceiling, not measured labor; future setup/training/review labor UNKNOWN",
+        "network_storage": "No new binary assets acquired; future model/data sizes, bandwidth and retention cost UNKNOWN"
+      }
+    },
+    {
+      "id": "O04",
+      "title": "Active exploration can propose a view without issuing a movement command",
+      "sources": [
+        "S07",
+        "S08"
+      ],
+      "dated_artifact": "ActiveSplat arXiv:2410.21955 (2024); RA-L 2025; public repository inspected 2026-09-28",
+      "evidence": "The project combines Gaussian reconstruction/visibility with sparse topological planning to select views. Authors provide code and simulated-scene evaluations; the page describes a real-robot demonstration, which was not directly viewed here.",
+      "rights": {
+        "code": "MIT, exact LICENSE text read",
+        "weights": "No reusable pretrained checkpoint relied upon; any model dependency terms UNKNOWN",
+        "data": "Gibson/Matterport3D and demo-video reuse terms NOT_VERIFIED"
+      },
+      "maturity": "RELEASED_RESEARCH_ARTIFACT; author demonstrations only",
+      "limits": "Exploration coverage claims depend on scene, sensing, pose and navigation assumptions. A request for information does not establish collision freedom, robot authority, or physical stopping.",
+      "owner": "H08; movement domains retain their authority",
+      "route": [
+        "R07"
+      ],
+      "requirements": [
+        "REQ-RF-09",
+        "REQ-RF-08",
+        "REQ-DRONE-05",
+        "REQ-ROBOT-03"
+      ],
+      "experiments": [
+        "EX15",
+        "EX17",
+        "EX25"
+      ],
+      "anchors": [
+        "V06",
+        "V07",
+        "V08",
+        "V09"
+      ],
+      "proposed": "E04: compare fixed, random and information-gain next-view requests on eight pre-authored admissible views in one synthetic scene; total episode ceiling 60 seconds and eight attempts. An unavailable view, exhausted budget or revoked source yields abstention. Report coverage support and cost, not automatic motion.",
+      "entry": "Paper replay of view requests and expected evidence gain; later existing simulator only under distinct authorization.",
+      "hardware_known": "Target compute and dependency footprint UNKNOWN",
+      "backlog": false,
+      "cost_profile": {
+        "status": "COMPLETE_DIMENSION_LIST_WITH_UNKNOWNS; not a price quote or feasibility result",
+        "entry_experiment_ceiling": "Proposed document/schema exercise: 60 minutes, at most 20 synthetic cases, 10 MiB new records, zero model/package/asset downloads, zero paid calls, zero new purchases; not executed",
+        "purchase": "0 new purchases for entry design; later apparatus/GPU purchase UNKNOWN",
+        "compute": "Target compute and dependency footprint UNKNOWN",
+        "installation": "No installation for entry design; later dependency setup effort UNKNOWN",
+        "subscriptions": "No subscription started; later licensing/service subscriptions UNKNOWN",
+        "energy": "Not metered; future watts and Wh per useful result UNKNOWN",
+        "maintenance": "No new runtime to maintain now; future updates/calibration/consumables/replacement effort UNKNOWN",
+        "privacy": "Synthetic entry cases; later real assets require exact user/purpose/audience/retention/derived-lineage authorization; signal-specific burden in card",
+        "licensing": {
+          "code": "MIT, exact LICENSE text read",
+          "weights": "No reusable pretrained checkpoint relied upon; any model dependency terms UNKNOWN",
+          "data": "Gibson/Matterport3D and demo-video reuse terms NOT_VERIFIED"
+        },
+        "operator_time": "60-minute proposed design ceiling, not measured labor; future setup/training/review labor UNKNOWN",
+        "network_storage": "No new binary assets acquired; future model/data sizes, bandwidth and retention cost UNKNOWN"
+      }
+    },
+    {
+      "id": "O05",
+      "title": "RF inverse rendering is promising but the released artifact is only a minimal demo",
+      "sources": [
+        "S09"
+      ],
+      "dated_artifact": "RFDT author citation MobiCom 2026 DOI 10.1145/3795866.3796686; current minimal repository inspected 2026-09-28",
+      "evidence": "The public Mini-Differentiable-RF-Digital-Twin README explicitly calls the release a conceptual minimal implementation and says the full simulator is forthcoming. It offers five notebooks around forward evaluation, gradients and inverse optimization, using RayD/DrJit with a separate Mitsuba branch.",
+      "rights": {
+        "code": "LICENSE not successfully retrieved; permission to reuse is UNKNOWN",
+        "weights": "No weights relied upon",
+        "data": "Full benchmark/raw measurement availability and reuse rights UNKNOWN"
+      },
+      "maturity": "PARTIAL_RESEARCH_DEMO; full claimed system NOT_AVAILABLE in inspected artifact",
+      "limits": "Differentiable RF parameter fitting does not prove unique geometry, material identity, real multipath transfer or independent hidden-scene reconstruction. Gradient agreement is not geometric ground truth.",
+      "owner": "H08",
+      "route": [
+        "R06",
+        "R07"
+      ],
+      "requirements": [
+        "REQ-RF-04",
+        "REQ-RF-07",
+        "REQ-RF-08"
+      ],
+      "experiments": [
+        "EX09",
+        "EX14"
+      ],
+      "anchors": [
+        "V06",
+        "V07",
+        "V15",
+        "V16"
+      ],
+      "proposed": "E05: design six identifiable/non-identifiable synthetic inverse cases with a deliberately different held-out forward model and perturbed calibration. Compare simple calibrated baseline with a future differentiable candidate at equal trials. Score uncertainty/abstention and held-out geometry error; retain failure cases and optical-prior dependencies.",
+      "entry": "Identification/counterexample dossier without any RF acquisition or package execution; license/full-artifact gap blocks candidate run.",
+      "hardware_known": "README requires Python 3.10 and CUDA GPU; exact GPU/RAM/energy UNKNOWN",
+      "backlog": false,
+      "cost_profile": {
+        "status": "COMPLETE_DIMENSION_LIST_WITH_UNKNOWNS; not a price quote or feasibility result",
+        "entry_experiment_ceiling": "Proposed document/schema exercise: 60 minutes, at most 20 synthetic cases, 10 MiB new records, zero model/package/asset downloads, zero paid calls, zero new purchases; not executed",
+        "purchase": "0 new purchases for entry design; later apparatus/GPU purchase UNKNOWN",
+        "compute": "README requires Python 3.10 and CUDA GPU; exact GPU/RAM/energy UNKNOWN",
+        "installation": "No installation for entry design; later dependency setup effort UNKNOWN",
+        "subscriptions": "No subscription started; later licensing/service subscriptions UNKNOWN",
+        "energy": "Not metered; future watts and Wh per useful result UNKNOWN",
+        "maintenance": "No new runtime to maintain now; future updates/calibration/consumables/replacement effort UNKNOWN",
+        "privacy": "Synthetic entry cases; later real assets require exact user/purpose/audience/retention/derived-lineage authorization; signal-specific burden in card",
+        "licensing": {
+          "code": "LICENSE not successfully retrieved; permission to reuse is UNKNOWN",
+          "weights": "No weights relied upon",
+          "data": "Full benchmark/raw measurement availability and reuse rights UNKNOWN"
+        },
+        "operator_time": "60-minute proposed design ceiling, not measured labor; future setup/training/review labor UNKNOWN",
+        "network_storage": "No new binary assets acquired; future model/data sizes, bandwidth and retention cost UNKNOWN"
+      }
+    },
+    {
+      "id": "O06",
+      "title": "Autonomous-lab corrections strengthen the evaluator boundary",
+      "sources": [
+        "S10",
+        "S11"
+      ],
+      "dated_artifact": "A-Lab original 2023-11-29; author correction 2026-01-19, DOI 10.1038/s41586-025-09992-y",
+      "evidence": "The correction narrows novelty to new-to-platform rather than necessarily new-to-science. Manual reanalysis confirmed 36 of 40 previously reported successes; four were inconclusive, and one training-contaminated compound was removed. These are corrected author findings, not a new independent reproduction.",
+      "rights": {
+        "code": "Several linked component repositories; no blanket code license established",
+        "weights": "Exact learned components/checkpoints and licenses UNKNOWN",
+        "data": "Corrected supplementary analyses available; per-artifact reuse terms must be checked before copying"
+      },
+      "maturity": "PHYSICAL_RESEARCH_REPORT_WITH_CORRECTION; not Haven lab capability",
+      "limits": "Specialized apparatus, autonomous orchestration and publication do not replace protected holdouts, measurement scrutiny or physical independent acceptance. A benchmark label may itself be wrong.",
+      "owner": "H09 engineering; H06 independent evaluation; H12 correction lineage",
+      "route": [
+        "R08",
+        "R13"
+      ],
+      "requirements": [
+        "REQ-ENG-04",
+        "REQ-ENG-09",
+        "REQ-RESEARCH-01",
+        "REQ-RESEARCH-04",
+        "REQ-RESEARCH-06"
+      ],
+      "experiments": [
+        "EX28",
+        "EX30"
+      ],
+      "anchors": [
+        "V11",
+        "V12",
+        "V15",
+        "V16"
+      ],
+      "proposed": "E06: 12 synthetic engineering result records include apparent success, inconclusive measurement, correction and evaluator-training contamination. Keep original and corrected verdicts linked, freeze evaluator identity, and require independent reassessment. Metric: zero contaminated results promoted; no historical record erased.",
+      "entry": "Correction-ledger fixture using invented nonchemical candidates; no synthesis, furnace, robot or instrument activity.",
+      "hardware_known": "Physical lab apparatus, consumables, installation and maintenance costs UNKNOWN; not an affordable household reproduction claim",
+      "backlog": false,
+      "cost_profile": {
+        "status": "COMPLETE_DIMENSION_LIST_WITH_UNKNOWNS; not a price quote or feasibility result",
+        "entry_experiment_ceiling": "Proposed document/schema exercise: 60 minutes, at most 20 synthetic cases, 10 MiB new records, zero model/package/asset downloads, zero paid calls, zero new purchases; not executed",
+        "purchase": "0 new purchases for entry design; later apparatus/GPU purchase UNKNOWN",
+        "compute": "Physical lab apparatus, consumables, installation and maintenance costs UNKNOWN; not an affordable household reproduction claim",
+        "installation": "No installation for entry design; later dependency setup effort UNKNOWN",
+        "subscriptions": "No subscription started; later licensing/service subscriptions UNKNOWN",
+        "energy": "Not metered; future watts and Wh per useful result UNKNOWN",
+        "maintenance": "No new runtime to maintain now; future updates/calibration/consumables/replacement effort UNKNOWN",
+        "privacy": "Synthetic entry cases; later real assets require exact user/purpose/audience/retention/derived-lineage authorization; signal-specific burden in card",
+        "licensing": {
+          "code": "Several linked component repositories; no blanket code license established",
+          "weights": "Exact learned components/checkpoints and licenses UNKNOWN",
+          "data": "Corrected supplementary analyses available; per-artifact reuse terms must be checked before copying"
+        },
+        "operator_time": "60-minute proposed design ceiling, not measured labor; future setup/training/review labor UNKNOWN",
+        "network_storage": "No new binary assets acquired; future model/data sizes, bandwidth and retention cost UNKNOWN"
+      }
+    },
+    {
+      "id": "O07",
+      "title": "Text-to-parametric CAD remains a later representation experiment",
+      "sources": [
+        "S12",
+        "S13"
+      ],
+      "dated_artifact": "Text2CAD arXiv:2409.17106 / NeurIPS 2024; public v1 model/data links inspected 2026-09-28",
+      "evidence": "The repository exposes training/inference/evaluation for text-conditioned sequential sketch/extrusion CAD and links a checkpoint and annotated dataset. This provides a concrete representation candidate, not proof of manufacturability.",
+      "rights": {
+        "code": "Repository Text2CAD Community License: CC BY-NC-SA 4.0",
+        "weights": "Exact checkpoint license not independently established; do not infer from repository badge",
+        "data": "Text2CAD.v1 model card CC BY-NC-SA 4.0; upstream DeepCAD-related provenance and additional rights require checking"
+      },
+      "maturity": "RELEASED_RESEARCH_ARTIFACT; BACKLOG",
+      "limits": "Generated sketches/extrusions are not structural, dimensional or manufacturing acceptance. R08 template-only first slice and rejection of SANDBOXED_GENERATED_SOURCE remain unchanged.",
+      "owner": "H09; H06 owns holdouts",
+      "route": [],
+      "requirements": [
+        "REQ-ENG-02",
+        "REQ-ENG-04",
+        "REQ-ENG-06"
+      ],
+      "experiments": [
+        "EX27",
+        "EX28"
+      ],
+      "anchors": [
+        "V11",
+        "V15",
+        "V16"
+      ],
+      "proposed": "E07: later compare ten declarative CAD sequences with ten fixed-template parameter sets, preserving an evaluator-controlled holdout. Study representation errors without evaluating or executing model-generated source. Any proposed widened representation needs a separate owner decision.",
+      "entry": "Static sequence dossier only; current engineering work proceeds with approved templates.",
+      "hardware_known": "Checkpoint/download/VRAM and CAD-kernel setup effort UNKNOWN",
+      "backlog": true,
+      "cost_profile": {
+        "status": "COMPLETE_DIMENSION_LIST_WITH_UNKNOWNS; not a price quote or feasibility result",
+        "entry_experiment_ceiling": "Proposed document/schema exercise: 60 minutes, at most 20 synthetic cases, 10 MiB new records, zero model/package/asset downloads, zero paid calls, zero new purchases; not executed",
+        "purchase": "0 new purchases for entry design; later apparatus/GPU purchase UNKNOWN",
+        "compute": "Checkpoint/download/VRAM and CAD-kernel setup effort UNKNOWN",
+        "installation": "No installation for entry design; later dependency setup effort UNKNOWN",
+        "subscriptions": "No subscription started; later licensing/service subscriptions UNKNOWN",
+        "energy": "Not metered; future watts and Wh per useful result UNKNOWN",
+        "maintenance": "No new runtime to maintain now; future updates/calibration/consumables/replacement effort UNKNOWN",
+        "privacy": "Synthetic entry cases; later real assets require exact user/purpose/audience/retention/derived-lineage authorization; signal-specific burden in card",
+        "licensing": {
+          "code": "Repository Text2CAD Community License: CC BY-NC-SA 4.0",
+          "weights": "Exact checkpoint license not independently established; do not infer from repository badge",
+          "data": "Text2CAD.v1 model card CC BY-NC-SA 4.0; upstream DeepCAD-related provenance and additional rights require checking"
+        },
+        "operator_time": "60-minute proposed design ceiling, not measured labor; future setup/training/review labor UNKNOWN",
+        "network_storage": "No new binary assets acquired; future model/data sizes, bandwidth and retention cost UNKNOWN"
+      }
+    },
+    {
+      "id": "O08",
+      "title": "Disconnected communication needs explicit delivery layers",
+      "sources": [
+        "S14",
+        "S15",
+        "S16"
+      ],
+      "dated_artifact": "RFC 9171 BPv7 January 2022; RFC 9713 January 2025 update; ION current branch inspected 2026-09-28",
+      "evidence": "BPv7 defines store-carry-forward bundles, expiry and status reports. Section 5.7 explicitly limits a delivery report to the application agent, not successful application processing. NASA/JPL ION offers an implementation; its broader module list does not qualify every deployment.",
+      "rights": {
+        "code": "ION license permits redistribution with attribution/disclaimer/non-endorsement conditions; read exact license.txt",
+        "weights": "NOT_APPLICABLE",
+        "data": "No traffic or personal messages collected; RFC document and extracted-code rights differ (IETF Trust / Revised BSD)"
+      },
+      "maturity": "PUBLISHED_STANDARD_AND_IMPLEMENTATION; Haven integration untested",
+      "limits": "Transport delivery is not human perception, emergency response, broadband service, revocation erasure or guaranteed delivery. Stored copies may be unreachable; authorization and expiry still matter.",
+      "owner": "H11 with H04 privacy and H03 receipt boundary",
+      "route": [
+        "R11"
+      ],
+      "requirements": [
+        "REQ-COMMS-01",
+        "REQ-COMMS-05",
+        "REQ-COMMS-06",
+        "REQ-COMMS-07",
+        "REQ-EMERG-01"
+      ],
+      "experiments": [
+        "EX21",
+        "EX24",
+        "EX32"
+      ],
+      "anchors": [
+        "V01",
+        "V02",
+        "V10",
+        "V12"
+      ],
+      "proposed": "E08: 16 finite offline/reconnection traces covering duplicate bundle, expired payload, lost ACK, application-receive versus process, and later revoke. Compare simple bounded local spool baseline with a future BPv7 adapter; separate transport, application and reported presentation states.",
+      "entry": "Receipt-state fixture first; no radio/network activation or ION installation.",
+      "hardware_known": "Future radios/backhaul/power/platform costs and licensing UNKNOWN; no mesh-as-broadband claim",
+      "backlog": false,
+      "cost_profile": {
+        "status": "COMPLETE_DIMENSION_LIST_WITH_UNKNOWNS; not a price quote or feasibility result",
+        "entry_experiment_ceiling": "Proposed document/schema exercise: 60 minutes, at most 20 synthetic cases, 10 MiB new records, zero model/package/asset downloads, zero paid calls, zero new purchases; not executed",
+        "purchase": "0 new purchases for entry design; later apparatus/GPU purchase UNKNOWN",
+        "compute": "Future radios/backhaul/power/platform costs and licensing UNKNOWN; no mesh-as-broadband claim",
+        "installation": "No installation for entry design; later dependency setup effort UNKNOWN",
+        "subscriptions": "No subscription started; later licensing/service subscriptions UNKNOWN",
+        "energy": "Not metered; future watts and Wh per useful result UNKNOWN",
+        "maintenance": "No new runtime to maintain now; future updates/calibration/consumables/replacement effort UNKNOWN",
+        "privacy": "Synthetic entry cases; later real assets require exact user/purpose/audience/retention/derived-lineage authorization; signal-specific burden in card",
+        "licensing": {
+          "code": "ION license permits redistribution with attribution/disclaimer/non-endorsement conditions; read exact license.txt",
+          "weights": "NOT_APPLICABLE",
+          "data": "No traffic or personal messages collected; RFC document and extracted-code rights differ (IETF Trust / Revised BSD)"
+        },
+        "operator_time": "60-minute proposed design ceiling, not measured labor; future setup/training/review labor UNKNOWN",
+        "network_storage": "No new binary assets acquired; future model/data sizes, bandwidth and retention cost UNKNOWN"
+      }
+    },
+    {
+      "id": "O09",
+      "title": "Wrist sEMG supports intentional interface research, not thought reading",
+      "sources": [
+        "S17",
+        "S18",
+        "S24"
+      ],
+      "dated_artifact": "Nature article 2025-07-23, DOI 10.1038/s41586-025-09255-w; data repository inspected 2026-09-28",
+      "evidence": "The authors demonstrate wrist surface-EMG interfaces for intentional motor control. The paper describes a training-only public subset, but the current official repository now advertises pretrained checkpoints and 80/10/10 train/validation/test participants per task. Its README cautions that subsampling and model seeds can change published metrics; do not conflate release splits with the full paper evaluation.",
+      "rights": {
+        "code": "Current official repository README/LICENSE: CC BY-NC 4.0. Paper text describes earlier CC BY-NC-SA terms; preserve edition distinction.",
+        "weights": "Current repository advertises pretrained checkpoints; exact chosen checkpoint bytes and applicable weight-specific terms NOT_VERIFIED.",
+        "data": "Current repository declares data CC BY-NC 4.0 and includes train/validation/test subsets. Exact dataset edition/provenance must be frozen; human signals remain sensitive."
+      },
+      "maturity": "HUMAN_RESEARCH_DEMONSTRATION_WITH_PARTIAL_PUBLIC_DATA; no Haven human study",
+      "limits": "Population/task transfer, false activation, fatigue, learning burden, assistive suitability and commodity hardware compatibility remain unqualified. No mental-content inference or clinical claim.",
+      "owner": "H12 research and H07 interfaces; H04 consent",
+      "route": [
+        "R14",
+        "R04"
+      ],
+      "requirements": [
+        "REQ-WEAR-05",
+        "REQ-WEAR-06",
+        "REQ-WEAR-07",
+        "REQ-RESEARCH-04"
+      ],
+      "experiments": [
+        "EX08",
+        "EX30"
+      ],
+      "anchors": [
+        "V02",
+        "V05",
+        "V12",
+        "V16"
+      ],
+      "proposed": "E09: synthetic intentional-signal events drive two independent private cue routes; compare explicit button-coded commands with proposed sEMG intent labels. Include false activation, wrong audience, no response, revocation and ambiguous intent. Do not collect biosignals or recruit humans.",
+      "entry": "Button/tap plus private visual cue baseline; later human protocol requires separate rights, consent, device and false-activation review.",
+      "hardware_known": "Compatible wrist hardware/SDK/support/subscription and total costs UNKNOWN; no recommendation to buy",
+      "backlog": false,
+      "cost_profile": {
+        "status": "COMPLETE_DIMENSION_LIST_WITH_UNKNOWNS; not a price quote or feasibility result",
+        "entry_experiment_ceiling": "Proposed document/schema exercise: 60 minutes, at most 20 synthetic cases, 10 MiB new records, zero model/package/asset downloads, zero paid calls, zero new purchases; not executed",
+        "purchase": "0 new purchases for entry design; later apparatus/GPU purchase UNKNOWN",
+        "compute": "Compatible wrist hardware/SDK/support/subscription and total costs UNKNOWN; no recommendation to buy",
+        "installation": "No installation for entry design; later dependency setup effort UNKNOWN",
+        "subscriptions": "No subscription started; later licensing/service subscriptions UNKNOWN",
+        "energy": "Not metered; future watts and Wh per useful result UNKNOWN",
+        "maintenance": "No new runtime to maintain now; future updates/calibration/consumables/replacement effort UNKNOWN",
+        "privacy": "Synthetic entry cases; later real assets require exact user/purpose/audience/retention/derived-lineage authorization; signal-specific burden in card",
+        "licensing": {
+          "code": "Current official repository README/LICENSE: CC BY-NC 4.0. Paper text describes earlier CC BY-NC-SA terms; preserve edition distinction.",
+          "weights": "Current repository advertises pretrained checkpoints; exact chosen checkpoint bytes and applicable weight-specific terms NOT_VERIFIED.",
+          "data": "Current repository declares data CC BY-NC 4.0 and includes train/validation/test subsets. Exact dataset edition/provenance must be frozen; human signals remain sensitive."
+        },
+        "operator_time": "60-minute proposed design ceiling, not measured labor; future setup/training/review labor UNKNOWN",
+        "network_storage": "No new binary assets acquired; future model/data sizes, bandwidth and retention cost UNKNOWN"
+      }
+    },
+    {
+      "id": "O10",
+      "title": "An omni model needs a precise resource and rights profile",
+      "sources": [
+        "S19",
+        "S20"
+      ],
+      "dated_artifact": "Qwen2.5-Omni arXiv:2503.20215 (2025); exact 3B model card inspected 2026-09-28",
+      "evidence": "The 3B card describes text/image/audio/video inputs and text/audio outputs, with qwen-research weight licensing. It lists theoretical BF16 minimum GPU memory of 18.38/22.43/28.22 GB for 15/30/60-second video and warns actual use is typically at least 1.2 times higher.",
+      "rights": {
+        "code": "Repository software license distinct from weights; exact selected runtime/dependency license NOT_VERIFIED",
+        "weights": "Qwen2.5-Omni-3B: qwen-research, read model-card declaration",
+        "data": "Training-data access/rights and inference input rights distinct; full training provenance UNKNOWN"
+      },
+      "maturity": "RELEASED_MODEL_AND_CODE; no Haven runtime test",
+      "limits": "Architecture-level temporal alignment does not demonstrate reliable event ordering, identity, synchronized sensory understanding or safe audio cancellation. Three billion parameters does not establish fit on the existing computer.",
+      "owner": "H02 and H01 voice with H07 endpoint boundary",
+      "route": [
+        "MM-AV",
+        "R02"
+      ],
+      "requirements": [
+        "REQ-AI-02",
+        "REQ-AI-03",
+        "REQ-AI-06",
+        "REQ-AI-08",
+        "REQ-AI-09",
+        "REQ-DAILY-09"
+      ],
+      "experiments": [
+        "EX03",
+        "EX06",
+        "EX17"
+      ],
+      "anchors": [
+        "V01",
+        "V03",
+        "V04",
+        "V05",
+        "V12"
+      ],
+      "proposed": "E10: define 12 synthetic audiovisual cases with late/contradictory/missing modalities, noise and cancel-after-consume. Compare ASR plus selected-frame baseline against one future pinned omni profile at matched budgets. Preserve unknown playback ACK and per-user audience; no hosted calls.",
+      "entry": "Design fixtures and economics sheet first; original M4 qwen2.5vl:3b remains unchanged.",
+      "hardware_known": "Author GPU minima only; host RAM/VRAM/energy/latency and quantized-runtime compatibility UNKNOWN",
+      "backlog": false,
+      "cost_profile": {
+        "status": "COMPLETE_DIMENSION_LIST_WITH_UNKNOWNS; not a price quote or feasibility result",
+        "entry_experiment_ceiling": "Proposed document/schema exercise: 60 minutes, at most 20 synthetic cases, 10 MiB new records, zero model/package/asset downloads, zero paid calls, zero new purchases; not executed",
+        "purchase": "0 new purchases for entry design; later apparatus/GPU purchase UNKNOWN",
+        "compute": "Author GPU minima only; host RAM/VRAM/energy/latency and quantized-runtime compatibility UNKNOWN",
+        "installation": "No installation for entry design; later dependency setup effort UNKNOWN",
+        "subscriptions": "No subscription started; later licensing/service subscriptions UNKNOWN",
+        "energy": "Not metered; future watts and Wh per useful result UNKNOWN",
+        "maintenance": "No new runtime to maintain now; future updates/calibration/consumables/replacement effort UNKNOWN",
+        "privacy": "Synthetic entry cases; later real assets require exact user/purpose/audience/retention/derived-lineage authorization; signal-specific burden in card",
+        "licensing": {
+          "code": "Repository software license distinct from weights; exact selected runtime/dependency license NOT_VERIFIED",
+          "weights": "Qwen2.5-Omni-3B: qwen-research, read model-card declaration",
+          "data": "Training-data access/rights and inference input rights distinct; full training provenance UNKNOWN"
+        },
+        "operator_time": "60-minute proposed design ceiling, not measured labor; future setup/training/review labor UNKNOWN",
+        "network_storage": "No new binary assets acquired; future model/data sizes, bandwidth and retention cost UNKNOWN"
+      }
+    }
+  ]
+}

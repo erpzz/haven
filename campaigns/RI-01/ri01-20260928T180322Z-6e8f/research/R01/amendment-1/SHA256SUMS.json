@@ -1,0 +1,27 @@
+[
+  {
+    "path": "AMENDMENT.md",
+    "bytes": 11976,
+    "sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535"
+  },
+  {
+    "path": "ARTIFACT_CHECKS.json",
+    "bytes": 629,
+    "sha256": "a9d288fe118a5153ec5d8d2054d898a980adf4aa30e48437a89cc6f421c2cffa"
+  },
+  {
+    "path": "INPUT_USE.json",
+    "bytes": 5720,
+    "sha256": "d9661e9a53da88ca1889ed22dac9c08fd4b290407ac452fde05ff01a754e3a6c"
+  },
+  {
+    "path": "ORIGINAL_PINS.json",
+    "bytes": 863,
+    "sha256": "da7bc6e9b31c0fe418f63f860fcfb4c23c8faba07f69af6a7de5bf2ff82232e9"
+  },
+  {
+    "path": "PROPOSED_TRACES.json",
+    "bytes": 4337,
+    "sha256": "62a1ac1bcd2aca65d04d158e548d3d468fe1fe19dc4247d8c897e44b74a29e0e"
+  }
+]

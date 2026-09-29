@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:delivery_receipt:1",
+  "title": "delivery_receipt — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "message_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recipient_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sponsor_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "STORED_LOCALLY",
+        "TRANSFERRED_TO_TEST_RELAY",
+        "TEST_DESTINATION_ACCEPTED",
+        "EXPIRED",
+        "UNKNOWN"
+      ]
+    },
+    "observed_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_component": {
+      "type": "string",
+      "minLength": 1
+    },
+    "prior_receipt_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "has_internet_backhaul": {
+      "type": "boolean"
+    },
+    "is_real_dispatch": {
+      "type": "boolean",
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "message_id",
+    "recipient_id",
+    "sponsor_id",
+    "state",
+    "observed_at",
+    "source_component",
+    "prior_receipt_id",
+    "has_internet_backhaul",
+    "is_real_dispatch"
+  ],
+  "additionalProperties": false
+}

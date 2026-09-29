@@ -1,0 +1,60 @@
+[
+  {
+    "asset_id": "RI01-SYNTHETIC-VISION-001",
+    "source": "../../inputs/runtime/synthetic-vision-probe.png",
+    "sha256_or_source_version": "12a1ed92fe078247281f01f05edbde362110a562cd759e2f8f7f7244bd66e837",
+    "rights": "Campaign-authored synthetic geometric fixture, per ROOT_IMAGE_PROBE.json",
+    "original_or_derived": "original",
+    "parent_asset": null,
+    "transforms": [],
+    "inspection_mode": "DIRECT_IMAGE",
+    "tool_and_model_if_exposed": {
+      "tool": "view_image",
+      "model": "NOT_EXPOSED; inherited session default"
+    },
+    "page_frame_or_interval": "whole360x180image",
+    "observations": "Red filled rectangle on left and blue filled circle on right, separated on a light background.",
+    "uncertainties": "Benign development-tool smoke check only. No scientific visual benchmark or Haven runtime qualification.",
+    "status": "INSPECTED",
+    "inspector": "/root/ri01_review_p01",
+    "inspected_at": "2026-09-28T19:14:51Z"
+  },
+  {
+    "asset_id": "R12-VGGT-PDF",
+    "source": "https://arxiv.org/pdf/2503.11651",
+    "sha256_or_source_version": "arXiv:2503.11651; exact PDF revision/hash not frozen",
+    "rights": "Publicly readable paper; figure reuse license not independently established",
+    "original_or_derived": "original",
+    "parent_asset": null,
+    "transforms": [
+      "web screenshot request for page0; no accessible pixels exposed to this author"
+    ],
+    "inspection_mode": "DOCUMENTATION_ONLY",
+    "tool_and_model_if_exposed": {
+      "tool": "web open/screenshot",
+      "model": "NOT_EXPOSED"
+    },
+    "page_frame_or_interval": "PDF text; page0 screenshot attempted",
+    "observations": "PDF text available. No visual judgment made on chart or reconstruction quality.",
+    "uncertainties": "Screenshot returned only source/reference text through current execution path; no direct figure inspection.",
+    "status": "TOOL_UNAVAILABLE"
+  },
+  {
+    "asset_id": "R12-AUDIO-VIDEO",
+    "source": "Project/paper descriptions only",
+    "sha256_or_source_version": "Source IDs S01,S03,S07,S17,S19",
+    "rights": "Direct media reuse rights not checked",
+    "original_or_derived": "original",
+    "parent_asset": null,
+    "transforms": [],
+    "inspection_mode": "DOCUMENTATION_ONLY",
+    "tool_and_model_if_exposed": {
+      "tool": "web text",
+      "model": "NOT_EXPOSED"
+    },
+    "page_frame_or_interval": "No listened interval, sampled frame or played interval",
+    "observations": "Author descriptions of audiovisual/robot/human experiments only.",
+    "uncertainties": "No audio listening, video viewing, waveform/spectrogram, spatial rendering or direct timing validation.",
+    "status": "DOCUMENTATION_ONLY"
+  }
+]

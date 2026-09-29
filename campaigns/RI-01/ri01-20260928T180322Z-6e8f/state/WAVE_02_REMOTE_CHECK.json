@@ -1,0 +1,8 @@
+{
+  "observed_at": "2026-09-28T18:58:57.7544807Z",
+  "campaign_before_push": "d1f4a278bea62d391f74c54d3936d45f6d1bf9d7",
+  "method": "Authenticated gh pr list state all limit100 plus git fetch; exact 8 expected records returned",
+  "scope": "Wave boundary read-only refresh; no Actions activation",
+  "main": "376031e182c57495912baf6727093b0b188da568",
+  "remote_pr_heads": "All 8 recorded PR heads and states unchanged from INTAKE revision1"
+}

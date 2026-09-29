@@ -1,0 +1,282 @@
+{
+  "task": "R14",
+  "checked_at_utc": "2026-09-28T21:05:35.5856559Z",
+  "environment": "Existing Windows PowerShell; documentary standard parsing/hashing only",
+  "application_code": "NO_APPLICATION_CODE_CHANGED",
+  "application_tests": "NOT_EXECUTED",
+  "scientific_experiments": "NOT_EXECUTED",
+  "human_device_clinical_activity": "NOT_EXECUTED",
+  "input_hash_rows": 47,
+  "input_hash_mismatches": [],
+  "hard_anchor_results": [
+    {
+      "path": "integration/core-v1/MANIFEST.sha256",
+      "expected": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "actual": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "match": true
+    },
+    {
+      "path": "research/R04/HASHES.json",
+      "expected": "90c2d832f126b0111d0726f75f1d8eb5f36bb040fbd82ce154a5b5e016a0eef0",
+      "actual": "90c2d832f126b0111d0726f75f1d8eb5f36bb040fbd82ce154a5b5e016a0eef0",
+      "match": true
+    },
+    {
+      "path": "reviews/REVIEW-R04/REVIEW.md",
+      "expected": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956",
+      "actual": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956",
+      "match": true
+    },
+    {
+      "path": "research/MM-AV/HANDOFF_MANIFEST.json",
+      "expected": "1cb85927411aefaf3ba16a39e4b2465b53ee12dfd5f7d240da3112128d19cc64",
+      "actual": "1cb85927411aefaf3ba16a39e4b2465b53ee12dfd5f7d240da3112128d19cc64",
+      "match": true
+    },
+    {
+      "path": "reviews/REVIEW-MM-AV/REVIEW.md",
+      "expected": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025",
+      "actual": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025",
+      "match": true
+    },
+    {
+      "path": "reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+      "expected": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593",
+      "actual": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593",
+      "match": true
+    },
+    {
+      "path": "research/R09/CONTRACTS.md",
+      "expected": "854d05a470581289537df387a959c817cf9be6b05d46c0686f93a6f82aa948a1",
+      "actual": "854d05a470581289537df387a959c817cf9be6b05d46c0686f93a6f82aa948a1",
+      "match": true
+    },
+    {
+      "path": "reviews/REVIEW-R09/REVIEW.md",
+      "expected": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81",
+      "actual": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81",
+      "match": true
+    }
+  ],
+  "upstream_member_checks": [
+    {
+      "group": "CORE",
+      "path": "ARCHITECTURE.md",
+      "match": true
+    },
+    {
+      "group": "CORE",
+      "path": "ARTIFACT_CHECKS.json",
+      "match": true
+    },
+    {
+      "group": "CORE",
+      "path": "CONTRACT_CROSSWALK.md",
+      "match": true
+    },
+    {
+      "group": "CORE",
+      "path": "CONTRACTS.md",
+      "match": true
+    },
+    {
+      "group": "CORE",
+      "path": "DECISIONS.md",
+      "match": true
+    },
+    {
+      "group": "CORE",
+      "path": "DEPENDENCIES.json",
+      "match": true
+    },
+    {
+      "group": "CORE",
+      "path": "IMPLEMENTATION_QUEUE.md",
+      "match": true
+    },
+    {
+      "group": "CORE",
+      "path": "INPUT_USE.json",
+      "match": true
+    },
+    {
+      "group": "CORE",
+      "path": "MANAGER_STATE.md",
+      "match": true
+    },
+    {
+      "group": "CORE",
+      "path": "MULTIMODAL.md",
+      "match": true
+    },
+    {
+      "group": "R04",
+      "path": "CAPABILITIES.md",
+      "match": true
+    },
+    {
+      "group": "R04",
+      "path": "CONSULTATIONS.md",
+      "match": true
+    },
+    {
+      "group": "R04",
+      "path": "CONTRACTS.md",
+      "match": true
+    },
+    {
+      "group": "R04",
+      "path": "EXPERIMENTS_AND_PACKAGE.md",
+      "match": true
+    },
+    {
+      "group": "R04",
+      "path": "INPUT_RECEIPT.md",
+      "match": true
+    },
+    {
+      "group": "R04",
+      "path": "INPUT_USE.json",
+      "match": true
+    },
+    {
+      "group": "R04",
+      "path": "MODALITY.json",
+      "match": true
+    },
+    {
+      "group": "R04",
+      "path": "REPORT.md",
+      "match": true
+    },
+    {
+      "group": "R04",
+      "path": "SOURCES.md",
+      "match": true
+    },
+    {
+      "group": "R04",
+      "path": "VALIDATION.md",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "CANDIDATES.md",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "CONSULTATIONS_AND_CHECKIN.md",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "CONTRACTS.md",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "EVALUATION.md",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "INPUT_RECEIPT.md",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "INPUT_USE.json",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "INTEGRATION_SUMMARY.md",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "MODALITY.json",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "NEXT_PACKAGE.md",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "REPORT.md",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "REQUIREMENT_MAP.json",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "SOURCES.md",
+      "match": true
+    },
+    {
+      "group": "MM-AV",
+      "path": "VALIDATION.json",
+      "match": true
+    }
+  ],
+  "counts": {
+    "opportunities": 16,
+    "experiments": 8,
+    "sources": 23,
+    "partner_words": 150,
+    "requirements": 22,
+    "acceptance": 22,
+    "original_experiments": 12
+  },
+  "json_parse_files": [
+    "INPUT_USE.json",
+    "MODALITY.json",
+    "REQUIREMENT_MAP.json",
+    "VALIDATION.json"
+  ],
+  "expected_counts": {
+    "opportunities": 16,
+    "experiments": 8,
+    "software_replay": 3,
+    "low_risk_interface_bench": 3,
+    "ambitious_staged": 2,
+    "primary_source_entries": 23,
+    "partner_words": 150,
+    "future_packages": 3
+  },
+  "attempt_arithmetic": {
+    "E01": "24*2=48",
+    "E02": "20*2=40",
+    "E03": "18*2=36",
+    "P01": "48+40+36=124",
+    "E04": "4*(2+8)*2=80",
+    "E05": "4*(2+8)*2=80",
+    "E06": "4*(1+4)*3=60",
+    "P02": "80+80+60=220",
+    "E07": "24*4=96",
+    "E08": "12*2+12=36 conditional A+B",
+    "MM_AV": "Separate inherited48 inclusive; unchanged"
+  },
+  "method_commands": [
+    "Get-Content -Raw | ConvertFrom-Json",
+    "Get-FileHash -LiteralPath <exact input path> -Algorithm SHA256",
+    "Get-Item <manifest member> then compare Length and SHA256",
+    "Regex heading/source/ID counts; whitespace word count for partner paragraph",
+    "Compare copied original REQ/AT/EX JSON records by original ID and owner"
+  ],
+  "limits": [
+    "Hash identity is not scientific correctness",
+    "No output source media or model was inspected or run",
+    "No independent R14 review yet",
+    "External live pages not byte-archived",
+    "Write scope observed by child actions, not proven OS isolation"
+  ],
+  "status": "PASS_DOCUMENTARY_STRUCTURE_AND_IDENTITY_ONLY",
+  "original_record_structural_mismatches": []
+}

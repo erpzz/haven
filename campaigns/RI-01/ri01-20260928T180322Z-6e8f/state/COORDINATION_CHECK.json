@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-09-28T20:14:43.223776+00:00",
+  "task_nodes": 46,
+  "hard_cycles": 0,
+  "missing_dependencies": 0,
+  "duplicate_ids": 0,
+  "qualification": "Graph/JSON check only, no scientific or application test; independent review tasks intentionally depend on draft authors."
+}

@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-09-29T00:52:28.108193+00:00",
+  "url": "https://github.com/erpzz/haven/pull/19",
+  "state": "OPEN",
+  "draft": true,
+  "base": "main",
+  "head": "campaign/ri01-20260928T180322Z-6e8f",
+  "observed_remote_head": "affbf9e06f670bcfe5c6e008fcbd7a2a6084228d",
+  "verification": "gh pr view and successful native attachment",
+  "scope": "Only consolidated review PR; final integration and final independent reviews pending; no merge."
+}

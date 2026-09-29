@@ -1,0 +1,241 @@
+{
+  "schema": "ri01.review-r15.source-checks.v1",
+  "reviewer": "/root/ri01_code_review",
+  "date_utc": "2026-09-29",
+  "source_repo": "https://github.com/erpzz/gods-eye-view",
+  "source_commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+  "source_cache_inputs": [
+    "inputs/R15-fork/SOURCE_CACHE_MANIFEST.json",
+    "inputs/R15-fork/SOURCE_CACHE_SUPPLEMENT-1.json"
+  ],
+  "identity_checks": {
+    "sha256_files": 241,
+    "sha256_mismatches": 0,
+    "git_blob_mismatches": 0,
+    "semantic_full_repository_review": false,
+    "git_blob_files": 241
+  },
+  "selected_source_reads": [
+    {
+      "path": "LICENSE",
+      "sha256": "b231bb38e2d4eab741643126087cbe9df2b58e2f2e5abf27ad613d05f52b01ca",
+      "git_blob": "4f01699a2afc703093fcf07181129c3724aae9ff",
+      "bytes": 3281,
+      "read_scope": "full"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "fb0c74c2e609d08aedc61157d19c8d34f60e5d009c90a712b7dae83fd548107c",
+      "git_blob": "718c43778156e172abbe981962468520fa8a1638",
+      "bytes": 12350,
+      "read_scope": "selected first75 lines and relevant claims"
+    },
+    {
+      "path": "docs/SCENE-DOCUMENT.md",
+      "sha256": "745a25b77bd1f1d44b55a4078b38a1b471a24e5b98ae59fdd8135e442722949d",
+      "git_blob": "f6dc66636965d1c75441333dfba3ad4e180bb98f",
+      "bytes": 5810,
+      "read_scope": "first110"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "081818a6d68d87cd9a6038504a18df91d8494e5bd4841f87f7e540e0b9860215",
+      "git_blob": "17bb0691e8a7c01352d0ba052d454fa16786b496",
+      "bytes": 98802,
+      "read_scope": "selected dependency metadata only"
+    },
+    {
+      "path": "package.json",
+      "sha256": "ad904b92590aaed4d1d970b8be25158e09c0917f27ae52eb3326be6beed20b38",
+      "git_blob": "e48881c6d28de7af1b760cdf52561ddc99cb6916",
+      "bytes": 11163,
+      "read_scope": "full"
+    },
+    {
+      "path": "server/providers/firms.js",
+      "sha256": "63a270d8c05ed000c65aaf5f1af410075e5c382c724d88a35d02d0c46a81b7b5",
+      "git_blob": "636968348af38bdc63fbbb67975ce7c05722bda5",
+      "bytes": 9318,
+      "read_scope": "first120 and selected fetch anchors"
+    },
+    {
+      "path": "server/providers/openai/realtime.js",
+      "sha256": "45557d8f03247cf2c4ba7243aef1cc66615b9d6a1af7df6f8cff88cfbe187c1f",
+      "git_blob": "b4dfb4b5a6e7c6c8bfa06beed4c95b45c795020a",
+      "bytes": 5810,
+      "read_scope": "full"
+    },
+    {
+      "path": "server/providers/weather.js",
+      "sha256": "315d150f75f487143de54e982dd0f0e4ca403f2a37e45d6de8f6c80042d62743",
+      "git_blob": "2302359edf3bf36826cb9a941252cf701d434479",
+      "bytes": 21774,
+      "read_scope": "selected route validation and capped upstream paths"
+    },
+    {
+      "path": "src/app/application.js",
+      "sha256": "69300438ffefd2ed7c243c77ff7e9f25f60bd3bc2ffe1a051aeb4926450da9bd",
+      "git_blob": "b9c37a8d229f61e119f0a3ae76fa620f0bb1e1a6",
+      "bytes": 4699,
+      "read_scope": "full"
+    },
+    {
+      "path": "src/app/application.test.mjs",
+      "sha256": "cda775568981923c637f0d14e6065365f2d7466f7276cc93b20efbefd07d1c7f",
+      "git_blob": "d3ef8c7cc2360cfa4d2d00cf1ff2a436f1825dd9",
+      "bytes": 10639,
+      "read_scope": "selected lifecycle tests, especially54-83; not executed"
+    },
+    {
+      "path": "src/director/document.js",
+      "sha256": "69b457d7f565784d5e3df42d538fea5bfea4633ed89550d0064744192fec0f85",
+      "git_blob": "48804d83bc44663f3b0a7bd52b2ef8d8e8739311",
+      "bytes": 6266,
+      "read_scope": "version declaration"
+    },
+    {
+      "path": "src/director/sharing/bundle.js",
+      "sha256": "04c31f1898eb31689aa75eaa8fac3e7fccd700d6e3f9d48d4c1e0b448f6625c0",
+      "git_blob": "945457aadc8e2b47d413b94f4e6e03f04f9ca099",
+      "bytes": 7418,
+      "read_scope": "first85"
+    },
+    {
+      "path": "src/director/sharing/lifetime.js",
+      "sha256": "f9595b0288e44bbb2778cd99ce7dfdaa3a1dc5f804502dd0ba8f11b91bacdcbc",
+      "git_blob": "0468ddbeb3a0bbf32bfe5787b36581ca5aca3a87",
+      "bytes": 800,
+      "read_scope": "full"
+    },
+    {
+      "path": "src/search/defaults.js",
+      "sha256": "01e810ee84a1c4b883430053934eb980aabc63ab5e523980899a45e02c41bd56",
+      "git_blob": "2b04280259eee219365b0084ce4982f11f57fbbe",
+      "bytes": 3793,
+      "read_scope": "full"
+    },
+    {
+      "path": "src/search/http.js",
+      "sha256": "449dcaa6e02a6265e569c62ae5ceb87403f38233511de36523f752f3115ed4e1",
+      "git_blob": "5b1642c67ee453223489dc62a3793d6476d42aa1",
+      "bytes": 4021,
+      "read_scope": "first120"
+    },
+    {
+      "path": "src/standalone/application.js",
+      "sha256": "5d9e5d9ff8156b930380605f33a1bc754eee1969a0aec59d627fba178b81dcfa",
+      "git_blob": "cbdf9cb7fa68b7638f44dcc654512f71954debef",
+      "bytes": 2478,
+      "read_scope": "full"
+    },
+    {
+      "path": "src/voice/actionSchemas.js",
+      "sha256": "5a95918243c3614e2a5a99bc20531a2ff990203d9b3b1b430ad2422dee4164df",
+      "git_blob": "c18b3c724d59c455237614e40c29992eec6b0f3b",
+      "bytes": 22748,
+      "read_scope": "first45"
+    },
+    {
+      "path": "src/voice/gevActions.js",
+      "sha256": "071d4c116517d64d2d8c340f7811d73dcec1439b62558800f7ab5458a2d4c3c4",
+      "git_blob": "cfdb1fb0b46f8d46cba7809c71ab0a30d20e6b30",
+      "bytes": 146261,
+      "read_scope": "1194-1308"
+    },
+    {
+      "path": "src/voice/realtimeController.js",
+      "sha256": "a9028d1419d15453ab331ac0d5c3f425be0f03dfcf8f08ba11226c7d63568cc4",
+      "git_blob": "d0c9f1baeea9618d67700eda63b387f0f395ea21",
+      "bytes": 13033,
+      "read_scope": "215-270,323-353 and relevant references"
+    },
+    {
+      "path": "src/layers/traffic/model.js",
+      "sha256": "8a78153a3ab45b53ebd0be18cb6776a7ef2ce5e0a380f055a0468d66a0d7b9cb",
+      "git_blob": "281bacb9bdc3ea20d486cdb5e5c05509dc2993e7",
+      "bytes": 13765,
+      "read_scope": "215-279"
+    },
+    {
+      "path": "src/scenes/director.js",
+      "sha256": "a78b9657313f5ae1c60a2a76aa81c76189a594103be535c4941747033d3a2356",
+      "git_blob": "983e4454cf386096274192aa8394bfc70f7dbcf4",
+      "bytes": 87462,
+      "read_scope": "1960-2050 and import API references"
+    },
+    {
+      "path": "src/scenes/sharing.js",
+      "sha256": "02439a8580d025ee9947470d3be63dac44d22899499c00a9cff91c38c48c931b",
+      "git_blob": "22b000f7859337e1fc87e835abbb4f123ee6b575",
+      "bytes": 13047,
+      "read_scope": "1-280"
+    }
+  ],
+  "additional_exact_commit_http_reads_memory_only": [
+    {
+      "path": "build/vite.js",
+      "read_scope": "full",
+      "bytes": 1864,
+      "sha256": "89cafe3f1536fe188c906933995b09be9feae5afa3bab075a0521623206be670"
+    },
+    {
+      "path": "src/styles/thermal.js",
+      "read_scope": "selected255-267",
+      "bytes": 14317,
+      "sha256": "3d70fc4f9af7976923d33339af4d3b38a7ca86cc0f7f496a86b3e0b9a0264940"
+    },
+    {
+      "path": "server/standalone/key-setup.js",
+      "read_scope": "247-344",
+      "bytes": 15245,
+      "sha256": "7bf27bd465fdf3765134dfa003cf056778540dc679b6a59a267da05c6b9ba207"
+    },
+    {
+      "path": "src/keySetupCore.mjs",
+      "read_scope": "188-325",
+      "bytes": 17885,
+      "sha256": "55c0d039ce1519435f7f19a3d8e7a0dab05d3a21b7bffa24ca352e2600d81bbe"
+    }
+  ],
+  "full_r15_manifest_sha256": "6620628821e093c9585e920fce241044f0aa697c29b7942d3f7c3b7017d4314c",
+  "payloads_verified": 14,
+  "payload_bytes": 474370,
+  "payload_mismatches": 0,
+  "input_audit_refs_verified": 37,
+  "input_audit_mismatches": 0,
+  "input_use": {
+    "path_resolution": "repository-qualified",
+    "external_application_entry_hash_matches": true,
+    "entries": 32,
+    "external_entry_source_bytes": "NOT_SUPPLIED",
+    "campaign_entries_with_bytes_and_hash": 31
+  },
+  "original_structural_equality": {
+    "requirements": 102,
+    "acceptance_tests": 102,
+    "all_equal": true,
+    "experiments": 32
+  },
+  "execution": {
+    "installs": 0,
+    "builds": 0,
+    "models": 0,
+    "live_feed_acquisitions": 0,
+    "devices": 0,
+    "human_trials": 0,
+    "new_tests": 0,
+    "application_tests_run": 0
+  },
+  "limits": [
+    "Selected source reads; not full security/dependency/license audit",
+    "No source bytes republished",
+    "Current M0/R1 CODE_NOT_AVAILABLE",
+    "Historical N1/N2 results not rerun",
+    "Runtime, UI, physical and performance qualification unavailable"
+  ],
+  "reviewer_validation_incidents": [
+    "Initial INPUT_USE checker treated repository-qualified external path as Haven-local; corrected resolution confirms source hash; omitted source_bytes is recorded rather than mismatch",
+    "Initial supplemental-cache check used files instead of entries and did not complete; corrected schema-aware final check verified241 Git blobs with zero mismatches",
+    "Several guessed source paths were absent; rg file inventory resolved actual paths before citations"
+  ]
+}

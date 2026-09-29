@@ -1,0 +1,186 @@
+[
+  {
+    "id": "H00",
+    "name": "Master integration and cumulative scope",
+    "chapter": "docs/01_SYSTEM_ARCHITECTURE.md",
+    "ownership": "scope/, decisions/, roadmap/, contracts/ registry only",
+    "decisions": "All domain state machines and shared contract revisions; additive requirement coverage; conflicts and dependency scheduling",
+    "exclusions": "Do not implement or approve another domain on its behalf; do not edit the active M0 tree",
+    "assignment": "Publish the current contract vocabulary, requirement ownership and three-or-fewer proposed parallel packages. Reconcile specialist outputs without silently dropping scope. Keep target, authorized work and demonstrated results separate.",
+    "reviewers": [
+      "H04",
+      "H06"
+    ]
+  },
+  {
+    "id": "H01",
+    "name": "Everyday experience and conversational behavior",
+    "chapter": "docs/02_DAILY_ASSISTANT.md",
+    "ownership": "design/H01/",
+    "decisions": "Persona, daily journeys, ambiguity handling, foreground voice, output audience, quiet hours and accessibility",
+    "exclusions": "No backend authorization, credential decisions or robot commands",
+    "assignment": "Produce at least twelve daily journeys and four physical/health boundary journeys. Show exact user-visible distinctions between draft, request, acknowledgement, observed outcome and unknown. Design a small useful daily release without forcing calendar tasks into OUTSIDE_CHECK incidents.",
+    "reviewers": [
+      "H02",
+      "H03",
+      "H04",
+      "H07"
+    ]
+  },
+  {
+    "id": "H02",
+    "name": "Intelligence, memory and model economics",
+    "chapter": "docs/04_INTELLIGENCE_AND_COST.md",
+    "ownership": "design/H02/",
+    "decisions": "Task-qualified model routing; local/cheap/frontier evaluation; thin coordinator versus Hermes; bounded memory/context",
+    "exclusions": "No provider accounts, paid calls, model downloads or unapproved M4 swap",
+    "assignment": "Compare two compact local candidates and one privacy-eligible cheap provider after current-documentation review. Specify full framework context/resource costs, private-user cache isolation, no-model paths, voice economics and cost per accepted task. Separate proposed benchmarks from measured results.",
+    "reviewers": [
+      "H04",
+      "H06"
+    ]
+  },
+  {
+    "id": "H03",
+    "name": "Personal tools, connectors and scheduling",
+    "chapter": "docs/02_DAILY_ASSISTANT.md",
+    "ownership": "design/H03/",
+    "decisions": "Calendar/email/files/tasks interfaces; durable reminders; provider acknowledgement and reconciliation",
+    "exclusions": "No actual account reads/writes in design; no generic browser/admin authority",
+    "assignment": "Choose a first read-only connector and a synthetic draft/schedule path. Define exact scopes, token lifecycle, provider idempotency, missing results, timezone/restart behavior and cancellation. Investigate official APIs instead of assuming hosted chat connectors transfer.",
+    "reviewers": [
+      "H01",
+      "H04",
+      "H06"
+    ]
+  },
+  {
+    "id": "H04",
+    "name": "Identity, privacy and cross-domain authority",
+    "chapter": "docs/03_PRIVACY_AND_AUTHORITY.md",
+    "ownership": "design/H04/",
+    "decisions": "Subject/recipient grants, worker identities, threat model, data routing, physical/clinical boundaries",
+    "exclusions": "No unilateral cancellation of user targets or self-certification of product safety",
+    "assignment": "Define private versus shared household boundaries, borrowed devices, output audience, deletion/revocation and host-admin residual risk. Review each proposed side effect and standing-policy class. Protect daily usefulness while preventing escalation into flight, printer or medical authority.",
+    "reviewers": [
+      "H00",
+      "H06"
+    ]
+  },
+  {
+    "id": "H05",
+    "name": "Aircraft, sensors on carriers and base",
+    "chapter": "docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+    "ownership": "design/H05/",
+    "decisions": "Exact aircraft capability profiles, consumer/open alternatives, internal control/media links, fleet and dock gates",
+    "exclusions": "No EC120 connection, hardware purchase or original simulator-stack substitution",
+    "assignment": "Preserve budget paths and R0 time box. Define real read-only telemetry/video qualification, takeover, independent failure cases and payload review. Carry concurrent aircraft and standing-observation targets forward with reserved space/landing capacity and unknown-outcome lockout.",
+    "reviewers": [
+      "H04",
+      "H06",
+      "H08",
+      "H11"
+    ]
+  },
+  {
+    "id": "H06",
+    "name": "Independent assurance, operations and evaluation",
+    "chapter": "docs/14_OPERATIONS_SECURITY_AND_FAILURES.md",
+    "ownership": "design/H06/",
+    "decisions": "Acceptance methods, adversarial cases, observability, restore/failure tests, readiness and result classification",
+    "exclusions": "Do not author a capability and declare it independently certified; no destructive hardware fault tests",
+    "assignment": "Review the tests before implementation. Separate simulated, desktop, actual phone, physical bench and field evidence. Verify coverage, protected hold-outs, privacy/cost behavior, cancellation, recovery and exact versions. A second model critique is not physical ground truth.",
+    "reviewers": [
+      "All relevant owners"
+    ]
+  },
+  {
+    "id": "H07",
+    "name": "Both users’ wearables, health and glasses",
+    "chapter": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+    "ownership": "design/H07/",
+    "decisions": "Native bridge/API inventory, device/OS/region matrix, sample provenance, explicit capture and wearer lifecycle",
+    "exclusions": "No collecting real partner data, clinical diagnosis or expansion of M0/M6",
+    "assignment": "Build per-person capability and consent matrices; separate sample/capture time from arrival, historical records from live data, display/audio/camera capabilities and preview limitations. Define synthetic tests before actual devices and clear fallbacks.",
+    "reviewers": [
+      "H01",
+      "H04",
+      "H06"
+    ]
+  },
+  {
+    "id": "H08",
+    "name": "Wireless sensing, spatial maps and active perception",
+    "chapter": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+    "ownership": "design/H08/",
+    "decisions": "Presence/localization toward geometry/semantics; measurement assumptions, fusion, calibration, coordinate frames",
+    "exclusions": "No covert sensing, unqualified RF transmitters or claim that a heatmap completes the goal",
+    "assignment": "Compare CSI/RSSI/ranging/radar paths and exact data access. Plan held-out room/session evaluations, known geometry fixtures and uncertainty. Preserve phone-accessory/fixed/handheld/rover/drone options. Define a replay-first adaptive-view experiment and limitations of generated scene imagery.",
+    "reviewers": [
+      "H04",
+      "H05",
+      "H06",
+      "H09",
+      "H10"
+    ]
+  },
+  {
+    "id": "H09",
+    "name": "Engineering agents, CAD and fabrication",
+    "chapter": "docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+    "ownership": "design/H09/",
+    "decisions": "Bounded design-build-measure-iterate campaigns, parametric CAD chain, workshop/printer integration gates",
+    "exclusions": "No autonomous purchase/print/heating, safety-limit edits, hazardous labs or flight-critical part certification",
+    "assignment": "Design a first sensor-fixture improvement campaign with a baseline, protected metric, iteration ceiling, reviewed CAD/job hashes, physical inspection and data-based decisions. Compare human-mediated fabrication with future qualified robotics. Define useful autonomy without letting the proposer accept itself.",
+    "reviewers": [
+      "H04",
+      "H06",
+      "H08",
+      "H10"
+    ]
+  },
+  {
+    "id": "H10",
+    "name": "Ground robots and embodied skills",
+    "chapter": "docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+    "ownership": "design/H10/",
+    "decisions": "Rover/arm architecture, teleop/demonstration/learned-skill progression, hardware stop and observations",
+    "exclusions": "No hot/sharp/medical/human-lifting tasks or unqualified actuation",
+    "assignment": "Choose a narrow inert-object or sensor-carrier task. Compare complete development platforms using actual BOM and control assumptions. Specify action spaces, camera/calibration conventions, safe-state policies and simulation-to-bench tests. Keep new robotics models as candidates until accessible and qualified.",
+    "reviewers": [
+      "H04",
+      "H05",
+      "H06",
+      "H09"
+    ]
+  },
+  {
+    "id": "H11",
+    "name": "Emergency support and resilient communications",
+    "chapter": "docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+    "ownership": "design/H11/",
+    "decisions": "Independent help workflow, guest portal, backhaul/relay/data ferry, lighting/speaker human factors",
+    "exclusions": "No real dispatch, telephony, medical service, public hotspot or fireground operation",
+    "assignment": "Separate offline portal, low-bandwidth messages and true upstream internet. Design guest/control isolation and meaningful delivery/acknowledgement states. Preserve incapacitation policies and healthcare assistance without requiring AI/drone success; qualify useful lighting on a ground fixture first.",
+    "reviewers": [
+      "H04",
+      "H05",
+      "H06",
+      "H07"
+    ]
+  },
+  {
+    "id": "H12",
+    "name": "Research frontier, prior art and experiment synthesis",
+    "chapter": "docs/15_NOVELTY_AND_SCIENTIFIC_METHOD.md",
+    "ownership": "design/H12/",
+    "decisions": "Primary-source findings, corrections, novel hypotheses, replication recommendations and evidence maturity",
+    "exclusions": "No unsupported novelty claims, automatic downloads/installations or perpetual background jobs",
+    "assignment": "Read the research atlas and source audit. Investigate promising examples across robotics/sensing/engineering/emergency support; distinguish field results, lab demonstrations, preprints and restricted products. Return bounded experiment cards with baselines, access/license constraints, cost and failure interpretations.",
+    "reviewers": [
+      "H00",
+      "H06",
+      "domain owner"
+    ]
+  }
+]

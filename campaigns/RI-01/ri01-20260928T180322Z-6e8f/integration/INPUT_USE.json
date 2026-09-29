@@ -1,0 +1,658 @@
+[
+  {
+    "upstream_task": "INTAKE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/INVENTORY.md"
+    },
+    "artifact_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+    "finding": "Frozen inventory, three distinct handbacks; P01 and prompt-only lanes not complete; missing originals explicit",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES.baseline_tasks; MANAGER_STATE.Evidence",
+    "design_effect": "Keep R02-P01/R03 closure and actual research lanes; do not invent accepted proposals",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS_INVENTORY_ONLY"
+  },
+  {
+    "upstream_task": "INTAKE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/SOURCE_MANIFEST.json"
+    },
+    "artifact_sha256": "687b25a3934b351d9ff20a2ce472587ca6dd90a9c8809bf5f74f7f6b0b160392",
+    "finding": "Exact source paths, commits and byte hashes for incoming packets",
+    "disposition": "REUSED",
+    "downstream_section": "INPUT_USE; CONTRACT_CROSSWALK.Evidence",
+    "design_effect": "Pin contract comparisons to original proposal editions",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS_INVENTORY_ONLY"
+  },
+  {
+    "upstream_task": "INTAKE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/SOURCE_SNAPSHOT.json"
+    },
+    "artifact_sha256": "1bc2d6af12b9b4a502015934528f45e9560b77b7f059377bc7b070bfe2b67435",
+    "finding": "Frozen branch/PR identity snapshot",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES.source_state",
+    "design_effect": "No continuous main chase or timestamp-based acceptance",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS_INVENTORY_ONLY"
+  },
+  {
+    "upstream_task": "VISION-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/REVIEW.md"
+    },
+    "artifact_sha256": "cb0e9fd770f5dc7040d57abd38451e388530759bb6132b5369bcfaf07b71af36",
+    "finding": "Five journeys, all V01–V16, useful selected image slice and explicit modality limits",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.D-PRE-01; DEPENDENCIES.retained_scope",
+    "design_effect": "Keep immediate daily usefulness and broader scientific/physical targets",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "ACCEPTED_ONLY_WITH_CLOSURE_1"
+  },
+  {
+    "upstream_task": "VISION-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/CLOSURE-1.md"
+    },
+    "artifact_sha256": "151e22a9030be0d50643261dbec081f12f343460b790ec15839e30381f5aeabf",
+    "finding": "Closes V0-01; V0-02–04 constrain later reviews; original mappings validated",
+    "disposition": "REUSED",
+    "downstream_section": "MANAGER_STATE.Evidence; DEPENDENCIES.review_gates",
+    "design_effect": "Use accepted intake vision without treating it as final architecture acceptance",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS_INTAKE_VISION_ONLY"
+  },
+  {
+    "upstream_task": "VISION-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/REQUIREMENT_MAP.json"
+    },
+    "artifact_sha256": "a23c5082af277e9bd24a911688addc3815bc77f8d4ba3624d2c696887de61f40",
+    "finding": "All 102 original IDs/owners/AT links and anchors retained",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES.retained_scope.requirement_map",
+    "design_effect": "Carry exact mapping rows with source-only/unexecuted status",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "ACCEPTED_BY_CLOSURE_1"
+  },
+  {
+    "upstream_task": "VISION-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/EXPERIMENT_MAP.json"
+    },
+    "artifact_sha256": "f8eda76b0b99325bdf4061b877deb48036b8cc4a9d1d7c1f4824a1f605b0a1d8",
+    "finding": "All 32 EX IDs with original cross-domain owners retained",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES.retained_scope.experiment_map",
+    "design_effect": "No owner reassignment or experiment completion from mapping",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "ACCEPTED_BY_CLOSURE_1"
+  },
+  {
+    "upstream_task": "EVIDENCE-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/EVIDENCE-0/REVIEW.md"
+    },
+    "artifact_sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d",
+    "finding": "E0-H1 unresolved lifecycle; historical synthetic limits; E0-H2 lineage receipt limitation; original AT/EX unexecuted",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.I04; MANAGER_STATE.Evidence",
+    "design_effect": "Separate cancellation/termination and historical evidence/current qualification; preserve Gen0 T01–35/research-test R01",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "SCOPED_IDENTITY_PASS_WITH_OPEN_LIMITS"
+  },
+  {
+    "upstream_task": "SOURCE-REQ",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json"
+    },
+    "artifact_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+    "finding": "Original 102 requirement statements and authority-preserving change rules read",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES.retained_scope; CONTRACT_CROSSWALK.Decisions",
+    "design_effect": "Reference original statements as authoritative; campaign anchors do not replace IDs",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_IDENTITY_REVIEWED_NOT_IMPLEMENTED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/registry.json"
+    },
+    "artifact_sha256": "a26d3cf9cb0451f32ba4152ff2382a1126204d0d21c27a179baf112836939873",
+    "finding": "Twelve draft contracts and semantic invariants",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "Preserve inert examples and separate operational successor proposals",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_IDENTITY_REVIEWED_DRAFT"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/agent_job.schema.json"
+    },
+    "artifact_sha256": "fbc33699cebf0f095a5e6da2c5ab3c64554bcb499be2442aa6f62ba1c8047b93",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/capability_qualification.schema.json"
+    },
+    "artifact_sha256": "5a202cc524f0a5b4d38f526ef7bc8ea12a4b703fc9f1e6d8e554c816eee3cfd3",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/consent_proposal.schema.json"
+    },
+    "artifact_sha256": "d48d26aac261eb77c9d9f4ecb9d93c6b0a0efdb2358f83c3e613f6419005defb",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/context_packet.schema.json"
+    },
+    "artifact_sha256": "9ebbf9c8fe0b620db89d3348c31f38580f11b7244b24897a6f200e82e9aba925",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/daily_action_proposal.schema.json"
+    },
+    "artifact_sha256": "da7b74e6349fd30df796aa6adc149d81c269aa4bc0b504e17eb47f95dcdc6d00",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/delivery_receipt.schema.json"
+    },
+    "artifact_sha256": "06e49970f99d8bb4a37c2c8343c8e81e40e580aafbcb166f9f6c6f1050245779",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/design_artifact.schema.json"
+    },
+    "artifact_sha256": "b872628654d13e32ac1571c33790f68ecfc103c7d4fe9e9185f4ccaae7d6847b",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/evidence.schema.json"
+    },
+    "artifact_sha256": "241d0f2bb00cbbb1e59472a92b66b53b893135f410e4c88bd2712d061e1a1c29",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/experiment.schema.json"
+    },
+    "artifact_sha256": "14d7893c6728edcbdad7690373a72ea08ab2b1ef32e8285695f3f625afd0402b",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/health_observation.schema.json"
+    },
+    "artifact_sha256": "793918b305df534b79bd605525e8add2bb545fea9538307dd3b242a9277b70c1",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/physical_action_proposal.schema.json"
+    },
+    "artifact_sha256": "6e72a18ed05eb120dd02cc4787f52e0ae5d153539ec89f4dcb3602bbfe478d5c",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "SOURCE-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/spatial_estimate.schema.json"
+    },
+    "artifact_sha256": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e",
+    "finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Original contract and change-request crosswalk",
+    "design_effect": "No original schema mutation or wire-compatibility claim",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "RECOVERED_DRAFT_FIELDS_INSPECTED_NOT_RUNTIME_QUALIFIED"
+  },
+  {
+    "upstream_task": "R02-SOURCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/CONTRACT_DESIGN.md"
+    },
+    "artifact_sha256": "9cc1ce4ce5d2d240b244513aa7680ba0015d86829216497877f3f90cd51856d7",
+    "finding": "C01–C11 and CR-R02-01–05 propose context/jobs/model/accounting/publication boundaries",
+    "disposition": "UNRESOLVED",
+    "downstream_section": "CONTRACT_CROSSWALK.I01–I07; Q-CORE-01/02/04",
+    "design_effect": "Use proposed field vocabulary; await accepted review and P01/R03 semantic closure",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "SOURCE_PROPOSAL_REVIEW_NOT_CONSUMED"
+  },
+  {
+    "upstream_task": "R06-SOURCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/CONTRACT_PROPOSALS.md"
+    },
+    "artifact_sha256": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13",
+    "finding": "Required spatial sidecar, parent-frame covariance, acquisition/motion separation and access intersection",
+    "disposition": "UNRESOLVED",
+    "downstream_section": "CONTRACT_CROSSWALK.I02/I07; conflicts 1–4; Q-CORE-03",
+    "design_effect": "Retain domain extensions and reject lossy old-consumer downgrade",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "SOURCE_PROPOSAL_REVIEW_NOT_CONSUMED"
+  },
+  {
+    "upstream_task": "R08-SOURCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/INTERFACES_AND_CONTRACTS.md"
+    },
+    "artifact_sha256": "01ed60d55591b3d4a2a03cafaf4c299d24c1c9f47d406d68bd3dd2bac6d02f03",
+    "finding": "C01–C08 campaign/metrology/physical-grant distinctions and shared-budget reuse",
+    "disposition": "UNRESOLVED",
+    "downstream_section": "CONTRACT_CROSSWALK.I05/I07; conflicts 1/2/4/6; Q-CORE-04",
+    "design_effect": "Keep mm-to-m explicit, fixed evaluator and independent acceptance; avoid printer status in delivery receipt",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "SOURCE_PROPOSAL_REVIEW_NOT_CONSUMED"
+  },
+  {
+    "upstream_task": "RI-01-NORMATIVE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "orchestration/RI-01/MASTER_PROMPT.md"
+    },
+    "artifact_sha256": "d102519c6b871470601f88c01e649f7487c7c522712fd7d9c5728b5d8d59e722",
+    "finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES; MANAGER_STATE.Next package",
+    "design_effect": "Bound provisional work, preserve full graph and future multimodal synthesis",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "CURRENT_CAMPAIGN_INSTRUCTIONS"
+  },
+  {
+    "upstream_task": "RI-01-NORMATIVE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "orchestration/RI-01/PROTOCOL.md"
+    },
+    "artifact_sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+    "finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES; MANAGER_STATE.Next package",
+    "design_effect": "Bound provisional work, preserve full graph and future multimodal synthesis",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "CURRENT_CAMPAIGN_INSTRUCTIONS"
+  },
+  {
+    "upstream_task": "RI-01-NORMATIVE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "orchestration/RI-01/VISION.md"
+    },
+    "artifact_sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+    "finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES; MANAGER_STATE.Next package",
+    "design_effect": "Bound provisional work, preserve full graph and future multimodal synthesis",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "CURRENT_CAMPAIGN_INSTRUCTIONS"
+  },
+  {
+    "upstream_task": "RI-01-NORMATIVE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "orchestration/RI-01/MULTIMODAL.md"
+    },
+    "artifact_sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+    "finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES; MANAGER_STATE.Next package",
+    "design_effect": "Bound provisional work, preserve full graph and future multimodal synthesis",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "CURRENT_CAMPAIGN_INSTRUCTIONS"
+  },
+  {
+    "upstream_task": "RI-01-NORMATIVE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md"
+    },
+    "artifact_sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+    "finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES; MANAGER_STATE.Next package",
+    "design_effect": "Bound provisional work, preserve full graph and future multimodal synthesis",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "CURRENT_CAMPAIGN_INSTRUCTIONS"
+  },
+  {
+    "upstream_task": "RI-01-NORMATIVE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "orchestration/RI-01/TASK_GRAPH.json"
+    },
+    "artifact_sha256": "c9b5364b8eb23dad76f194cb4a0bed8858ede40dd33a45220e95cd3f81b7d9bd",
+    "finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES; MANAGER_STATE.Next package",
+    "design_effect": "Bound provisional work, preserve full graph and future multimodal synthesis",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "CURRENT_CAMPAIGN_INSTRUCTIONS"
+  },
+  {
+    "upstream_task": "RI-01-NORMATIVE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "orchestration/RI-01/TEMPLATES.md"
+    },
+    "artifact_sha256": "7296a0c3b73437cae992788eea49bc6de1f693dc2198147a38fb729861529ae2",
+    "finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES; MANAGER_STATE.Next package",
+    "design_effect": "Bound provisional work, preserve full graph and future multimodal synthesis",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "CURRENT_CAMPAIGN_INSTRUCTIONS"
+  },
+  {
+    "upstream_task": "RI-01-NORMATIVE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "orchestration/RI-01/AUTHORIZATION.md"
+    },
+    "artifact_sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+    "finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+    "disposition": "REUSED",
+    "downstream_section": "DEPENDENCIES; MANAGER_STATE.Next package",
+    "design_effect": "Bound provisional work, preserve full graph and future multimodal synthesis",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "CURRENT_CAMPAIGN_INSTRUCTIONS"
+  },
+  {
+    "upstream_task": "ROLE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": ".codex/agents/haven_integration_manager.toml"
+    },
+    "artifact_sha256": "ea5ff7331942d843feaad7067d672e89ba7adb69f2ba6fd56255da83708d34e3",
+    "finding": "Distinct integration-manager role, scoped writes, exact upstream binding, no Git/subagents",
+    "disposition": "REUSED",
+    "downstream_section": "MANAGER_STATE.Metadata and Next package",
+    "design_effect": "Author recommendations only; root schedules and final reviewers remain independent",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "CURRENT_ASSIGNMENT_PROFILE"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "AGENTS.md"
+    },
+    "artifact_sha256": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281",
+    "finding": "Existing sources immutable, gates separate, RI01 exception scoped",
+    "disposition": "REUSED",
+    "downstream_section": "MANAGER_STATE; CONTRACT_CROSSWALK.D-PRE-03",
+    "design_effect": "Only integration documentation changes; no application or physical authorization",
+    "reason": "Preserve exact source meaning and distinguish proposed interfaces from accepted capability",
+    "review_state": "CURRENT_REPOSITORY_INSTRUCTIONS"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "START_HERE.md"
+    },
+    "artifact_sha256": "aec6a160969d1ade3725f262f7bca76fead1a34730d6cda299b4cc018f64de7c",
+    "finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Decisions; MANAGER_STATE.Metadata",
+    "design_effect": "Retain existing foundation/M4 pin, distinguish research acceptance from implementation, and use required handback headings",
+    "reason": "Do not derive authority or active-workspace completion from historical sources",
+    "review_state": "CURRENT_REPOSITORY_CONTEXT_NOT_LIVE_APPLICATION_VERIFICATION"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "PRECEDENCE.md"
+    },
+    "artifact_sha256": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc",
+    "finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Decisions; MANAGER_STATE.Metadata",
+    "design_effect": "Retain existing foundation/M4 pin, distinguish research acceptance from implementation, and use required handback headings",
+    "reason": "Do not derive authority or active-workspace completion from historical sources",
+    "review_state": "CURRENT_REPOSITORY_CONTEXT_NOT_LIVE_APPLICATION_VERIFICATION"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "CURRENT_STATUS.md"
+    },
+    "artifact_sha256": "bf4745153beff5687207f8e733809567e72080f0645241a1840c2cfb13a4ae16",
+    "finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Decisions; MANAGER_STATE.Metadata",
+    "design_effect": "Retain existing foundation/M4 pin, distinguish research acceptance from implementation, and use required handback headings",
+    "reason": "Do not derive authority or active-workspace completion from historical sources",
+    "review_state": "CURRENT_REPOSITORY_CONTEXT_NOT_LIVE_APPLICATION_VERIFICATION"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "coordination/PROTOCOL.md"
+    },
+    "artifact_sha256": "40fbb4f282155cb2762a67c2d970b2332ff37dcc3f303dc823d4b6e00db712dc",
+    "finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Decisions; MANAGER_STATE.Metadata",
+    "design_effect": "Retain existing foundation/M4 pin, distinguish research acceptance from implementation, and use required handback headings",
+    "reason": "Do not derive authority or active-workspace completion from historical sources",
+    "review_state": "CURRENT_REPOSITORY_CONTEXT_NOT_LIVE_APPLICATION_VERIFICATION"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "baseline/cumulative-v1.0/agents/HANDOFF_TEMPLATE.md"
+    },
+    "artifact_sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+    "finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Decisions; MANAGER_STATE.Metadata",
+    "design_effect": "Retain existing foundation/M4 pin, distinguish research acceptance from implementation, and use required handback headings",
+    "reason": "Do not derive authority or active-workspace completion from historical sources",
+    "review_state": "CURRENT_REPOSITORY_CONTEXT_NOT_LIVE_APPLICATION_VERIFICATION"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "checkpoint_ref": "d1f4a27 (scheduler supplied; not Git-verified by child)",
+      "path": "coordination/HANDBACK_METADATA.md"
+    },
+    "artifact_sha256": "27a8d0b5bc8aec1eeeb5c7fc178b7a977016e96aaf69f5f62f63a39a3731c3a7",
+    "finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACT_CROSSWALK.Decisions; MANAGER_STATE.Metadata",
+    "design_effect": "Retain existing foundation/M4 pin, distinguish research acceptance from implementation, and use required handback headings",
+    "reason": "Do not derive authority or active-workspace completion from historical sources",
+    "review_state": "CURRENT_REPOSITORY_CONTEXT_NOT_LIVE_APPLICATION_VERIFICATION"
+  }
+]

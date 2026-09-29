@@ -1,0 +1,2 @@
+# Python 3.12 standard library only; zero third-party runtime/test dependencies.
+# No pip install is needed. Qualified interpreter and SQLite identities: ../outputs/RUNTIME.json

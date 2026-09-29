@@ -1,0 +1,7 @@
+# R01 input receipt
+
+Task R01 / H01; author `/root/ri01_daily`, role haven_researcher read from `.codex/agents/haven_researcher.toml`. Assignment permits documentation only in this directory and public primary-source research. No Git, application execution, installation, accounts/devices, external messaging, or child agents. Effective filesystem permissions are broader than assignment scope; path ownership is instructional rather than OS isolation.
+
+Base commit supplied by accepted intake and state/run.json: `376031e182c57495912baf6727093b0b188da568`; latest scheduler checkpoint recorded `d1f4a278bea62d391f74c54d3936d45f6d1bf9d7`. No Git verification by this child. Hard inputs consumed: INTAKE revision1 INVENTORY; VISION-0 REVIEW plus CLOSURE-1 and retained requirement/experiment maps. Canonical baseline daily, privacy, architecture docs and recovered H01/REQ/AT/EX catalogs read. Original R01 prompt bytes remain unavailable as INTAKE states; current RESEARCH_QUEUE R01 governs. CORE-PRE revision0 consumed only as provisional. CORE and MM-FUSION not complete at receipt; R03/R02-P01 being authored.
+
+Work begins with detailed five-scenario design and public accessibility/platform source verification. All runtime, media, user and acceptance experiments remain NOT_EXECUTED. Independent handback review is requested. Input hashes and exact downstream use will be recorded in INPUT_USE.json. No memory registry hits relevant to this task.

@@ -1,0 +1,38 @@
+{
+  "local_version": "night01-lab-contracts-1",
+  "frozen_sources": {
+    "evidence": {
+      "source": "haven-astra-starter/contracts/evidence.schema.json",
+      "sha256": "241d0f2bb00cbbb1e59472a92b66b53b893135f410e4c88bd2712d061e1a1c29"
+    },
+    "context_packet": {
+      "source": "haven-astra-starter/contracts/context_packet.schema.json",
+      "sha256": "9ebbf9c8fe0b620db89d3348c31f38580f11b7244b24897a6f200e82e9aba925"
+    },
+    "daily_action_proposal": {
+      "source": "haven-astra-starter/contracts/daily_action_proposal.schema.json",
+      "sha256": "da7b74e6349fd30df796aa6adc149d81c269aa4bc0b504e17eb47f95dcdc6d00"
+    },
+    "agent_job": {
+      "source": "haven-astra-starter/contracts/agent_job.schema.json",
+      "sha256": "fbc33699cebf0f095a5e6da2c5ab3c64554bcb499be2442aa6f62ba1c8047b93"
+    },
+    "experiment": {
+      "source": "haven-astra-starter/contracts/experiment.schema.json",
+      "sha256": "14d7893c6728edcbdad7690373a72ea08ab2b1ef32e8285695f3f625afd0402b"
+    },
+    "design_artifact": {
+      "source": "haven-astra-starter/contracts/design_artifact.schema.json",
+      "sha256": "b872628654d13e32ac1571c33790f68ecfc103c7d4fe9e9185f4ccaae7d6847b"
+    }
+  },
+  "compatibility": "Local mapping, not wire-compatible production adoption; no original schema changed",
+  "mapping": {
+    "evidence": "SIMULATED, claim_class, original capture/receive time, evidence_id/version; separate category preserves CURRENT_STATE/HISTORICAL_FACT/USER_STATEMENT/MODEL_INTERPRETATION. Text inline and hash in audit.",
+    "context_packet": "Injected principal, purpose, grant revisions, selected snapshots, no capabilities/providers; bounded serialized bytes rather than tokenizer estimates",
+    "daily_action_proposal": "Only inert DRAFT_NOTE quote collection; PROPOSED, execution_enabled=false. No time/recipient/account write",
+    "agent_job": "At most two timed subprocess attempts, zero provider USD and tools; ledger stores request/context/attempt/output/outcome. No broker, lease service or deployed agent",
+    "experiment": "N2 local synthetic execution status distinct from frozen PROPOSED_NOT_RUN; physical permission remains NOT_GRANTED",
+    "design_artifact": "N2 inert JSON dimensions only; content hash, revision, parent and metric identity; UNQUALIFIED, no CAD/toolpath/machine"
+  }
+}

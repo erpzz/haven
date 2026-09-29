@@ -1,0 +1,82 @@
+{
+  "schema": "ri01.root.publication-receipt.v1",
+  "observed_at": "2026-09-29T01:51:35.443170+00:00",
+  "research_status": "RESEARCH_COMPLETE",
+  "publication_status": "CONTENT_VERIFIED_PR_METADATA_CONFIRMATION_PENDING",
+  "verified_content_commit": "b530d1a8ce127ccb868b59d5e62e0d2556f21305",
+  "branch": "campaign/ri01-20260928T180322Z-6e8f",
+  "base_main_verified_unchanged": "376031e182c57495912baf6727093b0b188da568",
+  "remote_ref_check": "Exact ls-remote campaign SHA equals local content commit",
+  "public_file_readback": {
+    "commit": "b530d1a8ce127ccb868b59d5e62e0d2556f21305",
+    "verified_at": "2026-09-29T01:45:18.441521+00:00",
+    "files": [
+      {
+        "path": "DELIVERY_MANIFEST.json",
+        "sha256": "fe8cf2be90822b37773f6ccdd35520056d5b75b3714d5d1cbd8a1e9f2025d708",
+        "bytes": 94669,
+        "remote_blob": "336f9c98590c58dc93797db7df7522fb74a4c63e"
+      },
+      {
+        "path": "MORNING_REPORT.md",
+        "sha256": "16e759bc5f99b4a50a640b80b41ec534abdadb2fba66854d80378f7655a6e673",
+        "bytes": 11267,
+        "remote_blob": "f774f26cf9b1db22e58e022a55748aef2ad6217a"
+      },
+      {
+        "path": "integration/final-v1/MANIFEST.json",
+        "sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+        "bytes": 4692,
+        "remote_blob": "9fc087bd54c1d1a1e1b92da4defed44ee710eaa7"
+      },
+      {
+        "path": "reviews/R13/REVIEW.md",
+        "sha256": "97cb060c01526098b12257c72f1b50aa0e939fbde8b5c40e006b9a0960ac7d10",
+        "bytes": 15115,
+        "remote_blob": "ea78bc8c568761d3cb7b392d4174045eb012ed84"
+      },
+      {
+        "path": "reviews/R13/PROMOTION_GATES.md",
+        "sha256": "54d899147008f4558131ced6c0a53c92acc38d05cbe60bd16ac070242fbe8099",
+        "bytes": 16194,
+        "remote_blob": "04b3d65353f683d40f2044b14b01f8e969f4fb77"
+      },
+      {
+        "path": "reviews/VISION-FINAL/REVIEW.md",
+        "sha256": "a3a4cb2591813da7b77dbbd5eebb3becb29ffdc6477b7fe38ab9bd983bca9d69",
+        "bytes": 14324,
+        "remote_blob": "4f7ff8180342b9501e5ab2f4e61fd7ef8284faee"
+      },
+      {
+        "path": "reviews/CODE-FINAL/REVIEW.md",
+        "sha256": "e5b2d50843cfa9bcc265d07546c704d59b021da57a98f11f40da9f5e09d3dde9",
+        "bytes": 18251,
+        "remote_blob": "915c695ac3cb216c8021c2ab7390b3f2a0e4aed9"
+      }
+    ]
+  },
+  "pull_request": {
+    "url": "https://github.com/erpzz/haven/pull/19",
+    "state": "OPEN",
+    "draft": true,
+    "merged": false,
+    "head": "b530d1a8ce127ccb868b59d5e62e0d2556f21305",
+    "attached_to_task": true
+  },
+  "remaining_action": "Final PR title/body update and ready transition were rejected by automatic approval review; user confirmation requested before retry. Existing PR and published content remain intact.",
+  "approval_review_observation": "Both the combined metadata update command and subsequent local description preparation were rejected with blocked by policy; no more specific reason was provided. Neither command executed.",
+  "candidate_unchanged_after_review": true,
+  "implementation_authorized": false,
+  "app_model_device_physical_tests_executed": 0,
+  "all_owned_children_completed": true,
+  "automatic_continuation_scheduled": false,
+  "self_reference_note": "This receipt observes the prior published content checkpoint; a later metadata commit may contain it.",
+  "verified_delivery_metadata_commit": "9b925293216ecef45d54e42632eaa690373b5040",
+  "metadata_verification": "Exact remote campaign ref, PR head, and public manifest/report/publication-receipt/candidate-manifest bytes read back successfully; all 522 delivery-manifest entries verified locally, working tree clean at that checkpoint.",
+  "issue_receipt": {
+    "url": "https://github.com/erpzz/haven/issues/17#issuecomment-5882113549",
+    "created_at": "2026-09-29T01:51:01Z",
+    "body_sha256": "0a4928a381cc38b51c2014ed3222d3f7a0fa7a957bc0beae9541edca5defcbe5",
+    "readback_matches_submitted_body": true
+  }
+}

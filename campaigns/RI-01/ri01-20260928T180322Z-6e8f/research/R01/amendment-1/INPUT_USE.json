@@ -1,0 +1,110 @@
+[
+  {
+    "upstream_task": "REVIEW-R01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R01/REVIEW.md",
+      "section": "F01 and L01",
+      "revision": "Exact campaign bytes; no Git reachability assertion"
+    },
+    "artifact_sha256": "27503c8aceb2ef43afc35fe4d3ffa352f9df4fbe3482f3562c825ff59990839b",
+    "finding": "No ACK does not establish non-delivery; denominator/test-layer ambiguous",
+    "disposition": "REUSED",
+    "downstream_section": "F01 and both L01 sections; traces",
+    "design_effect": "Require positive no-dispatch evidence, preserve uncertainty and split fixed evaluation strata",
+    "reason": "Focused review remediation; preserve unrelated accepted scope",
+    "review_state": "INDEPENDENT_AMEND"
+  },
+  {
+    "upstream_task": "R01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/REPORT.md",
+      "section": "Lines133,164,259-263",
+      "revision": "Exact campaign bytes; no Git reachability assertion"
+    },
+    "artifact_sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+    "finding": "Exact reviewed sentences and original proposed package scope",
+    "disposition": "AMENDED",
+    "downstream_section": "Exact supersession receipt",
+    "design_effect": "Only listed wording/scoring interpretations replaced; no scheduler/connector added",
+    "reason": "Focused review remediation; preserve unrelated accepted scope",
+    "review_state": "BOUNDED_SUBSET_ACCEPTED_BY_REVIEW_R01"
+  },
+  {
+    "upstream_task": "R03",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R03/CLOSURE-1.md",
+      "section": "F01 recovery; P01 coupling; accepted composite",
+      "revision": "Exact campaign bytes; no Git reachability assertion"
+    },
+    "artifact_sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+    "finding": "Finite quota charges release, consumption uses exact slot, lost ACK survives revocation",
+    "disposition": "REUSED",
+    "downstream_section": "New exact upstream use; F01",
+    "design_effect": "No refund/remint/double debit or historical uncertainty erasure",
+    "reason": "Focused review remediation; preserve unrelated accepted scope",
+    "review_state": "ACCEPT_FOR_SYNTHESIS"
+  },
+  {
+    "upstream_task": "R02-P01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R02-P01/CLOSURE-1.md",
+      "section": "M1 closure; Trace A/B; R03 coupling",
+      "revision": "Exact campaign bytes; no Git reachability assertion"
+    },
+    "artifact_sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+    "finding": "Four separate facts; historical uncertainty independent of future denial",
+    "disposition": "REUSED",
+    "downstream_section": "F01; New exact upstream use",
+    "design_effect": "Receipt projection separates history/current permission; later R03 closure resolves finite-use coupling",
+    "reason": "Focused review remediation; preserve unrelated accepted scope",
+    "review_state": "ACCEPT_FOR_SYNTHESIS"
+  },
+  {
+    "upstream_task": "R03-A1",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/AMENDMENT.md",
+      "section": "A4 lost replies; A5 actual answer and whole-output finite-use narrowing",
+      "revision": "Exact campaign bytes; no Git reachability assertion"
+    },
+    "artifact_sha256": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+    "finding": "Unknown send/reply cannot reset slots; prior reports survive cancellation",
+    "disposition": "REUSED",
+    "downstream_section": "F01; traces T2-T4",
+    "design_effect": "Preserve existing slot/charge and content-minimal status lookup; no accounting innovation",
+    "reason": "Focused review remediation; preserve unrelated accepted scope",
+    "review_state": "ACCEPTED_COMPOSITE_VIA_REVIEW_R03_CLOSURE"
+  },
+  {
+    "upstream_task": "R02-P01-A1",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "base_commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/AMENDMENT.md",
+      "section": "Four-record definitions; Trace A/B; P02-B refinement",
+      "revision": "Exact campaign bytes; no Git reachability assertion"
+    },
+    "artifact_sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+    "finding": "Release, consumption, delivery and eligibility are orthogonal",
+    "disposition": "REUSED",
+    "downstream_section": "F01; traces T2-T5",
+    "design_effect": "Use append-only matched report projections and preserve unknown/sent history through denial",
+    "reason": "Focused review remediation; preserve unrelated accepted scope",
+    "review_state": "ACCEPTED_COMPOSITE_VIA_P01_CLOSURE"
+  }
+]

@@ -1,0 +1,69 @@
+{
+  "task": "R08-P00",
+  "revision": 1,
+  "author_agent": "/root/ri01_runtime_probe",
+  "role": "haven_researcher",
+  "status": "SUBMITTED_FOR_INDEPENDENT_REVIEW",
+  "created_at_utc": "2026-09-28T20:11:32.6394468Z",
+  "required_review_question": "Q-R08P00-H06-02: conditional estimand, bootstrap coverage and generalization beyond two fixed sessions",
+  "artifact_count": 11,
+  "files": [
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CASE_CROSSWALK.json",
+      "bytes": 40213,
+      "sha256": "726d49635341c8e57be8a675aa4ec0a62c4e72d2f845578279086cf717036e63"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CONSULTATIONS.json",
+      "bytes": 3703,
+      "sha256": "31aae3d34486eec7856d9a697e0ede3c32c77e26a36ee1e799303d96a5aff0b8"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CONTRACT_DELTA.md",
+      "bytes": 12451,
+      "sha256": "642ea41d2a218ab018b62d1edc92e317c4edd72c972a80a258fd71d556f8045a"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/INPUT_USE.json",
+      "bytes": 50494,
+      "sha256": "9d4af66c08ac69b60d465b25b68924ba77091e3c097131dc43c8cb2b3e465ca0"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/MEASUREMENT_PLAN.md",
+      "bytes": 10719,
+      "sha256": "636e176b2016e119b5098828b9ac42fbabedc8312d9f3fb560a0bfb2788fc24b"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/MODALITY.json",
+      "bytes": 1434,
+      "sha256": "4ad1d5203b20df21e16191acf9e3c28dd3d0fd0ca2e544d31b60e6ec1ca3484a"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/NEXT_PACKAGE.md",
+      "bytes": 9268,
+      "sha256": "01e9bbc1487b82b43548a0b0f11082be8500fdc74bf5a7ab463bc426401f8c99"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/REPORT.md",
+      "bytes": 13166,
+      "sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/SOURCE_REGISTER.json",
+      "bytes": 21112,
+      "sha256": "0deab560fee63358814ab00eab53295645cdcbf00c10366a971672da8328e448"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/SOURCES.md",
+      "bytes": 4864,
+      "sha256": "49c606be7492d563da544c266c4243cd970a41a5bfd4a83b2a7c760ea06bbaff"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/VALIDATION.json",
+      "bytes": 2431,
+      "sha256": "f5380b89c4ae2f27b8726af5accffa6106c580f691bd9bee5d542af0a5ad432d"
+    }
+  ],
+  "self_hash_rule": "Manifest excludes itself; its SHA256 is returned in final handback",
+  "execution": "No application tests, code, models, CAD, devices, installations or Git commands executed"
+}
