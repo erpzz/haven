@@ -1,6 +1,6 @@
 {
   "schema": "ri01.root.delivery-validation.v1",
-  "observed_at": "2026-09-29T01:49:22.894918+00:00",
+  "observed_at": "2026-09-29T01:51:36.672333+00:00",
   "scope": "Explicit public tracked/new campaign files; excludes this receipt and DELIVERY_MANIFEST to avoid self-reference",
   "checked_files": 521,
   "png_files_hashed_not_text_scanned": 1,

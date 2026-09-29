@@ -1,6 +1,6 @@
 {
   "schema": "ri01.root.public-delivery.v1",
-  "generated_at": "2026-09-29T01:49:22.894918+00:00",
+  "generated_at": "2026-09-29T01:51:36.672333+00:00",
   "scope": "All public campaign files in Git index, excluding this manifest itself; private original R11 and external caches are excluded",
   "hash_algorithm": "SHA256",
   "base_commit": "376031e182c57495912baf6727093b0b188da568",
@@ -9,7 +9,7 @@
   "review_receipt": "state/FINAL_REVIEW_RECEIPT.json",
   "publication_receipt": "state/PUBLICATION_RECEIPT.json",
   "public_file_count": 522,
-  "public_total_bytes": 7485923,
+  "public_total_bytes": 7486545,
   "files": [
     {
       "path": ".gitattributes",
@@ -2553,7 +2553,7 @@
     },
     {
       "path": "state/DELIVERY_VALIDATION.json",
-      "sha256": "7ca6f80cb04ce86640b212a58e4fc6698cdedeb196a2d5af2ae777a8f41bd89d",
+      "sha256": "ccf63db1721254eaab0656fce49750b9d3a9dd3a55be4c9794b8bb0e7ab71140",
       "bytes": 1090
     },
     {
@@ -2583,8 +2583,8 @@
     },
     {
       "path": "state/PUBLICATION_RECEIPT.json",
-      "sha256": "d7863390197fa64452a053286110dba3937a1cdd0293085cc749dbf49db44c00",
-      "bytes": 3422
+      "sha256": "26503bed046bddeb83721a3ffb8cf13b09d7079b990a9e6071fb4044b9b156b5",
+      "bytes": 4044
     },
     {
       "path": "state/SCHEDULING_NOTE.json",
@@ -2613,7 +2613,7 @@
     },
     {
       "path": "state/run.json",
-      "sha256": "7e58f2ad10dfe08d1374ffdc5ad06924c8bad4de240379a343eb50ca2a62d885",
+      "sha256": "848159d71758cac08551a0073acab55d96703355f83fe94203ba11fa1ad46791",
       "bytes": 5151
     },
     {

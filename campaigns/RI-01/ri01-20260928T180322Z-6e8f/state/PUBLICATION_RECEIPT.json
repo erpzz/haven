@@ -1,6 +1,6 @@
 {
   "schema": "ri01.root.publication-receipt.v1",
-  "observed_at": "2026-09-29T01:47:20.655880+00:00",
+  "observed_at": "2026-09-29T01:51:35.443170+00:00",
   "research_status": "RESEARCH_COMPLETE",
   "publication_status": "CONTENT_VERIFIED_PR_METADATA_CONFIRMATION_PENDING",
   "verified_content_commit": "b530d1a8ce127ccb868b59d5e62e0d2556f21305",
@@ -70,5 +70,13 @@
   "app_model_device_physical_tests_executed": 0,
   "all_owned_children_completed": true,
   "automatic_continuation_scheduled": false,
-  "self_reference_note": "This receipt observes the prior published content checkpoint; a later metadata commit may contain it."
+  "self_reference_note": "This receipt observes the prior published content checkpoint; a later metadata commit may contain it.",
+  "verified_delivery_metadata_commit": "9b925293216ecef45d54e42632eaa690373b5040",
+  "metadata_verification": "Exact remote campaign ref, PR head, and public manifest/report/publication-receipt/candidate-manifest bytes read back successfully; all 522 delivery-manifest entries verified locally, working tree clean at that checkpoint.",
+  "issue_receipt": {
+    "url": "https://github.com/erpzz/haven/issues/17#issuecomment-5882113549",
+    "created_at": "2026-09-29T01:51:01Z",
+    "body_sha256": "0a4928a381cc38b51c2014ed3222d3f7a0fa7a957bc0beae9541edca5defcbe5",
+    "readback_matches_submitted_body": true
+  }
 }
