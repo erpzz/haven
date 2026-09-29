@@ -610,7 +610,7 @@
   {
     "local_deadline": "2026-09-29T21:44:00Z",
     "profile": "CUSTOM_PROFILE_FALLBACK",
-    "status": "RUNNING",
+    "status": "COMPLETED_CLOSED",
     "write_scope": [
       "campaigns/IP-01/ip01-v2-20260929/integration/closure-v1/"
     ],
@@ -623,6 +623,18 @@
     "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
     "model_calls_authorized": 0,
     "role": "haven_integration_manager",
-    "at": "2026-09-29T21:29:38.922407+00:00"
+    "at": "2026-09-29T21:29:38.922407+00:00",
+    "completion": {
+      "actual_tool_status": "completed; close_agent returned completed handback",
+      "status": "COMPLETED_CLOSED",
+      "native_id": "01a0ef12-861f-7511-8e1d-68cee3f932ab",
+      "disposition": "READY_FOR_INDEPENDENT_REVIEW",
+      "task_id": "H00-CLOSURE",
+      "execution": "PARTIAL",
+      "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+      "manifest": "integration/closure-v1/MANIFEST.json",
+      "manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+      "at": "2026-09-29T21:41:18.306211+00:00"
+    }
   }
 ]

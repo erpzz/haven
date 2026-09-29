@@ -1,0 +1,16 @@
+{
+  "at": "2026-09-29T21:42:18.940584+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+  "native_handback_received": true,
+  "native_id": "01a0ef12-861f-7511-8e1d-68cee3f932ab",
+  "native_close_tool_previous_status": "completed",
+  "inputs_checked": 94,
+  "outputs_checked": 4,
+  "all_hashes_match": true,
+  "candidate_bytes_changed": false,
+  "execution_disposition": "PARTIAL",
+  "H00_disposition": "READY_FOR_INDEPENDENT_REVIEW",
+  "role_separation": "H00 synthesis received; independent code/vision/evidence verdicts still missing. Root hash check is not executable QA.",
+  "snapshot_correction": "Frozen CONTINUATION_INPUT_SNAPSHOT retains older no-active prose plus correct H00 active array. Current continuation process field explicitly supersedes that prose; original snapshot unchanged."
+}

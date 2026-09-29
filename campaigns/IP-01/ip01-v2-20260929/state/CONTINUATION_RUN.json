@@ -69,7 +69,14 @@
     "reread_after_every_checkpoint": true,
     "old_checkpoint_cap": "Preserved historically; current explicit operator mandatory boundaries govern continuation postings."
   },
-  "processes": "APP stopped; gate disabled; original HALT retained; no active native children",
-  "status": "EXACT_CANDIDATE_RECONCILED_FINAL_EXECUTION_PARTIAL",
-  "at": "2026-09-29T21:27:32.940835+00:00"
+  "processes": "APP/model stopped; H00 native handback received and close tool returned completed; active reviewer identities must be read from current array.",
+  "status": "H00_FROZEN_FINAL_REVIEW_READY",
+  "at": "2026-09-29T21:38:49.838807+00:00",
+  "assignments_used": 21,
+  "assignments_remaining": 3,
+  "active_native_children": [],
+  "last_published_observation": {
+    "at": "2026-09-29T21:38:49.838807+00:00",
+    "commit": "ef1655cc09e216dc76b7f6ccb850f4e09f33e680"
+  }
 }

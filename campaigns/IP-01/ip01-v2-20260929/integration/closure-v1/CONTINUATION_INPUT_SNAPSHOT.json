@@ -1,0 +1,84 @@
+{
+  "schema": "ip01.closure-run.v1",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "parent_campaign": "ip01-v2-20260929",
+  "root_native_id": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
+  "started_at": "2026-09-29T21:24:04.782931+00:00",
+  "hard_deadline": "2026-09-29T22:54:04.782931+00:00",
+  "stop_new_assignments_at": "2026-09-29T22:09:04.782931+00:00",
+  "time_bound_basis": "Root chooses a finite 90-minute closure window for the operator-requested distinct bounded continuation; original six-hour run is expired and immutable. Final 45 minutes reserved for verification, publication and shutdown.",
+  "operator_authorization": "Current message explicitly continues the GitHub-coordinated campaign, requires a distinct bounded closure run and final H00/CODE/VISION/EVIDENCE/delivery. No authority is inferred from usage reset or from a GitHub comment.",
+  "remaining_graph": [
+    "21 H00 final integration",
+    "22 CODE-FINAL",
+    "23 VISION-FINAL",
+    "24 EVIDENCE-FINAL",
+    "Existing root delivery task 6: reports, publication, shutdown"
+  ],
+  "limits": {
+    "new_assignments": 4,
+    "cumulative_assignments": 24,
+    "active_children": 3,
+    "new_model_calls": 0,
+    "new_final_suite_starts": 0,
+    "new_downloads": 0,
+    "new_features": 0,
+    "new_provider_spending": 0
+  },
+  "baseline": {
+    "assignments_used": 20,
+    "model_calls": {
+      "readiness": 6,
+      "lifecycle": 4,
+      "final": 54
+    },
+    "settled_calls": 64,
+    "unknown_cleanup": 0,
+    "model_seconds": 1593.4050000000425,
+    "final_suite_starts": 3,
+    "original_issue_checkpoints": 2,
+    "original_issue_checkpoint_cap": 4
+  },
+  "final_execution": "PARTIAL: deterministic composite complete; 54/72 pilot calls observed, 45 pass and 9 conservative failures; protected comparison EVALUATION_INCONCLUSIVE; 18 unrun remain unrun.",
+  "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "external_coordination": {
+    "latest_consumed": {
+      "comment_id": 5898973462,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5898973462",
+      "label": "IP01-SUPERADMIN:20260929-1710ET:resume-steer-v1",
+      "consumed_at": "2026-09-29T21:24:04.782931+00:00",
+      "disposition": "ACCEPTED_WITHIN_OPERATOR_CONTINUATION_SCOPE",
+      "precedence": "Current explicit operator continuation and mandatory check-in amendment > scoped WORK_PACKAGE > external corrective guidance. Steward agreement is neither authorization nor empirical evidence.",
+      "actions": [
+        "Preserve expired original clock, all 64 model calls, three final-suite starts and failed attempts",
+        "Publish exact evaluated executable bytes, distinguishing worktree hashes from historical Git identity",
+        "Use four remaining assignments for H00 and distinct code/vision/evidence reviews",
+        "Close with PARTIAL final execution, accurate report/publication and cessation evidence"
+      ],
+      "scope_expansion": "NONE_ACCEPTED; permissions, model selection, calls, suites, spending and physical activity are unchanged. Any expansion remains HUMAN_DECISION_REQUIRED."
+    },
+    "required_boundaries": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "additional_material_events": true,
+    "reread_after_every_checkpoint": true,
+    "old_checkpoint_cap": "Preserved historically; current explicit operator mandatory boundaries govern continuation postings."
+  },
+  "processes": "APP stopped; gate disabled; original HALT retained; no active native children",
+  "status": "EXACT_CANDIDATE_RECONCILED_FINAL_EXECUTION_PARTIAL",
+  "at": "2026-09-29T21:38:49.838807+00:00",
+  "assignments_used": 21,
+  "assignments_remaining": 3,
+  "active_native_children": [
+    "01a0ef12-861f-7511-8e1d-68cee3f932ab"
+  ],
+  "last_published_observation": {
+    "at": "2026-09-29T21:38:49.838807+00:00",
+    "commit": "ef1655cc09e216dc76b7f6ccb850f4e09f33e680"
+  }
+}

@@ -1,0 +1,1091 @@
+{
+  "schema": "ip01.integration.closure-v1",
+  "assignment": 21,
+  "owner": "H00 haven_integration_manager",
+  "native_profile": "CUSTOM_PROFILE_FALLBACK",
+  "native_id": "01a0ef12-861f-7511-8e1d-68cee3f932ab",
+  "inherited_model": "UNKNOWN",
+  "cost": "UNKNOWN",
+  "created_at": "2026-09-29T21:40:11.6778802Z",
+  "status": "READY_FOR_INDEPENDENT_REVIEW",
+  "final_execution": "PARTIAL",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "original_run_expired_at": "2026-09-29T10:10:16Z",
+  "closure_started_at": "2026-09-29T21:24:04.782931Z",
+  "closure_hard_deadline": "2026-09-29T22:54:04.782931Z",
+  "handoff_due": "2026-09-29T21:44:00Z",
+  "exact_executable_candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "historical_evaluated_revision": "487c67299445a29e0fbbdede04259565f741f587",
+  "exact_qa_publication": "e567c3dc541084044e6142ae236a5d71bf64e23f",
+  "historical_qa_publication": "e5c98ca804f3d380fb2cead12e6c4fb476072678",
+  "saved_final_manifest_sha256": "2980ad0a199f48d6599f5462b9cdd9baf6adb6995acc6516d5695f7572d1470f",
+  "new_candidate_or_evidence_bytes": false,
+  "inputs": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281",
+      "bytes": 4318,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "sha256": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc",
+      "bytes": 1512,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "START_HERE.md",
+      "sha256": "aec6a160969d1ade3725f262f7bca76fead1a34730d6cda299b4cc018f64de7c",
+      "bytes": 4413,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "sha256": "bf4745153beff5687207f8e733809567e72080f0645241a1840c2cfb13a4ae16",
+      "bytes": 3781,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "coordination/PROTOCOL.md",
+      "sha256": "40fbb4f282155cb2762a67c2d970b2332ff37dcc3f303dc823d4b6e00db712dc",
+      "bytes": 3858,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": ".codex/agents/haven_integration_manager.toml",
+      "sha256": "ea5ff7331942d843feaad7067d672e89ba7adb69f2ba6fd56255da83708d34e3",
+      "bytes": 1283,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "orchestration/RI-01/MASTER_PROMPT.md",
+      "sha256": "d102519c6b871470601f88c01e649f7487c7c522712fd7d9c5728b5d8d59e722",
+      "bytes": 10671,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+      "bytes": 7504,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "bytes": 5286,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "bytes": 9910,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "baseline/cumulative-v1.0/agents/HANDOFF_TEMPLATE.md",
+      "sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+      "bytes": 1329,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "coordination/HANDBACK_METADATA.md",
+      "sha256": "27a8d0b5bc8aec1eeeb5c7fc178b7a977016e96aaf69f5f62f63a39a3731c3a7",
+      "bytes": 999,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Role, precedence, retained vision, modality and handback boundaries; current assignment narrows all historical launch instructions",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/WORK_PACKAGE.md",
+      "sha256": "0c833df829b7c92df8412bc022b42906c4b50492ff1989fe7e869bbd0a466a6f",
+      "bytes": 27779,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Scoped limits and external loop; exact reproduction identity with no operational renewal",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/COORDINATION_AMENDMENT.md",
+      "sha256": "ef295dbe172268c95d26578b53f1f4bc098b886ff3244b9a2b73b746fd2e5003",
+      "bytes": 5652,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Scoped limits and external loop; exact reproduction identity with no operational renewal",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/EXACT_CANDIDATE.md",
+      "sha256": "7bc1827368ad3309336ee0a6d40dde7f0579e9539e0c3decacf051dfdd084c1a",
+      "bytes": 1206,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Scoped limits and external loop; exact reproduction identity with no operational renewal",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/closure-v1/CONTINUATION_INPUT_SNAPSHOT.json",
+      "sha256": "22f4e0cacf47ba4d442085ef1e924c337537dba4e4894cc3616266898baf9265",
+      "bytes": 3977,
+      "inspection": "OBSERVED_COORDINATION_SNAPSHOT_NOT_FINAL_EXECUTION_EVIDENCE",
+      "use": "Distinct closure budget, assignment21-24 graph and operator/steward separation; later root scheduling updates do not change frozen QA",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md"
+      ],
+      "original_source_path": "campaigns/IP-01/ip01-v2-20260929/state/CONTINUATION_RUN.json",
+      "previously_observed_sha256": "f1112b09caf6de8939c4244acb1a079cbe47deaf7c3b6f8e984619f2f0b5cdf7",
+      "reconciliation": "Root coordination changed during synthesis. Reread final observed version and preserved exact snapshot; same candidate, budget and frozen result. active_native_children records H00; old processes prose is stale and not final cessation evidence."
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/EXACT_CANDIDATE_RECONCILIATION.json",
+      "sha256": "3d2dcf3e7c7d692165ffb06cfdc355414e62aa1f8b95ad959873fa1646f9371f",
+      "bytes": 17350,
+      "inspection": "RECEIPT_READ_ROOT_ATTRIBUTED",
+      "use": "Reconcile exact bytes, preserved failures, distinct eligibility, expired/closure clocks and cessation; recovery preparation-only claim explicitly corrected",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/EXACT_QA_PUBLICATION_RECONCILIATION.json",
+      "sha256": "2175180dd99dc1189a1a2033a95253cb02235ed527ae9c63165e2f17dc322f13",
+      "bytes": 42966,
+      "inspection": "RECEIPT_READ_ROOT_ATTRIBUTED",
+      "use": "Reconcile exact bytes, preserved failures, distinct eligibility, expired/closure clocks and cessation; recovery preparation-only claim explicitly corrected",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/FINAL_EXECUTION_DISPOSITION.json",
+      "sha256": "7eb15348a24e978b6a875ecf8efb292179b82586b851c9d26fe0b318575cf7f7",
+      "bytes": 2271,
+      "inspection": "RECEIPT_READ_ROOT_ATTRIBUTED",
+      "use": "Reconcile exact bytes, preserved failures, distinct eligibility, expired/closure clocks and cessation; recovery preparation-only claim explicitly corrected",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/H00_SAVED_FINAL_RECOVERY_CORRECTION.json",
+      "sha256": "2ec34ce5fd055d406e794134c89dcf38c04e8eeff11e3e329dc05257125fadb8",
+      "bytes": 1020,
+      "inspection": "RECEIPT_READ_ROOT_ATTRIBUTED",
+      "use": "Reconcile exact bytes, preserved failures, distinct eligibility, expired/closure clocks and cessation; recovery preparation-only claim explicitly corrected",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/FINAL_RUNTIME_SHUTDOWN.json",
+      "sha256": "c568d7645c4e49a632a1f45b76f99c850210ff674ad6af3ccf79864bf58805d5",
+      "bytes": 1840,
+      "inspection": "RECEIPT_READ_ROOT_ATTRIBUTED",
+      "use": "Reconcile exact bytes, preserved failures, distinct eligibility, expired/closure clocks and cessation; recovery preparation-only claim explicitly corrected",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/SUPER_ADMIN_5898973462_DISPOSITION.json",
+      "sha256": "0ba7124d087ea3b7d16e6190057d5b75b03579675cd05f16d25a91689a90513c",
+      "bytes": 1106,
+      "inspection": "RECEIPT_READ_ROOT_ATTRIBUTED",
+      "use": "Reconcile exact bytes, preserved failures, distinct eligibility, expired/closure clocks and cessation; recovery preparation-only claim explicitly corrected",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/INTERRUPTION_RECOVERY_2111.json",
+      "sha256": "56094868c5e81f26a7126180516b40f872682699deb66a5d333c25dfeffa4d1e",
+      "bytes": 2970,
+      "inspection": "RECEIPT_READ_ROOT_ATTRIBUTED",
+      "use": "Reconcile exact bytes, preserved failures, distinct eligibility, expired/closure clocks and cessation; recovery preparation-only claim explicitly corrected",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/TASK17_B2_RESULT_RECONCILIATION.json",
+      "sha256": "91a4be94343bd166c4db53c39c4badd927a8e45507d26396086624de3afe5e53",
+      "bytes": 1704,
+      "inspection": "RECEIPT_READ_ROOT_ATTRIBUTED",
+      "use": "Reconcile exact bytes, preserved failures, distinct eligibility, expired/closure clocks and cessation; recovery preparation-only claim explicitly corrected",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/TASK17_FINAL_AUTHORIZATION.json",
+      "sha256": "b8777e9001387f364a134e97755d096998b2b1d1d959bfacbcc3a5f730bf1a12",
+      "bytes": 1035,
+      "inspection": "RECEIPT_READ_ROOT_ATTRIBUTED",
+      "use": "Reconcile exact bytes, preserved failures, distinct eligibility, expired/closure clocks and cessation; recovery preparation-only claim explicitly corrected",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/TASK17_BROWSER_HARNESS_RECONCILIATION.json",
+      "sha256": "d1d2c67f0ab45aa1acf339c0ad6e044c9a990985167806ff105c0ca54af307dc",
+      "bytes": 1386,
+      "inspection": "RECEIPT_READ_ROOT_ATTRIBUTED",
+      "use": "Reconcile exact bytes, preserved failures, distinct eligibility, expired/closure clocks and cessation; recovery preparation-only claim explicitly corrected",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_A_READBACK.json",
+      "sha256": "b05c831b419f067378cc764e7a1cca116d5245699f581477ddb61b6a2e42fd31",
+      "bytes": 981,
+      "inspection": "READBACK_RECORD_FIELDS_INSPECTED_NOT_FRESH_REMOTE_READ",
+      "use": "Root coordination readback and absence of newer steward guidance at the recorded time",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_B_READBACK.json",
+      "sha256": "ad3e05c650554a4de51fba92944509d6a2e5ddebd5b67efdcbce6b8d80adc19f",
+      "bytes": 938,
+      "inspection": "READBACK_RECORD_FIELDS_INSPECTED_NOT_FRESH_REMOTE_READ",
+      "use": "Root coordination readback and absence of newer steward guidance at the recorded time",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_C_READBACK.json",
+      "sha256": "7055327e4670b37182652ec1e3b19c12eb3e784446808e92927e1dbbd6a3d335",
+      "bytes": 1055,
+      "inspection": "READBACK_RECORD_FIELDS_INSPECTED_NOT_FRESH_REMOTE_READ",
+      "use": "Root coordination readback and absence of newer steward guidance at the recorded time",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_D_READBACK.json",
+      "sha256": "b661779d007ba9fd11694de6015742c472f7080beabbe352633d7bb73d0414ef",
+      "bytes": 1172,
+      "inspection": "READBACK_RECORD_FIELDS_INSPECTED_NOT_FRESH_REMOTE_READ",
+      "use": "Root coordination readback and absence of newer steward guidance at the recorded time",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_P1_READBACK.json",
+      "sha256": "8bc2a95628ac81cf22e0036072357cd8b0293e316024b78684b94155c675ad86",
+      "bytes": 1290,
+      "inspection": "READBACK_RECORD_FIELDS_INSPECTED_NOT_FRESH_REMOTE_READ",
+      "use": "Root coordination readback and absence of newer steward guidance at the recorded time",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/final-v1/MANIFEST.json",
+      "sha256": "2980ad0a199f48d6599f5462b9cdd9baf6adb6995acc6516d5695f7572d1470f",
+      "bytes": 35109,
+      "inspection": "PARSED_BINDINGS_AND_TARGETED_FIELDS",
+      "use": "Reuse preserved saved final; no silent rewrite; exact hashes validated and corrections stated",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/final-v1/INTEGRATION_HANDOFF.md",
+      "sha256": "d3968562c978ed2b3cebb25098ec549310f7ec542c4342f7c8977fceba8bd3f9",
+      "bytes": 5993,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Reuse preserved saved final; no silent rewrite; exact hashes validated and corrections stated",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/final-v1/CONTRACT_CODE_EVIDENCE_MAP.md",
+      "sha256": "ca3ffacc1d7a6e2eb5b442ff7110b461dab1a4e6a07c308b1088a5e3e72c212a",
+      "bytes": 10583,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Reuse preserved saved final; no silent rewrite; exact hashes validated and corrections stated",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/final-v1/RETAINED_VISION.md",
+      "sha256": "9b478187595a2a6b3bc88d327691f62cc034388b97177386b473e2c6ef1a4e8e",
+      "bytes": 7547,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Reuse preserved saved final; no silent rewrite; exact hashes validated and corrections stated",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/final-v1/INPUT_USE.json",
+      "sha256": "d845ce97c1e7a881923c1c8fa12f261a61c65029b5ebdd0c86565a340641647b",
+      "bytes": 22709,
+      "inspection": "PARSED_BINDINGS_AND_TARGETED_FIELDS",
+      "use": "Reuse preserved saved final; no silent rewrite; exact hashes validated and corrections stated",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/final-v1/SOURCE_BINDING.json",
+      "sha256": "e5d25824a7feecfdae4608eef17d202a4fa768874a7d5436c3c420b2790092ca",
+      "bytes": 10939,
+      "inspection": "PARSED_BINDINGS_AND_TARGETED_FIELDS",
+      "use": "Reuse preserved saved final; no silent rewrite; exact hashes validated and corrections stated",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/FINAL_CANDIDATE_01.json",
+      "sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+      "bytes": 16907,
+      "inspection": "PARSED_SOURCE_AND_MODEL_IDENTITY_BINDINGS",
+      "use": "Historical evaluated worktree freeze and attributed exact model identity",
+      "downstream": [
+        "BYTE_VALIDATION.json",
+        "INTEGRATION_HANDOFF.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/FINAL_QA_HANDOFF.md",
+      "sha256": "733b1d373c42c01ef5a94b5b5b0a971bd6c002952fae9c3a0cdf93ee8041649d",
+      "bytes": 3986,
+      "inspection": "PUBLIC_REPORT_READ_HASH_VERIFIED",
+      "use": "Frozen QA17 partial outcomes, denominators, original failed attempts, readiness/timeout distinctions and publication identities",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/FINAL_QA_REPORT.json",
+      "sha256": "09bea0b3deea2e9535ed805a6db960475c9a36b7f556ba1a7058f3e608059629",
+      "bytes": 12069,
+      "inspection": "PUBLIC_REPORT_READ_HASH_VERIFIED",
+      "use": "Frozen QA17 partial outcomes, denominators, original failed attempts, readiness/timeout distinctions and publication identities",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/FINAL_PUBLIC_MANIFEST.json",
+      "sha256": "887f05ea92d0d1d51387415a54dd1d433bc476abcfeacd2f4fa9e26ec47bc72e",
+      "bytes": 11225,
+      "inspection": "MANIFEST_PARSED_NO_EXHAUSTIVE_FILE_AUDIT",
+      "use": "Frozen QA17 partial outcomes, denominators, original failed attempts, readiness/timeout distinctions and publication identities",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json",
+      "sha256": "97d393c974d23e9685854002aa562813b033366d5c21cf7411d9e6b344aeb248",
+      "bytes": 13842,
+      "inspection": "PUBLIC_REPORT_READ_HASH_VERIFIED",
+      "use": "Frozen QA17 partial outcomes, denominators, original failed attempts, readiness/timeout distinctions and publication identities",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/READINESS_RESULTS.json",
+      "sha256": "9b1ab3b45a14c2a593a4b78ca938424c8d3bb64e8c7c4ce18a61e0ff0b218fdc",
+      "bytes": 6034,
+      "inspection": "TARGETED_SUMMARY_FIELDS_READ_HASH_VERIFIED",
+      "use": "Frozen QA17 partial outcomes, denominators, original failed attempts, readiness/timeout distinctions and publication identities",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/LIFECYCLE_RESULTS.json",
+      "sha256": "97c4818b86f12cdf18f24e8c9bc7fbf33777faccc7feec8b448bba711151d9d0",
+      "bytes": 4615,
+      "inspection": "TARGETED_SUMMARY_FIELDS_READ_HASH_VERIFIED",
+      "use": "Frozen QA17 partial outcomes, denominators, original failed attempts, readiness/timeout distinctions and publication identities",
+      "downstream": [
+        "INTEGRATION_HANDOFF.md",
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/FORMAL_SUITE_01_RESULTS.json",
+      "sha256": "79f26d5341db173d3c319544f74d6e6a7d86887a61bfc635639e52b978255890",
+      "bytes": 8777,
+      "inspection": "HASH_ONLY_OR_MANIFEST_KEYS;CONTENT_CLAIMS_ATTRIBUTED_TO_FINAL_QA_REPORT",
+      "use": "Validate named evidence identity; no private rationale reading, independent grading, raw trace or pixel inspection",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/FORMAL_SUITE_02_RESULTS.json",
+      "sha256": "f7c2948288c241cbdd17329834ea2d7984abe6c54b13b60bcfd76bf62481b358",
+      "bytes": 1550,
+      "inspection": "HASH_ONLY_OR_MANIFEST_KEYS;CONTENT_CLAIMS_ATTRIBUTED_TO_FINAL_QA_REPORT",
+      "use": "Validate named evidence identity; no private rationale reading, independent grading, raw trace or pixel inspection",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/PILOT_AGGREGATE.json",
+      "sha256": "ac0446506394f161666cc79fff2e32d178ca9fa1912f0ceca2677d0f8934833e",
+      "bytes": 489,
+      "inspection": "HASH_ONLY_OR_MANIFEST_KEYS;CONTENT_CLAIMS_ATTRIBUTED_TO_FINAL_QA_REPORT",
+      "use": "Validate named evidence identity; no private rationale reading, independent grading, raw trace or pixel inspection",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/PILOT_INDEPENDENT_REVIEW.json",
+      "sha256": "27216b2083716d920f08f8667c5e8ee3f755d9ddcb72bf1e05e34194d512cc43",
+      "bytes": 84924,
+      "inspection": "HASH_ONLY_OR_MANIFEST_KEYS;CONTENT_CLAIMS_ATTRIBUTED_TO_FINAL_QA_REPORT",
+      "use": "Validate named evidence identity; no private rationale reading, independent grading, raw trace or pixel inspection",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/FINAL_SOURCE_MANIFEST.json",
+      "sha256": "0c020caa83080b6a426a6fe2d90d39a5222b4972b3b4ca2d9511f8abc171b4e3",
+      "bytes": 4450,
+      "inspection": "HASH_ONLY_OR_MANIFEST_KEYS;CONTENT_CLAIMS_ATTRIBUTED_TO_FINAL_QA_REPORT",
+      "use": "Validate named evidence identity; no private rationale reading, independent grading, raw trace or pixel inspection",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/FINAL_EVALUATOR_MANIFEST.json",
+      "sha256": "8c880d2bd97e5c9e918c82a28cdbc50c8901a1a10cc575558429a4dae5f696c2",
+      "bytes": 5805,
+      "inspection": "HASH_ONLY_OR_MANIFEST_KEYS;CONTENT_CLAIMS_ATTRIBUTED_TO_FINAL_QA_REPORT",
+      "use": "Validate named evidence identity; no private rationale reading, independent grading, raw trace or pixel inspection",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/FINAL_OWNERSHIP_AUDIT.json",
+      "sha256": "21199c343b65700774d5cfa29f5bce0c6762d84aadcf1d30ef7408370e9db5e8",
+      "bytes": 408,
+      "inspection": "HASH_ONLY_OR_MANIFEST_KEYS;CONTENT_CLAIMS_ATTRIBUTED_TO_FINAL_QA_REPORT",
+      "use": "Validate named evidence identity; no private rationale reading, independent grading, raw trace or pixel inspection",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/INPUT_INSPECTION.json",
+      "sha256": "b26346222a980b6cba1d24773c66ea2bda36460bc38a68b5b632e97684bde857",
+      "bytes": 473,
+      "inspection": "HASH_ONLY_OR_MANIFEST_KEYS;CONTENT_CLAIMS_ATTRIBUTED_TO_FINAL_QA_REPORT",
+      "use": "Validate named evidence identity; no private rationale reading, independent grading, raw trace or pixel inspection",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/SUITE01_PIXEL_INSPECTION.json",
+      "sha256": "80337f2669103698c344c6b7779f611e5da3feba0c09f11b40f25cd7f729a2ac",
+      "bytes": 4328,
+      "inspection": "HASH_ONLY_OR_MANIFEST_KEYS;CONTENT_CLAIMS_ATTRIBUTED_TO_FINAL_QA_REPORT",
+      "use": "Validate named evidence identity; no private rationale reading, independent grading, raw trace or pixel inspection",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/RUNTIME_TRACE_SUMMARY_SUITE01.json",
+      "sha256": "6333a2efda68404bf148c632a2f530419a8e0dc98363a22c79b7d78b63f6f0c7",
+      "bytes": 26416,
+      "inspection": "HASH_ONLY_OR_MANIFEST_KEYS;CONTENT_CLAIMS_ATTRIBUTED_TO_FINAL_QA_REPORT",
+      "use": "Validate named evidence identity; no private rationale reading, independent grading, raw trace or pixel inspection",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/RETAINED_SCOPE.json",
+      "sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116",
+      "bytes": 492384,
+      "inspection": "HASH_AND_STRUCTURAL_COUNTS_TARGETED_RECORD_SAMPLE",
+      "use": "Retain exact original namespaces/owners and inherited contracts without new acceptance or corpus recreation",
+      "downstream": [
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/VISION_COVERAGE.md",
+      "sha256": "a19dc834e0a043f985cb7dc010775a7c1a637d964175a08e5d068fcda37317c1",
+      "bytes": 7814,
+      "inspection": "OWNER_ANCHOR_TABLE_AND_JOURNEY_REFERENCE_READ",
+      "use": "Retain exact original namespaces/owners and inherited contracts without new acceptance or corpus recreation",
+      "downstream": [
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/CONTRACT_CROSSWALK.md",
+      "sha256": "0ee3d9eb32f8d87f6d3d8b74cf310f0c4f7632f695f8f15a4b09776792584ea8",
+      "bytes": 5794,
+      "inspection": "DOCUMENTATION_READ",
+      "use": "Retain exact original namespaces/owners and inherited contracts without new acceptance or corpus recreation",
+      "downstream": [
+        "CARRY_FORWARD.md",
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/.gitignore",
+      "sha256": "d8d14f8ba1de4c22d163262fe69619da4fe75febcb5305d27e2a187b881fea53",
+      "bytes": 212,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/README.md",
+      "sha256": "f81674e4155c23726f1ed8d1df0fc1aa87e0f551e4de837af1e1b12f95734dca",
+      "bytes": 8317,
+      "inspection": "DOCUMENTATION_READ_AND_SHA256",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/README.md",
+      "sha256": "1ac83a87b82f9cf4debd75b5061cc08599229b24e7533016c902da15edfaebdf",
+      "bytes": 1866,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/common.py",
+      "sha256": "c1c7a9678bd648078bd0dc7daf3a63f0ed164129f9caf14997d6db3402ca3129",
+      "bytes": 4871,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/conftest.py",
+      "sha256": "0ec81b9e86389a4dfc8e88f33ab9dcab31ebfdcf286569aa3fde58f1c2fee44a",
+      "bytes": 1264,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/prepare.py",
+      "sha256": "4d7d56c702930a688c4ab2b4cbfbd6abe13073ae6f7964e5b2b00f9fbe8997bb",
+      "bytes": 2879,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_backing.py",
+      "sha256": "b1af947a25e111529888493fdd575a8002164a1094a07996fbc8faab6f60a174",
+      "bytes": 5111,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_bounds.py",
+      "sha256": "30604f9ea222457a3e0f4ab0704cd52b75ace5d7765ed89854aca7eb50c54139",
+      "bytes": 6161,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_code_early.py",
+      "sha256": "cc5639377b97e81959531f2a1cab470a24d0f35376c871bdeaff86bf3f26f6fc",
+      "bytes": 2868,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_extra_bounds.py",
+      "sha256": "e04b33f9f15601f09ee30c45cf6e2b8cfc7f14f8ce753438ec17af982a89df01",
+      "bytes": 3763,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_functional.py",
+      "sha256": "340a17918bf7f70e2bdd86728cf7f0d22736ae0addbbef5c01e6fafc5c925768",
+      "bytes": 14490,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_static_domains.py",
+      "sha256": "dfeb4925bc2d338ce7bdf3642fe48ca08edddd474273b4966365d670710fc26e",
+      "bytes": 2504,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/fixtures/demo-notes.json",
+      "sha256": "11065181fdc55eadc52656fbcf2dca352b1ca891ad1ac65e0b4a45aa997c2943",
+      "bytes": 1440,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/__init__.py",
+      "sha256": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+      "bytes": 94,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/app.py",
+      "sha256": "93b9335f9bb5eb73b506c34a08bc8c2490263ed2ccbe551fa45253f0cd5b7427",
+      "bytes": 55714,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/authority.py",
+      "sha256": "15ca0f6b4e273d5d4d19b54d2cd082cc41bb592c8fadd60c1c9871a5c724ac75",
+      "bytes": 21770,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/contracts.py",
+      "sha256": "9912e3282f5634627f6b8ff3b0969c2c2e1920ca8077729f5bf3e365d1de8b3f",
+      "bytes": 5213,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/model_adapter.py",
+      "sha256": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+      "bytes": 19229,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/static/app.css",
+      "sha256": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+      "bytes": 9373,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/static/app.js",
+      "sha256": "3ca857311c75771d7ab972575d5afb1b067005a5bb9c8190deca939d8f9ef2fa",
+      "bytes": 14367,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/store.py",
+      "sha256": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+      "bytes": 11015,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/supervisor.py",
+      "sha256": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+      "bytes": 44063,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/templates/index.html",
+      "sha256": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+      "bytes": 7955,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/haven/worker.py",
+      "sha256": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a",
+      "bytes": 3528,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/requirements.lock",
+      "sha256": "bc2b94b9763868b08170dcd18790db46537ad8eac7cbc6f037404a5893f0ba48",
+      "bytes": 3218,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/scripts/check_publication.py",
+      "sha256": "a5b27b634a802d9920243b96eaf2b8c49c63e22ad2ed606915598774e55d1f12",
+      "bytes": 4327,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/scripts/freeze_candidate.py",
+      "sha256": "e84a9c672cbd20845ddcb4ad1646f6a825a96e0174aeaf4dec206e3db15f47ba",
+      "bytes": 4883,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/scripts/render_snapshot.py",
+      "sha256": "dc7a2e6f5e160d8397eaa531f8873ac2b4967d4b0cf3a24fe215daebfbb98089",
+      "bytes": 4753,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/scripts/run.py",
+      "sha256": "06d5b4db081ad196098ba2e192ba53ebc84413692523e4484a315e9c99d38b43",
+      "bytes": 12673,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/tests/app/browser_walkthrough.py",
+      "sha256": "49c602312e21ee4e3796bee8fe1dd2a295b412d989e16c52fee45aee11296557",
+      "bytes": 5497,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/tests/app/test_app_fixes.py",
+      "sha256": "1ef8c3bfb98fa70c9da72e7e9eb2586a9759108e73b22b3a015de36ce348e9c2",
+      "bytes": 11573,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/tests/app/test_application.py",
+      "sha256": "45410aebc3e96d1c932a5be6bdd4f243a61fc748798ae05e3d4e6672e4e5f57b",
+      "bytes": 20699,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/tests/runtime/fixture_worker.py",
+      "sha256": "e901d13be77e953c35672b6f662204da1fe1aba647a157d2f0c894c9300ba1f8",
+      "bytes": 2314,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/tests/runtime/prepare_model.py",
+      "sha256": "59e9abb19c4e4d4f70f7a696288b6f7cfe091e3dcfc58ac3205c1507ba187465",
+      "bytes": 9518,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/tests/runtime/test_model_gate.py",
+      "sha256": "d1e0e000296021e076dfeaa2c9db931c8a104cd5eb9fd3f7217c4aa0b80ca335",
+      "bytes": 4903,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/tests/runtime/test_runtime.py",
+      "sha256": "347f85fe350b6215714c1684395cab53e998304ad62cee324273b8c4224ca35a",
+      "bytes": 13106,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    },
+    {
+      "path": "labs/ip01/tests/runtime/test_runtime_fix.py",
+      "sha256": "7e61de543f231352561ff231f3ded358e0e87cc05b74043b0648267d8057455c",
+      "bytes": 13164,
+      "inspection": "SHA256_ONLY_NO_CODE_REVIEW_OR_EXECUTION",
+      "use": "37-file worktree identity against original freeze, saved final binding and exact-candidate receipt",
+      "downstream": [
+        "BYTE_VALIDATION.json"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/closure-v1/INTEGRATION_HANDOFF.md",
+      "sha256": "b458b7c6942612196e82b4e529937ac6ab17cb4199be71fef07ab8d87a41abd3",
+      "bytes": 10837
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/closure-v1/CARRY_FORWARD.md",
+      "sha256": "401a3e57983989997b4a597a696591d0e37daba883091e67714c701cafa1721c",
+      "bytes": 8372
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/closure-v1/BYTE_VALIDATION.json",
+      "sha256": "4f96b190c92cc1caab6004c968a676048528be3a952dda6eb98b37880a49a341",
+      "bytes": 73568
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/closure-v1/CONTINUATION_INPUT_SNAPSHOT.json",
+      "sha256": "22f4e0cacf47ba4d442085ef1e924c337537dba4e4894cc3616266898baf9265",
+      "bytes": 3977
+    }
+  ],
+  "self_hash_excluded": true,
+  "manifest_hash_delivery": "Returned in H00 handback; root must verify exact saved bytes on publication",
+  "finding_ids": [
+    "H00-C21-01 saved-final recovery correction",
+    "H00-C21-02 exact executable byte identity",
+    "H00-C21-03 stale preparation/totals/clock wording",
+    "H00-C21-04 B2 failed readiness versus separate pilot eligibility",
+    "H00-C21-05 retained conservative grading ambiguity",
+    "H00-C21-06 partial pilot and unexercised real timeout",
+    "H00-C21-07 exact QA publication byte identity",
+    "H00-C21-08 stale no-native-children prose in mutable coordination snapshot; active array identifies this H00; root final cessation required"
+  ],
+  "dependency_rules": [
+    "A changed candidate byte invalidates affected empirical applicability; no automatic inherited PASS",
+    "Changed sealed QA/report bytes require affected independent review; changed publication identity alone must preserve exact manifest hashes",
+    "Changed root coordination snapshots require budget/steering reconciliation, not automatic reinterpretation of frozen QA",
+    "Root MORNING_REPORT/RESUME/audit drafts are excluded and must receive separate final delivery binding",
+    "Saved final-v1 is immutable; closure overlays only explicit corrections",
+    "Independent CODE/VISION/EVIDENCE review and root E/F check-ins remain required; no self-acceptance"
+  ],
+  "execution_by_h00": {
+    "application_runs": 0,
+    "tests": 0,
+    "model_calls": 0,
+    "final_suite_starts": 0,
+    "git_commands": 0,
+    "child_spawns": 0,
+    "posts": 0,
+    "direct_image_or_audio_inspections": 0,
+    "private_expected_asset_reads": 0,
+    "writes": "ONLY integration/closure-v1",
+    "validation": "SHA256 and document/JSON inspection only"
+  },
+  "publication": "NOT_UPLOADED_BY_H00",
+  "independent_reviews": "DOWNSTREAM_REQUIRED",
+  "authority_expansion": false,
+  "native_name": "Leibniz",
+  "native_identity_provenance": "Root supplied actual spawn-tool identity in current assignment follow-up; root task/agent ledger attribution"
+}
