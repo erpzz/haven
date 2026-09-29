@@ -15,14 +15,15 @@
   "hard_deadline": "2026-09-29T10:10:16Z",
   "stop_new_work_at": "2026-09-29T09:25:16Z",
   "deadline_rule": "Earlier of six elapsed hours and next 07:00 America/New_York from actual launch; reserve last 45 minutes; no renewal on resume.",
-  "assignments_dispatched": 15,
+  "assignments_dispatched": 16,
   "active_native_children": [
-    "01a0eb69-0092-74d3-9541-9aeb69de5d92"
+    "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+    "01a0eb9a-4e14-7012-8c9d-401632f2fa06"
   ],
   "native_profile_loading": "CUSTOM_PROFILE_FALLBACK: native spawn API exposes instructions, no profile selector; inherited model UNKNOWN",
   "model_identity": "PREPARED_NOT_INFERENCE_QUALIFIED: qwen2.5vl:3b manifest fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1 Ollama0.34.4",
   "code_candidate_sha": "cb266a32459d624097da685817a399db7156bbe6",
-  "latest_published_checkpoint": "f2acfb050b709c948a06cc090a74a974f5814515",
+  "latest_published_checkpoint": "cb266a32459d624097da685817a399db7156bbe6",
   "model_attempts": {
     "readiness_development": 4,
     "lifecycle_fault": 0,
@@ -47,7 +48,7 @@
     "Root binds actual setup/PR references from the verified Issue #20 receipt before work.",
     "No original workspace, main, RI-01 file or PR #19 metadata is changed by this setup."
   ],
-  "at": "2026-09-29T05:51:33.640797+00:00",
+  "at": "2026-09-29T05:59:17.089481+00:00",
   "runtime_checkpoints_published": 2,
   "acquisition_debit_bytes": 4402341479,
   "acquisition_debit_basis": "Conservative4.1GiB total: initial1GiB Python/browser plus3.1GiB selectedmodel/metadata; exacttransportoverhead UNKNOWN",
@@ -67,5 +68,11 @@
   "allowance_ordinary_usage_allowed": true,
   "code_candidate_scope": "Repaired developmentcandidate for independent QA15; not finalfreeze",
   "root_app_state": "STOPPED_PENDING_REPAIRED_CANDIDATE",
-  "assignments_note": "15dispatched; integratedQA preparing; plannedfreeze16finalexec17H00integration18 thenreservedreviewsdelivery19-22"
+  "assignments_note": "16dispatched; modelexecution16 parallel with deterministicQA15. Routine finalfreeze remains ongoing root6 support, finalQA17H00integration18 thenreservedreviewsdelivery19-22;23-24closures",
+  "workspace_storage_bytes_observed": 4505015204,
+  "workspace_storage_observed_at": "2026-09-29T05:58:23Z",
+  "host_free_disk_bytes_observed": 409945968640,
+  "host_available_memory_bytes_observed": 52607336448,
+  "storage_scope": "Combined authorized clone and evaluator, logical file lengths excluding symlinks",
+  "original_final_recheck": "Prepared read-only helper; NOT_EXECUTED untilfinal handoff"
 }

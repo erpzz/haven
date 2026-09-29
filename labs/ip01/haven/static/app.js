@@ -15,7 +15,7 @@ function beginSwitch() {
   for(const form of document.querySelectorAll('form')) {form.reset();for(const control of form.querySelectorAll('button'))control.disabled=false;}
   $('share-title').textContent=''; $('note-count').textContent='0';
   $('answer-image').replaceChildren(new Option('No image selected',''));
-  $('answer-view').replaceChildren(el('p','Choose a demo person to continue.','empty'));
+  $('answer-view').replaceChildren(el('p','Answers you open will appear here.','empty'));
   $('identity').textContent='Choose a demo person'; $('notice').hidden=true;
   return sessionGeneration;
 }
