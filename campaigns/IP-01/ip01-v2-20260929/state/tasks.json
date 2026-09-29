@@ -403,7 +403,7 @@
     "task_id": "INTEGRATED-QA",
     "assignment": 15,
     "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
-    "status": "ACTIVE",
+    "status": "COMPLETED_CLOSED",
     "started_at": "2026-09-29T05:44:00Z",
     "local_deadline": "2026-09-29T06:44:00Z",
     "ownership": [
@@ -412,21 +412,29 @@
     ],
     "model_calls_authorized": 0,
     "final_suite_starts_authorized": 0,
-    "at": "2026-09-29T05:44:53.561157+00:00"
+    "at": "2026-09-29T05:44:53.561157+00:00",
+    "completion": {
+      "at": "2026-09-29T06:31:23.023357+00:00",
+      "receipt": "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
+      "receipt_sha256": "83c3c74467d161eb7e3a303f61b1b96fefd0830c6c61079289cc07c384a4bcdb",
+      "real_model_calls": 0,
+      "final_suite_starts": 0,
+      "source_changes": 0
+    }
   },
   {
     "task_id": "MODEL-EXECUTION",
     "assignment": 16,
     "role": "ip01_validation_engineer",
     "native_id": "01a0eb9a-4e14-7012-8c9d-401632f2fa06",
-    "status": "ACTIVE_PREPARATION_GATES_PENDING",
+    "status": "ACTIVE_EXPLICIT_ROOT_LIFECYCLE_AUTHORIZATION",
     "started_at": "2026-09-29T05:56:00Z",
     "local_deadline": "2026-09-29T06:36:00Z",
     "write_scope": [
       "evaluator/model_execution",
       "reviews/MODEL-EXECUTION"
     ],
-    "model_calls_authorized": 0,
+    "model_calls_authorized": 4,
     "hard_dependencies": [
       "INTEGRATED-QA operationalgate",
       "rootexplicitrealmodelauthorization"
@@ -435,6 +443,7 @@
       "QA15MODEL_DRIVER_HANDOFF"
     ],
     "objective": "Independent actual model fault and selected-image browser drivers; unchanged final72pilot driver prep, realexecution only after explicit root gate",
-    "at": "2026-09-29T05:55:47.853540+00:00"
+    "at": "2026-09-29T05:55:47.853540+00:00",
+    "authorization_receipt": "receipts/LIFECYCLE_PREFLIGHT_RECONCILIATION.json"
   }
 ]

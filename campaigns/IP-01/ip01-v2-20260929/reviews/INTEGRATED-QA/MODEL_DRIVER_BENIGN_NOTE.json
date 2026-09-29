@@ -1,0 +1,15 @@
+{
+  "frozen_files": [
+    {
+      "path": "<evaluator>/integrated_qa/live_model.py",
+      "sha256": "539dbe88090468c6810dabb0f25517a5c1f7f3ca159a6984248bd0a2400f5e8d"
+    },
+    {
+      "path": "<evaluator>/integrated_qa/live_observer.py",
+      "sha256": "82842b353871ca20a47381ccf102a1e2af1b001dfd6ffc003141fe3fca85aca8"
+    }
+  ],
+  "unchanged": true,
+  "later_benign_use": "Only Retained handle helper from live_observer.py was imported in fixture-only tests; actual handles/FILETIME/CPU samples checked. Network/residency Observer and live_model dispatch were not executed here. No adapter edits after quiescence.",
+  "real_model_calls": 0
+}

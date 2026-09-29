@@ -1,0 +1,28 @@
+{
+  "at": "2026-09-29T06:17:40.616933+00:00",
+  "assignment": 16,
+  "phase": "lifecycle",
+  "control_sha256": "ae6ef9416e1fe3b94e6270670ef35ab01ad4d2cd23919f2648332369a8b08ce0",
+  "control_path": "<evaluator>/model_execution/root-lifecycle.json",
+  "gate_sha256": "c4539b1aef409d3419c91ae7a62aff523a5bf185ba4d7798f19e7abaf7b30cfb",
+  "authorized_cases": [
+    "L1",
+    "L2",
+    "L3",
+    "L4"
+  ],
+  "maximum_new_calls": 4,
+  "allocation": "lifecycle",
+  "source_candidate": "4a49999a4f2edefcd0c63c22e2ff3f7fbb51a154",
+  "owner_identity": {
+    "pid": 27308,
+    "process_birth": 1790662600.427394,
+    "boot_time": 1790563096.9768713,
+    "nonce": "e4f98ad4e2c7496fa7a5aa8e6eaa375a",
+    "started_at": "2026-09-29T06:16:40.432988+00:00",
+    "model_allocation": "lifecycle"
+  },
+  "scope": "Exclusive root APP actual model window; same admitted job only may be cancelled for cleanup; no retries or shared service changes",
+  "expires_utc": "2026-09-29T06:36:00Z",
+  "dispatch": "REQUIRES_ROOT_PREFLIGHT_AND_EXPLICIT_NATIVE_RELAY"
+}

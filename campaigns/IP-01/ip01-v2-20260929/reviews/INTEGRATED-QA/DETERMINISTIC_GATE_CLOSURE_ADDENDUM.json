@@ -1,0 +1,96 @@
+{
+  "assignment": 15,
+  "at": "2026-09-29T06:08:24.858294+00:00",
+  "status": "DETERMINISTIC_GATE_READY",
+  "scope": "Independent development containment evidence for root allocation decision; not final qualification or model authorization",
+  "candidate_base_commit": "cb266a32459d624097da685817a399db7156bbe6",
+  "candidate_files": {
+    "labs/ip01/haven/app.py": "93b9335f9bb5eb73b506c34a08bc8c2490263ed2ccbe551fa45253f0cd5b7427",
+    "labs/ip01/haven/authority.py": "15ca0f6b4e273d5d4d19b54d2cd082cc41bb592c8fadd60c1c9871a5c724ac75",
+    "labs/ip01/haven/contracts.py": "9912e3282f5634627f6b8ff3b0969c2c2e1920ca8077729f5bf3e365d1de8b3f",
+    "labs/ip01/haven/model_adapter.py": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+    "labs/ip01/haven/store.py": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+    "labs/ip01/haven/supervisor.py": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+    "labs/ip01/haven/worker.py": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a",
+    "labs/ip01/haven/__init__.py": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+    "labs/ip01/haven/static/app.css": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+    "labs/ip01/haven/static/app.js": "3ca857311c75771d7ab972575d5afb1b067005a5bb9c8190deca939d8f9ef2fa",
+    "labs/ip01/haven/templates/index.html": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+    "labs/ip01/scripts/run.py": "06d5b4db081ad196098ba2e192ba53ebc84413692523e4484a315e9c99d38b43",
+    "labs/ip01/requirements.lock": "bc2b94b9763868b08170dcd18790db46537ad8eac7cbc6f037404a5893f0ba48"
+  },
+  "ui_addendum": "Root one-line text-only copy change; independently reran both actual browser race variants and generic empty-copy assertion. Prior cb266a3 race evidence preserved.",
+  "actual_runs": [
+    {
+      "evidence": "<evaluator>/integrated_qa/runs/20260929T055452.577419Z",
+      "passed": 150,
+      "failed": 0,
+      "scope": "HTTP/SQLite authority behavior, bounds, CE04/05 and direct vector adapters"
+    },
+    {
+      "evidence": "<evaluator>/integrated_qa/lifecycle/runs/20260929T055502.795801Z",
+      "passed": 13,
+      "failed": 0,
+      "scope": "actual benign Windows owned processes with independent observer/control; frozen runtime stop target 3s"
+    },
+    {
+      "evidence": "<evaluator>/integrated_qa/runs/20260929T060646.445628Z",
+      "passed": 34,
+      "failed": 0,
+      "scope": "E1/E2/E3/T1/T2/S1 real APP/ModelLease/Supervisor with owned benign generation boundary"
+    },
+    {
+      "evidence": "<evaluator>/integrated_qa/session_race_runs/20260929T060429.612253Z",
+      "passed_variants": [
+        "refresh",
+        "consume"
+      ],
+      "scope": "actual Chromium delayed responses with Person A to B switch; inspected screenshots"
+    },
+    {
+      "evidence": "<evaluator>/integrated_qa/live_runs/20260929T060530.200787Z",
+      "status": "PASS",
+      "scope": "actual TCP A private/B forbidden/B shared; browser forms/reload/lost consume reply/no replay/drafts/task/current restart/rollback review-only; inspected pixels; owned app stopped"
+    }
+  ],
+  "barriers": {
+    "E1": "10 actual post-preparation cases: unchanged positive, revoke, uncited correction, grant/session expiry, rotate, cancel, fence, route, gate close",
+    "E2": "17 receipt/write cases: actual authority followed by wrong job/attempt/fence/context/vector/gate/cancel receipt; unknown/exception/timeout/expiry/commit unknown; delayed first write, cancel/deadline during await, context changed after seal, duplicate authority observation",
+    "E3": "Actual first frame observed before uncited correction; benign generation recorded; stale release fenced. No zero-send assertion after first byte.",
+    "T1": "Actual APP durable INCONCLUSIVE for malformed first candidate, deadline/no result, unknown admission; other cases egress uncertainty/denial and lost committed release callback",
+    "T2": "Metadata-only same-ID terminal redelivery; real stop then lost confirmation keeps quarantine/UNKNOWN capacity and full synthetic charge; another APP request cannot launch. Not an OS stop failure injection.",
+    "S1": "One CLAIM/SETTLE/RESULT_DISPOSITION in order; retained charges, no second settlement, actual committed release retained under callback uncertainty; immutable FILETIME strings accepted by actual APP event validator"
+  },
+  "retained_failure": {
+    "run": "<evaluator>/integrated_qa/runs/20260929T060429.140253Z",
+    "failed": 20,
+    "classification": "HARNESS_SCHEMA_ERROR",
+    "detail": "SQLite jobs body uses job_id, not id. Fixed evaluator lookup only; rerun20passed then expanded34passed. All raw originals retained."
+  },
+  "vector_denominator": {
+    "components": 26,
+    "phases": 4,
+    "required": 104,
+    "executed_direct_backing_or_config_cases": 76,
+    "executed_static_constant_fault_cases": 28,
+    "scope_limit": "Direct actual auth.check_current adapters with sealed vector unchanged; 7 static domains perturbed in memory, no HTTP live reconfiguration. Principal/audience and job/session availability changes are coupled, not independent editable fields."
+  },
+  "limitations": [
+    "No real artifact/backend/model generation executed; fixed generation usage markers are synthetic test records only.",
+    "Unknown-cleanup scenario withholds successful real stop observation; does not establish ability to cause or survive every OS-level failure.",
+    "8MiB exact derivative boundary uses serializer fault after real decode; separate real encoded JPEG fixtures test natural derivative guard below/above.",
+    "Actual selected-image model semantics, active model cancellation/timeouts and final72 driver belong to task16/17; task15 has zero authorization.",
+    "Protected evaluation filesystem enforcement NOT_ESTABLISHED; final protected verdict remains EVALUATION_INCONCLUSIVE."
+  ],
+  "real_model_calls": 0,
+  "final_suite_starts": 0,
+  "protected_status": "EVALUATION_INCONCLUSIVE",
+  "gate_and_ledger": "Only synthetic evaluator-private test gates/ledgers under explicit Q-INTEGRATED-01 authorization. Shared root gate/ledger untouched.",
+  "next_action": "Root may review this actual evidence and explicitly allocate task16 real-model slots. This receipt grants none.",
+  "closure_results": "RESULTS.json",
+  "latest_integration_passed": 38,
+  "latest_integration_run": "<evaluator>/integrated_qa/runs/20260929T061345.206481Z",
+  "operator_smoke": "PASS2",
+  "supplementary_browser_image_crash": "PASS",
+  "lifecycle_checker": "21passed; two stale-event expectation failures retained and resolved with actual affected reruns"
+}

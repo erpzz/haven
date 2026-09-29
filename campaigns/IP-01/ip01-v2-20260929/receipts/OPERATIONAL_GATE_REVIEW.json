@@ -1,0 +1,18 @@
+{
+  "at": "2026-09-29T06:11:49.965204+00:00",
+  "receipt_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
+  "candidate_files_matched": 13,
+  "scope": "Root checked independent identity, observed run receipts and bounded limitations; actual execution remains attributed to QA15",
+  "gate_decision": "OPERATIONAL_PREREQUISITE_SATISFIED_MODEL_DRIVER_AND_EXPLICIT_CONTROL_PENDING",
+  "model_calls_authorized": 0,
+  "fixed_targets_seconds": {
+    "runtime": 3,
+    "app": 20
+  },
+  "remaining_requirements": [
+    "Actual stable model driver and selfcheck",
+    "Root-owned app identity/phase restart",
+    "Finite root gate and exact control SHA relay",
+    "Finalfreeze and separate72-call authorization"
+  ]
+}

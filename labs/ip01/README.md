@@ -81,6 +81,12 @@ $env:HYPOTHESIS_STORAGE_DIRECTORY = Join-Path $ip01TestRun 'hypothesis'
 
 Retain the exit status and output for the source revision you tested. Producer checks, independently executed QA, and the final pilot are reported separately in the campaign; rerunning this command cannot transfer an earlier verdict to changed code.
 
+## Run the independent deterministic checks
+
+The reviewed [independent harness](evaluation/deterministic/README.md) contains 150 executable checks, including the 104 authority-vector cases. Copy that complete directory to an evaluator directory outside this checkout, then run its `prepare.py` with `--candidate` pointing to this repository. Add `--smoke` for two useful private/shared-note and finite-grant workflows. The runner snapshots the candidate, keeps its synthetic state and reports in the evaluator, checks that source bytes remain unchanged, and returns the actual pytest exit status.
+
+These reusable checks contain no model gate, model assets or protected pilot answers. Browser and process-fault evidence have separately recorded commands and scope in the campaign reports.
+
 ## Source and scope
 
 Implementation is confined to `labs/ip01/`; coordination and review to the IP-01 campaign. The accepted R03/P01 composites define influence closure, four output records, once-only finite grant accounting and restore semantics. The original ASTRA store's transaction/receipt patterns were inspected from its clean pinned source; exact source and private-copy identities are recorded in the campaign. The new Windows supervisor is a laboratory implementation, not a repair or qualification of the original NIGHT-01/R1 workspace.

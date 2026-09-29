@@ -1,0 +1,7 @@
+{
+  "frozen_gate_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
+  "immutable_file": "DETERMINISTIC_GATE_READY.json",
+  "closure_file": "DETERMINISTIC_GATE_CLOSURE_ADDENDUM.json",
+  "closure_sha256": "a14427221fd400f291589a30d248da13dc747ebed603585a543367d53d9d8515",
+  "note": "Report builder added closure fields immediately before root freeze notice arrived. Added edition preserved separately; exact1113841e original restored from retained original and checked. No further changes to frozen gate. Root control remains bound to1113841e."
+}

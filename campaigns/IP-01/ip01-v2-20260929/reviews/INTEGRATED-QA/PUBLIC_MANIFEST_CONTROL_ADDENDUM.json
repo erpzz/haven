@@ -1,0 +1,13 @@
+{
+  "scope": "Additive manifest; original PUBLIC_MANIFEST.json and frozen gate unchanged",
+  "files": [
+    {
+      "path": "GATE_IMMUTABILITY_FINDING.md",
+      "sha256": "00a66d488cf51b942eabeb020eb21cf8fe937877686a2bff199b88fb744d6e15"
+    },
+    {
+      "path": "CONTROL_HANDOFF_ADDENDUM.json",
+      "sha256": "89cde90c9d936d845eea0abe2f1977a6d7e067e7c9266ce31e217e4172d5c191"
+    }
+  ]
+}

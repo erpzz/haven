@@ -1,0 +1,144 @@
+{
+  "inputs": [
+    {
+      "path": "<campaign>/WORK_PACKAGE.md",
+      "sha256_actual_worktree_bytes": "0c833df829b7c92df8412bc022b42906c4b50492ff1989fe7e869bbd0a466a6f",
+      "use": "Task requirements and fixed profile bounds; read once for task15"
+    },
+    {
+      "path": "<campaign>/START_HERE.md",
+      "sha256_actual_worktree_bytes": "5ef191208eeda9e9e05f0f9785f853b012a71c690c9d9ed957fc1fde23ff89de",
+      "use": "Current campaign entry and routing"
+    },
+    {
+      "path": "<campaign>/AGENT_BRIEFS.md",
+      "sha256_actual_worktree_bytes": "ffd4ef7af084f0540ea9a7d5c33203f095000ddf62aea3a2d946cb7a8821a8e8",
+      "use": "Independent validation role and boundaries"
+    },
+    {
+      "path": "<campaign>/inputs/SOURCE_IDENTITY.json",
+      "sha256_actual_worktree_bytes": "0889a0abdea1885ce22b98c6c01934925fd8dc9beb9dc367955d6531372d95af",
+      "use": "Root actual input identity snapshots, setup/baseline mapping; no Git commands"
+    },
+    {
+      "path": "<campaign>/integration/SEAM.md",
+      "sha256_actual_worktree_bytes": "09380772d5e19838950d94e4cf94e682fc41d65fed217f8587d2e53b579b0985",
+      "use": "Exact initial API/storage/runtime interfaces"
+    },
+    {
+      "path": "<campaign>/integration/EGRESS_AMENDMENT.md",
+      "sha256_actual_worktree_bytes": "46620137b8ff8bde83340b922c856a158c264a6e7639178bd974a1dc00726820",
+      "use": "Actual adopted E1/E2/E3/T1/T2/S1 callback/terminal/ledger protocol"
+    },
+    {
+      "path": "<campaign>/receipts/APP_FIX_HANDOFF.md",
+      "sha256_actual_worktree_bytes": "130389776e1c5cd3baee4abdc86adada1565a12af542264e98aad4a1b347432c",
+      "use": "Closed author bytes and adoption; never inherited producer PASS"
+    },
+    {
+      "path": "<campaign>/receipts/RUNTIME_FIX_HANDOFF.md",
+      "sha256_actual_worktree_bytes": "f2ec6b0699bf4a5da7d11ec96ee1d218df17c4470ffd44ab88e947da52b12459",
+      "use": "Closed author bytes and adoption; never inherited producer PASS"
+    },
+    {
+      "path": "<campaign>/receipts/DEVELOPMENT_CANDIDATE_02.json",
+      "sha256_actual_worktree_bytes": "09aa30f89d5c71bd284f2fff847cc69e0221c3788c5e2105ef1fac5ae2cdd825",
+      "use": "Development commit and byte binding; not final freeze"
+    }
+  ],
+  "candidate_source_imports": "Only exact byte snapshots of labs/ip01/haven inside evaluator. No imported original/R1/RI01 code. Input hashes are provenance, not implied semantic reads of every original source.",
+  "fixture_provenance": [
+    {
+      "from": "<evaluator>/qa_e2e/common.py",
+      "to": "common.py",
+      "original_sha256": "c4652da9f17621a6527c96d39a90b0f95291ab88e07cee628663585639b04742",
+      "copied_sha256": "fdf0e9a1909a9f97b12a1a72205376cee5ed0c26f68ed275d9af2567b94ecaf7"
+    },
+    {
+      "from": "<evaluator>/qa_e2e/conftest.py",
+      "to": "conftest.py",
+      "original_sha256": "6a9df73dc8b47db120da9e9faa0d8c70d2d36d96b58530889880b0f7db969bf7",
+      "copied_sha256": "a5615f1ac874089de69446f94815519a6b6f5d3f5c738a250d1ecf0d7193e5ff"
+    },
+    {
+      "from": "<evaluator>/qa_e2e/run_tests.py",
+      "to": "run_tests.py",
+      "original_sha256": "fd77da1010edbadbc062ac91345be7b0c341aefe8639ffee0263ad116760f9f4",
+      "copied_sha256": "426c1a41687217694ff951c3c24393e38ea11f0483778342dd4469226cf4afbe"
+    },
+    {
+      "from": "<evaluator>/qa_e2e/test_functional.py",
+      "to": "test_functional.py",
+      "original_sha256": "5dc0d17086431c6e094dc4a3474a8c86d7c7221d389829b7b8cb66a60895be06",
+      "copied_sha256": "340a17918bf7f70e2bdd86728cf7f0d22736ae0addbbef5c01e6fafc5c925768"
+    },
+    {
+      "from": "<evaluator>/qa_e2e/test_backing.py",
+      "to": "test_backing.py",
+      "original_sha256": "557a613e1dc6660e8affaaa6d97f66f688653513511822ebcf90c6a917c7ba84",
+      "copied_sha256": "ea9bc1c1270f8d4da2280cf619c89386abde6e726e536697d94a386bc0916297"
+    },
+    {
+      "from": "<evaluator>/qa_e2e/test_bounds.py",
+      "to": "test_bounds.py",
+      "original_sha256": "f4c207208c7059f4575ac989d2df8c667d8b8983bd744b8f35970ea4ecf77f85",
+      "copied_sha256": "30604f9ea222457a3e0f4ab0704cd52b75ace5d7765ed89854aca7eb50c54139"
+    },
+    {
+      "from": "<evaluator>/qa_e2e/test_code_early.py",
+      "to": "test_code_early.py",
+      "original_sha256": "0dc897fadf54d954300058dc6095263f13f3f4934c1f84a4ad2d15ab521b6257",
+      "copied_sha256": "0b4c44ece7a46c18c55fc671697cb8b0beecd1f41dc4cb6060ca457f1a711a7a"
+    },
+    {
+      "from": "<evaluator>/qa_e2e/live_browser.py",
+      "to": "live_browser.py",
+      "original_sha256": "4aa142d39efdc0d5505dd4f91b4c9908076a560eefb4a35d1b0e55ebd130765e",
+      "copied_sha256": "45cda23ca0b4f70d1027377a6244509db735535304bfc8bf5c9b971ceaf9a666"
+    },
+    {
+      "from": "<evaluator>/qa_e2e/live_session_race.py",
+      "to": "live_session_race.py",
+      "original_sha256": "2883a3bd7b27bd701596dc6506737b012a206674f99df1eef5deb21e73e9365f",
+      "copied_sha256": "655f05439eb7c73d7d549bf4793a760c79c4c2e5e5427869a545b2b8917e874f"
+    },
+    {
+      "from": "<evaluator>/qa_e2e/live_crash_image.py",
+      "to": "live_crash_image.py",
+      "original_sha256": "3917b4e049f35b3d94bc6e2a5dcf36dda76014b69174942c47a52c5f9b5b86af",
+      "copied_sha256": "94a8575e314e664932b3d18cf3e5cb6584fb0811691c15667682fa627a8ea343"
+    },
+    {
+      "from": "<evaluator>/lifecycle_obs/actor.py",
+      "to": "lifecycle/actor.py",
+      "original_sha256": "b2f769ea8be2e0dbe9ab2ac28a4280fbb59f55aecf081ee4d03f2b5e8dc038ba",
+      "copied_sha256": "47d9a7d03ea001904da1cb95c9b04fc7575d920d34f9c212f16960d1d143ac20"
+    },
+    {
+      "from": "<evaluator>/lifecycle_obs/run_faults.py",
+      "to": "lifecycle/run_faults.py",
+      "original_sha256": "9fe8b84ec5e6e04f6c9b64e5b0b29766e92b5be0054788ffd0277eff298d974d",
+      "copied_sha256": "7f130df1f99c447fc310b86ca247ae761c8861a399f7c2efeef9fb6de9558364"
+    },
+    {
+      "from": "<evaluator>/lifecycle_obs/evidence_oracle.py",
+      "to": "lifecycle/evidence_oracle.py",
+      "original_sha256": "738647725ab57b105e6cb109d463e85b887a14e7a05968b1d66b13a2a66141dd",
+      "copied_sha256": "b7fc9d56d0d71edae49b3b9034c9765cfb453733c751dd8d67f07c0222732d7c"
+    },
+    {
+      "from": "<evaluator>/lifecycle_obs/test_oracle.py",
+      "to": "lifecycle/test_oracle.py",
+      "original_sha256": "7a37dcbe1d07a1392eda7b6c174ca8f3613ec100d75262ce4e907d5b664fc81f",
+      "copied_sha256": "d0c3c3d4e89e5a0341f87fa429b0c4cf2becc9d64d5e5dd90dd4f2bfc313936b"
+    },
+    {
+      "from": "<evaluator>/lifecycle_obs/verify_oracle.py",
+      "to": "lifecycle/verify_oracle.py",
+      "original_sha256": "5317b0dce5a05ea94c01fda257753ac25540d24106778a8e92d8aadc2dc22446",
+      "copied_sha256": "4df96901515543f98e32b78d0099e488b4502df865ec4c28b70c61c71b91b0ec"
+    }
+  ],
+  "synthetic_fixture": "Original local note strings, generated image dimensions/bytes and benign transport. Protected QA-PREP assets/oracles unchanged; no pilot answers exported.",
+  "source_before_after_matches": true
+}
