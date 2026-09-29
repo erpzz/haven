@@ -1,0 +1,104 @@
+{
+  "at": "2026-09-29T06:47:16.957846+00:00",
+  "assignment": 17,
+  "root_thread_id": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
+  "phase": "final_deterministic",
+  "candidate_commit": "487c67299445a29e0fbbdede04259565f741f587",
+  "source_freeze_sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+  "final_plan_sha256": "9eba55c347b5e58f466482c8957c4ef8d10b1819b7aa36edbf25939a0da754e5",
+  "harness_manifest_sha256": "83966821420b007765576771d94beb5a06d56cc56ef1177ab51c479d45693d34",
+  "harness_files": 38,
+  "source_files": 37,
+  "private_control_sha256": "a80287cb381c00ef6f9cdb3321e28fc64f1feab7c22ee1b358ac5fdcc82dad2a",
+  "private_control_path": "<evaluator>/final_execution/root-final-deterministic-01.json",
+  "authorized_start_number": 1,
+  "prior_actual_final_starts": 0,
+  "global_max_starts": 3,
+  "commands": [
+    {
+      "component": "independent-main",
+      "script": "deterministic/run_tests.py",
+      "args": [
+        "test_functional.py",
+        "test_backing.py",
+        "test_static_domains.py",
+        "test_bounds.py",
+        "test_code_early.py",
+        "test_extra_bounds.py"
+      ],
+      "expected_cases": 150,
+      "bound_seconds": 240
+    },
+    {
+      "component": "app-runtime-seams",
+      "script": "deterministic/run_tests.py",
+      "args": [
+        "test_integration.py"
+      ],
+      "expected_cases": 38,
+      "bound_seconds": 180,
+      "transport": "SYNTHETIC_MODELLEASE_NO_REAL_MODEL"
+    },
+    {
+      "component": "benign-process-faults",
+      "script": "deterministic/lifecycle/run_faults.py",
+      "args": [],
+      "expected_process_cases": 13,
+      "bound_seconds": 180
+    },
+    {
+      "component": "lifecycle-evidence-oracle",
+      "script": "deterministic/lifecycle/verify_oracle.py",
+      "args": [
+        "<new-fault-run-id>"
+      ],
+      "expected_checks": 21,
+      "bound_seconds": 45
+    },
+    {
+      "component": "browser-session-races",
+      "script": "deterministic/live_session_race.py",
+      "args": [],
+      "expected_variants": 2,
+      "bound_seconds": 100
+    },
+    {
+      "component": "browser-journey",
+      "script": "deterministic/live_browser.py",
+      "args": [],
+      "bound_seconds": 180
+    },
+    {
+      "component": "browser-image-crash",
+      "script": "deterministic/live_crash_image.py",
+      "args": [],
+      "bound_seconds": 120
+    },
+    {
+      "component": "producer-regression",
+      "command": [
+        "<python>",
+        "-B",
+        "-m",
+        "pytest",
+        "<snapshot>/labs/ip01/tests/app",
+        "<snapshot>/labs/ip01/tests/runtime",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "<suite>/producer-tmp",
+        "--junitxml",
+        "<suite>/producer-junit.xml"
+      ],
+      "bound_seconds": 180
+    }
+  ],
+  "expires_utc": "2026-09-29T08:20:00Z",
+  "source_and_harness_current_match": true,
+  "selfchecks": "9PASS; benign evaluator/denominator only",
+  "real_model_calls_authorized": 0,
+  "status": "ROOT_CONTROL_READY_REQUIRES_INERT_PREFLIGHT_AND_NATIVE_RELAY",
+  "rules": "One predeclared8component suite; preserve every failure. No retry or candidate/harness edit during run. New affected suite starts require root control, globalmax3. No real model artifact/backend/generation in synthetic fixtures; no root gate/ledger or original modifications."
+}

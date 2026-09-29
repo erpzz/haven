@@ -1,6 +1,6 @@
 {
   "campaign_id": "ip01-v2-20260929",
-  "status": "PREPARING_FINAL_CANDIDATE_AND_EVALUATION",
+  "status": "FINAL_DETERMINISTIC_SUITE01_RUNNING",
   "issue": 20,
   "research_issue": 17,
   "dependency_pr": 19,
@@ -21,14 +21,14 @@
   ],
   "native_profile_loading": "CUSTOM_PROFILE_FALLBACK: native spawn API exposes instructions, no profile selector; inherited model UNKNOWN",
   "model_identity": "PREPARED_NOT_INFERENCE_QUALIFIED: qwen2.5vl:3b manifest fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1 Ollama0.34.4",
-  "code_candidate_sha": "00dea8a134aca10a0bea8ad82c44861ace2d3d93",
+  "code_candidate_sha": "487c67299445a29e0fbbdede04259565f741f587",
   "latest_published_checkpoint": "4a49999a4f2edefcd0c63c22e2ff3f7fbb51a154",
   "model_attempts": {
     "readiness_development": 4,
     "lifecycle_fault": 1,
     "final_pilot": 0
   },
-  "final_deterministic_suite_starts": 0,
+  "final_deterministic_suite_starts": 1,
   "limits": {
     "active_children": 3,
     "assignments": 24,
@@ -47,7 +47,7 @@
     "Root binds actual setup/PR references from the verified Issue #20 receipt before work.",
     "No original workspace, main, RI-01 file or PR #19 metadata is changed by this setup."
   ],
-  "at": "2026-09-29T06:39:12.709614+00:00",
+  "at": "2026-09-29T06:49:03.409562+00:00",
   "runtime_checkpoints_published": 2,
   "acquisition_debit_bytes": 4402341479,
   "acquisition_debit_basis": "Conservative4.1GiB total: initial1GiB Python/browser plus3.1GiB selectedmodel/metadata; exacttransportoverhead UNKNOWN",
@@ -63,7 +63,7 @@
   "model_execution_charged_seconds": 108.9539999999979,
   "model_network_starts": 5,
   "model_unknown_cleanup_claims": 0,
-  "allowance_weekly_used_percent_observed": 71,
+  "allowance_weekly_used_percent_observed": 79,
   "allowance_ordinary_usage_allowed": true,
   "code_candidate_scope": "Repairedcb266Python plus one displaystring correction83872, independently rechecked2browserraces; finalqualificationpending",
   "root_app_state": "STOP_CONFIRMED",
@@ -84,5 +84,10 @@
   "root_app_birth": 1790662600.427394,
   "model_lifecycle_tokens_issued": 4,
   "model_control_sha256": "7d8500333150ebd0492dccef143b11edea6a0cb5683185d1d7e71ae6d70a065e",
-  "model_control_expires": "2026-09-29T06:36:00Z"
+  "model_control_expires": "2026-09-29T06:36:00Z",
+  "final_source_freeze": "receipts/FINAL_CANDIDATE_01.json",
+  "final_source_freeze_sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+  "final_evaluation_control": "receipts/FINAL_EVALUATION_CONTROL_01.json",
+  "final_deterministic_suite_authorized_start": 1,
+  "final_suite_actual_start": "2026-09-29T06:47:52.474282+00:00"
 }
