@@ -13,7 +13,14 @@
       "original_sha256": "4340fa9f226f0bfdc2bc45baa8b0cad2e2a3403b0baf945fe7669b4dec3cf4da",
       "public_edition_sha256": "db61e5368d4b48d3c87797ddfacaa4b6f2dd3c2fcb8bc88091b403c4fe734b01",
       "change": "Absolute user-home paths replaced by scope-relative aliases; assertions and outcomes unchanged; original retained privately"
+    },
+    {
+      "path": "receipts/APP_HANDOFF.md",
+      "original_sha256": "e58a722fea576fc920b509548bc56b2dc2a8cc3e8d7cc3108559eb5933dbb108",
+      "public_edition_sha256": "f9d7fcf1024f9315e770079fb6f185b31a189f0ca5bd62b046aec521a0a531bb",
+      "change": "Absolute user-home path replaced with campaign alias; original retained privately; assertions unchanged"
     }
   ],
-  "scope": "Publication pathname redaction only; original review hashes remain historical identities"
+  "scope": "Publication pathname redaction only; original review hashes remain historical identities",
+  "updated_at": "2026-09-29T05:09:18.265359+00:00"
 }

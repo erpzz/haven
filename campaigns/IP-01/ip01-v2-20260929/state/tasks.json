@@ -50,7 +50,7 @@
     "task_id": "APP",
     "role": "ip01_application_engineer",
     "native_id": "01a0eb68-1eef-7890-a6bb-4d1dc1bc5a57",
-    "status": "RUNNING",
+    "status": "COMPLETED_CLOSED",
     "inputs": "SEAM.md at setup+launch; full package; R03/P01 accepted composites",
     "hard_dependencies": [
       "INTAKE",
@@ -69,7 +69,16 @@
     "budget_minutes": 45,
     "reviewer": "independent QA and final code reviewer",
     "next_action": "Runnable skeleton then stateful authority and UI",
-    "at": "2026-09-29T04:24:25.524522+00:00"
+    "at": "2026-09-29T04:24:25.524522+00:00",
+    "completion": {
+      "native_id": "01a0eb68-1eef-7890-a6bb-4d1dc1bc5a57",
+      "task_id": "APP",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "receipts/APP_HANDOFF.md",
+      "sha256": "e58a722fea576fc920b509548bc56b2dc2a8cc3e8d7cc3108559eb5933dbb108",
+      "outcome": "124author tests;twobrowserwalkthroughs;livepersistence/restart;ownserversstopped;0calls0finals",
+      "at": "2026-09-29T05:07:43.989911+00:00"
+    }
   },
   {
     "task_id": "RUNTIME",
@@ -152,7 +161,7 @@
     "task_id": "LIFECYCLE-OBS",
     "role": "ip01_validation_engineer",
     "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
-    "status": "RUNNING",
+    "status": "COMPLETED_CLOSED",
     "inputs": "QA-PREP benign topology proof; exact snapshot of available supervisor/worker; SEAM; owner consultations",
     "hard_dependencies": [
       "QA-PREP",
@@ -165,6 +174,65 @@
     "budget_minutes": 20,
     "reviewer": "independent code/evidence final",
     "next_action": "Measured benign lifecycle faults and root launcher checks; retain source drift and failures",
-    "at": "2026-09-29T04:44:08.217975+00:00"
+    "at": "2026-09-29T04:44:08.217975+00:00",
+    "completion": {
+      "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+      "task_id": "LIFECYCLE-OBS",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "reviews/LIFECYCLE-OBS/LIFECYCLE_OBS_HANDOFF.md",
+      "sha256": "68ae8af6e4c2d35e0b62dae00ad012e9be0d30658c2def27177c1123e9162f75",
+      "outcome": "13of13independentbenigncasesfinalbytes;21oraclechecks;launcherchecks;234identities0residuals;0modelcalls",
+      "at": "2026-09-29T05:01:21.462800+00:00"
+    }
+  },
+  {
+    "task_id": "MODEL-READY",
+    "role": "ip01_runtime_engineer",
+    "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
+    "status": "RUNNING",
+    "inputs": "FINAL_BENIGN_GATE a63f368b2c788911b950d9696acf30ed02f9533f154c1fdacce7813818124426; exactmodelpins;MODEL_READY_AUTHORIZATION;statefulAPP",
+    "hard_dependencies": [
+      "LIFECYCLE-OBS",
+      "MODEL_PREPARATION",
+      "APP_STATEFUL_READY"
+    ],
+    "write_scope": [
+      "existingRUNTIMEmodulesifboundedrepair",
+      "labs/ip01/tests/runtime",
+      "receipts/MODEL_READY_HANDOFF.md",
+      "receipts/MODEL_READY_RESULTS.json",
+      "receipts/MODEL_READY_FINDING.md",
+      "private model-ready"
+    ],
+    "budget_minutes": 25,
+    "model_calls_authorized": {
+      "readiness": 4,
+      "lifecycle": 0,
+      "final": 0
+    },
+    "reviewer": "independentQA/code/evidence",
+    "next_action": "Up to4 actualAPP-authorized modelreadinesscalls; measuredcleanup;nohiddenwarmups",
+    "at": "2026-09-29T05:04:02.174971+00:00"
+  },
+  {
+    "task_id": "QA-E2E",
+    "role": "ip01_validation_engineer",
+    "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+    "status": "RUNNING",
+    "inputs": "APP_READY STATEFUL_VALIDATED119authortests12browser;finalbenigngate;QA-PREP;ownerHTTPfaultconsultations",
+    "hard_dependencies": [
+      "APP_STATEFUL_READY",
+      "QA-PREP",
+      "LIFECYCLE-OBS"
+    ],
+    "seed_adaptation": "DeterministicWIREintegratedininitialAPPplusrootstatefulstartup; modelintegrationseparate gated lane; noacceptancebeforecurrentevidence",
+    "write_scope": [
+      "evaluator qa_e2e",
+      "reviews/QA-E2E"
+    ],
+    "budget_minutes": 35,
+    "reviewer": "CODE-EARLY then finalcode/evidence",
+    "next_action": "Independentexecutedauthority,persistence,HTTP,browserfaults; exactsourcefingerprints;0modelcalls0finalstarts",
+    "at": "2026-09-29T05:05:31.976548+00:00"
   }
 ]

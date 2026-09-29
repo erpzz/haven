@@ -1,0 +1,26 @@
+{
+  "status": "STATEFUL_VALIDATED_READY_FOR_INDEPENDENT_QA",
+  "health": {
+    "service": "haven-ip01",
+    "ready": true,
+    "stage": "stateful",
+    "model_available": false
+  },
+  "ui_http_status": 200,
+  "validation": {
+    "development_tests": "124 passed, 1 non-fatal TestClient deprecation warning; latest pytest-05.log",
+    "real_browser": "12 scenario categories passed twice; console_errors=[]; desktop/mobile screenshots inspected",
+    "restart": "live INTACT_CURRENT restart, persisted notes/tasks, old sessions expired, no consumed payload replay, fresh answer succeeded",
+    "independent_qualification": "PENDING"
+  },
+  "startup": ".ip01-runtime/venv/Scripts/python.exe -m uvicorn haven.app:create_app --factory --app-dir labs/ip01 --host 127.0.0.1 --port 8765 --workers 1",
+  "runtime_dir": "Set HAVEN_RUNTIME_DIR to clone .ip01-runtime for root server; APP tests use .ip01-runtime/app-dev",
+  "Q-APP-01": "Runtime must await APP admit_attempt immediately before spawn, check local cancel_epoch/fence after await before spawn, return exact attempt/lease/cancel/request/context identity on results, and never treat fenced release as stop confirmation. Can runtime guarantee these callback orderings and preserve stop UNKNOWN until owned termination evidence? Root please relay actual runtime answer.",
+  "model_calls": 0,
+  "final_suites": 0,
+  "root_owns_persistent_server": true,
+  "runtime_consultation": "Q-APP-01 actual answer read and adopted; model root token pool adopted; no inference",
+  "api_details": "See APP_HANDOFF.md Q-QA-APP-01",
+  "app_dev_server": "STOP_CONFIRMED for both APP-owned runtime directories; latest restart descendants absent; root shared server untouched",
+  "completed_at": "2026-09-29T05:07:13.362088+00:00"
+}

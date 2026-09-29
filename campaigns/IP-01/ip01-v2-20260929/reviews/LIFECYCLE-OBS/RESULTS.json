@@ -1,0 +1,395 @@
+{
+  "assignment": 7,
+  "root": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
+  "role": "ip01_validation_engineer",
+  "profile": "CUSTOM_PROFILE_FALLBACK",
+  "inherited_model": "UNKNOWN",
+  "disposition": "INDEPENDENT_BENIGN_LIFECYCLE_PASS_BOUND_SCOPE",
+  "runtime_hashes": {
+    "labs/ip01/haven/supervisor.py": "9713cac68f27ca627780334e27f2637fc258711da2e8072cd70b6f2cd1ff1437",
+    "labs/ip01/haven/worker.py": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d"
+  },
+  "source_current_hashes": {
+    "labs/ip01/haven/supervisor.py": "9713cac68f27ca627780334e27f2637fc258711da2e8072cd70b6f2cd1ff1437",
+    "labs/ip01/haven/worker.py": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d"
+  },
+  "runtime_current_matches_tested": true,
+  "launcher_hash_tested": "5ee9fb5f92c9977be4754675ebe136bd13bf42758207a98abad907b065a9a656",
+  "launcher_hash_current": "5ee9fb5f92c9977be4754675ebe136bd13bf42758207a98abad907b065a9a656",
+  "runtime_stop_seconds": 3,
+  "app_stop_seconds": 20,
+  "runtime_cases": [
+    {
+      "case": "normal",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS"
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/normal",
+      "evidence_sha256": {
+        "actor-result.json": "1702fe4b67deab721e87bd0098912d0cf3053c4a36858b8c8c47ae87e1bec7f3",
+        "actor.jsonl": "37bcad28f05f28296836a32482a62fca36bb7d1063265479a7a099e78b5e41fe",
+        "observer.json": "b35aef20463a6de20367a18373f98009c6c231b5cced620ff6da1886f7f5b2b1",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "cancel_before",
+      "outcome": "PASS",
+      "workload_identities": 0,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS",
+        "observed_stop_latency_seconds": 0.014999999999417923
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/cancel_before",
+      "evidence_sha256": {
+        "actor-result.json": "8b9881f63a657816ae8d2a9168309631047e0d492d53d40d0582dc0c93d8b144",
+        "actor.jsonl": "a1381e09ded256c48e709499ef59e6bfb56db21f67cc1db4d40741d23b060d5b",
+        "observer.json": "a881168586c3d999c855e66c0be36e4ab9bf2c51cd280cbb72b922d227bfc3a7",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "cancel_during",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS",
+        "observed_stop_latency_seconds": 0.04700000000593718
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/cancel_during",
+      "evidence_sha256": {
+        "actor-result.json": "e99b0b3c36d32286de09381bfebf543569d4300bcf832cb17c17aaf3a5abafbe",
+        "actor.jsonl": "6472494036264d5beb3b4ec327179a8230d4af434d2678e4fb5e184616c2f74a",
+        "observer.json": "6f3e642be0052cd406a5856e25496405e10760f53a92f2e74f4aa75486aa930a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "timeout",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS",
+        "observed_stop_latency_seconds": 0.21899999999732245
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/timeout",
+      "evidence_sha256": {
+        "actor-result.json": "0bdb6af169e910c677bb1f7e0741c3dc364e5c77272b29592925f7c9f11d6a80",
+        "actor.jsonl": "14ff764426bb849d87299a5e786ae480da97b8759c91724691ba611459748ebc",
+        "observer.json": "cb17596412cbb91901f9247c622f55869646592130eacd179682e792bb35b8ab",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "parent_death",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS",
+        "parent_death_elapsed": 0.014999999999417923
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/parent_death",
+      "evidence_sha256": {
+        "actor.jsonl": "065e5161940125b9ea1207acc84ac2d3d6ecccf0b8e2db0dce2decd518821dd9",
+        "observer.json": "49a3d596992e4b2a26cfe69e02640fc3fafed0030113f75473478b7844cf6d6b",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "worker_crash",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS"
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/worker_crash",
+      "evidence_sha256": {
+        "actor-result.json": "39201d234563d4eb3aced7291f3102e1d22b186ee15699ba48140d455d55521e",
+        "actor.jsonl": "13cb6cd5fb49264994581718bc44141e889bbbac0f733335885c1432c76da85f",
+        "observer.json": "15929fb997f09a6e929ff811e02c971b655da7facb88f27c3eb6bd50ef584065",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "delayed_result",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS"
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/delayed_result",
+      "evidence_sha256": {
+        "actor-result.json": "c4a037a6445e81144a75942989f5eed37994bca0b2e688fd656acd25cd9b0718",
+        "actor.jsonl": "e5fb50fec947b619e067dcd2cf65f1195834fc387763acc94c840e94f5c34da4",
+        "observer.json": "29b11cd1aabfc20765166fe3405403cea47f148753a83c42ffff0447df45f1d4",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "duplicate_result",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS"
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/duplicate_result",
+      "evidence_sha256": {
+        "actor-result.json": "efb9abb99857a5a8a10791ccf8a4788ccef144e4c9f5fe654b2d2ca6dfe33652",
+        "actor.jsonl": "117af11b1a07e8bf986a7b2eb0aa09ad258cb2ad2d304a8dbbd3c7379b41b4cb",
+        "observer.json": "2a075f89bbbfc284b852b0ed878c272b82f2ad4cfc5a4b42cf5fe009598b01bf",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "stale_fence",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS"
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/stale_fence",
+      "evidence_sha256": {
+        "actor-result.json": "4ecaeaa7d5ff9214584aee19f35800a151e74283d2e22e517fb98b6680aec687",
+        "actor.jsonl": "771438fc043fa533aca25ea0a6cad1613d5aae1512be659d8cb17811b6509f77",
+        "observer.json": "338db2a2241031ec7bf1206a06919fe538a7f802ee2ea4416a263afb98ccfba6",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "restart_capacity",
+      "outcome": "PASS",
+      "workload_identities": 4,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS"
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/restart_capacity",
+      "evidence_sha256": {
+        "actor-result.json": "c78b4d8fae06d47260439760073bb062d469c02e793ae937f80c08d13eede899",
+        "actor.jsonl": "9a7c8deebe58325f439012ea06e66419b2142d12460eae77e7b61b5cf2357863",
+        "observer.json": "255a882efd4a4ffcf4236562965ecdc1fbfac6449f6a91728f981cdb2e75ffd0",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "unknown_cleanup_capacity",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS"
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/unknown_cleanup_capacity",
+      "evidence_sha256": {
+        "actor-result.json": "5341b39fbd026be87d609e02e932624e7147af8363079235514ab4bb0e3c2200",
+        "actor.jsonl": "270a9aaa5244458932ac9ca5eabab15769cc0b5f69516e7e1999ede508de49b8",
+        "observer.json": "d8e6a72812c9bd3e7883a99086e2eaa00b5cc94e2773ec406d9681ba7925c618",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "malformed_first",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS"
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/malformed_first",
+      "evidence_sha256": {
+        "actor-result.json": "117246a4e67ad035c4d3310c3985351f5c7a126490575fef0af4f85ee0acfb48",
+        "actor.jsonl": "fc14b3758505405f8268289dd23b6d8be82ab8b217f3a30d02571225fed2ada3",
+        "observer.json": "819cac2672e55938b901a27757f2d7e4ee75b764ead2ff63f07453294c64be0c",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "malformed_duplicate",
+      "outcome": "PASS",
+      "workload_identities": 2,
+      "infrastructure_identities": 1,
+      "control_survived": true,
+      "residuals": 0,
+      "summary": {
+        "outcome": "PASS"
+      },
+      "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z/malformed_duplicate",
+      "evidence_sha256": {
+        "actor-result.json": "a2d77683d55f95539dae9c7fa924720072cc250ed67081db714d63a604481ee1",
+        "actor.jsonl": "5fb95a0f7bc10672f6231d39795603596f2bef5f9e99a390492afdeb56d74396",
+        "observer.json": "f1061261261a91d03543db0e2c86bc1fe3379379ac3a8196580f5f2bc1890b1f",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "launcher_cases": [
+    {
+      "case": "start_status_duplicate",
+      "outcome": "PASS"
+    },
+    {
+      "case": "wrong_birth_stop_denied_control_survives",
+      "outcome": "PASS"
+    },
+    {
+      "case": "wrong_command_stop_denied_control_survives",
+      "outcome": "PASS"
+    },
+    {
+      "case": "expired_deadline_no_start",
+      "outcome": "PASS"
+    },
+    {
+      "case": "graceful_stop_all_known_descendants_absent",
+      "outcome": "PASS",
+      "elapsed": 0.5629999999946449
+    },
+    {
+      "case": "duplicate_stop_history_observation",
+      "outcome": "PASS"
+    },
+    {
+      "case": "same_runtime_fresh_process_restart_then_stop",
+      "outcome": "PASS",
+      "limit": "startup/health/process only; no stateful continuity claim"
+    },
+    {
+      "case": "earlier_test_deadline_stops_owned_app",
+      "outcome": "PASS",
+      "seconds_after_deadline": 0.472996,
+      "campaign_deadline_unchanged": "2026-09-29T10:10:16Z"
+    }
+  ],
+  "negative_launcher_cases": [
+    {
+      "case": "birth-mismatch-start",
+      "outcome": "PASS"
+    },
+    {
+      "case": "birth-mismatch-status",
+      "outcome": "PASS"
+    },
+    {
+      "case": "birth-mismatch-stop",
+      "outcome": "PASS"
+    },
+    {
+      "case": "command-mismatch-start",
+      "outcome": "PASS"
+    },
+    {
+      "case": "command-mismatch-status",
+      "outcome": "PASS"
+    },
+    {
+      "case": "command-mismatch-stop",
+      "outcome": "PASS"
+    },
+    {
+      "case": "invalid-deadline-2026-09-29T00:00:00Z",
+      "outcome": "PASS"
+    },
+    {
+      "case": "invalid-deadline-2026-09-29T10:10:16",
+      "outcome": "PASS"
+    },
+    {
+      "case": "earlier-start-failure-owned-identity-absent",
+      "outcome": "PASS"
+    }
+  ],
+  "oracle_checks": {
+    "passed": 21,
+    "corruption_rejection_cases": 8,
+    "receipt_sha256": "c55cd891568378940a6e74bf5e5d30194404c78eaeafef197d5c0eeb5bf74943"
+  },
+  "owned_shutdown": {
+    "identity_count": 234,
+    "residual_count": 0,
+    "private_receipt_sha256": "f8c72d479f4ff5c7c99772c7875f68cc725502814cde41035630bb486d09e7fc"
+  },
+  "model_calls": 0,
+  "final_suite_starts": 0,
+  "scope_limits": [
+    "No model/backend inference or its stop qualification",
+    "No full APP/stateful UI/rollback qualification",
+    "Unknown cleanup is injected lost confirmation after actual real stop, not actual OS failure",
+    "No protected enforcement, production containment, canonical or original-R1 qualification"
+  ],
+  "failed_attempts": [
+    {
+      "run": "launcher-20260929T045007.520408Z",
+      "outcome": "START_FAILED_APP_STATIC_DIRECTORY_MISSING",
+      "retained": true
+    },
+    {
+      "run": "launcher-20260929T045007.520408Z",
+      "outcome": "EVALUATOR_FINDING_WRITER_PATH_KEYERROR",
+      "retained": true
+    },
+    {
+      "run": "20260929T045344.368406Z/cancel_before",
+      "outcome": "EVALUATOR_MISCLASSIFIED_PREEXISTING_CONSOLE_HELPER",
+      "retained": true
+    }
+  ],
+  "actual_rechecks": [
+    "All 11 runtime cases rechecked with independent descendant walk and pre-runtime baseline; frozen targets unchanged",
+    "Launcher rerun after author-created assets appeared; source stable within passing run",
+    "19 independent evidence/oracle checks, including rejection of eight corrupted-record faults"
+  ],
+  "final_runtime_recheck": {
+    "run": "<evaluator>/lifecycle_obs/runs/20260929T045903.582547Z",
+    "actual_cases": 13,
+    "reason": "Owner final supervisor schema guard superseded previous bytes; every benign case independently rerun, plus malformed-first and malformed-duplicate assertions",
+    "prior_pass_inherited": false
+  }
+}

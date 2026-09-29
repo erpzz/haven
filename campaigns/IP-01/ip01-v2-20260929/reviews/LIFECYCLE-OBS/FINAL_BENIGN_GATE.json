@@ -1,0 +1,19 @@
+{
+  "assignment": 7,
+  "disposition": "INDEPENDENT_BENIGN_RUNTIME_PASS_BOUND_SCOPE",
+  "supervisor_sha256": "9713cac68f27ca627780334e27f2637fc258711da2e8072cd70b6f2cd1ff1437",
+  "worker_sha256": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d",
+  "runtime_cases_passed": 13,
+  "oracle_checks_passed": 21,
+  "frozen_stop_seconds": 3,
+  "root_launcher_stop_seconds": 20,
+  "earlier_failures_retained_and_reconciled": true,
+  "protected_enforcement": "NOT_ESTABLISHED",
+  "model_backend_qualified": false,
+  "model_calls": 0,
+  "final_suite_starts": 0,
+  "owned_shutdown_residuals": 0,
+  "handoff_sha256": "68ae8af6e4c2d35e0b62dae00ad012e9be0d30658c2def27177c1123e9162f75",
+  "results_sha256": "69ed2ed6a82cf51e21afa7f4650a4637f2d10db5573f19ba1f428557cd1e9d4d",
+  "next": "Root may assess separate MODEL-READY prerequisites; this receipt does not authorize inference."
+}

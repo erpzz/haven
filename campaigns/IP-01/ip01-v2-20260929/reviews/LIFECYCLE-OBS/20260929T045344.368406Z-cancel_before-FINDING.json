@@ -1,0 +1,13 @@
+{
+  "assignment": 7,
+  "case": "cancel_before",
+  "status": "NEEDS_TRIAGE",
+  "error": "AssertionError()",
+  "tested_runtime_hashes": {
+    "labs/ip01/haven/supervisor.py": "a461647d7f72f24c52a26762d1e895965345f79c429e7c6fba004d7613134a2e",
+    "labs/ip01/haven/worker.py": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d"
+  },
+  "private_evidence": "<evaluator>/lifecycle_obs/runs/20260929T045344.368406Z/cancel_before",
+  "source_changed_by_QA": false,
+  "note": "May be harness defect; no candidate edit or final qualification."
+}

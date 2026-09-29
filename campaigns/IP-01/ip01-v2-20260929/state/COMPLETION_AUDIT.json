@@ -4,56 +4,85 @@
     {
       "id": "CAMPAIGN-01",
       "requirement": "Exact setup and baseline ancestry; one root and reused branch/PR21",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "EXECUTED_INITIAL_IDENTITY",
+      "evidence": [
+        "receipts/OPERATOR_LAUNCH.md",
+        "inputs/SOURCE_IDENTITY.json"
+      ]
     },
     {
       "id": "CAMPAIGN-02",
       "requirement": "Fixed launch/deadline and last45min reserve",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "ONGOING_FIXED_DEADLINE",
+      "evidence": [
+        "receipts/OPERATOR_LAUNCH.md",
+        "state/run.json"
+      ]
     },
     {
       "id": "CAMPAIGN-03",
       "requirement": "Root/H00 separation, targeted actual specialists, no recursive spawning",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "EXECUTED_ONGOING_ROLES",
+      "evidence": [
+        "state/agents.jsonl",
+        "state/tasks.json",
+        "integration/SEAM.md"
+      ]
     },
     {
       "id": "CAMPAIGN-04",
       "requirement": "Actual bounded peer question/response and implementation disposition",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "EXECUTED_CONSULTATIONS",
+      "evidence": [
+        "consultations.jsonl",
+        "receipts/RUNTIME_CONSULTATION.md",
+        "receipts/APP_HANDOFF.md"
+      ]
     },
     {
       "id": "CAMPAIGN-05",
       "requirement": "Max3 active children, max24 assignments, six reserved final slots",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "ONGOING_WITHIN_LIMITS",
+      "evidence": [
+        "state/run.json",
+        "state/agents.jsonl"
+      ]
     },
     {
       "id": "CAMPAIGN-06",
       "requirement": "Original workspace before/after identity unchanged and source-copy hashes",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "INITIAL_BASELINE_ONLY_FINAL_RECHECK_PENDING",
+      "evidence": [
+        "inputs/ORIGINAL_SOURCE_BASELINE.json"
+      ]
     },
     {
       "id": "CAMPAIGN-07",
       "requirement": "Tracked allowlist, private runtime exclusions, no forbidden actions",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "ONGOING_SCOPED_DIFF_FINAL_SCAN_PENDING",
+      "evidence": [
+        "receipts/PUBLIC_REPORT_EDITIONS.json",
+        "state/attempts.jsonl"
+      ]
     },
     {
       "id": "CAMPAIGN-08",
       "requirement": "Allowance, acquisition/storage/RAM/time/call counters with unknowns retained",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "ONGOING_COUNTERS_UNKNOWN_COSTS_RETAINED",
+      "evidence": [
+        "inputs/RUNTIME_PREPARATION.md",
+        "receipts/MODEL_PREPARATION.md",
+        "state/run.json"
+      ]
     },
     {
       "id": "APPLICATION-01",
       "requirement": "Python3.12 FastAPI Pydantic2 Jinja2 one Uvicorn SQLite; runnable local server",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "SKELETON_EXECUTED_STATEFUL_ACCEPTANCE_PENDING",
+      "evidence": [
+        "receipts/SKELETON_BROWSER.json",
+        "receipts/APP_READY.json"
+      ]
     },
     {
       "id": "APPLICATION-02",
@@ -154,20 +183,27 @@
     {
       "id": "LIFECYCLE-01",
       "requirement": "Owned immutable request/job/worker birth/boot/nonce/fence/deadline and append-only events",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "IMPLEMENTED_AUTHOR_TESTED_INDEPENDENT_RECHECK_PENDING",
+      "evidence": [
+        "receipts/RUNTIME_HANDOFF.md"
+      ]
     },
     {
       "id": "LIFECYCLE-02",
       "requirement": "Real NOT_STARTED/RUNNING/STOP_REQUESTED/STOP_CONFIRMED/UNKNOWN observations",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "IMPLEMENTED_AUTHOR_TESTED_INDEPENDENT_RECHECK_PENDING",
+      "evidence": [
+        "receipts/RUNTIME_HANDOFF.md"
+      ]
     },
     {
       "id": "LIFECYCLE-03",
       "requirement": "Independent observer and frozen topology-specific targets before fault trials",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "STOP_TARGETS_FROZEN_BEFORE_TRIALS",
+      "evidence": [
+        "reviews/QA-PREP/QA_PREP_HANDOFF.md",
+        "receipts/RUNTIME_HANDOFF.md"
+      ]
     },
     {
       "id": "LIFECYCLE-04",
@@ -238,14 +274,18 @@
     {
       "id": "MODEL-01",
       "requirement": "Single exact qwen2.5vl3b artifact/blob/quantization/license/template/preprocessing/runtime identity",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "ARTIFACT_PREPARED_INFERENCE_NOT_EXECUTED",
+      "evidence": [
+        "receipts/MODEL_PREPARATION.md"
+      ]
     },
     {
       "id": "MODEL-02",
       "requirement": "Owned dedicated server11435-11437, isolated directories, one loaded model/request, cloud off",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "PREPARATION_BACKEND_EXECUTED_INFERENCE_NOT_EXECUTED",
+      "evidence": [
+        "receipts/MODEL_PREPARATION.md"
+      ]
     },
     {
       "id": "MODEL-03",
@@ -262,32 +302,43 @@
     {
       "id": "MODEL-05",
       "requirement": "Every admitted call counted16 readiness/8 fault/72 final,90min total, no borrowing",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "ZERO_CALLS_GATE_DISABLED",
+      "evidence": [
+        "state/run.json",
+        "receipts/MODEL_PREPARATION.md"
+      ]
     },
     {
       "id": "MODEL-06",
       "requirement": "24 families12 development12 protected, six text/six image each,3 repeats",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "FIXTURES_PREPARED_FINAL_PILOT_NOT_EXECUTED",
+      "evidence": [
+        "reviews/QA-PREP/QA_PREP_HANDOFF.md"
+      ]
     },
     {
       "id": "MODEL-07",
       "requirement": "Protected per modality4 answerable2 unsupported; pixels/text actually independently inspected",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "INDEPENDENT_PIXELS_INSPECTED",
+      "evidence": [
+        "reviews/QA-PREP/QA_PREP_HANDOFF.md"
+      ]
     },
     {
       "id": "MODEL-08",
       "requirement": "Frozen assertions/family/repeat threshold7of8 and4of4 with all errors retained",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "PROTOCOL_FROZEN_FINAL_PILOT_NOT_EXECUTED",
+      "evidence": [
+        "reviews/QA-PREP/QA_PREP_HANDOFF.md"
+      ]
     },
     {
       "id": "MODEL-09",
       "requirement": "Actual protection controls/exposure, EVALUATION_INCONCLUSIVE if unenforced",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "EVALUATION_INCONCLUSIVE_PROTECTION_NOT_ESTABLISHED",
+      "evidence": [
+        "reviews/QA-PREP/QA_PREP_HANDOFF.md"
+      ]
     },
     {
       "id": "MODEL-10",
@@ -355,5 +406,7 @@
       "status": "UNPROVEN",
       "evidence": []
     }
-  ]
+  ],
+  "updated_at": "2026-09-29T04:59:49.645135+00:00",
+  "progress_note": "Mid-build inventory; no aggregate acceptance or final candidate claimed. All unlisted requirements remain unproven."
 }

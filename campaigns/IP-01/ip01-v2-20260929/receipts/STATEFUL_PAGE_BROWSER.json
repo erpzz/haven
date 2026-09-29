@@ -1,0 +1,15 @@
+{
+  "at": "2026-09-29T05:02:35.091360+00:00",
+  "kind": "DEVELOPMENT_STATEFUL_PAGE_SMOKE",
+  "app_identity": {
+    "pid": 30028,
+    "process_birth": 1790658152.0525637
+  },
+  "url": "http://127.0.0.1:8765",
+  "status": 200,
+  "title": "Haven \u00b7 A little room to think",
+  "body": "h\nhaven\nLOCAL LAB\n\nA LITTLE ROOM TO THINK\n\n\u25c8 \u00a0 Workspace\n\u25a4 \u00a0 Your sources\n\u2637 \u00a0 Drafts & tasks\n Local, on this computer\n\nTwo invented people. No connected accounts or outside actions.\n\nSharing permits a current source read and a bounded answer release. It does not grant outside access.\n\n Synthetic workspace / Choose a demo person\nSwitch person\n\nYOUR EVERYDAY WORKSPACE\n\nA little room to think.\n\nKeep a useful note. Find the relevant detail. Save a next step.\n\n\u2726 \u00a0 Deterministic excerpts\n\nTHE GROUNDING\n\nYour sources 0\n+\n\nChoose a person to open their workspace.\n\n\uff0b Import a synthetic image\n\nPNG or JPEG \u00b7 up to 2 MiB \u00b7 no camera access\n\nFROM YOUR CURRENT SOURCES\n\nMake something clearer.\n\u2727\nWhat would you like to find?\nAnswer route\nDeterministic excerpts\nLocal model \u00b7 unavailable\nFind an answer \u2197\nOptional image source\nNo image selected\n\nUses eligible, current sources only. Model inference is off until the runtime gate is ready.\n\n\u2727\nStart with something you know.\n\nAdd a private note, then ask a question about it.\nHaven will show the source behind each excerpt.\n\nRecent activity\nRefresh\n\nYour questions and their status will appear here.\n\nKEEP THE NEXT STEP\n\nDrafts & tasks\nSaved locally \u00b7 never dispatched\nKind\nTask\nDraft\nDraft or task text\nSave\nHaven / IP-01\nLocal synthetic laboratory. Source excerpts and model proposals are not independent verification.\n\nSYNTHETIC DEMO LOGIN\n\nA workspace of your own.\n\nA and B are invented people with separate sessions, private notes, and explicit sharing. This selector is not real identity authentication.\n\nA\nPerson A\nB\nPerson B\n\nSwitching people ends this browser's previous session and clears displayed answer bytes. Use separate browser contexts for simultaneous A/B sessions.",
+  "console_errors": [],
+  "screenshot_sha256": "30b8a83cf80527a2dc4594a95385914b03a0f552726f9809c520b1c890351d24",
+  "scope": "Page load/nonblank title/content/error check only; no stateful journey or final qualification"
+}
