@@ -661,7 +661,7 @@
     "native_id": "01a0ef1f-a5ab-7221-968a-0f0a4afd18ad",
     "nickname": "Turing",
     "role": "haven_vision_guardian",
-    "status": "RUNNING",
+    "status": "COMPLETED_CLOSED",
     "profile": "CUSTOM_PROFILE_FALLBACK",
     "continuation_run_id": "ip01-closure-20260929T212404Z",
     "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
@@ -671,7 +671,17 @@
     "model_calls_authorized": 0,
     "final_suite_starts_authorized": 0,
     "objective": "Distinct independent final vision review of exact candidate and frozen H00 partial handoff",
-    "at": "2026-09-29T21:44:04.314989+00:00"
+    "at": "2026-09-29T21:44:04.314989+00:00",
+    "completion": {
+      "status": "COMPLETED_CLOSED",
+      "actual_close_tool_previous_status": "completed",
+      "task_id": "VISION-FINAL-CLOSURE",
+      "verdict": "PASS_FOR_VISION_RETENTION_AND_HONEST_PARTIAL_HANDOFF_WITH_OPEN_USEFULNESS_DEFECTS",
+      "new_execution": 0,
+      "native_id": "01a0ef1f-a5ab-7221-968a-0f0a4afd18ad",
+      "review": "reviews/VISION-FINAL-CLOSURE/REVIEW.md",
+      "at": "2026-09-29T21:55:56.952378+00:00"
+    }
   },
   {
     "task_id": "EVIDENCE-FINAL-CLOSURE",
@@ -679,7 +689,7 @@
     "native_id": "01a0ef1f-a61b-7c60-b34a-477d91e77feb",
     "nickname": "Chandrasekhar",
     "role": "haven_evidence_auditor",
-    "status": "RUNNING",
+    "status": "COMPLETED_CLOSED",
     "profile": "CUSTOM_PROFILE_FALLBACK",
     "continuation_run_id": "ip01-closure-20260929T212404Z",
     "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
@@ -689,6 +699,16 @@
     "model_calls_authorized": 0,
     "final_suite_starts_authorized": 0,
     "objective": "Distinct independent final evidence review of exact candidate and frozen H00 partial handoff",
-    "at": "2026-09-29T21:44:05.003502+00:00"
+    "at": "2026-09-29T21:44:05.003502+00:00",
+    "completion": {
+      "native_id": "01a0ef1f-a61b-7c60-b34a-477d91e77feb",
+      "actual_close_tool_previous_status": "completed",
+      "review": "reviews/EVIDENCE-FINAL-CLOSURE/REVIEW.md",
+      "status": "COMPLETED_CLOSED",
+      "task_id": "EVIDENCE-FINAL-CLOSURE",
+      "verdict": "PASS_FOR_HONEST_BOUNDED_PARTIAL_HANDOFF",
+      "new_execution": 0,
+      "at": "2026-09-29T21:54:20.144352+00:00"
+    }
   }
 ]

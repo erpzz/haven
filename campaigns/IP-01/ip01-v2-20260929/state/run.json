@@ -17,9 +17,7 @@
   "deadline_rule": "Earlier of six elapsed hours and next 07:00 America/New_York from actual launch; reserve last 45 minutes; no renewal on resume.",
   "assignments_dispatched": 24,
   "active_native_children": [
-    "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6",
-    "01a0ef1f-a5ab-7221-968a-0f0a4afd18ad",
-    "01a0ef1f-a61b-7c60-b34a-477d91e77feb"
+    "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6"
   ],
   "native_profile_loading": "CUSTOM_PROFILE_FALLBACK: native spawn API exposes instructions, no profile selector; inherited model UNKNOWN",
   "model_identity": "EXECUTED: qwen2.5vl:3b manifest fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1 Ollama0.34.4",
@@ -49,7 +47,7 @@
     "Root binds actual setup/PR references from the verified Issue #20 receipt before work.",
     "No original workspace, main, RI-01 file or PR #19 metadata is changed by this setup."
   ],
-  "at": "2026-09-29T21:44:05.687681+00:00",
+  "at": "2026-09-29T21:50:57.455662+00:00",
   "runtime_checkpoints_published": 2,
   "acquisition_debit_bytes": 4402341479,
   "acquisition_debit_basis": "Conservative4.1GiB total: initial1GiB Python/browser plus3.1GiB selectedmodel/metadata; exacttransportoverhead UNKNOWN",
@@ -64,7 +62,7 @@
   "independent_benign_gate_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
   "model_network_starts": 64,
   "model_unknown_cleanup_claims": 0,
-  "allowance_weekly_used_percent_observed": 0,
+  "allowance_weekly_used_percent_observed": 8,
   "allowance_ordinary_usage_allowed": true,
   "code_candidate_scope": "37 evaluated file bytes unchanged; all exact Git blobs and explicit autocrlf=false archive verified. Historical487c672 identity retained in original freeze.",
   "root_app_state": "STOPPED_REVERIFIED_AFTER_INTERRUPTION",
@@ -94,11 +92,11 @@
   "final_deterministic_disposition": "Sevenpassedcomponentsfromsuite01plus221passedaffectedproducerchecksfromsuite03;suite01andsuite02FAILpreserved;unchangedsource487c672;3of3startsused",
   "model_final_tokens_issued": 72,
   "model_execution_charged_seconds": 1593.4050000000425,
-  "allowance_observed_at": "2026-09-29T21:12:15.723921+00:00",
+  "allowance_observed_at": "2026-09-29T17:49:26.349265-04:00",
   "final_integration_status": "H00_CLOSURE_FROZEN_READY_FOR_INDEPENDENT_REVIEW",
   "final_code_review_status": "RUNNING_DISTINCT_CLOSURE_REVIEW",
-  "final_vision_review_status": "RUNNING_DISTINCT_CLOSURE_REVIEW",
-  "final_evidence_review_status": "RUNNING_DISTINCT_CLOSURE_REVIEW",
+  "final_vision_review_status": "PASS_FOR_BOUNDED_PARTIAL_HANDOFF_TWO_P2_USEFULNESS_DEFECTS_RETAINED_NATIVE_CLOSED",
+  "final_evidence_review_status": "PASS_FOR_BOUNDED_PARTIAL_HANDOFF_RETURNED_NATIVE_CLOSED",
   "continuation_run_id": "ip01-closure-20260929T212404Z",
   "continuation_receipt": "state/CONTINUATION_RUN.json",
   "super_admin_last_consumed": {
@@ -122,5 +120,7 @@
   "publication_observed_at": "2026-09-29T21:44:05.687681+00:00",
   "publication_pointer_semantics": "Last observed remote publication at timestamp; later administrative receipt commits are separate. Latest Issue20 checkpoint binds actual final pushed commit.",
   "integration_manager_closure_native_id": "01a0ef12-861f-7511-8e1d-68cee3f932ab",
-  "closure_integration_manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121"
+  "closure_integration_manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+  "allowance_note": "Current tool observation during closure; original97percent resource-stop receipt preserved; no credit redemption by agent",
+  "allowance_timestamp_basis": "Recorded immediately after the get_usage_limits observation; tool did not provide its own capture timestamp."
 }

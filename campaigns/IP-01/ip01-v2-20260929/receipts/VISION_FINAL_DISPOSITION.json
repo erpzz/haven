@@ -1,0 +1,44 @@
+{
+  "at": "2026-09-29T21:56:56.830262+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "independent_review": "reviews/VISION-FINAL-CLOSURE/REVIEW.md",
+  "native_id": "01a0ef1f-a5ab-7221-968a-0f0a4afd18ad",
+  "verdict": "PASS_FOR_VISION_RETENTION_AND_HONEST_PARTIAL_HANDOFF_WITH_OPEN_USEFULNESS_DEFECTS",
+  "candidate_bytes_changed": false,
+  "evidence_bytes_changed": false,
+  "findings": [
+    {
+      "id": "V23-P2-B2",
+      "severity": "P2",
+      "status": "RETAINED_BLOCKER_FOR_GENERAL_RELIABLE_IMAGE_FLOW_CLAIM",
+      "response": "B2 consumed inference but no released answer because of incidental exhausted shared-note influence. Preserve full influence closure, spent slot, failedreadiness and noabstention; source relevance/earlyquota feedback belongs to separately bounded corrective work."
+    },
+    {
+      "id": "V23-P2-ROUTE-STATUS",
+      "severity": "P2",
+      "status": "RETAINED_PRODUCT_STATE_REPRESENTATION_DEFECT_CODE_PEER_REVIEW_REQUESTED",
+      "source": [
+        "labs/ip01/haven/templates/index.html:20",
+        "labs/ip01/haven/static/app.js:63",
+        "labs/ip01/haven/static/app.js:65"
+      ],
+      "evidence": "Vision independently inspected seven supplied PNGs and source. Completed B1 model answer coexists with hardcoded Deterministic excerpts badge and stale Question queued notice.",
+      "response": "Report as an open defect. Code reviewer received exact source/pixel finding for independent assessment. No candidate bytes changed or new execution invented."
+    },
+    {
+      "id": "V23-P3-DRAFT",
+      "severity": "P3",
+      "status": "CORRECTED_CURRENT_ROOT_DRAFTS",
+      "response": "Same staleH00 wording as E24-01 was corrected; final report will record actual returns and cessation."
+    },
+    {
+      "id": "V23-P3-DIGEST",
+      "severity": "P3",
+      "status": "CORRECTED_ASSIGNMENT_TRANSCRIPTION",
+      "response": "Actual sealed artifact intact; correct SHA256 preserved in EVIDENCE_FINAL_DISPOSITION."
+    }
+  ],
+  "retention": "Reviewer matched all102REQ,102AT,32EX canonical objects; allV01-V16 retained with owners/deferrals/re-entry. Acceptance objects remain NOT_EXECUTED; future ambition is not authority.",
+  "new_application_model_suite_execution": 0,
+  "actual_reviewer_visual_work": "Seven supplied screenshot inspections, not active browser interaction."
+}

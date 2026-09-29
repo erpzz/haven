@@ -1,0 +1,40 @@
+{
+  "at": "2026-09-29T21:55:08.870677+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "independent_review": "reviews/EVIDENCE-FINAL-CLOSURE/REVIEW.md",
+  "native_id": "01a0ef1f-a61b-7c60-b34a-477d91e77feb",
+  "verdict": "PASS_FOR_EVIDENCE_INTEGRITY_AND_HONEST_BOUNDED_PARTIAL_HANDOFF",
+  "candidate_bytes_changed": false,
+  "evidence_bytes_changed": false,
+  "findings": [
+    {
+      "id": "E24-01",
+      "status": "CORRECTED_CURRENT_ROOT_DRAFTS",
+      "response": "Removed stale pending-H00 phrase from MORNING_REPORT and audit progress_note; actual H00 frozen/closed and remaining reviews stated."
+    },
+    {
+      "id": "E24-02",
+      "status": "CORRECTED_ASSIGNMENT_TRANSCRIPTION",
+      "response": "The initial reviewer briefing omitted a 5b in one quoted digest. Actual artifact was intact; auditor independently verified the correct repository digest.",
+      "correct_FINAL_QA_HANDOFF_sha256": "733b1d373c42c01ef5a94b5b5b0a971bd6c002952fae9c3a0cdf93ee8041649d"
+    },
+    {
+      "id": "E24-03",
+      "status": "RETAINED_QUALIFICATION_BLOCKER",
+      "response": "Protected separation NOT_ESTABLISHED and EVALUATION_INCONCLUSIVE remain explicit; no protection inferred from role/directory."
+    },
+    {
+      "id": "E24-04",
+      "status": "RETAINED_USEFULNESS_LIMITATION",
+      "response": "B1/B2 readiness NOT_MET, separate pilot operational eligibility, B2 spent call/no released answer, no observable abstention and future source-relevance/early-quota work all retained."
+    },
+    {
+      "id": "E24-05",
+      "status": "PENDING_FINAL_DELIVERY_AND_CESSATION",
+      "response": "Receive CODE/VISION, reconcile findings, complete E/F plus readbacks, publish actual final artifacts and close native children before closure claim."
+    }
+  ],
+  "archive_scope_clarification": "Independent audit verified107 designated QA files (106 manifest entries plus manifest). QA archive has108 files overall because mutable STATUS.json is excluded from the sealed manifest. No claim that STATUS.json is sealed.",
+  "new_application_model_suite_execution": 0,
+  "independence": "Root applied minor documentary corrections and retains independent verdict unchanged; no root self-upgrade of empirical outcomes."
+}

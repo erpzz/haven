@@ -1,0 +1,16 @@
+{
+  "at": "2026-09-29T21:55:56.182380+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "role": "VISION",
+  "assignment": 23,
+  "native_id": "01a0ef1f-a5ab-7221-968a-0f0a4afd18ad",
+  "actual_final_message_received": true,
+  "received_at": "2026-09-29 21:55:55 UTC",
+  "native_message_sha256": "a956e14771a769d38de074ccea7810a3c885e9ea1f2d007955821698d96b3068",
+  "public_review_sha256": "42d91558afa0f3f822349ebbb7d17ac58dc3a7d65169a670826001cc99629705",
+  "normalization": "Only repository absolute-path prefixes converted to relative paths; independent verdict/text otherwise preserved",
+  "candidate_commit": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "H00_manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+  "root_acceptance": "PENDING_EXPLICIT_DISPOSITION",
+  "native_cessation": "Recorded separately after actual close tool"
+}
