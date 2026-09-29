@@ -1,14 +1,14 @@
 {
-  "observed_at": "2026-09-28T21:01:15.029556+00:00",
-  "estimated_required_remaining_assignments": 10,
-  "remaining_assignment_allowance": 15,
-  "estimate_is_not_completion": "Remaining:R11/R14reviews;MM-FUSION/R15authors+reviews;synthesis;final3reviews. R15-AUDIT preliminary source work is extra counted assignment, not full R15 acceptance or hard-gate bypass.",
+  "observed_at": "2026-09-29T00:38:03.608223+00:00",
+  "estimated_required_remaining_assignments": 5,
+  "remaining_assignment_allowance": 6,
+  "estimate_is_not_completion": "Remaining dispatches:MMF review,R15review,final3reviews. R15 and SYNTHESIS ongoing preliminary-independent phase; original hard gates retained/enforced beforefreeze. User time-extension question pending; no changed deadline withoutanswer.",
   "stop_new_work_utc": "2026-09-29T01:48:22Z",
   "new_paid_provider_calls": 0,
-  "successful_assignments": 49,
+  "successful_assignments": 58,
   "deadline_utc": "2026-09-29T02:03:22Z",
   "session_cost": "UNKNOWN_NOT_ZERO",
   "max_assignments": 64,
   "elapsed_rule": "Wall clock checked separately; never restart launch clock at compaction",
-  "estimated_revision_headroom": 5
+  "estimated_revision_headroom": 1
 }

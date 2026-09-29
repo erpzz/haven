@@ -1,0 +1,30 @@
+{
+  "task": "R15-AUDIT",
+  "date_utc": "2026-09-28",
+  "status": "STATIC_DOCUMENT_AND_SOURCE_IDENTITY_CHECKS_ONLY",
+  "source_count": 50,
+  "source_path_duplicates": 0,
+  "pinned_tree_blob_mismatches": 0,
+  "host_paths_in_public_report": 0,
+  "application_code_changed": false,
+  "application_or_test_execution": false,
+  "git_commands_run": false,
+  "additional_memory_only_source_fetch": {
+    "files": 11,
+    "bytes": 113508
+  },
+  "additional_persisted_source_bytes": 0,
+  "authored_artifacts": [
+    "SOURCE_AUDIT.md",
+    "INPUT_AUDIT.json",
+    "VALIDATION.json",
+    "MANIFEST.json"
+  ],
+  "limits": [
+    "Hashes cover complete files; read extent is separately recorded.",
+    "Private cache total241 is not author content-read count.",
+    "Source/API current availability, license applicability and security behavior not dynamically certified.",
+    "Full R15 hard gate MM-FUSION remains; audit not implementation permission.",
+    "Manifest excludes its own hash."
+  ]
+}

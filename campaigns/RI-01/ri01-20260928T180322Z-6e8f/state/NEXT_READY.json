@@ -1,10 +1,10 @@
 {
-  "recorded_at": "2026-09-28T21:07:01.933119+00:00",
+  "recorded_at": "2026-09-29T00:36:42.777813+00:00",
   "ready": [],
   "active": [
-    "R11",
-    "R15-AUDIT",
-    "REVIEW-R14"
+    "MM-FUSION",
+    "R15",
+    "SYNTHESIS"
   ],
   "rule": "Do not bypass exact independent review gates; retain hard versus soft distinction."
 }

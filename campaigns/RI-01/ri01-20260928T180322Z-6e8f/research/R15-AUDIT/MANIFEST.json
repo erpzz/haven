@@ -1,0 +1,26 @@
+{
+  "task": "R15-AUDIT",
+  "revision": 1,
+  "status": "DRAFT_READY_NOT_INDEPENDENTLY_REVIEWED",
+  "date_utc": "2026-09-28",
+  "upstream_commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+  "files": [
+    {
+      "path": "SOURCE_AUDIT.md",
+      "bytes": 19080,
+      "sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74"
+    },
+    {
+      "path": "INPUT_AUDIT.json",
+      "bytes": 55631,
+      "sha256": "94203e5e82c28223a0d4b0a4da23e3ae875a6e2076a0ab32751bf4f781e74f19"
+    },
+    {
+      "path": "VALIDATION.json",
+      "bytes": 984,
+      "sha256": "48226092b13680b9caf6aafb154f93704379ebb5d2ea7cc6a491771330c4b3ee"
+    }
+  ],
+  "manifest_self_hash": "excluded; returned separately",
+  "extra_persisted_source_bytes": 0
+}

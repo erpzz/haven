@@ -17,3 +17,13 @@ Original launch began2026-09-28T18:03:22Z. Stop new work2026-09-29T01:48:22Z; ha
 7. Final delivery includes MORNING_REPORT, current RESUME, delivery identities, full integration files including MULTIMODAL, independently reviewed source-use and all original requirement/acceptance/experiment mappings. Report missing code, unexecuted tests, unavailable modalities and open operator decisions honestly. Attach created PR to this task; verify remote ref before claiming publication.
 
 All research acceptance is documentary. M0/NIGHT-01/R1 code, models, live accounts/devices, private media, clinical/physical operations, deployment and main remain outside this campaign. Actual iPhone/HTTPS or earlier M0 acceptance is not inferred from RI-01 work.
+
+## Resumption checkpoint 2026-09-29
+
+The user reported resetting account limits and explicitly requested continuation. Three actually failed native assignments were resumed, preserving completed source work: R11 public redaction, its independent review, and MM-FUSION. Their reruns count against the64-assignment cap. No reset credit was consumed by the agent. Original wall-clock deadline remains unless the pending user extension request is answered affirmatively; consult current state/run.json.
+
+R11 is now accepted only as research/R11-public-v1 under reviews/REVIEW-R11/CLOSURE-1.md. Original research/R11 contains local provenance metadata and remains private, unchanged and ignored by the campaign .gitignore. Root verified git ls-files and available git log contain no original R11 files. Never bundle the raw working tree; publish tracked/explicitly approved files only. All32repo-field replacements and11unchanged substantive files were independently checked.
+
+R14 is accepted. R15-AUDIT is completed source prework, still subject to the full R15 review. MM-FUSION, R15 and final SYNTHESIS are active. R15 and SYNTHESIS use explicit preliminary-independent phases allowed by the campaign's split-scope/completion-gate rules: all ORIGINAL hard dependencies remain in task records and must be independently accepted and actually consumed before their final freeze. Do not mistake preliminary drafts for accepted integration. The private root metadata helper also rejects their completion while any original hard dependency is unaccepted.
+
+At this checkpoint58assignments are conservatively counted; five dispatches remain planned (MMF review,R15review,three final reviews), leaving one additional assignment under64. Reconcile real current state before resuming; do not replay the R11 fix or accepted R14 review. The only current source-head refresh found unchanged Haven main, fork main and all research PR heads.

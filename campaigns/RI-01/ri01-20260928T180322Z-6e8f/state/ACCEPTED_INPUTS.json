@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28T21:07:01.933119+00:00",
+  "generated_at": "2026-09-29T00:36:42.777813+00:00",
   "meaning": "Scoped documentary/design dispositions, not experimental acceptance or execution permission; read amendments and retained gates.",
   "entries": [
     {
@@ -356,6 +356,47 @@
       ]
     },
     {
+      "task_id": "R11",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "ACCEPT_FOR_SYNTHESIS public variant only, with substantive REVIEW.md14177bacc... and closure; original remains AMEND/private/publication-held. Documentary research only.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R11-public-v1/REPORT.md",
+          "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165"
+        },
+        {
+          "path": "reviews/REVIEW-R11/CLOSURE-1.md",
+          "sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef"
+        }
+      ],
+      "open_findings": [
+        "Retain G1-G5 independentoracle, exactdevice/provider/region/SDK, currentauthority, receipt, rights/cost/physical gates; all32casesNOT_EXECUTED."
+      ]
+    },
+    {
+      "task_id": "R14",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_mmav",
+      "scope": "ACCEPT_FOR_SYNTHESIS: bounded augmentation public research/interfaces/proposed experiments; no implementation, native, human-study or physical qualification.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R14/R14_HANDOFF.md",
+          "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544"
+        },
+        {
+          "path": "reviews/REVIEW-R14/REVIEW.md",
+          "sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
+        }
+      ],
+      "open_findings": [
+        "E07 exact-person/checkpoint exposure and person/session independence, idle-data feasibility must be frozen before study;12heldoutfamilies are not12new people.",
+        "Exact artifact rights/access, native/human-study/clinical/physical and ordinary-baseline benefit gates remain."
+      ]
+    },
+    {
       "task_id": "EVIDENCE-0",
       "status": "ACCEPTED_FOR_SYNTHESIS",
       "author_or_reviewer": "/root/ri01_evidence",
@@ -660,6 +701,52 @@
         }
       ],
       "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R14",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS: bounded augmentation public research/interfaces/proposed experiments; no implementation, native, human-study or physical qualification.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R14/REVIEW.md",
+          "sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R11",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": "Independent closure of deterministic32repo-field redaction in public variant, together with bounded substantive R11 acceptance; original not authorized for publication.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R11/CLOSURE-1.md",
+          "sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "R11-PUBLIC-1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Independent closure of deterministic32repo-field redaction in public variant, together with bounded substantive R11 acceptance; original not authorized for publication.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R11-public-v1/REDACTION_RECEIPT.json",
+          "sha256": "d9b4a1a1f0332c8cb448fa3444d0db6d5ecf41c0e3bcbabd366dec2b1c1c648e"
+        },
+        {
+          "path": "reviews/REVIEW-R11/CLOSURE-1.md",
+          "sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef"
+        }
+      ],
+      "open_findings": []
     }
   ]
 }

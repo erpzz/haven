@@ -243,14 +243,16 @@
       "artifact_sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
       "reviewer": "/root/ri01_review_privacy",
       "open_findings": [],
-      "next_action": "Versioned author amendment then independent focused closure; original v1 unchanged",
+      "next_action": "Carry accepted original+amendment composite and exact independent closure into final synthesis; no runtime acceptance.",
       "closed_findings": [
         "REVIEW-R01-F01",
         "REVIEW-R01-L01"
       ],
       "closure_artifact": "reviews/REVIEW-R01/CLOSURE-1.md",
       "closure_sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
-      "acceptance_scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance"
+      "acceptance_scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance",
+      "review_artifact": "reviews/REVIEW-R01/CLOSURE-1.md",
+      "review_sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
     },
     {
       "id": "R02-P01",
@@ -290,7 +292,10 @@
         "REVIEW-R02-P01-L1"
       ],
       "closure_artifact": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
-      "closure_sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+      "closure_sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+      "review_artifact": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+      "review_sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+      "next_action": "Carry accepted original+amendment composite and exact independent closure into final synthesis; no runtime acceptance."
     },
     {
       "id": "R03",
@@ -341,7 +346,10 @@
       ],
       "closure_artifact": "reviews/REVIEW-R03/CLOSURE-1.md",
       "closure_sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
-      "acceptance_scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization"
+      "acceptance_scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization",
+      "review_artifact": "reviews/REVIEW-R03/CLOSURE-1.md",
+      "review_sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "next_action": "Carry accepted original+amendment composite and exact independent closure into final synthesis; no runtime acceptance."
     },
     {
       "id": "CORE",
@@ -858,7 +866,7 @@
       ],
       "kind": "research",
       "research": "R11",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_privacy",
       "attempt_count": 1,
       "started_at": "2026-09-28T20:47:22.066610+00:00",
@@ -895,7 +903,28 @@
           "review_path": "reviews/REVIEW-R10/REVIEW.md",
           "review_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8"
         }
-      ]
+      ],
+      "completed_at": "2026-09-29T00:35:32.963255+00:00",
+      "artifact": "research/R11-public-v1/REPORT.md",
+      "artifact_sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+      "manifest": "research/R11-public-v1/HANDOFF_MANIFEST.json",
+      "manifest_sha256": "8c4f261598a01bb4971756f0d8fba0746425c10ebf4203721fb0b3c6268300ca",
+      "accepted_at": "2026-09-29T00:35:32.963255+00:00",
+      "acceptance_scope": "ACCEPT_FOR_SYNTHESIS public variant only, with substantive REVIEW.md14177bacc... and closure; original remains AMEND/private/publication-held. Documentary research only.",
+      "review_artifact": "reviews/REVIEW-R11/CLOSURE-1.md",
+      "review_sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef",
+      "reviewer": "/root/ri01_evidence",
+      "open_findings": [
+        "Retain G1-G5 independentoracle, exactdevice/provider/region/SDK, currentauthority, receipt, rights/cost/physical gates; all32casesNOT_EXECUTED."
+      ],
+      "original_publication_disposition": {
+        "path": "research/R11/",
+        "manifest_sha256": "ae2f3e7193e49db10e8fa6b707878428d0b2f9a84ed734923cbc14846773f7bb",
+        "status": "PRIVATE_ORIGINAL_AMEND_PUBLICATION_HOLD",
+        "public_variant": "research/R11-public-v1/",
+        "review": "reviews/REVIEW-R11/REVIEW.md",
+        "review_sha256": "14177bacc25927e6ac0969f3e5c52268ce31ddf80f95407a39e1907f92043602"
+      }
     },
     {
       "id": "R14",
@@ -912,7 +941,7 @@
       ],
       "kind": "research",
       "research": "R14",
-      "status": "DRAFT_READY",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_mmav",
       "attempt_count": 1,
       "started_at": "2026-09-28T20:39:01.077857+00:00",
@@ -947,11 +976,20 @@
       "artifact": "research/R14/R14_HANDOFF.md",
       "artifact_sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
       "manifest": "research/R14/HANDOFF_MANIFEST.json",
-      "manifest_sha256": "e99367a0d96ae3398b02821752c9256b705d6931050a9c7dfcca5ec10f25ac79"
+      "manifest_sha256": "e99367a0d96ae3398b02821752c9256b705d6931050a9c7dfcca5ec10f25ac79",
+      "accepted_at": "2026-09-28T21:17:18.493179+00:00",
+      "acceptance_scope": "ACCEPT_FOR_SYNTHESIS: bounded augmentation public research/interfaces/proposed experiments; no implementation, native, human-study or physical qualification.",
+      "review_artifact": "reviews/REVIEW-R14/REVIEW.md",
+      "review_sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c",
+      "reviewer": "/root/ri01_review_privacy",
+      "open_findings": [
+        "E07 exact-person/checkpoint exposure and person/session independence, idle-data feasibility must be frozen before study;12heldoutfamilies are not12new people.",
+        "Exact artifact rights/access, native/human-study/clinical/physical and ordinary-baseline benefit gates remain."
+      ]
     },
     {
       "id": "MM-FUSION",
-      "role": "haven_sensor_fusion",
+      "role": "haven_sensor_fusion resume",
       "hard": [
         "CORE",
         "R07",
@@ -964,11 +1002,58 @@
         "R11"
       ],
       "kind": "multimodal",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_world",
+      "attempt_count": 2,
+      "started_at": "2026-09-29T00:27:03.836924+00:00",
+      "allowed_output_prefix": "research/MM-FUSION",
+      "budgets": {
+        "minutes": 30
+      },
+      "hard_inputs": [
+        {
+          "task_id": "CORE",
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+          "review_path": "reviews/VISION-ARCH/REVIEW.md",
+          "review_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        },
+        {
+          "task_id": "R07",
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+          "review_path": "reviews/REVIEW-R07/REVIEW.md",
+          "review_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        },
+        {
+          "task_id": "MM-VISION",
+          "path": "research/MM-VISION/REPORT.md",
+          "sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd",
+          "review_path": "reviews/REVIEW-MM-VISION/REVIEW.md",
+          "review_sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660"
+        },
+        {
+          "task_id": "MM-AV",
+          "path": "research/MM-AV/REPORT.md",
+          "sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0",
+          "review_path": "reviews/REVIEW-MM-AV/REVIEW.md",
+          "review_sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025"
+        },
+        {
+          "task_id": "R14",
+          "path": "research/R14/R14_HANDOFF.md",
+          "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
+          "review_path": "reviews/REVIEW-R14/REVIEW.md",
+          "review_sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
+        }
+      ],
+      "resume_instruction": "User stated account limit reset and keep going; original campaign clock/cap preserved.",
+      "interruption_recorded_at": "2026-09-29T00:27:03.764168+00:00",
+      "interruption_time_precision": "Exact failure timestamp not separately captured; successful dispatch and later resume bracket the account-limit interruption."
     },
     {
       "id": "R15",
-      "role": "haven_researcher",
+      "role": "haven_researcher staged public research then accepted-input closure",
       "hard": [
         "CORE",
         "R07",
@@ -983,11 +1068,51 @@
       ],
       "kind": "research",
       "research": "R15",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/ri01_runtime_probe",
+      "attempt_count": 1,
+      "started_at": "2026-09-29T00:32:22.314486+00:00",
+      "allowed_output_prefix": "research/R15",
+      "budgets": {
+        "minutes": 35
+      },
+      "hard_inputs": [
+        {
+          "task_id": "CORE",
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+          "review_path": "reviews/VISION-ARCH/REVIEW.md",
+          "review_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        },
+        {
+          "task_id": "R07",
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+          "review_path": "reviews/REVIEW-R07/REVIEW.md",
+          "review_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        },
+        {
+          "task_id": "R01",
+          "path": "research/R01/REPORT.md",
+          "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ],
+      "phase": "PRELIMINARY",
+      "initial_ready_hard": [
+        "CORE",
+        "R07",
+        "R01"
+      ],
+      "pending_hard": [
+        "MM-FUSION"
+      ],
+      "completion_gate": "All original hard inputs accepted at exact revisions before freeze; initial scope limited to independent sections under MASTER_PROMPT split-preliminary rule and RUNTIME hard-input completion gate."
     },
     {
       "id": "SYNTHESIS",
-      "role": "haven_integration_manager",
+      "role": "haven_integration_manager staged integration",
       "hard": [
         "R01",
         "R02-P01",
@@ -1009,7 +1134,128 @@
         "CODE-0"
       ],
       "kind": "integration",
-      "status": "QUEUED"
+      "status": "RUNNING",
+      "actual_agent_id": "/root/night01_review",
+      "attempt_count": 1,
+      "started_at": "2026-09-29T00:36:42.777813+00:00",
+      "allowed_output_prefix": "integration/final-v1",
+      "budgets": {
+        "minutes": 35
+      },
+      "hard_inputs": [
+        {
+          "task_id": "R01",
+          "path": "research/R01/REPORT.md",
+          "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+          "review_path": null,
+          "review_sha256": null
+        },
+        {
+          "task_id": "R02-P01",
+          "path": "research/R02-P01/REPORT.md",
+          "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+          "review_path": null,
+          "review_sha256": null
+        },
+        {
+          "task_id": "R03",
+          "path": "research/R03/REPORT.md",
+          "sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+          "review_path": null,
+          "review_sha256": null
+        },
+        {
+          "task_id": "R04",
+          "path": "research/R04/REPORT.md",
+          "sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+          "review_path": "reviews/REVIEW-R04/REVIEW.md",
+          "review_sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956"
+        },
+        {
+          "task_id": "R05",
+          "path": "research/R05/REPORT.md",
+          "sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1",
+          "review_path": "reviews/REVIEW-R05/REPORT.md",
+          "review_sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7"
+        },
+        {
+          "task_id": "REV-R06",
+          "path": "reviews/REV-R06/REVIEW.md",
+          "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+          "review_path": null,
+          "review_sha256": null
+        },
+        {
+          "task_id": "R07",
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+          "review_path": "reviews/REVIEW-R07/REVIEW.md",
+          "review_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        },
+        {
+          "task_id": "R08-P00",
+          "path": "research/R08-P00/REPORT.md",
+          "sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7",
+          "review_path": "reviews/REVIEW-R08-P00/REVIEW.md",
+          "review_sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+        },
+        {
+          "task_id": "R09",
+          "path": "research/R09/REPORT.md",
+          "sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb",
+          "review_path": "reviews/REVIEW-R09/REVIEW.md",
+          "review_sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81"
+        },
+        {
+          "task_id": "R10",
+          "path": "research/R10/REPORT.md",
+          "sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+          "review_path": "reviews/REVIEW-R10/REVIEW.md",
+          "review_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8"
+        },
+        {
+          "task_id": "R11",
+          "path": "research/R11-public-v1/REPORT.md",
+          "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+          "review_path": "reviews/REVIEW-R11/CLOSURE-1.md",
+          "review_sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef"
+        },
+        {
+          "task_id": "R12",
+          "path": "research/R12/REPORT.md",
+          "sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+          "review_path": "reviews/REVIEW-R12/REVIEW.md",
+          "review_sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600"
+        },
+        {
+          "task_id": "R14",
+          "path": "research/R14/R14_HANDOFF.md",
+          "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
+          "review_path": "reviews/REVIEW-R14/REVIEW.md",
+          "review_sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
+        }
+      ],
+      "phase": "PRELIMINARY",
+      "initial_ready_hard": [
+        "R01",
+        "R02-P01",
+        "R03",
+        "R04",
+        "R05",
+        "REV-R06",
+        "R07",
+        "R08-P00",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R14"
+      ],
+      "pending_hard": [
+        "R15",
+        "MM-FUSION"
+      ],
+      "completion_gate": "All original hard inputs accepted at exact revisions before freeze; initial scope limited to independent sections under MASTER_PROMPT split-preliminary rule and RUNTIME hard-input completion gate."
     },
     {
       "id": "R13",
@@ -1690,14 +1936,19 @@
       "role": "Source integration specialist",
       "kind": "source_audit_prework",
       "actual_agent_id": "/root/ri01_runtime_probe",
-      "status": "RUNNING",
+      "status": "DRAFT_READY",
       "attempt_count": 1,
       "started_at": "2026-09-28T21:00:00.082064+00:00",
       "allowed_output_prefix": "research/R15-AUDIT",
       "budgets": {
         "minutes": 18
       },
-      "hard_inputs": []
+      "hard_inputs": [],
+      "completed_at": "2026-09-28T21:17:18.493179+00:00",
+      "artifact": "research/R15-AUDIT/SOURCE_AUDIT.md",
+      "artifact_sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74",
+      "manifest": "research/R15-AUDIT/MANIFEST.json",
+      "manifest_sha256": "f29e746157d7d04f5c0c9cf38210872a84ace1351b5cc63b1600c1f70eb71a1a"
     },
     {
       "id": "REVIEW-R14",
@@ -1708,7 +1959,7 @@
       "role": "haven_research_reviewer",
       "kind": "review",
       "actual_agent_id": "/root/ri01_review_privacy",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "attempt_count": 1,
       "started_at": "2026-09-28T21:07:01.933119+00:00",
       "allowed_output_prefix": "reviews/REVIEW-R14",
@@ -1723,7 +1974,76 @@
           "review_path": null,
           "review_sha256": null
         }
-      ]
+      ],
+      "completed_at": "2026-09-28T21:17:18.493179+00:00",
+      "artifact": "reviews/REVIEW-R14/REVIEW.md",
+      "artifact_sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c",
+      "review_disposition": "ACCEPT_FOR_SYNTHESIS: bounded augmentation public research/interfaces/proposed experiments; no implementation, native, human-study or physical qualification."
+    },
+    {
+      "id": "REVIEW-R11",
+      "hard": [
+        "R11"
+      ],
+      "soft": [],
+      "role": "Independent evidence reviewer resume",
+      "kind": "review",
+      "actual_agent_id": "/root/ri01_evidence",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "attempt_count": 2,
+      "started_at": "2026-09-29T00:27:03.836924+00:00",
+      "allowed_output_prefix": "reviews/REVIEW-R11",
+      "budgets": {
+        "minutes": 25
+      },
+      "hard_inputs": [
+        {
+          "task_id": "R11",
+          "path": "research/R11/REPORT.md",
+          "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ],
+      "resume_instruction": "User stated account limit reset and keep going; original campaign clock/cap preserved.",
+      "interruption_recorded_at": "2026-09-29T00:27:03.764168+00:00",
+      "interruption_time_precision": "Exact failure timestamp not separately captured; successful dispatch and later resume bracket the account-limit interruption.",
+      "completed_at": "2026-09-29T00:35:32.963255+00:00",
+      "artifact": "reviews/REVIEW-R11/CLOSURE-1.md",
+      "artifact_sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef",
+      "review_disposition": "Independent closure of deterministic32repo-field redaction in public variant, together with bounded substantive R11 acceptance; original not authorized for publication."
+    },
+    {
+      "id": "R11-PUBLIC-1",
+      "hard": [],
+      "soft": [
+        "R11"
+      ],
+      "role": "R11 author provenance redaction resume",
+      "kind": "amendment",
+      "actual_agent_id": "/root/ri01_privacy",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "attempt_count": 2,
+      "started_at": "2026-09-29T00:27:03.836924+00:00",
+      "allowed_output_prefix": "research/R11-public-v1",
+      "budgets": {
+        "minutes": 8
+      },
+      "hard_inputs": [],
+      "resume_instruction": "User stated account limit reset and keep going; original campaign clock/cap preserved.",
+      "interruption_recorded_at": "2026-09-29T00:27:03.764168+00:00",
+      "interruption_time_precision": "Exact failure timestamp not separately captured; successful dispatch and later resume bracket the account-limit interruption.",
+      "completed_at": "2026-09-29T00:32:22.314486+00:00",
+      "artifact": "research/R11-public-v1/REDACTION_RECEIPT.json",
+      "artifact_sha256": "d9b4a1a1f0332c8cb448fa3444d0db6d5ecf41c0e3bcbabd366dec2b1c1c648e",
+      "manifest": "research/R11-public-v1/HANDOFF_MANIFEST.json",
+      "manifest_sha256": "8c4f261598a01bb4971756f0d8fba0746425c10ebf4203721fb0b3c6268300ca",
+      "accepted_at": "2026-09-29T00:35:32.963255+00:00",
+      "acceptance_scope": "Independent closure of deterministic32repo-field redaction in public variant, together with bounded substantive R11 acceptance; original not authorized for publication.",
+      "review_artifact": "reviews/REVIEW-R11/CLOSURE-1.md",
+      "review_sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef",
+      "reviewer": "/root/ri01_evidence",
+      "open_findings": []
     }
   ]
 }

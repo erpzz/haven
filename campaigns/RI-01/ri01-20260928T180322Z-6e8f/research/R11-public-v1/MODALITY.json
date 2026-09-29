@@ -1,0 +1,64 @@
+[
+  {
+    "asset_id": "R10-static-smoke-reused-in-R11",
+    "source": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+    "sha256_or_source_version": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+    "rights": "Campaign-created synthetic graphic, read-only reuse",
+    "original_or_derived": "ORIGINAL_SYNTHETIC",
+    "parent_asset": null,
+    "transforms": [],
+    "inspection_mode": "DIRECT_IMAGE",
+    "tool_and_model_if_exposed": "tools.view_image via functions.exec; image reasoning model version not separately exposed",
+    "page_frame_or_interval": "One 240x120 still image",
+    "observations": "White background, red square on left, blue circle near center, thin black line descending to right.",
+    "uncertainties": "This smoke check does not qualify vision, medical imagery, location, video, thermal/RF, audio or devices.",
+    "status": "INSPECTED"
+  },
+  {
+    "asset_id": "R11-primary-documents",
+    "source": "SOURCES.md S01-S23",
+    "sha256_or_source_version": "URL and edition/access date only; no remote byte archive",
+    "rights": "Public primary documentation inspected; no bulk media reuse rights inferred",
+    "original_or_derived": "SOURCE_DOCUMENT_TEXT",
+    "parent_asset": null,
+    "transforms": [
+      "Web parser/index text extraction"
+    ],
+    "inspection_mode": "TEXT_DOCUMENT_AND_INDEXED_PRIMARY_TEXT",
+    "tool_and_model_if_exposed": "tools.web__run",
+    "page_frame_or_interval": "Relevant passages as registered",
+    "observations": "Native pathway constraints, transport semantics, rights/cost unknowns and rescue denominators",
+    "uncertainties": "Some JS pages/direct retrieval unavailable; exact failures in SOURCES. No paper figures visually verified.",
+    "status": "INSPECTED"
+  },
+  {
+    "asset_id": "R11-audio-video-spatial-rf",
+    "source": "No task-licensed signal/media asset supplied or acquired",
+    "sha256_or_source_version": null,
+    "rights": "No human/media/signal enrollment",
+    "original_or_derived": "NOT_APPLICABLE",
+    "parent_asset": null,
+    "transforms": [],
+    "inspection_mode": "NONE",
+    "tool_and_model_if_exposed": "No audio listening, temporal video playback, decoder, ASR, spatial/RF runtime or device access exercised",
+    "page_frame_or_interval": null,
+    "observations": "Contracts and typed synthetic cases only",
+    "uncertainties": "No direct task-qualified pipeline or asset established; availability in another tool/session would not establish Haven capability.",
+    "status": "SOURCE_UNAVAILABLE"
+  },
+  {
+    "asset_id": "R11-tools-inventory",
+    "source": "Current session tool surface",
+    "sha256_or_source_version": "2026-09-28 task observation",
+    "rights": "Development tools only; task authorization remains documentation",
+    "original_or_derived": "NOT_APPLICABLE",
+    "parent_asset": null,
+    "transforms": [],
+    "inspection_mode": "TOOL_DECLARATION",
+    "tool_and_model_if_exposed": "Text shell reads/document writes, public web, view_image available; browser UI, image generation and PDF screenshot tools exposed but not exercised",
+    "page_frame_or_interval": null,
+    "observations": "No model name is used to infer modality reliability; JSON/hash document checks are not application tests.",
+    "uncertainties": "Exposed tool does not imply safe operational access, assets, entitlement, application integration or a qualified modality.",
+    "status": "DOCUMENTATION_ONLY"
+  }
+]
