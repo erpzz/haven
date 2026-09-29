@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-RESULTS = ROOT / "labs/ip01/results"
+RESULTS = ROOT / "campaigns/IP-01/ip01-v2-20260929/results"
 
 
 def esc(value):
@@ -65,7 +65,7 @@ def main():
     source = Path(args.input).resolve()
     target = Path(args.output).resolve()
     if RESULTS.resolve() not in target.parents:
-        raise ValueError("Snapshot output must stay under labs/ip01/results")
+        raise ValueError("Snapshot output must stay under the campaign results directory")
     if not (ROOT / "campaigns/IP-01/ip01-v2-20260929").resolve() in source.parents and RESULTS.resolve() not in source.parents:
         raise ValueError("Input must be an explicitly sanitized campaign/result receipt")
     data = json.loads(source.read_text(encoding="utf-8"))

@@ -1,0 +1,13 @@
+{
+  "case": "L2",
+  "actual_command_start_utc": "NOT_RECORDED",
+  "actual_command_end_utc": "NOT_RECORDED",
+  "actual_model_submit_start_end": "NOT_APPLICABLE_NO_SUBMISSION",
+  "exec_tool_reported_wall_seconds": 0.5806554,
+  "command_log_creation_utc": "2026-09-29T06:19:27.996569+00:00",
+  "command_log_last_write_utc": "2026-09-29T06:19:28.051578+00:00",
+  "filesystem_time_limit": "Log file metadata is not asserted to equal actual command entry/exit or exact gate-read time. No timing inferred.",
+  "driver_receipt_present": false,
+  "command": "python -B live_model.py --control root-lifecycle.json --control-sha256 ae6ef9416e1fe3b94e6270670ef35ab01ad4d2cd23919f2648332369a8b08ce0 --case L2 --execute",
+  "command_exit": 1
+}

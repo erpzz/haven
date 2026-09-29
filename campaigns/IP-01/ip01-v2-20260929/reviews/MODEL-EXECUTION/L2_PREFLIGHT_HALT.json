@@ -1,0 +1,13 @@
+{
+  "assignment": 16,
+  "at": "2026-09-29T06:19:57.672353+00:00",
+  "case": "L2",
+  "status": "PREFLIGHT_PIN_DRIFT_NO_SUBMISSION",
+  "expected_operational_gate_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
+  "actual_operational_gate_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
+  "model_submission_attempts": 0,
+  "root_shared_state_mutated": false,
+  "lifecycle_driver_unchanged": true,
+  "next": "ROOT_RECONCILE_RECEIPT; no automatic retry or HALT clearing",
+  "command_log_sha256": "235905b5c9167d8c61a4c49dfa2c1db524958139d3d0a07a2ebd18ad8177b073"
+}

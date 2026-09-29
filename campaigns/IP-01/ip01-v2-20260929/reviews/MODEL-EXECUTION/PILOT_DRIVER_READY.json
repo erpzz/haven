@@ -1,0 +1,20 @@
+{
+  "status": "FINAL_DRIVER_PREPARED_NOT_AUTHORIZED",
+  "driver_sha256": "0e00813b9abcfb2587f3d6e4d6f90ed0868c1b00c6c9747b52491c8c65413774",
+  "selfcheck_sha256": "efa6e5d0a84e0cf9a7041f56e84dd911c6370e7a1c8923e36eb182983ce99c2e",
+  "selfchecks": 3,
+  "passed": 3,
+  "scheduled_calls": 72,
+  "families": 24,
+  "model_calls": 0,
+  "original_fixture_schedule_unchanged": true,
+  "semantic_grading": "Separate private independent evaluator records bound to each raw receipt; no model self-grade",
+  "all_repeat_errors_retained": true,
+  "protected_verdict": "EVALUATION_INCONCLUSIVE / protection not established",
+  "needs": [
+    "counted task17",
+    "root final freeze",
+    "explicit72final control/token map",
+    "actual live observations and independent semantic grading"
+  ]
+}

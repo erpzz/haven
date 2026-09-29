@@ -427,7 +427,7 @@
     "assignment": 16,
     "role": "ip01_validation_engineer",
     "native_id": "01a0eb9a-4e14-7012-8c9d-401632f2fa06",
-    "status": "ACTIVE_EXPLICIT_ROOT_LIFECYCLE_AUTHORIZATION",
+    "status": "BOUNDED_PARTIAL_CLOSED_AT_LOCAL_DEADLINE",
     "started_at": "2026-09-29T05:56:00Z",
     "local_deadline": "2026-09-29T06:36:00Z",
     "write_scope": [
@@ -444,6 +444,37 @@
     ],
     "objective": "Independent actual model fault and selected-image browser drivers; unchanged final72pilot driver prep, realexecution only after explicit root gate",
     "at": "2026-09-29T05:55:47.853540+00:00",
-    "authorization_receipt": "receipts/LIFECYCLE_PREFLIGHT_RECONCILIATION.json"
+    "authorization_receipt": "receipts/LIFECYCLE_PREFLIGHT_RECONCILIATION.json",
+    "completion": {
+      "native_id": "01a0eb9a-4e14-7012-8c9d-401632f2fa06",
+      "task_id": "MODEL-EXECUTION",
+      "status": "BOUNDED_PARTIAL_CLOSED_AT_LOCAL_DEADLINE",
+      "receipt": "reviews/MODEL-EXECUTION/LIFECYCLE_PHASE_PARTIAL.json",
+      "native_previous_status": "running",
+      "native_shutdown_confirmed": true,
+      "real_model_calls": 1,
+      "remaining_submission_attempts": 0,
+      "final_handback_received": false,
+      "at": "2026-09-29T06:37:57.435896+00:00"
+    }
+  },
+  {
+    "task_id": "FINAL-EXECUTION",
+    "assignment": 17,
+    "native_id": "01a0ebe2-1ef8-7f52-bfc1-0a37b63186c4",
+    "role": "ip01_validation_engineer",
+    "status": "ACTIVE_PREPARATION_ONLY",
+    "started_at": "2026-09-29T06:37:00Z",
+    "local_deadline": "2026-09-29T08:20:00Z",
+    "write_scope": [
+      "evaluator/final_execution",
+      "reviews/FINAL-QA"
+    ],
+    "model_calls_authorized": 0,
+    "final_suite_starts_authorized": 0,
+    "candidate": "00dea8a134aca10a0bea8ad82c44861ace2d3d93",
+    "objective": "Independent final deterministic suite, remaining actual lifecycle/browser and unchanged72pilot after separate root gates",
+    "profile": "CUSTOM_PROFILE_FALLBACK",
+    "at": "2026-09-29T06:37:40.636623+00:00"
   }
 ]

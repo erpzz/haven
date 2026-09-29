@@ -1,0 +1,11 @@
+{
+  "at": "2026-09-29T06:40:36.753295+00:00",
+  "page": "results/progress-0640.html",
+  "page_sha256": "15d80084e0b7f338d7394a39818d725780bb7c76931145cf4b54ab12bda24de1",
+  "browser": "Provisioned Playwright Chromium",
+  "page_errors": [],
+  "external_requests": 0,
+  "table_rows": 14,
+  "screenshot_sha256": "8520aecbfa356a324a1958f497a34f85c57a70779d5edb377b8fcb01a0f08157",
+  "scope": "Actual offline render/load/content check; root visual inspection follows. No app/model call."
+}

@@ -1,0 +1,7 @@
+Root directly inspected the rendered offline progress page and the independent QA screenshots for Person B's explicitly shared answer and four-record history on 2026-09-29 at approximately06:41UTC.
+
+The offline page is legible at1280pixels, has no clipped cards or table cells, labels its incomplete state, and distinguishes executed journeys from pending work. Actual Chromium loading recorded zero page errors and zero external requests in OFFLINE_PROGRESS_RENDER.json. This is a static progress artifact, not the running application or final acceptance. Its renderer now writes results under the campaign directory so later report updates do not alter the application candidate.
+
+The shared-answer screenshot visibly identifies Person B, marks the note as shared, renders the synthetic HTML test string as inert text, labels the answer as deterministic excerpts and shows its source link. The history screenshot separately displays release, once-only consumption, reported delivery and current eligibility; the explanatory text does not equate reported display with human perception. These observations concern the retained screenshots; actual interaction execution is independently recorded by QA15. No protected pilot image or answer was used in this root review.
+
+The final offline result will use final observed counts and verdicts, with readable spacing and the final candidate identity. The current dated progress artifact remains preserved.
