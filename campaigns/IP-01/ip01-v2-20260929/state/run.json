@@ -1,6 +1,6 @@
 {
   "campaign_id": "ip01-v2-20260929",
-  "status": "EXPIRED_ORIGINAL_BOUNDED_PARTIAL_CLOSURE_HANDOFF_DELIVERED",
+  "status": "CLOSED_ORIGINAL_AND_DISTINCT_CONTINUATION_RESTRICTED_PARTIAL",
   "issue": 20,
   "research_issue": 17,
   "dependency_pr": 19,
@@ -20,7 +20,7 @@
   "native_profile_loading": "CUSTOM_PROFILE_FALLBACK: native spawn API exposes instructions, no profile selector; inherited model UNKNOWN",
   "model_identity": "EXECUTED: qwen2.5vl:3b manifest fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1 Ollama0.34.4",
   "code_candidate_sha": "487c67299445a29e0fbbdede04259565f741f587",
-  "latest_published_checkpoint": "01d0c746da73546478ed4882a484f3099fa110b9",
+  "latest_published_checkpoint": "55fd9dcd85ddf74f9575e629dc77ccaf06b62198",
   "model_attempts": {
     "readiness_development": 6,
     "lifecycle_fault": 4,
@@ -71,9 +71,9 @@
   "host_available_memory_bytes_observed": 54024491008,
   "storage_scope": "Combined authorized clone and evaluator, logical file lengths excluding symlinks",
   "original_final_recheck": "Four inspected source hashes and ASTRA HEAD/clean status unchanged; receipt ORIGINAL_SOURCE_FINAL_CHECK.json; not filesystem-wide proof",
-  "latest_published_sha": "01d0c746da73546478ed4882a484f3099fa110b9",
+  "latest_published_sha": "55fd9dcd85ddf74f9575e629dc77ccaf06b62198",
   "last_issue_checkpoint_candidate": "f2acfb050b709c948a06cc090a74a974f5814515",
-  "handoff_status": "REVIEWED_RESTRICTED_PARTIAL_FINAL_DELIVERY_VERIFIED_PENDING_PUBLICATION_F_READBACK",
+  "handoff_status": "DELIVERED_CODE_CHANGES_REQUIRED_BLOCKERS_RETAINED",
   "operational_gate_receipt": "reviews/INTEGRATED-QA/ROOT_FROZEN_OPERATIONAL_GATE_06_30.json",
   "operational_gate_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
   "operational_gate_decision": "Independent QA15 closed; root froze exact separate snapshot after preserved transient-rewrite incident; current pins passed inert preflight",
@@ -115,10 +115,15 @@
   "final_execution_status": "PARTIAL",
   "reconciliation_correction": "receipts/H00_SAVED_FINAL_RECOVERY_CORRECTION.json",
   "exact_evaluated_bytes_commit": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
-  "publication_observed_at": "2026-09-29T21:44:05.687681+00:00",
-  "publication_pointer_semantics": "Last observed remote publication at timestamp; later administrative receipt commits are separate. Latest Issue20 checkpoint binds actual final pushed commit.",
+  "publication_observed_at": "2026-09-29T22:20:17.593569+00:00",
+  "publication_pointer_semantics": "Delivery artifact commit before administrative F-readback commit; final publishedHEAD is externallybound by finalIssue20F checkpoint.",
   "integration_manager_closure_native_id": "01a0ef12-861f-7511-8e1d-68cee3f932ab",
   "closure_integration_manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
   "allowance_note": "Current tool observation during closure; original97percent resource-stop receipt preserved; no credit redemption by agent",
-  "allowance_timestamp_basis": "Recorded immediately after the get_usage_limits observation; tool did not provide its own capture timestamp."
+  "allowance_timestamp_basis": "Recorded immediately after the get_usage_limits observation; tool did not provide its own capture timestamp.",
+  "administrative_close_recorded_at": "2026-09-29T22:20:17.593569+00:00",
+  "final_issue_checkpoint": "https://github.com/erpzz/haven/issues/20#issuecomment-5900181426",
+  "last_super_admin_readback": "2026-09-29 22:19:04 UTC",
+  "continuation_checkpoint_count": 9,
+  "owned_processes": "STOPPED_WITH_EXACT_RUNTIME_AND_NATIVE_CESSATION_RECEIPTS"
 }

@@ -1,0 +1,96 @@
+{
+  "at": "2026-09-29T22:20:17.593569+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "status": "CLOSED_RESTRICTED_BOUNDED_PARTIAL_HANDOFF",
+  "closure_deliverable_finished": true,
+  "IP01_code_runtime_acceptance": "CHANGES_REQUIRED",
+  "FINAL_EXECUTION": "PARTIAL",
+  "material_findings": "CF-F01-F04,B2 and qualificationgaps explicitlyretained in state/RETAINED_BLOCKERS.json; no repairclaim",
+  "delivery_commit": "55fd9dcd85ddf74f9575e629dc77ccaf06b62198",
+  "exact_candidate_commit": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "QA_publication_commit": "e567c3dc541084044e6142ae236a5d71bf64e23f",
+  "final_review_receipt": "receipts/FINAL_REVIEW_RECEIPT.json",
+  "cessation": [
+    "receipts/FINAL_NATIVE_CESSATION.json",
+    "receipts/CLOSURE_CESSATION.json",
+    "receipts/OFFLINE_CLOSURE_RENDER_final.json"
+  ],
+  "checkpoints": {
+    "A": {
+      "id": 5899243588,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899243588",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "B": {
+      "id": 5899289805,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899289805",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "C": {
+      "id": 5899295145,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899295145",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "D": {
+      "id": 5899301415,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899301415",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "E": {
+      "id": 5900010291,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5900010291",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "F": {
+      "id": 5900181426,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5900181426",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "P1": {
+      "id": 5899392690,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899392690",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "P2": {
+      "id": 5899800430,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899800430",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "P3": {
+      "id": 5899903142,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899903142",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    }
+  },
+  "latest_consumed_steward": 5898973462,
+  "final_initial_F_readback": "2026-09-29 22:19:04 UTC",
+  "publication_binding": "This administrative readback receipt commit is bound externally by the updated F checkpoint; a second final reread follows that update, with its unchanged-state observation retained in the native tool log/private root receipt. Any newer steward guidance must be dispositioned before ending.",
+  "source_evidence_H00_bytes_changed": false,
+  "original_counter_preservation": {
+    "assignments_before_closure": 20,
+    "cumulative_assignments": 24,
+    "original_checkpoint_count": 2,
+    "closure_checkpoint_count": 9,
+    "readiness": 6,
+    "lifecycle": 4,
+    "final_pilot": 54,
+    "formal_suite_starts": 3,
+    "charged_model_seconds": 1593.4050000000425
+  },
+  "open_next_action": "Only a newly authorized bounded correctivepackage; no worker/app/model retry/timer/automatic continuation scheduled.",
+  "supersedes_pending_delivery_fields": [
+    "FINAL_REVIEW_RECEIPT.downstream_remaining as-of reviewtime",
+    "EVIDENCE_FINAL_DISPOSITION E24-05 pendingfinaldelivery",
+    "Earlier root draft pending-review/prose projections"
+  ],
+  "no_general_acceptance": "Closing the authorized partial handoff is not asserting all IP01 capabilities, protectedbenchmark, canonical, production or physical qualification."
+}
