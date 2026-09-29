@@ -25,7 +25,7 @@
   "close_tool": "NOT_EXPOSED; native completed turns quiescent; report completion/interrupt state, never claim explicit closure",
   "exact_model": "NOT_EXPOSED; inherited defaults",
   "git_transport": "Existing authenticated GitHub CLI/HTTPS; connector fetch_file failed Unknown tool; no credentials changed",
-  "assignments_dispatched": 58,
+  "assignments_dispatched": 60,
   "modalities": {
     "text_code": "EXERCISED",
     "image": "DIRECT_IMAGE_EXERCISED",
@@ -41,16 +41,19 @@
   },
   "failed_spawn_attempts": 3,
   "thread_limit_observation": "Capacity-dependent: an earlier spawn and later message-to-quiescent child were rejected at thread limit; after completion, fresh privacy/code children spawned successfully. No explicit close tool. Keep at most3 active children under platform4-agent total and recheck actual handles.",
-  "published_checkpoint": "e29a9dbee3d30dc384559940644ebba4e2b6f33f",
-  "publication_verified_by": "Successful push and exact git ls-remote campaign ref; R14 frozen research pending independent review, R09 accepted documentary review.",
+  "published_checkpoint": "affbf9e06f670bcfe5c6e008fcbd7a2a6084228d",
+  "publication_verified_by": "Successful campaign push followed by exact git ls-remote campaign ref; accepted R14 and separately reviewed public R11 variant, R15 source audit prework, and resumed campaign ledger published. Final integration remains pending.",
   "issue_receipt": "https://github.com/erpzz/haven/issues/17#issuecomment-5877412035",
   "git_transport_note": "Default credential helper waited without publishing; owned command cancelled. Per-command existing gh auth git-credential succeeded; no persistent credential/settings change.",
   "private_public_research_assets_bytes": 16413944,
   "failed_dispatch_observation": "Three native spawn rejections observed (initial REV-R02, R03 amendment fallback, R01 reviewer fallback); two R03 author reactivation attempts rejected; an earlier Q-CORE-04 message rejected. Failed attempts created no assignments. Later reactivation/reuse succeeded as capacity freed.",
   "last_checkpoint_at": "2026-09-28T19:54:24.064171+00:00",
   "coordination_policy": "Root routes early specialist questions; active agents continue independent soft-input work. Four total active-agent platform limit. No fabricated consultation or recursive dispatch.",
-  "last_metadata_update_at": "2026-09-29T00:36:42.777813+00:00",
+  "last_metadata_update_at": "2026-09-29T00:58:14.268705+00:00",
   "private_source_cache_bytes": 3064660,
   "private_source_cache_note": "151original files plus supplemental representative layers/annotations/scenes/shared-link source; exact Git-blob-verified, read-only, not executed or republished",
-  "assignment_count_note": "Conservatively includes separate R14 readiness turn and MM-AV addendum review sent during R05 review; original task counts retained, no invented native execution."
+  "assignment_count_note": "Conservatively includes separate R14 readiness turn and MM-AV addendum review sent during R05 review; original task counts retained, no invented native execution.",
+  "consolidated_pr": "https://github.com/erpzz/haven/pull/19",
+  "consolidated_pr_status": "OPEN_DRAFT",
+  "pr_attachment": "Attached through native Codex artifact tool after creation"
 }

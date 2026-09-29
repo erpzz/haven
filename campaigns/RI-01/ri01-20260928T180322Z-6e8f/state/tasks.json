@@ -1002,7 +1002,7 @@
         "R11"
       ],
       "kind": "multimodal",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_world",
       "attempt_count": 2,
       "started_at": "2026-09-29T00:27:03.836924+00:00",
@@ -1049,7 +1049,24 @@
       ],
       "resume_instruction": "User stated account limit reset and keep going; original campaign clock/cap preserved.",
       "interruption_recorded_at": "2026-09-29T00:27:03.764168+00:00",
-      "interruption_time_precision": "Exact failure timestamp not separately captured; successful dispatch and later resume bracket the account-limit interruption."
+      "interruption_time_precision": "Exact failure timestamp not separately captured; successful dispatch and later resume bracket the account-limit interruption.",
+      "completed_at": "2026-09-29T00:49:02.378505+00:00",
+      "artifact": "research/MM-FUSION/REPORT.md",
+      "artifact_sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3",
+      "manifest": "research/MM-FUSION/HANDOFF_MANIFEST.json",
+      "manifest_sha256": "c5fd20410d718bea5a1e02141b53ef925cfec0948e7e73be0a1f0045142ce7a9",
+      "accepted_at": "2026-09-29T00:55:39.353480+00:00",
+      "acceptance_scope": "ACCEPT_FOR_SYNTHESIS exact frozen documentary composition; no CORE semantic change or implementation/native/physical qualification.16payloads50inputs71predecessor hashes verified, full102REQ102AT32EX unchanged.",
+      "review_artifact": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+      "review_sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd",
+      "reviewer": "/root/ri01_review_privacy",
+      "open_findings": [
+        {
+          "id": "MF-L01",
+          "severity": "LOW",
+          "disposition": "Future MF-P0 oracle/protocol freeze must explicitly cover missing/mismatched digest-bound sidecar, essential metadata loss and changed-authority reimport within76invocations or separately versioned allocation; not current execution or mandatory source amendment."
+        }
+      ]
     },
     {
       "id": "R15",
@@ -2044,6 +2061,73 @@
       "review_sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef",
       "reviewer": "/root/ri01_evidence",
       "open_findings": []
+    },
+    {
+      "id": "REVIEW-MM-FUSION",
+      "hard": [
+        "MM-FUSION"
+      ],
+      "soft": [],
+      "role": "haven_research_reviewer",
+      "kind": "review",
+      "actual_agent_id": "/root/ri01_review_privacy",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "attempt_count": 1,
+      "started_at": "2026-09-29T00:49:40.932796+00:00",
+      "allowed_output_prefix": "reviews/REVIEW-MM-FUSION/",
+      "budgets": {
+        "minutes": 18
+      },
+      "hard_inputs": [
+        {
+          "task_id": "MM-FUSION",
+          "path": "research/MM-FUSION/REPORT.md",
+          "sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ],
+      "completed_at": "2026-09-29T00:55:39.353480+00:00",
+      "artifact": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+      "artifact_sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd",
+      "review_disposition": "ACCEPT_FOR_SYNTHESIS exact frozen documentary composition; no CORE semantic change or implementation/native/physical qualification.16payloads50inputs71predecessor hashes verified, full102REQ102AT32EX unchanged."
+    },
+    {
+      "id": "REVIEW-R15",
+      "hard": [
+        "R15-AUDIT",
+        "MM-FUSION",
+        "R15"
+      ],
+      "soft": [],
+      "role": "haven_research_reviewer_and_code_specialist",
+      "kind": "review",
+      "actual_agent_id": "/root/ri01_code_review",
+      "status": "RUNNING",
+      "attempt_count": 1,
+      "started_at": "2026-09-29T00:57:01.396026+00:00",
+      "allowed_output_prefix": "reviews/REVIEW-R15/",
+      "budgets": {
+        "minutes": 18
+      },
+      "hard_inputs": [
+        {
+          "task_id": "R15-AUDIT",
+          "path": "research/R15-AUDIT/SOURCE_AUDIT.md",
+          "sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74",
+          "review_path": null,
+          "review_sha256": null
+        },
+        {
+          "task_id": "MM-FUSION",
+          "path": "research/MM-FUSION/REPORT.md",
+          "sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3",
+          "review_path": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+          "review_sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd"
+        }
+      ],
+      "initial_scope": "Review immutable R15-AUDIT and accepted MM-FUSION while full R15 closes its hard input; no final review before full R15 freeze.",
+      "completion_gate": "Exact full R15 frozen manifest supplied by root, consumed and independently reviewed together with load-bearing R15-AUDIT before final disposition."
     }
   ]
 }

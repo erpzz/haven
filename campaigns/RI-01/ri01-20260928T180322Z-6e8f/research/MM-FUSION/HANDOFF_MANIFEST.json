@@ -1,0 +1,101 @@
+{
+  "task": "MM-FUSION",
+  "revision": 1,
+  "role": "haven_sensor_fusion",
+  "author": "/root/ri01_world",
+  "owner": "H08 with existing H02/H04/H07 and domain owners retained",
+  "status": "DRAFT_READY_FOR_INDEPENDENT_REVIEW",
+  "canonical_repository": "https://github.com/erpzz/haven",
+  "base_commit_supervisor_reported": "376031e182c57495912baf6727093b0b188da568",
+  "base_commit_verified_by_author": false,
+  "allowed_output_prefix": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/",
+  "completed_utc": "2026-09-29T00:48:22.0734201Z",
+  "resumed_utc": "2026-09-29T00:26:54Z",
+  "publication_classification": "PUBLIC_SAFE_RESEARCH",
+  "publication": "NOT_UPLOADED_BY_AUTHOR",
+  "core_semantic_change": "NO_CORE_SEMANTIC_CHANGE",
+  "runtime_qualification": "NOT_CLAIMED",
+  "content_file_count": 16,
+  "files": [
+    {
+      "path": "ACCEPTED_INPUT_SNAPSHOT.json",
+      "sha256": "2f10a519b24e160d0e8a9547376d2d0d5810ed1f7a66ffa1c5fed660c1bd88e9",
+      "bytes": 8072
+    },
+    {
+      "path": "CONSULTATIONS.md",
+      "sha256": "15103e9c9ab534a162135c2afb0ec4401332da504afa5a58ed529a65fda4cf62",
+      "bytes": 4207
+    },
+    {
+      "path": "CONTRACTS.md",
+      "sha256": "fed1ad340e9d45b95d71252e25ce183ac89cfbdd4449d74025d29ceb5454dfb9",
+      "bytes": 18477
+    },
+    {
+      "path": "DELTAS.md",
+      "sha256": "4d983c95aa535d6d2e83b8b20340f21ac0f21a64a1ff1d48b78c6272f22c3841",
+      "bytes": 3304
+    },
+    {
+      "path": "EVALUATION.md",
+      "sha256": "610aac480e3e4bd562f25df62a2c6be3ccd384e872f83ffae618fb325cbec7dd",
+      "bytes": 11892
+    },
+    {
+      "path": "HANDOFF.md",
+      "sha256": "079d64fbee95b248c8b2f66c78f8b5382d346a381384eb7fcf101dcc65da7403",
+      "bytes": 5843
+    },
+    {
+      "path": "INPUT_RECEIPT.md",
+      "sha256": "53e2c96891abbf5a285a591becf5212bd1b9a7a5e94cb7c2e7e7b396ba87a4de",
+      "bytes": 2712
+    },
+    {
+      "path": "INPUT_USE.json",
+      "sha256": "89fec704a74ef6c567827846bcafc6da77e9a07423933f95b524f1f57c9e55f5",
+      "bytes": 30054
+    },
+    {
+      "path": "INTEGRITY.json",
+      "sha256": "ee8ecdd28cf1e4d1267c7f5576f1e169692e9d6ca7e8a849ff91ae49bb20832e",
+      "bytes": 22860
+    },
+    {
+      "path": "MODALITY_REGISTRY.md",
+      "sha256": "a62ef91aff1d63ab9d29dd1b53e4cd72ae532d2414d75684e8226862eebead37",
+      "bytes": 8232
+    },
+    {
+      "path": "MODALITY.md",
+      "sha256": "2cda024ae8df6ab16b650ced9c4537ab5c80026ba788925e482b03925c1f4934",
+      "bytes": 1742
+    },
+    {
+      "path": "NEXT_PACKAGES.md",
+      "sha256": "2b64520a3455071dde1d267557083961216f66e3f4949d9a877e8f72db5538ac",
+      "bytes": 7269
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3",
+      "bytes": 11429
+    },
+    {
+      "path": "REQUIREMENT_MAP.json",
+      "sha256": "ad7e2f3dc1459ce56debe892bfcce87c880add1fb59b3bcb3215fd0879358155",
+      "bytes": 228426
+    },
+    {
+      "path": "SOURCES.md",
+      "sha256": "477ffdddce092121e4b21e22854979fa688fe8fb003d3126f527d206f1433f7d",
+      "bytes": 6041
+    },
+    {
+      "path": "VALIDATION.json",
+      "sha256": "096b05add37c0190b7732a60477636c9dbeecc1ad99d2619e01a1385e5f91a5f",
+      "bytes": 12582
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-29T00:36:42.777813+00:00",
+  "generated_at": "2026-09-29T00:58:14.268705+00:00",
   "meaning": "Scoped documentary/design dispositions, not experimental acceptance or execution permission; read amendments and retained gates.",
   "entries": [
     {
@@ -100,6 +100,10 @@
         {
           "path": "reviews/REVIEW-R01/CLOSURE-1.md",
           "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        },
+        {
+          "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
         }
       ],
       "open_findings": []
@@ -118,6 +122,10 @@
         {
           "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
           "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        },
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
         }
       ],
       "open_findings": []
@@ -132,6 +140,10 @@
         {
           "path": "research/R03/REPORT.md",
           "sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d"
+        },
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
         },
         {
           "path": "reviews/REVIEW-R03/CLOSURE-1.md",
@@ -394,6 +406,30 @@
       "open_findings": [
         "E07 exact-person/checkpoint exposure and person/session independence, idle-data feasibility must be frozen before study;12heldoutfamilies are not12new people.",
         "Exact artifact rights/access, native/human-study/clinical/physical and ordinary-baseline benefit gates remain."
+      ]
+    },
+    {
+      "task_id": "MM-FUSION",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_world",
+      "scope": "ACCEPT_FOR_SYNTHESIS exact frozen documentary composition; no CORE semantic change or implementation/native/physical qualification.16payloads50inputs71predecessor hashes verified, full102REQ102AT32EX unchanged.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/MM-FUSION/REPORT.md",
+          "sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3"
+        },
+        {
+          "path": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+          "sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd"
+        }
+      ],
+      "open_findings": [
+        {
+          "id": "MF-L01",
+          "severity": "LOW",
+          "disposition": "Future MF-P0 oracle/protocol freeze must explicitly cover missing/mismatched digest-bound sidecar, essential metadata loss and changed-authority reimport within76invocations or separately versioned allocation; not current execution or mandatory source amendment."
+        }
       ]
     },
     {
@@ -747,6 +783,20 @@
         }
       ],
       "open_findings": []
+    },
+    {
+      "task_id": "REVIEW-MM-FUSION",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS exact frozen documentary composition; no CORE semantic change or implementation/native/physical qualification.16payloads50inputs71predecessor hashes verified, full102REQ102AT32EX unchanged.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+          "sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd"
+        }
+      ],
+      "open_findings": null
     }
   ]
 }

@@ -107,3 +107,7 @@
 {"recorded_at": "2026-09-29T00:35:32.963255+00:00", "task_id": "REVIEW-R11", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED_QUIESCENT"}
 {"recorded_at": "2026-09-29T00:35:32.963255+00:00", "task_id": "REVIEW-R11", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED_QUIESCENT"}
 {"recorded_at": "2026-09-29T00:36:42.777813+00:00", "task_id": "SYNTHESIS", "actual_agent_id": "/root/night01_review", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_integration_manager staged integration"}
+{"recorded_at": "2026-09-29T00:49:02.378505+00:00", "task_id": "MM-FUSION", "actual_agent_id": "/root/ri01_world", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T00:49:40.932796+00:00", "task_id": "REVIEW-MM-FUSION", "actual_agent_id": "/root/ri01_review_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
+{"recorded_at": "2026-09-29T00:55:39.353480+00:00", "task_id": "REVIEW-MM-FUSION", "actual_agent_id": "/root/ri01_review_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T00:57:01.396026+00:00", "task_id": "REVIEW-R15", "actual_agent_id": "/root/ri01_code_review", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer_and_code_specialist"}
