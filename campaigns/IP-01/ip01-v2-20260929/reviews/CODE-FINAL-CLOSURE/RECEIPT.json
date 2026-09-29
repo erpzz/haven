@@ -11,6 +11,6 @@
   "normalization": "Only repository absolute-path prefixes converted to relative paths; independent verdict/text otherwise preserved",
   "candidate_commit": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
   "H00_manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
-  "root_acceptance": "PENDING_EXPLICIT_DISPOSITION",
-  "native_cessation": "Recorded separately after actual close tool"
+  "root_acceptance": "CHANGES_REQUIRED_RETAINED_RESTRICTED_PARTIAL_HANDOFF_ONLY",
+  "native_cessation": "Actual completed handback; close tool acknowledged; subsequent wait returned not_found. See receipts/FINAL_NATIVE_CESSATION.json."
 }

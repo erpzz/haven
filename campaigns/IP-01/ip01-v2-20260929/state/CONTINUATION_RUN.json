@@ -39,7 +39,7 @@
     "original_issue_checkpoints": 2,
     "original_issue_checkpoint_cap": 4
   },
-  "final_execution": "PARTIAL: deterministic composite complete; 54/72 pilot calls observed, 45 pass and 9 conservative failures; protected comparison EVALUATION_INCONCLUSIVE; 18 unrun remain unrun.",
+  "final_execution": "PARTIAL",
   "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
   "external_coordination": {
     "latest_consumed": {
@@ -69,14 +69,17 @@
     "reread_after_every_checkpoint": true,
     "old_checkpoint_cap": "Preserved historically; current explicit operator mandatory boundaries govern continuation postings."
   },
-  "processes": "APP/model/test stopped; all four closure native children completed, close acknowledged, handles removed. Final runtime reobservation and offline final artifact render still pending.",
-  "status": "FINAL_REVIEWS_RETURNED_DELIVERY_PENDING",
-  "at": "2026-09-29T21:44:05.687681+00:00",
+  "processes": "APP/model/test stopped; model gate disabled and ledger unchanged; allfour native closurechildren completed/closed; both root offlinebrowser launches closed with zeroobservedresiduals.",
+  "status": "REVIEWED_RESTRICTED_PARTIAL_FINAL_DELIVERY",
+  "at": "2026-09-29T22:14:32.085913+00:00",
   "assignments_used": 24,
   "assignments_remaining": 0,
   "active_native_children": [],
   "last_published_observation": {
     "at": "2026-09-29T21:44:05.687681+00:00",
     "commit": "01d0c746da73546478ed4882a484f3099fa110b9"
-  }
+  },
+  "completion_semantics": "Closure deliverable only; CODE requireschanges and empiricalpilot remainsPARTIAL. No general IP01 capabilityacceptance.",
+  "code_acceptance": "CHANGES_REQUIRED",
+  "delivered_capability_claim": "Restricted partial handoff only; no general runtime, canonical or physical acceptance."
 }

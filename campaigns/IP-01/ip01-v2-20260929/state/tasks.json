@@ -144,7 +144,7 @@
     "task_id": "ROOT-HANDOFF-SUPPORT",
     "role": "root",
     "native_id": null,
-    "status": "IN_PROGRESS",
+    "status": "BOUNDED_PARTIAL_HANDOFF_DELIVERED",
     "inputs": "H00 ownership and current IP01 grant",
     "write_scope": [
       "labs/ip01/scripts",
@@ -155,7 +155,13 @@
     "objective": "Owned start/status/stop commands, dependency setup and runnable handoff; conservatively count root substantive source assignment",
     "reviewer": "independent QA/code final",
     "next_action": "Integrate actual app/QA results and preserve exact stop observations",
-    "at": "2026-09-29T04:32:26.878924+00:00"
+    "at": "2026-09-29T04:32:26.878924+00:00",
+    "completion": {
+      "at": "2026-09-29T22:11:15.213901+00:00",
+      "role": "root",
+      "scope": "Existing assignment6 support/report/publication/cessation; all material findings retained; no new source repair or execution",
+      "final_delivery": "Separate validation and Issue20 F bind final publication"
+    }
   },
   {
     "task_id": "LIFECYCLE-OBS",

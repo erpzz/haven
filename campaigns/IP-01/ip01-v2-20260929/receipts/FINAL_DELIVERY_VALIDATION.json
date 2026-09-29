@@ -1,0 +1,196 @@
+{
+  "at": "2026-09-29T22:14:32.085913+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "status": "FINAL_ARTIFACTS_VALIDATED_FOR_PUBLICATION",
+  "candidate_commit": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "source37_unchanged": true,
+  "sealed_QA106_unchanged": true,
+  "independent_reviews_received": 3,
+  "CODE": "CHANGES_REQUIRED",
+  "VISION": "PASS_SCOPED",
+  "EVIDENCE": "PASS_SCOPED",
+  "audit_denominator": 59,
+  "actual_artifact_checks": {
+    "offline_browser_launches_in_closure": 2,
+    "viewports_per_launch": 2,
+    "observed_browser_identities_per_launch": 5,
+    "observed_browser_residuals": 0,
+    "page_errors": 0,
+    "external_requests": 0,
+    "local_markdown_links_checked": 24,
+    "missing_local_links": 0,
+    "direct_pixel_inspection": "Root directly viewed desktop/narrow screenshots for both draft/final. Content readable, no horizontal page overflow; narrow table is dense. This is an offline report, not an application rerun."
+  },
+  "new_application_model_lifecycle_or_formal_suite_execution": 0,
+  "runtime_cessation_receipt": "receipts/CLOSURE_CESSATION.json",
+  "native_cessation_receipt": "receipts/FINAL_NATIVE_CESSATION.json",
+  "resources": {
+    "at": "2026-09-29T22:11:31.721807+00:00",
+    "combined_workspace_bytes": 4701107239,
+    "host_free_disk_bytes": 406285275136,
+    "host_available_memory_bytes": 54024491008,
+    "budget_bytes": 21474836480,
+    "within_storage_limits": true
+  },
+  "artifacts": [
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/MORNING_REPORT.md",
+      "sha256": "5daafaef69508b53dd7947db0c98000143f68e1e14f47e553efc50bee1f57395",
+      "bytes": 18750
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/RESUME.md",
+      "sha256": "f02b6ca33ba1900f151bee7a1c0602947b3d492d7038d8990414f0ea04bb1a14",
+      "bytes": 3248
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/EXACT_CANDIDATE.md",
+      "sha256": "7bc1827368ad3309336ee0a6d40dde7f0579e9539e0c3decacf051dfdd084c1a",
+      "bytes": 1206
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/COORDINATION_AMENDMENT.md",
+      "sha256": "ef295dbe172268c95d26578b53f1f4bc098b886ff3244b9a2b73b746fd2e5003",
+      "bytes": 5652
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/state/COMPLETION_AUDIT.json",
+      "sha256": "05236420796ded73edc61a5d87c277fb197b399af91214610d6673e237798ac0",
+      "bytes": 25251
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/state/RETAINED_BLOCKERS.json",
+      "sha256": "584487cc6ac860006a28d3dfd0909e51ab731e52504bcf233632c2ff0afd3d98",
+      "bytes": 5421
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/FINAL_REVIEW_RECEIPT.json",
+      "sha256": "7e325160efbf5c6806caa73553566d96e540f2a1d122f14e52936a35a3f10f1f",
+      "bytes": 2499
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/FINAL_NATIVE_CESSATION.json",
+      "sha256": "fd1af25dae7de55589a8690ea82655b1b080bb83d1be1414310639d961cffe25",
+      "bytes": 1529
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CLOSURE_CESSATION.json",
+      "sha256": "4b332ac66a5b0c8a6a601e97996f7c0c7f4b0b3c4e6528ee2e154537f764530f",
+      "bytes": 1985
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/OFFLINE_CLOSURE_RENDER_final.json",
+      "sha256": "4d6f3fe4e8c2771598fbe39dd0b36139b3f412e81ae610b5d28af908aa47577a",
+      "bytes": 1347
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/EXACT_CANDIDATE_RECONCILIATION.json",
+      "sha256": "3d2dcf3e7c7d692165ffb06cfdc355414e62aa1f8b95ad959873fa1646f9371f",
+      "bytes": 17350
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/EXACT_QA_PUBLICATION_RECONCILIATION.json",
+      "sha256": "2175180dd99dc1189a1a2033a95253cb02235ed527ae9c63165e2f17dc322f13",
+      "bytes": 42966
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/H00_CLOSURE_FREEZE.json",
+      "sha256": "922e719b1fd9c249b35884972eaa9471ee7baef6ade163d38af013098c950d70",
+      "bytes": 908
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/results/last-run.json",
+      "sha256": "b4e89021f5981c10cc6a02aec81fc46e34ca78ed8fd0c060c796b7db2d902ea5",
+      "bytes": 4220
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/results/last-run.html",
+      "sha256": "7917a623a5dda878258affdad50ff35c3bcec59dfe24a63ba6a2b4ad12651763",
+      "bytes": 6482
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/results/closure-snapshot-final.png",
+      "sha256": "a90a2ebd2065fc23a1675e2e56e48471aa5325a243a8b21bcc12efe1d9121be9",
+      "bytes": 172457
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/closure-v1/MANIFEST.json",
+      "sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+      "bytes": 48934
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+      "sha256": "e9b24be84cab5fcb61c33cc6ff06c0d7b3df2741112a683f47e135b0af85229f",
+      "bytes": 19535
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/CODE-FINAL-CLOSURE/RECEIPT.json",
+      "sha256": "07760428336e5f637ae32d6a825a0b9fad5bf666ba912f22072546c4cf7fbdb9",
+      "bytes": 1006
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/VISION-FINAL-CLOSURE/REVIEW.md",
+      "sha256": "42d91558afa0f3f822349ebbb7d17ac58dc3a7d65169a670826001cc99629705",
+      "bytes": 22513
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/VISION-FINAL-CLOSURE/RECEIPT.json",
+      "sha256": "d3339a7d37de5c18b6474abe363631820a3f146f9a37b2154f52448b17c30012",
+      "bytes": 987
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/EVIDENCE-FINAL-CLOSURE/REVIEW.md",
+      "sha256": "65daf7c83a357ba1d08ab13a79a09c43c127ac5cd45ca91c567a14e74accc244",
+      "bytes": 13843
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/EVIDENCE-FINAL-CLOSURE/RECEIPT.json",
+      "sha256": "6dd78ffb6aceaaf44a7240a52fe4501888b971d59f04de8fe360c4f575e62dbc",
+      "bytes": 989
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_A_READBACK.json",
+      "sha256": "b05c831b419f067378cc764e7a1cca116d5245699f581477ddb61b6a2e42fd31",
+      "bytes": 981
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_B_READBACK.json",
+      "sha256": "ad3e05c650554a4de51fba92944509d6a2e5ddebd5b67efdcbce6b8d80adc19f",
+      "bytes": 938
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_C_READBACK.json",
+      "sha256": "7055327e4670b37182652ec1e3b19c12eb3e784446808e92927e1dbbd6a3d335",
+      "bytes": 1055
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_D_READBACK.json",
+      "sha256": "b661779d007ba9fd11694de6015742c472f7080beabbe352633d7bb73d0414ef",
+      "bytes": 1172
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_E_READBACK.json",
+      "sha256": "6b52147f43d91e1615a8eaf6d7ae63902838b5968835eb5e96ded3abb7dd7210",
+      "bytes": 1640
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_P1_READBACK.json",
+      "sha256": "8bc2a95628ac81cf22e0036072357cd8b0293e316024b78684b94155c675ad86",
+      "bytes": 1290
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_P2_READBACK.json",
+      "sha256": "47a1b8e9176976601161a9c632019fa6acc88b8b107d6eb8f6e27bc378693422",
+      "bytes": 1407
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/CHECKPOINT_P3_READBACK.json",
+      "sha256": "505b2a0e1eafcc10fe6279818956914b1bcbbb28f9602c45838f46a4c205b204",
+      "bytes": 1524
+    }
+  ],
+  "publication_scan": "Final scoped pattern scan is recorded separately as receipts/FINAL_PUBLICATION_SCAN.json; manual review includes native reviews and final operator report. No full privacy certification.",
+  "publication_binding": "Final delivery commit and later F readback receipt commit are bound by Issue20 checkpointF; its own commit hash cannot self-reference. F and immediate final reread remain required before ending.",
+  "candidate_bytes_changed": false,
+  "prior_evidence_applicability": "Observed cases remain applicable; new static CF failurepaths untested and unresolved, no all-path acceptance."
+}

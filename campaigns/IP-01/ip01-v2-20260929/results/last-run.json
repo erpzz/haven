@@ -1,10 +1,10 @@
 {
-  "status": "BOUNDED PARTIAL \u2014 final reviews incomplete",
-  "observed_at": "2026-09-29T21:31:00.260453+00:00",
+  "status": "REVIEWED PARTIAL \u2014 code changes required",
+  "observed_at": "2026-09-29 22:11 UTC",
   "candidate_sha": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
   "model": "qwen2.5vl:3b Q4_K_M / Ollama 0.34.4; 54 of 72 pilot calls executed",
-  "process_shutdown": "APP stopped at 07:53:50 UTC; model gate disabled; 64 confirmed model settlements",
-  "scope": "Synthetic local development evidence. Exact evaluated bytes are reproduced in Git; root archive verification passed. Execution remains partial. H00 closure and distinct final reviews are in progress.",
+  "process_shutdown": "APP stopped; model gate disabled; all four closure native children completed and closed. Exact current cessation is recorded separately.",
+  "scope": "Synthetic local development evidence. All three independent final reviews returned. CODE requires changes; VISION and EVIDENCE pass their limited review scopes. The unchanged candidate retains runtime and product defects.",
   "journeys": [
     {
       "name": "Private and explicitly shared notes",
@@ -48,25 +48,27 @@
     },
     {
       "name": "Independent final reviews",
-      "result": "Closure in progress",
-      "evidence": "Saved H00 final packet recovered; new H00 closure binding then distinct code, vision and evidence reviewers."
+      "result": "CODE: changes required; VISION/EVIDENCE: scoped pass",
+      "evidence": "H00 frozen; all three actual native handbacks received and closed. No reviewer executed new application/model tests."
     }
   ],
   "budgets": {
     "Model allocations": "6/16 readiness; 4/8 lifecycle; 54/72 final",
     "Charged model time": "1593.405 / 5400 seconds",
     "Final deterministic starts": "3 / 3",
-    "Assignments": "21 / 24; final three reserved for independent reviewers",
+    "Assignments": "24 / 24; zero remaining and zero active children",
     "Original hard deadline": "2026-09-29 10:10:16 UTC \u2014 passed; not renewed",
     "Closure hard deadline": "2026-09-29 22:54:04 UTC; original clock unchanged"
   },
   "limitations": [
-    "18 pilot calls remain NOT_EXECUTED_RESOURCE_BOUND; every original scheduled case remains in the denominator.",
-    "45 of 54 executed pilot calls passed independent grading; nine conservatively failed, including two disclosed ambiguous grounding judgments.",
-    "Protected separation is NOT_ESTABLISHED and evaluation remains EVALUATION_INCONCLUSIVE.",
-    "Actual model timeout was not exercised; successful early completion does not prove timeout behavior.",
-    "B2 browser abstention could not be graded because output release was denied.",
-    "This snapshot is an offline report, not the running application or final acceptance.",
-    "No original R1, canonical P03/CORE/MF/VA/R13, production, real-account/device or physical qualification."
+    "CF-F01 HIGH: journal failure before termination can bypass cleanup; no all-path deadline or cleanup guarantee.",
+    "CF-F02: concurrent starts can overwrite owner records. Any later authorized deterministic visit requires one serialized lifecycle per runtime state.",
+    "CF-F03: readiness-failure output draining can remain unbounded when termination is unconfirmed and a pipe stays open.",
+    "CF-F04: route/queued notices can contradict a completed answer. B2 separately spent inference but released no useful answer.",
+    "The new code findings are static failure paths, not claims of escaped or hung work in the recorded run.",
+    "18 of72 pilot calls remain unrun;45 of54 executed passed independent grading, nine conservatively failed.",
+    "Protected separation NOT_ESTABLISHED; EVALUATION_INCONCLUSIVE. Natural real-model timeout NOT_EXERCISED.",
+    "No new execution or automatic restart in this closure. Disabled model gate and original HALT remain.",
+    "This offline report does not confer canonical, production, household, real-account/device or physical qualification."
   ]
 }

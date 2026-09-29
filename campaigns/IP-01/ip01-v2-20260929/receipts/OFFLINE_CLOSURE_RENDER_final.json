@@ -1,0 +1,48 @@
+{
+  "at": "2026-09-29T22:11:16.406811+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "status": "PASS",
+  "page": "results/last-run.html",
+  "page_sha256": "7917a623a5dda878258affdad50ff35c3bcec59dfe24a63ba6a2b4ad12651763",
+  "browser": "Provisioned Playwright Chromium",
+  "browser_launches": 1,
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "width": 411,
+      "height": 850
+    }
+  ],
+  "page_errors": [],
+  "external_requests": 0,
+  "screenshot": "results/closure-snapshot-final.png",
+  "screenshot_sha256": "a90a2ebd2065fc23a1675e2e56e48471aa5325a243a8b21bcc12efe1d9121be9",
+  "owned_observed_identities": [
+    {
+      "pid": 26828,
+      "process_birth": 1790719875.604454
+    },
+    {
+      "pid": 9432,
+      "process_birth": 1790719875.919542
+    },
+    {
+      "pid": 5188,
+      "process_birth": 1790719875.982401
+    },
+    {
+      "pid": 18540,
+      "process_birth": 1790719875.9952245
+    },
+    {
+      "pid": 30616,
+      "process_birth": 1790719876.0180583
+    }
+  ],
+  "same_identity_residuals": [],
+  "scope": "Root actual offline artifact render, no APP/model calls and no final deterministic suite. Finite process snapshots; no claim every transient process was captured.",
+  "pixel_review": "Separate direct inspection required"
+}

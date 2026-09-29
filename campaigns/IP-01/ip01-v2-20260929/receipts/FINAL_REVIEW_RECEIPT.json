@@ -42,9 +42,8 @@
   "correct_QA_handoff_sha256": "733b1d373c42c01ef5a94b5b5b0a971bd6c002952fae9c3a0cdf93ee8041649d",
   "CODE_handback_recovery": "Initial received addendum preserved; same native assignment retransmitted a lossless consolidated report covering allCF-F01-F04 and originalCE dispositions. No finding discarded.",
   "downstream_remaining": [
-    "CheckpointE and immediate steering readback",
-    "Final operator report/audit/offline artifact publication",
-    "Exact runtime/native cessation receipt",
+    "Final artifact verification/publication",
     "CheckpointF and final Issue20readback"
-  ]
+  ],
+  "checkpoint_E": "https://github.com/erpzz/haven/issues/20#issuecomment-5900010291"
 }

@@ -1,0 +1,13 @@
+{
+  "at": "2026-09-29T22:16:16.559342+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "status": "CHECKS_PASS_MANUAL_REVIEW_STILL_REQUIRED",
+  "checked_files": 473,
+  "findings": [],
+  "private_runtime_excluded": true,
+  "private_full_scan_sha256": "363582eb643221ce9ffd71bf81906a63298fd06c72658e74c14e1b6234c194c0",
+  "scope": "Changed/untracked campaign+labs paths against exactsetup; source37 staysunchanged. No privateDB/raworacle/weights/sessionlogs included.",
+  "manual_review": "Root read all returned native reviews and finaloperatorreport, inspected both finaloffline screenshots, and retained disclosed historical pathname miss.",
+  "limitations": "Configured pattern and extension checks, JSON parsing and manual scoped inspection do not prove absence of every privacy issue. Candidatebytes/QA and canonicalmaps have separate hash receipts.",
+  "publication": "Authorized implementationbranch andexistingdraftPR21 only; main/RI01/originalworkspaces/PR19metadata unchanged."
+}

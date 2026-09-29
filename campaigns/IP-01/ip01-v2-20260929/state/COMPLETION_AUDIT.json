@@ -13,7 +13,7 @@
     {
       "id": "CAMPAIGN-02",
       "requirement": "Fixed launch/deadline and last45min reserve",
-      "status": "ORIGINAL_EXPIRED_RECONCILED_SEPARATE_CLOSURE_BOUNDED",
+      "status": "ORIGINAL_EXPIRED_PRESERVED_DISTINCT_CLOSURE_WITHIN_90MIN_BOUND",
       "evidence": [
         "state/ORIGINAL_RUN_RECONCILED.json",
         "state/CONTINUATION_RUN.json"
@@ -22,7 +22,7 @@
     {
       "id": "CAMPAIGN-03",
       "requirement": "Root/H00 separation, targeted actual specialists, no recursive spawning",
-      "status": "DISTINCT_H00_RETURNED_THREE_FINAL_REVIEWERS_ACTIVE",
+      "status": "DISTINCT_H00_AND_THREE_FINAL_REVIEWERS_RETURNED_CLOSED",
       "evidence": [
         "state/tasks.json",
         "state/agents.jsonl"
@@ -41,7 +41,7 @@
     {
       "id": "CAMPAIGN-05",
       "requirement": "Max3 active children, max24 assignments, six reserved final slots",
-      "status": "24_OF24_USED_THREE_ACTIVE_NO_REMAINING_ASSIGNMENTS",
+      "status": "24_OF24_USED_ZERO_ACTIVE_ZERO_REMAINING",
       "evidence": [
         "state/tasks.json",
         "state/CONTINUATION_RUN.json"
@@ -77,13 +77,15 @@
     {
       "id": "APPLICATION-01",
       "requirement": "Python3.12 FastAPI Pydantic2 Jinja2 one Uvicorn SQLite; runnable local server",
-      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
+      "status": "EXECUTED_SCOPED_CASES_RETAINED_CODE_RUNTIME_BLOCKERS_CF_F01_F02_F03",
       "evidence": [
         "receipts/SKELETON_BROWSER.json",
         "receipts/APP_READY.json",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
         "reviews/INTEGRATED-QA/RESULTS.json",
-        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json",
+        "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+        "state/RETAINED_BLOCKERS.json"
       ]
     },
     {
@@ -253,24 +255,28 @@
     {
       "id": "LIFECYCLE-01",
       "requirement": "Owned immutable request/job/worker birth/boot/nonce/fence/deadline and append-only events",
-      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
+      "status": "EXECUTED_SCOPED_CASES_RETAINED_CODE_RUNTIME_BLOCKERS_CF_F01_F02_F03",
       "evidence": [
         "receipts/RUNTIME_HANDOFF.md",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
         "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
-        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json",
+        "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+        "state/RETAINED_BLOCKERS.json"
       ]
     },
     {
       "id": "LIFECYCLE-02",
       "requirement": "Real NOT_STARTED/RUNNING/STOP_REQUESTED/STOP_CONFIRMED/UNKNOWN observations",
-      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
+      "status": "EXECUTED_SCOPED_CASES_RETAINED_CODE_RUNTIME_BLOCKERS_CF_F01_F02_F03",
       "evidence": [
         "receipts/RUNTIME_HANDOFF.md",
         "integration/EGRESS_AMENDMENT.md",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
         "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
-        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json",
+        "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+        "state/RETAINED_BLOCKERS.json"
       ]
     },
     {
@@ -288,11 +294,13 @@
     {
       "id": "LIFECYCLE-04",
       "requirement": "Cancel before start and during work, duplicate cancel, timeout",
-      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
+      "status": "EXECUTED_SCOPED_CASES_RETAINED_CODE_RUNTIME_BLOCKERS_CF_F01_F02_F03",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
         "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
-        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json",
+        "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+        "state/RETAINED_BLOCKERS.json"
       ]
     },
     {
@@ -308,11 +316,13 @@
     {
       "id": "LIFECYCLE-06",
       "requirement": "Restart recovery and capacity release; independent control survives",
-      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
+      "status": "EXECUTED_SCOPED_CASES_RETAINED_CODE_RUNTIME_BLOCKERS_CF_F01_F02_F03",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
         "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
-        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json",
+        "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+        "state/RETAINED_BLOCKERS.json"
       ]
     },
     {
@@ -329,10 +339,12 @@
     {
       "id": "LIFECYCLE-08",
       "requirement": "No unowned kills, no unrestricted worker tool/shell/capability surface",
-      "status": "SCOPED_OWNERSHIP_OBSERVED_FINAL_CODE_REVIEW_PENDING_NO_PRODUCTION_ISOLATION_CLAIM",
+      "status": "EXECUTED_SCOPED_CASES_RETAINED_CODE_RUNTIME_BLOCKERS_CF_F01_F02_F03",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/MODEL-EXECUTION/LIFECYCLE_PHASE_PARTIAL.json"
+        "reviews/MODEL-EXECUTION/LIFECYCLE_PHASE_PARTIAL.json",
+        "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+        "state/RETAINED_BLOCKERS.json"
       ]
     },
     {
@@ -379,17 +391,18 @@
     {
       "id": "BROWSER-05",
       "requirement": "Visible real queue/status/cancel/crash and restore handling",
-      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
+      "status": "EXECUTED_OBSERVED_CASES_CF_F04_ROUTE_PROGRESS_DEFECT_RETAINED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
         "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json",
-        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json",
+        "reviews/CODE-FINAL-CLOSURE/REVIEW.md"
       ]
     },
     {
       "id": "BROWSER-06",
       "requirement": "Selected-image answering when operational model gate met",
-      "status": "B1_RECHECK_PASSED_B2_RELEASE_FAILED_ABSTENTION_UNOBSERVABLE",
+      "status": "B1_USEFUL_POSITIVE_B2_FAILED_RELEASE_CF_F04_LABEL_DEFECT_RETAINED",
       "evidence": [
         "reviews/FINAL-QA/READINESS_RESULTS.json",
         "receipts/TASK17_BROWSER_HARNESS_RECONCILIATION.json",
@@ -408,19 +421,23 @@
     {
       "id": "MODEL-02",
       "requirement": "Owned dedicated server11435-11437, isolated directories, one loaded model/request, cloud off",
-      "status": "64_CALLS_CONFIRMED_SETTLED_SCOPED_OWNERSHIP_OBSERVED",
+      "status": "EXECUTED_SCOPED_CASES_RETAINED_CODE_RUNTIME_BLOCKERS_CF_F01_F02_F03",
       "evidence": [
         "reviews/FINAL-QA/FINAL_OWNERSHIP_AUDIT.json",
-        "receipts/FINAL_RUNTIME_SHUTDOWN.json"
+        "receipts/FINAL_RUNTIME_SHUTDOWN.json",
+        "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+        "state/RETAINED_BLOCKERS.json"
       ]
     },
     {
       "id": "MODEL-03",
       "requirement": "Owned launch/deadline/stop demonstrated before inference; unknown cleanup stops admission",
-      "status": "OWNED_LAUNCH_DEADLINE_STOP_OBSERVED_NO_UNKNOWN_CLEANUP_B2_NOT_PASSED",
+      "status": "EXECUTED_SCOPED_CASES_RETAINED_CODE_RUNTIME_BLOCKERS_CF_F01_F02_F03",
       "evidence": [
         "reviews/FINAL-QA/LIFECYCLE_RESULTS.json",
-        "receipts/FINAL_EXECUTION_DISPOSITION.json"
+        "receipts/FINAL_EXECUTION_DISPOSITION.json",
+        "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+        "state/RETAINED_BLOCKERS.json"
       ]
     },
     {
@@ -485,7 +502,7 @@
     {
       "id": "MODEL-11",
       "requirement": "No canonical P03/CORE/MF/VA/R13 or physical promotion from pilot",
-      "status": "EXPLICIT_NONPROMOTION_SCOPE_RETAINED_FINAL_REVIEW_PENDING",
+      "status": "ALL_REVIEWS_PRESERVE_NONPROMOTION_SCOPE",
       "evidence": [
         "receipts/FINAL_EXECUTION_DISPOSITION.json"
       ]
@@ -511,34 +528,36 @@
     {
       "id": "DELIVERY-03",
       "requirement": "Distinct final code,vision,evidence reviewers at exact candidate; affected recheck after changes",
-      "status": "H00_FROZEN_DISTINCT_CODE_VISION_EVIDENCE_RUNNING",
+      "status": "ALL_THREE_RETURNED_CODE_CHANGES_REQUIRED_VISION_EVIDENCE_SCOPED_PASS",
       "evidence": [
-        "state/tasks.json"
+        "receipts/FINAL_REVIEW_RECEIPT.json",
+        "state/RETAINED_BLOCKERS.json"
       ]
     },
     {
       "id": "DELIVERY-04",
       "requirement": "Source, tests, migrations, lock, sanitized fixtures, runnable README/start/stop",
-      "status": "RUNNABLE_SOURCE_LOCK_MIGRATIONS_README_TEST_EXPORT_DELIVERED_FINAL_REVIEW_PENDING",
+      "status": "RUNNABLE_SOURCE_RETAINED_SINGLE_SERIAL_LIFECYCLE_ONLY_CODE_REPAIRS_REQUIRED",
       "evidence": [
         "receipts/INDEPENDENT_HARNESS_DELIVERY.json",
-        "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md"
+        "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
+        "reviews/CODE-FINAL-CLOSURE/REVIEW.md"
       ]
     },
     {
       "id": "DELIVERY-05",
       "requirement": "Actual test reports/screenshots/immutable sanitized traces and offline last-run snapshot",
-      "status": "SEALED_QA_PUBLISHED_OFFLINE_DRAFT_RENDER_AND_PIXELS_INSPECTED_FINAL_RENDER_PENDING",
+      "status": "SEALED_QA_AND_OFFLINE_FINAL_SNAPSHOT_DELIVERED_RENDER_RECEIPT_SEPARATE",
       "evidence": [
         "reviews/FINAL-QA/FINAL_PUBLIC_MANIFEST.json",
-        "results/last-run.json",
-        "results/last-run.html"
+        "results/last-run.html",
+        "receipts/OFFLINE_CLOSURE_RENDER_final.json"
       ]
     },
     {
       "id": "DELIVERY-06",
       "requirement": "MORNING_REPORT and RESUME answer exact scope/budgets/failures/next decision",
-      "status": "CURRENT_PARTIAL_REPORT_RESUME_CLOSURE_IN_PROGRESS",
+      "status": "FINAL_RESTRICTED_PARTIAL_REPORT_AND_RESUME_WITH_OPEN_BLOCKERS",
       "evidence": [
         "MORNING_REPORT.md",
         "RESUME.md"
@@ -547,14 +566,13 @@
     {
       "id": "DELIVERY-07",
       "requirement": "Public-safe content scan and branch-only publication, <=4 issue20 checkpoints",
-      "status": "BRANCH_ONLY_PUBLISHED_OPERATOR_AMENDED_CONTINUATION_CHECKPOINTS_A_TO_D_POSTED",
+      "status": "BRANCH_ONLY_PUBLICATION_FINAL_SCAN_AND_E_F_STEERING_RECEIPTS",
       "evidence": [
-        "receipts/CHECKPOINT_A_READBACK.json",
-        "receipts/CHECKPOINT_B_READBACK.json",
-        "receipts/CHECKPOINT_C_READBACK.json",
-        "receipts/CHECKPOINT_D_READBACK.json"
+        "receipts/FINAL_DELIVERY_VALIDATION.json",
+        "receipts/CHECKPOINT_E_READBACK.json",
+        "receipts/CHECKPOINT_F_READBACK.json"
       ],
-      "operator_amendment": "Original four-checkpoint cap preserved historically; current explicit operator requires A-F plus material exceptions, each with immediate readback."
+      "operator_amendment": "Original2of4 preserved; operator required continuation A-F plus materialP1/P2/P3, all withreadbacks."
     },
     {
       "id": "DELIVERY-08",
@@ -568,20 +586,21 @@
     {
       "id": "DELIVERY-09",
       "requirement": "All owned app/model/test/native processes stopped by deadline with observed identities",
-      "status": "APP_MODEL_TEST_STOP_CONFIRMED_CLOSURE_NATIVE_REVIEW_ACTIVE",
+      "status": "EXACT_CESSATION_RECEIPTS_BIND_OBSERVED_STOPPED_RUNTIME_AND_CLOSED_NATIVE_CHILDREN",
       "evidence": [
         "receipts/FINAL_RUNTIME_SHUTDOWN.json",
-        "reviews/FINAL-QA/FINAL_OWNERSHIP_AUDIT.json",
-        "state/tasks.json"
+        "receipts/FINAL_NATIVE_CESSATION.json",
+        "receipts/CLOSURE_CESSATION.json",
+        "receipts/OFFLINE_CLOSURE_RENDER_final.json"
       ]
     }
   ],
-  "updated_at": "2026-09-29T21:55:08.870677+00:00",
-  "progress_note": "H00 closure returned and is frozen. Independent EVIDENCE-FINAL returned PASS for bounded PARTIAL evidence; CODE/VISION verdicts and root final delivery remain pending.",
-  "qualification": "All59 requirements retained; deterministic composite complete, model pilot54/72 partial, no canonical/production/physical qualification. Final review statuses must be read from current task/agent receipts.",
-  "last_root_observation": "2026-09-29T21:44:05.687681+00:00",
-  "status": "FINAL_REVIEW_WAVE_ACTIVE_EXECUTION_PARTIAL",
-  "as_of": "2026-09-29T21:44:05.687681+00:00",
-  "disposition": "PARTIAL_EXECUTION_CLOSURE_REVIEWS_PENDING",
+  "updated_at": "2026-09-29T22:11:15.213901+00:00",
+  "progress_note": "H00 and allthree independent final reviews returned. CODE CHANGES_REQUIRED; VISION/EVIDENCE scopedPASS. Allfour closure nativechildren completed/closed. Finalpublication/runtimecessation bound by separate delivery receipts.",
+  "qualification": "59originalrequirements retained; specified cases executed, not universal acceptance. CF-F01-F04/B2 and pilot/protection/timeout gaps remain open. No canonical/production/physical qualification.",
+  "last_root_observation": "2026-09-29T22:11:15.213901+00:00",
+  "status": "REVIEWED_BOUNDED_PARTIAL_CODE_CHANGES_REQUIRED",
+  "as_of": "2026-09-29T22:11:15.213901+00:00",
+  "disposition": "CLOSURE_HANDOFF_READY_WITH_EXPLICIT_RETAINED_BLOCKERS",
   "denominator": 59
 }
