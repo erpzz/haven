@@ -120,6 +120,8 @@ def start(args):
     runtime = runtime_path(args.runtime_dir)
     owner = read_owner(runtime)
     if observed_process(owner):
+        if owner.get("model_allocation", "readiness") != args.model_allocation:
+            raise RuntimeError("Model allocation differs from the running app; stop it and restart explicitly before changing allocation")
         print(json.dumps({"state": "ALREADY_RUNNING", "url": owner["url"], "identity": owner}))
         return 0
     if any(identity_alive(row) for row in previously_observed(runtime, owner)):
@@ -143,6 +145,7 @@ def start(args):
     environment.update({"PATH": str(Path(sys.executable).parent) + os.pathsep + os.environ.get("SYSTEMROOT", "C:\\Windows") + "\\System32",
                         "PYTHONPATH": str(ROOT / "labs/ip01"), "PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1",
                         "HAVEN_RUNTIME_DIR": str(runtime), "HAVEN_ROUTE": "deterministic",
+                        "HAVEN_MODEL_ALLOCATION": args.model_allocation,
                         "TEMP": str(runtime / "tmp"), "TMP": str(runtime / "tmp")})
     logfile = runtime / "logs" / f"app-{nonce}.log"
     with logfile.open("wb") as output:
@@ -153,6 +156,7 @@ def start(args):
              "process_birth": psutil.Process(process.pid).create_time(), "boot_time": psutil.boot_time(),
              "started_at": utcnow(), "url": f"http://127.0.0.1:{port}", "port": port,
              "deadline": deadline.isoformat() if deadline else None,
+             "model_allocation": args.model_allocation,
              "log": str(logfile.relative_to(runtime)), "runtime": str(runtime)}
     atomic_json(runtime / "control/app-owner.json", owned)
     expires = time.monotonic() + 20
@@ -246,6 +250,8 @@ def main():
     parser.add_argument("action", choices=["start", "status", "stop", "_serve"])
     parser.add_argument("--runtime-dir", default=str(PRIVATE))
     parser.add_argument("--deadline")
+    parser.add_argument("--model-allocation", choices=["readiness", "lifecycle", "final"], default="readiness",
+                        help="Trusted app configuration only; an independent root-issued gate and unused token are still required")
     parser.add_argument("--port", type=int, choices=[8765, 8766, 8767])
     parser.add_argument("--nonce")
     args = parser.parse_args()

@@ -189,7 +189,7 @@
     "task_id": "MODEL-READY",
     "role": "ip01_runtime_engineer",
     "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
-    "status": "RUNNING",
+    "status": "COMPLETED_CLOSED",
     "inputs": "FINAL_BENIGN_GATE a63f368b2c788911b950d9696acf30ed02f9533f154c1fdacce7813818124426; exactmodelpins;MODEL_READY_AUTHORIZATION;statefulAPP",
     "hard_dependencies": [
       "LIFECYCLE-OBS",
@@ -212,7 +212,16 @@
     },
     "reviewer": "independentQA/code/evidence",
     "next_action": "Up to4 actualAPP-authorized modelreadinesscalls; measuredcleanup;nohiddenwarmups",
-    "at": "2026-09-29T05:04:02.174971+00:00"
+    "at": "2026-09-29T05:04:02.174971+00:00",
+    "completion": {
+      "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
+      "task_id": "MODEL-READY",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "receipts/MODEL_READY_HANDOFF.md",
+      "sha256": "65d7f9e948aad73c4a19c89c7e0b04001193df8f69357d1e0bf877f047074270",
+      "outcome": "4of4actualAPPreadinesscalls;4bindingsclaimsstartssettlements;97.204s;0survivors;2auditfindings+1wordlimitmissretained",
+      "at": "2026-09-29T05:17:34.394873+00:00"
+    }
   },
   {
     "task_id": "QA-E2E",
@@ -234,5 +243,70 @@
     "reviewer": "CODE-EARLY then finalcode/evidence",
     "next_action": "Independentexecutedauthority,persistence,HTTP,browserfaults; exactsourcefingerprints;0modelcalls0finalstarts",
     "at": "2026-09-29T05:05:31.976548+00:00"
+  },
+  {
+    "task_id": "CODE-EARLY",
+    "role": "haven_code_reviewer",
+    "native_id": "01a0eb92-7434-73a0-8f4e-ac2bc64da561",
+    "status": "COMPLETED_CLOSED_FINDINGS",
+    "inputs": "candidate f2acfb050b709c948a06cc090a74a974f5814515; DEVELOPMENT_CANDIDATE_01 exactbytes;APP/RUNTIME/QA benignhandbacks;acceptedcomposites",
+    "hard_dependencies": [
+      "APP",
+      "RUNTIME"
+    ],
+    "write_scope": [],
+    "budget_minutes": 15,
+    "reviewer": "root and later independent evidence",
+    "next_action": "Read-only concrete code/authority/concurrency findings; noexecution;rootpreservesnativehandback",
+    "at": "2026-09-29T05:10:39.633497+00:00",
+    "completion": {
+      "native_id": "01a0eb92-7434-73a0-8f4e-ac2bc64da561",
+      "task_id": "CODE-EARLY",
+      "status": "COMPLETED_CLOSED_FINDINGS",
+      "artifact": "reviews/CODE-EARLY/CODE_EARLY_REVIEW.md",
+      "outcome": "6source-supportedfindings;noexecution;sourcef2acpluslauncheraddendum;freshpostpreparationegress HIGH;ownerrepairandindependentrecheckrequired",
+      "at": "2026-09-29T05:23:03.100272+00:00"
+    }
+  },
+  {
+    "task_id": "MODEL-QA",
+    "role": "ip01_validation_engineer",
+    "native_id": "01a0eb9a-4e14-7012-8c9d-401632f2fa06",
+    "status": "RUNNING_PREPARATION_NO_CALLS",
+    "inputs": "MODEL_READY handback65d7f9e948aad73c4a19c89c7e0b04001193df8f69357d1e0bf877f047074270;fouractualreadinessresults;finalbenigngate;exactmodelpins;developmentcandidatef2ac",
+    "hard_dependencies": [
+      "MODEL-READY"
+    ],
+    "soft_dependencies": [
+      "RUNTIME_AUDIT_REPAIR",
+      "CODE-EARLY"
+    ],
+    "write_scope": [
+      "evaluator/model_qa",
+      "reviews/MODEL-QA"
+    ],
+    "budget_minutes": 30,
+    "model_calls_authorized": 0,
+    "reviewer": "root and finalcode/evidence",
+    "next_action": "Independentexistingreadinesssemantic/pixelcheck and model-lifecycle/browserprotocol; NO newcalls untilrootexplicitgate",
+    "at": "2026-09-29T05:19:14.179934+00:00"
+  },
+  {
+    "task_id": "H00-EGRESS",
+    "role": "haven_integration_manager",
+    "native_id": "01a0eb61-9f2d-72c2-9acc-e1ac3845f9d7",
+    "status": "RUNNING",
+    "inputs": "CODE-EARLY CE-F01/03 and Q-CODE-EARLY-01; existingSEAM; developmentcandidatef2ac",
+    "hard_dependencies": [
+      "CODE-EARLY",
+      "SEAM"
+    ],
+    "write_scope": [
+      "integration/EGRESS_AMENDMENT.md"
+    ],
+    "budget_minutes": 5,
+    "reviewer": "APP/RUNTIME owners thenindependentQA/code",
+    "next_action": "Minimal fresh-egress and terminal-outcome callbackseam;actualH00answerwithoutfictionalowneragreement",
+    "at": "2026-09-29T05:23:03.860275+00:00"
   }
 ]
