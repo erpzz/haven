@@ -1,0 +1,15 @@
+[
+  {
+    "task_id": "INTAKE",
+    "role": "haven_intake",
+    "native_id": "01a0eb5c-f3bf-7c52-9bb1-90465cc30b24",
+    "status": "RUNNING",
+    "inputs": "setup 8e1304caf82c0a889eeaea7691db7b9d7b98c526; full IP01 package; exact intake profile",
+    "hard_dependencies": [],
+    "write_scope": [],
+    "budget_minutes": 6,
+    "reviewer": "root",
+    "next_action": "Return provenance inventory",
+    "at": "2026-09-29T04:13:54.588656+00:00"
+  }
+]

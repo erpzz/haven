@@ -1,28 +1,50 @@
 {
   "campaign_id": "ip01-v2-20260929",
-  "status": "PREPARED_NOT_STARTED",
+  "status": "RUNNING_PREFLIGHT",
   "issue": 20,
   "research_issue": 17,
   "dependency_pr": 19,
-  "implementation_pr": null,
+  "implementation_pr": 21,
   "branch": "implementation/ip01-v2-20260929",
   "research_baseline": "6bc1c8df1218ceb0e0d8709adee65d1e44634047",
-  "setup_revision": null,
-  "operator_launch_receipt": null,
-  "root_native_id": null,
+  "setup_revision": "8e1304caf82c0a889eeaea7691db7b9d7b98c526",
+  "operator_launch_receipt": "receipts/OPERATOR_LAUNCH.md",
+  "root_native_id": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
   "integration_manager_native_id": null,
-  "started_at": null,
-  "hard_deadline": null,
-  "stop_new_work_at": null,
+  "started_at": "2026-09-29T04:10:16Z",
+  "hard_deadline": "2026-09-29T10:10:16Z",
+  "stop_new_work_at": "2026-09-29T09:25:16Z",
   "deadline_rule": "Earlier of six elapsed hours and next 07:00 America/New_York from actual launch; reserve last 45 minutes; no renewal on resume.",
-  "assignments_dispatched": 0,
-  "active_native_children": [],
-  "native_profile_loading": "NOT_CHECKED",
+  "assignments_dispatched": 1,
+  "active_native_children": [
+    "01a0eb5c-f3bf-7c52-9bb1-90465cc30b24"
+  ],
+  "native_profile_loading": "CUSTOM_PROFILE_FALLBACK: native spawn API exposes instructions, no profile selector; inherited model UNKNOWN",
   "model_identity": "NOT_CHECKED",
   "code_candidate_sha": null,
   "latest_published_checkpoint": null,
-  "model_attempts": {"readiness_development":0,"lifecycle_fault":0,"final_pilot":0},
+  "model_attempts": {
+    "readiness_development": 0,
+    "lifecycle_fault": 0,
+    "final_pilot": 0
+  },
   "final_deterministic_suite_starts": 0,
-  "limits": {"active_children":3,"assignments":24,"reserved_review_delivery":6,"hours":6,"download_gib":12,"workspace_gib":20,"min_free_host_gib":10,"model_calls":96,"model_execution_minutes":90,"final_deterministic_suite_starts":3,"runtime_issue_checkpoints":4},
-  "notes": ["Initial state is configuration, not observed execution.","Root binds actual setup/PR references from the verified Issue #20 receipt before work.","No original workspace, main, RI-01 file or PR #19 metadata is changed by this setup."]
+  "limits": {
+    "active_children": 3,
+    "assignments": 24,
+    "reserved_review_delivery": 6,
+    "hours": 6,
+    "download_gib": 12,
+    "workspace_gib": 20,
+    "min_free_host_gib": 10,
+    "model_calls": 96,
+    "model_execution_minutes": 90,
+    "final_deterministic_suite_starts": 3,
+    "runtime_issue_checkpoints": 4
+  },
+  "notes": [
+    "Initial state is configuration, not observed execution.",
+    "Root binds actual setup/PR references from the verified Issue #20 receipt before work.",
+    "No original workspace, main, RI-01 file or PR #19 metadata is changed by this setup."
+  ]
 }

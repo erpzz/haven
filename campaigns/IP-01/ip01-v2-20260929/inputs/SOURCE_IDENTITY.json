@@ -1,0 +1,442 @@
+{
+  "setup": "8e1304caf82c0a889eeaea7691db7b9d7b98c526",
+  "source_baseline": "6bc1c8df1218ceb0e0d8709adee65d1e44634047",
+  "scope_mapping": "IP01 separately authorizes labs/ip01; selected upstream package inputs inform design, not canonical qualification or original path grants",
+  "checkout_line_endings": "core.autocrlf may change worktree bytes; Git blob bytes are authoritative",
+  "inputs": [
+    {
+      "path": "AGENTS.md",
+      "sha256_git_bytes": "1e54401f87a83b5133984674f1d98840487e5ac789810a7414e900462055d03f",
+      "bytes": 4281,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "sha256_git_bytes": "30ba3e19702360c58cf776949c3c090d9586eb6476b33d97d9cd35079d1968a2",
+      "bytes": 3745,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "sha256_git_bytes": "a27fe82ee432ae40e3cb285ba8b6fa57793a4f9b15ab8ef8fdc1ba713bf5b146",
+      "bytes": 1498,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "START_HERE.md",
+      "sha256_git_bytes": "1c649fa20cf792080a970ac775d2961684c037d4890544d28079afb9658d187d",
+      "bytes": 4373,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/AGENT_BRIEFS.md",
+      "sha256_git_bytes": "5617429c005d00efda5d868250f51372219d5976f69d5a52985477358c818b3f",
+      "bytes": 5228,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/ROLE_MAP.md",
+      "sha256_git_bytes": "e5bfc681e6b7617d59549b63390eb9d7917be13a18f8a953506fe73bbafac172",
+      "bytes": 5794,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/START_HERE.md",
+      "sha256_git_bytes": "a0c8608def1b06ce3951919caccdd17ba90afe86f996226e7f4b69b5493ef8d7",
+      "bytes": 5656,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/SUPERVISOR.md",
+      "sha256_git_bytes": "33e2757c9c515256cc3a26a96ef3b36fbb487ba8d90d268ed0870d9d58c82a25",
+      "bytes": 6248,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/TASK_GRAPH.json",
+      "sha256_git_bytes": "7e806cd7f992205748469dba2f3488741bff3c20143ddf7469580dd5c72b8c5d",
+      "bytes": 5035,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/WORK_PACKAGE.md",
+      "sha256_git_bytes": "bd51fc00fa763218a4f9aa9a39a195fd2109bd46875a4c49452875a0a61ae774",
+      "bytes": 27626,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/MORNING_REPORT.md",
+      "sha256_git_bytes": "6ae8a61608f37c309a3801fdbf45ab229557bd955028df6a5b202d867de3c0c4",
+      "bytes": 11846,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/ARCHITECTURE.md",
+      "sha256_git_bytes": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
+      "bytes": 11436,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/CONTRACTS.md",
+      "sha256_git_bytes": "cb6cea47fb00aba89da234da620b3fb3bd240c2a10e314bcc81cbfa647cc4be7",
+      "bytes": 20609,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/CONTRACT_CROSSWALK.md",
+      "sha256_git_bytes": "0ee3d9eb32f8d87f6d3d8b74cf310f0c4f7632f695f8f15a4b09776792584ea8",
+      "bytes": 5794,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/IMPLEMENTATION_QUEUE.md",
+      "sha256_git_bytes": "aca2b175bcd564c8c497b12b850ff6d33ebfd7233c1dc85cb123574667f7f7ed",
+      "bytes": 6869,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/INPUT_USE.json",
+      "sha256_git_bytes": "7c67866d5658526ff86533d8b56c1e2174f345b4c6a5ac4b870d465b39ea3a25",
+      "bytes": 186592,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/MANIFEST.json",
+      "sha256_git_bytes": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+      "bytes": 4692,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/WORK_PACKAGES.json",
+      "sha256_git_bytes": "d7b46b4f14165d7634fa1931c772c026a2b14d49cd607faee27fa91d3a9e6500",
+      "bytes": 139651,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/INPUT_RECEIPT.md",
+      "sha256_git_bytes": "853e32ebfe1890a35371e2d6d6a1d136198f60f6501d2ddbd55fe5b82ff1eac0",
+      "bytes": 1453,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/INPUT_USE.json",
+      "sha256_git_bytes": "355b5b220bfd1eb8d03a7cfc9dee045e91f09994c0fd801c2265d15ab224d17a",
+      "bytes": 16985,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/REPORT.md",
+      "sha256_git_bytes": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+      "bytes": 41526,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/SHA256SUMS.json",
+      "sha256_git_bytes": "504b9aed17e60faa81d35ce0ee2ea340b7731ce2bddd09fa1d6e28f8b20100be",
+      "bytes": 999,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/SOURCES.md",
+      "sha256_git_bytes": "b8e0dc7231080a32b2ca0eadbb7acd399444ea288400d8b3cfc550c3c1502859",
+      "bytes": 7271,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/VALIDATION.md",
+      "sha256_git_bytes": "20a3eb4cd665d7b4939e3508a75d8b83a99d8df886338edbf2b327123070210a",
+      "bytes": 2117,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/AMENDMENT.md",
+      "sha256_git_bytes": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535",
+      "bytes": 11976,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/ARTIFACT_CHECKS.json",
+      "sha256_git_bytes": "a9d288fe118a5153ec5d8d2054d898a980adf4aa30e48437a89cc6f421c2cffa",
+      "bytes": 629,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/INPUT_USE.json",
+      "sha256_git_bytes": "d9661e9a53da88ca1889ed22dac9c08fd4b290407ac452fde05ff01a754e3a6c",
+      "bytes": 5720,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/ORIGINAL_PINS.json",
+      "sha256_git_bytes": "da7bc6e9b31c0fe418f63f860fcfb4c23c8faba07f69af6a7de5bf2ff82232e9",
+      "bytes": 863,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/PROPOSED_TRACES.json",
+      "sha256_git_bytes": "62a1ac1bcd2aca65d04d158e548d3d468fe1fe19dc4247d8c897e44b74a29e0e",
+      "bytes": 4337,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/SHA256SUMS.json",
+      "sha256_git_bytes": "7fcddeec0bdc5edeea80cec272612e1a95f7e0194465a0a06ae455882fc348a6",
+      "bytes": 738,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/CASE_CROSSWALK.json",
+      "sha256_git_bytes": "f7dbebfc218d2c5cff7c7ff6d0396c15ef86b02c8fcb9e8bbff778ff829f6921",
+      "bytes": 109588,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/INPUT_USE.json",
+      "sha256_git_bytes": "9ec7a115c89eda2bb22b1a724a0480f7f069f8fc2da7c72474bbaf639d197faa",
+      "bytes": 15181,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/NEXT_PACKAGE.md",
+      "sha256_git_bytes": "d278dc54606db1a50803a9b50085b25389ec515f9ea5b95aecaf4223d98c7a8f",
+      "bytes": 8024,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/REPORT.md",
+      "sha256_git_bytes": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+      "bytes": 27833,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/SOURCES.md",
+      "sha256_git_bytes": "a23251a40cda484b61f22e282502d6d7057e8c5eb6fbb960f85c786ff1264a4b",
+      "bytes": 9610,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/AMENDMENT.md",
+      "sha256_git_bytes": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "bytes": 13519,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/INPUT_USE.json",
+      "sha256_git_bytes": "2cd8bdaa4b40103b4acd9e4bea4a363adc14c3377b3cc6f81226bcf8c215f9d3",
+      "bytes": 5300,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/STATE_TRACES.json",
+      "sha256_git_bytes": "15db9de5f33c7bbd58acd21dfa4d69122364f07a517b26e1c0c78f508a2c49e8",
+      "bytes": 8390,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/ARTIFACT_CHECKS.json",
+      "sha256_git_bytes": "870ffcfeb2ae4da085e06f926aa40b3eb706ebe9938a177e999a3140169a2baa",
+      "bytes": 598,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/CONSULTATIONS.md",
+      "sha256_git_bytes": "473fc43f4eb8340992b450b74e12c1315ddacf2eaa4e9c743744bae3b1cab6d5",
+      "bytes": 3257,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/CONTRACTS.md",
+      "sha256_git_bytes": "cfd271d1650e40daa735651ddc2ab28ca4ccdcb17f117c96cc5602975bad5eea",
+      "bytes": 15679,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/EXPERIMENTS.md",
+      "sha256_git_bytes": "275f68e9d1c4c6c668adbd568768e7f10b3cb491007a70a6a4904e76d3161511",
+      "bytes": 12409,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/INPUT_RECEIPT.md",
+      "sha256_git_bytes": "a5531e66a433eb0348c60a82c0f398078314db41a8a542fbd92a8f5d21eb04ea",
+      "bytes": 2595,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/INPUT_USE.json",
+      "sha256_git_bytes": "42e57e4531e1c2b80e487c17ca7876af8c6b18c263094f749660396926eb060e",
+      "bytes": 19654,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/MANIFEST.sha256",
+      "sha256_git_bytes": "e154d038cd1eedf1dcfa7acefc29ddb31c88cd5d36b56573a3dc5e344405a4ac",
+      "bytes": 819,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/MODALITY.json",
+      "sha256_git_bytes": "43d9e6f553a492ba68307b920f36a75a7686601b740522e13bcfb6568eb15d52",
+      "bytes": 949,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/NEXT_PACKAGE.md",
+      "sha256_git_bytes": "070e7e09ec91c4ccd565f25716d95a812332a377d240538b993fc1f2558c9df8",
+      "bytes": 5692,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/REPORT.md",
+      "sha256_git_bytes": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+      "bytes": 29305,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/SOURCES.md",
+      "sha256_git_bytes": "89d1ae4b50550fac061d3794b4e85535330bf1c3d0063d76bbbb513650cab8fa",
+      "bytes": 4602,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/AMENDMENT.md",
+      "sha256_git_bytes": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "bytes": 15080,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/ARTIFACT_CHECKS.json",
+      "sha256_git_bytes": "d98d8ca6dab290786a877d78294169d59ae97007631124f40f1dfbae6bb4f1ad",
+      "bytes": 3411,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/INPUT_USE.json",
+      "sha256_git_bytes": "d1e112f2cbac559c128f7b993a648a8369353d01f77b0170b9676a45e4de743e",
+      "bytes": 4667,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/MANIFEST.sha256",
+      "sha256_git_bytes": "4984a658f00e8c9a9248c03d56390ce29aba52d5676acc30b5ec0e860f8878ae",
+      "bytes": 335,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/PROPOSED_CASES.md",
+      "sha256_git_bytes": "d019c2553d92e7fd465ca9f8b7c27f381965669d653368c505aca588c8320748",
+      "bytes": 4202,
+      "expected_match": true,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/R13/PROMOTION_GATES.md",
+      "sha256_git_bytes": "54d899147008f4558131ced6c0a53c92acc38d05cbe60bd16ac070242fbe8099",
+      "bytes": 16194,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R02-P01/CLOSURE-1.md",
+      "sha256_git_bytes": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+      "bytes": 3964,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R02-P01/REVIEW.md",
+      "sha256_git_bytes": "1634b53af3fe0799bcabd5adfbef5658d64812e9d2425c457bc09f3e7faa8589",
+      "bytes": 13171,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R03/CLOSURE-1.md",
+      "sha256_git_bytes": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "bytes": 4691,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R03/REVIEW.md",
+      "sha256_git_bytes": "cc393683b0db1ff0723cc6688196bfe11871b6844019cf2d3ecd4b29ab330952",
+      "bytes": 16051,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/state/FINAL_REVIEW_RECEIPT.json",
+      "sha256_git_bytes": "5ba928153feb47bb912c6295bb96f1e8a421280e948b04a2b360f4b3140059fd",
+      "bytes": 1691,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "coordination/DECISIONS.md",
+      "sha256_git_bytes": "fa0ca9ddc7deddeaacd9037669d8a3492f4007361591f052945660af0699a557",
+      "bytes": 1847,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    },
+    {
+      "path": "coordination/PROTOCOL.md",
+      "sha256_git_bytes": "c8ce9687ee1e3ca2e7a66a9ec71c6446b19833b1626e37872c210a269c1b8fe6",
+      "bytes": 3808,
+      "expected_match": null,
+      "semantic_read": "NOT_IMPLIED_BY_IDENTITY_CHECK"
+    }
+  ]
+}

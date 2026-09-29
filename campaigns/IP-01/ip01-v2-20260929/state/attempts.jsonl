@@ -1,0 +1,1 @@
+{"task_id": "PREFLIGHT", "kind": "tooling", "attempt": 1, "outcome": "FAIL_FIXED", "detail": "Dependency report was UTF-8; host default cp1252 decode failed. Explicit UTF-8 fixes root provenance helper; no candidate execution.", "at": "2026-09-29T04:15:18.426531+00:00"}
