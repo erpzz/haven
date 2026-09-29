@@ -1,0 +1,42 @@
+# Evaluation plan — proposed, never executed by synthesis
+
+Every experiment freezes original assets, source groups, labels/expected outcomes, split, artifact/runtime/preprocessing, complete influencing authority, resource/attempt budgets, stop rule and independent H06 oracle before execution. Report every admitted, failed, cancelled and partial attempt. Repeats are dependent observations, not new independent families. Missing required coverage is incomplete/inconclusive, not a smaller passing denominator. Positive usefulness is required separately from negative correctness. Zero authority/privacy escape and no generated-as-measured promotion are mandatory; aggregate quality cannot compensate.
+
+## Exact protocol identities
+
+| Protocol | Frozen proposal and interpretation | Required remaining gate |
+|---|---|---|
+| Original102AT /32EX | Exact records in RETAINED_SCOPE; all NOT_EXECUTED / PROPOSED_NOT_EXECUTED | Original owners/H06, exact original method/resource/native gates; no equivalence from new fixtures |
+| R01 S4 | Eight families:4 answerable,2 abstention,2 clarification; total≥7/8 plus mandatory gates | Wrong class or unsupported content fails; deny-all cannot pass |
+| R01 E-R01-SMALL |20cases:10 grounding G,10 simulated presentation V;≥9/10 each;12ordinary;3heldout per stratum;40 inclusive model attempts | Vignettes do not qualify scheduler/connector/restore/user study; lost-ACK symbolic gates outside utility denominator |
+| R02 P03-EVAL |24 independent families12dev/12heldout, each6text6image; heldout each modality4answerable2unanswerable;3repeats≤72calls;7/8positive and4/4negative | VA-01/P01 F05 independent lifecycle cleanup and exact adapter containment first; every repeat meets family disposition; exact model/host/license/oracle |
+| MM-VISION MV-P1 |Two routes×24 independent groups=48 inclusive first attempts; no spare retry capacity | Freeze route/split/positive thresholds and any reallocation before outcomes; failed slots cannot silently shrink required coverage |
+| MM-AV amended ASR |Whisper small/int8 CPU vs medium/int8 CPU, faster-whisper1.2.1 beam5;12dev+12heldout, each6positive6negative;24families×2routes=48 inclusive attempts, zero planned same-route repeats | Each route heldout≥5/6positive and6/6negative, zero escapes; critical tokens correct or unresolved. Failed/partial/retry/tuning consumes cap; missing coverage incomplete. Material accepted amendment replaces10/12 old criterion; no video/omni/TTS allocation |
+| R06 original E0 |60episodes20initial/10tune/30protected,16view candidates;60seconds total episode,8attempted observations | Preserve exact original protocol for replication; never reset deadline per selection |
+| R07 E07-B variant |60episodes20/20/20,8candidate views; same60seconds/8attempts | Actual author rationale is reduced selector/fixture complexity and a new balanced split, not methodological improvement. Version separately; no pooling/equivalence with R06 |
+| R08 E01 |20paired remounts,2fixed sessions of10; overall SD denominator19; candidate/baseline ratio. Proposed10,000 stratified paired draws, one-based9500th endpoint | Freeze conditional estimand, exchangeability/serial drift, reference/correlation uncertainty, baseline floor, draw artifact/algorithm and missing/undefined rules. Percentile endpoint is not guaranteed95%coverage or new-operator/specimen generalization |
+| R05 P0 |32cases A8+B12+C12; mandatory variants stay within parentcase | AT-DAILY-08 partial; proposed C09 enrolled-device handoff addition awaits final H06 review. No account-switch equivalence or count inflation |
+| R07 E07-A |24semantic replay traces +4evaluator mutations; positiveC01/C24 | Metadata labels do not test actual image/RF quality; qualified protected oracle |
+| R08 inert |20families,5candidates,160scalar/correction events and fixed closure limits | Independent byte vectors/reviewer roles/holdout denial; physical qualification always UNQUALIFIED |
+| R09 E09-A |24families,12dev/12protected with positiveT01-T06 and four oracle mutations |24/24 prescribed outcomes, zero escapes/duplicates/premature exclusion release; mock is not robot safety |
+| R11 public E11 |32families:8dev(4+/4-),24heldout(10+/14-); each experiment cap32inclusive attempts | Layered receipts/independent help; modes/repeats not independent n; no field/clinical efficacy |
+| R14 E01-E03 |48+40+36=124inclusive synthetic attempts | Interface-state utility does not qualify cognition, classifiers or native behavior |
+| R14 E04-E06 |80+80+60=220attempts across4people;90min/person,20staffhours,1.5GB proposed | Counterbalance, person-level descriptive results, withdrawal/discomfort retained; no population reliability claim |
+| R14 E07/E08 |E07 24families×4routes=96; E08 24dossiers+12conditional unpowered trials=36 | Exact person/checkpoint train/validation exposure, person/session grouping and eligible idle-data feasibility before run.12heldout families≠12new people; StageA may STOP/REDESIGN |
+
+R02 20% heldout alignment-error reduction, R08 30% reseating-SD reduction, R06 20% fewer acquisitions at matched error and N2 arithmetic are four different objectives. Keep exact numerator/denominator and conditions; none establishes another. N2 retained negative/checker failures are useful historical synthetic evidence, not protected metrology. No new N1/N2 run occurred.
+
+## Qualification and regression
+
+Document identity → independent synthetic behavior → exact runtime/model/native host evaluation → task/embodiment/human/environment qualification → bounded monitored use are separate maturity levels. External papers may have strong evidence while Haven remains untested. A change to source, model, tokenizer, preprocessing, tool catalog, rights, frame/calibration, material/lot/orientation/assembly, boot/config, audience or authoritative state invalidates only affected applicability and triggers scoped requalification. Historical outcomes stay immutable.
+
+CODE-0/H1-H2/M1-M5 remain explicit future regression obligations: abrupt parent loss/startup cleanup independently observed; release/consume race versus read checks; retained raw/rejected context/metadata; semantic relevance versus exact quote; concurrent/crash/restore/migration correctness; evaluator access and OS containment. No broad process kill, fixture role text or wrapper exit may stand in for those observations.
+
+MULTIMODAL.md and MULTIMODAL_CASES.json preserve at least24concrete crossmodal families with positive tasks and protected oracles. MM-FUSION/R15 accepted protocol details are reconciled below; all execution remains unperformed. Final independent evidence/code/vision reviews assess this candidate; author hash checks do not replace them.
+## Fusion and Observatory protocols
+
+Accepted MM-FUSION E-MF-01:36 families,18 development/18 protected, each split four useful positives and14 negative/uncertain. Two routes consume72 inclusive attempts, plus four fixed mutation checks =76 invocations. Each route requires all four protected positives and14 negatives, zero escape/fabricated measurement; missing coverage is inconclusive. MF-L01 freezes sidecar/digest/metadata/current-authority assertions within that allocation or versions it before results. Nothing ran.
+
+R15's independently accepted proposed study retains:30 concrete trust/usefulness families; separately two people x two conditions x eight tasks =32 utility trials. Each user/condition has four answerable, two abstention and two clarification cases. Target >=7/8, no worse correctness than equal-data separate-tools baseline, and >=20% lower median completed-task time per user. Report individual paired results, not population efficacy. Mode comprehension separately has14 vignettes/person =28 trials; target >=13/14 and zero consequential confusion of simulation/styling with sensing, unknown with free, or replay with current.
+
+R15 proposed performance:20 fixed interactions/session across three sessions, local selection-to-inspector p95<=500ms, first fixture<=3s, browser target<=2GiB, fixtures<=200MiB. The120-minute composition proof precedes implementation. Egress, provenance and authority gates are absolute and separate from speed. R15 export/import fixtures independently cover MF-L01 without borrowing MMF invocations. Original Gen0 T01-T35 and research-test R01 are preserved verbatim by row in RETAINED_SCOPE and were not rerun.

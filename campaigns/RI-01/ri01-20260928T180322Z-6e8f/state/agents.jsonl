@@ -111,3 +111,7 @@
 {"recorded_at": "2026-09-29T00:49:40.932796+00:00", "task_id": "REVIEW-MM-FUSION", "actual_agent_id": "/root/ri01_review_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
 {"recorded_at": "2026-09-29T00:55:39.353480+00:00", "task_id": "REVIEW-MM-FUSION", "actual_agent_id": "/root/ri01_review_privacy", "event": "COMPLETED_QUIESCENT"}
 {"recorded_at": "2026-09-29T00:57:01.396026+00:00", "task_id": "REVIEW-R15", "actual_agent_id": "/root/ri01_code_review", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer_and_code_specialist"}
+{"recorded_at": "2026-09-29T01:03:35.853890+00:00", "task_id": "R15", "actual_agent_id": "/root/ri01_runtime_probe", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:12:46.423220+00:00", "task_id": "REVIEW-R15", "actual_agent_id": "/root/ri01_code_review", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:12:46.423220+00:00", "task_id": "REVIEW-R15", "actual_agent_id": "/root/ri01_code_review", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:18:50.294557+00:00", "task_id": "SYNTHESIS", "actual_agent_id": "/root/night01_review", "event": "COMPLETED_QUIESCENT"}

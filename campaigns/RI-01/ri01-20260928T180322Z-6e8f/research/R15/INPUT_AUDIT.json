@@ -1,0 +1,2110 @@
+{
+  "schema": "ri01.r15.input-audit.v1",
+  "task": "R15",
+  "status": "DRAFT_READY_FOR_INDEPENDENT_REVIEW",
+  "native_handle": "/root/ri01_runtime_probe",
+  "role": "haven_researcher custom profile fallback",
+  "effective_model": "NOT_EXPOSED",
+  "permissions": "danger-full-access actual runtime; instruction-scoped research/R15 writes; no execution or operational grants",
+  "repository": "https://github.com/erpzz/haven",
+  "base_commit": "376031e182c57495912baf6727093b0b188da568",
+  "base_verification": "root freshly verified; child ran no Git",
+  "source_date_utc": "2026-09-29",
+  "hard_dependencies": {
+    "CORE": "ACCEPTED exact manifest7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+    "R01": "ACCEPTED original plus amendment composite; closure96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
+    "R07": "ACCEPTED no author amendment; E07-B and adoption gates retained",
+    "MM_FUSION": "ACCEPTED exact frozen packet; full review c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd read; MF-L01 retained"
+  },
+  "inputs": [
+    {
+      "path": "integration/core-v1/MANIFEST.sha256",
+      "bytes": 833,
+      "sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "task": "CORE",
+      "read_scope": "identity manifest",
+      "downstream_section": "INTEGRATION_SUMMARY architecture",
+      "review_state": "ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "integration/core-v1/ARCHITECTURE.md",
+      "bytes": 6025,
+      "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "task": "CORE",
+      "read_scope": "architecture read; source-preserving existing foundation",
+      "downstream_section": "INTEGRATION_SUMMARY architecture",
+      "review_state": "ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "integration/core-v1/CONTRACTS.md",
+      "bytes": 13893,
+      "sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "task": "CORE",
+      "read_scope": "FULL; I01-I07 vectors/output/cost boundaries",
+      "downstream_section": "CONTRACTS_AND_TRUST all CRs",
+      "review_state": "ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "reviews/VISION-ARCH/REVIEW.md",
+      "bytes": 9636,
+      "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "task": "CORE",
+      "read_scope": "bounded review sections and root acceptance receipt",
+      "downstream_section": "INTEGRATION_SUMMARY prerequisites",
+      "review_state": "ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R01/REPORT.md",
+      "bytes": 41526,
+      "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+      "task": "R01",
+      "read_scope": "sections read: opening, S5 and lines 130-220; some combined output truncated",
+      "downstream_section": "OBSERVATORY_DESIGN UX",
+      "review_state": "ACCEPTED_COMPOSITE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/REPORT.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R01/amendment-1/AMENDMENT.md",
+      "bytes": 11976,
+      "sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535",
+      "task": "R01",
+      "read_scope": "FULL; receipt wording and evaluation strata",
+      "downstream_section": "CONTRACTS_AND_TRUST CR05; EXPERIMENTS",
+      "review_state": "ACCEPTED_COMPOSITE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/AMENDMENT.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R01/SHA256SUMS.json",
+      "bytes": 999,
+      "sha256": "504b9aed17e60faa81d35ce0ee2ea340b7731ce2bddd09fa1d6e28f8b20100be",
+      "task": "R01",
+      "read_scope": "identity only",
+      "downstream_section": "INPUT_AUDIT",
+      "review_state": "ACCEPTED_COMPOSITE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/SHA256SUMS.json",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R01/amendment-1/SHA256SUMS.json",
+      "bytes": 738,
+      "sha256": "7fcddeec0bdc5edeea80cec272612e1a95f7e0194465a0a06ae455882fc348a6",
+      "task": "R01",
+      "read_scope": "identity only",
+      "downstream_section": "INPUT_AUDIT",
+      "review_state": "ACCEPTED_COMPOSITE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/SHA256SUMS.json",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+      "bytes": 4273,
+      "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
+      "task": "R01",
+      "read_scope": "FULL closure",
+      "downstream_section": "INPUT_AUDIT",
+      "review_state": "ACCEPTED_COMPOSITE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R01/CLOSURE-1.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R07/CONTRACTS.md",
+      "bytes": 12240,
+      "sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+      "task": "R07",
+      "read_scope": "FULL; spatial/clock/correlation contracts",
+      "downstream_section": "CONTRACTS_AND_TRUST CR02",
+      "review_state": "ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONTRACTS.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R07/INTEGRATION_SUMMARY.md",
+      "bytes": 2425,
+      "sha256": "7081b28fac8a5a8478f59c674b8967ecf18efb3a17000e0d5c92bfe7845e75de",
+      "task": "R07",
+      "read_scope": "FULL; E07-B variant retained",
+      "downstream_section": "OBSERVATORY_DESIGN field kit",
+      "review_state": "ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/INTEGRATION_SUMMARY.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R07/HANDOFF_MANIFEST.json",
+      "bytes": 2265,
+      "sha256": "2db5745bfc5626f38542b1b4608e63b00458b21f4a38c1b05f2437414cf9bfc8",
+      "task": "R07",
+      "read_scope": "identity only",
+      "downstream_section": "INPUT_AUDIT",
+      "review_state": "ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/HANDOFF_MANIFEST.json",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "reviews/REVIEW-R07/REVIEW.md",
+      "bytes": 15628,
+      "sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+      "task": "R07",
+      "read_scope": "first 60 lines/bounded findings and root acceptance receipt",
+      "downstream_section": "EXPERIMENTS prerequisites",
+      "review_state": "ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R07/REVIEW.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R08-P00/CONTRACT_DELTA.md",
+      "bytes": 12451,
+      "sha256": "642ea41d2a218ab018b62d1edc92e317c4edd72c972a80a258fd71d556f8045a",
+      "task": "R08-P00",
+      "read_scope": "first 90 lines; scalar profile, separate metrics",
+      "downstream_section": "CONTRACTS_AND_TRUST CR02",
+      "review_state": "ACCEPTED_SOFT",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CONTRACT_DELTA.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R14/INTEGRATION_SUMMARY.md",
+      "bytes": 4964,
+      "sha256": "de71f9806644efde6b964f0aa87fabf794e43bb7021d406316cc308e4e10aeba",
+      "task": "R14",
+      "read_scope": "FULL",
+      "downstream_section": "OBSERVATORY_DESIGN resources",
+      "review_state": "ACCEPTED_SOFT",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/INTEGRATION_SUMMARY.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "reviews/REVIEW-R14/REVIEW.md",
+      "bytes": 17471,
+      "sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c",
+      "task": "R14",
+      "read_scope": "first 60 lines",
+      "downstream_section": "CONTRACTS_AND_TRUST CR06",
+      "review_state": "ACCEPTED_SOFT",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R14/REVIEW.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "reviews/REVIEW-R09/REVIEW.md",
+      "bytes": 18108,
+      "sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81",
+      "task": "R09",
+      "read_scope": "bounded first 60 and first 32 lines",
+      "downstream_section": "CONTRACTS_AND_TRUST CR06",
+      "review_state": "ACCEPTED_SOFT",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R09/REVIEW.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "reviews/REVIEW-R10/REVIEW.md",
+      "bytes": 11155,
+      "sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+      "task": "R10",
+      "read_scope": "first 60 lines",
+      "downstream_section": "CONTRACTS_AND_TRUST CR06",
+      "review_state": "ACCEPTED_SOFT",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R10/REVIEW.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R11-public-v1/CONTRACTS.md",
+      "bytes": 13340,
+      "sha256": "5295c4836f524748d25b0e76b06c7db6330c4c7c36ec82ac28f2a8a8f2101baa",
+      "task": "R11",
+      "read_scope": "first 110 lines; bounded output, offline authority/transport semantics",
+      "downstream_section": "CONTRACTS_AND_TRUST CR01/05",
+      "review_state": "ACCEPTED_PUBLIC_VARIANT_SOFT",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/CONTRACTS.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R11-public-v1/HANDOFF_MANIFEST.json",
+      "bytes": 4270,
+      "sha256": "8c4f261598a01bb4971756f0d8fba0746425c10ebf4203721fb0b3c6268300ca",
+      "task": "R11",
+      "read_scope": "identity only",
+      "downstream_section": "INPUT_AUDIT",
+      "review_state": "ACCEPTED_PUBLIC_VARIANT_SOFT",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/HANDOFF_MANIFEST.json",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "reviews/REVIEW-R11/CLOSURE-1.md",
+      "bytes": 4829,
+      "sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef",
+      "task": "R11",
+      "read_scope": "FULL",
+      "downstream_section": "INPUT_AUDIT",
+      "review_state": "ACCEPTED_PUBLIC_VARIANT_SOFT",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R11/CLOSURE-1.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R15-AUDIT/SOURCE_AUDIT.md",
+      "bytes": 19080,
+      "sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74",
+      "task": "R15-AUDIT",
+      "read_scope": "FULL authored prework retained; 50 exact source read extents",
+      "downstream_section": "GEV_AUDIT A01-A09",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/SOURCE_AUDIT.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R15-AUDIT/INPUT_AUDIT.json",
+      "bytes": 55631,
+      "sha256": "94203e5e82c28223a0d4b0a4da23e3ae875a6e2076a0ab32751bf4f781e74f19",
+      "task": "R15-AUDIT",
+      "read_scope": "FULL structured identity register",
+      "downstream_section": "GEV_AUDIT; INPUT_AUDIT",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/INPUT_AUDIT.json",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/R15-AUDIT/MANIFEST.json",
+      "bytes": 753,
+      "sha256": "f29e746157d7d04f5c0c9cf38210872a84ace1351b5cc63b1600c1f70eb71a1a",
+      "task": "R15-AUDIT",
+      "read_scope": "identity only",
+      "downstream_section": "INPUT_AUDIT",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/MANIFEST.json",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/MM-FUSION/HANDOFF_MANIFEST.json",
+      "bytes": 3339,
+      "sha256": "c5fd20410d718bea5a1e02141b53ef925cfec0948e7e73be0a1f0045142ce7a9",
+      "task": "MM-FUSION",
+      "read_scope": "identity only",
+      "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+      "review_state": "ACCEPTED_FOR_SYNTHESIS",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/HANDOFF_MANIFEST.json",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/MM-FUSION/CONTRACTS.md",
+      "bytes": 18477,
+      "sha256": "fed1ad340e9d45b95d71252e25ce183ac89cfbdd4449d74025d29ceb5454dfb9",
+      "task": "MM-FUSION",
+      "read_scope": "FULL",
+      "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+      "review_state": "ACCEPTED_FOR_SYNTHESIS",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/CONTRACTS.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/MM-FUSION/REPORT.md",
+      "bytes": 11429,
+      "sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3",
+      "task": "MM-FUSION",
+      "read_scope": "FULL",
+      "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+      "review_state": "ACCEPTED_FOR_SYNTHESIS",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/REPORT.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/MM-FUSION/DELTAS.md",
+      "bytes": 3304,
+      "sha256": "4d983c95aa535d6d2e83b8b20340f21ac0f21a64a1ff1d48b78c6272f22c3841",
+      "task": "MM-FUSION",
+      "read_scope": "FULL",
+      "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+      "review_state": "ACCEPTED_FOR_SYNTHESIS",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/DELTAS.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/MM-FUSION/MODALITY_REGISTRY.md",
+      "bytes": 8232,
+      "sha256": "a62ef91aff1d63ab9d29dd1b53e4cd72ae532d2414d75684e8226862eebead37",
+      "task": "MM-FUSION",
+      "read_scope": "FULL",
+      "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+      "review_state": "ACCEPTED_FOR_SYNTHESIS",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/MODALITY_REGISTRY.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/MM-FUSION/NEXT_PACKAGES.md",
+      "bytes": 7269,
+      "sha256": "2b64520a3455071dde1d267557083961216f66e3f4949d9a877e8f72db5538ac",
+      "task": "MM-FUSION",
+      "read_scope": "FULL",
+      "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+      "review_state": "ACCEPTED_FOR_SYNTHESIS",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/NEXT_PACKAGES.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "research/MM-FUSION/INPUT_RECEIPT.md",
+      "bytes": 2712,
+      "sha256": "53e2c96891abbf5a285a591becf5212bd1b9a7a5e94cb7c2e7e7b396ba87a4de",
+      "task": "MM-FUSION",
+      "read_scope": "FULL",
+      "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+      "review_state": "ACCEPTED_FOR_SYNTHESIS",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/INPUT_RECEIPT.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "inputs/incoming/referenced/prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md",
+      "bytes": 32045,
+      "sha256": "868a9dd4aa72c490fc3e417871c57a53a3110bf113ecfa09e7f0db84e7c1b758",
+      "task": "R15-PROMPT",
+      "read_scope": "FULL",
+      "downstream_section": "all required deliverables",
+      "review_state": "AUTHORITATIVE_TASK",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "inputs/incoming/referenced/design/H00/R15/brief-v1/README.md",
+      "bytes": 2634,
+      "sha256": "ff5d24007253d45ea4c3e4f86c461e00b75071d577561aecfc349c09af96b17a",
+      "task": "R15-BRIEF",
+      "read_scope": "FULL",
+      "downstream_section": "all required deliverables",
+      "review_state": "AUTHORITATIVE_TASK",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/design/H00/R15/brief-v1/README.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "inputs/incoming/referenced/design/H00/R15/brief-v1/INPUTS_AND_HANDOFF.md",
+      "bytes": 3752,
+      "sha256": "d1c977e12028634039229226c6ef15feac54d54e38b1074e31ba99acb9a0db3d",
+      "task": "R15-BRIEF",
+      "read_scope": "FULL",
+      "downstream_section": "all required deliverables",
+      "review_state": "AUTHORITATIVE_TASK",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/design/H00/R15/brief-v1/INPUTS_AND_HANDOFF.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "inputs/incoming/referenced/design/H00/R15/brief-v1/OPPORTUNITIES.md",
+      "bytes": 5781,
+      "sha256": "7e672dcbfeb381a6e4d3ed2445d11ba63e8f5d03650f266339916e193a02dc8e",
+      "task": "R15-BRIEF",
+      "read_scope": "FULL",
+      "downstream_section": "all required deliverables",
+      "review_state": "AUTHORITATIVE_TASK",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/design/H00/R15/brief-v1/OPPORTUNITIES.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "inputs/incoming/referenced/design/H00/R15/brief-v1/SOURCE_NOTES.md",
+      "bytes": 4371,
+      "sha256": "394e54fe25f2c05130056f218dbc8700cbf1c8c1f9036d2715043a8e5eac7045",
+      "task": "R15-BRIEF",
+      "read_scope": "FULL",
+      "downstream_section": "all required deliverables",
+      "review_state": "AUTHORITATIVE_TASK",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/design/H00/R15/brief-v1/SOURCE_NOTES.md",
+        "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+      }
+    },
+    {
+      "path": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+      "task": "MM-FUSION",
+      "sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd",
+      "bytes": 16274,
+      "read_scope": "FULL after acceptance relay; exact SHA256 independently checked",
+      "downstream_section": "CONTRACTS_AND_TRUST accepted reconciliation",
+      "review_state": "ACCEPTED_FOR_SYNTHESIS",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-FUSION/REVIEW.md"
+      }
+    }
+  ],
+  "source_files_with_actual_read_receipts": [
+    {
+      "path": "package.json",
+      "bytes": 11163,
+      "sha256": "ad904b92590aaed4d1d970b8be25158e09c0917f27ae52eb3326be6beed20b38",
+      "git_blob_sha": "e48881c6d28de7af1b760cdf52561ddc99cb6916",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "package.json",
+        "sha256": "ad904b92590aaed4d1d970b8be25158e09c0917f27ae52eb3326be6beed20b38"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/package.json",
+      "downstream_use": [
+        {
+          "finding": "A01",
+          "decision": "accept source exports; reject public/stable SDK inference"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 98802,
+      "sha256": "081818a6d68d87cd9a6038504a18df91d8494e5bd4841f87f7e540e0b9860215",
+      "git_blob_sha": "17bb0691e8a7c01352d0ba052d454fa16786b496",
+      "git_verified": true,
+      "read_scope": "parsed root and selected resolved dependencies; not full transitive audit",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "package-lock.json",
+        "sha256": "081818a6d68d87cd9a6038504a18df91d8494e5bd4841f87f7e540e0b9860215"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/package-lock.json",
+      "downstream_use": [
+        {
+          "finding": "A01",
+          "decision": "accept source exports; reject public/stable SDK inference"
+        },
+        {
+          "finding": "A09",
+          "decision": "separate code license, dependency notices, assets and provider terms"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 3281,
+      "sha256": "b231bb38e2d4eab741643126087cbe9df2b58e2f2e5abf27ad613d05f52b01ca",
+      "git_blob_sha": "4f01699a2afc703093fcf07181129c3724aae9ff",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "LICENSE",
+        "sha256": "b231bb38e2d4eab741643126087cbe9df2b58e2f2e5abf27ad613d05f52b01ca"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/LICENSE",
+      "downstream_use": [
+        {
+          "finding": "A09",
+          "decision": "separate code license, dependency notices, assets and provider terms"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 736,
+      "sha256": "d90d9f5e12851f67f3e61613d4e91e6c2f20dfb0c8b056e85f4068cd3e86b6b4",
+      "git_blob_sha": "071299fba8430ee52be43bf4254ca4567aa6bb37",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "THIRD_PARTY_NOTICES.md",
+        "sha256": "d90d9f5e12851f67f3e61613d4e91e6c2f20dfb0c8b056e85f4068cd3e86b6b4"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/THIRD_PARTY_NOTICES.md",
+      "downstream_use": [
+        {
+          "finding": "A09",
+          "decision": "separate code license, dependency notices, assets and provider terms"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "DATA_SOURCES.md",
+      "bytes": 75660,
+      "sha256": "3fe1510d393bb00ca4dad5175029cec22d5c6d666ff513836083458aa6954c0a",
+      "git_blob_sha": "b1439230e2dd08886b21dc5c59b1d1832fabd999",
+      "git_verified": true,
+      "read_scope": "selected provider and bundled asset rows; lines 1-68,84-116",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "DATA_SOURCES.md",
+        "sha256": "3fe1510d393bb00ca4dad5175029cec22d5c6d666ff513836083458aa6954c0a"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/DATA_SOURCES.md",
+      "downstream_use": [
+        {
+          "finding": "A09",
+          "decision": "separate code license, dependency notices, assets and provider terms"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 12350,
+      "sha256": "fb0c74c2e609d08aedc61157d19c8d34f60e5d009c90a712b7dae83fd548107c",
+      "git_blob_sha": "718c43778156e172abbe981962468520fa8a1638",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "SECURITY.md",
+        "sha256": "fb0c74c2e609d08aedc61157d19c8d34f60e5d009c90a712b7dae83fd548107c"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/SECURITY.md",
+      "downstream_use": [
+        {
+          "finding": "A03",
+          "decision": "separate local settings defense and provider broker from multiuser authorization"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "docs/APPLICATION.md",
+      "bytes": 11625,
+      "sha256": "d4c630e59ee368a62dff2570eedf1ad2d0f04ee6b339682468d44470220fe85b",
+      "git_blob_sha": "deafe916892ee13e1cbf8542a1a2eeb38329b1bf",
+      "git_verified": true,
+      "read_scope": "application/voice/source ownership and lifecycle sections",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "docs/APPLICATION.md",
+        "sha256": "d4c630e59ee368a62dff2570eedf1ad2d0f04ee6b339682468d44470220fe85b"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/APPLICATION.md",
+      "downstream_use": [
+        {
+          "finding": "A02",
+          "decision": "accept lifecycle ownership; restrict stock composition to one page"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "docs/DIRECTOR-SHARING.md",
+      "bytes": 5154,
+      "sha256": "73e270eb0af6f1af2778a0cd10b3236c97fd0b7c6685433469ab21533516096a",
+      "git_blob_sha": "7748b2eb23e4e7d0939eee6b3db09754ebf45c19",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "docs/DIRECTOR-SHARING.md",
+        "sha256": "73e270eb0af6f1af2778a0cd10b3236c97fd0b7c6685433469ab21533516096a"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/DIRECTOR-SHARING.md",
+      "downstream_use": [
+        {
+          "finding": "A06",
+          "decision": "reuse presentation validation only; fresh Haven admission required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "docs/SCENE-DOCUMENT.md",
+      "bytes": 5810,
+      "sha256": "745a25b77bd1f1d44b55a4078b38a1b471a24e5b98ae59fdd8135e442722949d",
+      "git_blob_sha": "f6dc66636965d1c75441333dfba3ad4e180bb98f",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "docs/SCENE-DOCUMENT.md",
+        "sha256": "745a25b77bd1f1d44b55a4078b38a1b471a24e5b98ae59fdd8135e442722949d"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/SCENE-DOCUMENT.md",
+      "downstream_use": [
+        {
+          "finding": "A07",
+          "decision": "actual parser version6 supersedes stale version5 prose"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/app/application.js",
+      "bytes": 4699,
+      "sha256": "69300438ffefd2ed7c243c77ff7e9f25f60bd3bc2ffe1a051aeb4926450da9bd",
+      "git_blob_sha": "b9c37a8d229f61e119f0a3ae76fa620f0bb1e1a6",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/app/application.js",
+        "sha256": "69300438ffefd2ed7c243c77ff7e9f25f60bd3bc2ffe1a051aeb4926450da9bd"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/app/application.js",
+      "downstream_use": [
+        {
+          "finding": "A02",
+          "decision": "accept lifecycle ownership; restrict stock composition to one page"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/standalone/application.js",
+      "bytes": 2478,
+      "sha256": "5d9e5d9ff8156b930380605f33a1bc754eee1969a0aec59d627fba178b81dcfa",
+      "git_blob_sha": "cbdf9cb7fa68b7638f44dcc654512f71954debef",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/standalone/application.js",
+        "sha256": "5d9e5d9ff8156b930380605f33a1bc754eee1969a0aec59d627fba178b81dcfa"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/standalone/application.js",
+      "downstream_use": [
+        {
+          "finding": "A02",
+          "decision": "accept lifecycle ownership; restrict stock composition to one page"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/app/application.test.mjs",
+      "bytes": 10639,
+      "sha256": "cda775568981923c637f0d14e6065365f2d7466f7276cc93b20efbefd07d1c7f",
+      "git_blob_sha": "d3ef8c7cc2360cfa4d2d00cf1ff2a436f1825dd9",
+      "git_verified": true,
+      "read_scope": "30-112,125-220",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/app/application.test.mjs",
+        "sha256": "cda775568981923c637f0d14e6065365f2d7466f7276cc93b20efbefd07d1c7f"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/app/application.test.mjs",
+      "downstream_use": [
+        {
+          "finding": "A02",
+          "decision": "accept lifecycle ownership; restrict stock composition to one page"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "server/providers/openai/realtime.js",
+      "bytes": 5810,
+      "sha256": "45557d8f03247cf2c4ba7243aef1cc66615b9d6a1af7df6f8cff88cfbe187c1f",
+      "git_blob_sha": "b4dfb4b5a6e7c6c8bfa06beed4c95b45c795020a",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "server/providers/openai/realtime.js",
+        "sha256": "45557d8f03247cf2c4ba7243aef1cc66615b9d6a1af7df6f8cff88cfbe187c1f"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/openai/realtime.js",
+      "downstream_use": [
+        {
+          "finding": "A03",
+          "decision": "separate local settings defense and provider broker from multiuser authorization"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "server/providers/common/http.js",
+      "bytes": 1639,
+      "sha256": "3aa8351de12b0e3c915957a7f4e9b5f932ef2f9c5ee93e74b070013c25420f5e",
+      "git_blob_sha": "c80c291157449f2770093568d9401d26bb26df72",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "server/providers/common/http.js",
+        "sha256": "3aa8351de12b0e3c915957a7f4e9b5f932ef2f9c5ee93e74b070013c25420f5e"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/common/http.js",
+      "downstream_use": [
+        {
+          "finding": "A04",
+          "decision": "amend uniform proxy-hardening assumption; route-specific inspection required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "server/providers/firms.js",
+      "bytes": 9318,
+      "sha256": "63a270d8c05ed000c65aaf5f1af410075e5c382c724d88a35d02d0c46a81b7b5",
+      "git_blob_sha": "636968348af38bdc63fbbb67975ce7c05722bda5",
+      "git_verified": true,
+      "read_scope": "1-110",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "server/providers/firms.js",
+        "sha256": "63a270d8c05ed000c65aaf5f1af410075e5c382c724d88a35d02d0c46a81b7b5"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/firms.js",
+      "downstream_use": [
+        {
+          "finding": "A04",
+          "decision": "amend uniform proxy-hardening assumption; route-specific inspection required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "server/providers/weather.js",
+      "bytes": 21774,
+      "sha256": "315d150f75f487143de54e982dd0f0e4ca403f2a37e45d6de8f6c80042d62743",
+      "git_blob_sha": "2302359edf3bf36826cb9a941252cf701d434479",
+      "git_verified": true,
+      "read_scope": "415-499",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "server/providers/weather.js",
+        "sha256": "315d150f75f487143de54e982dd0f0e4ca403f2a37e45d6de8f6c80042d62743"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/weather.js",
+      "downstream_use": [
+        {
+          "finding": "A04",
+          "decision": "amend uniform proxy-hardening assumption; route-specific inspection required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/keySetupCore.mjs",
+      "bytes": 17885,
+      "sha256": "55c0d039ce1519435f7f19a3d8e7a0dab05d3a21b7bffa24ca352e2600d81bbe",
+      "git_blob_sha": "e8bfef92ceb22da9c773fba39da47256acd5b086",
+      "git_verified": true,
+      "read_scope": "1-155,188-335",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/keySetupCore.mjs",
+        "sha256": "55c0d039ce1519435f7f19a3d8e7a0dab05d3a21b7bffa24ca352e2600d81bbe"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/keySetupCore.mjs",
+      "downstream_use": [
+        {
+          "finding": "A03",
+          "decision": "separate local settings defense and provider broker from multiuser authorization"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/voice/actionSchemas.js",
+      "bytes": 22748,
+      "sha256": "5a95918243c3614e2a5a99bc20531a2ff990203d9b3b1b430ad2422dee4164df",
+      "git_blob_sha": "c18b3c724d59c455237614e40c29992eec6b0f3b",
+      "git_verified": true,
+      "read_scope": "1-54 plus action names and additionalProperties declarations",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/voice/actionSchemas.js",
+        "sha256": "5a95918243c3614e2a5a99bc20531a2ff990203d9b3b1b430ad2422dee4164df"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/actionSchemas.js",
+      "downstream_use": [
+        {
+          "finding": "A05",
+          "decision": "separate argument schemas, action effects, protocol and advisory cancellation"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/voice/gevActions.js",
+      "bytes": 146261,
+      "sha256": "071d4c116517d64d2d8c340f7811d73dcec1439b62558800f7ab5458a2d4c3c4",
+      "git_blob_sha": "cfdb1fb0b46f8d46cba7809c71ab0a30d20e6b30",
+      "git_verified": true,
+      "read_scope": "328-440,1000-1125,1194-1305,1315-1368",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/voice/gevActions.js",
+        "sha256": "071d4c116517d64d2d8c340f7811d73dcec1439b62558800f7ab5458a2d4c3c4"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/gevActions.js",
+      "downstream_use": [
+        {
+          "finding": "A05",
+          "decision": "separate argument schemas, action effects, protocol and advisory cancellation"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/voice/realtimeController.js",
+      "bytes": 13033,
+      "sha256": "a9028d1419d15453ab331ac0d5c3f425be0f03dfcf8f08ba11226c7d63568cc4",
+      "git_blob_sha": "d0c9f1baeea9618d67700eda63b387f0f395ea21",
+      "git_verified": true,
+      "read_scope": "1-95,224-274,323-353",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/voice/realtimeController.js",
+        "sha256": "a9028d1419d15453ab331ac0d5c3f425be0f03dfcf8f08ba11226c7d63568cc4"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeController.js",
+      "downstream_use": [
+        {
+          "finding": "A05",
+          "decision": "separate argument schemas, action effects, protocol and advisory cancellation"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/voice/realtimeTurns.js",
+      "bytes": 27230,
+      "sha256": "30ffac0faf7df5ffd6df2cd5c95c25aea5839b67de4042ff3a8623d303b84461",
+      "git_blob_sha": "366a8e7d3584ebc05b9a47504a235e994c2dcbe3",
+      "git_verified": true,
+      "read_scope": "355-436",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/voice/realtimeTurns.js",
+        "sha256": "30ffac0faf7df5ffd6df2cd5c95c25aea5839b67de4042ff3a8623d303b84461"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeTurns.js",
+      "downstream_use": [
+        {
+          "finding": "A05",
+          "decision": "separate argument schemas, action effects, protocol and advisory cancellation"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/voice/realtimeBackend.js",
+      "bytes": 3233,
+      "sha256": "a85a68c570531c89d4023dbda639f6e1fe3addb0d39a8955fe7ab803fdccef3e",
+      "git_blob_sha": "2a8af2d0d220b0864d3b829b20cc3f82ce6b734b",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/voice/realtimeBackend.js",
+        "sha256": "a85a68c570531c89d4023dbda639f6e1fe3addb0d39a8955fe7ab803fdccef3e"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeBackend.js",
+      "downstream_use": [
+        {
+          "finding": "A05",
+          "decision": "separate argument schemas, action effects, protocol and advisory cancellation"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/voice/realtimeBackend.test.mjs",
+      "bytes": 4462,
+      "sha256": "cc9c9e60857248a8e96ee7de1b03c1a71f24716288bf5e1c7f2d2cf898f7b3fc",
+      "git_blob_sha": "1fc21da9d81960665d8dd7a230955a0158b54c95",
+      "git_verified": true,
+      "read_scope": "1-132; selected assertions",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/voice/realtimeBackend.test.mjs",
+        "sha256": "cc9c9e60857248a8e96ee7de1b03c1a71f24716288bf5e1c7f2d2cf898f7b3fc"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeBackend.test.mjs",
+      "downstream_use": [
+        {
+          "finding": "A05",
+          "decision": "separate argument schemas, action effects, protocol and advisory cancellation"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/director/document.js",
+      "bytes": 6266,
+      "sha256": "69b457d7f565784d5e3df42d538fea5bfea4633ed89550d0064744192fec0f85",
+      "git_blob_sha": "48804d83bc44663f3b0a7bd52b2ef8d8e8739311",
+      "git_verified": true,
+      "read_scope": "1-77",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/director/document.js",
+        "sha256": "69b457d7f565784d5e3df42d538fea5bfea4633ed89550d0064744192fec0f85"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/document.js",
+      "downstream_use": [
+        {
+          "finding": "A06",
+          "decision": "reuse presentation validation only; fresh Haven admission required"
+        },
+        {
+          "finding": "A07",
+          "decision": "actual parser version6 supersedes stale version5 prose"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/director/packs/manifest.js",
+      "bytes": 4369,
+      "sha256": "33ea3ca51d576854eff4190214cd89422ed02535735f3c972d584332b0411f08",
+      "git_blob_sha": "eff00eb12845ef42a57f363b06bd01e99dad468d",
+      "git_verified": true,
+      "read_scope": "1-72",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/director/packs/manifest.js",
+        "sha256": "33ea3ca51d576854eff4190214cd89422ed02535735f3c972d584332b0411f08"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/packs/manifest.js",
+      "downstream_use": [
+        {
+          "finding": "A06",
+          "decision": "reuse presentation validation only; fresh Haven admission required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/director/sharing/bundle.js",
+      "bytes": 7418,
+      "sha256": "04c31f1898eb31689aa75eaa8fac3e7fccd700d6e3f9d48d4c1e0b448f6625c0",
+      "git_blob_sha": "945457aadc8e2b47d413b94f4e6e03f04f9ca099",
+      "git_verified": true,
+      "read_scope": "1-115",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/director/sharing/bundle.js",
+        "sha256": "04c31f1898eb31689aa75eaa8fac3e7fccd700d6e3f9d48d4c1e0b448f6625c0"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/sharing/bundle.js",
+      "downstream_use": [
+        {
+          "finding": "A06",
+          "decision": "reuse presentation validation only; fresh Haven admission required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/director/sharing/lifetime.js",
+      "bytes": 800,
+      "sha256": "f9595b0288e44bbb2778cd99ce7dfdaa3a1dc5f804502dd0ba8f11b91bacdcbc",
+      "git_blob_sha": "0468ddbeb3a0bbf32bfe5787b36581ca5aca3a87",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/director/sharing/lifetime.js",
+        "sha256": "f9595b0288e44bbb2778cd99ce7dfdaa3a1dc5f804502dd0ba8f11b91bacdcbc"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/sharing/lifetime.js",
+      "downstream_use": [
+        {
+          "finding": "A06",
+          "decision": "reuse presentation validation only; fresh Haven admission required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/director/sharing/sharing.test.mjs",
+      "bytes": 8334,
+      "sha256": "f8830717de1e070263be525a5b7ae84acac819d5a3ed0494e51173ed958f0320",
+      "git_blob_sha": "d65b340b25f79aa441a5fdd9023d7f542fc33d72",
+      "git_verified": true,
+      "read_scope": "56-125,160-215",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/director/sharing/sharing.test.mjs",
+        "sha256": "f8830717de1e070263be525a5b7ae84acac819d5a3ed0494e51173ed958f0320"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/sharing/sharing.test.mjs",
+      "downstream_use": [
+        {
+          "finding": "A06",
+          "decision": "reuse presentation validation only; fresh Haven admission required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/scenes/sharing.js",
+      "bytes": 13047,
+      "sha256": "02439a8580d025ee9947470d3be63dac44d22899499c00a9cff91c38c48c931b",
+      "git_blob_sha": "22b000f7859337e1fc87e835abbb4f123ee6b575",
+      "git_verified": true,
+      "read_scope": "1-85",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/scenes/sharing.js",
+        "sha256": "02439a8580d025ee9947470d3be63dac44d22899499c00a9cff91c38c48c931b"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/scenes/sharing.js",
+      "downstream_use": [
+        {
+          "finding": "A06",
+          "decision": "reuse presentation validation only; fresh Haven admission required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/sharelink.js",
+      "bytes": 27536,
+      "sha256": "2df7bc550559e241b32865f227bdb378ba8c0c49339a0615b92d3289921363a0",
+      "git_blob_sha": "08360932b406ccb985a601c29b92766f9973fd70",
+      "git_verified": true,
+      "read_scope": "parse/restore authority search matches;268-377",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/sharelink.js",
+        "sha256": "2df7bc550559e241b32865f227bdb378ba8c0c49339a0615b92d3289921363a0"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sharelink.js",
+      "downstream_use": [
+        {
+          "finding": "A06",
+          "decision": "reuse presentation validation only; fresh Haven admission required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/sharelink.celestial.test.mjs",
+      "bytes": 34540,
+      "sha256": "74b36c99f9e84e1c879239c36f6e0d117582dd83636e58661ae573ee50193a82",
+      "git_blob_sha": "cc26727859ff215c6d14c928969e8170797f9b9e",
+      "git_verified": true,
+      "read_scope": "1-125",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/sharelink.celestial.test.mjs",
+        "sha256": "74b36c99f9e84e1c879239c36f6e0d117582dd83636e58661ae573ee50193a82"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sharelink.celestial.test.mjs",
+      "downstream_use": [
+        {
+          "finding": "A06",
+          "decision": "reuse presentation validation only; fresh Haven admission required"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/annotations/annotationEngine.test.mjs",
+      "bytes": 27265,
+      "sha256": "ac827aee6b6fb55068d29536196cb180b578c2f8501436e615a63514cc73e6f3",
+      "git_blob_sha": "0d26974aedd8be4c97b61b0ad9f0f6a77c52a1cd",
+      "git_verified": true,
+      "read_scope": "1-125",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/annotations/annotationEngine.test.mjs",
+        "sha256": "ac827aee6b6fb55068d29536196cb180b578c2f8501436e615a63514cc73e6f3"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/annotations/annotationEngine.test.mjs",
+      "downstream_use": [
+        {
+          "finding": "A08",
+          "decision": "preserve observation/reference/simulation/stylization distinctions"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/layers/firms/source.js",
+      "bytes": 874,
+      "sha256": "5754af5fba35a0c395883fda32961fad2dfb06473708a39c9cb4ac96366f3ce3",
+      "git_blob_sha": "9ee4ebc6c8003cbb5efe5eae67ab544b719423fb",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/layers/firms/source.js",
+        "sha256": "5754af5fba35a0c395883fda32961fad2dfb06473708a39c9cb4ac96366f3ce3"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/layers/firms/source.js",
+      "downstream_use": [
+        {
+          "finding": "A08",
+          "decision": "preserve observation/reference/simulation/stylization distinctions"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/layers/weather/source.js",
+      "bytes": 4906,
+      "sha256": "5c45f4aa6eae537ec71d0489c533ec4fa7f43ad0beb074328bac046ee181cc6a",
+      "git_blob_sha": "ec92cd5a2f13452e0333da15c2d5dd13b2e23436",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/layers/weather/source.js",
+        "sha256": "5c45f4aa6eae537ec71d0489c533ec4fa7f43ad0beb074328bac046ee181cc6a"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/layers/weather/source.js",
+      "downstream_use": [
+        {
+          "finding": "A04",
+          "decision": "amend uniform proxy-hardening assumption; route-specific inspection required"
+        },
+        {
+          "finding": "A08",
+          "decision": "preserve observation/reference/simulation/stylization distinctions"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/layers/weather/clock.js",
+      "bytes": 6699,
+      "sha256": "45b8d95cdc1cc1f843a3e7ffc07c3726d482215cce91a2d5dd5deef992679bbd",
+      "git_blob_sha": "a758dddd2f54653fd506698b1d8c077fe10bb2a0",
+      "git_verified": true,
+      "read_scope": "targeted history matches plus120-180",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/layers/weather/clock.js",
+        "sha256": "45b8d95cdc1cc1f843a3e7ffc07c3726d482215cce91a2d5dd5deef992679bbd"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/layers/weather/clock.js",
+      "downstream_use": [
+        {
+          "finding": "A08",
+          "decision": "preserve observation/reference/simulation/stylization distinctions"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/layers/traffic/source.js",
+      "bytes": 5621,
+      "sha256": "8a5b59ec89c09376807c3a2827dad528f23376916a30131f48bcb5624df23155",
+      "git_blob_sha": "b2c992b125a84166cf87244a04e63b0c45cb9e9f",
+      "git_verified": true,
+      "read_scope": "1-110",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/layers/traffic/source.js",
+        "sha256": "8a5b59ec89c09376807c3a2827dad528f23376916a30131f48bcb5624df23155"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/layers/traffic/source.js",
+      "downstream_use": [
+        {
+          "finding": "A08",
+          "decision": "preserve observation/reference/simulation/stylization distinctions"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/layers/traffic/model.js",
+      "bytes": 13765,
+      "sha256": "8a78153a3ab45b53ebd0be18cb6776a7ef2ce5e0a380f055a0468d66a0d7b9cb",
+      "git_blob_sha": "281bacb9bdc3ea20d486cdb5e5c05509dc2993e7",
+      "git_verified": true,
+      "read_scope": "215-279",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/layers/traffic/model.js",
+        "sha256": "8a78153a3ab45b53ebd0be18cb6776a7ef2ce5e0a380f055a0468d66a0d7b9cb"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/layers/traffic/model.js",
+      "downstream_use": [
+        {
+          "finding": "A08",
+          "decision": "preserve observation/reference/simulation/stylization distinctions"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/sources/reference.js",
+      "bytes": 526,
+      "sha256": "8f5f639697553a6ca2fb821f629dcc877e4c9f03d78854d4c95b85ef62ac3c89",
+      "git_blob_sha": "4bdf7e9acbb9111a58ce8c8f7a3d8144167ccf57",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "private read-only cache; exact bytes verified against frozen TREE",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/sources/reference.js",
+        "sha256": "8f5f639697553a6ca2fb821f629dcc877e4c9f03d78854d4c95b85ef62ac3c89"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/reference.js",
+      "downstream_use": [
+        {
+          "finding": "A08",
+          "decision": "preserve observation/reference/simulation/stylization distinctions"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "docs/CODE-BOUNDARIES.md",
+      "bytes": 44128,
+      "sha256": "69518499d5633714c3f627d9c626f2f2fe52e683d652f2e985fe7594783ac4f3",
+      "git_blob_sha": "1aeddd5652f0a3bbe71cc69028920ff3c5dafffb",
+      "git_verified": true,
+      "read_scope": "selected boundaries and exports sections;97-127 re-read",
+      "retrieval": "private read-only cache",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "docs/CODE-BOUNDARIES.md",
+        "sha256": "69518499d5633714c3f627d9c626f2f2fe52e683d652f2e985fe7594783ac4f3"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/CODE-BOUNDARIES.md",
+      "downstream_use": [
+        {
+          "finding": "A01",
+          "decision": "accept source exports; reject public/stable SDK inference"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "server/standalone/key-setup-hardening.mjs",
+      "bytes": 8351,
+      "sha256": "c8bafb9856b628bdce4ad3db22180b566e77c20671832e47cc44ec2cd3edeb2f",
+      "git_blob_sha": "78440948cffd0993daccbdc839bf928bbca5a45c",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "server/standalone/key-setup-hardening.mjs",
+        "sha256": "c8bafb9856b628bdce4ad3db22180b566e77c20671832e47cc44ec2cd3edeb2f"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/standalone/key-setup-hardening.mjs",
+      "downstream_use": [
+        {
+          "finding": "A03",
+          "decision": "separate local settings defense and provider broker from multiuser authorization"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "server/standalone/key-setup.js",
+      "bytes": 15245,
+      "sha256": "7bf27bd465fdf3765134dfa003cf056778540dc679b6a59a267da05c6b9ba207",
+      "git_blob_sha": "b8be4c036f82d87f42e9b3c640e13cd020cfb942",
+      "git_verified": true,
+      "read_scope": "246-440",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "server/standalone/key-setup.js",
+        "sha256": "7bf27bd465fdf3765134dfa003cf056778540dc679b6a59a267da05c6b9ba207"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/standalone/key-setup.js",
+      "downstream_use": [
+        {
+          "finding": "A03",
+          "decision": "separate local settings defense and provider broker from multiuser authorization"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/app/catalog.js",
+      "bytes": 2047,
+      "sha256": "87044b7e36a30ca7776184cd0d60712b3b85b3318c9e026ec561e93e11484c36",
+      "git_blob_sha": "70b96ffbffa3ab979d8b0a6a3ccbe087da8dc491",
+      "git_verified": true,
+      "read_scope": "1-90 and lifecycle/export matches",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/app/catalog.js",
+        "sha256": "87044b7e36a30ca7776184cd0d60712b3b85b3318c9e026ec561e93e11484c36"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/app/catalog.js",
+      "downstream_use": [
+        {
+          "finding": "A02",
+          "decision": "accept lifecycle ownership; restrict stock composition to one page"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/app/sources.js",
+      "bytes": 1891,
+      "sha256": "5003b534a969973e4ab9e124798793720ed5d3a5a6abbd998ba927f0686e5bc6",
+      "git_blob_sha": "a1e7d1eacdbb2ff25b7f0efe9f942dbd7524397f",
+      "git_verified": true,
+      "read_scope": "1-90 and lifecycle/export matches",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/app/sources.js",
+        "sha256": "5003b534a969973e4ab9e124798793720ed5d3a5a6abbd998ba927f0686e5bc6"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/app/sources.js",
+      "downstream_use": [
+        {
+          "finding": "A02",
+          "decision": "accept lifecycle ownership; restrict stock composition to one page"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/app/data.js",
+      "bytes": 2443,
+      "sha256": "e6a247531a9cc1cd6f66b81f83a2cb9a0cbb58ee731ffc54163ef30e68a630da",
+      "git_blob_sha": "85a3183fc376812695080f73001483c58a00bc4a",
+      "git_verified": true,
+      "read_scope": "1-90 and lifecycle/export matches",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/app/data.js",
+        "sha256": "e6a247531a9cc1cd6f66b81f83a2cb9a0cbb58ee731ffc54163ef30e68a630da"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/app/data.js",
+      "downstream_use": [
+        {
+          "finding": "A02",
+          "decision": "accept lifecycle ownership; restrict stock composition to one page"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/app/tools.js",
+      "bytes": 6657,
+      "sha256": "d264a0fe2398c82f44be54b425de6f2327e32a15526630aae590a370104b15c3",
+      "git_blob_sha": "613add71cd8968710437c4dc748ead43a1173a87",
+      "git_verified": true,
+      "read_scope": "1-90 and lifecycle/export matches",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/app/tools.js",
+        "sha256": "d264a0fe2398c82f44be54b425de6f2327e32a15526630aae590a370104b15c3"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/app/tools.js",
+      "downstream_use": [
+        {
+          "finding": "A02",
+          "decision": "accept lifecycle ownership; restrict stock composition to one page"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/app/scene.js",
+      "bytes": 4453,
+      "sha256": "92f5095a9de66e3ddeea0794ff00ca92aa4ec831c686b85a3a7fa345a45ea66f",
+      "git_blob_sha": "65e40cd7e8a0628f336efe4793dd338c4957f152",
+      "git_verified": true,
+      "read_scope": "1-90 and lifecycle/export matches",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/app/scene.js",
+        "sha256": "92f5095a9de66e3ddeea0794ff00ca92aa4ec831c686b85a3a7fa345a45ea66f"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/app/scene.js",
+      "downstream_use": [
+        {
+          "finding": "A02",
+          "decision": "accept lifecycle ownership; restrict stock composition to one page"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/app/controls.js",
+      "bytes": 1849,
+      "sha256": "078aebd7983cff3d5c6973d74d36deb486140e54ab130ce15b4bffb3d68a7d09",
+      "git_blob_sha": "8d9b988b5d11eb5f48496fc123e0879c163d835e",
+      "git_verified": true,
+      "read_scope": "1-90 and lifecycle/export matches",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/app/controls.js",
+        "sha256": "078aebd7983cff3d5c6973d74d36deb486140e54ab130ce15b4bffb3d68a7d09"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/app/controls.js",
+      "downstream_use": [
+        {
+          "finding": "A02",
+          "decision": "accept lifecycle ownership; restrict stock composition to one page"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/styles/thermal.js",
+      "bytes": 14317,
+      "sha256": "3d70fc4f9af7976923d33339af4d3b38a7ca86cc0f7f496a86b3e0b9a0264940",
+      "git_blob_sha": "fe0796810a7c89a2b2c98d21d1521a13de3e9cec",
+      "git_verified": true,
+      "read_scope": "1-48,187-290",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/styles/thermal.js",
+        "sha256": "3d70fc4f9af7976923d33339af4d3b38a7ca86cc0f7f496a86b3e0b9a0264940"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/styles/thermal.js",
+      "downstream_use": [
+        {
+          "finding": "A08",
+          "decision": "preserve observation/reference/simulation/stylization distinctions"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "README.md",
+      "bytes": 54391,
+      "sha256": "eac4feae53e21a0f5e876d630615b048b4db07886ef88505c70e3845ba90046f",
+      "git_blob_sha": "88690d52f4ad5581d5b1d0a25171bc2831969238",
+      "git_verified": true,
+      "read_scope": "1-70 plus provider, simulation, thermal, security and media-rights search matches",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "README.md",
+        "sha256": "eac4feae53e21a0f5e876d630615b048b4db07886ef88505c70e3845ba90046f"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/README.md",
+      "downstream_use": [
+        {
+          "finding": "A08",
+          "decision": "preserve observation/reference/simulation/stylization distinctions"
+        },
+        {
+          "finding": "A09",
+          "decision": "separate code license, dependency notices, assets and provider terms"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "build/vite.js",
+      "bytes": 1864,
+      "sha256": "89cafe3f1536fe188c906933995b09be9feae5afa3bab075a0521623206be670",
+      "git_blob_sha": "cdff4a27ca762801f34bbee7de6273ef89e079d7",
+      "git_verified": true,
+      "read_scope": "FULL",
+      "retrieval": "exact-commit raw source fetched into tool memory; zero persisted source bytes",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "build/vite.js",
+        "sha256": "89cafe3f1536fe188c906933995b09be9feae5afa3bab075a0521623206be670"
+      },
+      "url": "https://github.com/erpzz/gods-eye-view/blob/81eb44340d90feda5b5283438f6e5fdad5cabbdd/build/vite.js",
+      "downstream_use": [
+        {
+          "finding": "A03",
+          "decision": "separate local settings defense and provider broker from multiuser authorization"
+        }
+      ],
+      "read_history": "R15-AUDIT actual same-handle prework; reused not reread wholesale",
+      "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "path": "src/search/index.js",
+      "bytes": 797,
+      "sha256": "a66a14e0ba245389a53efd9a9605f810647a7e99b0404160cbb5ed3a056a65e6",
+      "git_blob_sha": "eb0e727ccd90013c5577d462553ec38c664c1e3d",
+      "git_verified": true,
+      "read_scope": "FULL in R15 assignment",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/search/index.js"
+      },
+      "downstream_use": "GEV_AUDIT A10; keyless search may use public endpoints, require local-only provider injection/egress proof"
+    },
+    {
+      "path": "src/search/defaults.js",
+      "bytes": 3793,
+      "sha256": "01e810ee84a1c4b883430053934eb980aabc63ab5e523980899a45e02c41bd56",
+      "git_blob_sha": "2b04280259eee219365b0084ce4982f11f57fbbe",
+      "git_verified": true,
+      "read_scope": "FULL in R15 assignment",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/search/defaults.js"
+      },
+      "downstream_use": "GEV_AUDIT A10; keyless search may use public endpoints, require local-only provider injection/egress proof"
+    },
+    {
+      "path": "src/search/coordinateGeocoder.js",
+      "bytes": 1717,
+      "sha256": "5b18e27cf0639cbe0cb55652ba3ac2ffa48538a1d92663cae375e165993e869a",
+      "git_blob_sha": "265a0e12ca6d797edac8c67b7ac0f85b6e20e4b5",
+      "git_verified": true,
+      "read_scope": "FULL in R15 assignment",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/search/coordinateGeocoder.js"
+      },
+      "downstream_use": "GEV_AUDIT A10; keyless search may use public endpoints, require local-only provider injection/egress proof"
+    },
+    {
+      "path": "src/search/presetGeocoder.js",
+      "bytes": 3549,
+      "sha256": "63f38eba722777cef02ef9e699778df0afeb15e2c6f9a101c7289ea2ccde8b60",
+      "git_blob_sha": "f0e192c98c8691cc7362b2a59dbc5093217af45c",
+      "git_verified": true,
+      "read_scope": "FULL in R15 assignment",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/search/presetGeocoder.js"
+      },
+      "downstream_use": "GEV_AUDIT A10; keyless search may use public endpoints, require local-only provider injection/egress proof"
+    },
+    {
+      "path": "src/search/placeSearch.js",
+      "bytes": 2213,
+      "sha256": "a817bf9f3a850c4bf09a4707c3976b46feb9e4708bc29416ddf8e928d0a40511",
+      "git_blob_sha": "664e5f9af3cd1a929bba56e546fd08b139c618eb",
+      "git_verified": true,
+      "read_scope": "FULL in R15 assignment",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/gods-eye-view",
+        "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+        "path": "src/search/placeSearch.js"
+      },
+      "downstream_use": "GEV_AUDIT A10; keyless search may use public endpoints, require local-only provider injection/egress proof"
+    }
+  ],
+  "source_read_extent": {
+    "prework_files": 50,
+    "additional_full_files": 5,
+    "total_unique_files": 55,
+    "cache_files_not_all_read": 241,
+    "prior_extra_memory_only_files": 11,
+    "prior_extra_memory_only_bytes": 113508,
+    "new_persisted_third_party_source_bytes": 0,
+    "public_HTTP_documentation": "Current primary docs, raw license texts and release metadata only; no live feed payloads or media",
+    "not_claimed": "No complete repository/dependency/rights audit or running UI inspection"
+  },
+  "governing_inputs_reused": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281",
+      "bytes": 4318,
+      "read_scope": "FULL",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": "AGENTS.md"
+      }
+    },
+    {
+      "path": "START_HERE.md",
+      "sha256": "aec6a160969d1ade3725f262f7bca76fead1a34730d6cda299b4cc018f64de7c",
+      "bytes": 4413,
+      "read_scope": "first65 lines",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": "START_HERE.md"
+      }
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "sha256": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc",
+      "bytes": 1512,
+      "read_scope": "FULL",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": "PRECEDENCE.md"
+      }
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "sha256": "bf4745153beff5687207f8e733809567e72080f0645241a1840c2cfb13a4ae16",
+      "bytes": 3781,
+      "read_scope": "first55 lines",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": "CURRENT_STATUS.md"
+      }
+    },
+    {
+      "path": ".codex/agents/haven_researcher.toml",
+      "sha256": "877878aedac04b2e8b599c0968de95d755abecc60032ad77a11b8585d9e09c6f",
+      "bytes": 1398,
+      "read_scope": "FULL",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": ".codex/agents/haven_researcher.toml"
+      }
+    },
+    {
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+      "bytes": 5980,
+      "read_scope": "FULL, re-read in current R15-AUDIT assignment",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": "orchestration/RI-01/AUTHORIZATION.md"
+      }
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+      "bytes": 7504,
+      "read_scope": "FULL",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": "orchestration/RI-01/PROTOCOL.md"
+      }
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "bytes": 5286,
+      "read_scope": "FULL, re-read in current R15-AUDIT assignment",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": "orchestration/RI-01/VISION.md"
+      }
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "bytes": 9910,
+      "read_scope": "prior actual read same native context; current hard gate root dispatch",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": "orchestration/RI-01/MULTIMODAL.md"
+      }
+    },
+    {
+      "path": "orchestration/RI-01/TEMPLATES.md",
+      "sha256": "7296a0c3b73437cae992788eea49bc6de1f693dc2198147a38fb729861529ae2",
+      "bytes": 4258,
+      "read_scope": "prior actual read same native context",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": "orchestration/RI-01/TEMPLATES.md"
+      }
+    },
+    {
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+      "bytes": 12968,
+      "read_scope": "current R15/MM-FUSION sections plus prior actual read",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": "376031e182c57495912baf6727093b0b188da568",
+        "path": "orchestration/RI-01/RESEARCH_QUEUE.md"
+      }
+    },
+    {
+      "path": "inputs/incoming/referenced/prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md",
+      "sha256": "868a9dd4aa72c490fc3e417871c57a53a3110bf113ecfa09e7f0db84e7c1b758",
+      "bytes": 32045,
+      "read_scope": "sections1-4 source audit; output beyond scoped sections truncated, not full survey receipt",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md"
+      }
+    },
+    {
+      "path": "inputs/R15-fork/PIN.json",
+      "sha256": "d73e10cce505f2ee240cc4afa61e2e10469c1283e7ba449107d1212c3f32451d",
+      "bytes": 1078,
+      "read_scope": "FULL",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/R15-fork/PIN.json"
+      }
+    },
+    {
+      "path": "inputs/R15-fork/TREE.json",
+      "sha256": "83c360ceee68a6a7375f398805124fcaba7f04561a20580672d76d81818e22b2",
+      "bytes": 381420,
+      "read_scope": "JSON parsed for exact paths/blob identity; not all contents semantically read",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/R15-fork/TREE.json"
+      }
+    },
+    {
+      "path": "inputs/R15-fork/SOURCE_CACHE_MANIFEST.json",
+      "sha256": "3682ca951b1b97f0cb3d5cea8561cc1998f7b6729b762a7960c1b6cc11e9ce16",
+      "bytes": 57287,
+      "read_scope": "metadata/paths, original151file identity inventory",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/R15-fork/SOURCE_CACHE_MANIFEST.json"
+      }
+    },
+    {
+      "path": "inputs/R15-fork/SOURCE_CACHE_SUPPLEMENT-1.json",
+      "sha256": "594601214090c268c771f8b7c556d81e125680c169d3fe0e6f6d8ee9194175af",
+      "bytes": 34492,
+      "read_scope": "metadata/paths, supplement90file inventory",
+      "use": "governing constraints or frozen source identity; not substantive acceptance",
+      "source_ref": {
+        "repo": "https://github.com/erpzz/haven",
+        "commit": null,
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/R15-fork/SOURCE_CACHE_SUPPLEMENT-1.json"
+      }
+    }
+  ],
+  "consultations": [
+    {
+      "question_id": "Q-R15AUDIT-H04-01",
+      "asked_by": "/root/ri01_runtime_probe via root",
+      "answered_by": "actual R03 author via root relay",
+      "status": "attributed peer contract advice; not code review or schema approval",
+      "question": "Must shared scene/Director restoration be untrusted presentation intent requiring fresh I01/I06 source/audience admission, never transferable authority?",
+      "answer": "Yes. New private release/replay requires complete current influencing-source/grant/rights/purpose/session/device/audience/destination/route/provider/cancel closure and exact-output admission/fresh consumption. Historical receipts cannot remint permits/refund use. Plain scene/view import into intact authority does not itself rotate authority/restore epoch; authority/evidence persistence rollback or lost continuity is a distinct restore protocol. Embedded grants/permits/jobs cannot resume by import.",
+      "downstream_section": "A06",
+      "decision": "ACCEPT_AS_PROVISIONAL_DESIGN_BOUNDARY",
+      "implementation_claim": "NONE",
+      "resolution": "REUSED with exact view-import versus authority-store-restore distinction; not implementation approval"
+    },
+    {
+      "question_id": "Q-R15-MMF-01",
+      "asked_by": "/root/ri01_runtime_probe via root",
+      "answered_by": "actual MM-FUSION author via root",
+      "answer": "F01/F02/F03 preserved in F08; missing essential semantics omit claim or safe table; mandatory digest-bound sidecar; current authority on import",
+      "resolution": "Initial draft advice superseded by exact independently accepted F08 and full review; MF-L01 retained"
+    },
+    {
+      "question_id": "MANAGER_CORE_DELTA",
+      "asked_by": "/root/night01_review via root",
+      "answer": "NO_CORE_SEMANTIC_CHANGE; profile consumers and first whole-output bounds unchanged",
+      "resolution": "CONTRACTS_AND_TRUST and final HANDOFF"
+    }
+  ],
+  "external_sources": "SOURCES_AND_COSTS URLs, exact queried versions and access date; no fabricated response-byte hashes",
+  "missing_inputs": [
+    "Original H00 R02 review and later R1 review remain missing from campaign; not reconstructed or needed to replace accepted CORE",
+    "No approved exact live-feed snapshot, qualified app build/egress capture, device/model run or human trial exists in this task"
+  ],
+  "actual_vs_proposed": {
+    "actual": [
+      "Source/documentation inspection and identity checks",
+      "Substantive design, cost comparison,30case proposal and frozen source ledger",
+      "Accepted hard-input reconciliation and author correction of reviewer-found A02"
+    ],
+    "proposed": [
+      "All implementation, installs, feeds, model/device operation, human comparison and deployments"
+    ]
+  }
+}

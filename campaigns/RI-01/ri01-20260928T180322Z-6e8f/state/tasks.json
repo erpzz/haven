@@ -1085,7 +1085,7 @@
       ],
       "kind": "research",
       "research": "R15",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/ri01_runtime_probe",
       "attempt_count": 1,
       "started_at": "2026-09-29T00:32:22.314486+00:00",
@@ -1116,16 +1116,65 @@
           "review_sha256": null
         }
       ],
-      "phase": "PRELIMINARY",
+      "phase": "ALL_HARD_INPUTS_ACCEPTED_BEFORE_FREEZE",
       "initial_ready_hard": [
         "CORE",
         "R07",
         "R01"
       ],
-      "pending_hard": [
-        "MM-FUSION"
+      "pending_hard": [],
+      "completion_gate": "All original hard inputs accepted at exact revisions before freeze; initial scope limited to independent sections under MASTER_PROMPT split-preliminary rule and RUNTIME hard-input completion gate.",
+      "final_hard_inputs": [
+        {
+          "task_id": "CORE",
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+          "review_path": "reviews/VISION-ARCH/REVIEW.md",
+          "review_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        },
+        {
+          "task_id": "R07",
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+          "review_path": "reviews/REVIEW-R07/REVIEW.md",
+          "review_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        },
+        {
+          "task_id": "MM-FUSION",
+          "path": "research/MM-FUSION/REPORT.md",
+          "sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3",
+          "review_path": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+          "review_sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd"
+        },
+        {
+          "task_id": "R01",
+          "path": "research/R01/REPORT.md",
+          "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+          "review_path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "review_sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        }
       ],
-      "completion_gate": "All original hard inputs accepted at exact revisions before freeze; initial scope limited to independent sections under MASTER_PROMPT split-preliminary rule and RUNTIME hard-input completion gate."
+      "completed_at": "2026-09-29T01:03:35.853890+00:00",
+      "artifact": "research/R15/INTEGRATION_SUMMARY.md",
+      "artifact_sha256": "b4a58e054c6304ed1c6fd7c83a2fe12eec89fb85fd516ec3ec53334b39b9bc12",
+      "manifest": "research/R15/HANDOFF_MANIFEST.json",
+      "manifest_sha256": "6620628821e093c9585e920fce241044f0aa697c29b7942d3f7c3b7017d4314c",
+      "accepted_at": "2026-09-29T01:12:46.423220+00:00",
+      "acceptance_scope": "ACCEPT_FOR_SYNTHESIS frozen full R15 plus corrected R15-AUDIT composite.14payloads37inputs241cachedsourceidentities and102REQ102AT32EX preserved. NO_APPLICATION_CODE_CHANGED; no execution or implementation authorization.",
+      "review_artifact": "reviews/REVIEW-R15/REVIEW.md",
+      "review_sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6",
+      "reviewer": "/root/ri01_code_review",
+      "open_findings": [
+        {
+          "id": "R15-C01",
+          "severity": "SOURCE_CORRECTION",
+          "disposition": "CLOSED only by consuming R15/AUDIT_CORRECTIONS.md with immutable preliminary audit; original A02 alone remains inaccurate."
+        },
+        {
+          "id": "R15-PRE-RUN",
+          "disposition": "Exact dependency/asset rights, lifecycle/zero-egress proof, independent oracle, current authority, bounded adapter, F08/MF-L01 and actual-code review remain future gates."
+        }
+      ]
     },
     {
       "id": "SYNTHESIS",
@@ -1151,13 +1200,14 @@
         "CODE-0"
       ],
       "kind": "integration",
-      "status": "RUNNING",
+      "status": "DRAFT_READY",
       "actual_agent_id": "/root/night01_review",
       "attempt_count": 1,
       "started_at": "2026-09-29T00:36:42.777813+00:00",
       "allowed_output_prefix": "integration/final-v1",
       "budgets": {
-        "minutes": 35
+        "minutes": 35,
+        "same_assignment_finish_by": "2026-09-29T01:20:00Z"
       },
       "hard_inputs": [
         {
@@ -1252,7 +1302,7 @@
           "review_sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
         }
       ],
-      "phase": "PRELIMINARY",
+      "phase": "ALL_HARD_INPUTS_ACCEPTED_BEFORE_FREEZE",
       "initial_ready_hard": [
         "R01",
         "R02-P01",
@@ -1268,11 +1318,121 @@
         "R12",
         "R14"
       ],
-      "pending_hard": [
-        "R15",
-        "MM-FUSION"
+      "pending_hard": [],
+      "completion_gate": "All original hard inputs accepted at exact revisions before freeze; initial scope limited to independent sections under MASTER_PROMPT split-preliminary rule and RUNTIME hard-input completion gate.",
+      "budget_update": "Root extended current active scope only to consume final hard R15 input; no new research/rerun, original launch ceilings unchanged.",
+      "final_hard_inputs": [
+        {
+          "task_id": "R01",
+          "path": "research/R01/REPORT.md",
+          "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+          "review_path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "review_sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        },
+        {
+          "task_id": "R02-P01",
+          "path": "research/R02-P01/REPORT.md",
+          "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+          "review_path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "review_sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        },
+        {
+          "task_id": "R03",
+          "path": "research/R03/REPORT.md",
+          "sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+          "review_path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "review_sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        },
+        {
+          "task_id": "R04",
+          "path": "research/R04/REPORT.md",
+          "sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+          "review_path": "reviews/REVIEW-R04/REVIEW.md",
+          "review_sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956"
+        },
+        {
+          "task_id": "R05",
+          "path": "research/R05/REPORT.md",
+          "sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1",
+          "review_path": "reviews/REVIEW-R05/REPORT.md",
+          "review_sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7"
+        },
+        {
+          "task_id": "REV-R06",
+          "path": "reviews/REV-R06/REVIEW.md",
+          "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+          "review_path": null,
+          "review_sha256": null
+        },
+        {
+          "task_id": "R07",
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+          "review_path": "reviews/REVIEW-R07/REVIEW.md",
+          "review_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        },
+        {
+          "task_id": "R08-P00",
+          "path": "research/R08-P00/REPORT.md",
+          "sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7",
+          "review_path": "reviews/REVIEW-R08-P00/REVIEW.md",
+          "review_sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+        },
+        {
+          "task_id": "R09",
+          "path": "research/R09/REPORT.md",
+          "sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb",
+          "review_path": "reviews/REVIEW-R09/REVIEW.md",
+          "review_sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81"
+        },
+        {
+          "task_id": "R10",
+          "path": "research/R10/REPORT.md",
+          "sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+          "review_path": "reviews/REVIEW-R10/REVIEW.md",
+          "review_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8"
+        },
+        {
+          "task_id": "R11",
+          "path": "research/R11-public-v1/REPORT.md",
+          "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+          "review_path": "reviews/REVIEW-R11/CLOSURE-1.md",
+          "review_sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef"
+        },
+        {
+          "task_id": "R12",
+          "path": "research/R12/REPORT.md",
+          "sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+          "review_path": "reviews/REVIEW-R12/REVIEW.md",
+          "review_sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600"
+        },
+        {
+          "task_id": "R14",
+          "path": "research/R14/R14_HANDOFF.md",
+          "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
+          "review_path": "reviews/REVIEW-R14/REVIEW.md",
+          "review_sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
+        },
+        {
+          "task_id": "R15",
+          "path": "research/R15/INTEGRATION_SUMMARY.md",
+          "sha256": "b4a58e054c6304ed1c6fd7c83a2fe12eec89fb85fd516ec3ec53334b39b9bc12",
+          "review_path": "reviews/REVIEW-R15/REVIEW.md",
+          "review_sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6"
+        },
+        {
+          "task_id": "MM-FUSION",
+          "path": "research/MM-FUSION/REPORT.md",
+          "sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3",
+          "review_path": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+          "review_sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd"
+        }
       ],
-      "completion_gate": "All original hard inputs accepted at exact revisions before freeze; initial scope limited to independent sections under MASTER_PROMPT split-preliminary rule and RUNTIME hard-input completion gate."
+      "completed_at": "2026-09-29T01:18:50.294557+00:00",
+      "artifact": "integration/final-v1/ARCHITECTURE.md",
+      "artifact_sha256": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
+      "manifest": "integration/final-v1/MANIFEST.json",
+      "manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b"
     },
     {
       "id": "R13",
@@ -1953,7 +2113,7 @@
       "role": "Source integration specialist",
       "kind": "source_audit_prework",
       "actual_agent_id": "/root/ri01_runtime_probe",
-      "status": "DRAFT_READY",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "attempt_count": 1,
       "started_at": "2026-09-28T21:00:00.082064+00:00",
       "allowed_output_prefix": "research/R15-AUDIT",
@@ -1965,7 +2125,21 @@
       "artifact": "research/R15-AUDIT/SOURCE_AUDIT.md",
       "artifact_sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74",
       "manifest": "research/R15-AUDIT/MANIFEST.json",
-      "manifest_sha256": "f29e746157d7d04f5c0c9cf38210872a84ace1351b5cc63b1600c1f70eb71a1a"
+      "manifest_sha256": "f29e746157d7d04f5c0c9cf38210872a84ace1351b5cc63b1600c1f70eb71a1a",
+      "accepted_at": "2026-09-29T01:12:46.423220+00:00",
+      "acceptance_scope": "ACCEPT_FOR_SYNTHESIS ONLY AS CORRECTED COMPOSITE: original audit plus research/R15/AUDIT_CORRECTIONS.md and GEV_AUDIT.md. Original A02 reverse-order claim superseded; no original-byte rewrite or standalone accuracy acceptance.",
+      "review_artifact": "reviews/REVIEW-R15/REVIEW.md",
+      "review_sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6",
+      "reviewer": "/root/ri01_code_review",
+      "open_findings": [],
+      "closure_artifact": "research/R15/AUDIT_CORRECTIONS.md",
+      "closure_sha256": "523e1e24632021f9afc892d479399d69b2959d5e2125aa260752855d6f9c3a09",
+      "must_consume_composite": [
+        "research/R15-AUDIT/SOURCE_AUDIT.md",
+        "research/R15/AUDIT_CORRECTIONS.md",
+        "research/R15/GEV_AUDIT.md",
+        "reviews/REVIEW-R15/REVIEW.md"
+      ]
     },
     {
       "id": "REVIEW-R14",
@@ -2103,7 +2277,7 @@
       "role": "haven_research_reviewer_and_code_specialist",
       "kind": "review",
       "actual_agent_id": "/root/ri01_code_review",
-      "status": "RUNNING",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "attempt_count": 1,
       "started_at": "2026-09-29T00:57:01.396026+00:00",
       "allowed_output_prefix": "reviews/REVIEW-R15/",
@@ -2127,7 +2301,16 @@
         }
       ],
       "initial_scope": "Review immutable R15-AUDIT and accepted MM-FUSION while full R15 closes its hard input; no final review before full R15 freeze.",
-      "completion_gate": "Exact full R15 frozen manifest supplied by root, consumed and independently reviewed together with load-bearing R15-AUDIT before final disposition."
+      "completion_gate": "Exact full R15 frozen manifest supplied by root, consumed and independently reviewed together with load-bearing R15-AUDIT before final disposition.",
+      "full_handback_received_at": "2026-09-29T01:04:51.607035+00:00",
+      "full_handback_manifest": {
+        "path": "research/R15/HANDOFF_MANIFEST.json",
+        "sha256": "6620628821e093c9585e920fce241044f0aa697c29b7942d3f7c3b7017d4314c"
+      },
+      "completed_at": "2026-09-29T01:12:46.423220+00:00",
+      "artifact": "reviews/REVIEW-R15/REVIEW.md",
+      "artifact_sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6",
+      "review_disposition": "ACCEPT_FOR_SYNTHESIS ONLY AS CORRECTED COMPOSITE: original audit plus research/R15/AUDIT_CORRECTIONS.md and GEV_AUDIT.md. Original A02 reverse-order claim superseded; no original-byte rewrite or standalone accuracy acceptance."
     }
   ]
 }

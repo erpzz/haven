@@ -1,10 +1,6 @@
 {
-  "recorded_at": "2026-09-29T00:58:14.268705+00:00",
+  "recorded_at": "2026-09-29T01:18:50.294557+00:00",
   "ready": [],
-  "active": [
-    "R15",
-    "SYNTHESIS",
-    "REVIEW-R15"
-  ],
+  "active": [],
   "rule": "Do not bypass exact independent review gates; retain hard versus soft distinction."
 }
