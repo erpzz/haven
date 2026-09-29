@@ -1,0 +1,456 @@
+{
+  "schema": "ip01.integration.input-use.v1",
+  "assignment": 18,
+  "status": "PREPARATION_ONLY",
+  "candidate_commit": "487c67299445a29e0fbbdede04259565f741f587",
+  "captured_at": "2026-09-29T07:48:59.1480320Z",
+  "hard_dependency": "FINAL-EXECUTION17_ACTUAL_HANDOFF_PENDING_ROOT_RELAY",
+  "protected_expected_assets_read": false,
+  "independent_acceptance": false,
+  "inputs": [
+    {
+      "path": ".codex/agents/haven_integration_manager.toml",
+      "sha256_worktree": "ea5ff7331942d843feaad7067d672e89ba7adb69f2ba6fd56255da83708d34e3",
+      "bytes": 1283,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Role boundary; separate H00, no source execution or self-acceptance",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/WORK_PACKAGE.md",
+      "sha256_worktree": "0c833df829b7c92df8412bc022b42906c4b50492ff1989fe7e869bbd0a466a6f",
+      "bytes": 27779,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Current scoped operational authority and budgets; no canonical qualification",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/START_HERE.md",
+      "sha256_worktree": "5ef191208eeda9e9e05f0f9785f853b012a71c690c9d9ed957fc1fde23ff89de",
+      "bytes": 5701,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Current role/publication amendment; root distinct",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/ROLE_MAP.md",
+      "sha256_worktree": "bc39d8382f4da24f0c96fc9b91a2dcd04fec99341650407dfa6123759c022998",
+      "bytes": 5830,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Owners, independence and fallback limitations",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "orchestration/RI-01/MASTER_PROMPT.md",
+      "sha256_worktree": "d102519c6b871470601f88c01e649f7487c7c522712fd7d9c5728b5d8d59e722",
+      "bytes": 10671,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Previously read integration instructions; additive scope",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "sha256_worktree": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+      "bytes": 7504,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Previously read exact input use and actual consultation rules",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "sha256_worktree": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "bytes": 5286,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "V01-V16 retained anchors",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "sha256_worktree": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "bytes": 9910,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Previously read modality inspection and claim-class limitations",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/COVERAGE.md",
+      "sha256_worktree": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "bytes": 21724,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Original REQ/AT identifiers; intended targets not implemented acceptance",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/RETAINED_SCOPE.json",
+      "sha256_worktree": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116",
+      "bytes": 492384,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Exact102REQ/102AT/32EX and Gen0 retention by reference",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/VISION_COVERAGE.md",
+      "sha256_worktree": "a19dc834e0a043f985cb7dc010775a7c1a637d964175a08e5d068fcda37317c1",
+      "bytes": 7814,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Owner mapping and five useful journeys retained",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/CONTRACTS.md",
+      "sha256_worktree": "cb6cea47fb00aba89da234da620b3fb3bd240c2a10e314bcc81cbfa647cc4be7",
+      "bytes": 20609,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Previously read accepted I01-I07 semantics reused through SEAM",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/CONTRACT_CROSSWALK.md",
+      "sha256_worktree": "0ee3d9eb32f8d87f6d3d8b74cf310f0c4f7632f695f8f15a4b09776792584ea8",
+      "bytes": 5794,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Original contract names and CR-R02 mapping reused",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/MANIFEST.json",
+      "sha256_worktree": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+      "bytes": 4692,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Frozen inherited synthesis identity; not runtime acceptance",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/AMENDMENT.md",
+      "sha256_worktree": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "bytes": 15080,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Previously read once-only joint finite-grant charge, fixed claim and no refund",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R03/CLOSURE-1.md",
+      "sha256_worktree": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "bytes": 4691,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Previously read actual independent contract closure, not implementation PASS",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/AMENDMENT.md",
+      "sha256_worktree": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "bytes": 13519,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Previously read four orthogonal receipt/eligibility records",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R02-P01/CLOSURE-1.md",
+      "sha256_worktree": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+      "bytes": 3964,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Previously read accepted composite and retained limitations",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/inputs/SOURCE_IDENTITY.json",
+      "sha256_worktree": "0889a0abdea1885ce22b98c6c01934925fd8dc9beb9dc367955d6531372d95af",
+      "bytes": 19369,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Root exact Git-byte input registry; no new Git claims",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/SEAM.md",
+      "sha256_worktree": "09380772d5e19838950d94e4cf94e682fc41d65fed217f8587d2e53b579b0985",
+      "bytes": 25967,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Callable/file ownership/HTTP/once-only presentation decisions",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/EGRESS_AMENDMENT.md",
+      "sha256_worktree": "46620137b8ff8bde83340b922c856a158c264a6e7639178bd974a1dc00726820",
+      "bytes": 17202,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Q-CODE-EARLY-01, CE-F01/F03/F06 and E1-E3/T1-T2/S1 obligations",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/CODE-EARLY/CODE_EARLY_REVIEW.md",
+      "sha256_worktree": "28e4876f764a6efd30b339316afb36505d8b3729ead38456563c77fea232d1a0",
+      "bytes": 12025,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Previously read actual independent six findings, no self-closure",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/APP_FIX_HANDOFF.md",
+      "sha256_worktree": "130389776e1c5cd3baee4abdc86adada1565a12af542264e98aad4a1b347432c",
+      "bytes": 8009,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Attributed APP repair/adoption and development evidence",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/RUNTIME_FIX_HANDOFF.md",
+      "sha256_worktree": "f2ec6b0699bf4a5da7d11ec96ee1d218df17c4470ffd44ab88e947da52b12459",
+      "bytes": 11209,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Attributed runtime repair/adoption, FILETIME reconciliation and limitations",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/FINAL_CANDIDATE_01.json",
+      "sha256_worktree": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+      "bytes": 16907,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Exact37-file candidate freeze; compared all current bytes",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json",
+      "sha256_worktree": "97d393c974d23e9685854002aa562813b033366d5c21cf7411d9e6b344aeb248",
+      "bytes": 13842,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Independent final composite, strata, failures and3of3 starts",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/LIFECYCLE_RESULTS.json",
+      "sha256_worktree": "97c4818b86f12cdf18f24e8c9bc7fbf33777faccc7feec8b448bba711151d9d0",
+      "bytes": 4615,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "L2 real cancel; L3/L4 timeout not exercised; dated report not final totals",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/FINAL-QA/READINESS_RESULTS.json",
+      "sha256_worktree": "9b1ab3b45a14c2a593a4b78ca938424c8d3bb64e8c7c4ce18a61e0ff0b218fdc",
+      "bytes": 6034,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Actual B1 useful result and B2 no-release failure; no pass laundering",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/TASK17_BROWSER_HARNESS_RECONCILIATION.json",
+      "sha256_worktree": "d1d2c67f0ab45aa1acf339c0ad6e044c9a990985167806ff105c0ca54af307dc",
+      "bytes": 1386,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Original zero-admission failure and versioned driver correction",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/TASK17_B2_RESULT_RECONCILIATION.json",
+      "sha256_worktree": "91a4be94343bd166c4db53c39c4badd927a8e45507d26396086624de3afe5e53",
+      "bytes": 1704,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Root separates operational eligibility from failed B2 comparison",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/MODEL_PREPARATION.md",
+      "sha256_worktree": "67cbb253d690680fbef6bc62c28854847537e1a874f173a98f91659575e37f3e",
+      "bytes": 12411,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Pinned artifact/runtime/envelope; historical preparation counts not current",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/MODEL-QA/NATIVE_HANDBACK.md",
+      "sha256_worktree": "91af989d19dfb36945c5b082933900001f4cb1e9eb446c1ff0fdf5af6177b3d9",
+      "bytes": 4462,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Historical independent semantic/pixel review and word-bound failure retained",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/MODEL-EXECUTION/L1_RESULT.json",
+      "sha256_worktree": "fbced2b4f2192e2a3608f9141fa7e2d6abcbe6e5c826c6ce7bbe2b3ba0b603a0",
+      "bytes": 757,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Actual L1 cancellation0.156s; no replay",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/MODEL-EXECUTION/EXECUTION_RESULTS.json",
+      "sha256_worktree": "ccc1dca4ab8e23f0c5b8e3fec9fb5bd9636997e36e84af7e56c63f2ab7100db8",
+      "bytes": 5520,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "L1 old freeze attribution and source hashes; not blanket final-candidate acceptance",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/ORIGINAL_SOURCE_FINAL_CHECK.json",
+      "sha256_worktree": "8fdaed21d369e526a34fa4000698bf1d29f4d8f214491e338be283e442e18ae4",
+      "bytes": 1997,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "07:18 bounded four-file preservation and ASTRA identity",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/PUBLIC_REPORT_EDITIONS.json",
+      "sha256_worktree": "686ca01c82320c410457258b49794d880f79d9e271800da6c5b446197f6a8391",
+      "bytes": 1988,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Disclosed public path editions without history rewrite",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    },
+    {
+      "path": "labs/ip01/README.md",
+      "sha256_worktree": "f81674e4155c23726f1ed8d1df0fc1aa87e0f551e4de837af1e1b12f95734dca",
+      "bytes": 8317,
+      "disposition": "USED_WITH_STATED_LIMITS",
+      "use": "Actual startup/stop and deterministic/model lifetime distinction",
+      "downstream": [
+        "CONTRACT_CODE_EVIDENCE_MAP.PREPARATION.md",
+        "RETAINED_VISION.PREPARATION.md",
+        "INTEGRATION_HANDOFF.PREPARATION.md"
+      ]
+    }
+  ]
+}

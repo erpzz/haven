@@ -1,0 +1,249 @@
+{
+  "assignment": 17,
+  "status": "SUITE01_FAIL_RETAINED_HARNESS_PATH_CONFIGURATION",
+  "formal_suite_starts": 1,
+  "candidate_commit": "487c67299445a29e0fbbdede04259565f741f587",
+  "source_freeze_sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+  "private_suite_receipt_sha256": "ee9c9f739bc27dea6e586db5c95f8f1c0e25232853d53e7e45a1ef095d7126b6",
+  "source_unchanged": true,
+  "components": [
+    {
+      "component": "independent-main",
+      "wrapper_exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "<evaluator>/final_execution\\deterministic\\run_tests.py",
+        "test_functional.py",
+        "test_backing.py",
+        "test_static_domains.py",
+        "test_bounds.py",
+        "test_code_early.py",
+        "test_extra_bounds.py"
+      ],
+      "receipts": [
+        {
+          "path": "<evaluator>/final_execution\\deterministic\\runs\\20260929T064752.606868Z\\receipt.json",
+          "sha256": "23c980c892a3e7a526d9b4ad5febf8b43b79a1c557d172e1b615ab6205d0467c",
+          "underlying_exit_code": 0,
+          "status": null,
+          "failure": false,
+          "junit": [
+            {
+              "tests": "150",
+              "failures": "0",
+              "errors": "0",
+              "skipped": "0",
+              "time": "32.651"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "component": "app-runtime-seams",
+      "wrapper_exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "<evaluator>/final_execution\\deterministic\\run_tests.py",
+        "test_integration.py"
+      ],
+      "receipts": [
+        {
+          "path": "<evaluator>/final_execution\\deterministic\\runs\\20260929T064827.185710Z\\receipt.json",
+          "sha256": "1fc85350c7f73dcd980a03a8ce0319dea7accc418fa961965e7532310678771d",
+          "underlying_exit_code": 0,
+          "status": null,
+          "failure": false,
+          "junit": [
+            {
+              "tests": "38",
+              "failures": "0",
+              "errors": "0",
+              "skipped": "0",
+              "time": "23.438"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "component": "benign-process-faults",
+      "wrapper_exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "<evaluator>/final_execution\\deterministic\\lifecycle\\run_faults.py"
+      ],
+      "receipts": [
+        {
+          "path": "<evaluator>/final_execution\\deterministic\\lifecycle\\runs\\20260929T064852.091932Z\\receipt.json",
+          "sha256": "03fff78653f8565ae9b7d6cb2c5f6c49cc709affb49c469ec386994597de41c8",
+          "underlying_exit_code": null,
+          "status": null,
+          "failure": false,
+          "case_count": 13,
+          "all_pass": true
+        }
+      ]
+    },
+    {
+      "component": "lifecycle-evidence-oracle",
+      "wrapper_exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "<evaluator>/final_execution\\deterministic\\lifecycle\\verify_oracle.py",
+        "20260929T064852.091932Z"
+      ],
+      "receipts": [
+        {
+          "path": "<evaluator>/final_execution\\deterministic\\lifecycle\\runs\\oracle-20260929T064900.351033Z\\receipt.json",
+          "sha256": "cd4340a5b93f1f591105b3ff412bcdc9c3dff463be6a5d88e6bd06c1a6d6f452",
+          "underlying_exit_code": 0,
+          "status": null,
+          "failure": false,
+          "junit": [
+            {
+              "tests": "21",
+              "failures": "0",
+              "errors": "0",
+              "skipped": "0",
+              "time": "0.131"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "component": "browser-session-races",
+      "wrapper_exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "<evaluator>/final_execution\\deterministic\\live_session_race.py"
+      ],
+      "receipts": [
+        {
+          "path": "<evaluator>/final_execution\\deterministic\\session_race_runs\\20260929T064901.393057Z\\receipt.json",
+          "sha256": "a7b34bb6b50ed0affd909c3f2afc664f44f9cba5d52288904b9ea2c246048f6b",
+          "underlying_exit_code": null,
+          "status": null,
+          "failure": false,
+          "case_count": 2,
+          "all_pass": null
+        }
+      ]
+    },
+    {
+      "component": "browser-journey",
+      "wrapper_exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "<evaluator>/final_execution\\deterministic\\live_browser.py"
+      ],
+      "receipts": [
+        {
+          "path": "<evaluator>/final_execution\\deterministic\\live_runs\\20260929T064913.670540Z\\receipt.json",
+          "sha256": "e431180670bb5bb3f37935138b3b1a9cd0e1bbb25b7b600724a5c93c04399212",
+          "underlying_exit_code": null,
+          "status": "PASS",
+          "failure": false
+        }
+      ]
+    },
+    {
+      "component": "browser-image-crash",
+      "wrapper_exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "<evaluator>/final_execution\\deterministic\\live_crash_image.py"
+      ],
+      "receipts": [
+        {
+          "path": "<evaluator>/final_execution\\deterministic\\crash_image_runs\\20260929T064935.542905Z\\receipt.json",
+          "sha256": "8020fb7c1f8a08dc4521f375a957b380d6f7c6474e2a38a62c8b3d145968209e",
+          "underlying_exit_code": null,
+          "status": "PASS",
+          "failure": false
+        }
+      ]
+    },
+    {
+      "component": "producer-regression",
+      "wrapper_exit_code": 1,
+      "status": "FAILED",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\tests\\app",
+        "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\tests\\runtime",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "<evaluator>/final_execution\\suites\\suite-01\\producer-tmp",
+        "--junitxml",
+        "<evaluator>/final_execution\\suites\\suite-01\\producer-junit.xml"
+      ],
+      "receipts": []
+    }
+  ],
+  "independent_main_passed": 150,
+  "app_runtime_seams_passed": 38,
+  "benign_process_faults_passed": 13,
+  "evidence_oracle_checks_passed": 21,
+  "browser_session_races_passed": 2,
+  "actual_browser_journey": "PASS",
+  "actual_browser_image_crash": "PASS",
+  "producer_regression": {
+    "passed": 76,
+    "setup_errors": 145,
+    "pytest_exit_code": 1,
+    "junit": [
+      {
+        "tests": "221",
+        "failures": "0",
+        "errors": "145",
+        "skipped": "0",
+        "time": "16.040"
+      }
+    ],
+    "all_setup_errors_same_guard": true,
+    "error": "Runtime state must stay in the assigned private runtime or evaluator sibling"
+  },
+  "classification": "HARNESS_CONFIGURATION_ERROR: producer --basetemp was under suite evidence rather than imported snapshot/.ip01-runtime. Candidate runtime guard correctly rejected fixture creation; no candidate code defect established.",
+  "smallest_repair": "A separately authorized affected recheck with --basetemp <snapshot>/.ip01-runtime/final-producer-suite02. Preserve suite01, candidate and immutable original harness. Count next formal start globally.",
+  "retry_performed": false,
+  "harness_edits_performed": false,
+  "real_model_calls": 0,
+  "independent_max_worker_stop_seconds": 0.23500000000058208,
+  "worker_stop_target_seconds": 3,
+  "app_stop_target_seconds": 20,
+  "ownership_audit": {
+    "captured": 471,
+    "residual": 0,
+    "task_path_processes": 0
+  },
+  "pixel_inspection": "SUITE01_PIXEL_INSPECTION.json",
+  "retained_scope_limits": [
+    "104 vector checks are76 backing/config and28 constant faults, not104 HTTP workflows",
+    "38seam cases use synthetic transport/artifacts and actual adapters; zero real-model ledger claims",
+    "Unknown-cleanup fault withholds confirmation after real OS termination",
+    "Final suite1 overall failed despite seven components passing",
+    "Same-user protected evaluation remains EVALUATION_INCONCLUSIVE"
+  ]
+}

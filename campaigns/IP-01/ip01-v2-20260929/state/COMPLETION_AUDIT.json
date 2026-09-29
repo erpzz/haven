@@ -51,9 +51,10 @@
     {
       "id": "CAMPAIGN-06",
       "requirement": "Original workspace before/after identity unchanged and source-copy hashes",
-      "status": "INITIAL_BASELINE_ONLY_FINAL_RECHECK_PENDING",
+      "status": "OBSERVED_SOURCE_IDENTITIES_UNCHANGED_BOUNDED_COMPARISON",
       "evidence": [
-        "inputs/ORIGINAL_SOURCE_BASELINE.json"
+        "inputs/ORIGINAL_SOURCE_BASELINE.json",
+        "receipts/ORIGINAL_SOURCE_FINAL_CHECK.json"
       ]
     },
     {
@@ -78,228 +79,253 @@
     {
       "id": "APPLICATION-01",
       "requirement": "Python3.12 FastAPI Pydantic2 Jinja2 one Uvicorn SQLite; runnable local server",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "receipts/SKELETON_BROWSER.json",
         "receipts/APP_READY.json",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-02",
       "requirement": "Versioned durable schema: two synthetic people, notes/revisions/grants/lineage/drafts/tasks/jobs/output",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-03",
       "requirement": "Note create/edit/tombstone, explicit share and withdrawal; local draft/task edits",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-04",
       "requirement": "Independent server-side sessions, simulated login visibly labeled",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-05",
       "requirement": "A useful private current-evidence answer; B cannot retrieve private A data",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-06",
       "requirement": "Explicitly shared eligible note supports useful B answer",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-07",
       "requirement": "Complete uncited influencing closure and atomic current retrieval/admission/release checks",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/CODE-EARLY/CODE_EARLY_REVIEW.md",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-08",
       "requirement": "Full AuthorityVector and bounded lab2/32/16/128/depth16/64KiB/256KiB rejection",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/CODE-EARLY/CODE_EARLY_REVIEW.md",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-09",
       "requirement": "Four separate immutable release/consume/append-only delivery/current eligibility records",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-10",
       "requirement": "One finite charge per release, single whole-output destination consume slot",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/CODE-EARLY/CODE_EARLY_REVIEW.md",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-11",
       "requirement": "Concurrent quota, grant deduplication and all-or-none joint-grant transactions",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-12",
       "requirement": "Duplicate/conflict/lost commit/lost consume reply/unknown ACK/replay semantics",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-13",
       "requirement": "Correction/revoke/cancel/expiry fences stale newly released outputs; history retained",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-14",
       "requirement": "Current restart vs rollback: fresh epoch review-only, no old jobs or permits replay",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-15",
       "requirement": "Model route shares authority path and cannot grant identity/tools",
-      "status": "AMENDED_SEAM_SYNTHETIC_INTEGRATION_AND_ACTUAL_TEXT_CANCEL_EXECUTED_FINAL_REAL_ANSWER_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
         "reviews/MODEL-EXECUTION/LIFECYCLE_PHASE_PARTIAL.json",
-        "integration/EGRESS_AMENDMENT.md"
+        "integration/EGRESS_AMENDMENT.md",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-16",
       "requirement": "Bounded PNG/JPEG decode; no URLs/arbitrary paths; inert output/escaped content",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "APPLICATION-17",
       "requirement": "CSRF/session binding, host/origin restriction, loopback8765-8767 only",
-      "status": "INDEPENDENT_DEVELOPMENT_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RESULTS.json"
+        "reviews/INTEGRATED-QA/RESULTS.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "LIFECYCLE-01",
       "requirement": "Owned immutable request/job/worker birth/boot/nonce/fence/deadline and append-only events",
-      "status": "INDEPENDENT_BENIGN_FAULT_EXECUTION_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "receipts/RUNTIME_HANDOFF.md",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json"
+        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "LIFECYCLE-02",
       "requirement": "Real NOT_STARTED/RUNNING/STOP_REQUESTED/STOP_CONFIRMED/UNKNOWN observations",
-      "status": "INDEPENDENT_BENIGN_FAULT_EXECUTION_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "receipts/RUNTIME_HANDOFF.md",
         "integration/EGRESS_AMENDMENT.md",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json"
+        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "LIFECYCLE-03",
       "requirement": "Independent observer and frozen topology-specific targets before fault trials",
-      "status": "INDEPENDENT_BENIGN_FAULT_EXECUTION_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/QA-PREP/QA_PREP_HANDOFF.md",
         "receipts/RUNTIME_HANDOFF.md",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json"
+        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "LIFECYCLE-04",
       "requirement": "Cancel before start and during work, duplicate cancel, timeout",
-      "status": "INDEPENDENT_BENIGN_FAULT_EXECUTION_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json"
+        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "LIFECYCLE-05",
       "requirement": "Actual parent death, worker crash, delayed/duplicate result, stale fence",
-      "status": "INDEPENDENT_BENIGN_FAULT_EXECUTION_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json"
+        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "LIFECYCLE-06",
       "requirement": "Restart recovery and capacity release; independent control survives",
-      "status": "INDEPENDENT_BENIGN_FAULT_EXECUTION_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json"
+        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "LIFECYCLE-07",
       "requirement": "Dedicated model backend descendants/active computation/memory/termination observed separately",
-      "status": "ACTUAL_TEXT_ACTIVE_CANCEL_OBSERVED_IMAGE_CANCEL_TIMEOUTS_PENDING",
+      "status": "REAL_TEXT_IMAGE_ACTIVE_CANCEL_CONFIRMED_NATURAL_TIMEOUT_NOT_EXERCISED",
       "evidence": [
         "reviews/MODEL-EXECUTION/LIFECYCLE_PHASE_PARTIAL.json",
-        "receipts/TASK16_BOUNDED_CLOSURE.json"
+        "receipts/TASK16_BOUNDED_CLOSURE.json",
+        "reviews/FINAL-QA/LIFECYCLE_RESULTS.json",
+        "reviews/MODEL-EXECUTION/LIFECYCLE_PHASE_PARTIAL.json"
       ]
     },
     {
@@ -314,56 +340,62 @@
     {
       "id": "BROWSER-01",
       "requirement": "Actual page render and screenshot/pixel inspection with no unhandled console errors",
-      "status": "INDEPENDENT_CHROMIUM_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json"
+        "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "BROWSER-02",
       "requirement": "Real note create/edit, A private/B forbidden/B shared workflows",
-      "status": "INDEPENDENT_CHROMIUM_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/CODE-EARLY/CODE_EARLY_REVIEW.md",
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json"
+        "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "BROWSER-03",
       "requirement": "Revoke/correct queued or running work, finite-use/duplicate flows",
-      "status": "INDEPENDENT_CHROMIUM_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json"
+        "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "BROWSER-04",
       "requirement": "Saved draft reload/server-restart persistence, error presentation",
-      "status": "INDEPENDENT_CHROMIUM_EXECUTED_FINAL_COHORT_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json"
+        "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "BROWSER-05",
       "requirement": "Visible real queue/status/cancel/crash and restore handling",
-      "status": "BENIGN_BROWSER_STATE_CRASH_RESTORE_EXECUTED_REAL_MODEL_BROWSER_PENDING",
+      "status": "INDEPENDENT_FINAL_DETERMINISTIC_COMPOSITE_EXECUTED",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json"
+        "reviews/INTEGRATED-QA/BROWSER_OBSERVED.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
       "id": "BROWSER-06",
       "requirement": "Selected-image answering when operational model gate met",
-      "status": "DETERMINISTIC_IMAGE_IMPORT_EXECUTED_REAL_SELECTED_IMAGE_BROWSER_NOT_EXECUTED",
+      "status": "UPLOAD_RESPONSE_HARNESS_FAILURE_BEFORE_MODEL_SUBMISSION_REPAIR_PENDING",
       "evidence": [
         "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "receipts/TASK16_BOUNDED_CLOSURE.json"
+        "receipts/TASK16_BOUNDED_CLOSURE.json",
+        "reviews/FINAL-QA/ROOT_QUESTION_B1_PREMODEL_FAILURE.json"
       ]
     },
     {
@@ -468,9 +500,10 @@
     {
       "id": "DELIVERY-01",
       "requirement": "At most3 final deterministic suite starts, frozen candidate/config/deps/environment/evaluator identity",
-      "status": "SOURCE37_FILES_FROZEN_FINAL_PLAN_AND_COHORT_PENDING",
+      "status": "FINAL_COMPOSITE_EXECUTED_THREE_OF_THREE_STARTS_USED_TWO_FAILURES_RETAINED",
       "evidence": [
-        "receipts/FINAL_CANDIDATE_01.json"
+        "receipts/FINAL_CANDIDATE_01.json",
+        "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json"
       ]
     },
     {
@@ -545,5 +578,7 @@
   ],
   "updated_at": "2026-09-29T06:43:27.369336+00:00",
   "progress_note": "Independent code defects are open; original owners repairing; no final acceptance. Four actual readiness calls remain historical evidence, not repaired-candidate qualification.",
-  "qualification": "Development evidence mapped without reducing the59requirements. Final deterministic/model evaluation and separate reviews pending."
+  "qualification": "Development evidence mapped without reducing the59requirements. Final deterministic/model evaluation and separate reviews pending.",
+  "last_root_observation": "2026-09-29T07:21:38.304937+00:00",
+  "status": "IN_PROGRESS_MODEL_BROWSER_PILOT_AND_FINAL_REVIEW_PENDING"
 }

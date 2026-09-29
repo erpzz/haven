@@ -1,0 +1,15 @@
+# INTEGRATION-FINAL handoff — PREPARATION ONLY
+
+Assignment18 H00 is separate from root scheduler and final reviewers. Hard FINAL-EXECUTION17 handoff has not arrived. This preparation must not be described as completed integration or final acceptance; no MANIFEST.json is issued yet.
+
+Candidate `487c67299445a29e0fbbdede04259565f741f587` is bound by FINAL_CANDIDATE_01 SHA256 `643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30`; H00's read-only preparation comparison matched all37 source files. Repaired production code, the empty-text JS fix, independent harness export and snapshot output-path update remain distinct provenance steps. Administrative publication SHA is not the evaluated source SHA.
+
+Prepared artifacts map I01–I07, accepted P01/R03 composites, SEAM/EGRESS decisions, CE-F01–06 and V01–V16 to actual code/evidence or explicit deferral. APP_FIX_HANDOFF and RUNTIME_FIX_HANDOFF document real author adoption, including exact FILETIME-string reconciliation; H00 did not fabricate consensus. Independent deterministic reports support the bounded local composite after retained harness failures. No self-closure of independent findings.
+
+Required final relay: Task17 actual handoff path/hash and final aggregate reports; 72-call dispositions/independent grading and protected verdict; all phase claim/settlement totals and wall usage; last candidate37 comparison; final owned app/model/browser/control observations and remaining UNKNOWNs. Do not read reusable protected expected answers. Cross-check final totals against dated prior reports rather than rewriting their history.
+
+Delivery must retain B2's spent-slot useful-flow failure and lack of abstention verdict, original pre-model browser-driver failure/repair, REAL_MODEL_TIMEOUT_NOT_EXERCISED, protection NOT_ESTABLISHED/EVALUATION_INCONCLUSIVE, and no canonical/production/original-R1 qualification. Startup/stop commands are in labs/ip01/README.md; no command was executed by H00. Model gate expiry does not disable useful deterministic operation and cannot be renewed by a receipt or app restart.
+
+Root remains responsible for actual reviewer19–21 outcomes, publication, final MORNING_REPORT/RESUME, allowance/deadline and shutdown. At dispatch root reports PR21 draft/base unchanged, two of four Issue20 comments, and a 07:35 IN_PROGRESS MORNING_REPORT; H00 has not independently queried GitHub or refreshed that draft into a completion claim. PUBLIC_REPORT_EDITIONS discloses prior pathname correction without history rewrite. Four-file original comparison plus ASTRA clean HEAD is bounded source-preservation evidence, not filesystem-wide isolation.
+
+H00 actions: read scoped documents/source and compare hashes; write only integration/final-v1. No source/test/runtime execution, Git, model calls, extra spending, child spawning, original modification or shared-state writes. Model/cost identity UNKNOWN; same-user full access is not security isolation. Local assignment bound08:40Z, campaign hard10:10:16Z unchanged.

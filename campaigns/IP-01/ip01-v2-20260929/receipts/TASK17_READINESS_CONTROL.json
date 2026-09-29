@@ -1,0 +1,19 @@
+{
+  "at": "2026-09-29T07:09:29.610361+00:00",
+  "assignment": 17,
+  "phase": "readiness",
+  "control_sha256": "68fcdbf31bbea96acc1f1b257bbecdb5085073d23091c524ba3f0ad14447d7d2",
+  "private_control_path": "<evaluator>/final_execution/root-readiness-17.json",
+  "gate_sha256": "8bc886afeac8b7a6e334f3feb47bf8bee1b0d11f5108e4f78b79b29ff9c83d23",
+  "case_count": 2,
+  "owner": {
+    "pid": 7616,
+    "process_birth": 1790665768.0644908,
+    "boot_time": 1790563096.9768715,
+    "nonce": "e5b50c903eeb438ba07a4ac6d1394d7b",
+    "started_at": "2026-09-29T07:09:28.069301+00:00",
+    "model_allocation": "readiness"
+  },
+  "expires_utc": "2026-09-29T08:20:00Z",
+  "dispatch": "REQUIRES_ROOT_INERT_PREFLIGHT_AND_NATIVE_RELAY"
+}

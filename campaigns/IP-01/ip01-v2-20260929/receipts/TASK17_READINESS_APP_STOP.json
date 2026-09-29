@@ -1,0 +1,26 @@
+{
+  "assignment": 17,
+  "phase": "readiness",
+  "state": "STOP_CONFIRMED",
+  "observed_at": "2026-09-29T07:29:32.998311+00:00",
+  "identity": {
+    "pid": 7616,
+    "process_birth": 1790665768.0644908,
+    "boot_time": 1790563096.9768715,
+    "nonce": "e5b50c903eeb438ba07a4ac6d1394d7b",
+    "model_allocation": "readiness"
+  },
+  "descendants_before": [
+    {
+      "pid": 25392,
+      "process_birth": 1790665768.0718224
+    },
+    {
+      "pid": 9236,
+      "process_birth": 1790665768.086128
+    }
+  ],
+  "residual": [],
+  "raw_receipt_sha256": "31da0b66e01659a51c5a921b70136fdac0cb28cc97908825b1367516b23c23d5",
+  "scope": "Exact root APP instance and preobserved descendants; separate model cleanup is in per-call observer/settlement receipts."
+}

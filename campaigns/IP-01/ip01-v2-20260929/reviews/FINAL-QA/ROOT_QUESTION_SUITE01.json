@@ -1,0 +1,8 @@
+{
+  "assignment": 17,
+  "decision_required": "Authorize the one affected producer-regression recheck as formal start2 using snapshot-private basetemp, with new versioned harness/control and unchanged37candidate files?",
+  "reason": "One harness path error prevented145 producer APP fixture setups;76 producer tests and all seven earlier components passed. No source or runtime permission weakening is needed.",
+  "evidence": "FORMAL_SUITE_01_RESULTS.json",
+  "ownership_residuals": 0,
+  "work_continuing": "Evidence packaging and immutable provenance only; no suite/model retry pending root decision."
+}

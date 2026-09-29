@@ -1,0 +1,21 @@
+{
+  "at": "2026-09-29T07:30:35.605186+00:00",
+  "assignment": 17,
+  "phase": "final",
+  "root_thread_id": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
+  "source_candidate": "487c67299445a29e0fbbdede04259565f741f587",
+  "slots_added": 72,
+  "prior_consumed": {
+    "readiness": 6,
+    "lifecycle": 4,
+    "final": 0
+  },
+  "prior_confirmed_settlements": 10,
+  "prior_charged_seconds": 330.8910000000178,
+  "gate_sha256": "e639e3087693315ced170f2fe0e5d0357728e68e10f3b4d55d097b342069d825",
+  "ledger_prefix_sha256": "2afb833cd7d4dd8f26c287f4400c4ba414b36d0de59fbae286cbe686d61bbcde",
+  "expires_utc": "2026-09-29T08:20:00Z",
+  "case_count": 72,
+  "dispatch": "ROOT_APP_START_EXACT_CONTROL_PREFLIGHT_NATIVE_RELAY_REQUIRED",
+  "limits": "One submission per original predeclared case; preserve failures, no retries/borrowing/refunds; halt on unknown cleanup or ambiguous submission; global5400seconds with120reserved perpending call. Final protected verdict EVALUATION_INCONCLUSIVE because protection is not established."
+}

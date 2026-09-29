@@ -1,0 +1,46 @@
+{
+  "at": "2026-09-29T07:53:50.873443+00:00",
+  "status": "OWNED_APP_STOP_CONFIRMED_MODEL_GATE_DISABLED",
+  "app_identity": {
+    "pid": 26908,
+    "process_birth": 1790667035.855971,
+    "nonce": "0df0e10016424617a54198c26174e590",
+    "boot_time": 1790563096.9768713,
+    "model_allocation": "final",
+    "started_at": "2026-09-29T07:30:35.861141+00:00"
+  },
+  "app_stop": {
+    "state": "STOP_CONFIRMED",
+    "observed_at": "2026-09-29T07:53:50.852284+00:00",
+    "descendants_before": [
+      {
+        "pid": 31308,
+        "process_birth": 1790667035.863718
+      },
+      {
+        "pid": 4344,
+        "process_birth": 1790667035.8783147
+      }
+    ],
+    "residual": [],
+    "raw_sha256": "2d48646545fa7a359c19e8e0fd476340cc643a9b48c8e38e206e138cfec6bc64"
+  },
+  "model_gate_before_sha256": "e639e3087693315ced170f2fe0e5d0357728e68e10f3b4d55d097b342069d825",
+  "model_gate_disabled_sha256": "58bcbf40c3047d81099638477a11de5318d746363a3087f8494c85b8fee4d5d7",
+  "gate_enabled": false,
+  "admitted_slots_consumed": {
+    "readiness": 6,
+    "lifecycle": 4,
+    "final": 54
+  },
+  "app_bindings": 64,
+  "runtime_claims": 64,
+  "confirmed_settlements": 64,
+  "actual_network_start_markers": 64,
+  "charged_seconds": 1593.4050000000425,
+  "ledger_sha256": "f3db7383060cf4aecd86acba7ea7d8c2f61ecf8d71200b35ab6ba6fe3e84f4cb",
+  "ledger_preserved": true,
+  "model_cleanup_basis": "Every runtime claim has confirmed settlement; independent per-case retained-handle and listener evidence is in FINAL-QA handback. Launcher receipt covers exact APP identity and descendants only.",
+  "native_review_work": "May remain active; final native closure recorded separately",
+  "restart": "README deterministic start remains available; disabled finite model gate and ledger are not reset by restart."
+}

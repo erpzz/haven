@@ -1,0 +1,26 @@
+{
+  "at": "2026-09-29T07:30:35.193134+00:00",
+  "assignment": 17,
+  "status": "B2_FAILURE_RETAINED_CLEANUP_RECONCILED_FINAL_PILOT_SEPARATELY_ELIGIBLE",
+  "B2": "FAILED_GRANT_QUOTA_EXHAUSTED_NO_OUTPUT_CONSUMPTION_NO_ABSTENTION_VERDICT",
+  "B2_admitted_slot_spent": true,
+  "B2_retry_authorized": false,
+  "B1": "ACTUAL_SELECTED_IMAGE_RENDER_BLUE_SQUARE_FOUR_WORDS_ONE_SUBMIT_ONE_CONSUME_RELOAD_NO_REPLAY",
+  "halt_sha256": "86355db49b6b5fd237d563f180bf9673dea11c6f918b4f505414350fbcac0be2",
+  "B2_model_receipt_sha256": "da436fce289833c267d9af424c88bf2c5966ca6dba991fa0ce5516374c1f1302",
+  "B2_browser_receipt_sha256": "2a5597195d8d27d8d91f0ace74f0a47a93e42f2b1b088b2b0854e720fae1352f",
+  "model_handles_all_signaled": true,
+  "owned_backend_listeners": 0,
+  "browser_identities_remaining": 0,
+  "root_APP_STOP_CONFIRMED": true,
+  "claims_and_confirmed_settlements": 10,
+  "counts": {
+    "readiness": 6,
+    "lifecycle": 4,
+    "final": 0
+  },
+  "charged_seconds": 330.8910000000178,
+  "reason": "A previously shared note was also retrieved by the browser request; result release correctly denied an exhausted grant. This is a failed useful browser case, not successful abstention. No uncontrolled runtime or unknown cleanup remains. Final pilot has its original predeclared exact single-source request per family; candidate, harness, prompts, assets, schedule and limits unchanged.",
+  "decision": "Preserve failure and spent slot; no retry or grant change. Separate final72 gate still needs new exact root control and native relay.",
+  "limitations": "Original source-card relevance behavior warrants final code/vision review; no general UI image-answer reliability claim."
+}

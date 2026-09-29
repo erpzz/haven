@@ -1,0 +1,8 @@
+{
+  "assignment": 17,
+  "question": "Authorize preparation of immutable v3 runner with explicit parent creation and an inert collection-only check of all221 tests before root review of the final allowed affected start3?",
+  "evidence": "FORMAL_SUITE_02_RESULTS.json",
+  "no_product_changes": true,
+  "third_start_requires_separate_root_control": true,
+  "residuals": 0
+}

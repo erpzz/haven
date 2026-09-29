@@ -1,0 +1,42 @@
+{
+  "assignment": 17,
+  "status": "BROWSER_RECHECK_PREPARED_ZERO_MODEL_CALLS_HALTED_PENDING_ROOT",
+  "driver_sha256": "e7d8e0a8ac4591dac5a15624d0f6457e581f272bb0a2bead94f9623648eb2fd6",
+  "manifest_sha256": "464e1e7217c013c8d84fecdfab8b877ea93b7cffda4ffcf2be8ffaf1a0227ec3",
+  "original_B1_attempt": "FAILED_RETAINED_BEFORE_MODEL_INTENT_OR_SUBMISSION",
+  "B1_intent_exists": false,
+  "B1_run_directory_exists": false,
+  "before": "Delayed upload.json() depended on Chromium inspector response cache; ownership populated only at successful end; error cleanup happened after Playwright context exit",
+  "after": "HTTP201 plus upload-completion notice and exactly one new selected DOM source identity; answer/consume JSON captured in response callback; process identities captured after launch and before close; close context/browser inside Playwright context including errors",
+  "probe": {
+    "status": "BENIGN_UPLOAD_PROBE_PASS_ZERO_MODEL_CALLS",
+    "command_exit_code": 0,
+    "actual_image_uploads": 1,
+    "model_submissions": 0,
+    "new_selected_source_count": 1,
+    "captured_browser_identities": 5,
+    "residuals": 0,
+    "page_errors": 0,
+    "pixel_inspection": "PASS: upload success notice, new selected image, visible blue square and red circle without a number",
+    "code_timing_note": "Probe preceded two final guard additions: fixed-deadline check for probe and try/finally ensuring browser close if context close fails. Final edition AST parsed; no further browser probe or model call."
+  },
+  "root_must_pin_additional_driver": "live_browser_recheck.py",
+  "disabled_control": "<evaluator>/final_execution/root-readiness-recheck-17.disabled.json",
+  "execution_commands": [
+    "python -B <evaluator>/final_execution/live_browser_recheck.py --control <new-root-control> --control-sha256 <root-relayed-digest> --case B1 --execute",
+    "python -B <evaluator>/final_execution/live_browser_recheck.py --control <new-root-control> --control-sha256 <root-relayed-digest> --case B2 --execute"
+  ],
+  "case_ids_tokens_questions_assets_protocol": "UNCHANGED",
+  "root_HALT_reconciliation": "REQUIRED; Task17 did not clear or modify HALT",
+  "new_output_directories": [
+    "browser/B1-recheck",
+    "browser/B2-recheck"
+  ],
+  "formal_deterministic_starts_used": 3,
+  "no_fourth_formal_start": true,
+  "global_claims": 8,
+  "global_settles": 8,
+  "unknown": false,
+  "charged_seconds": 257.25000000001455,
+  "real_execution_authorized": false
+}

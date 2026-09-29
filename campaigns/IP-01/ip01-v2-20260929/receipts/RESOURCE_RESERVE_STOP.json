@@ -1,0 +1,11 @@
+{
+  "at": "2026-09-29T07:52:51.802657+00:00",
+  "reason": "ROOT_RESOURCE_RESERVE_STOP: weekly Codex usage97percent; preserve remaining ordinary allowance for required independent final reviews, public handoff and exact owned shutdown. No new pilot admissions; current already-admitted call may complete and settle.",
+  "actor": "root scheduler",
+  "usage_used_percent": 97,
+  "ordinary_usage_allowed": true,
+  "additional_spending_authorized": false,
+  "attempt_disposition": "Retain every original72 scheduled case and actual outcome; unrun cases NOT_EXECUTED_RESOURCE_BOUND, no retry/refund/reordering or threshold changes",
+  "clear_policy": "DO_NOT_CLEAR_THIS_CAMPAIGN; final cohort bounded partial",
+  "model_cleanup": "Current call allowed to finish; this marker does not claim termination"
+}

@@ -1,0 +1,26 @@
+{
+  "finding": "CE-F02",
+  "status": "RECHECK_PASS",
+  "cases": [
+    {
+      "variant": "refresh",
+      "identity_after_delivery": "Person B",
+      "answer_view_copy": "Answers you open will appear here.",
+      "private_marker_rendered_after_B_switch": false,
+      "response_was_200_before_delay": true,
+      "status": "NOT_REPRODUCED"
+    },
+    {
+      "variant": "consume",
+      "identity_after_delivery": "Person B",
+      "answer_view_copy": "Answers you open will appear here.",
+      "private_marker_rendered_after_B_switch": false,
+      "response_was_200_before_delay": true,
+      "status": "NOT_REPRODUCED"
+    }
+  ],
+  "scope": "Actual Chromium, same browser context A-to-B switch, separate refresh and committed consume delayed-response scenarios. cb266a3 Python plus explicitly hashed root text-only JS correction. Synthetic marker only.",
+  "private_evidence": "<evaluator>/final_execution/deterministic/session_race_runs/20260929T064901.393057Z/receipt.json",
+  "source_sha256": "3ca857311c75771d7ab972575d5afb1b067005a5bb9c8190deca939d8f9ef2fa",
+  "failure": null
+}

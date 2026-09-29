@@ -1,0 +1,460 @@
+{
+  "files": [
+    {
+      "source": "<candidate>\\labs\\ip01\\.gitignore",
+      "source_sha256": "d8d14f8ba1de4c22d163262fe69619da4fe75febcb5305d27e2a187b881fea53",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\.gitignore",
+      "copy_sha256": "d8d14f8ba1de4c22d163262fe69619da4fe75febcb5305d27e2a187b881fea53",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\README.md",
+      "source_sha256": "f81674e4155c23726f1ed8d1df0fc1aa87e0f551e4de837af1e1b12f95734dca",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\README.md",
+      "copy_sha256": "f81674e4155c23726f1ed8d1df0fc1aa87e0f551e4de837af1e1b12f95734dca",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\requirements.lock",
+      "source_sha256": "bc2b94b9763868b08170dcd18790db46537ad8eac7cbc6f037404a5893f0ba48",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\requirements.lock",
+      "copy_sha256": "bc2b94b9763868b08170dcd18790db46537ad8eac7cbc6f037404a5893f0ba48",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\fixtures\\demo-notes.json",
+      "source_sha256": "11065181fdc55eadc52656fbcf2dca352b1ca891ad1ac65e0b4a45aa997c2943",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\fixtures\\demo-notes.json",
+      "copy_sha256": "11065181fdc55eadc52656fbcf2dca352b1ca891ad1ac65e0b4a45aa997c2943",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\app.py",
+      "source_sha256": "93b9335f9bb5eb73b506c34a08bc8c2490263ed2ccbe551fa45253f0cd5b7427",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\app.py",
+      "copy_sha256": "93b9335f9bb5eb73b506c34a08bc8c2490263ed2ccbe551fa45253f0cd5b7427",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\authority.py",
+      "source_sha256": "15ca0f6b4e273d5d4d19b54d2cd082cc41bb592c8fadd60c1c9871a5c724ac75",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\authority.py",
+      "copy_sha256": "15ca0f6b4e273d5d4d19b54d2cd082cc41bb592c8fadd60c1c9871a5c724ac75",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\contracts.py",
+      "source_sha256": "9912e3282f5634627f6b8ff3b0969c2c2e1920ca8077729f5bf3e365d1de8b3f",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\contracts.py",
+      "copy_sha256": "9912e3282f5634627f6b8ff3b0969c2c2e1920ca8077729f5bf3e365d1de8b3f",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\model_adapter.py",
+      "source_sha256": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\model_adapter.py",
+      "copy_sha256": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\store.py",
+      "source_sha256": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\store.py",
+      "copy_sha256": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\supervisor.py",
+      "source_sha256": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\supervisor.py",
+      "copy_sha256": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\worker.py",
+      "source_sha256": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\worker.py",
+      "copy_sha256": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\__init__.py",
+      "source_sha256": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\__init__.py",
+      "copy_sha256": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\scripts\\check_publication.py",
+      "source_sha256": "a5b27b634a802d9920243b96eaf2b8c49c63e22ad2ed606915598774e55d1f12",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\scripts\\check_publication.py",
+      "copy_sha256": "a5b27b634a802d9920243b96eaf2b8c49c63e22ad2ed606915598774e55d1f12",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\scripts\\freeze_candidate.py",
+      "source_sha256": "e84a9c672cbd20845ddcb4ad1646f6a825a96e0174aeaf4dec206e3db15f47ba",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\scripts\\freeze_candidate.py",
+      "copy_sha256": "e84a9c672cbd20845ddcb4ad1646f6a825a96e0174aeaf4dec206e3db15f47ba",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\scripts\\render_snapshot.py",
+      "source_sha256": "dc7a2e6f5e160d8397eaa531f8873ac2b4967d4b0cf3a24fe215daebfbb98089",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\scripts\\render_snapshot.py",
+      "copy_sha256": "dc7a2e6f5e160d8397eaa531f8873ac2b4967d4b0cf3a24fe215daebfbb98089",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\scripts\\run.py",
+      "source_sha256": "06d5b4db081ad196098ba2e192ba53ebc84413692523e4484a315e9c99d38b43",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\scripts\\run.py",
+      "copy_sha256": "06d5b4db081ad196098ba2e192ba53ebc84413692523e4484a315e9c99d38b43",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\evaluation\\deterministic\\common.py",
+      "source_sha256": "c1c7a9678bd648078bd0dc7daf3a63f0ed164129f9caf14997d6db3402ca3129",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\evaluation\\deterministic\\common.py",
+      "copy_sha256": "c1c7a9678bd648078bd0dc7daf3a63f0ed164129f9caf14997d6db3402ca3129",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\evaluation\\deterministic\\conftest.py",
+      "source_sha256": "0ec81b9e86389a4dfc8e88f33ab9dcab31ebfdcf286569aa3fde58f1c2fee44a",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\evaluation\\deterministic\\conftest.py",
+      "copy_sha256": "0ec81b9e86389a4dfc8e88f33ab9dcab31ebfdcf286569aa3fde58f1c2fee44a",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\evaluation\\deterministic\\prepare.py",
+      "source_sha256": "4d7d56c702930a688c4ab2b4cbfbd6abe13073ae6f7964e5b2b00f9fbe8997bb",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\evaluation\\deterministic\\prepare.py",
+      "copy_sha256": "4d7d56c702930a688c4ab2b4cbfbd6abe13073ae6f7964e5b2b00f9fbe8997bb",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\evaluation\\deterministic\\README.md",
+      "source_sha256": "1ac83a87b82f9cf4debd75b5061cc08599229b24e7533016c902da15edfaebdf",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\evaluation\\deterministic\\README.md",
+      "copy_sha256": "1ac83a87b82f9cf4debd75b5061cc08599229b24e7533016c902da15edfaebdf",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\evaluation\\deterministic\\test_backing.py",
+      "source_sha256": "b1af947a25e111529888493fdd575a8002164a1094a07996fbc8faab6f60a174",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\evaluation\\deterministic\\test_backing.py",
+      "copy_sha256": "b1af947a25e111529888493fdd575a8002164a1094a07996fbc8faab6f60a174",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\evaluation\\deterministic\\test_bounds.py",
+      "source_sha256": "30604f9ea222457a3e0f4ab0704cd52b75ace5d7765ed89854aca7eb50c54139",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\evaluation\\deterministic\\test_bounds.py",
+      "copy_sha256": "30604f9ea222457a3e0f4ab0704cd52b75ace5d7765ed89854aca7eb50c54139",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\evaluation\\deterministic\\test_code_early.py",
+      "source_sha256": "cc5639377b97e81959531f2a1cab470a24d0f35376c871bdeaff86bf3f26f6fc",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\evaluation\\deterministic\\test_code_early.py",
+      "copy_sha256": "cc5639377b97e81959531f2a1cab470a24d0f35376c871bdeaff86bf3f26f6fc",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\evaluation\\deterministic\\test_extra_bounds.py",
+      "source_sha256": "e04b33f9f15601f09ee30c45cf6e2b8cfc7f14f8ce753438ec17af982a89df01",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\evaluation\\deterministic\\test_extra_bounds.py",
+      "copy_sha256": "e04b33f9f15601f09ee30c45cf6e2b8cfc7f14f8ce753438ec17af982a89df01",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\evaluation\\deterministic\\test_functional.py",
+      "source_sha256": "340a17918bf7f70e2bdd86728cf7f0d22736ae0addbbef5c01e6fafc5c925768",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\evaluation\\deterministic\\test_functional.py",
+      "copy_sha256": "340a17918bf7f70e2bdd86728cf7f0d22736ae0addbbef5c01e6fafc5c925768",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\evaluation\\deterministic\\test_static_domains.py",
+      "source_sha256": "dfeb4925bc2d338ce7bdf3642fe48ca08edddd474273b4966365d670710fc26e",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\evaluation\\deterministic\\test_static_domains.py",
+      "copy_sha256": "dfeb4925bc2d338ce7bdf3642fe48ca08edddd474273b4966365d670710fc26e",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\static\\app.css",
+      "source_sha256": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\static\\app.css",
+      "copy_sha256": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\static\\app.js",
+      "source_sha256": "3ca857311c75771d7ab972575d5afb1b067005a5bb9c8190deca939d8f9ef2fa",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\static\\app.js",
+      "copy_sha256": "3ca857311c75771d7ab972575d5afb1b067005a5bb9c8190deca939d8f9ef2fa",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\haven\\templates\\index.html",
+      "source_sha256": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\haven\\templates\\index.html",
+      "copy_sha256": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\tests\\app\\browser_walkthrough.py",
+      "source_sha256": "49c602312e21ee4e3796bee8fe1dd2a295b412d989e16c52fee45aee11296557",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\tests\\app\\browser_walkthrough.py",
+      "copy_sha256": "49c602312e21ee4e3796bee8fe1dd2a295b412d989e16c52fee45aee11296557",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\tests\\app\\test_application.py",
+      "source_sha256": "45410aebc3e96d1c932a5be6bdd4f243a61fc748798ae05e3d4e6672e4e5f57b",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\tests\\app\\test_application.py",
+      "copy_sha256": "45410aebc3e96d1c932a5be6bdd4f243a61fc748798ae05e3d4e6672e4e5f57b",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\tests\\app\\test_app_fixes.py",
+      "source_sha256": "1ef8c3bfb98fa70c9da72e7e9eb2586a9759108e73b22b3a015de36ce348e9c2",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\tests\\app\\test_app_fixes.py",
+      "copy_sha256": "1ef8c3bfb98fa70c9da72e7e9eb2586a9759108e73b22b3a015de36ce348e9c2",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\tests\\runtime\\fixture_worker.py",
+      "source_sha256": "e901d13be77e953c35672b6f662204da1fe1aba647a157d2f0c894c9300ba1f8",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\tests\\runtime\\fixture_worker.py",
+      "copy_sha256": "e901d13be77e953c35672b6f662204da1fe1aba647a157d2f0c894c9300ba1f8",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\tests\\runtime\\prepare_model.py",
+      "source_sha256": "59e9abb19c4e4d4f70f7a696288b6f7cfe091e3dcfc58ac3205c1507ba187465",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\tests\\runtime\\prepare_model.py",
+      "copy_sha256": "59e9abb19c4e4d4f70f7a696288b6f7cfe091e3dcfc58ac3205c1507ba187465",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\tests\\runtime\\test_model_gate.py",
+      "source_sha256": "d1e0e000296021e076dfeaa2c9db931c8a104cd5eb9fd3f7217c4aa0b80ca335",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\tests\\runtime\\test_model_gate.py",
+      "copy_sha256": "d1e0e000296021e076dfeaa2c9db931c8a104cd5eb9fd3f7217c4aa0b80ca335",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\tests\\runtime\\test_runtime.py",
+      "source_sha256": "347f85fe350b6215714c1684395cab53e998304ad62cee324273b8c4224ca35a",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\tests\\runtime\\test_runtime.py",
+      "copy_sha256": "347f85fe350b6215714c1684395cab53e998304ad62cee324273b8c4224ca35a",
+      "adapted": false
+    },
+    {
+      "source": "<candidate>\\labs\\ip01\\tests\\runtime\\test_runtime_fix.py",
+      "source_sha256": "7e61de543f231352561ff231f3ded358e0e87cc05b74043b0648267d8057455c",
+      "copy": "<evaluator>/final_execution\\snapshots\\prepared\\candidate\\labs\\ip01\\tests\\runtime\\test_runtime_fix.py",
+      "copy_sha256": "7e61de543f231352561ff231f3ded358e0e87cc05b74043b0648267d8057455c",
+      "adapted": false
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\common.py",
+      "source_sha256": "3c3b1b4376ce6bb9589d5cd598f7017caa8bed75cf0057ae76d432090362186a",
+      "copy": "<evaluator>/final_execution\\deterministic\\common.py",
+      "copy_sha256": "5f227f26f75d40814d5302bdc701fa2bb7accfa77aa46d81c25aa5b3ba470996",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\conftest.py",
+      "source_sha256": "cf7245bae9822d524642a3679796da4261ebe66f1a69daa813eda3b649bc17c0",
+      "copy": "<evaluator>/final_execution\\deterministic\\conftest.py",
+      "copy_sha256": "fbc814b32c7cb0d05becc22a26471dc5609e5dbd27e7e843a2da0545fedde1f1",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\run_tests.py",
+      "source_sha256": "426c1a41687217694ff951c3c24393e38ea11f0483778342dd4469226cf4afbe",
+      "copy": "<evaluator>/final_execution\\deterministic\\run_tests.py",
+      "copy_sha256": "c0d8a3dbfe0381d5d59250b9a5d68362a374ef9c1fa077d79ebcdc35260076f4",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\test_functional.py",
+      "source_sha256": "340a17918bf7f70e2bdd86728cf7f0d22736ae0addbbef5c01e6fafc5c925768",
+      "copy": "<evaluator>/final_execution\\deterministic\\test_functional.py",
+      "copy_sha256": "340a17918bf7f70e2bdd86728cf7f0d22736ae0addbbef5c01e6fafc5c925768",
+      "adapted": false
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\test_backing.py",
+      "source_sha256": "ea9bc1c1270f8d4da2280cf619c89386abde6e726e536697d94a386bc0916297",
+      "copy": "<evaluator>/final_execution\\deterministic\\test_backing.py",
+      "copy_sha256": "ea9bc1c1270f8d4da2280cf619c89386abde6e726e536697d94a386bc0916297",
+      "adapted": false
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\test_static_domains.py",
+      "source_sha256": "aec2fdd02b2cead5afcdc46cdaaf4b7843d15d0c714625f646cf9de21db3ba32",
+      "copy": "<evaluator>/final_execution\\deterministic\\test_static_domains.py",
+      "copy_sha256": "dfeb4925bc2d338ce7bdf3642fe48ca08edddd474273b4966365d670710fc26e",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\test_bounds.py",
+      "source_sha256": "30604f9ea222457a3e0f4ab0704cd52b75ace5d7765ed89854aca7eb50c54139",
+      "copy": "<evaluator>/final_execution\\deterministic\\test_bounds.py",
+      "copy_sha256": "30604f9ea222457a3e0f4ab0704cd52b75ace5d7765ed89854aca7eb50c54139",
+      "adapted": false
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\test_code_early.py",
+      "source_sha256": "0b5ee8be1e5d5248b1ce17baa14c9338929cbe6b82ecfc393ad7dc76e28d688d",
+      "copy": "<evaluator>/final_execution\\deterministic\\test_code_early.py",
+      "copy_sha256": "cc5639377b97e81959531f2a1cab470a24d0f35376c871bdeaff86bf3f26f6fc",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\test_extra_bounds.py",
+      "source_sha256": "e3ba3efcdb8d816edbe18af000e03946ee5882b676a5ff701fa50b8d2a7293a3",
+      "copy": "<evaluator>/final_execution\\deterministic\\test_extra_bounds.py",
+      "copy_sha256": "e04b33f9f15601f09ee30c45cf6e2b8cfc7f14f8ce753438ec17af982a89df01",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\test_integration.py",
+      "source_sha256": "271cbde5d7b9aca3de40c014adc53ad22568a641f52ab4d8842a55e5378f95b3",
+      "copy": "<evaluator>/final_execution\\deterministic\\test_integration.py",
+      "copy_sha256": "bd6588c9511dc75b539f25b4df86fb3278d127e375a71ed8f34494601513df68",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\benign_worker.py",
+      "source_sha256": "1b55a582f36822b17976a53994305c18dbef0f481e75126e89f77bc324111d92",
+      "copy": "<evaluator>/final_execution\\deterministic\\benign_worker.py",
+      "copy_sha256": "a70275797bf0452da7f98fc2625e3c05f148f093e4199386438c54eb21d2cad7",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\owned_app.py",
+      "source_sha256": "e4aeec7674b7e851f52c576126069f00316cfe78b839adf370650e1b9695bf00",
+      "copy": "<evaluator>/final_execution\\deterministic\\owned_app.py",
+      "copy_sha256": "fff3dc71a9b4ab4106f0e665bc55578af3cbbb200704c8dcdb5e5d38b5df5a1b",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\live_browser.py",
+      "source_sha256": "e2e8127f2e57962b888f188cebe2b08305391d05b341b64160c17e6b55afaa38",
+      "copy": "<evaluator>/final_execution\\deterministic\\live_browser.py",
+      "copy_sha256": "974b72a16941b2cb726bb97b85b28f2b97bb5a3537bade02403c91b5bf735331",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\live_session_race.py",
+      "source_sha256": "54322a9949bf35ffe9ffc9e9ed2437de3001a6039a20624eeb97ab3bda00f68e",
+      "copy": "<evaluator>/final_execution\\deterministic\\live_session_race.py",
+      "copy_sha256": "e47380cfcc2492992fcb97a0df829386757fc5748b767cf56747447dddc2f6cf",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\live_crash_image.py",
+      "source_sha256": "dbe54614794d5bef1f750e3289475bd459afe7a73633ad03ee2aa6d399888309",
+      "copy": "<evaluator>/final_execution\\deterministic\\live_crash_image.py",
+      "copy_sha256": "5ffbb3ed79c9a2229841823bae151274bd12d3f5736f7a354125bebc692ad5af",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\lifecycle\\actor.py",
+      "source_sha256": "c83875b69101284fa1be3df9d26dd9e6d24073bcc6dfd9b66c449ede0def794b",
+      "copy": "<evaluator>/final_execution\\deterministic\\lifecycle\\actor.py",
+      "copy_sha256": "36f9e791efa27431048ba1a5d520d9817770dd218bd459e83e94238d718b297a",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\lifecycle\\evidence_oracle.py",
+      "source_sha256": "de3442b4dc23126b850ddfad8bb53525c3b2d4eb2618c20787ea4b5e744a3b84",
+      "copy": "<evaluator>/final_execution\\deterministic\\lifecycle\\evidence_oracle.py",
+      "copy_sha256": "5c44300e714ab06666f9cd3a996296d9c0ad956ecc0527e6a682931aaf26c6ab",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\lifecycle\\run_faults.py",
+      "source_sha256": "7f130df1f99c447fc310b86ca247ae761c8861a399f7c2efeef9fb6de9558364",
+      "copy": "<evaluator>/final_execution\\deterministic\\lifecycle\\run_faults.py",
+      "copy_sha256": "5a76eac101c99feb4381ffda0f3aea9ab9fde36f3558beebffb43dc7ded64020",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\lifecycle\\test_oracle.py",
+      "source_sha256": "d0c3c3d4e89e5a0341f87fa429b0c4cf2becc9d64d5e5dd90dd4f2bfc313936b",
+      "copy": "<evaluator>/final_execution\\deterministic\\lifecycle\\test_oracle.py",
+      "copy_sha256": "d0c3c3d4e89e5a0341f87fa429b0c4cf2becc9d64d5e5dd90dd4f2bfc313936b",
+      "adapted": false
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\lifecycle\\verify_oracle.py",
+      "source_sha256": "4df96901515543f98e32b78d0099e488b4502df865ec4c28b70c61c71b91b0ec",
+      "copy": "<evaluator>/final_execution\\deterministic\\lifecycle\\verify_oracle.py",
+      "copy_sha256": "d64a5650c1f5a4d5a600f237f7caff9ce6432cd5a2d8911ef64dc7e2f1bddfd4",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\integrated_qa\\live_observer.py",
+      "source_sha256": "82842b353871ca20a47381ccf102a1e2af1b001dfd6ffc003141fe3fca85aca8",
+      "copy": "<evaluator>/final_execution\\deterministic\\live_observer.py",
+      "copy_sha256": "82842b353871ca20a47381ccf102a1e2af1b001dfd6ffc003141fe3fca85aca8",
+      "adapted": false
+    },
+    {
+      "source": "<evaluator>\\model_execution\\safety.py",
+      "source_sha256": "44d8b4b2b0eeecfa48b3c85465d7959bcdd1544ce5bcee9292c69fe6184148d4",
+      "copy": "<evaluator>/final_execution\\safety.py",
+      "copy_sha256": "1c381f4fd7392f64b88ba0184fcf1735e534dc7d8bf37f38595a7b1fe1dec8e3",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\model_execution\\live_model.py",
+      "source_sha256": "3bbad86cc1178b24699c71d124f5056486ec90568e56269fda964baab2729256",
+      "copy": "<evaluator>/final_execution\\live_model.py",
+      "copy_sha256": "903d7108134052a3596ff0d529472cfb282e94b4b76a442ad9bb61ad46cf92fa",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\model_execution\\live_observer.py",
+      "source_sha256": "c2db90ab5dad45a1efc84d90d7d7231b43fa9c3e39335e5680a8a571104b5fff",
+      "copy": "<evaluator>/final_execution\\live_observer.py",
+      "copy_sha256": "64424d1a98fdaaa2abf8b0159e0f044354738b9ec602c3f9aa69fb47c2e40f7d",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\model_execution\\live_browser.py",
+      "source_sha256": "12323ef57505ba1540e291b41ed3018d7e89307a7dad31f2e406cc84f7601709",
+      "copy": "<evaluator>/final_execution\\live_browser.py",
+      "copy_sha256": "abfef5b07561aca13987e9df31cca406b0f40bb8407d33a61319be1cbaca7aca",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\model_execution\\pilot_driver.py",
+      "source_sha256": "0e00813b9abcfb2587f3d6e4d6f90ed0868c1b00c6c9747b52491c8c65413774",
+      "copy": "<evaluator>/final_execution\\pilot_driver.py",
+      "copy_sha256": "0a05edc632c0cbbd198ac2404d7b651896a5a0e07fa16826fa57c97ff928dd98",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\model_execution\\test_adapters.py",
+      "source_sha256": "3c44d65949b6a61643e3eaa0b0692a0ec9a3dbb7ef64ba198557458a4b2caffc",
+      "copy": "<evaluator>/final_execution\\test_adapters.py",
+      "copy_sha256": "89b7b046acbfe32a058f6b66c253188dc7d781f6788801b4694774f52b562bad",
+      "adapted": true
+    },
+    {
+      "source": "<evaluator>\\model_execution\\test_pilot.py",
+      "source_sha256": "8dc937adf3e1a6cdc9eba664209a6eed3911e40569daff9a3cb7a5ab02abbb07",
+      "copy": "<evaluator>/final_execution\\test_pilot.py",
+      "copy_sha256": "06fd59b8d74442ffe23c3ea1183198153f7b7e1c95d5003e86295f1110dba835",
+      "adapted": true
+    }
+  ],
+  "all_originals_preserved": true
+}

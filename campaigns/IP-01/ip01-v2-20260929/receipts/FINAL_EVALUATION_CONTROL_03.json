@@ -1,0 +1,23 @@
+{
+  "at": "2026-09-29T07:00:06.366795+00:00",
+  "assignment": 17,
+  "candidate_commit": "487c67299445a29e0fbbdede04259565f741f587",
+  "source_freeze_sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+  "recheck_plan_sha256": "3f2ad2a3bb8e12d02751cd324a634f1a2fa3b2ecdecac05fa4a9636c2c071902",
+  "recheck_manifest_sha256": "f3c15bdf90a7ec3c2e3dae1223b0333471d1acc2ec3ed389bb32f37f90649dcb",
+  "setup_probe_sha256": "ae212f49b524fa00ca38cda6952367dc307262c7783fc2ede9f23d6487fc5329",
+  "preserved_suite01_sha256": "ee9c9f739bc27dea6e586db5c95f8f1c0e25232853d53e7e45a1ef095d7126b6",
+  "preserved_suite02_sha256": "4ece013b56cc1d9d9e62dd0f7952b3f33c3a7925c19c716561d7bf6749e6f261",
+  "private_control_sha256": "5e7d2967633e5868709fd862e256fb56b86897be69cfcfa5a223b699a656cec9",
+  "private_control_path": "<evaluator>/final_execution/root-final-deterministic-03.json",
+  "authorized_start_number": 3,
+  "actual_starts_before": 2,
+  "global_max_starts": 3,
+  "remaining_after_this_start": 0,
+  "expected_affected_cases": 221,
+  "expires_utc": "2026-09-29T08:20:00Z",
+  "candidate_changed": false,
+  "real_model_calls_authorized": 0,
+  "scope": "Last formal start. Full221producercohort with verified existing parent and short fresh snapshot-private basetemp. All prior files and failed outcomes preserved; first7actual suite01component passes remain bound to unchanged source. No candidate runtime guard changes.",
+  "dispatch": "REQUIRES_ROOT_INERT_PREFLIGHT_AND_NATIVE_RELAY"
+}

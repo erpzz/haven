@@ -1,0 +1,255 @@
+{
+  "assignment": 17,
+  "case": "L2",
+  "phase": "lifecycle",
+  "status": "OBSERVED",
+  "fault_status": "EXERCISED",
+  "disposition": "CANCELLED",
+  "compute_state": "STOP_CONFIRMED",
+  "model_submission_attempts": 1,
+  "network_marker_bound": true,
+  "physical_worker_match": true,
+  "activity_observed": true,
+  "recent_activity_at_deadline": null,
+  "independent_stop_seconds": 0.14100000000325963,
+  "call_latency_seconds": 12.046000000002095,
+  "peak_job_committed_bytes": 4720361472,
+  "peak_sampled_rss_bytes": 3665825792,
+  "resource_settlement_confirmed": true,
+  "charged_seconds": 11.75,
+  "usage": null,
+  "retained_handles_all_signaled": true,
+  "root_survived": true,
+  "control_survived": true,
+  "control_stopped": true,
+  "owned_backend_listener_count": 0,
+  "private_receipt_sha256": "7232a0d13310a0a200cfa17a1d2b21fc79d91b8cbe2ea0916750349232fc8edf",
+  "private_observer_trace_sha256": "fd168d294c39fbf97a790775f2407dd120794b417dbeba123ffa694433f7181c",
+  "sealed_context_sha256": "79afc33751f0a83df3e83f2ecfe3fbdebae6a6c32a5ac3c150b08ee55759a2ce",
+  "published_kind": "SANITIZED_TIMELINE_PROJECTION_NOT_RAW_TRACE",
+  "runtime_timeline": [
+    {
+      "case": "L2",
+      "kind": "QUEUED",
+      "timestamp": "2026-09-29T07:03:20.601645+00:00",
+      "identity_sha256": "77657586302421e67976e2920c4169fe1861af505f5849283a05de78e1d8152c"
+    },
+    {
+      "case": "L2",
+      "kind": "PROCESS_STARTED",
+      "timestamp": "2026-09-29T07:03:28.704352+00:00",
+      "identity_sha256": "4dc255a87ba749bc31ac6f353d7765674bc6e9c4c27708ff5e8b13106dd1cb80"
+    },
+    {
+      "case": "L2",
+      "kind": "CANCEL_REQUESTED",
+      "timestamp": "2026-09-29T07:03:32.341470+00:00",
+      "identity_sha256": "4dc255a87ba749bc31ac6f353d7765674bc6e9c4c27708ff5e8b13106dd1cb80",
+      "reason": "User requested cancellation"
+    },
+    {
+      "case": "L2",
+      "kind": "STOP_REQUESTED",
+      "timestamp": "2026-09-29T07:03:32.354470+00:00",
+      "identity_sha256": "4dc255a87ba749bc31ac6f353d7765674bc6e9c4c27708ff5e8b13106dd1cb80"
+    },
+    {
+      "case": "L2",
+      "kind": "STOP_CONFIRMED",
+      "timestamp": "2026-09-29T07:03:32.365470+00:00",
+      "identity_sha256": "4dc255a87ba749bc31ac6f353d7765674bc6e9c4c27708ff5e8b13106dd1cb80",
+      "confirmed": true,
+      "active_processes": 0,
+      "owned_handles_signaled": true,
+      "peak_job_memory_bytes": 4720361472
+    },
+    {
+      "case": "L2",
+      "kind": "DISPATCH_OBSERVED",
+      "timestamp": "2026-09-29T07:03:32.377471+00:00",
+      "identity_sha256": "4dc255a87ba749bc31ac6f353d7765674bc6e9c4c27708ff5e8b13106dd1cb80"
+    },
+    {
+      "case": "L2",
+      "kind": "ATTEMPT_TERMINAL",
+      "timestamp": "2026-09-29T07:03:32.390470+00:00",
+      "identity_sha256": "4dc255a87ba749bc31ac6f353d7765674bc6e9c4c27708ff5e8b13106dd1cb80",
+      "reason": "CANCELLED",
+      "job_disposition": "CANCELLED",
+      "usage": null
+    }
+  ],
+  "resource_result_timeline": [
+    {
+      "case": "L2",
+      "kind": "CLAIM",
+      "record_sha256": "809cd10905e696911334d0dacec3c0f7c6230ef3985ba43dd82d02457db1e227",
+      "observed_at": "2026-09-29T07:03:20.626680+00:00"
+    },
+    {
+      "case": "L2",
+      "kind": "SETTLE",
+      "record_sha256": "5c4404748a8490535e8a3271fc9e4017114630cf866edb12e5aed085fa471a0f",
+      "phase": "RESOURCE_SETTLED",
+      "outcome": "CANCELLED",
+      "charged_seconds": 11.75,
+      "cleanup_confirmed": true
+    },
+    {
+      "case": "L2",
+      "kind": "RESULT_DISPOSITION",
+      "record_sha256": "6baae4ea9cb6b850090d43e3d22f195b145eee8e69e00f01b400038107c72cbd",
+      "reason": "CANCELLED",
+      "usage": null,
+      "cleanup_confirmed": true
+    }
+  ],
+  "independent_observer_timeline": [
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665400.5430057,
+      "relative_seconds": 0.062000000005355105,
+      "identity_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "tracked": 0,
+      "alive": 0,
+      "listeners": 0,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665406.4963326,
+      "relative_seconds": 6.014999999999418,
+      "identity_sha256": "caacf407967fd96599253ec48a501f4f00e178b709d9dc4e928fbeb181053453",
+      "tracked": 2,
+      "alive": 2,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665406.8575892,
+      "relative_seconds": 6.375,
+      "identity_sha256": "952f0e619d88f2f040047b9ca45ff82e24927f75919276a64a378f01668e2968",
+      "tracked": 3,
+      "alive": 3,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665407.234442,
+      "relative_seconds": 6.75,
+      "identity_sha256": "952f0e619d88f2f040047b9ca45ff82e24927f75919276a64a378f01668e2968",
+      "tracked": 3,
+      "alive": 2,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665407.5969226,
+      "relative_seconds": 7.10899999999674,
+      "identity_sha256": "c97e807d4786fc119428bd1f5446782e40df5396fc7ba2b947a274ec629ef03e",
+      "tracked": 4,
+      "alive": 3,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665407.9750774,
+      "relative_seconds": 7.48399999999674,
+      "identity_sha256": "ab49e99bb3471e949622aee10c6a5cb88b84926c12227ede11156654ab97dc55",
+      "tracked": 5,
+      "alive": 2,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665408.3518326,
+      "relative_seconds": 7.85899999999674,
+      "identity_sha256": "10c7ea5d6493c5b255ea2e330696d3b95c3434c7aa833d3f9525f43ac5cfa258",
+      "tracked": 6,
+      "alive": 3,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665408.6647923,
+      "relative_seconds": 8.187000000005355,
+      "identity_sha256": "10c7ea5d6493c5b255ea2e330696d3b95c3434c7aa833d3f9525f43ac5cfa258",
+      "tracked": 6,
+      "alive": 2,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665408.759003,
+      "relative_seconds": 8.281000000002678,
+      "identity_sha256": "a59efbea21907db16ced551f5505554bd6577483e99cc6d0be04aa937ed50880",
+      "tracked": 8,
+      "alive": 4,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665409.1491904,
+      "relative_seconds": 8.671000000002095,
+      "identity_sha256": "48b7e7069cdba9997d2ac16d2a83fd021f46e0c1e95a015323f89140a71473de",
+      "tracked": 10,
+      "alive": 6,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665412.0891266,
+      "relative_seconds": 11.60899999999674,
+      "identity_sha256": "48b7e7069cdba9997d2ac16d2a83fd021f46e0c1e95a015323f89140a71473de",
+      "tracked": 10,
+      "alive": 6,
+      "listeners": 1,
+      "resident": 1
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665412.3704698,
+      "relative_seconds": 11.889999999999418,
+      "identity_sha256": "48b7e7069cdba9997d2ac16d2a83fd021f46e0c1e95a015323f89140a71473de",
+      "tracked": 10,
+      "alive": 1,
+      "listeners": 0,
+      "resident": 0
+    },
+    {
+      "case": "L2",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790665412.464781,
+      "relative_seconds": 11.98399999999674,
+      "identity_sha256": "48b7e7069cdba9997d2ac16d2a83fd021f46e0c1e95a015323f89140a71473de",
+      "tracked": 10,
+      "alive": 0,
+      "listeners": 0,
+      "resident": 0
+    }
+  ],
+  "protected_prompts_assets_outputs_published": false,
+  "semantic_grade": "NOT_APPLICABLE_FAULT_TRIAL",
+  "original_L2_preflight_failure_preserved": true
+}

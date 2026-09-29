@@ -1,0 +1,71 @@
+{
+  "status": "BOUNDED PARTIAL \u2014 final reviews incomplete",
+  "observed_at": "2026-09-29T21:22:59.446366+00:00",
+  "candidate_sha": "487c67299445a29e0fbbdede04259565f741f587",
+  "model": "qwen2.5vl:3b Q4_K_M / Ollama 0.34.4; 54 of 72 pilot calls executed",
+  "process_shutdown": "APP stopped at 07:53:50 UTC; model gate disabled; 64 confirmed model settlements",
+  "scope": "Synthetic local development evidence. Source and sealed QA bytes reverified after interruption. Required final integration and independent reviews are incomplete.",
+  "journeys": [
+    {
+      "name": "Private and explicitly shared notes",
+      "result": "Executed in actual HTTP/browser workflows",
+      "evidence": "150 independent checks; real A-private, B-forbidden and B-shared journeys"
+    },
+    {
+      "name": "Corrections, grants and receipt history",
+      "result": "Executed on frozen candidate",
+      "evidence": "Once-only consumption, revocation, joint grants, lost replies, history without replay"
+    },
+    {
+      "name": "Drafts/tasks and restart",
+      "result": "Actual persistence/recovery exercised",
+      "evidence": "Current restart and rollback review-only workflows"
+    },
+    {
+      "name": "Final deterministic coverage",
+      "result": "Composite pass, three starts used",
+      "evidence": "Seven suite-1 components plus 221 producer checks in suite 3; both earlier harness failures retained"
+    },
+    {
+      "name": "Owned lifecycle",
+      "result": "Benign faults and real model cancellation exercised",
+      "evidence": "Text/image model stop 0.156/0.141 seconds; intended natural model timeouts finished early"
+    },
+    {
+      "name": "Selected-image browser",
+      "result": "B1 passed; B2 failed release",
+      "evidence": "Blue-square answer rendered once; B2 withheld for exhausted incidental shared-note grant"
+    },
+    {
+      "name": "Text model pilot",
+      "result": "25 passed of 30 executed; 36 scheduled",
+      "evidence": "Median 13.492 s, maximum 14.218 s; peak committed 4.329 GiB"
+    },
+    {
+      "name": "Image model pilot",
+      "result": "20 passed of 24 executed; 36 scheduled",
+      "evidence": "Median 36.399 s, maximum 40.109 s; peak committed 4.400 GiB"
+    },
+    {
+      "name": "Independent final reviews",
+      "result": "Incomplete after usage-limit interruption",
+      "evidence": "H00 preparation only; code/vision no final verdict; evidence review not dispatched"
+    }
+  ],
+  "budgets": {
+    "Model allocations": "6/16 readiness; 4/8 lifecycle; 54/72 final",
+    "Charged model time": "1593.405 / 5400 seconds",
+    "Final deterministic starts": "3 / 3",
+    "Assignments": "20 / 24 before any newly authorized continuation",
+    "Original hard deadline": "2026-09-29 10:10:16 UTC \u2014 passed; not renewed"
+  },
+  "limitations": [
+    "18 pilot calls remain NOT_EXECUTED_RESOURCE_BOUND; every original scheduled case remains in the denominator.",
+    "45 of 54 executed pilot calls passed independent grading; nine conservatively failed, including two disclosed ambiguous grounding judgments.",
+    "Protected separation is NOT_ESTABLISHED and evaluation remains EVALUATION_INCONCLUSIVE.",
+    "Actual model timeout was not exercised; successful early completion does not prove timeout behavior.",
+    "B2 browser abstention could not be graded because output release was denied.",
+    "This snapshot is an offline report, not the running application or final acceptance.",
+    "No original R1, canonical P03/CORE/MF/VA/R13, production, real-account/device or physical qualification."
+  ]
+}

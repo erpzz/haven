@@ -1,0 +1,9 @@
+{
+  "at": "2026-09-29T07:54:06.327058+00:00",
+  "captured_owned_identities": 1255,
+  "residual_count": 0,
+  "task_path_process_count": 0,
+  "root_app": "ROOT_OWNED_SEPARATE_TEARDOWN; not terminated by Task17",
+  "root_identity_sha256": "2a4988a6fb01817b92ca3b9fb7574baecab9228cbbfed9fbd02f72e3108c19aa",
+  "private_audit_sha256": "7f24eb9fecf5184783b2c085e873ebeb77379da65d9354d1512a2efc184cda26"
+}

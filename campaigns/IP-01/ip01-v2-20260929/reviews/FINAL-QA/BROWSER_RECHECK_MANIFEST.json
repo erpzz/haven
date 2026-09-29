@@ -1,0 +1,16 @@
+{
+  "assignment": 17,
+  "live_browser_recheck.py": "e7d8e0a8ac4591dac5a15624d0f6457e581f272bb0a2bead94f9623648eb2fd6",
+  "original_38_file_manifest_sha256": "83966821420b007765576771d94beb5a06d56cc56ef1177ab51c479d45693d34",
+  "candidate_binding_sha256": "a69efe21c368efba10533975ba4b9bbd9d0beca56e57dddacc357b08dea75829",
+  "all_38_original_harness_files_unchanged": true,
+  "all_37_candidate_files_unchanged": true,
+  "old_browser_driver_sha256": "abfef5b07561aca13987e9df31cca406b0f40bb8407d33a61319be1cbaca7aca",
+  "old_readiness_control_sha256": "68fcdbf31bbea96acc1f1b257bbecdb5085073d23091c524ba3f0ad14447d7d2",
+  "retained_HALT_sha256": "a0f68cae7fb9be6dd4ad788f0387333a16ad81aa69004eda284df449127ac2dd",
+  "retained_B1_failure_receipt_sha256": "c984d84231d5826c1cefbb859a38f3771bcc870de415a73bd4769df0d812b212",
+  "retained_B1_command_log_sha256": "ab5c78978860982e4c24abba434ce16cf0b232b36f402621d1bd8e4d19f2639a",
+  "benign_probe_receipt_sha256": "3a6e32c42be6f7292343f7f8dcde45c96ecf3596bbbc7e9d3f3b66c277d3cae9",
+  "benign_probe_log_sha256": "09495b080c1e90fb79cd03f128211ccfa36083d78f46bc57b25f33cb35842104",
+  "benign_probe_pixels_sha256": "d48cfcdc1ffba77e51e478dda6359c555e15cbca87cb6846a2074e0fa8f7a9ed"
+}

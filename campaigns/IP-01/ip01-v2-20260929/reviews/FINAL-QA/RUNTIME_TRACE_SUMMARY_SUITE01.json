@@ -1,0 +1,655 @@
+{
+  "assignment": 17,
+  "suite": 1,
+  "kind": "SANITIZED_BENIGN_RUNTIME_TRACE_SUMMARY",
+  "worker_stop_target_seconds": 3,
+  "cases": [
+    {
+      "case": "normal",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS"
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:52.376405+00:00",
+          "identity_sha256": "db670d70d87faea318789f886208524f91052b204d6beed95ec30aec01d4cd5d"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:52.388650+00:00",
+          "identity_sha256": "5622d770135a9532c5fa282f6153f922e873c74757cdd4f5c74cf461ecb38f33"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:52.617430+00:00",
+          "identity_sha256": "5622d770135a9532c5fa282f6153f922e873c74757cdd4f5c74cf461ecb38f33"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:48:52.635943+00:00",
+          "identity_sha256": "5622d770135a9532c5fa282f6153f922e873c74757cdd4f5c74cf461ecb38f33"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:52.638942+00:00",
+          "identity_sha256": "5622d770135a9532c5fa282f6153f922e873c74757cdd4f5c74cf461ecb38f33"
+        },
+        {
+          "kind": "RESULT_DISPOSITION",
+          "observed_at": "2026-09-29T06:48:52.643947+00:00",
+          "identity_sha256": "5622d770135a9532c5fa282f6153f922e873c74757cdd4f5c74cf461ecb38f33"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:52.646945+00:00",
+          "identity_sha256": "5622d770135a9532c5fa282f6153f922e873c74757cdd4f5c74cf461ecb38f33"
+        }
+      ],
+      "actor_trace_sha256": "cb4193071d33e72b2201148c6f31c8c2a18e4a655eb43c96bfc44d21bd7f9c07",
+      "observer_receipt_sha256": "591a782753cc318012e3a463d4cdc80a16fb8d11d51d017c1c3232d091da57df"
+    },
+    {
+      "case": "cancel_before",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 0,
+      "timing": {
+        "outcome": "PASS",
+        "observed_stop_latency_seconds": 0.031000000002677552
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:52.970829+00:00",
+          "identity_sha256": "27cc53250f9a1c8a41884de51364fae8025275c361adbe2c1c50c4088d9876f4"
+        },
+        {
+          "kind": "CANCEL_REQUESTED",
+          "observed_at": "2026-09-29T06:48:52.974830+00:00",
+          "identity_sha256": "27cc53250f9a1c8a41884de51364fae8025275c361adbe2c1c50c4088d9876f4"
+        },
+        {
+          "kind": "CANCELLED_BEFORE_SPAWN",
+          "observed_at": "2026-09-29T06:48:52.977343+00:00",
+          "identity_sha256": "27cc53250f9a1c8a41884de51364fae8025275c361adbe2c1c50c4088d9876f4"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:52.979343+00:00",
+          "identity_sha256": "27cc53250f9a1c8a41884de51364fae8025275c361adbe2c1c50c4088d9876f4"
+        }
+      ],
+      "actor_trace_sha256": "aa6bbae67836018e1948b20e754db547ba6a0f3f8ac41ed7fae101f00c6bd74e",
+      "observer_receipt_sha256": "155ad7aad8a246850a947b28e112ee4d8ea3eebb552ce7957dc33e45a8175bcf"
+    },
+    {
+      "case": "cancel_during",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS",
+        "observed_stop_latency_seconds": 0.031000000002677552
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:53.336029+00:00",
+          "identity_sha256": "19fb3592d0885c9f444ca88ea0580f499f3d8d8820c7a965afabe20c43dd4b48"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:53.349031+00:00",
+          "identity_sha256": "e5051b483925e1925fc10c6b560a2dd3999aec682f9ae5e56c3925680b53de1d"
+        },
+        {
+          "kind": "CANCEL_REQUESTED",
+          "observed_at": "2026-09-29T06:48:53.567201+00:00",
+          "identity_sha256": "e5051b483925e1925fc10c6b560a2dd3999aec682f9ae5e56c3925680b53de1d"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:53.570270+00:00",
+          "identity_sha256": "e5051b483925e1925fc10c6b560a2dd3999aec682f9ae5e56c3925680b53de1d"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:48:53.572207+00:00",
+          "identity_sha256": "e5051b483925e1925fc10c6b560a2dd3999aec682f9ae5e56c3925680b53de1d"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:53.575210+00:00",
+          "identity_sha256": "e5051b483925e1925fc10c6b560a2dd3999aec682f9ae5e56c3925680b53de1d"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:53.577210+00:00",
+          "identity_sha256": "e5051b483925e1925fc10c6b560a2dd3999aec682f9ae5e56c3925680b53de1d"
+        }
+      ],
+      "actor_trace_sha256": "ec786bec39a061b19f280c3ff314745b7feca5894d1d87608c4fc9102ee7e577",
+      "observer_receipt_sha256": "5a28c4d419794a243d77566b596c3717ea90354d7b488ef5e25363d0d0cc1c6b"
+    },
+    {
+      "case": "timeout",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS",
+        "observed_stop_latency_seconds": 0.23500000000058208
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:53.884016+00:00",
+          "identity_sha256": "68e81c7595915d620f3b0298bf2556872426b9f0b5dbd18786d347a4f0d9e216"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:53.897146+00:00",
+          "identity_sha256": "73e418dc79eac9642743a883b802299a06ce35aadffb2cd5028328b179aea638"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:54.568570+00:00",
+          "identity_sha256": "73e418dc79eac9642743a883b802299a06ce35aadffb2cd5028328b179aea638"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:48:54.575079+00:00",
+          "identity_sha256": "73e418dc79eac9642743a883b802299a06ce35aadffb2cd5028328b179aea638"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:54.577079+00:00",
+          "identity_sha256": "73e418dc79eac9642743a883b802299a06ce35aadffb2cd5028328b179aea638"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:54.580588+00:00",
+          "identity_sha256": "73e418dc79eac9642743a883b802299a06ce35aadffb2cd5028328b179aea638"
+        }
+      ],
+      "actor_trace_sha256": "9563c1e9ab4f84c080b56e47df8481a6c34b0b80e6947f3dd4ada54d2611d313",
+      "observer_receipt_sha256": "2f4f30809b650bc8681904b255df448e7694172ec2769ca544f3bb47aa801aea"
+    },
+    {
+      "case": "parent_death",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS",
+        "parent_death_elapsed": 0.03199999999196734
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:54.885300+00:00",
+          "identity_sha256": "84586788397b5566c1eb193249c0643b01d382961161795bc6e74455c98c333d"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:54.898810+00:00",
+          "identity_sha256": "bc5cf57c6869712fa45be6b52309e9f6b1564c77dcd44f954ab2e4f86314378e"
+        }
+      ],
+      "actor_trace_sha256": "01bf7b97c078a600245dd62c288b44a944a249d97ba5756c2bd47d2bfec1de0c",
+      "observer_receipt_sha256": "c71c225aadff87ac29bf24b36de35cfaa50f67af440a4d229c0c3e09e1a66b24"
+    },
+    {
+      "case": "worker_crash",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS"
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:55.215106+00:00",
+          "identity_sha256": "f5e69ffdfc7127c80085fde58693120d544b9966ee6077b933dd5bd5e9f3834e"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:55.228134+00:00",
+          "identity_sha256": "c5a3fba32bef21c139b4cd0ba9eb22cdda92570a5358213813d423f95cb92f65"
+        },
+        {
+          "kind": "COMPUTE_FAILED",
+          "observed_at": "2026-09-29T06:48:55.469111+00:00",
+          "identity_sha256": "c5a3fba32bef21c139b4cd0ba9eb22cdda92570a5358213813d423f95cb92f65"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:55.472109+00:00",
+          "identity_sha256": "c5a3fba32bef21c139b4cd0ba9eb22cdda92570a5358213813d423f95cb92f65"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:48:55.475110+00:00",
+          "identity_sha256": "c5a3fba32bef21c139b4cd0ba9eb22cdda92570a5358213813d423f95cb92f65"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:55.477109+00:00",
+          "identity_sha256": "c5a3fba32bef21c139b4cd0ba9eb22cdda92570a5358213813d423f95cb92f65"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:55.480622+00:00",
+          "identity_sha256": "c5a3fba32bef21c139b4cd0ba9eb22cdda92570a5358213813d423f95cb92f65"
+        }
+      ],
+      "actor_trace_sha256": "86a8369c6c53ae5ff73df6edc26c826908ae42cebaf1631c7df9f81687aa2256",
+      "observer_receipt_sha256": "80b8b95b3c019eb22b8594685042c04d85548fbac9a9ba47a03136f17bfa4bd7"
+    },
+    {
+      "case": "delayed_result",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS"
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:55.815001+00:00",
+          "identity_sha256": "e2c990caf79a2d04366e0c74e02f33e3a696a38effd28ee3e3ec77d2e529fbf2"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:55.828005+00:00",
+          "identity_sha256": "1d598374289968b8f95a4ea393f1a1fbc4eca500d0debc82a93b00e11521ffc4"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:56.054080+00:00",
+          "identity_sha256": "1d598374289968b8f95a4ea393f1a1fbc4eca500d0debc82a93b00e11521ffc4"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:48:56.075594+00:00",
+          "identity_sha256": "1d598374289968b8f95a4ea393f1a1fbc4eca500d0debc82a93b00e11521ffc4"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:56.079592+00:00",
+          "identity_sha256": "1d598374289968b8f95a4ea393f1a1fbc4eca500d0debc82a93b00e11521ffc4"
+        },
+        {
+          "kind": "RESULT_FENCED",
+          "observed_at": "2026-09-29T06:48:56.357361+00:00",
+          "identity_sha256": "1d598374289968b8f95a4ea393f1a1fbc4eca500d0debc82a93b00e11521ffc4"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:56.360360+00:00",
+          "identity_sha256": "1d598374289968b8f95a4ea393f1a1fbc4eca500d0debc82a93b00e11521ffc4"
+        }
+      ],
+      "actor_trace_sha256": "8aea3b910f4e7badb2ad5b76f75bf2d3029b0aa7a36e662f5541ab05806c3ff9",
+      "observer_receipt_sha256": "27cb76cde3c166b3552d46d0744eeadeae8e05315c2982f563995f6a97f79d32"
+    },
+    {
+      "case": "duplicate_result",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS"
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:56.691801+00:00",
+          "identity_sha256": "8ac608f351e94cfe605909ac0943e5073dc95907b5b1d32c02a2fab7553f0cd6"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:56.703801+00:00",
+          "identity_sha256": "47b177f4beb56d41d8673dadeb167bcfc29fa26d9205703163865c1dc1735a23"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:56.926369+00:00",
+          "identity_sha256": "47b177f4beb56d41d8673dadeb167bcfc29fa26d9205703163865c1dc1735a23"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:48:56.939872+00:00",
+          "identity_sha256": "47b177f4beb56d41d8673dadeb167bcfc29fa26d9205703163865c1dc1735a23"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:56.941877+00:00",
+          "identity_sha256": "47b177f4beb56d41d8673dadeb167bcfc29fa26d9205703163865c1dc1735a23"
+        },
+        {
+          "kind": "RESULT_DISPOSITION",
+          "observed_at": "2026-09-29T06:48:56.944880+00:00",
+          "identity_sha256": "47b177f4beb56d41d8673dadeb167bcfc29fa26d9205703163865c1dc1735a23"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:56.947885+00:00",
+          "identity_sha256": "47b177f4beb56d41d8673dadeb167bcfc29fa26d9205703163865c1dc1735a23"
+        }
+      ],
+      "actor_trace_sha256": "2c3e359b851b8d3ec982143b430ddb67ebf9ea2081c0b6d1b8ff3ac02754fecf",
+      "observer_receipt_sha256": "c489c4760fdd073bc27c9e13d8ff78ee28aeec31788b8d8486a4d606bb17d91d"
+    },
+    {
+      "case": "stale_fence",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS"
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:57.258354+00:00",
+          "identity_sha256": "79e8ec63657b6a4f8bf3ac62f531b186988152dc06cc13806b7d2f53c7333f58"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:57.270867+00:00",
+          "identity_sha256": "a16e20ac9978bad607586243b088cc7fed33400c32c14723a45f6872cd5340d2"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:57.495227+00:00",
+          "identity_sha256": "a16e20ac9978bad607586243b088cc7fed33400c32c14723a45f6872cd5340d2"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:48:57.520148+00:00",
+          "identity_sha256": "a16e20ac9978bad607586243b088cc7fed33400c32c14723a45f6872cd5340d2"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:57.522149+00:00",
+          "identity_sha256": "a16e20ac9978bad607586243b088cc7fed33400c32c14723a45f6872cd5340d2"
+        },
+        {
+          "kind": "RESULT_FENCED",
+          "observed_at": "2026-09-29T06:48:57.526149+00:00",
+          "identity_sha256": "a16e20ac9978bad607586243b088cc7fed33400c32c14723a45f6872cd5340d2"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:57.527985+00:00",
+          "identity_sha256": "a16e20ac9978bad607586243b088cc7fed33400c32c14723a45f6872cd5340d2"
+        }
+      ],
+      "actor_trace_sha256": "503242c466b86dea6f7f07655b4e197af9c309e055100784a23fccece763e7e6",
+      "observer_receipt_sha256": "739a9f7a99e84c481ce90314427f894bd484e87cee541618dce9202b8d99cc0f"
+    },
+    {
+      "case": "restart_capacity",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 4,
+      "timing": {
+        "outcome": "PASS"
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:57.835321+00:00",
+          "identity_sha256": "cebb73da5f270d62e57d62a11b3406d7c242f36eb01a6245231b36f3db62b727"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:57.848844+00:00",
+          "identity_sha256": "c62f3dc2ef77c021ee5dd95b2c80243f8637fbc57b5f04396c1ced12efdc56b5"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:58.077103+00:00",
+          "identity_sha256": "c62f3dc2ef77c021ee5dd95b2c80243f8637fbc57b5f04396c1ced12efdc56b5"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:48:58.097617+00:00",
+          "identity_sha256": "c62f3dc2ef77c021ee5dd95b2c80243f8637fbc57b5f04396c1ced12efdc56b5"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:58.099616+00:00",
+          "identity_sha256": "c62f3dc2ef77c021ee5dd95b2c80243f8637fbc57b5f04396c1ced12efdc56b5"
+        },
+        {
+          "kind": "RESULT_DISPOSITION",
+          "observed_at": "2026-09-29T06:48:58.103617+00:00",
+          "identity_sha256": "c62f3dc2ef77c021ee5dd95b2c80243f8637fbc57b5f04396c1ced12efdc56b5"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:58.105617+00:00",
+          "identity_sha256": "c62f3dc2ef77c021ee5dd95b2c80243f8637fbc57b5f04396c1ced12efdc56b5"
+        },
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:58.121133+00:00",
+          "identity_sha256": "ac1a035692797fdf11dab6c8ca835881a10b8fccfee9a9c7e68481844e76b15a"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:58.127246+00:00",
+          "identity_sha256": "db3111020c7c452cab6ea3cefdef19d982a18c0e1bf0af9513a5fcaef217f824"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:58.354903+00:00",
+          "identity_sha256": "db3111020c7c452cab6ea3cefdef19d982a18c0e1bf0af9513a5fcaef217f824"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:48:58.378448+00:00",
+          "identity_sha256": "db3111020c7c452cab6ea3cefdef19d982a18c0e1bf0af9513a5fcaef217f824"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:58.381449+00:00",
+          "identity_sha256": "db3111020c7c452cab6ea3cefdef19d982a18c0e1bf0af9513a5fcaef217f824"
+        },
+        {
+          "kind": "RESULT_DISPOSITION",
+          "observed_at": "2026-09-29T06:48:58.384449+00:00",
+          "identity_sha256": "db3111020c7c452cab6ea3cefdef19d982a18c0e1bf0af9513a5fcaef217f824"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:58.386450+00:00",
+          "identity_sha256": "db3111020c7c452cab6ea3cefdef19d982a18c0e1bf0af9513a5fcaef217f824"
+        }
+      ],
+      "actor_trace_sha256": "1b96fe06908490141f8ae3fbcde909a7170670b0aec1e95ef2decbe4bd2db55d",
+      "observer_receipt_sha256": "669380c22799b6e0761b7289727faf0165fe9acd100d8ad705667c054e35f2d8"
+    },
+    {
+      "case": "unknown_cleanup_capacity",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS"
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:58.711107+00:00",
+          "identity_sha256": "7d7286e055b306532721257806554a74b4c279eab3740191ff1917a16a211443"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:58.724508+00:00",
+          "identity_sha256": "e71864cd9f034f807f385ef26bd999e527531ce1232efee443fa1369bb570b3f"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:58.951752+00:00",
+          "identity_sha256": "e71864cd9f034f807f385ef26bd999e527531ce1232efee443fa1369bb570b3f"
+        },
+        {
+          "kind": "UNKNOWN",
+          "observed_at": "2026-09-29T06:48:58.973265+00:00",
+          "identity_sha256": "e71864cd9f034f807f385ef26bd999e527531ce1232efee443fa1369bb570b3f"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:58.976262+00:00",
+          "identity_sha256": "e71864cd9f034f807f385ef26bd999e527531ce1232efee443fa1369bb570b3f"
+        },
+        {
+          "kind": "RESULT_FENCED",
+          "observed_at": "2026-09-29T06:48:58.979261+00:00",
+          "identity_sha256": "e71864cd9f034f807f385ef26bd999e527531ce1232efee443fa1369bb570b3f"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:58.981264+00:00",
+          "identity_sha256": "e71864cd9f034f807f385ef26bd999e527531ce1232efee443fa1369bb570b3f"
+        }
+      ],
+      "actor_trace_sha256": "1cdf4714895f27f4414a9cd89a166a6d32eaa82e3d81288add5b88156698060e",
+      "observer_receipt_sha256": "ef641bfd68779f8839c8c8fe8382786863d4961986456211ab806f2c9b4bef39"
+    },
+    {
+      "case": "malformed_first",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS"
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:59.303433+00:00",
+          "identity_sha256": "d86c0d315a54c47f85f241380ea7ef58c2067256cd59dd601c6ea86118d8f9d8"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:59.316941+00:00",
+          "identity_sha256": "d87f71a2e171c8f95e42ae3de294b2f2d929018436811ca1b66736383c22ac99"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:48:59.550395+00:00",
+          "identity_sha256": "d87f71a2e171c8f95e42ae3de294b2f2d929018436811ca1b66736383c22ac99"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:48:59.564906+00:00",
+          "identity_sha256": "d87f71a2e171c8f95e42ae3de294b2f2d929018436811ca1b66736383c22ac99"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:48:59.567905+00:00",
+          "identity_sha256": "d87f71a2e171c8f95e42ae3de294b2f2d929018436811ca1b66736383c22ac99"
+        },
+        {
+          "kind": "RESULT_REJECTED_SCHEMA",
+          "observed_at": "2026-09-29T06:48:59.572418+00:00",
+          "identity_sha256": "d87f71a2e171c8f95e42ae3de294b2f2d929018436811ca1b66736383c22ac99"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:48:59.575418+00:00",
+          "identity_sha256": "d87f71a2e171c8f95e42ae3de294b2f2d929018436811ca1b66736383c22ac99"
+        }
+      ],
+      "actor_trace_sha256": "702d450d31121c54d056157866cf28b8ca0c6c2ebbe17fac92d664451db020af",
+      "observer_receipt_sha256": "31ce5132d003b20d29d06ecfb99e35ce85c525fa8951d21406608578a8a17985"
+    },
+    {
+      "case": "malformed_duplicate",
+      "outcome": "PASS",
+      "control_survived": true,
+      "control_stopped": true,
+      "residual_count": 0,
+      "independent_workload_count": 2,
+      "timing": {
+        "outcome": "PASS"
+      },
+      "events": [
+        {
+          "kind": "QUEUED",
+          "observed_at": "2026-09-29T06:48:59.870323+00:00",
+          "identity_sha256": "1febf112538428b4e03a9aca376ab47bc39478acc49f21f7efa8d15a8c3b406a"
+        },
+        {
+          "kind": "PROCESS_STARTED",
+          "observed_at": "2026-09-29T06:48:59.884345+00:00",
+          "identity_sha256": "367764fa9febd5ae55bdb15a80c3445e1537d2420a4ee9f51b48308af2a3e6bc"
+        },
+        {
+          "kind": "STOP_REQUESTED",
+          "observed_at": "2026-09-29T06:49:00.108928+00:00",
+          "identity_sha256": "367764fa9febd5ae55bdb15a80c3445e1537d2420a4ee9f51b48308af2a3e6bc"
+        },
+        {
+          "kind": "STOP_CONFIRMED",
+          "observed_at": "2026-09-29T06:49:00.131451+00:00",
+          "identity_sha256": "367764fa9febd5ae55bdb15a80c3445e1537d2420a4ee9f51b48308af2a3e6bc"
+        },
+        {
+          "kind": "DISPATCH_OBSERVED",
+          "observed_at": "2026-09-29T06:49:00.134450+00:00",
+          "identity_sha256": "367764fa9febd5ae55bdb15a80c3445e1537d2420a4ee9f51b48308af2a3e6bc"
+        },
+        {
+          "kind": "RESULT_DISPOSITION",
+          "observed_at": "2026-09-29T06:49:00.138449+00:00",
+          "identity_sha256": "367764fa9febd5ae55bdb15a80c3445e1537d2420a4ee9f51b48308af2a3e6bc"
+        },
+        {
+          "kind": "ATTEMPT_TERMINAL",
+          "observed_at": "2026-09-29T06:49:00.141449+00:00",
+          "identity_sha256": "367764fa9febd5ae55bdb15a80c3445e1537d2420a4ee9f51b48308af2a3e6bc"
+        }
+      ],
+      "actor_trace_sha256": "039a0efcb510af70dab409bbfa29021ef97016a9b97a3376a8e2cfcf62d0f045",
+      "observer_receipt_sha256": "5f5cb764c4304548494bd805c021bd805b5daa7dd7d0dd1d763a9d37d62c8f75"
+    }
+  ],
+  "raw_trace_published": false,
+  "unknown_cleanup_scope": "Real OS termination with evaluator withholding confirmation; no claim that OS termination failed",
+  "real_model_calls": 0
+}
