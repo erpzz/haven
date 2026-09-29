@@ -1,16 +1,17 @@
-# Current continuation resume
+# Current closure resume
 
-Run `ip01-closure-20260929T212404Z` is a distinct closure run. Original run expired at 2026-09-29T10:10:16Z; see state/ORIGINAL_RUN_RECONCILED.json. Do not renew either deadline on resume.
+Run `ip01-closure-20260929T212404Z` is distinct from the expired original run. Original stop10:10:16Z remains historical. Closure hardstop22:54:04Z; stop new assignments22:09:04Z; no renewal on compaction or resume. All24 assignments are now used. No new model calls/suite starts/downloads/features/spending are authorized in this closure.
 
-Closure began 2026-09-29T21:24:04.782931+00:00; hard stop 2026-09-29T22:54:04.782931+00:00; stop new assignments 2026-09-29T22:09:04.782931+00:00. Current 20/24 assignments; use remaining four for H00, CODE, VISION and EVIDENCE. Root delivery continues task 6. No new model calls, final suite starts, downloads, models or features.
+Exact evaluated-byte candidate `0b59551f36990cfb8a723f97da6d367358a8ceb5`; exact QA publication `e567c3dc541084044e6142ae236a5d71bf64e23f`. Historical487c672 evaluation revision and all failures/calls remain preserved. H00 closure MANIFEST SHA256 `054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121` is frozen and its native task closed. Published packet01d0c746da73546478ed4882a484f3099fa110b9.
 
-1. Publish reconciliation receipt and checkpoint A, then reread Issue20.
-2. Materialize exact evaluated candidate Git bytes; freeze companion binding and checkpoint B; retain historical freeze unchanged.
-3. Record FINAL-EXECUTION PARTIAL (54/72, 45 semantic passes, nine failures, 18 unrun; deterministic composite complete), checkpoint C and reread.
-4. Checkpoint D and reread before H00 then independent code/vision/evidence wave. Preserve role separation; no claim based only on scheduling.
-5. Resolve or retain findings as blockers, checkpoint E and reread. Update this file, MORNING_REPORT, 59-item audit, offline result and PR21 draft metadata.
-6. Reconcile publication and exact cessation; checkpoint F and final Issue20 reread before ending.
+Active distinct final reviewers:
 
-Latest steering: https://github.com/erpzz/haven/issues/20#issuecomment-5898973462; accepted within scope in receipts/SUPER_ADMIN_5898973462_DISPOSITION.json. After every outbound check and before each major gate consume any newer stewardship feedback; never infer expanded authority.
+- `01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6` — CODE-FINAL-CLOSURE, deadline 2026-09-29T22:07:00Z
+- `01a0ef1f-a5ab-7221-968a-0f0a4afd18ad` — VISION-FINAL-CLOSURE, deadline 2026-09-29T22:07:00Z
+- `01a0ef1f-a61b-7c60-b34a-477d91e77feb` — EVIDENCE-FINAL-CLOSURE, deadline 2026-09-29T22:07:00Z
 
-APP stopped at 07:53:50Z; reverified 21:11Z. Gate disabled, resource HALT retained, 64 calls settled, none unknown. Three suite starts remain consumed. H00 preparation and saved final artifacts are historical; task18 native handback is unconfirmed and tasks19-20 have no final verdict. Source37 and sealed QA106 hashes reverified. Exact Git materialization is pending.
+Next: receive actual verdicts, retain or resolve material findings with evidence, post Issue20 checkpoint E and immediately reread. Finalize MORNING_REPORT, all59 audititems, offline snapshot, review receipt and this resume; update PR21 while keeping it draft and its base unchanged. Close each actual native child; record exact runtime/native cessation; scan and publish allowed files. Post F and perform the final Issue20 reread before ending. A newly found material defect requires an extra checkpoint immediately. Do not infer completion from tasks.json.
+
+A/B/C/D and material publication checkpointP1 are posted and reread. Latest consumed stewardship5898973462 accepted within scope; no newer guidance in pre-review dispatch check. Follow COORDINATION_AMENDMENT.md and record every new disposition.
+
+FINAL-EXECUTION PARTIAL: deterministic composite complete across3starts; pilot54/72,45pass9fail18unrun, protected EVALUATION_INCONCLUSIVE. B2 release failure and naturalmodeltimeout NOT_EXERCISED remain. All64 totalcalls settled1593.405seconds, zero unknowncleanup. APP stopped07:53:50Z and reverified stopped duringclosure; gate disabled and originalHALT intact. Root offline draft browserrender completed with five observed identities/zero residuals; no APP/model was launched.

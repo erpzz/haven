@@ -22,7 +22,7 @@
     {
       "id": "CAMPAIGN-03",
       "requirement": "Root/H00 separation, targeted actual specialists, no recursive spawning",
-      "status": "ACTUAL_ROLES_PRESERVED_H00_CLOSURE_RUNNING",
+      "status": "DISTINCT_H00_RETURNED_THREE_FINAL_REVIEWERS_ACTIVE",
       "evidence": [
         "state/tasks.json",
         "state/agents.jsonl"
@@ -41,7 +41,7 @@
     {
       "id": "CAMPAIGN-05",
       "requirement": "Max3 active children, max24 assignments, six reserved final slots",
-      "status": "21_OF24_USED_THREE_FINAL_REVIEW_SLOTS_REMAIN",
+      "status": "24_OF24_USED_THREE_ACTIVE_NO_REMAINING_ASSIGNMENTS",
       "evidence": [
         "state/tasks.json",
         "state/CONTINUATION_RUN.json"
@@ -511,7 +511,7 @@
     {
       "id": "DELIVERY-03",
       "requirement": "Distinct final code,vision,evidence reviewers at exact candidate; affected recheck after changes",
-      "status": "H00_CLOSURE_RUNNING_THREE_DISTINCT_FINAL_REVIEWS_PENDING",
+      "status": "H00_FROZEN_DISTINCT_CODE_VISION_EVIDENCE_RUNNING",
       "evidence": [
         "state/tasks.json"
       ]
@@ -528,7 +528,7 @@
     {
       "id": "DELIVERY-05",
       "requirement": "Actual test reports/screenshots/immutable sanitized traces and offline last-run snapshot",
-      "status": "SEALED_REPORTS_SCREENSHOTS_TRACE_PROJECTIONS_PUBLISHED_OFFLINE_FINAL_RENDER_PENDING",
+      "status": "SEALED_QA_PUBLISHED_OFFLINE_DRAFT_RENDER_AND_PIXELS_INSPECTED_FINAL_RENDER_PENDING",
       "evidence": [
         "reviews/FINAL-QA/FINAL_PUBLIC_MANIFEST.json",
         "results/last-run.json",
@@ -576,12 +576,12 @@
       ]
     }
   ],
-  "updated_at": "2026-09-29T21:38:49.838807+00:00",
+  "updated_at": "2026-09-29T21:45:27.165172+00:00",
   "progress_note": "Frozen source byte identity reconciled. Independent final execution handoff is PARTIAL; root/H00 closure and distinct final reviews are pending actual returns.",
   "qualification": "All59 requirements retained; deterministic composite complete, model pilot54/72 partial, no canonical/production/physical qualification. Final review statuses must be read from current task/agent receipts.",
-  "last_root_observation": "2026-09-29T21:38:49.838807+00:00",
-  "status": "PARTIAL_EXECUTION_CLOSURE_REVIEWS_PENDING",
-  "as_of": "2026-09-29T21:38:49.838807+00:00",
+  "last_root_observation": "2026-09-29T21:44:05.687681+00:00",
+  "status": "FINAL_REVIEW_WAVE_ACTIVE_EXECUTION_PARTIAL",
+  "as_of": "2026-09-29T21:44:05.687681+00:00",
   "disposition": "PARTIAL_EXECUTION_CLOSURE_REVIEWS_PENDING",
   "denominator": 59
 }

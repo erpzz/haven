@@ -69,14 +69,18 @@
     "reread_after_every_checkpoint": true,
     "old_checkpoint_cap": "Preserved historically; current explicit operator mandatory boundaries govern continuation postings."
   },
-  "processes": "APP/model stopped; H00 native handback received and close tool returned completed; active reviewer identities must be read from current array.",
-  "status": "H00_FROZEN_FINAL_REVIEW_READY",
-  "at": "2026-09-29T21:38:49.838807+00:00",
-  "assignments_used": 21,
-  "assignments_remaining": 3,
-  "active_native_children": [],
+  "processes": "APP/model/test stopped. H00 closed. Three native read-only reviewers active, exact identities in active_native_children.",
+  "status": "THREE_INDEPENDENT_FINAL_REVIEWS_RUNNING",
+  "at": "2026-09-29T21:44:05.687681+00:00",
+  "assignments_used": 24,
+  "assignments_remaining": 0,
+  "active_native_children": [
+    "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6",
+    "01a0ef1f-a5ab-7221-968a-0f0a4afd18ad",
+    "01a0ef1f-a61b-7c60-b34a-477d91e77feb"
+  ],
   "last_published_observation": {
-    "at": "2026-09-29T21:38:49.838807+00:00",
-    "commit": "ef1655cc09e216dc76b7f6ccb850f4e09f33e680"
+    "at": "2026-09-29T21:44:05.687681+00:00",
+    "commit": "01d0c746da73546478ed4882a484f3099fa110b9"
   }
 }
