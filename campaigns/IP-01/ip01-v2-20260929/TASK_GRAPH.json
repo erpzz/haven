@@ -1,0 +1,41 @@
+{
+  "schema": "haven.ip01.seed.v1",
+  "campaign": "ip01-v2-20260929",
+  "status": "PREPARED_NOT_STARTED",
+  "issue": 20,
+  "branch": "implementation/ip01-v2-20260929",
+  "root_only_dispatch": true,
+  "max_active_children": 3,
+  "max_assignments": 24,
+  "reserved_review_delivery_assignments": 6,
+  "task_defaults": {"status":"QUEUED","assigned_native_id":null,"input_manifest":null,"candidate_sha":null,"attempts":0},
+  "rules": [
+    "Operator launch and native preflight precede execution; these entries do not dispatch agents.",
+    "Preserve six assignments for three final reviews, delivery and bounded rechecks.",
+    "Before each dispatch bind exact required artifacts, hashes, approved writable modules, time/attempt limits and acceptance evidence.",
+    "Soft dependencies permit labeled preparation only; hard dependencies gate acceptance.",
+    "Disposition dependencies require an honest result or bounded blocker, never fabricated success.",
+    "No duplicate root, recursive spawning, concurrent shared-file writes or author self-review.",
+    "Final reviews may assess a useful partial outcome; no missing execution becomes PASS."
+  ],
+  "tasks": [
+    {"id":"INTAKE","role":"haven_intake","hard":[],"objective":"Verify exact setup/baseline, source availability and native delegation; return bounded inventory."},
+    {"id":"SEAM","role":"haven_integration_manager","hard":["INTAKE"],"objective":"Publish compact module/path ownership and accepted-contract mapping; then yield slot."},
+    {"id":"APP","role":"ip01_application_engineer","hard":["SEAM"],"objective":"Run persistent two-person app with useful deterministic answers, sharing, corrections and local drafts."},
+    {"id":"RUNTIME","role":"ip01_runtime_engineer","hard":["SEAM"],"objective":"Implement owned benign-worker lifecycle and fault hooks; prepare granted runtime acquisition without inference before gate."},
+    {"id":"QA-PREP","role":"ip01_validation_engineer","hard":["SEAM"],"objective":"Author independent functional/HTTP/browser/lifecycle fixtures, observer and protected-evaluation plan."},
+    {"id":"CODE-EARLY","role":"haven_code_reviewer","hard":["APP","RUNTIME"],"objective":"Focused independent source/authority/concurrency review; return exact findings for authors."},
+    {"id":"LIFECYCLE-OBS","role":"ip01_validation_engineer","hard":["RUNTIME","QA-PREP"],"objective":"Execute independent benign-process fault and stop observations; retain failures and controls."},
+    {"id":"WIRE","role":"ip01_application_engineer","hard":["APP","RUNTIME"],"soft":["CODE-EARLY","LIFECYCLE-OBS"],"objective":"Integrate owned job/answer path and UI; address relevant findings without self-acceptance."},
+    {"id":"QA-E2E","role":"ip01_validation_engineer","hard":["WIRE","QA-PREP"],"objective":"Execute useful positive/negative HTTP/browser/state workflows and report exact candidate evidence."},
+    {"id":"MODEL-READY","role":"ip01_runtime_engineer","hard":["LIFECYCLE-OBS"],"objective":"Identify one artifact/runtime/rights; demonstrate dedicated backend launch/deadline/stop within readiness/lifecycle allocation, or record blocker.","optional_lane":"model"},
+    {"id":"PIXEL-ORACLE","role":"haven_vision_perception","hard":["QA-PREP"],"objective":"Actually inspect artificial pixels and bind supported/forbidden expected assertions; report modality limitation if unavailable.","optional_lane":"image"},
+    {"id":"FREEZE","role":"root","hard":["CODE-EARLY","QA-E2E","LIFECYCLE-OBS"],"disposition_dependencies":["MODEL-READY","PIXEL-ORACLE"],"objective":"Bind resolved findings, source/config/environment/fixture identities and final allocations; model admission requires its gates, not just a disposition."},
+    {"id":"FINAL-EXECUTION","role":"ip01_validation_engineer","hard":["FREEZE"],"objective":"Run bounded final deterministic suite and eligible 72-call pilot; preserve all partial/failure outcomes and protection limits."},
+    {"id":"INTEGRATION","role":"haven_integration_manager","hard":["FINAL-EXECUTION"],"objective":"Assemble frozen source/evidence manifest, exact contract-use map, honest implemented/deferred scope; do not self-accept."},
+    {"id":"CODE-FINAL","role":"haven_code_reviewer","hard":["INTEGRATION"],"reserved":true,"objective":"Independent final actual-code/authority verdict at exact frozen revision."},
+    {"id":"VISION-FINAL","role":"haven_vision_guardian","hard":["INTEGRATION"],"reserved":true,"objective":"Independent final usefulness and cumulative-vision verdict with actual versus deferred capabilities."},
+    {"id":"EVIDENCE-FINAL","role":"haven_evidence_auditor","hard":["INTEGRATION"],"reserved":true,"objective":"Independent final evidence/attempt/oracle/claim audit; no fake empirical or canonical promotion."},
+    {"id":"DELIVERY","role":"root","disposition_dependencies":["CODE-FINAL","VISION-FINAL","EVIDENCE-FINAL"],"reserved":true,"objective":"Sanitize/publish permitted results, MORNING_REPORT/RESUME and exact owned shutdown; partial/blocker handoff allowed, no automatic merge."}
+  ]
+}

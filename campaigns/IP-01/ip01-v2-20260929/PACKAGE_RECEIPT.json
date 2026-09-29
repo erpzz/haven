@@ -1,0 +1,15 @@
+{
+  "campaign": "ip01-v2-20260929",
+  "status": "PREPARED_NOT_STARTED",
+  "source_artifact": "Haven_IP-01_v2_Working_Local_Assistant.md",
+  "destination": "campaigns/IP-01/ip01-v2-20260929/WORK_PACKAGE.md",
+  "source_bytes": 27626,
+  "source_sha256": "bd51fc00fa763218a4f9aa9a39a195fd2109bd46875a4c49452875a0a61ae774",
+  "source_git_blob_sha1": "2e4e4d1df53d737248ea11f48285fef229d37651",
+  "transfer": "Exact original bytes preserved; GitHub-native transport and role adaptation are explicit in START_HERE.md and ROLE_MAP.md, not silent edits to the original.",
+  "research_baseline": "6bc1c8df1218ceb0e0d8709adee65d1e44634047",
+  "research_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+  "reused_orchestration": ["orchestration/RI-01/ROLE_MAP.md","orchestration/RI-01/PROTOCOL.md","orchestration/RI-01/RUNTIME.md",".codex/agents/"],
+  "scope_amendment": "Transport, Issue #20 checkpoint destination and explicit reuse of RI-01 roles with three bounded coding/QA additions; runtime limits are unchanged.",
+  "execution": "No Codex goal, native child, application or model launched by setup publication."
+}
