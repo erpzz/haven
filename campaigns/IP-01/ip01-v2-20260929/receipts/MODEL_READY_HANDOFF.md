@@ -40,7 +40,7 @@ Final independent PID+birth rechecks found0 observed workload survivors and0 lis
 
 ### Exact commands and outcomes
 
-All commands ran from `C:\Users\Eric Paiz\projects\haven-ip01-runtime-20260929`, using the designated venv. Driver scripts are private evidence tools and make model requests only through APP's `/api/answers` route.
+All commands ran from `<campaign>`, using the designated venv. Driver scripts are private evidence tools and make model requests only through APP's `/api/answers` route.
 
 ```powershell
 $env:PYTHONDONTWRITEBYTECODE='1'

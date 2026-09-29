@@ -19,8 +19,15 @@
       "original_sha256": "e58a722fea576fc920b509548bc56b2dc2a8cc3e8d7cc3108559eb5933dbb108",
       "public_edition_sha256": "f9d7fcf1024f9315e770079fb6f185b31a189f0ca5bd62b046aec521a0a531bb",
       "change": "Absolute user-home path replaced with campaign alias; original retained privately; assertions unchanged"
+    },
+    {
+      "path": "receipts/MODEL_READY_HANDOFF.md",
+      "original_sha256": "65d7f9e948aad73c4a19c89c7e0b04001193df8f69357d1e0bf877f047074270",
+      "public_edition_sha256": "89bf00b6b371364e120cdd243c0b7a068fede525e8f9e48e9849084fcb24c985",
+      "change": "One absolute user-home pathname replaced with campaign alias; original retained privately",
+      "publication_correction": "Pathname was inadvertently present in interim commit7a9d4f9; correction preserves history rather than rewriting it; scanner now rejects absolute home paths"
     }
   ],
   "scope": "Publication pathname redaction only; original review hashes remain historical identities",
-  "updated_at": "2026-09-29T05:09:18.265359+00:00"
+  "updated_at": "2026-09-29T05:25:37.236177+00:00"
 }

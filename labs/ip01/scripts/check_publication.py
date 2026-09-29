@@ -15,6 +15,7 @@ BASE = "8e1304caf82c0a889eeaea7691db7b9d7b98c526"
 ALLOWED = ("labs/ip01/", "campaigns/IP-01/ip01-v2-20260929/")
 DENIED_SUFFIXES = {".db", ".sqlite", ".sqlite3", ".pyc", ".pyo", ".pem", ".key", ".log", ".gguf", ".safetensors", ".whl"}
 SECRET_PATTERNS = {
+    "absolute_home_path": re.compile(rb"(?:[A-Za-z]:[\\/]+Users[\\/]+[^\\/\r\n`]+|(?<![A-Za-z0-9_/])/(?:home)/[A-Za-z0-9_.-]+)", re.IGNORECASE),
     "github_token": re.compile(rb"(?:gh[pousr]_[A-Za-z0-9]{24,}|github_pat_[A-Za-z0-9_]{32,})"),
     "private_key": re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----"),
     "provider_key": re.compile(rb"sk-(?:proj-)?[A-Za-z0-9_-]{32,}"),
