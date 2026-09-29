@@ -13,20 +13,19 @@
     {
       "id": "CAMPAIGN-02",
       "requirement": "Fixed launch/deadline and last45min reserve",
-      "status": "ONGOING_FIXED_DEADLINE",
+      "status": "ORIGINAL_EXPIRED_RECONCILED_SEPARATE_CLOSURE_BOUNDED",
       "evidence": [
-        "receipts/OPERATOR_LAUNCH.md",
-        "state/run.json"
+        "state/ORIGINAL_RUN_RECONCILED.json",
+        "state/CONTINUATION_RUN.json"
       ]
     },
     {
       "id": "CAMPAIGN-03",
       "requirement": "Root/H00 separation, targeted actual specialists, no recursive spawning",
-      "status": "EXECUTED_ONGOING_ROLES",
+      "status": "ACTUAL_ROLES_PRESERVED_H00_CLOSURE_RUNNING",
       "evidence": [
-        "state/agents.jsonl",
         "state/tasks.json",
-        "integration/SEAM.md"
+        "state/agents.jsonl"
       ]
     },
     {
@@ -42,10 +41,10 @@
     {
       "id": "CAMPAIGN-05",
       "requirement": "Max3 active children, max24 assignments, six reserved final slots",
-      "status": "ONGOING_WITHIN_LIMITS",
+      "status": "21_OF24_USED_THREE_FINAL_REVIEW_SLOTS_REMAIN",
       "evidence": [
-        "state/run.json",
-        "state/agents.jsonl"
+        "state/tasks.json",
+        "state/CONTINUATION_RUN.json"
       ]
     },
     {
@@ -69,11 +68,10 @@
     {
       "id": "CAMPAIGN-08",
       "requirement": "Allowance, acquisition/storage/RAM/time/call counters with unknowns retained",
-      "status": "ONGOING_COUNTERS_UNKNOWN_COSTS_RETAINED",
+      "status": "64_SETTLED_CALLS_1593_405_SECONDS_COST_UNKNOWN_NO_COUNTER_RESET",
       "evidence": [
-        "inputs/RUNTIME_PREPARATION.md",
-        "receipts/MODEL_PREPARATION.md",
-        "state/run.json"
+        "receipts/FINAL_RUNTIME_SHUTDOWN.json",
+        "state/CONTINUATION_RUN.json"
       ]
     },
     {
@@ -391,11 +389,11 @@
     {
       "id": "BROWSER-06",
       "requirement": "Selected-image answering when operational model gate met",
-      "status": "UPLOAD_RESPONSE_HARNESS_FAILURE_BEFORE_MODEL_SUBMISSION_REPAIR_PENDING",
+      "status": "B1_RECHECK_PASSED_B2_RELEASE_FAILED_ABSTENTION_UNOBSERVABLE",
       "evidence": [
-        "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "receipts/TASK16_BOUNDED_CLOSURE.json",
-        "reviews/FINAL-QA/ROOT_QUESTION_B1_PREMODEL_FAILURE.json"
+        "reviews/FINAL-QA/READINESS_RESULTS.json",
+        "receipts/TASK17_BROWSER_HARNESS_RECONCILIATION.json",
+        "receipts/TASK17_B2_RESULT_RECONCILIATION.json"
       ]
     },
     {
@@ -410,21 +408,19 @@
     {
       "id": "MODEL-02",
       "requirement": "Owned dedicated server11435-11437, isolated directories, one loaded model/request, cloud off",
-      "status": "OWNED_DEDICATED_BACKEND_OBSERVED_FIVE_CALLS_CONFIRMED_STOPPED",
+      "status": "64_CALLS_CONFIRMED_SETTLED_SCOPED_OWNERSHIP_OBSERVED",
       "evidence": [
-        "receipts/MODEL_PREPARATION.md",
-        "reviews/MODEL-EXECUTION/LIFECYCLE_PHASE_PARTIAL.json",
-        "receipts/TASK16_BOUNDED_CLOSURE.json"
+        "reviews/FINAL-QA/FINAL_OWNERSHIP_AUDIT.json",
+        "receipts/FINAL_RUNTIME_SHUTDOWN.json"
       ]
     },
     {
       "id": "MODEL-03",
       "requirement": "Owned launch/deadline/stop demonstrated before inference; unknown cleanup stops admission",
-      "status": "BENIGN_PRECONDITION_AND_ACTUAL_TEXT_STOP_OBSERVED_NO_UNKNOWN_CLEANUP",
+      "status": "OWNED_LAUNCH_DEADLINE_STOP_OBSERVED_NO_UNKNOWN_CLEANUP_B2_NOT_PASSED",
       "evidence": [
-        "reviews/INTEGRATED-QA/RUNTIME_OBSERVED.json",
-        "reviews/MODEL-EXECUTION/LIFECYCLE_PHASE_PARTIAL.json",
-        "receipts/TASK16_BOUNDED_CLOSURE.json"
+        "reviews/FINAL-QA/LIFECYCLE_RESULTS.json",
+        "receipts/FINAL_EXECUTION_DISPOSITION.json"
       ]
     },
     {
@@ -440,20 +436,17 @@
     {
       "id": "MODEL-05",
       "requirement": "Every admitted call counted16 readiness/8 fault/72 final,90min total, no borrowing",
-      "status": "READINESS4_LIFECYCLE1_FINAL0_CONFIRMED108_954_SECONDS_GATE_DISABLED",
+      "status": "READINESS6_LIFECYCLE4_FINAL54_1593_405_SECONDS_GATE_DISABLED",
       "evidence": [
-        "state/run.json",
-        "receipts/MODEL_PREPARATION.md",
-        "receipts/MODEL_READY_RESULTS.json",
-        "receipts/TASK16_BOUNDED_CLOSURE.json"
+        "receipts/FINAL_RUNTIME_SHUTDOWN.json"
       ]
     },
     {
       "id": "MODEL-06",
       "requirement": "24 families12 development12 protected, six text/six image each,3 repeats",
-      "status": "FIXTURES_PREPARED_FINAL_PILOT_NOT_EXECUTED",
+      "status": "PARTIAL_54_OF72_EXECUTED_18_NOT_EXECUTED_RESOURCE_BOUND",
       "evidence": [
-        "reviews/QA-PREP/QA_PREP_HANDOFF.md"
+        "reviews/FINAL-QA/PILOT_INDEPENDENT_REVIEW.json"
       ]
     },
     {
@@ -467,9 +460,9 @@
     {
       "id": "MODEL-08",
       "requirement": "Frozen assertions/family/repeat threshold7of8 and4of4 with all errors retained",
-      "status": "PROTOCOL_FROZEN_FINAL_PILOT_NOT_EXECUTED",
+      "status": "FROZEN_PROTOCOL_45_OF72_PASSED_CRITERION_FALSE_ALL_FAILURES_RETAINED",
       "evidence": [
-        "reviews/QA-PREP/QA_PREP_HANDOFF.md"
+        "reviews/FINAL-QA/PILOT_INDEPENDENT_REVIEW.json"
       ]
     },
     {
@@ -483,18 +476,18 @@
     {
       "id": "MODEL-10",
       "requirement": "Independent semantic scoring, per-modality usefulness/abstention/grounding/latency/memory",
-      "status": "INDEPENDENT_READINESS_SEMANTICS4_OF4_FORMAT3_OF4_FINAL_PILOT_PENDING",
+      "status": "INDEPENDENT_GRADING_45_PASS9_FAIL18_UNRUN_PER_MODALITY_REPORTED",
       "evidence": [
-        "reviews/MODEL-QA/EXISTING_READINESS_REVIEW.json"
+        "reviews/FINAL-QA/FINAL_QA_HANDOFF.md",
+        "reviews/FINAL-QA/PILOT_AGGREGATE.json"
       ]
     },
     {
       "id": "MODEL-11",
       "requirement": "No canonical P03/CORE/MF/VA/R13 or physical promotion from pilot",
-      "status": "EXPLICIT_NONPROMOTION_SCOPE_RETAINED_FINAL_AUDIT_PENDING",
+      "status": "EXPLICIT_NONPROMOTION_SCOPE_RETAINED_FINAL_REVIEW_PENDING",
       "evidence": [
-        "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "MORNING_REPORT.md"
+        "receipts/FINAL_EXECUTION_DISPOSITION.json"
       ]
     },
     {
@@ -509,17 +502,19 @@
     {
       "id": "DELIVERY-02",
       "requirement": "Independent executable functional/lifecycle/browser report with failures retained",
-      "status": "INDEPENDENT_DEVELOPMENT_HANDOFF_DELIVERED_FINAL_EXECUTION_PENDING",
+      "status": "INDEPENDENT_FINAL_EXECUTION_HANDOFF_RETURNED_PARTIAL",
       "evidence": [
-        "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "receipts/TASK16_BOUNDED_CLOSURE.json"
+        "reviews/FINAL-QA/FINAL_QA_HANDOFF.md",
+        "receipts/FINAL_EXECUTION_DISPOSITION.json"
       ]
     },
     {
       "id": "DELIVERY-03",
       "requirement": "Distinct final code,vision,evidence reviewers at exact candidate; affected recheck after changes",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "H00_CLOSURE_RUNNING_THREE_DISTINCT_FINAL_REVIEWS_PENDING",
+      "evidence": [
+        "state/tasks.json"
+      ]
     },
     {
       "id": "DELIVERY-04",
@@ -533,17 +528,17 @@
     {
       "id": "DELIVERY-05",
       "requirement": "Actual test reports/screenshots/immutable sanitized traces and offline last-run snapshot",
-      "status": "ACTUAL_DEVELOPMENT_REPORTS_SCREENSHOTS_AND_OFFLINE_PROGRESS_DELIVERED_FINAL_SNAPSHOT_PENDING",
+      "status": "SEALED_REPORTS_SCREENSHOTS_TRACE_PROJECTIONS_PUBLISHED_OFFLINE_FINAL_RENDER_PENDING",
       "evidence": [
-        "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
-        "receipts/OFFLINE_PROGRESS_RENDER.json",
-        "receipts/ROOT_VISUAL_REVIEW_0641.md"
+        "reviews/FINAL-QA/FINAL_PUBLIC_MANIFEST.json",
+        "results/last-run.json",
+        "results/last-run.html"
       ]
     },
     {
       "id": "DELIVERY-06",
       "requirement": "MORNING_REPORT and RESUME answer exact scope/budgets/failures/next decision",
-      "status": "DRAFT_MORNING_REPORT_CURRENT_RESUME_FINAL_HANDOFF_PENDING",
+      "status": "CURRENT_PARTIAL_REPORT_RESUME_CLOSURE_IN_PROGRESS",
       "evidence": [
         "MORNING_REPORT.md",
         "RESUME.md"
@@ -552,26 +547,31 @@
     {
       "id": "DELIVERY-07",
       "requirement": "Public-safe content scan and branch-only publication, <=4 issue20 checkpoints",
-      "status": "BRANCH_ONLY_PUBLICATION_TWO_CHECKPOINTS_CURRENT_SCAN_PASS_PRIOR_PATH_MISS_DISCLOSED",
+      "status": "BRANCH_ONLY_PUBLISHED_OPERATOR_AMENDED_CONTINUATION_CHECKPOINTS_A_TO_D_POSTED",
       "evidence": [
-        "receipts/PUBLIC_REPORT_EDITIONS.json",
-        "state/run.json"
-      ]
+        "receipts/CHECKPOINT_A_READBACK.json",
+        "receipts/CHECKPOINT_B_READBACK.json",
+        "receipts/CHECKPOINT_C_READBACK.json",
+        "receipts/CHECKPOINT_D_READBACK.json"
+      ],
+      "operator_amendment": "Original four-checkpoint cap preserved historically; current explicit operator requires A-F plus material exceptions, each with immediate readback."
     },
     {
       "id": "DELIVERY-08",
       "requirement": "Evaluated candidate SHA separate from later administrative SHA",
-      "status": "EXACT_SOURCE_CANDIDATE_IDENTITY_FROZEN_ADMIN_COMMITS_SEPARATE",
+      "status": "EXACT_EVALUATED_BYTES_MATERIALIZED_BLOBS_AND_ARCHIVE_VERIFIED",
       "evidence": [
-        "receipts/FINAL_CANDIDATE_01.json"
+        "receipts/EXACT_CANDIDATE_RECONCILIATION.json",
+        "EXACT_CANDIDATE.md"
       ]
     },
     {
       "id": "DELIVERY-09",
       "requirement": "All owned app/model/test/native processes stopped by deadline with observed identities",
-      "status": "ROOT_APP_FIVE_MODELS_PRIOR_QA_STOPPED_TASK17_ACTIVE_FINAL_SHUTDOWN_PENDING",
+      "status": "APP_MODEL_TEST_STOP_CONFIRMED_CLOSURE_NATIVE_REVIEW_ACTIVE",
       "evidence": [
-        "receipts/TASK16_BOUNDED_CLOSURE.json",
+        "receipts/FINAL_RUNTIME_SHUTDOWN.json",
+        "reviews/FINAL-QA/FINAL_OWNERSHIP_AUDIT.json",
         "state/tasks.json"
       ]
     }
@@ -580,5 +580,8 @@
   "progress_note": "Independent code defects are open; original owners repairing; no final acceptance. Four actual readiness calls remain historical evidence, not repaired-candidate qualification.",
   "qualification": "Development evidence mapped without reducing the59requirements. Final deterministic/model evaluation and separate reviews pending.",
   "last_root_observation": "2026-09-29T07:21:38.304937+00:00",
-  "status": "IN_PROGRESS_MODEL_BROWSER_PILOT_AND_FINAL_REVIEW_PENDING"
+  "status": "IN_PROGRESS_MODEL_BROWSER_PILOT_AND_FINAL_REVIEW_PENDING",
+  "as_of": "2026-09-29T21:31:00.260453+00:00",
+  "disposition": "PARTIAL_EXECUTION_CLOSURE_REVIEWS_PENDING",
+  "denominator": 59
 }

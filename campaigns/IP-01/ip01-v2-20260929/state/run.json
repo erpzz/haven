@@ -15,8 +15,10 @@
   "hard_deadline": "2026-09-29T10:10:16Z",
   "stop_new_work_at": "2026-09-29T09:25:16Z",
   "deadline_rule": "Earlier of six elapsed hours and next 07:00 America/New_York from actual launch; reserve last 45 minutes; no renewal on resume.",
-  "assignments_dispatched": 20,
-  "active_native_children": [],
+  "assignments_dispatched": 21,
+  "active_native_children": [
+    "01a0ef12-861f-7511-8e1d-68cee3f932ab"
+  ],
   "native_profile_loading": "CUSTOM_PROFILE_FALLBACK: native spawn API exposes instructions, no profile selector; inherited model UNKNOWN",
   "model_identity": "EXECUTED: qwen2.5vl:3b manifest fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1 Ollama0.34.4",
   "code_candidate_sha": "487c67299445a29e0fbbdede04259565f741f587",

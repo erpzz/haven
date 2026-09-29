@@ -1,10 +1,10 @@
 {
   "status": "BOUNDED PARTIAL \u2014 final reviews incomplete",
-  "observed_at": "2026-09-29T21:22:59.446366+00:00",
-  "candidate_sha": "487c67299445a29e0fbbdede04259565f741f587",
+  "observed_at": "2026-09-29T21:31:00.260453+00:00",
+  "candidate_sha": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
   "model": "qwen2.5vl:3b Q4_K_M / Ollama 0.34.4; 54 of 72 pilot calls executed",
   "process_shutdown": "APP stopped at 07:53:50 UTC; model gate disabled; 64 confirmed model settlements",
-  "scope": "Synthetic local development evidence. Source and sealed QA bytes reverified after interruption. Required final integration and independent reviews are incomplete.",
+  "scope": "Synthetic local development evidence. Exact evaluated bytes are reproduced in Git; root archive verification passed. Execution remains partial. H00 closure and distinct final reviews are in progress.",
   "journeys": [
     {
       "name": "Private and explicitly shared notes",
@@ -48,16 +48,17 @@
     },
     {
       "name": "Independent final reviews",
-      "result": "Incomplete after usage-limit interruption",
-      "evidence": "H00 preparation only; code/vision no final verdict; evidence review not dispatched"
+      "result": "Closure in progress",
+      "evidence": "Saved H00 final packet recovered; new H00 closure binding then distinct code, vision and evidence reviewers."
     }
   ],
   "budgets": {
     "Model allocations": "6/16 readiness; 4/8 lifecycle; 54/72 final",
     "Charged model time": "1593.405 / 5400 seconds",
     "Final deterministic starts": "3 / 3",
-    "Assignments": "20 / 24 before any newly authorized continuation",
-    "Original hard deadline": "2026-09-29 10:10:16 UTC \u2014 passed; not renewed"
+    "Assignments": "21 / 24; final three reserved for independent reviewers",
+    "Original hard deadline": "2026-09-29 10:10:16 UTC \u2014 passed; not renewed",
+    "Closure hard deadline": "2026-09-29 22:54:04 UTC; original clock unchanged"
   },
   "limitations": [
     "18 pilot calls remain NOT_EXECUTED_RESOURCE_BOUND; every original scheduled case remains in the denominator.",
