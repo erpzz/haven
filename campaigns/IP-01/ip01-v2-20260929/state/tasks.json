@@ -643,7 +643,7 @@
     "native_id": "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6",
     "nickname": "Lorentz",
     "role": "haven_code_reviewer",
-    "status": "RUNNING",
+    "status": "COMPLETED_CLOSED",
     "profile": "CUSTOM_PROFILE_FALLBACK",
     "continuation_run_id": "ip01-closure-20260929T212404Z",
     "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
@@ -653,7 +653,18 @@
     "model_calls_authorized": 0,
     "final_suite_starts_authorized": 0,
     "objective": "Distinct independent final code review of exact candidate and frozen H00 partial handoff",
-    "at": "2026-09-29T21:44:03.650990+00:00"
+    "at": "2026-09-29T21:44:03.650990+00:00",
+    "completion": {
+      "handoff_recovery": "Lossless consolidated native handback received after initial addendum; same assignment",
+      "verdict": "CHANGES_REQUIRED_CF_F01_TO_F04_UNRESOLVED_RESTRICTED_PARTIAL_HANDOFF_ACCEPTABLE",
+      "review": "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+      "actual_close_tool_previous_status": "completed",
+      "status": "COMPLETED_CLOSED",
+      "native_id": "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6",
+      "new_execution": 0,
+      "task_id": "CODE-FINAL-CLOSURE",
+      "at": "2026-09-29T22:04:27.810754+00:00"
+    }
   },
   {
     "task_id": "VISION-FINAL-CLOSURE",

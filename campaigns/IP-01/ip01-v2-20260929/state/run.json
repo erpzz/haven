@@ -16,9 +16,7 @@
   "stop_new_work_at": "2026-09-29T09:25:16Z",
   "deadline_rule": "Earlier of six elapsed hours and next 07:00 America/New_York from actual launch; reserve last 45 minutes; no renewal on resume.",
   "assignments_dispatched": 24,
-  "active_native_children": [
-    "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6"
-  ],
+  "active_native_children": [],
   "native_profile_loading": "CUSTOM_PROFILE_FALLBACK: native spawn API exposes instructions, no profile selector; inherited model UNKNOWN",
   "model_identity": "EXECUTED: qwen2.5vl:3b manifest fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1 Ollama0.34.4",
   "code_candidate_sha": "487c67299445a29e0fbbdede04259565f741f587",
@@ -47,7 +45,7 @@
     "Root binds actual setup/PR references from the verified Issue #20 receipt before work.",
     "No original workspace, main, RI-01 file or PR #19 metadata is changed by this setup."
   ],
-  "at": "2026-09-29T21:50:57.455662+00:00",
+  "at": "2026-09-29T22:02:00.212400+00:00",
   "runtime_checkpoints_published": 2,
   "acquisition_debit_bytes": 4402341479,
   "acquisition_debit_basis": "Conservative4.1GiB total: initial1GiB Python/browser plus3.1GiB selectedmodel/metadata; exacttransportoverhead UNKNOWN",
@@ -75,7 +73,7 @@
   "original_final_recheck": "Four inspected source hashes and ASTRA HEAD/clean status unchanged; receipt ORIGINAL_SOURCE_FINAL_CHECK.json; not filesystem-wide proof",
   "latest_published_sha": "01d0c746da73546478ed4882a484f3099fa110b9",
   "last_issue_checkpoint_candidate": "f2acfb050b709c948a06cc090a74a974f5814515",
-  "handoff_status": "Bounded partial under closure; independent final reviews required",
+  "handoff_status": "ALL_FINAL_REVIEWS_RETURNED_RESTRICTED_PARTIAL_DELIVERY_PENDING",
   "operational_gate_receipt": "reviews/INTEGRATED-QA/ROOT_FROZEN_OPERATIONAL_GATE_06_30.json",
   "operational_gate_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
   "operational_gate_decision": "Independent QA15 closed; root froze exact separate snapshot after preserved transient-rewrite incident; current pins passed inert preflight",
@@ -94,9 +92,9 @@
   "model_execution_charged_seconds": 1593.4050000000425,
   "allowance_observed_at": "2026-09-29T17:49:26.349265-04:00",
   "final_integration_status": "H00_CLOSURE_FROZEN_READY_FOR_INDEPENDENT_REVIEW",
-  "final_code_review_status": "RUNNING_DISTINCT_CLOSURE_REVIEW",
-  "final_vision_review_status": "PASS_FOR_BOUNDED_PARTIAL_HANDOFF_TWO_P2_USEFULNESS_DEFECTS_RETAINED_NATIVE_CLOSED",
-  "final_evidence_review_status": "PASS_FOR_BOUNDED_PARTIAL_HANDOFF_RETURNED_NATIVE_CLOSED",
+  "final_code_review_status": "CHANGES_REQUIRED_RUNTIME_CODE_RESTRICTED_PARTIAL_HANDOFF_ACCEPTABLE",
+  "final_vision_review_status": "PASS_SCOPED_RETURNED_CLOSED",
+  "final_evidence_review_status": "PASS_SCOPED_RETURNED_CLOSED",
   "continuation_run_id": "ip01-closure-20260929T212404Z",
   "continuation_receipt": "state/CONTINUATION_RUN.json",
   "super_admin_last_consumed": {

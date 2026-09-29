@@ -1,0 +1,40 @@
+{
+  "at": "2026-09-29 22:06:09 UTC",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "native_children": [
+    {
+      "role": "H00",
+      "native_id": "01a0ef12-861f-7511-8e1d-68cee3f932ab",
+      "actual_final_handback_received": true,
+      "close_tool_acknowledged": true,
+      "close_tool_previous_status": "completed",
+      "post_close_wait_status": "not_found"
+    },
+    {
+      "role": "CODE",
+      "native_id": "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6",
+      "actual_final_handback_received": true,
+      "close_tool_acknowledged": true,
+      "close_tool_previous_status": "completed",
+      "post_close_wait_status": "not_found"
+    },
+    {
+      "role": "VISION",
+      "native_id": "01a0ef1f-a5ab-7221-968a-0f0a4afd18ad",
+      "actual_final_handback_received": true,
+      "close_tool_acknowledged": true,
+      "close_tool_previous_status": "completed",
+      "post_close_wait_status": "not_found"
+    },
+    {
+      "role": "EVIDENCE",
+      "native_id": "01a0ef1f-a61b-7c60-b34a-477d91e77feb",
+      "actual_final_handback_received": true,
+      "close_tool_acknowledged": true,
+      "close_tool_previous_status": "completed",
+      "post_close_wait_status": "not_found"
+    }
+  ],
+  "status": "ALL_FOUR_COMPLETED_HANDLES_CLOSED_AND_REMOVED",
+  "limits": "Post-close not_found is handle removal after actual completed handback and acknowledged close; distinguish original interrupted handles missing without confirmed handbacks. This is native lifecycle evidence, separate from runtime process identities."
+}

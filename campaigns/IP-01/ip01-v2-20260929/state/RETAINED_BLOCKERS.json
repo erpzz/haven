@@ -1,0 +1,96 @@
+{
+  "at": "2026-09-29T22:06:10.130881+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "candidate_commit": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "findings": [
+    {
+      "id": "CF-F01",
+      "severity": "P1/HIGH",
+      "status": "OPEN_BLOCKER",
+      "title": "Journal failure before termination can bypass cleanup",
+      "source": [
+        "labs/ip01/haven/supervisor.py:429",
+        "labs/ip01/haven/supervisor.py:634",
+        "labs/ip01/haven/supervisor.py:735"
+      ],
+      "disposition": "Static source-supported failure path; not an observed escaped workload. Withhold all-path cancellation/deadline/cleanup guarantees. Future repair must make termination/lease cleanup independent of journal availability, then independently inject STOP_REQUESTED journal/fsync failure while a benign worker is live."
+    },
+    {
+      "id": "CF-F02",
+      "severity": "P2/MEDIUM",
+      "status": "OPEN_BLOCKER",
+      "title": "Concurrent starts can overwrite launcher ownership",
+      "source": [
+        "labs/ip01/scripts/run.py:119",
+        "labs/ip01/scripts/run.py:165",
+        "labs/ip01/scripts/run.py:184",
+        "labs/ip01/scripts/run.py:223"
+      ],
+      "disposition": "No concurrent-start reproduction executed. A later separately authorized deterministic visit must use one serialized launcher lifecycle per runtime state with model gate disabled. Future repair requires an interprocess lifecycle lock and readiness bound to exact child identity, then synchronized-start recheck."
+    },
+    {
+      "id": "CF-F03",
+      "severity": "P2/MEDIUM",
+      "status": "OPEN_BLOCKER",
+      "title": "Readiness-failure drain can wait indefinitely after unconfirmed termination",
+      "source": [
+        "labs/ip01/haven/model_adapter.py:244",
+        "labs/ip01/haven/model_adapter.py:291",
+        "labs/ip01/haven/supervisor.py:690"
+      ],
+      "disposition": "Static unexercised failure path. Existing UNKNOWN fixture killed process then withheld confirmation; it did not retain a live process/open pipe. Withhold all-path bounded readiness settlement. Future bounded-drain/quarantine repair requires independent live-open-pipe benign recheck."
+    },
+    {
+      "id": "CF-F04",
+      "severity": "P2/MEDIUM",
+      "status": "OPEN_PRODUCT_DEFECT",
+      "title": "Completed answers retain contradictory route/progress notices",
+      "source": [
+        "labs/ip01/haven/templates/index.html:20",
+        "labs/ip01/haven/static/app.js:63",
+        "labs/ip01/haven/static/app.js:65"
+      ],
+      "disposition": "CODE independently agrees with VISION. Actual backend disposition and model payload label are separate and correct; surrounding badge/queued notice are misleading. Future repair must bind notices to operation and distinguish displayed-result route from next-request route, preserving session fencing."
+    },
+    {
+      "id": "B2",
+      "severity": "P2/USEFULNESS",
+      "status": "OPEN_PRODUCT_DEFECT",
+      "title": "Incidental exhausted context spends inference then prevents release",
+      "source": [
+        "reviews/FINAL-QA/READINESS_RESULTS.json",
+        "labs/ip01/haven/authority.py:171",
+        "labs/ip01/haven/authority.py:260"
+      ],
+      "disposition": "Actual failed release; no observable answer/abstention. Distinct from repaired CE-F05 overlapping-grant counterexample. Future source-relevance/early-quota repair must preserve all actually influencing ancestors and fixed grant bindings. No retry or refund."
+    },
+    {
+      "id": "QUAL-PROTECTED",
+      "status": "RETAINED_QUALIFICATION_BLOCKER",
+      "title": "Protected separation not established",
+      "disposition": "EVALUATION_INCONCLUSIVE; same-user role/directory separation is not enforced blindness."
+    },
+    {
+      "id": "QUAL-TIMEOUT",
+      "status": "RETAINED_QUALIFICATION_GAP",
+      "title": "Natural model timeout not exercised",
+      "disposition": "Both planned attempts completed normally; benign timeout and model cancellations do not discharge this gap."
+    },
+    {
+      "id": "QUAL-PILOT",
+      "status": "RETAINED_PARTIAL_EXECUTION",
+      "title": "18 of72 pilot slots remain unrun; nine observed semantic failures",
+      "disposition": "Original72-slot/24-family denominator and conservative ambiguous grades remain unchanged; no resumed calls authorized by closure."
+    }
+  ],
+  "source_repairs_performed_in_closure": false,
+  "reason_for_retention": "This is the authorized zero-new-execution closure of an unchanged evaluated candidate. All24 assignments and all3 formal suite starts are consumed. The user explicitly permits material findings to be retained as blockers. Source repairs would require a new exact candidate and affected independent qualification under a new bounded package; no permission or budget is inferred here.",
+  "operating_restrictions": [
+    "No application restart or model/suite execution in this closure",
+    "Model gate disabled and original HALT preserved",
+    "No all-path cleanup/deadline guarantee or concurrent-launcher safety claim",
+    "Later separately authorized deterministic visits require a single serialized lifecycle per runtime state",
+    "No reliable general image-flow or accurate route/progress claim",
+    "No canonical, production, real-account/device or physical qualification"
+  ]
+}
