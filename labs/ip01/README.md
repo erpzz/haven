@@ -57,6 +57,30 @@ Final test commands, candidate hashes, observed outcomes and retained failures w
 
 The local model has a separate, expiring campaign gate and a finite call ledger. Restarting the app does not reset that ledger or extend the campaign. After the gate expires, the deterministic application remains usable; a later model evaluation requires a new explicit bounded authorization. The preparation script can inspect/download the single permitted artifact, but it never authorizes inference by itself.
 
+## Database migrations and continuity
+
+The application applies its versioned SQLite migrations in [haven/store.py](haven/store.py) when it starts. Version 1 creates the JSON record tables, immutable-history triggers and unique release/consume/grant-claim indexes; version 2 adds the unique model-allocation index. An unknown schema or an existing unversioned database is preserved and refused.
+
+The database, WAL files and separate continuity record are private runtime state. A current restart invalidates old sessions and fences old jobs and permits. Missing or mismatched continuity enters a fresh epoch in review-only mode. There is no public command to clear that state or replay old output.
+
+## Run the producer regression tests
+
+These tests use synthetic state and owned benign processes. They do not execute the local model or start the final pilot. Run them from the repository root:
+
+```powershell
+$ip01TestRun = Join-Path (Get-Location) ('.ip01-runtime/manual-tests/' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+New-Item -ItemType Directory -Force $ip01TestRun | Out-Null
+$env:PYTHONPATH = Join-Path (Get-Location) 'labs/ip01'
+$env:PYTHONDONTWRITEBYTECODE = '1'
+$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = '1'
+$env:TEMP = $ip01TestRun
+$env:TMP = $ip01TestRun
+$env:HYPOTHESIS_STORAGE_DIRECTORY = Join-Path $ip01TestRun 'hypothesis'
+& ./.ip01-runtime/venv/Scripts/python.exe -B -m pytest labs/ip01/tests/app labs/ip01/tests/runtime -q --basetemp "$ip01TestRun/tmp" -o "cache_dir=$ip01TestRun/pytest-cache"
+```
+
+Retain the exit status and output for the source revision you tested. Producer checks, independently executed QA, and the final pilot are reported separately in the campaign; rerunning this command cannot transfer an earlier verdict to changed code.
+
 ## Source and scope
 
 Implementation is confined to `labs/ip01/`; coordination and review to the IP-01 campaign. The accepted R03/P01 composites define influence closure, four output records, once-only finite grant accounting and restore semantics. The original ASTRA store's transaction/receipt patterns were inspected from its clean pinned source; exact source and private-copy identities are recorded in the campaign. The new Windows supervisor is a laboratory implementation, not a repair or qualification of the original NIGHT-01/R1 workspace.
