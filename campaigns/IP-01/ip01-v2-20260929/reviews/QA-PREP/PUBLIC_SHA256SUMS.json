@@ -1,0 +1,8 @@
+{
+  "files": {
+    "COVERAGE_RUBRIC.md": "d2c696b69915f98ae0e5d8c63aecf0fcb05df1a916cb7e2bbdee2e4121f446ed",
+    "QA_PREP_HANDOFF.md": "db61e5368d4b48d3c87797ddfacaa4b6f2dd3c2fcb8bc88091b403c4fe734b01",
+    "SOURCE_USE.json": "aeb9b54923adfc87476dc7fb304e480fe3c4e9ef238e2b7a6c4dcac0544b121c"
+  },
+  "scope": "Only public-safe QA reports; manifest itself excluded"
+}

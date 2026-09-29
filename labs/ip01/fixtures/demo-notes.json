@@ -1,0 +1,23 @@
+{
+  "scope": "Public, invented operator walkthrough data. Not a protected pilot fixture or evaluation oracle.",
+  "people": ["A", "B"],
+  "notes_for_person_a": [
+    {
+      "title": "Paper Garden materials",
+      "text": "This is an invented demonstration project. Paper Garden uses blue card for the river and green card for the trees. The supplies are stored in the fictional Lantern cabinet.",
+      "parents": [],
+      "initial_visibility": "private",
+      "optional_share": {"recipient": "B", "purpose": "answer", "max_uses": 1}
+    },
+    {
+      "title": "Private sketch idea",
+      "text": "This invented sketch plan belongs to demo Person A. Add three yellow circles above the paper river.",
+      "parents": [],
+      "initial_visibility": "private"
+    }
+  ],
+  "local_draft": {"kind": "draft", "text": "Draft only: prepare the invented Paper Garden materials."},
+  "local_task": {"kind": "task", "text": "Try a green paper tree in the demonstration sketch."},
+  "walkthrough_question": "What materials does Paper Garden use?",
+  "instructions": "Create these notes through the UI in a fresh demo session. Sharing is a separate explicit operation. Choose a future expiry in the interface; no expiry, IDs, authority vectors, or bearer tokens are embedded in this fixture. A one-use grant is charged at release, not again at consumption. Keep the second note private. Saved drafts and tasks never trigger external actions."
+}

@@ -42,6 +42,8 @@ For a time-bounded run, append `--deadline` with a future UTC timestamp to `star
 - A saved draft or task is local state. This app does not send a message, schedule an external action or operate a device.
 - A delivery report records what the browser reported. It cannot prove a person perceived the answer, recall already displayed bytes or turn a missing acknowledgment into “not sent.”
 
+The [public walkthrough notes](fixtures/demo-notes.json) provide invented content to enter in the interface. They are separate from the evaluator's pilot assets. Create the notes as A, keep one private, and explicitly share the materials note with B if you want to explore a one-use grant. Choose a future expiry when sharing.
+
 ## Browser test runtime
 
 The independent test setup uses Playwright's official Chromium distribution in the campaign cache:
@@ -52,6 +54,8 @@ $env:PLAYWRIGHT_BROWSERS_PATH = Join-Path (Get-Location) '.ip01-runtime/cache/ms
 ```
 
 Final test commands, candidate hashes, observed outcomes and retained failures will be bound in the campaign handoff. Development tests and the model pilot do not establish canonical CORE/MF/P03/VA-01, real authentication, OS isolation or physical qualification.
+
+The local model has a separate, expiring campaign gate and a finite call ledger. Restarting the app does not reset that ledger or extend the campaign. After the gate expires, the deterministic application remains usable; a later model evaluation requires a new explicit bounded authorization. The preparation script can inspect/download the single permitted artifact, but it never authorizes inference by itself.
 
 ## Source and scope
 

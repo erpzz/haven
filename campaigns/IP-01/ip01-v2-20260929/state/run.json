@@ -1,6 +1,6 @@
 {
   "campaign_id": "ip01-v2-20260929",
-  "status": "BUILD_SEAM",
+  "status": "RUNNING_BUILD_AND_INDEPENDENT_LIFECYCLE",
   "issue": 20,
   "research_issue": 17,
   "dependency_pr": 19,
@@ -15,14 +15,13 @@
   "hard_deadline": "2026-09-29T10:10:16Z",
   "stop_new_work_at": "2026-09-29T09:25:16Z",
   "deadline_rule": "Earlier of six elapsed hours and next 07:00 America/New_York from actual launch; reserve last 45 minutes; no renewal on resume.",
-  "assignments_dispatched": 6,
+  "assignments_dispatched": 7,
   "active_native_children": [
     "01a0eb68-1eef-7890-a6bb-4d1dc1bc5a57",
-    "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
     "01a0eb69-0092-74d3-9541-9aeb69de5d92"
   ],
   "native_profile_loading": "CUSTOM_PROFILE_FALLBACK: native spawn API exposes instructions, no profile selector; inherited model UNKNOWN",
-  "model_identity": "NOT_CHECKED",
+  "model_identity": "PREPARED_NOT_INFERENCE_QUALIFIED: qwen2.5vl:3b manifest fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1 Ollama0.34.4",
   "code_candidate_sha": null,
   "latest_published_checkpoint": "faaf8eaacca35548b816722162a15649363b3b1b",
   "model_attempts": {
@@ -49,10 +48,13 @@
     "Root binds actual setup/PR references from the verified Issue #20 receipt before work.",
     "No original workspace, main, RI-01 file or PR #19 metadata is changed by this setup."
   ],
-  "at": "2026-09-29T04:21:47.972632+00:00",
+  "at": "2026-09-29T04:54:49.769410+00:00",
   "runtime_checkpoints_published": 1,
-  "acquisition_debit_bytes": 1073741824,
-  "acquisition_debit_basis": "Conservative 1GiB Python/browser reserve, metadata transfer bytes unknown",
-  "runtime_storage_bytes_observed": 979742337,
-  "installed_ollama_version": "0.34.4"
+  "acquisition_debit_bytes": 4402341479,
+  "acquisition_debit_basis": "Conservative4.1GiB total: initial1GiB Python/browser plus3.1GiB selectedmodel/metadata; exacttransportoverhead UNKNOWN",
+  "runtime_storage_bytes_observed": 4181347512,
+  "installed_ollama_version": "0.34.4",
+  "pixel_oracle_disposition": "QA-PREP directly inspected12originalimages; protection not established; no additional pixel-only assignment required",
+  "model_preparation_receipt": "receipts/MODEL_PREPARATION.md",
+  "model_inference_gate": "DISABLED_PENDING_INDEPENDENT_LIFECYCLE_AND_MODEL_READY"
 }

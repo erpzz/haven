@@ -1,0 +1,19 @@
+{
+  "at": "2026-09-29T04:54:02.061450+00:00",
+  "actor": "root publisher",
+  "editions": [
+    {
+      "path": "integration/SEAM.md",
+      "original_sha256": "3afab9f6a8989cfd406e5b84bc93a10ee1ea2a6e3c98e5dea013853db4693a7c",
+      "public_edition_sha256": "09380772d5e19838950d94e4cf94e682fc41d65fed217f8587d2e53b579b0985",
+      "change": "Absolute user-home paths replaced by scope-relative aliases; assertions and outcomes unchanged; original retained privately"
+    },
+    {
+      "path": "reviews/QA-PREP/QA_PREP_HANDOFF.md",
+      "original_sha256": "4340fa9f226f0bfdc2bc45baa8b0cad2e2a3403b0baf945fe7669b4dec3cf4da",
+      "public_edition_sha256": "db61e5368d4b48d3c87797ddfacaa4b6f2dd3c2fcb8bc88091b403c4fe734b01",
+      "change": "Absolute user-home paths replaced by scope-relative aliases; assertions and outcomes unchanged; original retained privately"
+    }
+  ],
+  "scope": "Publication pathname redaction only; original review hashes remain historical identities"
+}

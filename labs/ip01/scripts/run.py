@@ -141,7 +141,7 @@ def start(args):
         "SYSTEMROOT", "WINDIR", "COMSPEC", "SYSTEMDRIVE", "PROCESSOR_ARCHITECTURE", "NUMBER_OF_PROCESSORS"
     }}
     environment.update({"PATH": str(Path(sys.executable).parent) + os.pathsep + os.environ.get("SYSTEMROOT", "C:\\Windows") + "\\System32",
-                        "PYTHONPATH": str(ROOT / "labs/ip01"), "PYTHONIOENCODING": "utf-8",
+                        "PYTHONPATH": str(ROOT / "labs/ip01"), "PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1",
                         "HAVEN_RUNTIME_DIR": str(runtime), "HAVEN_ROUTE": "deterministic",
                         "TEMP": str(runtime / "tmp"), "TMP": str(runtime / "tmp")})
     logfile = runtime / "logs" / f"app-{nonce}.log"

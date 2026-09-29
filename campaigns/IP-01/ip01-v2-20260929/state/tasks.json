@@ -75,7 +75,7 @@
     "task_id": "RUNTIME",
     "role": "ip01_runtime_engineer",
     "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
-    "status": "RUNNING",
+    "status": "COMPLETED_CLOSED",
     "inputs": "SEAM.md; reviewed I01/I04/I06; original source identity",
     "hard_dependencies": [
       "INTAKE",
@@ -93,13 +93,22 @@
     "budget_minutes": 45,
     "reviewer": "independent executable QA",
     "next_action": "Benign lifecycle and model acquisition; no generation",
-    "at": "2026-09-29T04:24:25.641933+00:00"
+    "at": "2026-09-29T04:24:25.641933+00:00",
+    "completion": {
+      "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
+      "task_id": "RUNTIME",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "receipts/RUNTIME_HANDOFF.md",
+      "sha256": "d760e62a6959940604b8eb519c37668399d2640390074d02fb7ba031c9a4cf23",
+      "outcome": "Author18lifecycle+13ledgerpassed;modelprepared0calls;independentclosurepending",
+      "at": "2026-09-29T04:57:11.792640+00:00"
+    }
   },
   {
     "task_id": "QA-PREP",
     "role": "ip01_validation_engineer",
     "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
-    "status": "RUNNING",
+    "status": "COMPLETED_CLOSED",
     "inputs": "SEAM and full package; independent evaluator sibling",
     "hard_dependencies": [
       "SEAM"
@@ -111,7 +120,16 @@
     "budget_minutes": 20,
     "reviewer": "final evidence auditor",
     "next_action": "Prepare executable independent scenarios/fixtures; no final suites/model calls",
-    "at": "2026-09-29T04:25:23.037726+00:00"
+    "at": "2026-09-29T04:25:23.037726+00:00",
+    "completion": {
+      "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+      "task_id": "QA-PREP",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "reviews/QA-PREP/QA_PREP_HANDOFF.md",
+      "sha256": "4340fa9f226f0bfdc2bc45baa8b0cad2e2a3403b0baf945fe7669b4dec3cf4da",
+      "result": "7 selfchecks and real benign probe;12actualimagesinspected;166collectedtests not166executed; protection inconclusive",
+      "at": "2026-09-29T04:44:07.272580+00:00"
+    }
   },
   {
     "task_id": "ROOT-HANDOFF-SUPPORT",
@@ -122,11 +140,31 @@
     "write_scope": [
       "labs/ip01/scripts",
       "labs/ip01/README.md",
-      "labs/ip01/haven/__init__.py"
+      "labs/ip01/haven/__init__.py",
+      "labs/ip01/fixtures/demo-notes.json"
     ],
     "objective": "Owned start/status/stop commands, dependency setup and runnable handoff; conservatively count root substantive source assignment",
     "reviewer": "independent QA/code final",
     "next_action": "Integrate actual app/QA results and preserve exact stop observations",
     "at": "2026-09-29T04:32:26.878924+00:00"
+  },
+  {
+    "task_id": "LIFECYCLE-OBS",
+    "role": "ip01_validation_engineer",
+    "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+    "status": "RUNNING",
+    "inputs": "QA-PREP benign topology proof; exact snapshot of available supervisor/worker; SEAM; owner consultations",
+    "hard_dependencies": [
+      "QA-PREP",
+      "RUNTIME_BENIGN_CODE_AND_OBSERVED_PROBE"
+    ],
+    "write_scope": [
+      "evaluator sibling",
+      "campaigns/IP-01/ip01-v2-20260929/reviews/LIFECYCLE-OBS"
+    ],
+    "budget_minutes": 20,
+    "reviewer": "independent code/evidence final",
+    "next_action": "Measured benign lifecycle faults and root launcher checks; retain source drift and failures",
+    "at": "2026-09-29T04:44:08.217975+00:00"
   }
 ]
