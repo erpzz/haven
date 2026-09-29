@@ -1,29 +1,35 @@
-# RI-01 recovery checkpoint
+# RI-01 completion and operator review gate
 
-Status at creation: RUNNING, not paused or complete. This file is a recovery aid if the finite campaign is interrupted, not a request to start duplicate work.
+Status: RESEARCH_COMPLETE. All research and three final independent reviews are complete; root is finalizing publication. This record does not authorize implementation or another campaign.
 
-Campaign branch `campaign/ri01-20260928T180322Z-6e8f`; base main `376031e182c57495912baf6727093b0b188da568`. Last verified published checkpoint at creation: `afa6b8bd47777dc4adc8bccb0866a3d74e6056a5`. Consult state/run.json for subsequent verified checkpoints and state/tasks.json plus state/agents.jsonl for current exact assignments. Later local files can be valid but unreviewed; Git status and hashes decide, not this snapshot's recency.
+## Exact reviewed checkpoint
 
-Original launch began2026-09-28T18:03:22Z. Stop new work2026-09-29T01:48:22Z; hard deadline02:03:22Z. Do not restart this clock merely because context or tools reset.64assignments maximum,2revision rounds/finding,250MiB private public-research assets, zero new provider spend. Platform4active total includes root. Session allowance is not free or unlimited; do not redeem credits/change account settings or start paid fallback without separate authorization.
+- Run: `ri01-20260928T180322Z-6e8f`.
+- Branch: `campaign/ri01-20260928T180322Z-6e8f`; one consolidated [PR #19](https://github.com/erpzz/haven/pull/19).
+- Verified frozen candidate commit: `c087bf9c00cb9213dc3225852fb7385ba0eb9aef`.
+- Base main: `376031e182c57495912baf6727093b0b188da568`; wave-07 refresh found no changed upstream research heads or new substantive handbacks.
+- Candidate manifest: `integration/final-v1/MANIFEST.json`, SHA256 `c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b`, 23 immutable payloads.
+- All 15 original synthesis hard inputs were accepted and consumed before freeze. The separate integration manager and all final reviewers are quiescent. R13/evidence, VISION-FINAL and CODE-FINAL all passed the unchanged documentary candidate; see `state/FINAL_REVIEW_RECEIPT.json`.
+- The public delivery inventory is `DELIVERY_MANIFEST.json`. `state/PUBLICATION_RECEIPT.json` records the observed remote checkpoint and PR status. A later metadata-only commit may contain that receipt; never interpret a self-reference as a verification of bytes not yet published.
 
-## Resume procedure after an actual interruption
+## Completed scope, budget and next action
 
-1. Resume requires the user's resume command; no detached work or automatic scheduling after a stop/cap. Confirm the intended remaining launch budget if original deadline has elapsed.
-2. Re-establish real tool/agent capabilities, inspect current goal, exact checkout and Git status, current remote campaign ref/main/PRs, owned live agents and partial files. Do not start duplicate active assignments. Only root changes Git/shared state.
-3. Preserve all source originals and reviewed reports. Rehash accepted composites and manifests. P01/R03/R01 and MM-AV have material amendment/closure files; consume them with original reports. R05 has explicit partial cross-device coverage. Consult integration/ROOT_RECONCILIATION_NOTES.md, current reviews and consultations.jsonl.
-4. Reconcile current active/completed native handbacks into state/tasks.json. At this snapshot: R11 author /root/ri01_privacy, R14 author /root/ri01_mmav, REVIEW-R09 /root/ri01_daily. R09 is frozen DRAFT_READY; R05/MM-VISION/MM-AV accepted for documentary synthesis. This snapshot is historical once newer task records appear.
-5. Remaining dependency path: independent R11/R14 reviews; MM-FUSION author/review after R14 accepted; R15 author/review after MM-FUSION accepted; manager final synthesis; separate final R13/evidence, code and vision reviews of the exact frozen candidate; bounded corrections and affected rechecks; final branch push/readback and one consolidated PR. No main merge or implementation.
-6. R15 read-only151file source cache may be recovered through inputs/R15-fork/SOURCE_CACHE_MANIFEST.json exact URLs/Git blobs at81eb44340d90feda5b5283438f6e5fdad5cabbdd. Cache is not yet R15 audit. Never execute retrieved application code or download models/packages.
-7. Final delivery includes MORNING_REPORT, current RESUME, delivery identities, full integration files including MULTIMODAL, independently reviewed source-use and all original requirement/acceptance/experiment mappings. Report missing code, unexecuted tests, unavailable modalities and open operator decisions honestly. Attach created PR to this task; verify remote ref before claiming publication.
+The original launch began 2026-09-28 18:03:22 UTC. Stop-new-work time is 2026-09-29 01:48:22 UTC; the hard deadline is 02:03:22 UTC. The account interruption and explicit operator resumption did not reset the clock. No optional extension is assumed. Research and final reviews completed at 01:35:41 UTC, within the original envelope.
 
-All research acceptance is documentary. M0/NIGHT-01/R1 code, models, live accounts/devices, private media, clinical/physical operations, deployment and main remain outside this campaign. Actual iPhone/HTTPS or earlier M0 acceptance is not inferred from RI-01 work.
+There were 63 conservatively counted native assignments under the 64-assignment cap, using twelve actual handles across waves and at most three active children plus root. No further research assignments are needed. Completed native turns are quiescent; explicit closure is not exposed. No detached job, scheduled continuation or background product service was created. Actual receipts remain in `state/agents.jsonl`, `state/CHILD_STOP_RECEIPT.json` and `state/USAGE_RECEIPT.json`.
 
-## Resumption checkpoint 2026-09-29
+Read `MORNING_REPORT.md`, the exact final reviews and `reviews/R13/PROMOTION_GATES.md`. The smallest future operator choice is CORE-P0, one bounded synthetic two-person authority/evidence answer. All 14 proposed packages require separate authorization. Actual selected-image inference needs independent worker lifecycle and exact adapter containment gates first; the public Observatory proof is a separate bounded option. Nothing starts automatically after PR review, and main must not be merged automatically.
 
-The user reported resetting account limits and explicitly requested continuation. Three actually failed native assignments were resumed, preserving completed source work: R11 public redaction, its independent review, and MM-FUSION. Their reruns count against the64-assignment cap. No reset credit was consumed by the agent. Original wall-clock deadline remains unless the pending user extension request is answered affirmatively; consult current state/run.json.
+If publication is interrupted, inspect the exact checkout, status, campaign remote and this PR before resuming root delivery. Preserve local evidence; do not reset, clean, duplicate a PR or redo accepted research. Rehash the candidate and compare the manifest, then reconcile actual local/remote publication. If the launch ceiling has elapsed, obtain a new explicit bounded allowance before continuing unfinished work. Do not silently restart the clock.
 
-R11 is now accepted only as research/R11-public-v1 under reviews/REVIEW-R11/CLOSURE-1.md. Original research/R11 contains local provenance metadata and remains private, unchanged and ignored by the campaign .gitignore. Root verified git ls-files and available git log contain no original R11 files. Never bundle the raw working tree; publish tracked/explicitly approved files only. All32repo-field replacements and11unchanged substantive files were independently checked.
+## Accepted composites and unresolved execution gates
 
-R14 is accepted. R15-AUDIT is completed source prework, still subject to the full R15 review. MM-FUSION, R15 and final SYNTHESIS are active. R15 and SYNTHESIS use explicit preliminary-independent phases allowed by the campaign's split-scope/completion-gate rules: all ORIGINAL hard dependencies remain in task records and must be independently accepted and actually consumed before their final freeze. Do not mistake preliminary drafts for accepted integration. The private root metadata helper also rejects their completion while any original hard dependency is unaccepted.
+P01/R03/R01 reports require their accepted amendments and closures. MM-AV uses the material ASR-only ADDENDUM-1, not the earlier positive threshold. R06 E0 and R07 E07-B remain different protocols. R08 metrology/statistics and R14 checkpoint/person/session/idle-data gates remain unqualified. R05 AT-DAILY-08 remains partial and its C09 device-handoff refinement is proposed, not an accepted amendment.
 
-At this checkpoint58assignments are conservatively counted; five dispatches remain planned (MMF review,R15review,three final reviews), leaving one additional assignment under64. Reconcile real current state before resuming; do not replay the R11 fix or accepted R14 review. The only current source-head refresh found unchanged Haven main, fork main and all research PR heads.
+MM-FUSION requires review `c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd` and retained MF-L01 pre-run assertions. R15 requires review `45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6`. Its R15-AUDIT A02 is accepted only with `research/R15/AUDIT_CORRECTIONS.md`, SHA256 `523e1e24632021f9afc892d479399d69b2959d5e2125aa260752855d6f9c3a09`, and `GEV_AUDIT.md`. The original reverse-shutdown-order claim remains superseded.
+
+CF-L01 requires pinning the current designated R1 source and approved isolated-copy mapping. R13-L01 requires binding upstream aliases to the exact queue package/version/subset. These low-severity findings must be resolved before the affected coding package, without mutating historical research or treating scope aliases as test equivalence.
+
+Only `research/R11-public-v1` is public and accepted, through `reviews/REVIEW-R11/CLOSURE-1.md`. Original `research/R11` contains private provenance, remains unchanged and ignored, and is absent from tracked files and available Git history. Never publish the raw working tree. Use the reviewed tracked tree or an explicit allowlist. Private caches, credentials, sessions, runtime databases, private keys, household media and host paths are excluded.
+
+Current M0/NIGHT-01/R1 workspaces are separate and untouched. No application tests or model/device/physical qualification were executed by RI-01; historical N1/N2 counts were not rerun. No current iPhone/HTTPS acceptance finding follows from this campaign. Stop at this research/operator review gate.

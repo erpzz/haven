@@ -1,0 +1,554 @@
+{
+  "schema": "ri01.code-final.checks.v1",
+  "reviewer": "/root/ri01_code_review",
+  "time_utc": "2026-09-29T01:29:04.4714063Z",
+  "candidate_commit": "c087bf9c00cb9213dc3225852fb7385ba0eb9aef",
+  "commit_basis": "Root-reported; reviewer did not use Git",
+  "candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+  "candidate_payloads": [
+    {
+      "path": "ACCEPTED_INPUTS_SNAPSHOT.json",
+      "sha256": "dd42866890a719008b5654e1d7d7045ed6a12840b680e272d6948bb02fd0fa47",
+      "bytes": 34472
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "sha256": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
+      "bytes": 11436
+    },
+    {
+      "path": "CONSULTATIONS_SNAPSHOT.jsonl",
+      "sha256": "439fa5643a168235a91c65e14b29eb18e71a74375d2d57962c5ac6a3e9952675",
+      "bytes": 45327
+    },
+    {
+      "path": "CONTRACT_CROSSWALK.md",
+      "sha256": "0ee3d9eb32f8d87f6d3d8b74cf310f0c4f7632f695f8f15a4b09776792584ea8",
+      "bytes": 5794
+    },
+    {
+      "path": "CONTRACTS.md",
+      "sha256": "cb6cea47fb00aba89da234da620b3fb3bd240c2a10e314bcc81cbfa647cc4be7",
+      "bytes": 20609
+    },
+    {
+      "path": "DECISIONS.md",
+      "sha256": "2d663245e1746df508f4e9334f8c1a57539cf9d45a001c5b0e36981d16e71f76",
+      "bytes": 7349
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "sha256": "1cbae2c5c3e1ebb454162e3bf9254358c91d918504bbd0c445c1fef11c81ed45",
+      "bytes": 18157
+    },
+    {
+      "path": "EVALUATION_PLAN.md",
+      "sha256": "fedcb2f515abeed39e977c851188876902ef57f3e4ff6c683f28d248bbb3ab59",
+      "bytes": 8388
+    },
+    {
+      "path": "IMPLEMENTATION_QUEUE.md",
+      "sha256": "aca2b175bcd564c8c497b12b850ff6d33ebfd7233c1dc85cb123574667f7f7ed",
+      "bytes": 6869
+    },
+    {
+      "path": "INPUT_USE.json",
+      "sha256": "7c67866d5658526ff86533d8b56c1e2174f345b4c6a5ac4b870d465b39ea3a25",
+      "bytes": 186592
+    },
+    {
+      "path": "MANAGER_HANDBACK.md",
+      "sha256": "2948c7601730b03e66d830f959ad648ab28df06cbc1ffdcff182f7639238b695",
+      "bytes": 4109
+    },
+    {
+      "path": "MANAGER_STATE.md",
+      "sha256": "7b4072e995d584a6c250d5cf348b6db935b80bb2dc893008deb3c05c2210269a",
+      "bytes": 3997
+    },
+    {
+      "path": "MODALITY_MATRIX.md",
+      "sha256": "e272f7b1690c7676258adbeef8b89773c12559fac84600b627af2515190f3329",
+      "bytes": 5488
+    },
+    {
+      "path": "MULTIMODAL_CASES.json",
+      "sha256": "8a17c1a46fd858af562b7891f9bbfcb2caac7003ebb34e1dc9177f23623cd52b",
+      "bytes": 49874
+    },
+    {
+      "path": "MULTIMODAL.md",
+      "sha256": "d1e954738d8c2d5e6361b5328dce15f787b933e09bbf8b15b77d1400a1b47bc7",
+      "bytes": 10774
+    },
+    {
+      "path": "RETAINED_SCOPE.json",
+      "sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116",
+      "bytes": 492384
+    },
+    {
+      "path": "RISKS_AND_DISSENT.md",
+      "sha256": "6fbf57d1c98d5d8d7a190d40d1e7170dfd16bbf4a25fbe482c0c4d6ac3a94241",
+      "bytes": 4403
+    },
+    {
+      "path": "ROOT_NOTES_SNAPSHOT.md",
+      "sha256": "1e14c09fd4729cade42316ad09403e43ed02e81c41f380cb508f186db4136823",
+      "bytes": 9957
+    },
+    {
+      "path": "ROOT_UPDATES_SNAPSHOT.jsonl",
+      "sha256": "1d90c95503a1bffb87be80604dd55d4dcacc67f0624e825ee0b22ae3e6588c02",
+      "bytes": 2174
+    },
+    {
+      "path": "SOURCE_USE_INDEX.json",
+      "sha256": "8f113635a791d21817f134147d8933fb5164cf4dc2f7ab3f63884bc62452f9d1",
+      "bytes": 52391
+    },
+    {
+      "path": "VALIDATION.json",
+      "sha256": "73b6bb198200745d5e3417cd4fe5d982b8ec92867495799b42b50d1e5c7dd10e",
+      "bytes": 1099
+    },
+    {
+      "path": "VISION_COVERAGE.md",
+      "sha256": "a19dc834e0a043f985cb7dc010775a7c1a637d964175a08e5d068fcda37317c1",
+      "bytes": 7814
+    },
+    {
+      "path": "WORK_PACKAGES.json",
+      "sha256": "d7b46b4f14165d7634fa1931c772c026a2b14d49cd607faee27fa91d3a9e6500",
+      "bytes": 139651
+    }
+  ],
+  "validation": {
+    "package_input_mismatches": 0,
+    "package_unique_paths": 202,
+    "canonical_records_structurally_equal": true,
+    "canonical_requirements": 102,
+    "accepted_disposition_pins": 76,
+    "public_pattern_hits": 0,
+    "package_input_rows": 448,
+    "manifest_mismatches": 0,
+    "manifest_payload_count": 23,
+    "manifest_payload_bytes": 1129108,
+    "package_allowlist_duplicates": 0,
+    "input_use_members": 311,
+    "canonical_experiments": 32,
+    "package_required_field_gaps": 0,
+    "immutable_coordination_snapshots": 4,
+    "import_marker_present": false,
+    "canonical_acceptance": 102,
+    "accepted_pin_mismatches": 0,
+    "source_use_pin_mismatches": 0,
+    "source_use_records": 39,
+    "input_use_mismatches": 0
+  },
+  "diff_scope": {
+    "sha256": "ff88984dee09c50ea7c3f384111bc7c4e0007512ec9ae3e54e8f7cf534541716",
+    "quarantined_r11_original_paths": 0,
+    "outside_campaign": 0,
+    "basis": "Root staged-versus-base receipt; no independent Git/remote check",
+    "listed_paths": 505,
+    "workflow_config_paths": 0,
+    "path": "state/CANDIDATE_DIFF_SCOPE.json",
+    "root_reported_changed_paths": 505
+  },
+  "packages": [
+    {
+      "id": "CORE-P0",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H04 with H02",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 25,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/CORE-P0/contracts/",
+        "future/CORE-P0/fixtures/",
+        "future/CORE-P0/src/",
+        "future/CORE-P0/tests/",
+        "future/CORE-P0/reports/",
+        "future/CORE-P0/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "MF-P0",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H08 with H02/H04",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 70,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/MF-P0/contracts/",
+        "future/MF-P0/fixtures/",
+        "future/MF-P0/src/",
+        "future/MF-P0/tests/",
+        "future/MF-P0/reports/",
+        "future/MF-P0/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "R02-P02-A",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H02",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 9,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/R02-P02-A/contracts/",
+        "future/R02-P02-A/fixtures/",
+        "future/R02-P02-A/src/",
+        "future/R02-P02-A/tests/",
+        "future/R02-P02-A/reports/",
+        "future/R02-P02-A/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "CF-L01: exact source-to-isolated-copy mapping required before activation"
+    },
+    {
+      "id": "R02-P02-B",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H02/H04",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 25,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/R02-P02-B/contracts/",
+        "future/R02-P02-B/fixtures/",
+        "future/R02-P02-B/src/",
+        "future/R02-P02-B/tests/",
+        "future/R02-P02-B/reports/",
+        "future/R02-P02-B/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "R02-P03-EVAL",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H02",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 21,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/R02-P03-EVAL/contracts/",
+        "future/R02-P03-EVAL/fixtures/",
+        "future/R02-P03-EVAL/src/",
+        "future/R02-P03-EVAL/tests/",
+        "future/R02-P03-EVAL/reports/",
+        "future/R02-P03-EVAL/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "MV-P1",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H02/MM-VISION",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 28,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/MV-P1/contracts/",
+        "future/MV-P1/fixtures/",
+        "future/MV-P1/src/",
+        "future/MV-P1/tests/",
+        "future/MV-P1/reports/",
+        "future/MV-P1/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "P-MMAV-02-ASR",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "MM-AV/H02",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 26,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/P-MMAV-02-ASR/contracts/",
+        "future/P-MMAV-02-ASR/fixtures/",
+        "future/P-MMAV-02-ASR/src/",
+        "future/P-MMAV-02-ASR/tests/",
+        "future/P-MMAV-02-ASR/reports/",
+        "future/P-MMAV-02-ASR/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "R08-P00-INERT",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H09 with H08",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 13,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/R08-P00-INERT/contracts/",
+        "future/R08-P00-INERT/fixtures/",
+        "future/R08-P00-INERT/src/",
+        "future/R08-P00-INERT/tests/",
+        "future/R08-P00-INERT/reports/",
+        "future/R08-P00-INERT/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "R05-AGENDA-LOCAL",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H03/H01",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 22,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/R05-AGENDA-LOCAL/contracts/",
+        "future/R05-AGENDA-LOCAL/fixtures/",
+        "future/R05-AGENDA-LOCAL/src/",
+        "future/R05-AGENDA-LOCAL/tests/",
+        "future/R05-AGENDA-LOCAL/reports/",
+        "future/R05-AGENDA-LOCAL/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "R07-TYPED-REPLAY",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H08",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 26,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/R07-TYPED-REPLAY/contracts/",
+        "future/R07-TYPED-REPLAY/fixtures/",
+        "future/R07-TYPED-REPLAY/src/",
+        "future/R07-TYPED-REPLAY/tests/",
+        "future/R07-TYPED-REPLAY/reports/",
+        "future/R07-TYPED-REPLAY/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "R11-PUBLIC-REPLAY",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H11",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 16,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/R11-PUBLIC-REPLAY/contracts/",
+        "future/R11-PUBLIC-REPLAY/fixtures/",
+        "future/R11-PUBLIC-REPLAY/src/",
+        "future/R11-PUBLIC-REPLAY/tests/",
+        "future/R11-PUBLIC-REPLAY/reports/",
+        "future/R11-PUBLIC-REPLAY/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "R14-STAGE-A",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H12/H07",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 45,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/R14-STAGE-A/contracts/",
+        "future/R14-STAGE-A/fixtures/",
+        "future/R14-STAGE-A/src/",
+        "future/R14-STAGE-A/tests/",
+        "future/R14-STAGE-A/reports/",
+        "future/R14-STAGE-A/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "R09-DOMAIN-REPLAY",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H10",
+      "review_owner": "H06 independent evaluator; domain owner plus H04 where authority changes",
+      "input_count": 39,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "future/R09-DOMAIN-REPLAY/contracts/",
+        "future/R09-DOMAIN-REPLAY/fixtures/",
+        "future/R09-DOMAIN-REPLAY/src/",
+        "future/R09-DOMAIN-REPLAY/tests/",
+        "future/R09-DOMAIN-REPLAY/reports/",
+        "future/R09-DOMAIN-REPLAY/README.md"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    },
+    {
+      "id": "WP-R15-0",
+      "status": "AUTHORIZATION_REQUIRED",
+      "owner": "H00 implementation",
+      "review_owner": "Independent H06/code and H04 boundary reviewer",
+      "input_count": 83,
+      "all_input_hashes_match": true,
+      "all_required_fields_present": true,
+      "substantive_fields_and_ready_prompt_read": true,
+      "path_allowlist": [
+        "prototypes/observatory-p0/",
+        "tests/observatory-p0/"
+      ],
+      "activation_is_future": true,
+      "note": "No blocking integrated-candidate finding"
+    }
+  ],
+  "rehash_pins": [
+    {
+      "path": ".codex/config.toml",
+      "sha256": "e707b5f47198a83d1ea16d910fe2286daf05066f98d45e067071f96df7bb9fc0",
+      "bytes": 271
+    },
+    {
+      "path": ".codex/agents/haven_code_reviewer.toml",
+      "sha256": "bef693eb967ddc646271b07cd92980a3acee7a6f1eef13179cc58ed5a44256be",
+      "bytes": 1132
+    },
+    {
+      "path": ".github/workflows/haven-source-import-once.yml",
+      "sha256": "497eb96b1742b99e502590c393db48587536074365c2430ae7b899195b49cec2",
+      "bytes": 5912
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/.gitattributes",
+      "sha256": "fa6a58c44027baffd076001100c39c5982264278704933eec2219a6cff2b4de7",
+      "bytes": 78
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/.gitignore",
+      "sha256": "5dd4cc1bb86cce6c3209afa4b097755b7a6767bd821b43f2b012b79118cbb314",
+      "bytes": 115
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/backend.py",
+      "sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+      "bytes": 2643
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/coordinator.py",
+      "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+      "bytes": 5970
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/store.py",
+      "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+      "bytes": 11897
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/context.py",
+      "sha256": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+      "bytes": 1227
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/validation.py",
+      "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+      "bytes": 2036
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+      "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+      "bytes": 19763
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+      "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+      "bytes": 4961
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/CODE-0/REVIEW.md",
+      "sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8",
+      "bytes": 18796
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R15/REVIEW.md",
+      "sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6",
+      "bytes": 12006
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R15/SOURCE_CHECKS.json",
+      "sha256": "4815425b7ce8c7342fbebb1f80e71efa8d2e02f1243dccf0dd40f4cfd9196f45",
+      "bytes": 9026
+    }
+  ],
+  "reused_evidence": {
+    "r15": "Same reviewer prior actual selected source checks and241 identity verification reused; no repeat audit or tests",
+    "code0": "Historical static source/config/test review; exact report reused and selected source hashes rechecked",
+    "historical_suites": "N1=33/N2=11 saved results not rerun; original/redacted gate bytes remain distinct"
+  },
+  "read_limits": [
+    "Full main final architecture/contracts/crosswalk/decisions/evaluation/multimodal/queue/risk/manager documents",
+    "All14 substantive package fields and prompts;448 exact input pins checked",
+    "All39 source-use finding/effect records and all36 case input/outcome records plus retained MF-L01 addenda",
+    "Dependency gates/refinements and structural original records; no fresh full semantic reading of every311 input member",
+    "Current config/all10 role profiles/import workflow read statically",
+    "No CODE-FINAL external web/media/private-source archive inspection; earlier R15 primary checks transparently reused"
+  ],
+  "execution": {
+    "devices": 0,
+    "application_tests": 0,
+    "models": 0,
+    "accounts": 0,
+    "git_commands": 0,
+    "new_tests": 0,
+    "builds": 0,
+    "children": 0,
+    "installs": 0
+  },
+  "finding": {
+    "id": "CF-L01",
+    "action": "Pin actual supplied current R1 source and exact source-to-isolated-approved-copy mapping; do not edit active R1 under future-only allowance",
+    "path": "integration/final-v1/WORK_PACKAGES.json",
+    "lines": "484-498",
+    "blocks_research_pass": false,
+    "required_before": "R02-P02-A activation",
+    "severity": "LOW"
+  },
+  "disposition": "PASS_RESEARCH_CANDIDATE_ONLY",
+  "application": "NO_APPLICATION_CODE_CHANGED",
+  "current_m0_r1": "CODE_NOT_AVAILABLE",
+  "scientific_runtime_physical_qualification": "NOT_ESTABLISHED",
+  "reviewer_incidents": [
+    "Initial protocol path guesses were missing; exact orchestration/RI-01 authority/protocol located and read",
+    "An initial compact source-use summary displayed a null sentinel; explicit per-record loop rechecked all39 with zero mismatches"
+  ]
+}

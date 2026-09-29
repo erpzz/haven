@@ -1,0 +1,21 @@
+{
+  "schema": "ri01.root.delivery-validation.v1",
+  "observed_at": "2026-09-29T01:43:21.933772+00:00",
+  "scope": "Explicit public tracked/new campaign files; excludes this receipt and DELIVERY_MANIFEST to avoid self-reference",
+  "checked_files": 520,
+  "png_files_hashed_not_text_scanned": 1,
+  "parsed_json": 218,
+  "parsed_jsonl": 6,
+  "bounded_private_path_or_key_pattern_hits": 0,
+  "privacy_limit": "Bounded pattern scan plus explicit reviewed publication list; not a universal privacy guarantee",
+  "candidate_payload_hashes_and_lengths_verified": 23,
+  "candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+  "distinct_final_reviews_verified": 3,
+  "root_state_pin_checks": 303,
+  "original_R11_tracked_or_in_available_history": false,
+  "changed_paths_at_validation": 521,
+  "all_changed_paths_under_campaign": true,
+  "application_tests_executed": 0,
+  "future_implementation_authorization": "REQUIRED",
+  "manifest_verification": "Every manifest entry checked against Git index and worktree bytes after staging"
+}

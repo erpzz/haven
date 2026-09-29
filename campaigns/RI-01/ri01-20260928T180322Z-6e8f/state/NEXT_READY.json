@@ -1,6 +1,8 @@
 {
-  "recorded_at": "2026-09-29T01:18:50.294557+00:00",
+  "recorded_at": "2026-09-29T01:35:41.672306+00:00",
   "ready": [],
-  "active": [],
-  "rule": "Do not bypass exact independent review gates; retain hard versus soft distinction."
+  "active": [
+    "DELIVERY"
+  ],
+  "rule": "All research/final reviews complete. Root publication only; no implementation grant."
 }

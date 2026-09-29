@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-29T01:18:50.294557+00:00",
+  "generated_at": "2026-09-29T01:33:38.990039+00:00",
   "meaning": "Scoped documentary/design dispositions, not experimental acceptance or execution permission; read amendments and retained gates.",
   "entries": [
     {
@@ -457,6 +457,105 @@
         {
           "id": "R15-PRE-RUN",
           "disposition": "Exact dependency/asset rights, lifecycle/zero-egress proof, independent oracle, current authority, bounded adapter, F08/MF-L01 and actual-code review remain future gates."
+        }
+      ]
+    },
+    {
+      "task_id": "SYNTHESIS",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/night01_review",
+      "scope": "PASS documentary synthesis after separate R13 evidence, CODE-FINAL and VISION-FINAL reviews of identical c5ec562b manifest. No mandatory candidate amendments. No application, model, native or physical acceptance, operator grant or automatic merge.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "integration/final-v1/ARCHITECTURE.md",
+          "sha256": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee"
+        },
+        {
+          "path": "reviews/R13/REVIEW.md",
+          "sha256": "97cb060c01526098b12257c72f1b50aa0e939fbde8b5c40e006b9a0960ac7d10"
+        }
+      ],
+      "open_findings": [
+        {
+          "id": "CF-L01",
+          "severity": "LOW",
+          "disposition": "Pin actual current source and approved isolated-copy mapping before R1 lifecycle package activation."
+        },
+        {
+          "id": "R13-L01",
+          "severity": "LOW",
+          "disposition": "Bind exact queue/upstream package aliases, subset and allowed paths before invocation; no implied test equivalence."
+        },
+        {
+          "id": "R13-G01/MF-L01",
+          "disposition": "Freeze evaluator-owned sidecar/metadata/reimport assertions within76 invocations or separately version protocol before execution."
+        },
+        {
+          "id": "R13-G02",
+          "disposition": "C09 enrolled-device refinement remains proposed; AT-DAILY-08 partial and NOT_EXECUTED."
+        }
+      ]
+    },
+    {
+      "task_id": "R13",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": "PASS documentary synthesis with independently specified protected promotion gates; no execution or implementation authorization",
+      "disposition": "PASS documentary synthesis after separate R13 evidence, CODE-FINAL and VISION-FINAL reviews of identical c5ec562b manifest. No mandatory candidate amendments. No application, model, native or physical acceptance, operator grant or automatic merge.",
+      "artifacts": [
+        {
+          "path": "reviews/R13/REVIEW.md",
+          "sha256": "97cb060c01526098b12257c72f1b50aa0e939fbde8b5c40e006b9a0960ac7d10"
+        }
+      ],
+      "open_findings": [
+        {
+          "id": "R13-L01",
+          "severity": "LOW",
+          "disposition": "Resolve exact queue/upstream package aliases, subset and path grants before invocation; no implied test equivalence."
+        },
+        {
+          "id": "R13-G01",
+          "disposition": "Evaluator-owned MF-L01 corruption/round-trip assertions within76 attempts or explicit pre-results version."
+        },
+        {
+          "id": "R13-G02",
+          "disposition": "C09 handoff remains proposed, AT-DAILY-08 partial and unexecuted; freeze exact future protocol separately."
+        }
+      ]
+    },
+    {
+      "task_id": "VISION-FINAL",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_vision",
+      "scope": "PASS exact documentary synthesis; full scope and useful image/question/evidence path retained, all implementation and qualification gates remain",
+      "disposition": "PASS",
+      "artifacts": [
+        {
+          "path": "reviews/VISION-FINAL/REVIEW.md",
+          "sha256": "a3a4cb2591813da7b77dbbd5eebb3becb29ffdc6477b7fe38ab9bd983bca9d69"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "CODE-FINAL",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_code_review",
+      "scope": "PASS exact frozen research candidate only; no implementation or runtime acceptance",
+      "disposition": "PASS",
+      "artifacts": [
+        {
+          "path": "reviews/CODE-FINAL/REVIEW.md",
+          "sha256": "e5b2d50843cfa9bcc265d07546c704d59b021da57a98f11f40da9f5e09d3dde9"
+        }
+      ],
+      "open_findings": [
+        {
+          "id": "CF-L01",
+          "severity": "LOW",
+          "disposition": "Before R02-P02-A activation, pin current R1 source and exact source-to-approved-isolated-copy mapping; no active workspace edits authorized."
         }
       ]
     },

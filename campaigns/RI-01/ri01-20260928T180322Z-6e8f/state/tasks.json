@@ -1200,7 +1200,7 @@
         "CODE-0"
       ],
       "kind": "integration",
-      "status": "DRAFT_READY",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
       "actual_agent_id": "/root/night01_review",
       "attempt_count": 1,
       "started_at": "2026-09-29T00:36:42.777813+00:00",
@@ -1432,7 +1432,55 @@
       "artifact": "integration/final-v1/ARCHITECTURE.md",
       "artifact_sha256": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
       "manifest": "integration/final-v1/MANIFEST.json",
-      "manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b"
+      "manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+      "final_reviews": [
+        {
+          "task": "R13",
+          "agent": "/root/ri01_evidence",
+          "path": "reviews/R13/REVIEW.md",
+          "sha256": "97cb060c01526098b12257c72f1b50aa0e939fbde8b5c40e006b9a0960ac7d10",
+          "disposition": "PASS documentary candidate only"
+        },
+        {
+          "task": "CODE-FINAL",
+          "agent": "/root/ri01_code_review",
+          "path": "reviews/CODE-FINAL/REVIEW.md",
+          "sha256": "e5b2d50843cfa9bcc265d07546c704d59b021da57a98f11f40da9f5e09d3dde9",
+          "disposition": "PASS documentary candidate only"
+        },
+        {
+          "task": "VISION-FINAL",
+          "agent": "/root/ri01_vision",
+          "path": "reviews/VISION-FINAL/REVIEW.md",
+          "sha256": "a3a4cb2591813da7b77dbbd5eebb3becb29ffdc6477b7fe38ab9bd983bca9d69",
+          "disposition": "PASS documentary candidate only"
+        }
+      ],
+      "accepted_at": "2026-09-29T01:33:38.990039+00:00",
+      "acceptance_scope": "PASS documentary synthesis after separate R13 evidence, CODE-FINAL and VISION-FINAL reviews of identical c5ec562b manifest. No mandatory candidate amendments. No application, model, native or physical acceptance, operator grant or automatic merge.",
+      "review_artifact": "reviews/R13/REVIEW.md",
+      "review_sha256": "97cb060c01526098b12257c72f1b50aa0e939fbde8b5c40e006b9a0960ac7d10",
+      "reviewer": "/root/ri01_evidence",
+      "open_findings": [
+        {
+          "id": "CF-L01",
+          "severity": "LOW",
+          "disposition": "Pin actual current source and approved isolated-copy mapping before R1 lifecycle package activation."
+        },
+        {
+          "id": "R13-L01",
+          "severity": "LOW",
+          "disposition": "Bind exact queue/upstream package aliases, subset and allowed paths before invocation; no implied test equivalence."
+        },
+        {
+          "id": "R13-G01/MF-L01",
+          "disposition": "Freeze evaluator-owned sidecar/metadata/reimport assertions within76 invocations or separately version protocol before execution."
+        },
+        {
+          "id": "R13-G02",
+          "disposition": "C09 enrolled-device refinement remains proposed; AT-DAILY-08 partial and NOT_EXECUTED."
+        }
+      ]
     },
     {
       "id": "R13",
@@ -1443,7 +1491,48 @@
       "soft": [],
       "kind": "review",
       "research": "R13",
-      "status": "QUEUED"
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "actual_agent_id": "/root/ri01_evidence",
+      "attempt_count": 1,
+      "started_at": "2026-09-29T01:21:02.171402+00:00",
+      "allowed_output_prefix": "reviews/R13/",
+      "budgets": {
+        "minutes": 20
+      },
+      "hard_inputs": [
+        {
+          "task_id": "SYNTHESIS",
+          "path": "integration/final-v1/ARCHITECTURE.md",
+          "sha256": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ],
+      "acceptance_scope": "PASS documentary synthesis with independently specified protected promotion gates; no execution or implementation authorization",
+      "review_disposition": "PASS documentary synthesis after separate R13 evidence, CODE-FINAL and VISION-FINAL reviews of identical c5ec562b manifest. No mandatory candidate amendments. No application, model, native or physical acceptance, operator grant or automatic merge.",
+      "reviewed_candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+      "promotion_gates": {
+        "path": "reviews/R13/PROMOTION_GATES.md",
+        "sha256": "54d899147008f4558131ced6c0a53c92acc38d05cbe60bd16ac070242fbe8099"
+      },
+      "open_findings": [
+        {
+          "id": "R13-L01",
+          "severity": "LOW",
+          "disposition": "Resolve exact queue/upstream package aliases, subset and path grants before invocation; no implied test equivalence."
+        },
+        {
+          "id": "R13-G01",
+          "disposition": "Evaluator-owned MF-L01 corruption/round-trip assertions within76 attempts or explicit pre-results version."
+        },
+        {
+          "id": "R13-G02",
+          "disposition": "C09 handoff remains proposed, AT-DAILY-08 partial and unexecuted; freeze exact future protocol separately."
+        }
+      ],
+      "completed_at": "2026-09-29T01:33:38.990039+00:00",
+      "artifact": "reviews/R13/REVIEW.md",
+      "artifact_sha256": "97cb060c01526098b12257c72f1b50aa0e939fbde8b5c40e006b9a0960ac7d10"
     },
     {
       "id": "VISION-FINAL",
@@ -1453,7 +1542,32 @@
       ],
       "soft": [],
       "kind": "review",
-      "status": "QUEUED"
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "actual_agent_id": "/root/ri01_vision",
+      "attempt_count": 1,
+      "started_at": "2026-09-29T01:21:02.171402+00:00",
+      "allowed_output_prefix": "reviews/VISION-FINAL/",
+      "budgets": {
+        "minutes": 20
+      },
+      "hard_inputs": [
+        {
+          "task_id": "SYNTHESIS",
+          "path": "integration/final-v1/ARCHITECTURE.md",
+          "sha256": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ],
+      "acceptance_scope": "PASS exact documentary synthesis; full scope and useful image/question/evidence path retained, all implementation and qualification gates remain",
+      "review_disposition": "PASS",
+      "reviewed_candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+      "open_findings": [],
+      "completed_at": "2026-09-29T01:33:38.832038+00:00",
+      "artifact": "reviews/VISION-FINAL/REVIEW.md",
+      "artifact_sha256": "a3a4cb2591813da7b77dbbd5eebb3becb29ffdc6477b7fe38ab9bd983bca9d69",
+      "manifest": "reviews/VISION-FINAL/MANIFEST.json",
+      "manifest_sha256": "1251a81758b8b84fc8f296d143b1b9943677c4a77c591c10d1d895268ef99479"
     },
     {
       "id": "CODE-FINAL",
@@ -1463,7 +1577,38 @@
       ],
       "soft": [],
       "kind": "review",
-      "status": "QUEUED"
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "actual_agent_id": "/root/ri01_code_review",
+      "attempt_count": 1,
+      "started_at": "2026-09-29T01:21:02.171402+00:00",
+      "allowed_output_prefix": "reviews/CODE-FINAL/",
+      "budgets": {
+        "minutes": 20
+      },
+      "hard_inputs": [
+        {
+          "task_id": "SYNTHESIS",
+          "path": "integration/final-v1/ARCHITECTURE.md",
+          "sha256": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
+          "review_path": null,
+          "review_sha256": null
+        }
+      ],
+      "acceptance_scope": "PASS exact frozen research candidate only; no implementation or runtime acceptance",
+      "review_disposition": "PASS",
+      "reviewed_candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+      "open_findings": [
+        {
+          "id": "CF-L01",
+          "severity": "LOW",
+          "disposition": "Before R02-P02-A activation, pin current R1 source and exact source-to-approved-isolated-copy mapping; no active workspace edits authorized."
+        }
+      ],
+      "completed_at": "2026-09-29T01:30:37.750424+00:00",
+      "artifact": "reviews/CODE-FINAL/REVIEW.md",
+      "artifact_sha256": "e5b2d50843cfa9bcc265d07546c704d59b021da57a98f11f40da9f5e09d3dde9",
+      "manifest": "reviews/CODE-FINAL/MANIFEST.json",
+      "manifest_sha256": "81df118ceb5508d7af93a5f146cf686c7e0e4622ab998f934dfcbc6db43d6a9f"
     },
     {
       "id": "DELIVERY",
@@ -1474,8 +1619,11 @@
         "CODE-FINAL"
       ],
       "soft": [],
-      "kind": "publication",
-      "status": "QUEUED"
+      "kind": "root_publication",
+      "status": "RUNNING",
+      "actual_agent_id": "/root",
+      "started_at": "2026-09-29T01:35:41.672306+00:00",
+      "next_action": "Publish completed review/report/identity records, verify remote content, then stop at operator review gate."
     },
     {
       "id": "EVIDENCE-0",
@@ -1531,7 +1679,7 @@
         "REV-R06",
         "REV-R08"
       ],
-      "status": "DRAFT_READY",
+      "status": "SUPERSEDED",
       "actual_agent_id": "/root/night01_review",
       "objective": "Provisional dependency and contract map from reviewed intake/vision; not CORE completion",
       "allowed_output_prefix": "integration/",
@@ -1546,7 +1694,14 @@
         "INPUT_USE.json": "0818baac652f2180e2a593ebe2667a666b3bddb05eaf8f48a8695589d56bf225",
         "MANAGER_STATE.md": "27bb39fb236c4ebfe711ebc826fb68a6605535cb99ccfb2d960274eda49275ac"
       },
-      "review_result": "Provisional integration only; CORE hard gates unsatisfied"
+      "review_result": "Provisional integration only; CORE hard gates unsatisfied",
+      "status_recorded_at": "2026-09-29T01:29:31.730738+00:00",
+      "artifact": "integration/MANAGER_STATE.md",
+      "artifact_sha256": "27bb39fb236c4ebfe711ebc826fb68a6605535cb99ccfb2d960274eda49275ac",
+      "superseded_by": [
+        "CORE"
+      ],
+      "next_action": "None for provisional revision; preserved historical source, reconciled into independently accepted core-v1 and frozen final synthesis."
     },
     {
       "write_mode": "read-only full report returned for root persistence",

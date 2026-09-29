@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-09-29T01:35:41.672306+00:00",
+  "candidate_commit": "c087bf9c00cb9213dc3225852fb7385ba0eb9aef",
+  "candidate_manifest": "integration/final-v1/MANIFEST.json",
+  "candidate_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+  "candidate_changed_after_freeze": false,
+  "independent_author": "/root/night01_review",
+  "reviews": [
+    {
+      "task": "R13",
+      "agent": "/root/ri01_evidence",
+      "path": "reviews/R13/REVIEW.md",
+      "sha256": "97cb060c01526098b12257c72f1b50aa0e939fbde8b5c40e006b9a0960ac7d10",
+      "disposition": "PASS documentary candidate only"
+    },
+    {
+      "task": "CODE-FINAL",
+      "agent": "/root/ri01_code_review",
+      "path": "reviews/CODE-FINAL/REVIEW.md",
+      "sha256": "e5b2d50843cfa9bcc265d07546c704d59b021da57a98f11f40da9f5e09d3dde9",
+      "disposition": "PASS documentary candidate only"
+    },
+    {
+      "task": "VISION-FINAL",
+      "agent": "/root/ri01_vision",
+      "path": "reviews/VISION-FINAL/REVIEW.md",
+      "sha256": "a3a4cb2591813da7b77dbbd5eebb3becb29ffdc6477b7fe38ab9bd983bca9d69",
+      "disposition": "PASS documentary candidate only"
+    }
+  ],
+  "mandatory_research_corrections": [],
+  "future_gates": [
+    "CF-L01 exact current source to approved isolated-copy mapping",
+    "R13-L01 exact queue/upstream package aliases and subset",
+    "MF-L01/R13-G01 evaluator-owned export/import assertions within fixed allocation",
+    "R13-G02 C09 remains proposed and AT-DAILY-08 partial",
+    "All model/native/rights/host/oracle/physical gates retained"
+  ],
+  "implementation_authorized": false,
+  "application_tests_executed": 0
+}

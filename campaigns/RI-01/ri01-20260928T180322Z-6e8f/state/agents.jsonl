@@ -115,3 +115,10 @@
 {"recorded_at": "2026-09-29T01:12:46.423220+00:00", "task_id": "REVIEW-R15", "actual_agent_id": "/root/ri01_code_review", "event": "COMPLETED_QUIESCENT"}
 {"recorded_at": "2026-09-29T01:12:46.423220+00:00", "task_id": "REVIEW-R15", "actual_agent_id": "/root/ri01_code_review", "event": "COMPLETED_QUIESCENT"}
 {"recorded_at": "2026-09-29T01:18:50.294557+00:00", "task_id": "SYNTHESIS", "actual_agent_id": "/root/night01_review", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:21:02.171402+00:00", "task_id": "R13", "actual_agent_id": "/root/ri01_evidence", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_evidence_auditor"}
+{"recorded_at": "2026-09-29T01:21:02.171402+00:00", "task_id": "VISION-FINAL", "actual_agent_id": "/root/ri01_vision", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_vision_guardian"}
+{"recorded_at": "2026-09-29T01:21:02.171402+00:00", "task_id": "CODE-FINAL", "actual_agent_id": "/root/ri01_code_review", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_code_reviewer"}
+{"recorded_at": "2026-09-29T01:30:37.750424+00:00", "task_id": "CODE-FINAL", "actual_agent_id": "/root/ri01_code_review", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:32:04.407890+00:00", "task_id": "R13", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:33:38.832038+00:00", "task_id": "VISION-FINAL", "actual_agent_id": "/root/ri01_vision", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:33:38.990039+00:00", "task_id": "R13", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED_QUIESCENT"}
