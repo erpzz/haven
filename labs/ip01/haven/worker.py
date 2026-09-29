@@ -38,10 +38,11 @@ def execute(request):
     refs = [s["id"] for s in sources]
     if job["route"] == "model":
         if __package__ in (None, ""):
-            from model_adapter import generate
+            from model_adapter import generate, check_handoff
         else:
-            from .model_adapter import generate
-        answer, usage = generate(context, request["backend"], request["model_identity"])
+            from .model_adapter import generate, check_handoff
+        check_handoff(request.get("handoff"), job, request["context_digest"])
+        answer, usage = generate(context, request["backend"], request["model_identity"], request["handoff"])
         payload = {"text": answer, "route": "model", "source_refs": refs,
                    "limitations": "Local model proposal on supplied synthetic evidence; APP checks current authority."}
     elif job["route"] == "deterministic":

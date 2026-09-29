@@ -1,0 +1,9 @@
+{
+  "prior_pending_path_length_min": 248,
+  "prior_pending_path_length_max": 268,
+  "prior_pending_paths_over259": 36,
+  "shortened_pending_path_length_min": 202,
+  "shortened_pending_path_length_max": 202,
+  "host_configuration_changed": false,
+  "snapshot_file_mismatch": []
+}

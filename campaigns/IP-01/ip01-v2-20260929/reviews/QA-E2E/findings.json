@@ -1,0 +1,76 @@
+{
+  "overall": "FAIL_CONFIRMED_DEFECTS_AND_MANDATORY_GAPS",
+  "findings": [
+    {
+      "id": "CE-F02",
+      "status": "CONFIRMED_CANDIDATE_DEFECT",
+      "evidence": "FINDING_CE-F02.json",
+      "summary": "Actual Chromium: delayed A notes and consumed payload render beneath Person B after a completed switch. Both variants reproduced; screenshots inspected."
+    },
+    {
+      "id": "CE-F04",
+      "status": "CONFIRMED_CANDIDATE_DEFECT",
+      "evidence": "FINDING_CE-F04_CE-F05.json",
+      "summary": "Actual HTTP accepts depth17 shared-ancestor DAG after at16 control. Linear boundary passing evidence is insufficient."
+    },
+    {
+      "id": "CE-F05",
+      "status": "CONFIRMED_CANDIDATE_DEFECT",
+      "evidence": "FINDING_CE-F04_CE-F05.json",
+      "summary": "Exhausted lexically first G1 shadows fresh G2. Original G1 slot still redeems at remaining zero."
+    },
+    {
+      "id": "HARNESS-KEYS",
+      "status": "RESOLVED_AFFECTED_RECHECK_PASS",
+      "runs": [
+        "20260929T051035.084776Z",
+        "20260929T051518.367074Z"
+      ],
+      "summary": "Two initial KeyErrors used grant_id instead of quota.id and draft_id instead of returned draft.id. Both corrected without source edits; 2 affected cases passed."
+    },
+    {
+      "id": "HARNESS-MAXPATH",
+      "status": "RESOLVED_AFFECTED_RECHECK_PASS",
+      "runs": [
+        "20260929T051911.760211Z",
+        "20260929T052103.277921Z"
+      ],
+      "summary": "36 backing fixtures failed setup under long parameter directory names. Hash-only runtime directories preserve scenario names in receipts. All76 backing cases then passed; no host longpath/security setting changed."
+    },
+    {
+      "id": "HARNESS-BOUND-ADAPTER",
+      "status": "RESOLVED_AFFECTED_RECHECK_PASS",
+      "runs": [
+        "20260929T052103.277921Z",
+        "20260929T052213.367484Z"
+      ],
+      "summary": "Metadata builder received durable job instead of full request; output expected RELEASE_AUTHORIZED instead of RELEASE_ADMITTED. Corrected both adapter expectations; exact byte boundaries passed."
+    },
+    {
+      "id": "HARNESS-BROWSER-FIXTURE",
+      "status": "RESOLVED_RECHECK_PASS",
+      "runs": [
+        "20260929T051733.805870Z",
+        "20260929T051901.611627Z",
+        "20260929T052113.756708Z"
+      ],
+      "summary": "An earlier exhausted TCP fixture was still eligible for broad browser retrieval; then quarantine UI test expected code instead of readable message. Fixtures isolated and visible-message assertion corrected; whole walkthrough passed."
+    },
+    {
+      "id": "HARNESS-CRASH-TOPOLOGY",
+      "status": "RESOLVED_RECHECK_PASS",
+      "runs": [
+        "20260929T052338.927667Z",
+        "20260929T052743.045195Z"
+      ],
+      "summary": "Pre-fault assertion rejected app-owned conhost helper lacking _serve args. Initial topology frozen; only exact app workload killed, all descendants still required absent within unchanged20sec; control survived."
+    },
+    {
+      "id": "CE-F01/CE-F03/CE-F06",
+      "status": "INDEPENDENT_EXECUTION_PENDING",
+      "summary": "Source review and H00 amendment read; no false closure. Fresh-egress barrier, durable terminal mapping and settlement require repaired APP+RUNTIME and actual callback integration."
+    }
+  ],
+  "all_failed_attempts_retained": true,
+  "source_fixed_by_QA": false
+}

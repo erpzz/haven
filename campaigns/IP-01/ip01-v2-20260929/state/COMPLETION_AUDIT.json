@@ -59,7 +59,7 @@
     {
       "id": "CAMPAIGN-07",
       "requirement": "Tracked allowlist, private runtime exclusions, no forbidden actions",
-      "status": "ONGOING_SCOPED_DIFF_FINAL_SCAN_PENDING",
+      "status": "ONGOING_WITH_DISCLOSED_INTERIM_PATHNAME_PUBLICATION_MISS_CORRECTED",
       "evidence": [
         "receipts/PUBLIC_REPORT_EDITIONS.json",
         "state/attempts.jsonl"
@@ -117,14 +117,18 @@
     {
       "id": "APPLICATION-07",
       "requirement": "Complete uncited influencing closure and atomic current retrieval/admission/release checks",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "OPEN_CE_F01_EGRESS_RACE",
+      "evidence": [
+        "reviews/CODE-EARLY/CODE_EARLY_REVIEW.md"
+      ]
     },
     {
       "id": "APPLICATION-08",
       "requirement": "Full AuthorityVector and bounded lab2/32/16/128/depth16/64KiB/256KiB rejection",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "OPEN_CE_F04_DEPTH_BOUND",
+      "evidence": [
+        "reviews/CODE-EARLY/CODE_EARLY_REVIEW.md"
+      ]
     },
     {
       "id": "APPLICATION-09",
@@ -135,8 +139,10 @@
     {
       "id": "APPLICATION-10",
       "requirement": "One finite charge per release, single whole-output destination consume slot",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "OPEN_CE_F05_GRANT_SELECTION_WITH_EXISTING_CONSUME_PRESERVED",
+      "evidence": [
+        "reviews/CODE-EARLY/CODE_EARLY_REVIEW.md"
+      ]
     },
     {
       "id": "APPLICATION-11",
@@ -191,9 +197,10 @@
     {
       "id": "LIFECYCLE-02",
       "requirement": "Real NOT_STARTED/RUNNING/STOP_REQUESTED/STOP_CONFIRMED/UNKNOWN observations",
-      "status": "IMPLEMENTED_AUTHOR_TESTED_INDEPENDENT_RECHECK_PENDING",
+      "status": "OPEN_CE_F03_DURABLE_TERMINAL_PROJECTION",
       "evidence": [
-        "receipts/RUNTIME_HANDOFF.md"
+        "receipts/RUNTIME_HANDOFF.md",
+        "integration/EGRESS_AMENDMENT.md"
       ]
     },
     {
@@ -244,8 +251,10 @@
     {
       "id": "BROWSER-02",
       "requirement": "Real note create/edit, A private/B forbidden/B shared workflows",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "OPEN_CE_F02_PERSONA_RESPONSE_RACE",
+      "evidence": [
+        "reviews/CODE-EARLY/CODE_EARLY_REVIEW.md"
+      ]
     },
     {
       "id": "BROWSER-03",
@@ -296,16 +305,19 @@
     {
       "id": "MODEL-04",
       "requirement": "Freeze <=4096context/768output/one image/120sec/12GiBRAM and actual peaks",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "FOUR_READINESS_CALLS_CONFIG_AND_MEMORY_OBSERVED_TOKEN_RETENTION_GAP",
+      "evidence": [
+        "receipts/MODEL_READY_HANDOFF.md"
+      ]
     },
     {
       "id": "MODEL-05",
       "requirement": "Every admitted call counted16 readiness/8 fault/72 final,90min total, no borrowing",
-      "status": "ZERO_CALLS_GATE_DISABLED",
+      "status": "FOUR_SPENT_READINESS_ALL_CONFIRMED97_204_SECONDS_GATE_DISABLED",
       "evidence": [
         "state/run.json",
-        "receipts/MODEL_PREPARATION.md"
+        "receipts/MODEL_PREPARATION.md",
+        "receipts/MODEL_READY_RESULTS.json"
       ]
     },
     {
@@ -343,8 +355,10 @@
     {
       "id": "MODEL-10",
       "requirement": "Independent semantic scoring, per-modality usefulness/abstention/grounding/latency/memory",
-      "status": "UNPROVEN",
-      "evidence": []
+      "status": "INDEPENDENT_READINESS_SEMANTICS4_OF4_FORMAT3_OF4_FINAL_PILOT_PENDING",
+      "evidence": [
+        "reviews/MODEL-QA/EXISTING_READINESS_REVIEW.json"
+      ]
     },
     {
       "id": "MODEL-11",
@@ -407,6 +421,6 @@
       "evidence": []
     }
   ],
-  "updated_at": "2026-09-29T04:59:49.645135+00:00",
-  "progress_note": "Mid-build inventory; no aggregate acceptance or final candidate claimed. All unlisted requirements remain unproven."
+  "updated_at": "2026-09-29T05:32:22.361023+00:00",
+  "progress_note": "Independent code defects are open; original owners repairing; no final acceptance. Four actual readiness calls remain historical evidence, not repaired-candidate qualification."
 }

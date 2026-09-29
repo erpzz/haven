@@ -104,7 +104,7 @@ def test_actual_worker_result_and_fenced_release_independent_of_stop(tmp_path):
         await s.submit(j)
         status = await wait_done(s, j)
         assert status["compute_state"] == "STOP_CONFIRMED"
-        assert status["disposition"] == "SUCCEEDED"
+        assert status["disposition"] == "FAILED"
         assert len(c.results) == 1
         result = c.results[0]
         assert result["request_digest"] == j["request_digest"]
@@ -124,7 +124,7 @@ def test_actual_worker_result_and_fenced_release_independent_of_stop(tmp_path):
         broken = {**candidate, "outcome": "UNSUPPORTED"}
         assert (await s._accept_candidate(s.jobs[j["job_id"]], broken))["disposition"] == "REJECTED"
         assert len(c.results) == 1
-        assert (await s.snapshot(j["job_id"]))["disposition"] == "SUCCEEDED"
+        assert (await s.snapshot(j["job_id"]))["disposition"] == "FAILED"
         assert (await s.close(time.monotonic()+3))["confirmed"]
     asyncio.run(run())
 

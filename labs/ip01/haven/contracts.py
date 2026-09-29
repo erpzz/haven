@@ -163,4 +163,3 @@ class ObservationRequest(Wire):
     nonce: str
     idempotency_key: str = Field(min_length=1, max_length=128)
     kind: Literal['DISPLAY_REPORTED', 'DELIVERY_UNKNOWN', 'STOP_REPORTED', 'SENT_UNACKNOWLEDGED']
-

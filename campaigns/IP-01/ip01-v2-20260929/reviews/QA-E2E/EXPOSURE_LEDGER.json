@@ -1,0 +1,15 @@
+{
+  "assignment": 9,
+  "protected_oracle_access": "NONE in this assignment",
+  "protected_expected_answers_exposed_to_authors": false,
+  "ordinary_synthetic_fixtures_public": true,
+  "retained_pilot": "24 families/72 final repeats remain private in evaluator QA-PREP protocol; no pilot calls",
+  "filesystem_protection": "Not established; shared user/full access cannot be represented as enforcement",
+  "new_exposures": [
+    {
+      "scope": "CE-F02/04/05",
+      "contents": "Minimal synthetic marker, graph and grant-order repro only",
+      "purpose": "Root relay for ordinary defect repair"
+    }
+  ]
+}

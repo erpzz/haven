@@ -35,7 +35,7 @@ def live(tx):
         raise Denied('CLOCK_UNCERTAIN', 503)
 
 
-def source_grant(tx, source, person, *, fixed=None):
+def source_grant(tx, source, person, *, fixed=None, new_release=False):
     if source['owner'] == person:
         return None
     now = tx.store.clock()
@@ -46,28 +46,34 @@ def source_grant(tx, source, person, *, fixed=None):
                 and g['authority_instance_epoch'] == tx.meta('authority_instance_epoch')]
     if not eligible:
         raise Denied('SOURCE_UNAVAILABLE', 404)
+    if new_release and fixed is None:
+        # Preference is only at initial sealing. If every valid grant is
+        # exhausted, retain the existing failed-release path; never invent quota.
+        available = [g for g in eligible if g['max_uses'] is None or
+                     tx.get('quota_ledger', g['id'])['charged_units'] < g['max_uses']]
+        if available:
+            eligible = available
     return sorted(eligible, key=lambda g: g['id'])[0]
 
 
-def resolve_closure(tx, person, roots, *, fixed_grants=None):
-    sources, grants, edges, visiting = {}, {}, set(), set()
-    def visit(source_id, depth):
-        if depth > LIMITS['depth']:
-            raise Denied('LINEAGE_DEPTH_LIMIT', 413)
+def resolve_closure(tx, person, roots, *, fixed_grants=None, new_release=False):
+    sources, grants, edges, visiting, heights = {}, {}, set(), set(), {}
+    def visit(source_id):
         if source_id in visiting:
             raise Denied('LINEAGE_CYCLE', 409)
+        if source_id in heights:
+            return heights[source_id]
         source = tx.get('sources', source_id)
         if not source or source['tombstone']:
             raise Denied('SOURCE_UNAVAILABLE', 404)
-        if source_id in sources:
-            return
-        grant = source_grant(tx, source, person, fixed=(fixed_grants or {}).get(source_id))
+        grant = source_grant(tx, source, person, fixed=(fixed_grants or {}).get(source_id), new_release=new_release)
         if grant:
             grants[grant['id']] = grant
         sources[source_id] = source
         if len(sources) > LIMITS['sources'] or len(grants) > LIMITS['grants']:
             raise Denied('CLOSURE_LIMIT', 413)
         visiting.add(source_id)
+        height = 0
         for parent in source['parents']:
             edges.add((source_id, parent['id'], parent['revision']))
             if len(edges) > LIMITS['edges']:
@@ -75,10 +81,14 @@ def resolve_closure(tx, person, roots, *, fixed_grants=None):
             current = tx.get('sources', parent['id'])
             if not current or current['revision'] != parent['revision']:
                 raise Denied('STALE_LINEAGE')
-            visit(parent['id'], depth + 1)
+            height = max(height, 1 + visit(parent['id']))
+        if height > LIMITS['depth']:
+            raise Denied('LINEAGE_DEPTH_LIMIT', 413)
         visiting.remove(source_id)
+        heights[source_id] = height
+        return height
     for root in sorted(set(roots)):
-        visit(root, 0)
+        visit(root)
     return sources, grants, sorted(edges)
 
 
@@ -174,7 +184,7 @@ def build_context(tx, session, request):
         selected = [sid for _, sid in sorted(ranked, reverse=True)[:8]]
     if request.get('image_source_id'):
         selected.append(request['image_source_id'])
-    sources, grants, edges = resolve_closure(tx, session['person'], selected)
+    sources, grants, edges = resolve_closure(tx, session['person'], selected, new_release=True)
     vector = make_vector(tx, session, job, sources, grants, edges)
     excerpts = []
     for sid in sorted(sources):

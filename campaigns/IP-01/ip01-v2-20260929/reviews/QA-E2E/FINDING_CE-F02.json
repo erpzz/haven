@@ -1,0 +1,24 @@
+{
+  "finding": "CE-F02",
+  "status": "CONFIRMED_CANDIDATE_DEFECT",
+  "cases": [
+    {
+      "variant": "refresh",
+      "identity_after_delivery": "Person B",
+      "private_marker_rendered_after_B_switch": true,
+      "response_was_200_before_delay": true,
+      "status": "REPRODUCED"
+    },
+    {
+      "variant": "consume",
+      "identity_after_delivery": "Person B",
+      "private_marker_rendered_after_B_switch": true,
+      "response_was_200_before_delay": true,
+      "status": "REPRODUCED"
+    }
+  ],
+  "scope": "Actual Chromium, same browser context A-to-B switch, separate refresh and committed consume delayed-response scenarios. Pinned f2ac candidate copy. Synthetic marker only.",
+  "private_evidence": "<evaluator>/qa_e2e/session_race_runs/20260929T052624.308977Z/receipt.json",
+  "source_sha256": "5930eb6331a2dec25d0a69d2ad1ff142666cf85667a9793b311f409ff0a33574",
+  "failure": null
+}

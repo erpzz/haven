@@ -1,0 +1,52 @@
+{
+  "assignment": 11,
+  "status": "PREPARATION_ONLY",
+  "observed_at": "2026-09-29T05:28:09.855499+00:00",
+  "direct_checks": [
+    {
+      "case": 1,
+      "actual_durable_request_fields_match": true
+    },
+    {
+      "case": 2,
+      "actual_durable_request_fields_match": true
+    },
+    {
+      "case": 3,
+      "actual_durable_request_fields_match": true,
+      "actual_APP_media_bytes_match_viewed_fixture": true
+    },
+    {
+      "case": 4,
+      "actual_durable_request_fields_match": true,
+      "actual_APP_media_bytes_match_viewed_fixture": true
+    }
+  ],
+  "root_owner_still_alive": true,
+  "historical_workload_identity_survivors": [],
+  "model_gate_enabled": false,
+  "current_ledger_sha256": "f4ef94316264bf41977988b0be1c1df4a2348af524fb146f66fc219751149759",
+  "code_early_sha256": "28e4876f764a6efd30b339316afb36505d8b3729ead38456563c77fea232d1a0",
+  "current_source_pins": {
+    "labs/ip01/haven/supervisor.py": "9713cac68f27ca627780334e27f2637fc258711da2e8072cd70b6f2cd1ff1437",
+    "labs/ip01/haven/worker.py": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d",
+    "labs/ip01/haven/model_adapter.py": "0e29edc6f826b04ba8c1bac3a28d55c5a2844f56a20349bb5f321d95577fc0a2",
+    "labs/ip01/haven/app.py": "dfbcab013af21ee086fce8c4d659476d9df47fe6000a6b1f0c34ac6904df1e56",
+    "labs/ip01/haven/authority.py": "9c9547375e7cb96b6f159635d0eb24b93ada54b27dc17ba427fccd86836ad3ca",
+    "labs/ip01/haven/store.py": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+    "labs/ip01/haven/contracts.py": "95a7721f42fc76a38fa457b950d5c1fface81beff0f766e030afd142fa856dd5"
+  },
+  "launcher_sha256": "06d5b4db081ad196098ba2e192ba53ebc84413692523e4484a315e9c99d38b43",
+  "model_calls": 0,
+  "faults_executed": 0,
+  "final_suite_starts": 0,
+  "root_app_stopped": false,
+  "harness_tests": {
+    "tests": 4,
+    "passed": 4,
+    "scope": "synthetic evaluator oracle records only"
+  },
+  "negative_execute_test": "exit1 expected ClosedGate: root control/hash/case required",
+  "private_runtime_copied": false,
+  "evaluator_owned_workload_or_control_processes_started": 0
+}

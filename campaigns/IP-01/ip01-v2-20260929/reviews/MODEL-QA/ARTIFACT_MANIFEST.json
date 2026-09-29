@@ -1,0 +1,14 @@
+{
+  "files": {
+    "<evaluator>/model_qa/existing-inspection.json": "f0e4cbab6f3b4dd088e2791683ec68056767796cc7d5d277b78b17d08b274d59",
+    "<evaluator>/model_qa/FINAL_PREPARATION_CHECKS.json": "9938fc90799f24510401a54b23edf8c2ce3ea87fac6722a89d12e00fee4f7a6e",
+    "<evaluator>/model_qa/inspect_existing.py": "dcd73821356b6738185db4290fb5fd2ea2b60b942a19987cc10bc9c1e940095c",
+    "<evaluator>/model_qa/root-control.example.json": "70c97e0d5b7be589bd4ec377d82dd94770629631ad6dbde1be5c102c9fd0cbe9",
+    "<evaluator>/model_qa/runner.py": "de439098ad13c96fc3e2577add4dd4fca19521868c4dcd53c29c22c675ac1100",
+    "<evaluator>/model_qa/test_runner.py": "40500d2e01a81187bc08f4e2d20d20410da33b44b4f7690b60e16accb9a522e6",
+    "<campaign>/campaigns/IP-01/ip01-v2-20260929/reviews/MODEL-QA/EXISTING_READINESS_REVIEW.json": "f0e4cbab6f3b4dd088e2791683ec68056767796cc7d5d277b78b17d08b274d59",
+    "<campaign>/campaigns/IP-01/ip01-v2-20260929/reviews/MODEL-QA/FINAL_PREPARATION_CHECKS.json": "9938fc90799f24510401a54b23edf8c2ce3ea87fac6722a89d12e00fee4f7a6e",
+    "<campaign>/campaigns/IP-01/ip01-v2-20260929/reviews/MODEL-QA/NATIVE_HANDBACK.md": "91af989d19dfb36945c5b082933900001f4cb1e9eb446c1ff0fdf5af6177b3d9",
+    "<campaign>/campaigns/IP-01/ip01-v2-20260929/reviews/MODEL-QA/PREPARATION_READY.md": "98d734dc5d32ac77f9e59558925d363448600c890648e549ba7d3102cf11957c"
+  }
+}

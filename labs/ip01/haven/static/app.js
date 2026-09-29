@@ -2,29 +2,59 @@
 const $ = id => document.getElementById(id);
 let session, notes = [], jobs = [], drafts = [], editing = null, sharing = null;
 let displayed = new Map(), requestKeys = new Map(), shareAttempt = null; // memory only; never persisted or replayed
+let sessionGeneration = 0, switching = false, loginPending = false;
+class StaleSession extends Error {}
+function guard(generation) { if(generation !== sessionGeneration) throw new StaleSession(); }
+function beginSwitch() {
+  sessionGeneration++; switching=true;
+  notes=[]; jobs=[]; drafts=[]; editing=null; sharing=null; shareAttempt=null;
+  displayed.clear(); requestKeys.clear();
+  for(const id of ['note-list','draft-list','job-list','receipt-view']) $(id).replaceChildren();
+  for(const id of ['note-title','note-text','draft-text','question','image-file']) $(id).value='';
+  for(const id of ['note-dialog','share-dialog','receipts-dialog']) $(id).close();
+  for(const form of document.querySelectorAll('form')) {form.reset();for(const control of form.querySelectorAll('button'))control.disabled=false;}
+  $('share-title').textContent=''; $('note-count').textContent='0';
+  $('answer-image').replaceChildren(new Option('No image selected',''));
+  $('answer-view').replaceChildren(el('p','Choose a demo person to continue.','empty'));
+  $('identity').textContent='Choose a demo person'; $('notice').hidden=true;
+  return sessionGeneration;
+}
 const key = () => crypto.randomUUID();
 const el = (tag, text, cls) => {const n = document.createElement(tag); if(text !== undefined) n.textContent = text; if(cls) n.className = cls; return n;};
 const button = (text, action, cls='quiet') => {const n=el('button',text,cls); n.type='button'; n.addEventListener('click',()=>run(action)); return n;};
 function notice(message, success=false) { $('notice').textContent=message; $('notice').className=success?'success':''; $('notice').hidden=false; }
 async function api(path, method='GET', body, operationKey) {
+  const generation=sessionGeneration;
   const headers = {};
   if(method !== 'GET') headers['X-CSRF-Token']=session?.csrf_token || document.querySelector('meta[name="csrf-token"]').content;
   if(body !== undefined) headers['Content-Type']='application/json';
   let response;
   try { response=await fetch(path,{method,headers,body:body===undefined?undefined:JSON.stringify(body),cache:'no-store'}); }
-  catch(e) { throw Error('Reply not received. The operation may have committed. Refresh its status; do not automatically replay.'); }
+  catch(e) { guard(generation); throw Error('Reply not received. The operation may have committed. Refresh its status; do not automatically replay.'); }
+  guard(generation);
   const data=await response.json();
+  guard(generation);
   if(!response.ok) throw Error(data.message || data.code || 'The operation could not be completed.');
   return data;
 }
-async function run(action){try{await action();}catch(e){notice(e.message);}}
-function form(id, action){$(id).addEventListener('submit',e=>{e.preventDefault(); const submit=e.submitter; run(async()=>{if(submit)submit.disabled=true;try{await action();}finally{if(submit)submit.disabled=false;}});});}
+async function run(action){const generation=sessionGeneration;try{await action();}catch(e){if(!(e instanceof StaleSession)&&generation===sessionGeneration)notice(e.message);}}
+function form(id, action){$(id).addEventListener('submit',e=>{e.preventDefault(); const submit=e.submitter; run(async()=>{const generation=sessionGeneration;if(submit)submit.disabled=true;try{await action();}finally{if(submit&&generation===sessionGeneration)submit.disabled=false;}});});}
 function operation(formName, value){const d=JSON.stringify(value);const old=requestKeys.get(formName);if(old?.digest===d)return old.key;const k=key();requestKeys.set(formName,{digest:d,key:k});return k;}
 function clearOperation(name){requestKeys.delete(name);}
-async function refresh(){if(!session?.person)return; const [n,d,j]=await Promise.all([api('/api/notes'),api('/api/drafts'),api('/api/jobs')]);notes=n.notes;drafts=d.drafts;jobs=j.jobs;renderNotes();renderDrafts();renderJobs();}
+async function refresh(){if(switching||!session?.person)return; const generation=sessionGeneration; const [n,d,j]=await Promise.all([api('/api/notes'),api('/api/drafts'),api('/api/jobs')]);guard(generation);notes=n.notes;drafts=d.drafts;jobs=j.jobs;renderNotes();renderDrafts();renderJobs();}
 function showSession(){ $('identity').textContent=session.person?'Person '+session.person:'Choose a demo person';$('review-banner').hidden=!session.review_only;const option=$('route').querySelector('[value="model"]');option.disabled=!session.model_available;option.textContent=session.model_available?'Local model':'Local model · unavailable';if(!session.person)$('login-dialog').showModal();}
-document.querySelectorAll('[data-person]').forEach(n=>n.addEventListener('click',()=>run(async()=>{session=await api('/api/session','POST',{person:n.dataset.person});displayed.clear();requestKeys.clear();$('answer-view').replaceChildren(el('p','Ask a question about your current notes.','empty'));$('login-dialog').close();showSession();await refresh();notice('Opened Person '+session.person+'’s synthetic workspace.',true);})));
-$('switch-person').addEventListener('click',()=>$('login-dialog').showModal());
+document.querySelectorAll('[data-person]').forEach(n=>n.addEventListener('click',()=>{
+  if(loginPending)return;
+  const generation=beginSwitch(); loginPending=true;
+  document.querySelectorAll('[data-person]').forEach(b=>b.disabled=true);
+  run(async()=>{try {
+    const next=await api('/api/session','POST',{person:n.dataset.person}); guard(generation);
+    session=next; switching=false; $('login-dialog').close(); showSession(); await refresh();
+    guard(generation); notice('Opened Person '+session.person+'’s synthetic workspace.',true);
+  } finally {loginPending=false;document.querySelectorAll('[data-person]').forEach(b=>b.disabled=false);}});
+}));
+$('switch-person').addEventListener('click',()=>{if(loginPending)return;beginSwitch();$('login-dialog').showModal();});
+
 document.querySelectorAll('[data-close]').forEach(n=>n.addEventListener('click',()=>$(n.dataset.close).close()));
 $('new-note').addEventListener('click',()=>{editing=null;$('note-title').value='';$('note-text').value='';$('note-dialog-title').textContent='Keep a useful detail.';$('note-dialog').showModal();});
 form('note-form',async()=>{const data={title:$('note-title').value,text:$('note-text').value};if(editing) await api('/api/notes/'+editing.id,'PATCH',{...data,expected_revision:editing.revision});else await api('/api/notes','POST',{...data,idempotency_key:operation('note',data)});clearOperation('note');$('note-dialog').close();await refresh();notice('Note saved. Future answers check this current revision.',true);});
@@ -36,7 +66,7 @@ async function consume(job){const o=job.output;const data={release_id:o.release_
 async function showReceipts(id){const r=await api('/api/outputs/'+id+'/receipts');const dl=el('dl');const rows=[['Release',r.ReleaseAuthorizationReceipt.decision],['Consumption',r.ConsumptionPermitReceipt?'Consumed once':'Not consumed'],['Reported delivery',r.DeliveryObservation.map(o=>o.kind).join(' → ')||'No observation; delivery unknown'],['Current eligibility',r.PermitEligibilityDecision.decision],['Current reason',r.PermitEligibilityDecision.reason||'No changed precondition detected']];for(const [k,v] of rows)dl.append(el('dt',k),el('dd',v.replaceAll('_',' ').toLowerCase()));$('receipt-view').replaceChildren(dl);$('receipts-dialog').showModal();}
 form('draft-form',async()=>{const data={kind:$('draft-kind').value,text:$('draft-text').value};await api('/api/drafts','POST',{...data,idempotency_key:operation('draft',data)});clearOperation('draft');$('draft-text').value='';await refresh();notice('Saved locally. Nothing is sent or scheduled.',true);});
 function renderDrafts(){const list=$('draft-list');list.replaceChildren();for(const draft of drafts){const row=el('div',undefined,'draft-row'+(draft.done?' done':''));row.append(el('span',draft.kind,'tag'),el('p',draft.text));if(draft.kind==='task')row.append(button(draft.done?'Reopen':'Complete',async()=>{await api('/api/drafts/'+draft.id,'PATCH',{expected_revision:draft.revision,text:draft.text,done:!draft.done});await refresh();}));row.append(button('Edit',()=>{const text=window.prompt('Edit this local '+draft.kind,draft.text);if(text!==null)return api('/api/drafts/'+draft.id,'PATCH',{expected_revision:draft.revision,text,done:draft.done}).then(refresh);}));list.append(row);}}
-$('image-file').addEventListener('change',()=>run(async()=>{const file=$('image-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw Error('Choose a PNG or JPEG smaller than 2 MiB.');const response=await fetch('/api/images',{method:'POST',headers:{'Content-Type':file.type,'X-CSRF-Token':session.csrf_token},body:file});const data=await response.json();if(!response.ok)throw Error(data.message||data.code);await refresh();$('answer-image').value=data.source_id;notice('Image imported and selected. Deterministic excerpts do not interpret pixels.',true);$('image-file').value='';}));
+$('image-file').addEventListener('change',()=>run(async()=>{const generation=sessionGeneration;const file=$('image-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw Error('Choose a PNG or JPEG smaller than 2 MiB.');const response=await fetch('/api/images',{method:'POST',headers:{'Content-Type':file.type,'X-CSRF-Token':session.csrf_token},body:file});guard(generation);const data=await response.json();guard(generation);if(!response.ok)throw Error(data.message||data.code);await refresh();guard(generation);$('answer-image').value=data.source_id;notice('Image imported and selected. Deterministic excerpts do not interpret pixels.',true);$('image-file').value='';}));
 $('refresh').addEventListener('click',()=>run(refresh));
 run(async()=>{session=await api('/api/session');showSession();await refresh();});
-setInterval(()=>{if(session?.person&&jobs.some(j=>j.disposition==='QUEUED'))run(refresh);},1000);
+setInterval(()=>{if(!switching&&session?.person&&jobs.some(j=>j.disposition==='QUEUED'))run(refresh);},1000);

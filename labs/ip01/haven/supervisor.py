@@ -90,6 +90,34 @@ def write_frame(stream, value, limit=MAX_FRAME):
     stream.flush()
 
 
+def validated_usage(usage, route):
+    """Missing counters are unknown, never synthesized as zero."""
+    if usage is None:
+        return None
+    if not isinstance(usage, dict):
+        raise ValueError("usage object required")
+    if route == "deterministic":
+        if usage != {"model_calls": 0, "certainty": "OBSERVED"}:
+            raise ValueError("deterministic usage differs")
+        return dict(usage)
+    allowed = {"model_calls", "certainty", "prompt_tokens", "output_tokens", "duration_ns"}
+    if set(usage) - allowed or type(usage.get("model_calls")) is not int or usage["model_calls"] != 1:
+        raise ValueError("model usage differs")
+    if usage.get("certainty") != "BACKEND_REPORTED":
+        raise ValueError("model usage certainty differs")
+    for key, bound in (("prompt_tokens", 4096), ("output_tokens", 768), ("duration_ns", 120_000_000_000)):
+        value = usage.get(key)
+        if value is not None and (type(value) is not int or not 0 <= value <= bound):
+            raise ValueError("model usage bound")
+    return {key: usage.get(key) for key in sorted(allowed)}
+
+
+class DispatchDenied(Exception):
+    def __init__(self, reason, uncertain=True):
+        super().__init__(reason)
+        self.reason, self.uncertain = reason, uncertain
+
+
 def private_environment(runtime_dir):
     """Construct from allowlist, never filter a copy of ambient credentials."""
     root = Path(runtime_dir).resolve()
@@ -351,9 +379,11 @@ class OwnedProcess:
 
 
 class Supervisor:
-    def __init__(self, *, runtime_dir, admit_attempt, on_event, on_result):
+    def __init__(self, *, runtime_dir, admit_attempt, on_event, on_result, authorize_egress=None):
         self.runtime_dir = Path(runtime_dir).resolve()
         self.admit_attempt, self.on_event, self.on_result = admit_attempt, on_event, on_result
+        self.authorize_egress = authorize_egress
+        self.pending_events = {}
         self.instance = str(uuid.uuid4())
         self.jobs = {}
         self.queue = asyncio.Queue(maxsize=32)
@@ -374,6 +404,12 @@ class Supervisor:
         # holds capacity; startup does not acquire termination rights by PID.
         for path in directory.glob("*.jsonl"):
             records = [strict_json(line) for line in path.read_bytes().splitlines()]
+            delivered = {r.get("event_id") for r in records if r.get("kind") == "TERMINAL_DELIVERED"}
+            for record in records:
+                if record.get("kind") == "ATTEMPT_TERMINAL" and record["event_id"] not in delivered:
+                    # Strip journal wrapper, preserving the exact original callback payload.
+                    self.pending_events[record["event_id"]] = {k: v for k, v in record.items()
+                                                               if k != "supervisor_instance"}
             starts = [r for r in records if r.get("kind") == "SUPERVISOR_STARTED"]
             ended = any(r.get("kind") == "SUPERVISOR_CLOSED" and r.get("confirmed") for r in records)
             self.seen_prior.update(r["job_id"] for r in records if r.get("job_id"))
@@ -388,6 +424,7 @@ class Supervisor:
                       "process_birth": process_birth(K.GetCurrentProcess()), "boot_id": boot_id()},
                       "quarantined": self.quarantined})
         self.task = asyncio.create_task(self._loop(), name="ip01-runtime")
+        await self.redeliver_pending()
 
     def _append(self, record):
         self.journal.write(canonical({"observed_at": utc_now(), "supervisor_instance": self.instance,
@@ -398,11 +435,134 @@ class Supervisor:
         event = {**state["identity"], "event_id": str(uuid.uuid4()), "kind": kind,
                  "observed_at": utc_now(), "evidence": evidence or {}}
         self._append(event)
+        if kind == "ATTEMPT_TERMINAL":
+            self.pending_events[event["event_id"]] = event
+        await self._deliver_event(event)
+
+    async def _deliver_event(self, event):
         try:
-            await asyncio.wait_for(self.on_event(event), 2)
+            await asyncio.wait_for(self.on_event(strict_json(canonical(event))), 2)
+            if event["kind"] == "ATTEMPT_TERMINAL":
+                self._append({"kind": "TERMINAL_DELIVERED", "event_id": event["event_id"]})
+                self.pending_events.pop(event["event_id"], None)
         except Exception as exc:
-            self._append({"kind": "EVENT_CALLBACK_UNKNOWN", "job_id": state["job"]["job_id"],
+            self._append({"kind": "EVENT_CALLBACK_UNKNOWN", "job_id": event["job_id"],
+                          "event_id": event["event_id"],
                           "exception_type": type(exc).__name__})
+
+    async def redeliver_pending(self, limit=32):
+        """Bounded metadata-only retry; never admission, computation or on_result."""
+        for event in list(self.pending_events.values())[:min(32, max(0, limit))]:
+            await self._deliver_event(event)
+        return len(self.pending_events)
+
+    async def _terminal(self, state):
+        if state.get("terminal_emitted"):
+            return
+        state["terminal_emitted"] = True
+        if state["disposition"] == "QUEUED":
+            state["disposition"] = "INCONCLUSIVE"
+        lease = getattr(state.get("owned_job"), "model_lease", None)
+        evidence = {"job_disposition": state["disposition"], "reason": state.get("reason", "ATTEMPT_COMPLETE"),
+                    "result_disposition": state.get("result_disposition", "NOT_PRODUCED"),
+                    "context_digest": state.get("context_digest"), "claim_id": lease.claim_id if lease else None,
+                    "admission_decision": state.get("admission_decision", "NOT_REQUESTED"),
+                    "egress_decision_id": state.get("egress_decision_id"),
+                    "cleanup_confirmed": state["cleanup"]["confirmed"] if state["cleanup"] else None,
+                    "usage": state.get("usage")}
+        if lease:
+            try:
+                lease.result_disposition(**evidence)
+            except Exception as exc:
+                # A failed resource/result audit must not strand the APP job.
+                # Pending ledger evidence never becomes an implicit success.
+                self._append({"kind": "RESULT_AUDIT_UNKNOWN", "job_id": state["job"]["job_id"],
+                              "claim_id": lease.claim_id, "exception_type": type(exc).__name__})
+                evidence["reason"] = "RESULT_AUDIT_UNKNOWN"
+                if evidence["job_disposition"] != "CANCELLED":
+                    evidence["job_disposition"] = state["disposition"] = "INCONCLUSIVE"
+        await self._event(state, "ATTEMPT_TERMINAL", evidence)
+
+    def _dispatch_guard(self, state, identity, valid_until):
+        if (state["cancel"].is_set() or self.closed or self.quarantined
+                or state["identity"] != identity or state.get("dispatch_started")
+                or time.monotonic() >= state["deadline"] or time.time() >= valid_until):
+            raise DispatchDenied("DISPATCH_GUARD_EXPIRED")
+
+    def _write_sealed(self, state, stream, frame, identity, valid_until):
+        # Runs in the actual writer thread, after any executor queue delay.
+        self._dispatch_guard(state, identity, valid_until)
+        state["dispatch_started"] = True
+        state["dispatch_at"] = time.time()
+        state["dispatch_bytes"] = 0
+        position = 0
+        while position < len(frame):
+            written = stream.write(frame[position:])
+            if not written:
+                raise OSError("short IPC write")
+            position += written
+            state["dispatch_bytes"] = position
+        stream.flush()
+
+    async def _prepare_dispatch(self, state, request, admitted):
+        # Freeze the influencing bytes before the fresh authority await. Only a
+        # small supervisor-authored decision envelope is attached afterwards.
+        sealed = canonical(request)
+        vector_hash = digest(admitted["authority_vector"])
+        if len(sealed) > MAX_FRAME - MAX_METADATA:
+            raise ValueError("IPC size limit")
+        identity = dict(request["identity"])
+        valid_until = datetime.fromisoformat(state["job"]["deadline_utc"].replace("Z", "+00:00")).timestamp()
+        if state["job"]["route"] != "model" or self.authorize_egress is None:
+            if state["job"]["route"] == "model":
+                raise DispatchDenied("EGRESS_CALLBACK_MISSING")
+            raw = sealed
+        else:
+            if time.monotonic() >= state["deadline"]:
+                raise DispatchDenied("EGRESS_DEADLINE")
+            try:
+                reply = await asyncio.wait_for(self.authorize_egress(state["job"]["job_id"],
+                    state["job"]["attempt_id"], state["job"]["lease_fence"], request["context_digest"]),
+                    max(.001, min(2, state["deadline"] - time.monotonic())))
+            except Exception:
+                raise DispatchDenied("EGRESS_UNKNOWN")
+            keys = {"decision", "reason", "job_id", "attempt_id", "lease_fence", "context_digest",
+                    "cancel_epoch", "decision_id", "checked_at", "valid_until", "authority_vector_digest", "model_gate_sha256"}
+            if not isinstance(reply, dict) or set(reply) != keys:
+                raise DispatchDenied("EGRESS_MALFORMED")
+            if (any(reply[k] != request["job"][k] for k in ("job_id", "attempt_id", "lease_fence"))
+                    or type(reply["lease_fence"]) is not int
+                    or reply["context_digest"] != request["context_digest"]
+                    or not isinstance(reply["reason"], str) or not 0 < len(reply["reason"]) <= 160
+                    or (reply["decision_id"] is not None and (not isinstance(reply["decision_id"], str)
+                        or not 0 < len(reply["decision_id"]) <= 256))):
+                raise DispatchDenied("EGRESS_BINDING_INVALID")
+            state["egress_decision_id"] = reply.get("decision_id")
+            if reply["decision"] != "AUTHORIZED":
+                raise DispatchDenied("EGRESS_DENIED" if reply["decision"] == "DENIED" else "EGRESS_UNKNOWN",
+                                     uncertain=reply["decision"] != "DENIED")
+            expected = {"job_id": state["job"]["job_id"], "attempt_id": state["job"]["attempt_id"],
+                        "lease_fence": state["job"]["lease_fence"], "cancel_epoch": state["job"]["cancel_epoch"],
+                        "context_digest": request["context_digest"], "authority_vector_digest": vector_hash,
+                        "model_gate_sha256": admitted.get("limits", {}).get("model_gate_sha256")}
+            if (any(reply[k] != v for k, v in expected.items()) or reply["reason"] != "OK"
+                    or type(reply["cancel_epoch"]) is not int
+                    or not isinstance(reply["decision_id"], str) or not 1 <= len(reply["decision_id"]) <= 256
+                    or any(type(reply[k]) not in (int, float) or not math.isfinite(reply[k]) for k in ("checked_at", "valid_until"))
+                    or not reply["checked_at"] <= time.time() < reply["valid_until"] <= reply["checked_at"] + 1
+                    or (state["job"]["route"] == "model" and not reply["model_gate_sha256"])):
+                raise DispatchDenied("EGRESS_BINDING_INVALID")
+            valid_until = min(valid_until, reply["valid_until"])
+            if canonical(request) != sealed or digest(admitted["authority_vector"]) != vector_hash:
+                raise DispatchDenied("SEALED_CONTEXT_CHANGED")
+            handoff = {"decision_id": reply["decision_id"], "context_digest": request["context_digest"],
+                       "job_id": expected["job_id"], "attempt_id": expected["attempt_id"],
+                       "lease_fence": expected["lease_fence"], "cancel_epoch": expected["cancel_epoch"],
+                       "checked_at": reply["checked_at"], "valid_until": valid_until}
+            raw = sealed[:-1] + b',"handoff":' + canonical(handoff) + b'}'
+        frame = struct.pack("!I", len(raw)) + raw
+        self._dispatch_guard(state, identity, valid_until)
+        return frame, identity, valid_until
 
     async def submit(self, job):
         if not self.task or self.closed:
@@ -468,6 +628,7 @@ class Supervisor:
                 "disposition": state["disposition"], "identity": dict(state["identity"]),
                 "cleanup": state["cleanup"], "observation": observation,
                 "capacity_held": state["owned_job"] is not None and state["compute_state"] != "STOP_CONFIRMED",
+                "terminal_delivery_pending": any(e["job_id"] == job_id for e in self.pending_events.values()),
                 "runtime_quarantined": self.quarantined}
 
     async def _loop(self):
@@ -479,16 +640,21 @@ class Supervisor:
                 state["disposition"] = "INCONCLUSIVE"
                 await self._event(state, "RUNTIME_ERROR", {"exception_type": type(exc).__name__})
             finally:
-                self.queue.task_done()
+                try:
+                    await self._terminal(state)
+                finally:
+                    self.queue.task_done()
 
     async def _execute(self, state):
         job = state["job"]
         if state["cancel"].is_set() or self.closed:
             state["disposition"] = "CANCELLED"
+            state["reason"] = "CANCELLED_BEFORE_ADMISSION"
             await self._event(state, "NEVER_ADMITTED")
             return
         if self.quarantined or time.monotonic() >= state["deadline"]:
             state["disposition"] = "INCONCLUSIVE"
+            state["reason"] = "ADMISSION_DEADLINE_OR_QUARANTINE"
             await self._event(state, "ADMISSION_BLOCKED")
             return
         try:
@@ -496,21 +662,26 @@ class Supervisor:
                                               job["lease_fence"]), min(5, state["deadline"] - time.monotonic()))
         except Exception:
             admitted = {"decision": "UNKNOWN"}
+        if not isinstance(admitted, dict):
+            admitted = {"decision": "UNKNOWN"}
+        state["admission_decision"] = admitted.get("decision") if admitted.get("decision") in ("ADMITTED", "DENIED") else "UNKNOWN"
         if admitted.get("decision") != "ADMITTED":
             state["disposition"] = "FAILED" if admitted.get("decision") == "DENIED" else "INCONCLUSIVE"
+            state["reason"] = "ADMISSION_" + state["admission_decision"]
             await self._event(state, "ADMISSION_DENIED", {"decision": admitted.get("decision", "UNKNOWN")})
             return
         if state["cancel"].is_set() or self.closed or time.monotonic() >= state["deadline"]:
             state["disposition"] = "CANCELLED" if state["cancel"].is_set() else "INCONCLUSIVE"
             await self._event(state, "CANCELLED_BEFORE_SPAWN")
             return
+        admitted = strict_json(canonical(admitted))
         context = admitted["context"]
         vector = admitted["authority_vector"]
         if len(canonical(vector)) > MAX_METADATA:
             raise ValueError("authority metadata limit")
         if admitted.get("job") != job:
             raise ValueError("admission job differs")
-        context_digest(context)
+        state["context_digest"] = context_digest(context)
         owned = OwnedJob()
         state["owned_job"] = owned
         io_tasks = []
@@ -531,12 +702,15 @@ class Supervisor:
             request = {"identity": dict(state["identity"]), "job": job, "context": context,
                        "context_digest": context_digest(context), "model_identity": admitted.get("model_identity"),
                        "backend": backend}
-            writer = asyncio.create_task(asyncio.to_thread(write_frame, proc.stdin, request))
+            frame, identity, valid_until = await self._prepare_dispatch(state, request, admitted)
+            # No await/logging between approved guard and scheduling the writer.
+            writer = asyncio.create_task(asyncio.to_thread(self._write_sealed, state, proc.stdin, frame, identity, valid_until))
             reader = asyncio.create_task(asyncio.to_thread(read_frame, proc.stdout, MAX_OUTPUT + MAX_METADATA))
             io_tasks = [writer, reader]
             while not reader.done():
                 if state["cancel"].is_set() or self.closed or time.monotonic() >= state["deadline"]:
                     state["disposition"] = "CANCELLED" if state["cancel"].is_set() else "INCONCLUSIVE"
+                    state["reason"] = "CANCELLED" if state["cancel"].is_set() else "COMPUTE_DEADLINE"
                     break
                 if writer.done() and writer.exception():
                     raise writer.exception()
@@ -548,8 +722,15 @@ class Supervisor:
                 state["expected_model"] = admitted.get("model_identity")
         except asyncio.CancelledError:
             state["disposition"] = "CANCELLED"
+        except DispatchDenied as exc:
+            state["disposition"] = "INCONCLUSIVE" if exc.uncertain else "FAILED"
+            state["reason"] = exc.reason
+        except ValueError as exc:
+            state["disposition"] = "INCONCLUSIVE"
+            state["reason"] = "MALFORMED_CANDIDATE_OR_CONTEXT"
+            await self._event(state, "COMPUTE_FAILED", {"exception_type": type(exc).__name__})
         except Exception as exc:
-            state["disposition"] = "FAILED"
+            state["disposition"] = "INCONCLUSIVE" if time.monotonic() >= state["deadline"] else "FAILED"
             await self._event(state, "COMPUTE_FAILED", {"exception_type": type(exc).__name__})
         finally:
             if state["cancel"].is_set() or self.closed:
@@ -564,7 +745,8 @@ class Supervisor:
             state["compute_state"] = "STOP_CONFIRMED" if cleanup["confirmed"] else "UNKNOWN"
             if not cleanup["confirmed"]:
                 self.quarantined = True
-                state["disposition"] = "INCONCLUSIVE"
+                if not state["cancel"].is_set():
+                    state["disposition"] = "INCONCLUSIVE"
             await self._event(state, state["compute_state"], cleanup)
             if cleanup["confirmed"]:
                 await asyncio.gather(*io_tasks, return_exceptions=True)
@@ -574,21 +756,27 @@ class Supervisor:
                     proc.close()
                 owned.close()
             if getattr(owned, "model_lease", None):
-                owned.model_lease.finish(confirmed=cleanup["confirmed"], outcome=state["disposition"])
-        if state.get("candidate"):
+                owned.model_lease.finish(confirmed=cleanup["confirmed"],
+                    outcome="PENDING_VALIDATION" if "candidate" in state else state["disposition"])
+            await self._event(state, "DISPATCH_OBSERVED", {"first_write_attempted": state.get("dispatch_started", False),
+                "bytes_written": state.get("dispatch_bytes", 0), "first_write_at": state.get("dispatch_at"),
+                "certainty": "OBSERVED_WRITES" if state.get("dispatch_bytes") else "NO_SUCCESSFUL_WRITE_OBSERVED"})
+        if "candidate" in state:
             await self._accept_candidate(state, state.pop("candidate"))
 
     async def _accept_candidate(self, state, candidate):
         """Internal test seam; all identity/hash/citation checks precede callback."""
+        if state.get("terminal_emitted") or state["result_seen"]:
+            return {"disposition": "FENCED" if isinstance(candidate, dict) and candidate.get("outcome") == "COMPLETED" else "REJECTED"}
         required = {"identity", "request_digest", "context_digest", "output_digest", "payload",
                     "source_refs", "model_identity", "outcome", "usage", "certainty"}
         if (not isinstance(candidate, dict) or set(candidate) != required
                 or not isinstance(candidate.get("payload"), dict)
-                or not isinstance(candidate.get("usage"), dict)
                 or candidate.get("outcome") != "COMPLETED" or candidate.get("certainty") != "OBSERVED"):
             await self._event(state, "RESULT_REJECTED_SCHEMA")
             if not state["result_seen"]:
                 state["disposition"] = "INCONCLUSIVE"
+                state["result_disposition"] = "REJECTED"
             return {"disposition": "REJECTED"}
         context = state["expected_context"]
         reject = state["result_seen"] or state["cancel"].is_set() or self.closed or self.quarantined
@@ -605,19 +793,37 @@ class Supervisor:
         if reject:
             await self._event(state, "RESULT_FENCED")
             if not state["result_seen"]:
-                state["disposition"] = "CANCELLED" if state["cancel"].is_set() else "INCONCLUSIVE"
+                state["disposition"] = "CANCELLED" if state["cancel"].is_set() else "FAILED"
+                if not state["cancel"].is_set() and (self.quarantined or time.monotonic() >= state["deadline"]):
+                    state["disposition"] = "INCONCLUSIVE"
+                state["result_disposition"] = "FENCED"
             return {"disposition": "FENCED"}
+        try:
+            usage = validated_usage(candidate["usage"], state["job"]["route"])
+        except ValueError:
+            state["disposition"], state["result_disposition"] = "INCONCLUSIVE", "REJECTED"
+            state["reason"] = "USAGE_INVALID"
+            return {"disposition": "REJECTED"}
+        state["usage"] = usage
         state["result_seen"] = True
         state["disposition"] = "SUCCEEDED"
         result = {**state["identity"], **{k: candidate[k] for k in
                   ("request_digest", "context_digest", "output_digest", "payload", "source_refs", "model_identity",
                    "outcome", "usage", "certainty")}}
+        result["usage"] = usage
         try:
             disposition = await asyncio.wait_for(self.on_result(result), 5)
         except Exception:
             disposition = {"disposition": "UNKNOWN"}
-        await self._event(state, "RESULT_DISPOSITION", {"disposition": disposition.get("disposition", "UNKNOWN")})
-        return disposition
+        value = disposition.get("disposition", "UNKNOWN") if isinstance(disposition, dict) else "UNKNOWN"
+        if value not in ("RELEASE_ADMITTED", "FENCED", "REJECTED"):
+            value = "UNKNOWN"
+        state["result_disposition"] = value
+        state["disposition"] = {"RELEASE_ADMITTED": "SUCCEEDED", "FENCED": "FAILED", "REJECTED": "FAILED", "UNKNOWN": "INCONCLUSIVE"}[value]
+        if state["cancel"].is_set():
+            state["disposition"] = "CANCELLED"
+        await self._event(state, "RESULT_DISPOSITION", {"disposition": value, "usage": usage})
+        return {"disposition": value}
 
     async def close(self, deadline_monotonic):
         self.closed = True
@@ -641,4 +847,5 @@ class Supervisor:
             if self.task is None:
                 self.journal.close()
                 self.journal = None
-        return {"confirmed": confirmed, "runtime_quarantined": self.quarantined}
+        return {"confirmed": confirmed, "runtime_quarantined": self.quarantined,
+                "pending_terminal_events": len(self.pending_events)}

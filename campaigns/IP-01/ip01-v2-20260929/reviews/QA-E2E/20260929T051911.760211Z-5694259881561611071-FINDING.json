@@ -1,0 +1,64 @@
+{
+  "assignment": 9,
+  "case": "test_backing.py::test_changed_backing_fences_sealed_vector[retrieval-source_dependencies]",
+  "phase": "setup",
+  "status": "NEEDS_TRIAGE",
+  "error_type": "FileNotFoundError",
+  "message": "[Errno 2] No such file or directory: '<evaluator>/snapshot\\\\.ip01-runtime\\\\qa-e2e\\\\20260929T051911.760211Z\\\\test_changed_backing_fences_sealed_vector[retrieval-source_dependencies]\\\\continuity\\\\haven-current.pending'",
+  "candidate_hashes": {
+    "labs/ip01/haven/app.py": {
+      "sha256": "dfbcab013af21ee086fce8c4d659476d9df47fe6000a6b1f0c34ac6904df1e56",
+      "bytes": 44205
+    },
+    "labs/ip01/haven/authority.py": {
+      "sha256": "9c9547375e7cb96b6f159635d0eb24b93ada54b27dc17ba427fccd86836ad3ca",
+      "bytes": 21170
+    },
+    "labs/ip01/haven/contracts.py": {
+      "sha256": "95a7721f42fc76a38fa457b950d5c1fface81beff0f766e030afd142fa856dd5",
+      "bytes": 5049
+    },
+    "labs/ip01/haven/model_adapter.py": {
+      "sha256": "0e29edc6f826b04ba8c1bac3a28d55c5a2844f56a20349bb5f321d95577fc0a2",
+      "bytes": 17564
+    },
+    "labs/ip01/haven/store.py": {
+      "sha256": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+      "bytes": 11015
+    },
+    "labs/ip01/haven/supervisor.py": {
+      "sha256": "9713cac68f27ca627780334e27f2637fc258711da2e8072cd70b6f2cd1ff1437",
+      "bytes": 30967
+    },
+    "labs/ip01/haven/worker.py": {
+      "sha256": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d",
+      "bytes": 3400
+    },
+    "labs/ip01/haven/__init__.py": {
+      "sha256": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+      "bytes": 94
+    },
+    "labs/ip01/haven/static/app.css": {
+      "sha256": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+      "bytes": 9373
+    },
+    "labs/ip01/haven/static/app.js": {
+      "sha256": "5930eb6331a2dec25d0a69d2ad1ff142666cf85667a9793b311f409ff0a33574",
+      "bytes": 12490
+    },
+    "labs/ip01/haven/templates/index.html": {
+      "sha256": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+      "bytes": 7955
+    },
+    "labs/ip01/scripts/run.py": {
+      "sha256": "5ee9fb5f92c9977be4754675ebe136bd13bf42758207a98abad907b065a9a656",
+      "bytes": 12081
+    },
+    "labs/ip01/requirements.lock": {
+      "sha256": "bc2b94b9763868b08170dcd18790db46537ad8eac7cbc6f037404a5893f0ba48",
+      "bytes": 3218
+    }
+  },
+  "private_evidence": "<evaluator>/qa_e2e/runs/20260929T051911.760211Z",
+  "note": "Independent test failure; classify harness versus candidate before concluding. No source edits."
+}

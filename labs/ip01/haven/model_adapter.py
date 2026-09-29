@@ -53,6 +53,7 @@ class ModelLease:
         self.claim_id = None
         self.started = time.monotonic()
         self.finished = False
+        self.disposition_written = False
         try:
             gate = strict_json((self.directory / "model-gate.json").read_bytes())
             now = datetime.now(timezone.utc)
@@ -118,10 +119,22 @@ class ModelLease:
         elapsed = time.monotonic() - self.started
         # Unknown usage remains charged at the full admitted ceiling.
         self._append({"kind": "SETTLE", "claim_id": self.claim_id,
+                      "phase": "RESOURCE_SETTLED",
                       "charged_seconds": max(elapsed, 120) if not confirmed else elapsed,
                       "cleanup_confirmed": confirmed, "outcome": outcome})
         self.finished = True
         self.release()
+
+    def result_disposition(self, **evidence):
+        if self.disposition_written:
+            return
+        if not self.finished:
+            raise RuntimeError("resource settlement must precede result disposition")
+        from .supervisor import validated_usage
+        evidence["usage"] = validated_usage(evidence.get("usage"), "model")
+        self._append({"kind": "RESULT_DISPOSITION", **evidence, "claim_id": self.claim_id,
+                      "job": self.record["job"]})
+        self.disposition_written = True
 
     def release(self):
         if not self.lock.closed:
@@ -283,7 +296,18 @@ class ModelAdapter:
                 "runtime_dir": str(self.runtime_dir)}
 
 
-def generate(context, backend, model_identity):
+def check_handoff(handoff, job, context_hash):
+    from datetime import datetime
+    if (not isinstance(handoff, dict) or not isinstance(handoff.get("decision_id"), str)
+            or not handoff["decision_id"] or handoff.get("context_digest") != context_hash
+            or any(handoff.get(k) != job[k] for k in ("job_id", "attempt_id", "lease_fence", "cancel_epoch"))
+            or any(type(handoff.get(k)) not in (int, float) for k in ("checked_at", "valid_until"))
+            or not handoff["checked_at"] <= time.time() < handoff["valid_until"] <= handoff["checked_at"] + 1
+            or time.time() >= datetime.fromisoformat(job["deadline_utc"].replace("Z", "+00:00")).timestamp()):
+        raise RuntimeError("bound worker handoff expired or differs")
+
+
+def generate(context, backend, model_identity, handoff=None):
     """Called only inside an explicitly admitted model worker, never preparation."""
     if not backend or not model_identity or not model_identity.get("inference_authorized"):
         raise RuntimeError("inference gate closed")
@@ -293,6 +317,11 @@ def generate(context, backend, model_identity):
     claim = next((r for r in records if r["kind"] == "CLAIM" and r["claim_id"] == backend["claim_id"]), None)
     if claim is None or any(r["kind"] == "SETTLE" and r["claim_id"] == backend["claim_id"] for r in records):
         raise RuntimeError("no live claimed model lease")
+    if __package__ in (None, ""):
+        from supervisor import context_digest, validated_usage
+    else:
+        from .supervisor import context_digest, validated_usage
+    check_handoff(handoff, claim["job"], context_digest(context))
     sources = [{"id": x["id"], "revision": x["revision"], "text": x.get("text", "")}
                for x in context.get("sources", [])]
     prompt = PROMPT_PREFIX + json.dumps({"question": context["question"], "sources": sources},
@@ -308,15 +337,16 @@ def generate(context, backend, model_identity):
         body["images"] = [context["image_base64"]]
     starts = claims.parent / "call-starts"
     starts.mkdir(exist_ok=True)
+    check_handoff(handoff, claim["job"], context_digest(context))
     # Exclusive marker prevents a repeated worker/request from invoking twice.
     with open(starts / (backend["claim_id"] + ".json"), "xb", buffering=0) as marker:
         marker.write(json.dumps({"claim_id": backend["claim_id"], "kind": "NETWORK_START"}).encode())
         os.fsync(marker.fileno())
+    check_handoff(handoff, claim["job"], context_digest(context))
     response = request_json(backend["url"] + "/api/generate", body, timeout=120)
     if not response.get("done") or not isinstance(response.get("response"), str):
         raise RuntimeError("incomplete generation")
-    if response.get("eval_count", 769) > 768 or response.get("prompt_eval_count", 4097) > 4096:
-        raise ValueError("model token bound")
-    return response["response"], {"model_calls": 1, "prompt_tokens": response.get("prompt_eval_count"),
+    usage = validated_usage({"model_calls": 1, "prompt_tokens": response.get("prompt_eval_count"),
                                   "output_tokens": response.get("eval_count"),
-                                  "duration_ns": response.get("total_duration"), "certainty": "BACKEND_REPORTED"}
+                                  "duration_ns": response.get("total_duration"), "certainty": "BACKEND_REPORTED"}, "model")
+    return response["response"], usage

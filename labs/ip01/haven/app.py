@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 import importlib
 import io
 import json
+import math
 import os
 from pathlib import Path
 import secrets
@@ -47,6 +48,22 @@ def wire_job(job):
     return result
 
 
+def valid_runtime_usage(usage):
+    """Defense in depth on the runtime's validated, attributed usage evidence."""
+    if usage is None:
+        return True
+    bounds = {'model_calls': 1, 'prompt_tokens': 4096, 'output_tokens': 768, 'duration_ns': 120_000_000_000}
+    if not isinstance(usage, dict) or not set(usage) <= set(bounds) | {'certainty'}:
+        return False
+    for name, value in usage.items():
+        if name == 'certainty':
+            if value not in ('OBSERVED', 'BACKEND_REPORTED', 'UNKNOWN'):
+                return False
+        elif value is not None and (type(value) is not int or not 0 <= value <= bounds[name]):
+            return False
+    return True
+
+
 class ApplicationService:
     def __init__(self, store):
         self.store, self.supervisor = store, None
@@ -81,7 +98,7 @@ class ApplicationService:
                     raise Denied('ATTEMPT_ALREADY_ADMITTED')
                 context = tx.get('contexts', job['context_id'])
                 auth.check_current(tx, context['authority_vector'], phase='admission')
-                model_identity, allocation = None, None
+                model_identity, allocation, snapshot, phase = None, None, None, None
                 if job['route'] == 'model':
                     snapshot = self.model_gate()
                     if not snapshot:
@@ -100,6 +117,10 @@ class ApplicationService:
                     'cancel_epoch': job['cancel_epoch'], 'status': 'ADMITTED', 'at': self.store.clock(),
                     'allocation_token': allocation, 'model_identity': model_identity,
                     'job_binding': wire_job(job), 'binding_id': attempt_id,
+                    'context_digest': context['context_digest'],
+                    'authority_vector_digest': digest(context['authority_vector']),
+                    'model_gate_sha256': snapshot['model_gate_sha256'] if snapshot else None,
+                    'model_allocation': phase,
                     'execution_mode': 'IN_PROCESS_DETERMINISTIC' if job['route'] == 'deterministic' else 'OWNED_WORKER'})
                 response = {'decision': 'ADMITTED', 'context': {k: v for k, v in context.items() if k != 'context_digest'},
                             'authority_vector': context['authority_vector'], 'job': wire_job(job),
@@ -114,15 +135,105 @@ class ApplicationService:
                 if allocation:
                     response['limits'].update(model_attempt_token=allocation, model_allocation=phase,
                         model_binding_id=attempt_id, model_gate_sha256=snapshot['model_gate_sha256'])
+                if digest(response['context']) != context['context_digest']:
+                    raise Denied('SEALED_CONTEXT_MISMATCH')
             return response
         except Denied as error:
             return {'decision': 'UNKNOWN' if isinstance(error, UnknownCommit) else 'DENIED', 'reason': error.code}
 
+    async def authorize_egress(self, job_id, attempt_id, fence, context_digest):
+        """Fresh post-readiness ordering point, never a new admission or claim."""
+        empty = {'decision': 'UNKNOWN', 'reason': 'EGRESS_STATE_UNKNOWN', 'job_id': job_id,
+            'attempt_id': attempt_id, 'lease_fence': fence, 'context_digest': context_digest,
+            'cancel_epoch': None, 'decision_id': None, 'checked_at': None, 'valid_until': None,
+            'authority_vector_digest': None, 'model_gate_sha256': None}
+        try:
+            with self.store.transaction(operation='egress:' + str(attempt_id)) as tx:
+                response = dict(empty)
+                vector_ref = None
+                try:
+                    job, attempt = tx.get('jobs', job_id), tx.get('attempts', attempt_id)
+                    if not job or not attempt:
+                        raise ValueError('unresolved admitted attempt')
+                    response['cancel_epoch'] = attempt['cancel_epoch']
+                    if (attempt['status'] != 'ADMITTED' or attempt['job_id'] != job_id or
+                        job['attempt_id'] != attempt_id or attempt['lease_fence'] != fence or
+                        job['lease_fence'] != fence or job['cancel_epoch'] != attempt['cancel_epoch'] or
+                        attempt['job_binding'] != wire_job(job)):
+                        raise Denied('EGRESS_ATTEMPT_BINDING_CONFLICT')
+                    if job['route'] != 'model' or job['disposition'] != 'QUEUED':
+                        raise Denied('EGRESS_JOB_NOT_ELIGIBLE')
+                    context = tx.get('contexts', job['context_id'])
+                    if not context:
+                        raise ValueError('missing sealed context')
+                    actual_digest = digest({k: v for k, v in context.items() if k != 'context_digest'})
+                    if context_digest != actual_digest or context_digest != context['context_digest'] or context_digest != attempt.get('context_digest'):
+                        raise Denied('EGRESS_CONTEXT_MISMATCH')
+                    checked = auth.check_current(tx, context['authority_vector'], phase='egress')
+                    vector_digest = digest(checked['vector'])
+                    if vector_digest != attempt.get('authority_vector_digest'):
+                        raise Denied('EGRESS_VECTOR_MISMATCH')
+                    snapshot = self.model_gate()
+                    if not snapshot:
+                        gate_path = self.store.runtime_dir / 'model' / 'model-gate.json'
+                        # Missing/explicitly closed gate is known denial. Corrupt
+                        # enabled gate state is uncertainty and still sends nothing.
+                        if gate_path.exists():
+                            gate = json.loads(gate_path.read_text(encoding='utf-8'))
+                            if gate.get('enabled') is True:
+                                expires = datetime.fromisoformat(gate['expires_utc'].replace('Z', '+00:00')).timestamp()
+                                if expires > self.store.clock():
+                                    raise ValueError('enabled gate invalid')
+                        raise Denied('MODEL_GATE_CLOSED')
+                    gate = snapshot['gate']
+                    slot = gate.get('slots', {}).get(attempt['allocation_token'])
+                    if (snapshot['model_gate_sha256'] != attempt.get('model_gate_sha256') or
+                        {**gate['identity'], 'inference_authorized': True} != attempt['model_identity'] or
+                        not slot or slot['allocation'] != attempt.get('model_allocation') or
+                        os.environ.get('HAVEN_MODEL_ALLOCATION', 'readiness') != attempt.get('model_allocation')):
+                        raise Denied('EGRESS_GATE_BINDING_CONFLICT')
+                    now = self.store.clock()
+                    session = tx.get('sessions', job['session_id'])
+                    expiry = min([now + 1.0, job['deadline_utc'], session['expires_at'],
+                        datetime.fromisoformat(gate['expires_utc'].replace('Z', '+00:00')).timestamp()] +
+                        [g['expires_at'] for g in checked['grants'].values()])
+                    if expiry <= now:
+                        raise Denied('EGRESS_EXPIRED')
+                    response.update(decision='AUTHORIZED', reason='OK', checked_at=now, valid_until=expiry,
+                        authority_vector_digest=vector_digest, model_gate_sha256=snapshot['model_gate_sha256'])
+                    vector_ref = job['context_id']
+                except Denied as error:
+                    response.update(decision='DENIED', reason=error.code, checked_at=self.store.clock())
+                except (ValueError, KeyError, TypeError, OSError):
+                    response.update(decision='UNKNOWN', reason='EGRESS_STATE_UNKNOWN', checked_at=self.store.clock())
+                decision_id = uid('egress')
+                response['decision_id'] = decision_id
+                tx.put('events', decision_id, {'id': decision_id, 'event_id': decision_id,
+                    'kind': 'EGRESS_DECISION', **response, 'vector_ref': vector_ref,
+                    'event_digest': digest(response), 'at': self.store.clock()})
+            return response
+        except UnknownCommit:
+            return {**empty, 'reason': 'EGRESS_COMMIT_UNKNOWN'}
+        except Exception:
+            return empty
+
     async def on_event(self, event):
         with self.store.transaction(operation='event') as tx:
             event_id = event.get('event_id')
-            if not event_id or len(canonical(event).encode()) > LIMITS['metadata_bytes']:
+            required = {'event_id', 'job_id', 'request_id', 'attempt_id', 'lease_fence', 'cancel_epoch',
+                'worker_instance_id', 'pid', 'process_birth', 'boot_id', 'nonce', 'kind', 'observed_at', 'evidence'}
+            if not required <= set(event) or not event_id or len(canonical(event).encode()) > LIMITS['metadata_bytes']:
                 raise Denied('INVALID_EVENT')
+            identity_valid = all(isinstance(event[k], str) and 0 < len(event[k]) <= 256 for k in
+                ('event_id', 'job_id', 'request_id', 'attempt_id', 'worker_instance_id', 'boot_id', 'nonce', 'kind', 'observed_at'))
+            identity_valid = identity_valid and all(type(event[k]) is int and event[k] >= 1 for k in ('lease_fence', 'cancel_epoch'))
+            pid, birth = event['pid'], event['process_birth']
+            valid_birth = ((type(birth) in (int, float) and math.isfinite(birth) and birth > 0) or
+                           (isinstance(birth, str) and birth.isascii() and birth.isdigit() and 0 < len(birth) <= 32 and int(birth) > 0))
+            identity_valid = identity_valid and ((pid is None and birth is None) or
+                (type(pid) is int and pid > 0 and valid_birth))
+            if not isinstance(event['evidence'], dict):
+                identity_valid = False
             old = tx.get('events', event_id)
             if old:
                 if old['event_digest'] != digest(event):
@@ -131,15 +242,36 @@ class ApplicationService:
                         'job_id': event.get('job_id'), 'event_digest': digest(event), 'at': self.store.clock()})
                 return
             job = tx.get('jobs', event.get('job_id'))
-            matched = bool(job and all(event.get(k) == job[k] for k in ('request_id', 'attempt_id', 'lease_fence', 'cancel_epoch')))
+            matched = bool(identity_valid and job and all(event.get(k) == job[k] for k in ('request_id', 'attempt_id', 'lease_fence', 'cancel_epoch')))
+            attempt = tx.get('attempts', event['attempt_id'])
+            attempt_matched = bool(identity_valid and attempt and all(event[k] == attempt['job_binding'][k]
+                for k in ('job_id', 'request_id', 'attempt_id', 'lease_fence', 'cancel_epoch')))
             execution = {k: event.get(k) for k in ('worker_instance_id', 'pid', 'process_birth', 'boot_id', 'nonce')}
             if matched and job.get('execution_identity'):
                 previous = job['execution_identity']
                 matched = all(previous[k] == execution[k] for k in ('worker_instance_id', 'boot_id', 'nonce'))
                 if previous.get('pid') is not None:
                     matched = matched and previous == execution
-            tx.put('events', event_id, {'id': event_id, **event, 'event_digest': digest(event), 'binding_valid': matched})
-            if not matched:
+            evidence = event['evidence'] if isinstance(event['evidence'], dict) else {}
+            terminal = event['kind'] == 'ATTEMPT_TERMINAL'
+            terminal_keys = {'job_disposition', 'reason', 'result_disposition', 'context_digest', 'claim_id',
+                'admission_decision', 'egress_decision_id', 'cleanup_confirmed', 'usage'}
+            schema_valid = valid_runtime_usage(evidence.get('usage'))
+            if terminal:
+                schema_valid = schema_valid and terminal_keys <= set(evidence)
+                schema_valid = schema_valid and evidence.get('job_disposition') in ('SUCCEEDED', 'FAILED', 'CANCELLED', 'INCONCLUSIVE')
+                schema_valid = schema_valid and evidence.get('result_disposition') in ('RELEASE_ADMITTED', 'FENCED', 'REJECTED', 'UNKNOWN', 'NOT_PRODUCED')
+                schema_valid = schema_valid and evidence.get('admission_decision') in ('ADMITTED', 'DENIED', 'UNKNOWN', 'NOT_REQUESTED')
+                schema_valid = schema_valid and (evidence.get('cleanup_confirmed') is None or type(evidence.get('cleanup_confirmed')) is bool)
+                schema_valid = schema_valid and isinstance(evidence.get('reason'), str) and 0 < len(evidence['reason']) <= 160
+                schema_valid = schema_valid and all(evidence.get(k) is None or (isinstance(evidence[k], str) and 0 < len(evidence[k]) <= 256)
+                    for k in ('context_digest', 'claim_id', 'egress_decision_id'))
+                if job and evidence.get('context_digest') is not None:
+                    sealed = tx.get('contexts', job['context_id'])
+                    schema_valid = schema_valid and bool(sealed and evidence['context_digest'] == sealed['context_digest'])
+            tx.put('events', event_id, {'id': event_id, **event, 'event_digest': digest(event),
+                'binding_valid': matched, 'attempt_binding_valid': attempt_matched, 'evidence_valid': schema_valid})
+            if not matched or not schema_valid:
                 return
             job['execution_identity'] = execution
             kind = event['kind']
@@ -151,10 +283,17 @@ class ApplicationService:
                 job['compute_state'] = 'STOP_CONFIRMED'
             elif kind == 'UNKNOWN' and job['compute_state'] != 'STOP_CONFIRMED':
                 job['compute_state'] = 'UNKNOWN'
-            if kind in ('ADMISSION_DENIED', 'ADMISSION_BLOCKED', 'COMPUTE_FAILED', 'RUNTIME_ERROR', 'RESULT_FENCED') and job['disposition'] == 'QUEUED':
-                job.update(disposition='INCONCLUSIVE' if kind in ('RUNTIME_ERROR', 'ADMISSION_BLOCKED') else 'FAILED', error=kind)
-            if kind in ('NEVER_ADMITTED', 'CANCELLED_BEFORE_SPAWN'):
-                job['disposition'] = 'CANCELLED'
+            if terminal and job['disposition'] == 'QUEUED':
+                disposition = evidence['job_disposition']
+                if disposition != 'CANCELLED' and (evidence['admission_decision'] == 'UNKNOWN' or
+                    evidence['result_disposition'] == 'UNKNOWN' or evidence['cleanup_confirmed'] is False):
+                    disposition = 'INCONCLUSIVE'
+                if disposition == 'SUCCEEDED':
+                    # Runtime cannot invent APP's committed release history.
+                    receipt = tx.get('release_receipts', job['release_id']) if job.get('release_id') else None
+                    if not receipt or evidence['result_disposition'] != 'RELEASE_ADMITTED':
+                        disposition = 'INCONCLUSIVE'
+                job.update(disposition=disposition, error=evidence['reason'], terminal_event_id=event_id)
             tx.put('jobs', job['job_id'], job)
 
     async def on_result(self, result):
@@ -166,6 +305,8 @@ class ApplicationService:
                     raise Denied('JOB_UNAVAILABLE', 404)
                 if result.get('request_id') != job['request_id']:
                     raise Denied('REQUEST_IDENTITY_CONFLICT')
+                if job['disposition'] != 'QUEUED' and not job.get('output_id'):
+                    raise Denied('JOB_ALREADY_SETTLED')
                 admitted_attempt = tx.get('attempts', job['attempt_id'])
                 if not admitted_attempt or admitted_attempt['lease_fence'] != job['lease_fence']:
                     raise Denied('ATTEMPT_NOT_ADMITTED')
@@ -206,7 +347,8 @@ class ApplicationService:
             with self.store.transaction(operation='deterministic-denied') as tx:
                 current = tx.get('jobs', job_id)
                 if current['disposition'] == 'QUEUED':
-                    current.update(disposition='FAILED', error=admitted.get('reason', 'ADMISSION_UNKNOWN'))
+                    current.update(disposition='INCONCLUSIVE' if admitted['decision'] == 'UNKNOWN' else 'FAILED',
+                                   error=admitted.get('reason', 'ADMISSION_UNKNOWN'))
                     tx.put('jobs', job_id, current)
             return
         await asyncio.sleep(0)
@@ -248,6 +390,7 @@ def create_app(*, runtime_dir=None, supervisor_factory=None) -> FastAPI:
         if factory:
             try:
                 service.supervisor = factory(runtime_dir=root, admit_attempt=service.admit_attempt,
+                                             authorize_egress=service.authorize_egress,
                                              on_event=service.on_event, on_result=service.on_result)
                 await service.supervisor.start()
                 service.runtime_status = 'AVAILABLE'

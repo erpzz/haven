@@ -40,7 +40,13 @@ else:
         sys.stdout.buffer.write(b"\xff\xff\xff\xff")
         sys.stdout.buffer.flush()
     else:
+        if mode == "mock-model-transport":
+            # Instrumented benign transport only: absolutely no adapter/network.
+            request["job"]["route"] = "deterministic"
         result = execute(request)
+        if mode == "mock-model-transport":
+            result["usage"] = {"model_calls": 1, "certainty": "BACKEND_REPORTED",
+                               "prompt_tokens": 10, "output_tokens": 4, "duration_ns": 100}
         if mode == "stale":
             result["identity"]["lease_fence"] -= 1
         if mode == "bad_hash":
