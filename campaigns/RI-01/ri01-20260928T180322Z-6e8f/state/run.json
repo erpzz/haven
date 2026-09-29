@@ -20,7 +20,7 @@
     "user_child_concurrency": "Lifted by user during execution; platform remains max3 children plus root",
     "platform_total_concurrency": 4
   },
-  "status": "FINALIZING_PUBLICATION",
+  "status": "RESEARCH_COMPLETE_PUBLICATION_METADATA_PENDING",
   "custom_profiles": "CUSTOM_PROFILE_FALLBACK; exact role text supplied to native children, automatic project-profile loading not exposed",
   "close_tool": "NOT_EXPOSED; native completed turns quiescent; report completion/interrupt state, never claim explicit closure",
   "exact_model": "NOT_EXPOSED; inherited defaults",
@@ -41,15 +41,15 @@
   },
   "failed_spawn_attempts": 3,
   "thread_limit_observation": "Capacity-dependent: an earlier spawn and later message-to-quiescent child were rejected at thread limit; after completion, fresh privacy/code children spawned successfully. No explicit close tool. Keep at most3 active children under platform4-agent total and recheck actual handles.",
-  "published_checkpoint": "c087bf9c00cb9213dc3225852fb7385ba0eb9aef",
-  "publication_verified_by": "Frozen candidate c087bf9 exact remote ref previously verified. Three final independent reviews now PASS for unchanged candidate; completed handoff publication in progress.",
+  "published_checkpoint": "b530d1a8ce127ccb868b59d5e62e0d2556f21305",
+  "publication_verified_by": "Exact campaign remote SHA plus seven public file byte readbacks equal the completed content checkpoint. Final PR metadata update rejected by automatic review; confirmation pending.",
   "issue_receipt": "https://github.com/erpzz/haven/issues/17#issuecomment-5877412035",
   "git_transport_note": "Default credential helper waited without publishing; owned command cancelled. Per-command existing gh auth git-credential succeeded; no persistent credential/settings change.",
   "private_public_research_assets_bytes": 16413944,
   "failed_dispatch_observation": "Three native spawn rejections observed (initial REV-R02, R03 amendment fallback, R01 reviewer fallback); two R03 author reactivation attempts rejected; an earlier Q-CORE-04 message rejected. Failed attempts created no assignments. Later reactivation/reuse succeeded as capacity freed.",
   "last_checkpoint_at": "2026-09-28T19:54:24.064171+00:00",
   "coordination_policy": "Root routes early specialist questions; active agents continue independent soft-input work. Four total active-agent platform limit. No fabricated consultation or recursive dispatch.",
-  "last_metadata_update_at": "2026-09-29T01:41:41.173149+00:00",
+  "last_metadata_update_at": "2026-09-29T01:49:22.029918+00:00",
   "private_source_cache_bytes": 3064660,
   "private_source_cache_note": "151original files plus supplemental representative layers/annotations/scenes/shared-link source; exact Git-blob-verified, read-only, not executed or republished",
   "assignment_count_note": "Conservatively includes separate R14 readiness turn and MM-AV addendum review sent during R05 review; original task counts retained, no invented native execution.",
@@ -60,5 +60,7 @@
   "final_review_receipt": "state/FINAL_REVIEW_RECEIPT.json",
   "child_stop_receipt": "state/CHILD_STOP_RECEIPT.json",
   "usage_receipt": "state/USAGE_RECEIPT.json",
-  "remaining_assignment_allowance": 1
+  "remaining_assignment_allowance": 1,
+  "publication_receipt": "state/PUBLICATION_RECEIPT.json",
+  "stop_state": "No running owned children or scheduled continuation; research complete, root checkpointing publication limitation."
 }

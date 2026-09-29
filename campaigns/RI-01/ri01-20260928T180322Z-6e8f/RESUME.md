@@ -1,6 +1,6 @@
 # RI-01 completion and operator review gate
 
-Status: RESEARCH_COMPLETE. All research and three final independent reviews are complete; root is finalizing publication. This record does not authorize implementation or another campaign.
+Status: RESEARCH_COMPLETE. All research and three final independent reviews are complete; completed content is published and verified. The final PR description update and ready transition remain pending user confirmation after automatic approval review rejected them. This record does not authorize implementation or another campaign.
 
 ## Exact reviewed checkpoint
 
@@ -20,7 +20,7 @@ There were 63 conservatively counted native assignments under the 64-assignment 
 
 Read `MORNING_REPORT.md`, the exact final reviews and `reviews/R13/PROMOTION_GATES.md`. The smallest future operator choice is CORE-P0, one bounded synthetic two-person authority/evidence answer. All 14 proposed packages require separate authorization. Actual selected-image inference needs independent worker lifecycle and exact adapter containment gates first; the public Observatory proof is a separate bounded option. Nothing starts automatically after PR review, and main must not be merged automatically.
 
-If publication is interrupted, inspect the exact checkout, status, campaign remote and this PR before resuming root delivery. Preserve local evidence; do not reset, clean, duplicate a PR or redo accepted research. Rehash the candidate and compare the manifest, then reconcile actual local/remote publication. If the launch ceiling has elapsed, obtain a new explicit bounded allowance before continuing unfinished work. Do not silently restart the clock.
+The only unfinished campaign action is the blocked PR metadata update; no research remains. Do not retry that denied action until confirmation arrives. If publication is interrupted, inspect the exact checkout, status, campaign remote and this PR before resuming root delivery. Preserve local evidence; do not reset, clean, duplicate a PR or redo accepted research. Rehash the candidate and compare the manifest, then reconcile actual local/remote publication. If the launch ceiling has elapsed, obtain a new explicit bounded allowance before continuing unfinished work. Do not silently restart the clock.
 
 ## Accepted composites and unresolved execution gates
 

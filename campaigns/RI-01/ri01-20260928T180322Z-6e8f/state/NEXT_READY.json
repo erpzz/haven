@@ -1,8 +1,9 @@
 {
-  "recorded_at": "2026-09-29T01:35:41.672306+00:00",
+  "recorded_at": "2026-09-29T01:49:22.029918+00:00",
   "ready": [],
-  "active": [
-    "DELIVERY"
+  "active": [],
+  "pending_user_confirmation": [
+    "DELIVERY_PR_METADATA"
   ],
-  "rule": "All research/final reviews complete. Root publication only; no implementation grant."
+  "rule": "Research complete and content published. Do not retry denied PR metadata action without confirmation. No implementation grant or scheduled continuation."
 }

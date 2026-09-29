@@ -1,8 +1,8 @@
 {
-  "observed_at": "2026-09-29T01:35:41.672306+00:00",
+  "observed_at": "2026-09-29T01:49:22.029918+00:00",
   "estimated_required_remaining_assignments": 0,
   "remaining_assignment_allowance": 1,
-  "estimate_is_not_completion": "All research and three final reviews completed without another correction round. Root publication and remote verification remain; original deadline unchanged.",
+  "estimate_is_not_completion": "All research and three reviews complete; content published and verified. PR metadata update pending confirmation after automatic approval-review rejection. No further native assignment required.",
   "stop_new_work_utc": "2026-09-29T01:48:22Z",
   "new_paid_provider_calls": 0,
   "successful_assignments": 63,

@@ -1,6 +1,6 @@
 {
   "schema": "ri01.root.public-delivery.v1",
-  "generated_at": "2026-09-29T01:43:21.933772+00:00",
+  "generated_at": "2026-09-29T01:49:22.894918+00:00",
   "scope": "All public campaign files in Git index, excluding this manifest itself; private original R11 and external caches are excluded",
   "hash_algorithm": "SHA256",
   "base_commit": "376031e182c57495912baf6727093b0b188da568",
@@ -8,8 +8,8 @@
   "frozen_candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
   "review_receipt": "state/FINAL_REVIEW_RECEIPT.json",
   "publication_receipt": "state/PUBLICATION_RECEIPT.json",
-  "public_file_count": 521,
-  "public_total_bytes": 7481003,
+  "public_file_count": 522,
+  "public_total_bytes": 7485923,
   "files": [
     {
       "path": ".gitattributes",
@@ -23,13 +23,13 @@
     },
     {
       "path": "MORNING_REPORT.md",
-      "sha256": "16e759bc5f99b4a50a640b80b41ec534abdadb2fba66854d80378f7655a6e673",
-      "bytes": 11267
+      "sha256": "6ae8a61608f37c309a3801fdbf45ab229557bd955028df6a5b202d867de3c0c4",
+      "bytes": 11846
     },
     {
       "path": "RESUME.md",
-      "sha256": "3fad52d3114bfc49626e6730d85d90624a64fc7118e2b734770dd0c84f112038",
-      "bytes": 5240
+      "sha256": "4336d880fda9d3bca0f63ab30fdfbf455ffd61e2c099438ee2ec1543adcb000a",
+      "bytes": 5538
     },
     {
       "path": "consultations.jsonl",
@@ -2523,8 +2523,8 @@
     },
     {
       "path": "state/BUDGET_CHECK.json",
-      "sha256": "7bea98e6dc28456aae4152f400cb71e8b43a8b46e81426d32b4a4c80f76d89da",
-      "bytes": 697
+      "sha256": "c69c7a0052d9b8a753f26c6fa2ac874ae8be841aeadefc52f3fff0dab599b35e",
+      "bytes": 733
     },
     {
       "path": "state/CANDIDATE_DIFF_SCOPE.json",
@@ -2553,7 +2553,7 @@
     },
     {
       "path": "state/DELIVERY_VALIDATION.json",
-      "sha256": "c96e30d84072bbf37b7e6f042e8c21fd7640c91e6e8fc7ec80e10de07921ebd2",
+      "sha256": "7ca6f80cb04ce86640b212a58e4fc6698cdedeb196a2d5af2ae777a8f41bd89d",
       "bytes": 1090
     },
     {
@@ -2568,8 +2568,8 @@
     },
     {
       "path": "state/NEXT_READY.json",
-      "sha256": "e0381d00107df762b11b7a058e47d4ed8299401c485d49179a3dba6f1a4ec23c",
-      "bytes": 211
+      "sha256": "8d930a070bc3be5c89f3623d5a21e31e12de2d4f0c04b38e82d43243530803fd",
+      "bytes": 327
     },
     {
       "path": "state/PENDING_CONSULTATIONS.json",
@@ -2580,6 +2580,11 @@
       "path": "state/PR_RECEIPT.json",
       "sha256": "fc975272ab030c0f78173b5d2f5ee11ac0e67e5bb6f59d85829fe5d2bf10d649",
       "bytes": 466
+    },
+    {
+      "path": "state/PUBLICATION_RECEIPT.json",
+      "sha256": "d7863390197fa64452a053286110dba3937a1cdd0293085cc749dbf49db44c00",
+      "bytes": 3422
     },
     {
       "path": "state/SCHEDULING_NOTE.json",
@@ -2608,13 +2613,13 @@
     },
     {
       "path": "state/run.json",
-      "sha256": "f0d14c571f4fcec4217579703603aee542b8cbfa91c3ddc4942a2cb98ad7dba5",
-      "bytes": 4923
+      "sha256": "7e58f2ad10dfe08d1374ffdc5ad06924c8bad4de240379a343eb50ca2a62d885",
+      "bytes": 5151
     },
     {
       "path": "state/tasks.json",
-      "sha256": "b7f37e4455b00ba37a04cfd070d6dfee35f7f7bc0bec4b33399b0677128d34a8",
-      "bytes": 103737
+      "sha256": "74f8b1935bdf5eb1342da298c2e761b9b62f5b507ab58578098a4c1c5fa7858b",
+      "bytes": 103978
     }
   ]
 }
