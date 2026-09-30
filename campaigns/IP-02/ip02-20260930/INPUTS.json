@@ -1,0 +1,96 @@
+{
+  "schema": "haven.ip02.inputs.v1",
+  "repository": "erpzz/haven",
+  "campaign": "ip02-20260930",
+  "status": "PREPARED_NOT_STARTED",
+  "preparation_head": "63c9f42e7ba8f62ed30c632bba8faae5bbe655d8",
+  "preparation_tree": "cfe9ee6895fe95aef09d9b41eef6a8d90ec555c1",
+  "branch": "implementation/ip01-v2-20260929",
+  "issue": 20,
+  "draft_pr": 21,
+  "pr_base_branch": "campaign/ri01-20260928T180322Z-6e8f",
+  "research_baseline": "6bc1c8df1218ceb0e0d8709adee65d1e44634047",
+  "prior_exact_candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "prior_historical_evaluation_revision": "487c67299445a29e0fbbdede04259565f741f587",
+  "prior_exact_qa": "e567c3dc541084044e6142ae236a5d71bf64e23f",
+  "prior_setup": "8e1304caf82c0a889eeaea7691db7b9d7b98c526",
+  "prior_prefix": "campaigns/IP-01/ip01-v2-20260929/",
+  "ri_prefix": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/",
+  "reference_rule": "All paths below are pinned at preparation_head unless an explicit ref is present. Actual launch must also inspect current branch/issue changes. Prefix-relative paths are expanded exactly; no attachment or main merge is needed.",
+  "governance_root_reads": [
+    "START_HERE.md",
+    "AGENTS.md",
+    "PRECEDENCE.md",
+    "CURRENT_STATUS.md",
+    "coordination/PROTOCOL.md",
+    "coordination/DECISIONS.md"
+  ],
+  "role_reuse": {
+    "root_reads": [
+      "orchestration/RI-01/ROLE_MAP.md",
+      "orchestration/RI-01/PROTOCOL.md",
+      "orchestration/RI-01/RUNTIME.md"
+    ],
+    "prior_prefix_relative": ["ROLE_MAP.md", "AGENT_BRIEFS.md", "SUPERVISOR.md", "COORDINATION_AMENDMENT.md"],
+    "instruction": "Reuse only compatible role/coordination semantics. IP-02 supplies the new launch grant, destinations, budgets, checkpoint scheme and runtime-engineer launcher ownership. Old research-only or expired execution grants do not relaunch.",
+    "child_rule": "Load the exact existing assigned profile or compatible native instruction fallback. Give each child only relevant inputs and its new scope/budget. Read-only reviewers never become test executors."
+  },
+  "prior_closure_root_reads": [
+    "RESUME.md",
+    "MORNING_REPORT.md",
+    "EXACT_CANDIDATE.md",
+    "state/run.json",
+    "state/tasks.json",
+    "state/agents.jsonl",
+    "state/RETAINED_BLOCKERS.json",
+    "receipts/FINAL_EXECUTION_DISPOSITION.json",
+    "receipts/FINAL_REVIEW_RECEIPT.json",
+    "receipts/CLOSURE_CESSATION.json",
+    "receipts/FINAL_NATIVE_CESSATION.json",
+    "receipts/DELIVERY_END.json"
+  ],
+  "targeted_contract_and_review_reads": {
+    "prior_prefix_relative": [
+      "integration/SEAM.md",
+      "integration/EGRESS_AMENDMENT.md",
+      "integration/closure-v1/INTEGRATION_HANDOFF.md",
+      "integration/closure-v1/CARRY_FORWARD.md",
+      "integration/closure-v1/MANIFEST.json",
+      "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+      "reviews/VISION-FINAL-CLOSURE/REVIEW.md",
+      "reviews/EVIDENCE-FINAL-CLOSURE/REVIEW.md",
+      "reviews/FINAL-QA/FINAL_QA_HANDOFF.md",
+      "reviews/FINAL-QA/READINESS_RESULTS.json",
+      "receipts/MODEL_PREPARATION.md"
+    ],
+    "ri_prefix_relative": ["integration/final-v1/IMPLEMENTATION_QUEUE.md"],
+    "accepted_composite_rule": "H00 follows the exact already-bound R03/P01 and I01-I07 source mappings from SEAM/EGRESS and the final integration manifests for affected behavior. Do not substitute superseded original-only semantics or re-review all research. Existing canonical work-package IDs/gates remain unchanged."
+  },
+  "verified_reference_blobs": {
+    "AGENTS.md": "7b3e447987d17c0a2cf222a16953213fcf129f5d",
+    "PRECEDENCE.md": "15cfb8b987f577ccfbe1ed15c711f0e65e978981",
+    "coordination/PROTOCOL.md": "b3bae757254592bbbeed6dadf2ceea643069126d",
+    "campaigns/IP-01/ip01-v2-20260929/AGENT_BRIEFS.md": "23c063a8db952bba3bba46fdfd15e0abd44ca820",
+    "campaigns/IP-01/ip01-v2-20260929/state/RETAINED_BLOCKERS.json": "513ffb51f9889f9a07a0ff80afa314960e709dfa",
+    "campaigns/IP-01/ip01-v2-20260929/integration/EGRESS_AMENDMENT.md": "d877d500ebef119b6e48cfbdf2faa3abc3ad3f51",
+    "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/IMPLEMENTATION_QUEUE.md": "54e5a6e0cdacd1b38992781e9cb9156e76f2c4a8",
+    "labs/ip01/scripts/run.py": "51f8b1a1b2a66a62ca27206f665530158d11ede8"
+  },
+  "historical_issue_references": {
+    "post_reset_boundary": "https://github.com/erpzz/haven/issues/20#issuecomment-5898973462",
+    "closed_delivery_F": "https://github.com/erpzz/haven/issues/20#issuecomment-5900181426",
+    "proposed_next_campaigns": "https://github.com/erpzz/haven/issues/20#issuecomment-5915035286"
+  },
+  "model_reuse": {
+    "tag_is_not_identity": "qwen2.5vl:3b",
+    "manifest": "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1",
+    "historical_runtime": "Ollama 0.34.4",
+    "rule": "Revalidate actual existing runtime/model/blob/rights/template/preprocessing bindings from the pinned preparation receipt. No new acquisition or replacement model; no inference until independent benign and authority gate."
+  },
+  "deferred_not_launched": [
+    "IP-03 coding/evidence worker workbench proposal",
+    "IP-04 spatial replay and engineering investigation proposal",
+    "All original canonical research/physical work packages not explicitly in IP-02"
+  ],
+  "preparation_evidence_limit": "Repository inspection and package publication only. No new app/browser/model/process test, native delegation, independent acceptance or current host-state verification is claimed by this setup."
+}

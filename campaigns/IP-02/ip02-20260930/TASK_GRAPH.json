@@ -1,0 +1,180 @@
+{
+  "schema": "haven.ip02.seed.v1",
+  "campaign": "ip02-20260930",
+  "status": "PREPARED_NOT_STARTED",
+  "root_only_dispatch": true,
+  "max_active_children": 3,
+  "max_substantive_assignments": 24,
+  "reserved_final_assignments": 6,
+  "task_defaults": {
+    "status": "QUEUED_NOT_DISPATCHED",
+    "actual_native_id": null,
+    "started_at": null,
+    "candidate_sha": null,
+    "attempts": 0
+  },
+  "rules": [
+    "An explicit operator launch of the exact setup revision precedes all dispatch and execution.",
+    "This seed is not a daemon or evidence an agent ran. Bind actual inputs, write paths, remaining budgets and reviewer at dispatch.",
+    "A hard dependency requires its actual handback or explicit blocker disposition. A model gate additionally requires applicable independent PASS evidence, not merely a returned handback.",
+    "Blocked optional model work cannot block separable deterministic execution or honest partial delivery.",
+    "Count every substantive dispatch/reactivation and root implementation assignment. Continued work inside one unchanged task does not manufacture a new assignment.",
+    "Ten seed pre-final tasks leave up to eight pre-final repair/consultation assignments within the 18-slot build ceiling; use only what is needed.",
+    "Hold six slots for H00 final integration, three distinct final reviews, one optional affected recheck and root delivery.",
+    "No author self-acceptance, recursive spawning, shared-file write races, hidden model calls or budget transfers.",
+    "A post-freeze change invalidates affected evidence. Re-freeze, recheck and obtain reviewer applicability within the remaining original IP-02 caps; otherwise deliver PARTIAL.",
+    "Root owns Git/publication and shared ledgers. H00 owns integration decisions, not root identity or acceptance."
+  ],
+  "tasks": [
+    {
+      "id": "INTAKE",
+      "role": "haven_intake",
+      "milestone": "A",
+      "hard": [],
+      "objective": "Briefly verify exact setup, current HEAD, prior closure, new-run isolation, native capability and no duplicate executing root.",
+      "write_scope": [],
+      "evidence": "Actual input/path/ownership observations and bounded blockers returned to root; no inferred running workers."
+    },
+    {
+      "id": "SEAM",
+      "role": "haven_integration_manager",
+      "milestone": "A",
+      "hard": ["INTAKE"],
+      "objective": "Assign disjoint APP/RUNTIME/QA modules and carry forward accepted authority/egress contracts; resolve only concrete interface questions and yield slot.",
+      "write_scope": ["<new-run>/integration/seam/"],
+      "evidence": "Compact finding-to-owner/interface map and actual owner consultations."
+    },
+    {
+      "id": "RUNTIME",
+      "role": "ip01_runtime_engineer",
+      "milestone": "B",
+      "hard": ["SEAM"],
+      "objective": "Repair CF-F01-03 across supervisor, model adapter and launcher; execute bounded author development tests, preserving failures.",
+      "write_scope": ["labs/ip01/haven/supervisor.py", "labs/ip01/haven/model_adapter.py", "labs/ip01/haven/worker.py", "labs/ip01/scripts/run.py", "<assigned runtime/launcher tests>"],
+      "evidence": "Real source changes plus author fault/regression results; not independent acceptance."
+    },
+    {
+      "id": "APP",
+      "role": "ip01_application_engineer",
+      "milestone": "C",
+      "hard": ["SEAM"],
+      "objective": "Repair B2/CF-F04 and deliver current-note, deliberate-sharing and explicit-image workflows with truthful operation/session-bound status.",
+      "write_scope": ["labs/ip01/haven/app.py", "labs/ip01/haven/authority.py", "labs/ip01/haven/store.py", "labs/ip01/haven/contracts.py", "labs/ip01/haven/templates/", "labs/ip01/haven/static/", "<assigned application tests>"],
+      "evidence": "Runnable deterministic/UI path and author tests while model gate remains closed."
+    },
+    {
+      "id": "QA-PREP",
+      "role": "ip01_validation_engineer",
+      "milestone": "B",
+      "hard": ["SEAM"],
+      "objective": "Independently prepare bounded fault observer, HTTP/browser journeys, synthetic fixtures and exact expected assertions; inspect actual image pixels.",
+      "write_scope": ["<new evaluator scratch>", "<new-run>/reviews/QA-PREP/"],
+      "evidence": "Executable harness readiness, demonstrated outer ownership/cleanup, oracle identities and actual modality/protection limits; no candidate edits."
+    },
+    {
+      "id": "BENIGN-QA",
+      "role": "ip01_validation_engineer",
+      "milestone": "B",
+      "hard": ["RUNTIME", "APP", "QA-PREP"],
+      "objective": "Execute independent R1-R4 fault and authority/egress integration cases against an immutable candidate; report failures for owner repair.",
+      "write_scope": ["<new evaluator scratch>", "<new-run>/reviews/BENIGN-QA/"],
+      "evidence": "Exact live-worker/journal, concurrent-start, retained-open-pipe and regression observations, actual residuals and capacity behavior."
+    },
+    {
+      "id": "CODE-EARLY",
+      "role": "haven_code_reviewer",
+      "milestone": "B",
+      "hard": ["RUNTIME", "APP"],
+      "soft": ["BENIGN-QA"],
+      "objective": "Independently inspect changed cleanup/ownership/authority/source-selection code; bind CF closures to current code and applicable QA before the model gate.",
+      "write_scope": [],
+      "evidence": "Actual read-only code review; source-supported findings kept separate from independently executed fault evidence."
+    },
+    {
+      "id": "JOURNEY-QA",
+      "role": "ip01_validation_engineer",
+      "milestone": "C",
+      "hard": ["APP", "RUNTIME", "QA-PREP"],
+      "soft": ["BENIGN-QA", "CODE-EARLY"],
+      "model_gate_requires": ["Independent applicable CF-F01-03 closure", "Fresh authority/egress checks", "Exact artifact/runtime identity", "New root-bound operational gate", "Remaining run resources"],
+      "objective": "Execute U1-U4, baseline/task-effort observations, and only gated development/lifecycle model work; deterministic subwork proceeds independently of a model blocker.",
+      "write_scope": ["<new evaluator scratch>", "<new-run>/reviews/JOURNEY-QA/"],
+      "evidence": "Real browser/HTTP/state evidence, direct image inspection, useful output or precise blocker, no invented human usability result."
+    },
+    {
+      "id": "FREEZE",
+      "role": "root",
+      "milestone": "D",
+      "hard": ["BENIGN-QA", "CODE-EARLY", "JOURNEY-QA"],
+      "objective": "Bind exact Git-reproducible candidate/config/environment and independently specified final suite/16 model slots; read Issue20 and record all open gates.",
+      "write_scope": ["<new-run>/state/", "<new-run>/receipts/"],
+      "evidence": "Candidate/input manifest, fixed per-slot outcomes plan, counters and review applicability; no model eligibility from a merely partial disposition."
+    },
+    {
+      "id": "FINAL-QA",
+      "role": "ip01_validation_engineer",
+      "milestone": "D",
+      "hard": ["FREEZE"],
+      "objective": "Run the frozen final deterministic plan and eligible J1-J8 repeats within three suite starts and sixteen final model calls; preserve all failure/unrun dispositions.",
+      "write_scope": ["<new evaluator scratch>", "<new-run>/reviews/FINAL-QA/"],
+      "evidence": "Independent exact-candidate execution, full denominator, actual pixels/browser/process observations and protected-status limitations."
+    },
+    {
+      "id": "H00-FINAL",
+      "role": "haven_integration_manager",
+      "milestone": "E",
+      "hard": ["FINAL-QA"],
+      "reserved": true,
+      "objective": "Freeze compact final integration, contract/finding/evidence map and implemented-versus-deferred capability view; no self-acceptance.",
+      "write_scope": ["<new-run>/integration/final/"],
+      "evidence": "Actual independent H00 handback and exact manifest; synthesis is not empirical QA."
+    },
+    {
+      "id": "CODE-FINAL",
+      "role": "haven_code_reviewer",
+      "milestone": "E",
+      "hard": ["H00-FINAL"],
+      "reserved": true,
+      "objective": "Return an independent code/authority/runtime verdict for the exact final candidate and applicable empirical evidence.",
+      "write_scope": []
+    },
+    {
+      "id": "VISION-FINAL",
+      "role": "haven_vision_guardian",
+      "milestone": "E",
+      "hard": ["H00-FINAL"],
+      "reserved": true,
+      "objective": "Assess U1-U4, truthful route/status and simple-baseline usefulness evidence while retaining Haven's wider scope; no fictional human testing.",
+      "write_scope": []
+    },
+    {
+      "id": "EVIDENCE-FINAL",
+      "role": "haven_evidence_auditor",
+      "milestone": "E",
+      "hard": ["H00-FINAL"],
+      "reserved": true,
+      "objective": "Audit exact identities, attempts/counters, failed/unrun cases, independence, protected limits and claims without executing under a read-only profile.",
+      "write_scope": []
+    },
+    {
+      "id": "AFFECTED-RECHECK",
+      "role": "independent role selected for the actual finding",
+      "milestone": "E",
+      "hard": [],
+      "reserved": true,
+      "conditional": "Dispatch only for an actual remaining correction with sufficient time and cumulative attempt resources; otherwise leave unused.",
+      "objective": "Perform the needed independent affected evidence/review recheck; owner repairs consume their own remaining assignments and cannot self-certify.",
+      "write_scope": ["<exact QA/review scope assigned by root>"]
+    },
+    {
+      "id": "DELIVERY",
+      "role": "root",
+      "milestone": "F",
+      "disposition_dependencies": ["CODE-FINAL", "VISION-FINAL", "EVIDENCE-FINAL"],
+      "reserved": true,
+      "objective": "Publish sanitized allowed artifacts, one-page operator report, explicit-runtime commands, static snapshot, final readback and exact shutdown; keep PR21 draft and stop.",
+      "write_scope": ["<new-run>/", "labs/ip01/README.md"],
+      "evidence": "Publication verified against actual remote HEAD; historical/candidate/admin identities distinct; observed cessation or explicit UNKNOWN."
+    }
+  ]
+}

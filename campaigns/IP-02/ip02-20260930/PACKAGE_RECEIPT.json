@@ -1,0 +1,51 @@
+{
+  "schema": "haven.ip02.setup-receipt.v1",
+  "status": "PREPARED_NOT_STARTED",
+  "prepared_date": "2026-09-30",
+  "repository": "erpzz/haven",
+  "package_directory": "campaigns/IP-02/ip02-20260930/",
+  "preparation_parent_commit": "63c9f42e7ba8f62ed30c632bba8faae5bbe655d8",
+  "preparation_base_tree": "cfe9ee6895fe95aef09d9b41eef6a8d90ec555c1",
+  "publication_branch": "implementation/ip01-v2-20260929",
+  "coordination_issue": 20,
+  "existing_draft_pr": 21,
+  "operator_request": "Prepare the follow-up prompt and add its required material to GitHub, taking account of the assessment that Haven needs usable outcomes, substantive multiagent sessions and less repeated coordination prose.",
+  "publication_authority_only": true,
+  "launch_boundary": "An explicit operator instruction to execute the exact published setup revision in the executing native session. The Issue20 publication receipt supplies that revision; this file does not embed its own commit hash.",
+  "files": [
+    {"path": "START_HERE.md", "git_blob_sha": "6346eba59034bb11098acd04fe05cf0249d0fd02"},
+    {"path": "WORK_PACKAGE.md", "git_blob_sha": "3b9c666512375c476ceb4d7aa675b8f4e1eef96c"},
+    {"path": "ACCEPTANCE.md", "git_blob_sha": "f356069a0e1f2cc33d0241a9ebd3281651fe4c04"},
+    {"path": "TASK_GRAPH.json", "git_blob_sha": "273ebc7d2ff2112b854a593ce9ee9679ff6891c4"},
+    {"path": "INPUTS.json", "git_blob_sha": "7f594a1723f29f5b06c824d4aa121c45c48a0e31"},
+    {"path": "state/run.json", "git_blob_sha": "37704bdc547fc291b46ebcba4b2ef42f616e10a9"}
+  ],
+  "receipt_self_hash": "Excluded to avoid a circular manifest; the exact setup commit binds this seventh file.",
+  "seed_structure": {
+    "total_seed_tasks": 16,
+    "pre_final_seed_tasks": 10,
+    "reserved_final_seed_tasks": 6,
+    "maximum_additional_pre_final_assignments": 8,
+    "maximum_total_assignments": 24,
+    "maximum_active_children": 3,
+    "final_model_families": 8,
+    "repeats_each": 2,
+    "final_model_call_ceiling": 16
+  },
+  "intentional_preservation": [
+    "All existing repository files, executable candidate bytes, IP-01 controls/ledgers/failures and sealed evidence",
+    "Existing research base, canonical IDs/gates, original ASTRA/NIGHT-01 ownership and main",
+    "PR21 draft status, PR19 denied metadata boundary and existing permissions",
+    "Separate root/H00/authors/executable-QA/final-review roles and wider Haven scope"
+  ],
+  "not_performed_by_setup": [
+    "Application or test execution",
+    "Browser/model/lifecycle trials",
+    "Native child or goal launch",
+    "Host process-state verification or shutdown",
+    "Independent acceptance of this package or candidate",
+    "Code changes, downloads, installations, paid calls, settings changes, merge or physical actions"
+  ],
+  "publication_verification": "After creating the commit, verify a fast-forward branch update, seven added files only, zero existing-file modifications/deletions, unchanged PR base/draft, and exact file blobs; then post one compact Issue20 receipt. Report an actual denial without another route.",
+  "scope_note": "The executable scope and new budgets are proposals until the exact package is launched. This setup does not silently resume the expired prior run or launch deferred IP-03/IP-04 work."
+}
