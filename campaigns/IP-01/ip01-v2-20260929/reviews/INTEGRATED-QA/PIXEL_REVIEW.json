@@ -1,0 +1,77 @@
+{
+  "screenshots": [
+    {
+      "path": "screenshots/crash_image_runs-01-selected-image-no-inference.png",
+      "sha256": "a075dfbed6451059ad144134942f24d9e20116d7b49ad7a3fad539fadeabac99",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/crash_image_runs-02-actual-app-crash-error.png",
+      "sha256": "2d55ff7b962b17762f1b36e6bd7929fc996a328a270dbbde3c30e4a67c71b635",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/crash_image_runs-03-crash-current-restart.png",
+      "sha256": "5ce11c2f7a03c3412a1baad1ebd718178035d40a0f381846b23dd55aeaa40a7f",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/live_runs-01-private-answer.png",
+      "sha256": "86c94c4c8879cf732b2cd6f7f3db738b2fbd4be2168d0b7e121cefae39dc0e0b",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/live_runs-02-explicit-share-answer.png",
+      "sha256": "954d9d586d6010d0ac782076ac55f3a4687588a9680c5b151ab0165dcb83855d",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/live_runs-03-four-record-history.png",
+      "sha256": "37e64f00fb70a864868d2b3f15a97ed64ee401a6dab3fa5025e9cbe3b51246d3",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/live_runs-04-actual-lost-consume-reply.png",
+      "sha256": "75ca3fc1fe14ba403b1f5eb6dbfddf97a0a457b46fbdbc8b9e7b56e9bf012834",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/live_runs-05-revoked-history.png",
+      "sha256": "32a14abcadd404e29f7af594f66e2ac8d380eb061172ba119e699ae8afae8ada",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/live_runs-06-current-restart-persistence.png",
+      "sha256": "7d056602810de2d964a9f5df04b6da541fae6739450ffa738ff07ea1cde8893f",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/live_runs-07-rollback-review-only.png",
+      "sha256": "030c773e528904d2adfdae0fc765d3fa55d259e9bf35e119e9a3c29b3da39193",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/session_race_runs-consume-after-switch.png",
+      "sha256": "fe5284b9d364ee9e6a86fedbee61e90d492e51b5f51ef89ece937fa37386a2bc",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    },
+    {
+      "path": "screenshots/session_race_runs-refresh-after-switch.png",
+      "sha256": "fe5284b9d364ee9e6a86fedbee61e90d492e51b5f51ef89ece937fa37386a2bc",
+      "inspection": "Direct view_image pixel inspection in task15",
+      "scope": "Synthetic deterministic UI, no protected pilot/oracle"
+    }
+  ],
+  "private_fixture_shape": "Directly viewed128x96image: solid yellow square on dark blue background. Browser preview matches. No model image interpretation asserted."
+}

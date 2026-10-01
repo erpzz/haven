@@ -1,0 +1,63 @@
+[
+  {
+    "id": "CE-F01",
+    "status": "RECHECK_PASS_BENIGN_CONTAINMENT",
+    "evidence": "E1/E2/E3 actual callbacks and owned benign transport; no real inference qualification"
+  },
+  {
+    "id": "CE-F02",
+    "status": "RECHECK_PASS",
+    "evidence": "Both actual delayed refresh/consume races; cb266a3 first passed isolation, root copy-only JS separately rechecked; screenshots inspected"
+  },
+  {
+    "id": "QA15-UX01",
+    "severity": "LOW",
+    "status": "FIXED_RECHECKED",
+    "description": "After B switch empty-copy implied no person selected; root-only string correction3ca857... observed in both race variants"
+  },
+  {
+    "id": "CE-F03",
+    "status": "RECHECK_PASS",
+    "evidence": "Actual DB terminal projection deadline/malformed/unknown admission/egress; committed release with lost callback preserved; terminal metadata redelivery/stale/duplicate tests"
+  },
+  {
+    "id": "CE-F04",
+    "status": "RECHECK_PASS",
+    "evidence": "Longest DAG16 accepted17 denied in both root-parent permutations"
+  },
+  {
+    "id": "CE-F05",
+    "status": "RECHECK_PASS",
+    "evidence": "Exhausted lex-first G1 does not shadow usable G2; old existing slot consumes at G1zero; both charged once; exhausted request fails"
+  },
+  {
+    "id": "CE-F06",
+    "status": "RECHECK_PASS_SYNTHETIC_LEDGER",
+    "evidence": "Actual ModelLease immutable one CLAIM/SETTLE/RESULT_DISPOSITION ordering and unknown/no refund; synthetic records separate from real model lane"
+  },
+  {
+    "id": "QA15-HARNESS01",
+    "status": "RESOLVED",
+    "description": "20 failures from jobs key lookup; no candidate defect"
+  },
+  {
+    "id": "QA15-HARNESS02",
+    "status": "RESOLVED",
+    "description": "32 failures from quota row absence assumption; actual zero-charge behavior correct"
+  },
+  {
+    "id": "QA15-HARNESS03",
+    "status": "RESOLVED",
+    "description": "Two evidence checker failures from obsolete extra duplicate-event requirement; actual affected process rechecks passed"
+  },
+  {
+    "id": "QA15-CONTROL-SCOPE",
+    "status": "LIMITATION_RETAINED",
+    "description": "Early synthetic integration controls observed Windows venv launcher handles, not every launcher descendant. They expired by final audit; later38-case run used direct base interpreter control. Earlier control shutdown timing is not retroactively asserted. Separate13fault observer suite used base controls and independently walked workload descendants."
+  },
+  {
+    "id": "QA15-PROTECTION",
+    "status": "EVALUATION_INCONCLUSIVE",
+    "description": "Same host user/full-access roles do not establish protected filesystem enforcement. No host security change and no protected oracle mutation."
+  }
+]

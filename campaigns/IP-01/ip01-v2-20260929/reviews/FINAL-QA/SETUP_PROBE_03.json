@@ -1,0 +1,20 @@
+{
+  "assignment": 17,
+  "status": "BENIGN_FILESYSTEM_PROBE_PASS",
+  "at": "2026-09-29T06:58:11.524519+00:00",
+  "candidate_hashes_unchanged": true,
+  "source_files": 37,
+  "probe_sha256": "bb515e604c2b84d9c21bb66b010fd5d046e130abc19494ea8d67ca2279897130",
+  "producer_basetemp_absent": true,
+  "parent_exists": true,
+  "parent_within_exact_owned_snapshot_runtime": true,
+  "path_lengths": {
+    "suite02_failed_basetemp": 147,
+    "suite03_proposed_basetemp": 131,
+    "probe_file": 155
+  },
+  "pytest_observed_behavior": "getbasetemp uses mkdir(mode=0o700), parents=False. Absent suite02 parent is concrete cause, not evidence of Windows path-length failure.",
+  "no_candidate_db_or_testcase_executed": true,
+  "formal_starts": 2,
+  "model_calls": 0
+}

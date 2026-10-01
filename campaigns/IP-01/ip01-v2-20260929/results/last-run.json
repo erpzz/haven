@@ -1,0 +1,74 @@
+{
+  "status": "REVIEWED PARTIAL \u2014 code changes required",
+  "observed_at": "2026-09-29 22:11 UTC",
+  "candidate_sha": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "model": "qwen2.5vl:3b Q4_K_M / Ollama 0.34.4; 54 of 72 pilot calls executed",
+  "process_shutdown": "APP stopped; model gate disabled; all four closure native children completed and closed. Exact current cessation is recorded separately.",
+  "scope": "Synthetic local development evidence. All three independent final reviews returned. CODE requires changes; VISION and EVIDENCE pass their limited review scopes. The unchanged candidate retains runtime and product defects.",
+  "journeys": [
+    {
+      "name": "Private and explicitly shared notes",
+      "result": "Executed in actual HTTP/browser workflows",
+      "evidence": "150 independent checks; real A-private, B-forbidden and B-shared journeys"
+    },
+    {
+      "name": "Corrections, grants and receipt history",
+      "result": "Executed on frozen candidate",
+      "evidence": "Once-only consumption, revocation, joint grants, lost replies, history without replay"
+    },
+    {
+      "name": "Drafts/tasks and restart",
+      "result": "Actual persistence/recovery exercised",
+      "evidence": "Current restart and rollback review-only workflows"
+    },
+    {
+      "name": "Final deterministic coverage",
+      "result": "Composite pass, three starts used",
+      "evidence": "Seven suite-1 components plus 221 producer checks in suite 3; both earlier harness failures retained"
+    },
+    {
+      "name": "Owned lifecycle",
+      "result": "Benign faults and real model cancellation exercised",
+      "evidence": "Text/image model stop 0.156/0.141 seconds; intended natural model timeouts finished early"
+    },
+    {
+      "name": "Selected-image browser",
+      "result": "B1 passed; B2 failed release",
+      "evidence": "Blue-square answer rendered once; B2 withheld for exhausted incidental shared-note grant"
+    },
+    {
+      "name": "Text model pilot",
+      "result": "25 passed of 30 executed; 36 scheduled",
+      "evidence": "Median 13.492 s, maximum 14.218 s; peak committed 4.329 GiB"
+    },
+    {
+      "name": "Image model pilot",
+      "result": "20 passed of 24 executed; 36 scheduled",
+      "evidence": "Median 36.399 s, maximum 40.109 s; peak committed 4.400 GiB"
+    },
+    {
+      "name": "Independent final reviews",
+      "result": "CODE: changes required; VISION/EVIDENCE: scoped pass",
+      "evidence": "H00 frozen; all three actual native handbacks received and closed. No reviewer executed new application/model tests."
+    }
+  ],
+  "budgets": {
+    "Model allocations": "6/16 readiness; 4/8 lifecycle; 54/72 final",
+    "Charged model time": "1593.405 / 5400 seconds",
+    "Final deterministic starts": "3 / 3",
+    "Assignments": "24 / 24; zero remaining and zero active children",
+    "Original hard deadline": "2026-09-29 10:10:16 UTC \u2014 passed; not renewed",
+    "Closure hard deadline": "2026-09-29 22:54:04 UTC; original clock unchanged"
+  },
+  "limitations": [
+    "CF-F01 HIGH: journal failure before termination can bypass cleanup; no all-path deadline or cleanup guarantee.",
+    "CF-F02: concurrent starts can overwrite owner records. Any later authorized deterministic visit requires one serialized lifecycle per runtime state.",
+    "CF-F03: readiness-failure output draining can remain unbounded when termination is unconfirmed and a pipe stays open.",
+    "CF-F04: route/queued notices can contradict a completed answer. B2 separately spent inference but released no useful answer.",
+    "The new code findings are static failure paths, not claims of escaped or hung work in the recorded run.",
+    "18 of72 pilot calls remain unrun;45 of54 executed passed independent grading, nine conservatively failed.",
+    "Protected separation NOT_ESTABLISHED; EVALUATION_INCONCLUSIVE. Natural real-model timeout NOT_EXERCISED.",
+    "No new execution or automatic restart in this closure. Disabled model gate and original HALT remain.",
+    "This offline report does not confer canonical, production, household, real-account/device or physical qualification."
+  ]
+}

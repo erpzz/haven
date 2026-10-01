@@ -1,0 +1,23 @@
+{
+  "at": "2026-09-29T07:02:12.849075+00:00",
+  "assignment": 17,
+  "phase": "lifecycle",
+  "control_sha256": "faa0d4a85063c4bfcb1fce94ed0f2dc9bb8c9cf3fb47e2891fb194929b5a60ca",
+  "private_control_path": "<evaluator>/final_execution/root-lifecycle-17.json",
+  "gate_sha256": "3b46efb2798cc301288c5ef5a0be7095b66ba2f2ac2e30e3a5a45966806f7cfb",
+  "cases": [
+    "L2",
+    "L3",
+    "L4"
+  ],
+  "owner": {
+    "pid": 13276,
+    "process_birth": 1790665331.2996178,
+    "boot_time": 1790563096.9768715,
+    "nonce": "710f3308297c4fb6b03120a81fb5e085",
+    "started_at": "2026-09-29T07:02:11.306867+00:00",
+    "model_allocation": "lifecycle"
+  },
+  "expires_utc": "2026-09-29T08:20:00Z",
+  "dispatch": "REQUIRES_ROOT_INERT_PREFLIGHT_AND_NATIVE_RELAY"
+}

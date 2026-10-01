@@ -1,0 +1,5 @@
+{
+  "status": "NEEDS_TRIAGE",
+  "summary": "Traceback (most recent call last):\n  File \"<evaluator>/qa_e2e\\live_crash_image.py\", line 43, in <module>\n    assert all('_serve' in x['command'] and str(runtime) in x['command'] for x in targets)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "private_evidence": "<evaluator>/qa_e2e/crash_image_runs/20260929T052338.927667Z/receipt.json"
+}

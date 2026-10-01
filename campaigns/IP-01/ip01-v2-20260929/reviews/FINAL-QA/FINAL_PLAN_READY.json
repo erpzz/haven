@@ -1,0 +1,284 @@
+{
+  "assignment": 17,
+  "status": "FINAL_PLAN_READY_DISABLED_PENDING_EXACT_ROOT_CONTROL_AND_NATIVE_PERMISSION",
+  "created_at": "2026-09-29T06:45:00.538395+00:00",
+  "deadline_utc": "2026-09-29T08:20:00Z",
+  "candidate_commit": "487c67299445a29e0fbbdede04259565f741f587",
+  "source_freeze": {
+    "path": "<campaign>/receipts/FINAL_CANDIDATE_01.json",
+    "sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30"
+  },
+  "candidate_files": {
+    "labs/ip01/.gitignore": "d8d14f8ba1de4c22d163262fe69619da4fe75febcb5305d27e2a187b881fea53",
+    "labs/ip01/evaluation/deterministic/common.py": "c1c7a9678bd648078bd0dc7daf3a63f0ed164129f9caf14997d6db3402ca3129",
+    "labs/ip01/evaluation/deterministic/conftest.py": "0ec81b9e86389a4dfc8e88f33ab9dcab31ebfdcf286569aa3fde58f1c2fee44a",
+    "labs/ip01/evaluation/deterministic/prepare.py": "4d7d56c702930a688c4ab2b4cbfbd6abe13073ae6f7964e5b2b00f9fbe8997bb",
+    "labs/ip01/evaluation/deterministic/README.md": "1ac83a87b82f9cf4debd75b5061cc08599229b24e7533016c902da15edfaebdf",
+    "labs/ip01/evaluation/deterministic/test_backing.py": "b1af947a25e111529888493fdd575a8002164a1094a07996fbc8faab6f60a174",
+    "labs/ip01/evaluation/deterministic/test_bounds.py": "30604f9ea222457a3e0f4ab0704cd52b75ace5d7765ed89854aca7eb50c54139",
+    "labs/ip01/evaluation/deterministic/test_code_early.py": "cc5639377b97e81959531f2a1cab470a24d0f35376c871bdeaff86bf3f26f6fc",
+    "labs/ip01/evaluation/deterministic/test_extra_bounds.py": "e04b33f9f15601f09ee30c45cf6e2b8cfc7f14f8ce753438ec17af982a89df01",
+    "labs/ip01/evaluation/deterministic/test_functional.py": "340a17918bf7f70e2bdd86728cf7f0d22736ae0addbbef5c01e6fafc5c925768",
+    "labs/ip01/evaluation/deterministic/test_static_domains.py": "dfeb4925bc2d338ce7bdf3642fe48ca08edddd474273b4966365d670710fc26e",
+    "labs/ip01/fixtures/demo-notes.json": "11065181fdc55eadc52656fbcf2dca352b1ca891ad1ac65e0b4a45aa997c2943",
+    "labs/ip01/haven/__init__.py": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+    "labs/ip01/haven/app.py": "93b9335f9bb5eb73b506c34a08bc8c2490263ed2ccbe551fa45253f0cd5b7427",
+    "labs/ip01/haven/authority.py": "15ca0f6b4e273d5d4d19b54d2cd082cc41bb592c8fadd60c1c9871a5c724ac75",
+    "labs/ip01/haven/contracts.py": "9912e3282f5634627f6b8ff3b0969c2c2e1920ca8077729f5bf3e365d1de8b3f",
+    "labs/ip01/haven/model_adapter.py": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+    "labs/ip01/haven/static/app.css": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+    "labs/ip01/haven/static/app.js": "3ca857311c75771d7ab972575d5afb1b067005a5bb9c8190deca939d8f9ef2fa",
+    "labs/ip01/haven/store.py": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+    "labs/ip01/haven/supervisor.py": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+    "labs/ip01/haven/templates/index.html": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+    "labs/ip01/haven/worker.py": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a",
+    "labs/ip01/README.md": "f81674e4155c23726f1ed8d1df0fc1aa87e0f551e4de837af1e1b12f95734dca",
+    "labs/ip01/requirements.lock": "bc2b94b9763868b08170dcd18790db46537ad8eac7cbc6f037404a5893f0ba48",
+    "labs/ip01/scripts/check_publication.py": "a5b27b634a802d9920243b96eaf2b8c49c63e22ad2ed606915598774e55d1f12",
+    "labs/ip01/scripts/freeze_candidate.py": "e84a9c672cbd20845ddcb4ad1646f6a825a96e0174aeaf4dec206e3db15f47ba",
+    "labs/ip01/scripts/render_snapshot.py": "dc7a2e6f5e160d8397eaa531f8873ac2b4967d4b0cf3a24fe215daebfbb98089",
+    "labs/ip01/scripts/run.py": "06d5b4db081ad196098ba2e192ba53ebc84413692523e4484a315e9c99d38b43",
+    "labs/ip01/tests/app/browser_walkthrough.py": "49c602312e21ee4e3796bee8fe1dd2a295b412d989e16c52fee45aee11296557",
+    "labs/ip01/tests/app/test_app_fixes.py": "1ef8c3bfb98fa70c9da72e7e9eb2586a9759108e73b22b3a015de36ce348e9c2",
+    "labs/ip01/tests/app/test_application.py": "45410aebc3e96d1c932a5be6bdd4f243a61fc748798ae05e3d4e6672e4e5f57b",
+    "labs/ip01/tests/runtime/fixture_worker.py": "e901d13be77e953c35672b6f662204da1fe1aba647a157d2f0c894c9300ba1f8",
+    "labs/ip01/tests/runtime/prepare_model.py": "59e9abb19c4e4d4f70f7a696288b6f7cfe091e3dcfc58ac3205c1507ba187465",
+    "labs/ip01/tests/runtime/test_model_gate.py": "d1e0e000296021e076dfeaa2c9db931c8a104cd5eb9fd3f7217c4aa0b80ca335",
+    "labs/ip01/tests/runtime/test_runtime.py": "347f85fe350b6215714c1684395cab53e998304ad62cee324273b8c4224ca35a",
+    "labs/ip01/tests/runtime/test_runtime_fix.py": "7e61de543f231352561ff231f3ded358e0e87cc05b74043b0648267d8057455c"
+  },
+  "snapshot": "<evaluator>/final_execution/snapshots/prepared/candidate",
+  "source_protection": "READ_ONLY_ATTRIBUTES_SAME_USER_FULL_ACCESS_NOT_ENFORCED_ISOLATION",
+  "harness_manifest": {
+    "path": "<evaluator>/final_execution/HARNESS_MANIFEST.json",
+    "sha256": "83966821420b007765576771d94beb5a06d56cc56ef1177ab51c479d45693d34",
+    "files": {
+      "CURRENT_REVIEWED_PINS.json": "211a02678fd6202beef44ce3b7bf379d5d7a53e6a22e5ccc996976ccc4856c5b",
+      "deterministic/benign_worker.py": "a70275797bf0452da7f98fc2625e3c05f148f093e4199386438c54eb21d2cad7",
+      "deterministic/common.py": "5f227f26f75d40814d5302bdc701fa2bb7accfa77aa46d81c25aa5b3ba470996",
+      "deterministic/conftest.py": "fbc814b32c7cb0d05becc22a26471dc5609e5dbd27e7e843a2da0545fedde1f1",
+      "deterministic/lifecycle/actor.py": "36f9e791efa27431048ba1a5d520d9817770dd218bd459e83e94238d718b297a",
+      "deterministic/lifecycle/evidence_oracle.py": "5c44300e714ab06666f9cd3a996296d9c0ad956ecc0527e6a682931aaf26c6ab",
+      "deterministic/lifecycle/run_faults.py": "5a76eac101c99feb4381ffda0f3aea9ab9fde36f3558beebffb43dc7ded64020",
+      "deterministic/lifecycle/selected-snapshot.json": "c70aa14ddc24a6819df4ab8e7b820584012b51f62f201d601be3f3613b5cb4f6",
+      "deterministic/lifecycle/test_oracle.py": "d0c3c3d4e89e5a0341f87fa429b0c4cf2becc9d64d5e5dd90dd4f2bfc313936b",
+      "deterministic/lifecycle/verify_oracle.py": "d64a5650c1f5a4d5a600f237f7caff9ce6432cd5a2d8911ef64dc7e2f1bddfd4",
+      "deterministic/live_browser.py": "974b72a16941b2cb726bb97b85b28f2b97bb5a3537bade02403c91b5bf735331",
+      "deterministic/live_crash_image.py": "5ffbb3ed79c9a2229841823bae151274bd12d3f5736f7a354125bebc692ad5af",
+      "deterministic/live_observer.py": "82842b353871ca20a47381ccf102a1e2af1b001dfd6ffc003141fe3fca85aca8",
+      "deterministic/live_session_race.py": "e47380cfcc2492992fcb97a0df829386757fc5748b767cf56747447dddc2f6cf",
+      "deterministic/owned_app.py": "fff3dc71a9b4ab4106f0e665bc55578af3cbbb200704c8dcdb5e5d38b5df5a1b",
+      "deterministic/run_tests.py": "c0d8a3dbfe0381d5d59250b9a5d68362a374ef9c1fa077d79ebcdc35260076f4",
+      "deterministic/selected.json": "c70aa14ddc24a6819df4ab8e7b820584012b51f62f201d601be3f3613b5cb4f6",
+      "deterministic/test_backing.py": "ea9bc1c1270f8d4da2280cf619c89386abde6e726e536697d94a386bc0916297",
+      "deterministic/test_bounds.py": "30604f9ea222457a3e0f4ab0704cd52b75ace5d7765ed89854aca7eb50c54139",
+      "deterministic/test_code_early.py": "cc5639377b97e81959531f2a1cab470a24d0f35376c871bdeaff86bf3f26f6fc",
+      "deterministic/test_extra_bounds.py": "e04b33f9f15601f09ee30c45cf6e2b8cfc7f14f8ce753438ec17af982a89df01",
+      "deterministic/test_functional.py": "340a17918bf7f70e2bdd86728cf7f0d22736ae0addbbef5c01e6fafc5c925768",
+      "deterministic/test_integration.py": "bd6588c9511dc75b539f25b4df86fb3278d127e375a71ed8f34494601513df68",
+      "deterministic/test_static_domains.py": "dfeb4925bc2d338ce7bdf3642fe48ca08edddd474273b4966365d670710fc26e",
+      "FINAL_SOURCE_BINDING.json": "a69efe21c368efba10533975ba4b9bbd9d0beca56e57dddacc357b08dea75829",
+      "live_browser.py": "abfef5b07561aca13987e9df31cca406b0f40bb8407d33a61319be1cbaca7aca",
+      "live_model.py": "903d7108134052a3596ff0d529472cfb282e94b4b76a442ad9bb61ad46cf92fa",
+      "live_observer.py": "64424d1a98fdaaa2abf8b0159e0f044354738b9ec602c3f9aa69fb47c2e40f7d",
+      "pilot_driver.py": "0a05edc632c0cbbd198ac2404d7b651896a5a0e07fa16826fa57c97ff928dd98",
+      "PREPARATION_IDENTITY.json": "4791ac2508d5dd5cc19498a5bb86086642d934c0208f4eaa03a7d9b6de2c1a25",
+      "prepare_task17.py": "17c9cc00b3ccc1217d22a57ee071e5ecdcb99c1185f7c29e42d4030e7163e0d9",
+      "PROTOCOL.json": "fab0a5db526f0d5ffce86173c90db48bf005533affab66b274c6a628ea02be30",
+      "run_final_suite.py": "9d4c7cd77d7fe3dcb75e0af2900ca059e4e790fbfc3b85d2a723b8d80e62a7ab",
+      "safety.py": "1c381f4fd7392f64b88ba0184fcf1735e534dc7d8bf37f38595a7b1fe1dec8e3",
+      "seal_plan.py": "e177fefe95181a781cfcfc99069e908a881b9eca806fa7549937da3e42b2f5c3",
+      "SUITE_COMMANDS.json": "28b73abe47edd1b319f08f00644b6ab0266110f3c64d3ca9d8cb52b71743d3e4",
+      "test_adapters.py": "89b7b046acbfe32a058f6b66c253188dc7d781f6788801b4694774f52b562bad",
+      "test_pilot.py": "06fd59b8d74442ffe23c3ea1183198153f7b7e1c95d5003e86295f1110dba835"
+    }
+  },
+  "driver_sha256": {
+    "safety.py": "1c381f4fd7392f64b88ba0184fcf1735e534dc7d8bf37f38595a7b1fe1dec8e3",
+    "live_model.py": "903d7108134052a3596ff0d529472cfb282e94b4b76a442ad9bb61ad46cf92fa",
+    "live_observer.py": "64424d1a98fdaaa2abf8b0159e0f044354738b9ec602c3f9aa69fb47c2e40f7d",
+    "live_browser.py": "abfef5b07561aca13987e9df31cca406b0f40bb8407d33a61319be1cbaca7aca",
+    "pilot_driver.py": "0a05edc632c0cbbd198ac2404d7b651896a5a0e07fa16826fa57c97ff928dd98"
+  },
+  "protocol_sha256": "fab0a5db526f0d5ffce86173c90db48bf005533affab66b274c6a628ea02be30",
+  "copy_provenance_sha256": "bfe52a45a0004ee200f5d76da7fdf58b88d9b9a02c57438cea33e26a8148160b",
+  "prior_evidence_hashes_sha256": "6536679e047a6a97617b1177625aa2eee10e82a52ed97388eebdc28159f918b1",
+  "selfchecks": {
+    "status": "9_PASSED",
+    "scope": "BENIGN_EVALUATOR_ADAPTER_AND_SYNTHETIC_DENOMINATOR_SELFCHECK_ONLY",
+    "log_sha256": "868579347ce8f433fa61064e9444cf4754a6d772caad20cd39e545c8efd9de3e",
+    "model_calls": 0,
+    "formal_suite_starts": 0
+  },
+  "deterministic": {
+    "formal_starts_so_far": 0,
+    "global_max_starts": 3,
+    "one_predeclared_start": true,
+    "entry_command": [
+      "<python>",
+      "-B",
+      "<evaluator>/final_execution/run_final_suite.py",
+      "--control",
+      "<root-private-control>",
+      "--control-sha256",
+      "<root-relayed-digest>",
+      "--execute"
+    ],
+    "components": [
+      {
+        "component": "independent-main",
+        "script": "deterministic/run_tests.py",
+        "args": [
+          "test_functional.py",
+          "test_backing.py",
+          "test_static_domains.py",
+          "test_bounds.py",
+          "test_code_early.py",
+          "test_extra_bounds.py"
+        ],
+        "expected_cases": 150,
+        "bound_seconds": 240
+      },
+      {
+        "component": "app-runtime-seams",
+        "script": "deterministic/run_tests.py",
+        "args": [
+          "test_integration.py"
+        ],
+        "expected_cases": 38,
+        "bound_seconds": 180,
+        "transport": "SYNTHETIC_MODELLEASE_NO_REAL_MODEL"
+      },
+      {
+        "component": "benign-process-faults",
+        "script": "deterministic/lifecycle/run_faults.py",
+        "args": [],
+        "expected_process_cases": 13,
+        "bound_seconds": 180
+      },
+      {
+        "component": "lifecycle-evidence-oracle",
+        "script": "deterministic/lifecycle/verify_oracle.py",
+        "args": [
+          "<new-fault-run-id>"
+        ],
+        "expected_checks": 21,
+        "bound_seconds": 45
+      },
+      {
+        "component": "browser-session-races",
+        "script": "deterministic/live_session_race.py",
+        "args": [],
+        "expected_variants": 2,
+        "bound_seconds": 100
+      },
+      {
+        "component": "browser-journey",
+        "script": "deterministic/live_browser.py",
+        "args": [],
+        "bound_seconds": 180
+      },
+      {
+        "component": "browser-image-crash",
+        "script": "deterministic/live_crash_image.py",
+        "args": [],
+        "bound_seconds": 120
+      },
+      {
+        "component": "producer-regression",
+        "command": [
+          "<python>",
+          "-B",
+          "-m",
+          "pytest",
+          "<snapshot>/labs/ip01/tests/app",
+          "<snapshot>/labs/ip01/tests/runtime",
+          "-q",
+          "-ra",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "<suite>/producer-tmp",
+          "--junitxml",
+          "<suite>/producer-junit.xml"
+        ],
+        "bound_seconds": 180
+      }
+    ],
+    "stop_targets_seconds": {
+      "worker": 3,
+      "app": 20
+    },
+    "failure_rule": "Retain all failures; classify harness/product; stop and await root-directed repair; never candidate edits or inherited PASS",
+    "104_vector_scope": "76 backing/config faults and28 in-memory constants; not104 HTTP"
+  },
+  "real_phases": {
+    "lifecycle": [
+      "L2_image_cancel_first_real_submission",
+      "L3_text_timeout",
+      "L4_image_timeout"
+    ],
+    "readiness": [
+      "B1_selected_image_positive_browser",
+      "B2_selected_image_unsupported_browser"
+    ],
+    "final": "UNCHANGED_72_SLOTS_24_FAMILIES_THREE_REPEATS",
+    "L1": "PRIOR_RETAINED_NOT_REPLAYED",
+    "L2_prior_failure": "PREFLIGHT_BEFORE_SUBMISSION_RETAINED",
+    "all_enabled": false,
+    "controls": [
+      {
+        "path": "<evaluator>/final_execution/root-lifecycle.DISABLED.template.json",
+        "sha256": "c7d7867c8759d2a9f2167da36c5472932b7a090ca5335a13e1f7b1cdcab9ca9f"
+      },
+      {
+        "path": "<evaluator>/final_execution/root-readiness.DISABLED.template.json",
+        "sha256": "12f0665a2759aefdfa7c90bd72062c1c7430792c243cc1e6733693edab60b6ca"
+      },
+      {
+        "path": "<evaluator>/final_execution/root-final.DISABLED.template.json",
+        "sha256": "ff5b2020f8c5e5a4dde21e624d7f5e934aad5a78fe1053c1c6293f28a4452b10"
+      },
+      {
+        "path": "<evaluator>/final_execution/root-final-deterministic.DISABLED.template.json",
+        "sha256": "9a13018f1b468dd3d767be1a7c8df3d585b5e22f1c58de5755333098573d1eec"
+      }
+    ],
+    "requires": "Each exact root-relayed private control digest plus native permission; final additionally source freeze and evaluation control",
+    "limits": {
+      "ctx": 4096,
+      "output": 768,
+      "images": 1,
+      "wall_seconds": 120,
+      "RAM_GiB": 12,
+      "CPU": true,
+      "reserve_pending_seconds": 120,
+      "global_model_wall_cap_seconds": 5400
+    },
+    "pilot_pins": {
+      "protocol.json": "50b51f2a5723ec1483d28f1b4a265df1539e9072d8f26c598eb2feb01099ffe9",
+      "families.json": "6c7581134bd90506acfc58cab42358561b8028474b58f43fd47171428a90c03d",
+      "schedule.json": "035a498adaf79566f97728114ffd7bc615dbd5fe6100b6d97d5c2a02e33e0734",
+      "pixel-inspection.json": "bff928118171e338ab105e16891143e30c93b6bfad1b9fffb1835626c2252c32"
+    }
+  },
+  "protection_verdict": "EVALUATION_INCONCLUSIVE / protection not established",
+  "not_claimed": [
+    "canonical_P03",
+    "VA",
+    "R13",
+    "CORE",
+    "MF",
+    "original_R1",
+    "production",
+    "physical_qualification"
+  ],
+  "ownership": {
+    "private": "<evaluator>/final_execution/**",
+    "public": "<campaign>/reviews/FINAL-QA/**",
+    "git": false,
+    "children": 0,
+    "source_writes": false,
+    "old_evidence_writes": false
+  }
+}

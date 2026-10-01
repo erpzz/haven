@@ -1,0 +1,46 @@
+{
+  "at": "2026-09-29T06:39:12.709614+00:00",
+  "assignment": 16,
+  "status": "BOUNDED_PARTIAL_NATIVE_CLOSED",
+  "native_id": "01a0eb9a-4e14-7012-8c9d-401632f2fa06",
+  "native_close_previous_status": "running",
+  "shutdown_notification_observed": true,
+  "final_native_handback_received": false,
+  "model_calls": 1,
+  "L1": "OBSERVED_ACTIVE_TEXT_CANCEL_PASS",
+  "L2": "FAILED_PRESUBMISSION_PREFLIGHT_RECONCILED_CURRENT_INPUTS; NO_ACTUAL_SUBMISSION_BEFORE_BOUND",
+  "L3": "NOT_EXECUTED",
+  "L4": "NOT_EXECUTED",
+  "B1_B2": "NOT_AUTHORIZED_NOT_EXECUTED",
+  "final72": "NOT_AUTHORIZED_NOT_EXECUTED",
+  "failed_preflight_log_sha256": "235905b5c9167d8c61a4c49dfa2c1db524958139d3d0a07a2ebd18ad8177b073",
+  "preserved_halt_sha256": "8e894f5d26892ecc0a065118738875231dd4eb9c68423a29b45319ada6cf04d5",
+  "old_control_sha256": "ae6ef9416e1fe3b94e6270670ef35ab01ad4d2cd23919f2648332369a8b08ce0",
+  "reconciled_control_sha256": "7d8500333150ebd0492dccef143b11edea6a0cb5683185d1d7e71ae6d70a065e",
+  "gate_before_sha256": "c4539b1aef409d3419c91ae7a62aff523a5bf185ba4d7798f19e7abaf7b30cfb",
+  "gate_disabled_sha256": "9e2a13bb5e48840710c9603b11372bf65975e4599db07373311ebd49c3a7ec75",
+  "slots_preserved": 8,
+  "ledger_sha256": "eb5648b42dcd654da66c974870d879a78ea2c06fd581bcac230d663baeaa5b06",
+  "claims": 5,
+  "confirmed_settlements": 5,
+  "charged_seconds": 108.9539999999979,
+  "root_app_stop": {
+    "state": "STOP_CONFIRMED",
+    "observed_at": "2026-09-29T06:37:57.993241+00:00",
+    "pid": 27308,
+    "birth": 1790662600.427394,
+    "descendants_before": [
+      {
+        "pid": 8432,
+        "process_birth": 1790662600.4349494
+      },
+      {
+        "pid": 3412,
+        "process_birth": 1790662600.449581
+      }
+    ],
+    "residual": [],
+    "raw_receipt_sha256": "10e366656a8671cd890c88be1f453bd0033256e705436780c568316fcd23bae4"
+  },
+  "next": "Task17 counted independently with new fixed08:20bound; all real calls/final suite require separate root controls. No old-task extension, no refund or replay."
+}

@@ -1,0 +1,102 @@
+{
+  "assignment": 16,
+  "updated_at": "2026-09-29T06:19:57.812351+00:00",
+  "candidate_identity": {
+    "freeze_sha256": "dc194f38fe9d411b68a51875f46dbcbf56749839deb6298ee45d030026883341",
+    "receipt_payload_sha256": "6ae07f99a1b5163bc14320ef0c1823ab8009ce4d459ac01f377c850427a6c36a",
+    "candidate_commit": "4a49999a4f2edefcd0c63c22e2ff3f7fbb51a154",
+    "source_sha256": {
+      "labs/ip01/.gitignore": "d8d14f8ba1de4c22d163262fe69619da4fe75febcb5305d27e2a187b881fea53",
+      "labs/ip01/README.md": "9b37dfa220eabbcb0edc78ebb1ded7c952dbbaa029c8224e314b6284ba3edb70",
+      "labs/ip01/fixtures/demo-notes.json": "11065181fdc55eadc52656fbcf2dca352b1ca891ad1ac65e0b4a45aa997c2943",
+      "labs/ip01/haven/__init__.py": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+      "labs/ip01/haven/app.py": "93b9335f9bb5eb73b506c34a08bc8c2490263ed2ccbe551fa45253f0cd5b7427",
+      "labs/ip01/haven/authority.py": "15ca0f6b4e273d5d4d19b54d2cd082cc41bb592c8fadd60c1c9871a5c724ac75",
+      "labs/ip01/haven/contracts.py": "9912e3282f5634627f6b8ff3b0969c2c2e1920ca8077729f5bf3e365d1de8b3f",
+      "labs/ip01/haven/model_adapter.py": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+      "labs/ip01/haven/static/app.css": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+      "labs/ip01/haven/static/app.js": "3ca857311c75771d7ab972575d5afb1b067005a5bb9c8190deca939d8f9ef2fa",
+      "labs/ip01/haven/store.py": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+      "labs/ip01/haven/supervisor.py": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+      "labs/ip01/haven/templates/index.html": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+      "labs/ip01/haven/worker.py": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a",
+      "labs/ip01/requirements.lock": "bc2b94b9763868b08170dcd18790db46537ad8eac7cbc6f037404a5893f0ba48",
+      "labs/ip01/scripts/check_publication.py": "a5b27b634a802d9920243b96eaf2b8c49c63e22ad2ed606915598774e55d1f12",
+      "labs/ip01/scripts/freeze_candidate.py": "e84a9c672cbd20845ddcb4ad1646f6a825a96e0174aeaf4dec206e3db15f47ba",
+      "labs/ip01/scripts/render_snapshot.py": "0222f6476c0c450e253641eb4ea2e6006a8fb920a5151b7ce0a6ff2329f9cc78",
+      "labs/ip01/scripts/run.py": "06d5b4db081ad196098ba2e192ba53ebc84413692523e4484a315e9c99d38b43",
+      "labs/ip01/tests/app/browser_walkthrough.py": "49c602312e21ee4e3796bee8fe1dd2a295b412d989e16c52fee45aee11296557",
+      "labs/ip01/tests/app/test_app_fixes.py": "1ef8c3bfb98fa70c9da72e7e9eb2586a9759108e73b22b3a015de36ce348e9c2",
+      "labs/ip01/tests/app/test_application.py": "45410aebc3e96d1c932a5be6bdd4f243a61fc748798ae05e3d4e6672e4e5f57b",
+      "labs/ip01/tests/runtime/fixture_worker.py": "e901d13be77e953c35672b6f662204da1fe1aba647a157d2f0c894c9300ba1f8",
+      "labs/ip01/tests/runtime/prepare_model.py": "59e9abb19c4e4d4f70f7a696288b6f7cfe091e3dcfc58ac3205c1507ba187465",
+      "labs/ip01/tests/runtime/test_model_gate.py": "d1e0e000296021e076dfeaa2c9db931c8a104cd5eb9fd3f7217c4aa0b80ca335",
+      "labs/ip01/tests/runtime/test_runtime.py": "347f85fe350b6215714c1684395cab53e998304ad62cee324273b8c4224ca35a",
+      "labs/ip01/tests/runtime/test_runtime_fix.py": "7e61de543f231352561ff231f3ded358e0e87cc05b74043b0648267d8057455c"
+    }
+  },
+  "cases": [
+    {
+      "case": "L1",
+      "status": "OBSERVED",
+      "receipt_sha256": "45cbf45fca86cd57a50412212d6bac2ecbfe2c4aa3c1ab4d3cbc488c0d47e384",
+      "model_submission_attempts": 1,
+      "app_disposition": "CANCELLED",
+      "fault_status": "EXERCISED",
+      "independent_stop_seconds": 0.15600000000267755,
+      "control_survived": true,
+      "control_stopped": true,
+      "all_retained_workload_handles_signaled": true,
+      "root_survived": true,
+      "remaining_owned_backend_listeners": 0,
+      "peak_sampled_rss_bytes": 3572752384,
+      "peak_job_committed_bytes": 4647337984,
+      "latency_seconds": 12.047000000005937,
+      "usage": null,
+      "observer_max_sample_gap_seconds": 0.39100000000325963,
+      "trace_sha256": "1fe6653e5e7e4a5f9f385cd6838703595876093b7179409e5f118ac0ada8dcd9"
+    },
+    {
+      "case": "L2",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "case": "L3",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "case": "L4",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "case": "B1",
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "case": "B2",
+      "status": "NOT_EXECUTED"
+    }
+  ],
+  "global_budget": {
+    "consumed_union_by_phase": {
+      "readiness": 4,
+      "lifecycle": 1,
+      "final": 0
+    },
+    "consumed_union": 5,
+    "charged_seconds": 108.9539999999979,
+    "unknown_cleanup": false
+  },
+  "halted": true,
+  "protected_verdict": "EVALUATION_INCONCLUSIVE / protection not established",
+  "runtime_stop_seconds": 3,
+  "app_stop_seconds": 20,
+  "app_stop_executed_by_evaluator": false,
+  "model_parent_death_executed": false,
+  "semantic_grading": "independent evaluator; no self-grading by model",
+  "claim_limitations": [
+    "Active predicate combines pinned residency, CPU growth and bound request marker; not hardware proof of token decoding.",
+    "Retained sampled handles corroborate Job Object accounting; polling can miss short-lived processes.",
+    "A natural timeout that completes early is not an exercised timeout and is never retried implicitly."
+  ]
+}

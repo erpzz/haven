@@ -1,0 +1,270 @@
+{
+  "assignment": 14,
+  "role": "ip01_runtime_engineer",
+  "status": "READY_FOR_INDEPENDENT_RECHECK",
+  "observed_at": "2026-09-29T05:47:14.432438+00:00",
+  "root_thread_id": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
+  "custom_profile_fallback": true,
+  "inherited_model": "UNKNOWN",
+  "changed_sources": [
+    {
+      "path": "labs/ip01/haven/supervisor.py",
+      "sha256": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+      "bytes": 44063
+    },
+    {
+      "path": "labs/ip01/haven/worker.py",
+      "sha256": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a",
+      "bytes": 3528
+    },
+    {
+      "path": "labs/ip01/haven/model_adapter.py",
+      "sha256": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+      "bytes": 19229
+    },
+    {
+      "path": "labs/ip01/tests/runtime/test_runtime.py",
+      "sha256": "347f85fe350b6215714c1684395cab53e998304ad62cee324273b8c4224ca35a",
+      "bytes": 13106
+    },
+    {
+      "path": "labs/ip01/tests/runtime/test_runtime_fix.py",
+      "sha256": "7e61de543f231352561ff231f3ded358e0e87cc05b74043b0648267d8057455c",
+      "bytes": 13164
+    },
+    {
+      "path": "labs/ip01/tests/runtime/fixture_worker.py",
+      "sha256": "e901d13be77e953c35672b6f662204da1fe1aba647a157d2f0c894c9300ba1f8",
+      "bytes": 2314
+    }
+  ],
+  "initial_module_hashes": {
+    "supervisor.py": "9713cac68f27ca627780334e27f2637fc258711da2e8072cd70b6f2cd1ff1437",
+    "worker.py": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d",
+    "model_adapter.py": "0e29edc6f826b04ba8c1bac3a28d55c5a2844f56a20349bb5f321d95577fc0a2"
+  },
+  "source_use": [
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/EGRESS_AMENDMENT.md",
+      "sha256": "46620137b8ff8bde83340b922c856a158c264a6e7639178bd974a1dc00726820",
+      "bytes": 17202,
+      "use": "Exact callback, dispatch ordering, all-path terminal event, resource/result settlement contract."
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/CODE-EARLY/CODE_EARLY_REVIEW.md",
+      "sha256": "28e4876f764a6efd30b339316afb36505d8b3729ead38456563c77fea232d1a0",
+      "bytes": 12025,
+      "use": "CE-F01/F03/F06 defect and affected recheck scope."
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/APP_FIX_HANDOFF.md",
+      "sha256": "713bc3a1c058b261a9f85a1d4d6ddbed731119bcb1b36bfce8c949d080cef654",
+      "bytes": 2371,
+      "use": "Actual attributed APP adoption; source inspection detected FILETIME mismatch and later observed acceptance."
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/SEAM.md",
+      "sha256": "09380772d5e19838950d94e4cf94e682fc41d65fed217f8587d2e53b579b0985",
+      "bytes": 25967,
+      "use": "Inherited immutable attempt/owned process identity and callback authority boundary."
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/inputs/SOURCE_IDENTITY.json",
+      "sha256": "0889a0abdea1885ce22b98c6c01934925fd8dc9beb9dc367955d6531372d95af",
+      "bytes": 19369,
+      "use": "Input identity catalog only; does not imply new semantic reads of every historical source."
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/inputs/ORIGINAL_SOURCE_BASELINE.json",
+      "sha256": "8382283536ccbc1f07a7fbb2da01b90dadeaff04dafd7526f82895abdc985776",
+      "bytes": 1733,
+      "use": "Original inspection identity only; no original writes or original-R1 qualification."
+    }
+  ],
+  "commands": [
+    {
+      "command": ".ip01-runtime/venv/Scripts/python.exe -B -m pytest labs/ip01/tests/runtime/test_runtime_fix.py -q --basetemp=.ip01-runtime/runtime-fix/focused-01 -o cache_dir=.ip01-runtime/runtime-fix/pytest-cache",
+      "log": {
+        "path": ".ip01-runtime/runtime-fix/focused-01.log",
+        "sha256": "91fdd777ae27b9dd27d030b613b9e5be6a75f0b39a0c93d3035a57a6eeeea680",
+        "bytes": 101
+      },
+      "exit_code": 0,
+      "passed": 40,
+      "elapsed_seconds": 4.57
+    },
+    {
+      "command": ".ip01-runtime/venv/Scripts/python.exe -B -m pytest labs/ip01/tests/runtime/test_runtime_fix.py -q --basetemp=.ip01-runtime/runtime-fix/focused-02 -o cache_dir=.ip01-runtime/runtime-fix/pytest-cache",
+      "log": {
+        "path": ".ip01-runtime/runtime-fix/focused-02.log",
+        "sha256": "562236c4ab949e5548571460c406777c10c673b363794bf0de1c5ab07625e56e",
+        "bytes": 101
+      },
+      "exit_code": 0,
+      "passed": 40,
+      "elapsed_seconds": 4.55
+    },
+    {
+      "command": ".ip01-runtime/venv/Scripts/python.exe -B -m pytest labs/ip01/tests/runtime/test_runtime_fix.py -q --basetemp=.ip01-runtime/runtime-fix/focused-03 -o cache_dir=.ip01-runtime/runtime-fix/pytest-cache",
+      "log": {
+        "path": ".ip01-runtime/runtime-fix/focused-03.log",
+        "sha256": "8c53f2619d70c6ca5c1db8e615ea7c47843e64595987402c5e22f3c3c62cc59c",
+        "bytes": 101
+      },
+      "exit_code": 0,
+      "passed": 43,
+      "elapsed_seconds": 5.83
+    },
+    {
+      "command": ".ip01-runtime/venv/Scripts/python.exe -B -m pytest labs/ip01/tests/runtime/ -q --basetemp=.ip01-runtime/runtime-fix/full-benign-01 -o cache_dir=.ip01-runtime/runtime-fix/pytest-cache",
+      "log": {
+        "path": ".ip01-runtime/runtime-fix/full-benign-01.log",
+        "sha256": "4533523ce31f3a2fe56c7023077ad4c0554c409d522273f81f6ee3cb016d0287",
+        "bytes": 182
+      },
+      "exit_code": 0,
+      "passed": 74,
+      "elapsed_seconds": 8.69
+    },
+    {
+      "command": ".ip01-runtime/venv/Scripts/python.exe -B -m pytest labs/ip01/tests/runtime/test_runtime_fix.py -q --basetemp=.ip01-runtime/runtime-fix/focused-04 -o cache_dir=.ip01-runtime/runtime-fix/pytest-cache",
+      "log": {
+        "path": ".ip01-runtime/runtime-fix/focused-04.log",
+        "sha256": "cfdb77cecbd4c8d1d73287453af3ba5e62dd5df3cb60e1549b6436e4846f6681",
+        "bytes": 101
+      },
+      "exit_code": 0,
+      "passed": 44,
+      "elapsed_seconds": 5.14
+    },
+    {
+      "command": ".ip01-runtime/venv/Scripts/python.exe -B -m pytest labs/ip01/tests/runtime/ -q --basetemp=.ip01-runtime/runtime-fix/full-benign-final -o cache_dir=.ip01-runtime/runtime-fix/pytest-cache",
+      "log": {
+        "path": ".ip01-runtime/runtime-fix/full-benign-final.log",
+        "sha256": "bdab9b94109f2e845b09282730d79b4a8af2eca87d6f84b2ebab1598052a02d7",
+        "bytes": 183
+      },
+      "exit_code": 0,
+      "passed": 75,
+      "elapsed_seconds": 10.0
+    }
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "<clone>/labs/ip01",
+    "TEMP": "<clone>/.ip01-runtime/runtime-fix/tmp",
+    "TMP": "<clone>/.ip01-runtime/runtime-fix/tmp",
+    "HYPOTHESIS_STORAGE_DIRECTORY": "<clone>/.ip01-runtime/runtime-fix/hypothesis"
+  },
+  "failures": [
+    {
+      "kind": "read_path_error",
+      "command": "Get-Content -Raw campaigns/IP-01/ip01-v2-20260929/IP/receipts/APP_FIX_HANDOFF.md",
+      "outcome": "Path absent: IP is alias for campaign root, not a nested directory. Correct receipts path read successfully; no writes."
+    }
+  ],
+  "failed_test_trials": 0,
+  "accounting": {
+    "model_calls_this_assignment": 0,
+    "final_suite_starts_this_assignment": 0,
+    "shared_ledger": {
+      "path": ".ip01-runtime/model/model-calls.jsonl",
+      "sha256": "f4ef94316264bf41977988b0be1c1df4a2348af524fb146f66fc219751149759",
+      "bytes": 5150
+    },
+    "claims": 4,
+    "settlements": 4,
+    "charged_seconds": 97.2039999999979,
+    "all_cleanup_confirmed": true,
+    "ledger_last_write_utc": "2026-09-29T05:11:39.571315+00:00",
+    "gate": {
+      "path": ".ip01-runtime/model/model-gate.json",
+      "sha256": "6410e517c3ed7bf3076964b018fe5027c49b45751b99fee19ca466f44076f70c",
+      "bytes": 1104
+    },
+    "gate_enabled": false
+  },
+  "owned_lifecycle_observations": [
+    {
+      "path": ".ip01-runtime/runtime-fix/full-benign-final/test_benign_owned_process_and_0/probe.json",
+      "sha256": "6331234762438ac18343981a0b8a43da187ee220eae17a9ce2ed5b9d569b9449",
+      "bytes": 423,
+      "observation": {
+        "after": {
+          "active_processes": 0,
+          "confirmed": true,
+          "owned_handles_signaled": true,
+          "peak_job_memory_bytes": 17776640,
+          "pids": [],
+          "terminated_processes": 0,
+          "total_processes": 3
+        },
+        "before": {
+          "active_processes": 3,
+          "peak_job_memory_bytes": 17776640,
+          "pids": [
+            26020,
+            28288,
+            20804
+          ],
+          "terminated_processes": 0,
+          "total_processes": 3
+        },
+        "control_alive": true,
+        "fixed_stop_target_seconds": 3.0,
+        "kind": "BENIGN_PROBE",
+        "stop_elapsed_seconds": 0.014999999999417923
+      }
+    },
+    {
+      "path": ".ip01-runtime/runtime-fix/full-benign-final/test_parent_death_job_cleanup_0/parent-death-observed.json",
+      "sha256": "447249f233d64c6394523681dc4c4b2f18c8a0d198dc85651ebb589b458a871b",
+      "bytes": 436,
+      "observation": {
+        "after": {
+          "active_processes": 0,
+          "peak_job_memory_bytes": 36728832,
+          "pids": [],
+          "terminated_processes": 0,
+          "total_processes": 6
+        },
+        "before": {
+          "descendant": {
+            "child_pid": 18788
+          },
+          "observation": {
+            "active_processes": 3,
+            "peak_job_memory_bytes": 18362368,
+            "pids": [
+              27316,
+              12120,
+              18788
+            ],
+            "terminated_processes": 0,
+            "total_processes": 3
+          },
+          "worker": {
+            "boot_id": "894859e6-d8a4-11ef-9f5d-b101f8ca7188",
+            "pid": 27316,
+            "process_birth": "134351343077047241"
+          }
+        },
+        "control_alive": true
+      }
+    }
+  ],
+  "limitations": [
+    "Producer development tests only; authority decisions, artifact/backend preparation and model transport in model barriers are mocked. Zero inference.",
+    "Independent actual APP callback/HTTP authority barriers, semantic/model lifecycle validation and root freeze are still required. No finding self-acceptance.",
+    "The complete influencing request bytes are sealed before authorize_egress. The returned decision/time/digest handoff envelope is attached synchronously after response, before final guard/scheduling; no influencing content is rebuilt.",
+    "One-second egress window is not instantaneous revocation or a hard real-time OS guarantee. Post-first-byte cancellation records actual writes and cannot recall transmitted bytes.",
+    "New supervisor/worker/adapter hashes invalidate affected applicability of prior benign/model readiness evidence. Root must load repaired sources; original four ledger entries remain historical.",
+    "Pending terminal redelivery is metadata-only, at most32 per invocation, each callback bounded2sec; restart reuses original IDs and does not recompute or retry on_result.",
+    "Claim resource settlement and later result disposition remain separate; a crash between phases leaves pending validation rather than implicit success. Stop uncertainty retains owned capacity independently."
+  ],
+  "peer_adoption": {
+    "APP": "Actual receipt read and root relay attributed; same callback fields. FILETIME string mismatch relayed; current app.py accepts bounded positive decimal strings on later source inspection. Independent integration recheck remains.",
+    "RUNTIME": "ADOPTED exact callback response, terminal and usage schema. Callback invoked only for model jobs; deterministic route preserved. No token/grant re-admission."
+  },
+  "next_action": "Root freeze repaired APP and these runtime hashes; QA15 independently rechecks affected egress/terminal/settlement/lifecycle barriers. Keep model gate disabled until root explicitly authorizes later slots."
+}

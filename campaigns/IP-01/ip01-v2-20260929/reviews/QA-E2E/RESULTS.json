@@ -1,0 +1,844 @@
+{
+  "assignment": 9,
+  "role": "ip01_validation_engineer",
+  "model": "CUSTOM_PROFILE_FALLBACK inherited UNKNOWN",
+  "as_of": "2026-09-29T05:36:18.719915+00:00",
+  "overall": "FAIL_CONFIRMED_DEFECTS; COVERAGE_INCOMPLETE; DEVELOPMENT_ONLY",
+  "required_workstreams": [
+    "A authority/transaction semantics",
+    "B actual lifecycle and APP integration",
+    "C 24-family model pilot",
+    "D real browser/UI"
+  ],
+  "pytest_runs": [
+    {
+      "run": "20260929T051035.084776Z",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "<evaluator>/qa_e2e\\test_functional.py",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "<evaluator>/qa_e2e\\runs\\20260929T051035.084776Z\\tmp",
+        "--junitxml",
+        "<evaluator>/qa_e2e\\runs\\20260929T051035.084776Z\\junit.xml"
+      ],
+      "pytest_exit_code": 1,
+      "wrapper_shell_exit_code": 0,
+      "counts": {
+        "passed": 22,
+        "failed": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "source_drift_during_run": false,
+      "receipt_sha256": "5bebb5bed378f8860d4cca87eb14a5ec3a50684bad52f4a7f6a3043e91df10d9",
+      "private_evidence": "<evaluator>/qa_e2e/runs/20260929T051035.084776Z"
+    },
+    {
+      "run": "20260929T051518.367074Z",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "<evaluator>/qa_e2e\\test_functional.py::test_joint_grant_atomicity_and_closure_dedup",
+        "<evaluator>/qa_e2e\\test_functional.py::test_drafts_tasks_edit_and_isolation",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "<evaluator>/qa_e2e\\runs\\20260929T051518.367074Z\\tmp",
+        "--junitxml",
+        "<evaluator>/qa_e2e\\runs\\20260929T051518.367074Z\\junit.xml"
+      ],
+      "pytest_exit_code": 0,
+      "wrapper_shell_exit_code": 0,
+      "counts": {
+        "passed": 2,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "source_drift_during_run": false,
+      "receipt_sha256": "a62f48728345976c7408fd04983d5892d89c945d6a886c4962ad58697432cc7d",
+      "private_evidence": "<evaluator>/qa_e2e/runs/20260929T051518.367074Z"
+    },
+    {
+      "run": "20260929T051911.760211Z",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "<evaluator>/qa_e2e\\test_backing.py",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "<evaluator>/qa_e2e\\runs\\20260929T051911.760211Z\\tmp",
+        "--junitxml",
+        "<evaluator>/qa_e2e\\runs\\20260929T051911.760211Z\\junit.xml"
+      ],
+      "pytest_exit_code": 1,
+      "wrapper_shell_exit_code": 0,
+      "counts": {
+        "passed": 41,
+        "failed": 0,
+        "errors": 36,
+        "skipped": 0
+      },
+      "source_drift_during_run": false,
+      "receipt_sha256": "71c3e2b8f6afef44ba997a94fb5f4f0e5a31c1f80ee11c521bd661e1aaeecd4d",
+      "private_evidence": "<evaluator>/qa_e2e/runs/20260929T051911.760211Z"
+    },
+    {
+      "run": "20260929T052103.277921Z",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "<evaluator>/qa_e2e\\test_backing.py",
+        "<evaluator>/qa_e2e\\test_bounds.py",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "<evaluator>/qa_e2e\\runs\\20260929T052103.277921Z\\tmp",
+        "--junitxml",
+        "<evaluator>/qa_e2e\\runs\\20260929T052103.277921Z\\junit.xml"
+      ],
+      "pytest_exit_code": 1,
+      "wrapper_shell_exit_code": 0,
+      "counts": {
+        "passed": 83,
+        "failed": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "source_drift_during_run": false,
+      "receipt_sha256": "9c90aadf92ba55b1e93e7cd115897ff3e2162f27b061d738f1208a0e4d6cdf37",
+      "private_evidence": "<evaluator>/qa_e2e/runs/20260929T052103.277921Z"
+    },
+    {
+      "run": "20260929T052213.367484Z",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "<evaluator>/qa_e2e\\test_bounds.py::test_metadata_exact_bound",
+        "<evaluator>/qa_e2e\\test_bounds.py::test_output_exact_bound[262144]",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "<evaluator>/qa_e2e\\runs\\20260929T052213.367484Z\\tmp",
+        "--junitxml",
+        "<evaluator>/qa_e2e\\runs\\20260929T052213.367484Z\\junit.xml"
+      ],
+      "pytest_exit_code": 0,
+      "wrapper_shell_exit_code": 0,
+      "counts": {
+        "passed": 2,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "source_drift_during_run": false,
+      "receipt_sha256": "e349db7b3bf3dc59cab96284e4bd2ae285e0a06461c9685584184dc90520a297",
+      "private_evidence": "<evaluator>/qa_e2e/runs/20260929T052213.367484Z"
+    },
+    {
+      "run": "20260929T052454.601878Z",
+      "command": [
+        "<candidate>\\.ip01-runtime\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "<evaluator>/qa_e2e\\test_code_early.py",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "<evaluator>/qa_e2e\\runs\\20260929T052454.601878Z\\tmp",
+        "--junitxml",
+        "<evaluator>/qa_e2e\\runs\\20260929T052454.601878Z\\junit.xml"
+      ],
+      "pytest_exit_code": 1,
+      "wrapper_shell_exit_code": 0,
+      "counts": {
+        "passed": 0,
+        "failed": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "source_drift_during_run": false,
+      "receipt_sha256": "46920ab14bba2db26a3f99b20f3955e5f880b750e8220f7bb3d310b70b7ce295",
+      "private_evidence": "<evaluator>/qa_e2e/runs/20260929T052454.601878Z"
+    }
+  ],
+  "latest_unique_case_counts": {
+    "passed": 109,
+    "failed": 2,
+    "errors": 0,
+    "skipped": 0
+  },
+  "latest_unique_cases": {
+    "test_functional::test_private_useful_B_forbidden_and_explicit_shared": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_one_use_at_zero_duplicate_and_no_refund": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_four_records_immutable_history_and_conflicting_observation": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_edit_CAS_tombstone_and_fence_old_output": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_uncited_ancestor_mutation_queued[edit]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_uncited_ancestor_mutation_queued[tombstone]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_uncited_ancestor_mutation_queued[revoke]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_uncited_ancestor_after_admission_before_release": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_joint_grant_atomicity_and_closure_dedup": {
+      "status": "passed",
+      "run": "20260929T051518.367074Z"
+    },
+    "test_functional::test_concurrent_quota_one_winner": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_unknown_release_commit_reconciles_same_identity": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_unknown_consume_commit_no_replay_or_refund": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_session_web_boundaries[change0]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_session_web_boundaries[change1]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_session_web_boundaries[change2]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_principal_spoof_and_strict_contracts": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_drafts_tasks_edit_and_isolation": {
+      "status": "passed",
+      "run": "20260929T051518.367074Z"
+    },
+    "test_functional::test_image_hostile_imports[svg]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_image_hostile_imports[html]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_image_hostile_imports[truncated]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_image_hostile_imports[mismatch]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_image_hostile_imports[animated]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_image_hostile_imports[too_large]": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_functional::test_image_valid_metadata_stripped_private_and_inert": {
+      "status": "passed",
+      "run": "20260929T051035.084776Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-authority_instance_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-restore_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-policy_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-purpose_definition_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-rights_policy_refs]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-principal_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-session_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-device_binding_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-device_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-tool_catalog_digest]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-grant_dependencies]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-source_dependencies]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-job_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-lease_fence]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-cancel_scope_epochs]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-destination_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-destination_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-audience_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[retrieval-dependency_closure_digest]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-authority_instance_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-restore_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-policy_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-purpose_definition_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-rights_policy_refs]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-principal_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-session_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-device_binding_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-device_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-tool_catalog_digest]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-grant_dependencies]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-source_dependencies]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-job_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-lease_fence]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-cancel_scope_epochs]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-destination_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-destination_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-audience_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[admission-dependency_closure_digest]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-authority_instance_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-restore_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-policy_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-purpose_definition_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-rights_policy_refs]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-principal_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-session_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-device_binding_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-device_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-tool_catalog_digest]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-grant_dependencies]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-source_dependencies]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-job_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-lease_fence]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-cancel_scope_epochs]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-destination_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-destination_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-audience_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[release-dependency_closure_digest]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-authority_instance_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-restore_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-policy_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-purpose_definition_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-rights_policy_refs]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-principal_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-session_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-device_binding_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-device_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-tool_catalog_digest]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-grant_dependencies]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-source_dependencies]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-job_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-lease_fence]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-cancel_scope_epochs]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-destination_ref]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-destination_epoch]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-audience_revision]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_changed_backing_fences_sealed_vector[consume-dependency_closure_digest]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_backing::test_full_vector_denominator": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_bounds::test_people_bound": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_bounds::test_sources_bound": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_bounds::test_grants_bound": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_bounds::test_depth_bound": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_bounds::test_edges_bound": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_bounds::test_metadata_exact_bound": {
+      "status": "passed",
+      "run": "20260929T052213.367484Z"
+    },
+    "test_bounds::test_output_exact_bound[262144]": {
+      "status": "passed",
+      "run": "20260929T052213.367484Z"
+    },
+    "test_bounds::test_output_exact_bound[262145]": {
+      "status": "passed",
+      "run": "20260929T052103.277921Z"
+    },
+    "test_code_early::test_CE_F04_shared_ancestor_longest_depth": {
+      "status": "failed",
+      "run": "20260929T052454.601878Z"
+    },
+    "test_code_early::test_CE_F05_new_grant_after_exhausted_grant": {
+      "status": "failed",
+      "run": "20260929T052454.601878Z"
+    }
+  },
+  "live_attempts": [
+    {
+      "group": "live_runs",
+      "run": "20260929T051733.805870Z",
+      "command": [
+        "<candidate>/.ip01-runtime/venv/Scripts/python.exe",
+        "-B",
+        "<evaluator>/qa_e2e/live_browser.py"
+      ],
+      "process_exit_code": 1,
+      "status": "FAIL",
+      "failure_retained": true,
+      "console": [],
+      "receipt_sha256": "c348d1a5f96479eecf9770ebb9f2d5320035b21396f3419ce7e7d0b0a1b15be3",
+      "private_evidence": "<evaluator>/qa_e2e/live_runs/20260929T051733.805870Z/receipt.json"
+    },
+    {
+      "group": "live_runs",
+      "run": "20260929T051901.611627Z",
+      "command": [
+        "<candidate>/.ip01-runtime/venv/Scripts/python.exe",
+        "-B",
+        "<evaluator>/qa_e2e/live_browser.py"
+      ],
+      "process_exit_code": 1,
+      "status": "FAIL",
+      "failure_retained": true,
+      "console": [
+        {
+          "person": "B",
+          "kind": "console",
+          "level": "error",
+          "text": "Failed to load resource: net::ERR_FAILED"
+        },
+        {
+          "person": "A",
+          "kind": "console",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+        }
+      ],
+      "receipt_sha256": "b763a40726d62c08226995f3b4b6078d82160e6b229b23441104568c95781df1",
+      "private_evidence": "<evaluator>/qa_e2e/live_runs/20260929T051901.611627Z/receipt.json"
+    },
+    {
+      "group": "live_runs",
+      "run": "20260929T052113.756708Z",
+      "command": [
+        "<candidate>/.ip01-runtime/venv/Scripts/python.exe",
+        "-B",
+        "<evaluator>/qa_e2e/live_browser.py"
+      ],
+      "process_exit_code": 0,
+      "status": "PASS",
+      "failure_retained": false,
+      "console": [
+        {
+          "person": "B",
+          "kind": "console",
+          "level": "error",
+          "text": "Failed to load resource: net::ERR_FAILED"
+        },
+        {
+          "person": "A",
+          "kind": "console",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+        }
+      ],
+      "receipt_sha256": "329a1d744149a538fe81bc5b96464fdf6e876d3558f42238eafed39876db2ae2",
+      "private_evidence": "<evaluator>/qa_e2e/live_runs/20260929T052113.756708Z/receipt.json"
+    },
+    {
+      "group": "crash_image_runs",
+      "run": "20260929T052338.927667Z",
+      "command": [
+        "<candidate>/.ip01-runtime/venv/Scripts/python.exe",
+        "-B",
+        "<evaluator>/qa_e2e/live_crash_image.py"
+      ],
+      "process_exit_code": 1,
+      "status": "FAIL",
+      "failure_retained": true,
+      "console": [],
+      "receipt_sha256": "4822ae1f234727c31b8c1168a8cd0503795efb567cd7a9069a377aaa700bf7b9",
+      "private_evidence": "<evaluator>/qa_e2e/crash_image_runs/20260929T052338.927667Z/receipt.json"
+    },
+    {
+      "group": "crash_image_runs",
+      "run": "20260929T052743.045195Z",
+      "command": [
+        "<candidate>/.ip01-runtime/venv/Scripts/python.exe",
+        "-B",
+        "<evaluator>/qa_e2e/live_crash_image.py"
+      ],
+      "process_exit_code": 0,
+      "status": "PASS",
+      "failure_retained": false,
+      "console": [
+        {
+          "level": "error",
+          "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+        },
+        {
+          "level": "error",
+          "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+        },
+        {
+          "level": "error",
+          "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+        }
+      ],
+      "receipt_sha256": "3e47841c1c7716b2dbb5d04d71aeb626e98d203c9ccec8f430c7d8a84ac5154f",
+      "private_evidence": "<evaluator>/qa_e2e/crash_image_runs/20260929T052743.045195Z/receipt.json"
+    },
+    {
+      "group": "session_race_runs",
+      "run": "20260929T052624.308977Z",
+      "command": [
+        "<candidate>/.ip01-runtime/venv/Scripts/python.exe",
+        "-B",
+        "<evaluator>/qa_e2e/live_session_race.py"
+      ],
+      "process_exit_code": 1,
+      "status": "CONFIRMED_DEFECT",
+      "failure_retained": false,
+      "console": [
+        {
+          "kind": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ],
+      "receipt_sha256": "40cbb9d1f07f4befbdcd51b25265ad29eb5c766c9a9d1a715ed7018ca0dd1575",
+      "private_evidence": "<evaluator>/qa_e2e/session_race_runs/20260929T052624.308977Z/receipt.json"
+    },
+    {
+      "group": "allocation_runs",
+      "run": "20260929T052855.016097Z",
+      "command": [
+        "<candidate>/.ip01-runtime/venv/Scripts/python.exe",
+        "-B",
+        "<evaluator>/qa_e2e/launcher_allocations.py"
+      ],
+      "process_exit_code": 0,
+      "status": "PASS",
+      "failure_retained": false,
+      "console": [],
+      "receipt_sha256": "846a2ea794619877c5f232d2a22955a1c113e19126cc87d436f1f0760538b021",
+      "private_evidence": "<evaluator>/qa_e2e/allocation_runs/20260929T052855.016097Z/receipt.json"
+    }
+  ],
+  "vector_denominator": {
+    "required": 104,
+    "components": 26,
+    "phases": 4,
+    "direct_authority_backing_or_config_trials_passed": 76,
+    "static_domains_without_live_mutation": [
+      "vector_version",
+      "service_capability_revision",
+      "subject_scope_revision",
+      "participant_area_scope_revision",
+      "route_profile_revision",
+      "provider_data_policy_revision",
+      "canonicalization_version"
+    ],
+    "unexecuted_static_domain_phase_trials": 28,
+    "route_phase_integration_not_implied": true,
+    "coupled_adapters": [
+      "principal_ref/audience_revision",
+      "session_revision via active-session invalidation",
+      "job_ref via job ownership invalidation"
+    ],
+    "egress_amendment_separate": "All E1/E2/E3/T1/T2/S1 repaired integration pending"
+  },
+  "bounds": {
+    "required_pairs": 7,
+    "ordinary_at_and_beyond_executed": 7,
+    "shared_ancestor_depth_counterexample": "CE-F04 FAIL overrides complete depth-bound acceptance",
+    "metadata": {
+      "at": 65536,
+      "beyond": 65537,
+      "adapter": "actual builder with private backing text fixture"
+    },
+    "output": {
+      "at": 262144,
+      "beyond": 262145,
+      "adapter": "real on_result after admission with private candidate payload fixture"
+    }
+  },
+  "model_calls_this_assignment": 0,
+  "final_deterministic_suites_started": 0,
+  "pilot_protection": "NOT_ESTABLISHED; final protected verdict EVALUATION_INCONCLUSIVE",
+  "shutdown": {
+    "status": "PASS",
+    "known_identities": 43,
+    "residual_count": 0,
+    "private_evidence": "<evaluator>/qa_e2e/shutdown_audit.json"
+  },
+  "candidate_edits": 0,
+  "next": "Owners repair then root freezes new bytes; distinct integrated QA15 affected recheck. No inherited PASS."
+}

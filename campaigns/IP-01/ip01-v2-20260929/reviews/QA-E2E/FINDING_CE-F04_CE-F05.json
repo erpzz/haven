@@ -1,0 +1,13 @@
+{
+  "status": "CONFIRMED_CANDIDATE_DEFECTS",
+  "candidate": "f2acfb050b709c948a06cc090a74a974f5814515",
+  "authority_sha256": "9c9547375e7cb96b6f159635d0eb24b93ada54b27dc17ba427fccd86836ad3ca",
+  "private_evidence": "<evaluator>/qa_e2e/runs/20260929T052454.601878Z",
+  "command": "<venv-python> -B <evaluator>/qa_e2e/run_tests.py test_code_early.py",
+  "result": "pytest exit1: 2 failed; no source drift",
+  "findings": [
+    {"id":"CE-F04","reproduction":"Candidate Store transaction seeds private 17-node synthetic chain with ordered IDs qa-c00..qa-c16. Actual HTTP POST note with parents c07,c15 returns201 at depth16; parents c08,c16 returns201 at longest depth17 where rejection413 is required.","scope":"Ordinary linear at/beyond test passed earlier; redundant-parent DAG falsifies complete depth-bound claim."},
+    {"id":"CE-F05","reproduction":"Evaluator fixture controls grant-ID generator only: G1 sorts before G2. Actual HTTP approves maxuses1 G1, releases once without consuming, approves fresh G2, asks a distinct new answer. New job FAILED GRANT_QUOTA_EXHAUSTED while G2 uncharged. Existing G1 slot still consumes at zero.","scope":"Ordinary finite-at-zero and joint-grant tests passed; overlapping fresh approval availability fails."}
+  ],
+  "next":"Root relay to APP owner; fix candidate through owner and allocate bounded affected recheck. QA does not patch candidate."
+}

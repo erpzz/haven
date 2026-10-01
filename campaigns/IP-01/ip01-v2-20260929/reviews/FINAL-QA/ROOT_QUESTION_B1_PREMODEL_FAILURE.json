@@ -1,0 +1,37 @@
+{
+  "assignment": 17,
+  "status": "HALTED_B1_BROWSER_HARNESS_FAILURE_BEFORE_MODEL_SUBMISSION",
+  "actual_command_exit_code": 1,
+  "classification": "HARNESS_RESPONSE_BODY_RETRIEVAL_FAILURE",
+  "failure_site": "live_browser.py:38 upload.json()",
+  "error": "Chromium Network.getResponseBody: Request content was evicted from inspector cache",
+  "observed_upload_http_status": 201,
+  "navigation_cause": "NOT_ESTABLISHED; generic exception text mentions navigation, but retained requests show no document navigation after upload",
+  "candidate_behavior": "Upload handler reads JSON, refreshes notes/drafts/jobs, and selects returned source ID; no location reload in handler",
+  "model_submit_request_count": 0,
+  "model_case_receipt_exists": false,
+  "browser_page_errors": 0,
+  "original_browser_tracking_complete": false,
+  "fresh_owned_path_scan_residual_count": 0,
+  "ownership_caveat": "Original early-exit path never populated known identities; fresh scan absence is not retained-handle proof",
+  "global_ledger": {
+    "counts": {
+      "readiness": 4,
+      "lifecycle": 4,
+      "final": 0
+    },
+    "claims": 8,
+    "settles": 8,
+    "app_bindings": 8,
+    "charged_seconds": 257.25000000001455,
+    "unknown": false
+  },
+  "private_receipt_sha256": "c984d84231d5826c1cefbb859a38f3771bcc870de415a73bd4769df0d812b212",
+  "private_command_log_sha256": "ab5c78978860982e4c24abba434ce16cf0b232b36f402621d1bd8e4d19f2639a",
+  "private_halt_sha256": "a0f68cae7fb9be6dd4ad788f0387333a16ad81aa69004eda284df449127ac2dd",
+  "private_ownership_audit_sha256": "f67e0fd10c54ad7703e12eb6c77f8d3d536847eb6801dd33a7fa9c129b354fe7",
+  "B2_final72": "UNEXECUTED_UNAUTHORIZED_AFTER_HALT",
+  "formal_deterministic_starts_used": 3,
+  "proposed_smallest_fix": "Versioned browser driver waits for the product upload success notice and its selected source ID in the DOM after HTTP 201, binds a newly added option, and records browser process identities immediately after launch; no candidate change",
+  "requested_root_decision": "Authorize harness-only versioned preparation and exact reconciliation of retained HALT; new root-pinned control and explicit execution permission required before B1 model admission or B2. Original browser failure and old driver/control remain immutable."
+}

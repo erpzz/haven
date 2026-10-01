@@ -1,0 +1,20 @@
+{
+  "case": "L1",
+  "status": "OBSERVED",
+  "receipt_sha256": "45cbf45fca86cd57a50412212d6bac2ecbfe2c4aa3c1ab4d3cbc488c0d47e384",
+  "model_submission_attempts": 1,
+  "app_disposition": "CANCELLED",
+  "fault_status": "EXERCISED",
+  "independent_stop_seconds": 0.15600000000267755,
+  "control_survived": true,
+  "control_stopped": true,
+  "all_retained_workload_handles_signaled": true,
+  "root_survived": true,
+  "remaining_owned_backend_listeners": 0,
+  "peak_sampled_rss_bytes": 3572752384,
+  "peak_job_committed_bytes": 4647337984,
+  "latency_seconds": 12.047000000005937,
+  "usage": null,
+  "observer_max_sample_gap_seconds": 0.39100000000325963,
+  "trace_sha256": "1fe6653e5e7e4a5f9f385cd6838703595876093b7179409e5f118ac0ada8dcd9"
+}

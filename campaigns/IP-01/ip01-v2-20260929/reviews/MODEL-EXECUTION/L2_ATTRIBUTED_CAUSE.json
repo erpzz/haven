@@ -1,0 +1,16 @@
+{
+  "assignment": 16,
+  "at": "2026-09-29T06:27:35.532905+00:00",
+  "status": "ATTRIBUTED_CAUSE_READ_ROOT_RECONCILIATION_STILL_REQUIRED",
+  "source": "reviews/INTEGRATED-QA/GATE_IMMUTABILITY_FINDING.md",
+  "source_sha256": "00a66d488cf51b942eabeb020eb21cf8fe937877686a2bff199b88fb744d6e15",
+  "attributed_writer": "task15 independent QA report builder",
+  "attributed_cause": "Gate receipt temporarily overwritten with closure edition around06:19:23Z then original bytes restored around06:19:40Z. Actual writer acknowledged publication/control-artifact immutability error.",
+  "original_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
+  "temporary_edition_sha256": "a14427221fd400f291589a30d248da13dc747ebed603585a543367d53d9d8515",
+  "evaluator_observation": "L2 preflight rejected before Client/fixture/submit; recheck original hash matched; original failure-time digest was not captured.",
+  "L2_model_calls": 0,
+  "HALT_sha256_unchanged": "8e894f5d26892ecc0a065118738875231dd4eb9c68423a29b45319ada6cf04d5",
+  "automatic_clear_or_retry": false,
+  "next": "Explicit root reconciliation and remaining-case control required"
+}

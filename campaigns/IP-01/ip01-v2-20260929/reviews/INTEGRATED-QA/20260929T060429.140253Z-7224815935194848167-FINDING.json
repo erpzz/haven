@@ -1,0 +1,66 @@
+{
+  "assignment": 15,
+  "case": "test_integration.py::test_T1_actual_terminal_projection[malformed]",
+  "phase": "call",
+  "status": "HARNESS_ERROR_RESOLVED",
+  "error_type": "KeyError",
+  "message": "'id'",
+  "candidate_hashes": {
+    "labs/ip01/haven/app.py": {
+      "sha256": "93b9335f9bb5eb73b506c34a08bc8c2490263ed2ccbe551fa45253f0cd5b7427",
+      "bytes": 55714
+    },
+    "labs/ip01/haven/authority.py": {
+      "sha256": "15ca0f6b4e273d5d4d19b54d2cd082cc41bb592c8fadd60c1c9871a5c724ac75",
+      "bytes": 21770
+    },
+    "labs/ip01/haven/contracts.py": {
+      "sha256": "9912e3282f5634627f6b8ff3b0969c2c2e1920ca8077729f5bf3e365d1de8b3f",
+      "bytes": 5213
+    },
+    "labs/ip01/haven/model_adapter.py": {
+      "sha256": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+      "bytes": 19229
+    },
+    "labs/ip01/haven/store.py": {
+      "sha256": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+      "bytes": 11015
+    },
+    "labs/ip01/haven/supervisor.py": {
+      "sha256": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+      "bytes": 44063
+    },
+    "labs/ip01/haven/worker.py": {
+      "sha256": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a",
+      "bytes": 3528
+    },
+    "labs/ip01/haven/__init__.py": {
+      "sha256": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+      "bytes": 94
+    },
+    "labs/ip01/haven/static/app.css": {
+      "sha256": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+      "bytes": 9373
+    },
+    "labs/ip01/haven/static/app.js": {
+      "sha256": "3ca857311c75771d7ab972575d5afb1b067005a5bb9c8190deca939d8f9ef2fa",
+      "bytes": 14367
+    },
+    "labs/ip01/haven/templates/index.html": {
+      "sha256": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+      "bytes": 7955
+    },
+    "labs/ip01/scripts/run.py": {
+      "sha256": "06d5b4db081ad196098ba2e192ba53ebc84413692523e4484a315e9c99d38b43",
+      "bytes": 12673
+    },
+    "labs/ip01/requirements.lock": {
+      "sha256": "bc2b94b9763868b08170dcd18790db46537ad8eac7cbc6f037404a5893f0ba48",
+      "bytes": 3218
+    }
+  },
+  "private_evidence": "<evaluator>/integrated_qa/runs/20260929T060429.140253Z",
+  "note": "Independent test failure; classify harness versus candidate before concluding. No source edits.",
+  "classification": "Evaluator jobs body schema lookup id versus job_id; candidate unchanged.",
+  "resolved_by": "<evaluator>/integrated_qa/runs/20260929T061345.206481Z"
+}

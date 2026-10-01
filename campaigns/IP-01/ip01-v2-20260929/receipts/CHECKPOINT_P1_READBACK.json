@@ -1,0 +1,46 @@
+{
+  "at": "2026-09-29 21:33:52 UTC",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "checkpoint": "P1",
+  "outbound_id": 5899392690,
+  "comments_read": [
+    {
+      "id": 5883316643,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5883316643"
+    },
+    {
+      "id": 5883564936,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5883564936"
+    },
+    {
+      "id": 5884105889,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5884105889"
+    },
+    {
+      "id": 5898973462,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5898973462"
+    },
+    {
+      "id": 5899243588,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899243588"
+    },
+    {
+      "id": 5899289805,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899289805"
+    },
+    {
+      "id": 5899295145,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899295145"
+    },
+    {
+      "id": 5899301415,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899301415"
+    },
+    {
+      "id": 5899392690,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899392690"
+    }
+  ],
+  "last_consumed_steward_id": 5898973462,
+  "newer_stewardship_found": false
+}

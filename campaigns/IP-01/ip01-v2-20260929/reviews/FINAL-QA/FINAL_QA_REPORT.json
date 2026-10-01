@@ -1,0 +1,277 @@
+{
+  "assignment": 17,
+  "role": "Independent validation engineer; distinct from candidate authors and final reviewers",
+  "status": "PARTIAL_EXECUTION_EVIDENCE_HANDBACK",
+  "protected_verdict": "EVALUATION_INCONCLUSIVE",
+  "same_user_full_access_protection": "NOT_ESTABLISHED",
+  "candidate_commit": "487c67299445a29e0fbbdede04259565f741f587",
+  "candidate_file_count": 37,
+  "candidate_freeze_sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+  "all_candidate_snapshot_and_original_harness_pins_unchanged": true,
+  "formal_deterministic_starts": {
+    "used": 3,
+    "maximum": 3,
+    "suite01": "FAIL_RETAINED: first seven components PASS; producer 76 PASS and 145 setup ERROR, pytest1, invalid harness basetemp outside allowed snapshot runtime",
+    "suite02": "FAIL_RETAINED: producer 7 PASS and 214 setup ERROR, pytest1, missing basetemp parent; no demonstrated Windows path-length defect",
+    "suite03": "221 producer checks PASS, pytest0, fresh short snapshot-private basetemp with verified parent mkdir",
+    "composite": "PASS: first seven actual suite01 components plus all221 actual suite03 producer checks; source unchanged; no fourth start"
+  },
+  "deterministic_coverage": {
+    "independent_main": 150,
+    "APP_runtime_integration": 38,
+    "benign_process_faults": 13,
+    "evidence_checks": "13 receipt checks +8 corruption challenges; not21 process trials",
+    "real_Chromium_races": 2,
+    "browser_journeys": [
+      "private/shared/forbidden/forms/edit/revoke/tombstone/no-replay/drafts/tasks/restart/rollback",
+      "synthetic selected-image/noninterpretation/owned crash/error/restart"
+    ],
+    "104_vectors": "76 backing/config +28 in-memory constant faults, not104 HTTP endpoints",
+    "synthetic_model_transport": "Actual adapters and owned benign fixtures, distinct from actual model ledger"
+  },
+  "lifecycle": {
+    "prior_task16_L1": {
+      "status": "OBSERVED",
+      "fault_status": "EXERCISED",
+      "independent_stop_seconds": 0.15600000000267755,
+      "private_receipt_sha256": "45cbf45fca86cd57a50412212d6bac2ecbfe2c4aa3c1ab4d3cbc488c0d47e384",
+      "provenance": "Prior actual text cancellation evidence; not replayed or relabeled as a new Task17 run"
+    },
+    "L2": "Actual active image cancellation exercised; independent stop0.141s",
+    "L3": "Early success55.843s,768tokens; real text natural TIMEOUT_NOT_EXERCISED",
+    "L4": "Early success81.453s,768tokens; real image natural TIMEOUT_NOT_EXERCISED",
+    "benign_timeout": "Actually exercised in deterministic benign process cohort; distinct from model natural timeout"
+  },
+  "readiness_gate": "NOT_MET_BY_B1_B2",
+  "B1": "Successful actual model answer, selected-image grounding, View once, inspected render and no-replay reload",
+  "B2": "Admitted once, FAILED/STOP_CONFIRMED/GRANT_QUOTA_EXHAUSTED/RESULT_FENCED; no released answer, abstention unavailable; spent slot retained, no retry",
+  "root_operational_eligibility": "Root separately authorized unchanged final single-source protocol after confirming prior owned launch/deadline/stop evidence and B2 release denial with confirmed cleanup; failed B1/B2 comparison not relabeled PASS",
+  "root_B2_reconciliation_sha256": "91a4be94343bd166c4db53c39c4badd927a8e45507d26396086624de3afe5e53",
+  "root_final_authorization_sha256": "b8777e9001387f364a134e97755d096998b2b1d1d959bfacbcc3a5f730bf1a12",
+  "final_driver": {
+    "exit_code": 1,
+    "private_command_log_sha256": "d0056fc852e3f7651a3000dcd0be55a5486e8d3a7732135c19452914365eaa31",
+    "stop_reason": "ROOT_RESOURCE_RESERVE_STOP",
+    "root_halt_sha256": "b3bc67c72a0b76b6f689bbeac7f909021dbe7d7ea24c14106d4a1987fab6fd1d",
+    "unrun_slots": [
+      {
+        "case": "F055",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F056",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F057",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F058",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F059",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F060",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F061",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F062",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F063",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F064",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F065",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F066",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F067",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F068",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F069",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F070",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F071",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      },
+      {
+        "case": "F072",
+        "disposition": "NOT_EXECUTED_RESOURCE_BOUND"
+      }
+    ],
+    "command": "python -B <evaluator>/final_execution/pilot_driver.py --control <evaluator>/final_execution/root-final-17.json --control-sha256 d40f1e4cc90ac069bd2be971ca8d0b8a90dd6cf3fe0d75585edda7c74bc88ce8 --execute --start 1 --end 72",
+    "source_sha256": "0a05edc632c0cbbd198ac2404d7b651896a5a0e07fa16826fa57c97ff928dd98",
+    "scheduled_calls": 72,
+    "observed_receipts": 54,
+    "independently_graded": 54,
+    "semantic_passed_calls": 45,
+    "retry_or_refund": false
+  },
+  "pilot_modalities": {
+    "text": {
+      "scheduled_calls": 36,
+      "observed_calls": 30,
+      "semantic_reviewed_calls": 30,
+      "passed_calls": 25,
+      "supported_calls": 24,
+      "supported_passed_calls": 20,
+      "unsupported_calls": 12,
+      "unsupported_passed_calls": 5,
+      "grounded_calls": 25,
+      "negative_assertions_passed_calls": 25,
+      "appropriate_abstention_calls": 5,
+      "charged_model_seconds": 393.0320000000356,
+      "reported_output_tokens": 339,
+      "passed_families": 5,
+      "latency_seconds": {
+        "observations": 30,
+        "minimum": 12.968999999997322,
+        "median": 13.492000000005646,
+        "maximum": 14.218000000008033
+      },
+      "peak_sampled_rss_bytes": {
+        "observations": 30,
+        "minimum": 3570520064,
+        "median": 3572148224.0,
+        "maximum": 3584671744
+      },
+      "peak_job_committed_bytes": {
+        "observations": 30,
+        "minimum": 4644749312,
+        "median": 4646727680.0,
+        "maximum": 4648624128
+      }
+    },
+    "image": {
+      "scheduled_calls": 36,
+      "observed_calls": 24,
+      "semantic_reviewed_calls": 24,
+      "passed_calls": 20,
+      "supported_calls": 24,
+      "supported_passed_calls": 16,
+      "unsupported_calls": 12,
+      "unsupported_passed_calls": 4,
+      "grounded_calls": 20,
+      "negative_assertions_passed_calls": 22,
+      "appropriate_abstention_calls": 6,
+      "charged_model_seconds": 869.4819999999891,
+      "reported_output_tokens": 312,
+      "passed_families": 0,
+      "latency_seconds": {
+        "observations": 24,
+        "minimum": 35.65600000000268,
+        "median": 36.39900000000489,
+        "maximum": 40.10900000001129
+      },
+      "peak_sampled_rss_bytes": {
+        "observations": 24,
+        "minimum": 4150587392,
+        "median": 4152174592.0,
+        "maximum": 4154396672
+      },
+      "peak_job_committed_bytes": {
+        "observations": 24,
+        "minimum": 4719095808,
+        "median": 4720891904.0,
+        "maximum": 4724113408
+      }
+    }
+  },
+  "comparison_criterion_met": false,
+  "protected_supported_passed_families": 0,
+  "protected_unsupported_passed_families": 0,
+  "authority_escape_observed_count": 0,
+  "grading_interpretation": {
+    "private_note_sha256": "40f7e2e5bd294272fb3fcb6b267a5a21715bf224a1d48e5d4fd261f609523d62",
+    "limitation": "One unsupported image family includes ambiguous spatial wording. Abstention and negative assertions are credited; grounding is conservatively not credited where this wording recurs. Initial grade preserved and explicitly flagged for independent reviewer adjudication. This ambiguity does not change the failed comparison criterion caused by separate ownership hallucination."
+  },
+  "global_usage": {
+    "counts": {
+      "readiness": 6,
+      "lifecycle": 4,
+      "final": 54
+    },
+    "APP_bindings": 64,
+    "claims": 64,
+    "confirmed_settlements": 64,
+    "charged_seconds": 1593.4050000000425,
+    "limit_seconds": 5400,
+    "unknown": false
+  },
+  "observer": {
+    "actual_model_receipts_this_task": 59,
+    "active_cpu_and_pinned_residency_observed_calls": 59,
+    "maximum_sample_gap_seconds": 0.4529999999940628,
+    "limitations": [
+      "Finite sampling can miss short-lived processes between observations.",
+      "Sampled summed RSS is distinct from producer Windows Job peak committed memory.",
+      "Retained handles and PID/birth checks establish observed ownership cleanup, not universal host or physical-device qualification.",
+      "Original pre-model B1 failure lacked launch tracking; its later independent fresh process scan is not retained-handle proof.",
+      "Protected fixtures shared the same full-access host account; protection not established.",
+      "Public timelines are sanitized event/sample projections with bound private raw hashes; they are not raw traces."
+    ]
+  },
+  "ownership": {
+    "at": "2026-09-29T07:54:06.327058+00:00",
+    "captured_owned_identities": 1255,
+    "residual_count": 0,
+    "task_path_process_count": 0,
+    "root_app": "ROOT_OWNED_SEPARATE_TEARDOWN; not terminated by Task17",
+    "root_identity_sha256": "2a4988a6fb01817b92ca3b9fb7574baecab9228cbbfed9fbd02f72e3108c19aa",
+    "private_audit_sha256": "7f24eb9fecf5184783b2c085e873ebeb77379da65d9354d1512a2efc184cda26"
+  },
+  "evidence_sha256": {
+    "FINAL_DETERMINISTIC_RESULTS.json": "97d393c974d23e9685854002aa562813b033366d5c21cf7411d9e6b344aeb248",
+    "FORMAL_SUITE_01_RESULTS.json": "79f26d5341db173d3c319544f74d6e6a7d86887a61bfc635639e52b978255890",
+    "FORMAL_SUITE_02_RESULTS.json": "f7c2948288c241cbdd17329834ea2d7984abe6c54b13b60bcfd76bf62481b358",
+    "LIFECYCLE_RESULTS.json": "97c4818b86f12cdf18f24e8c9bc7fbf33777faccc7feec8b448bba711151d9d0",
+    "READINESS_RESULTS.json": "9b1ab3b45a14c2a593a4b78ca938424c8d3bb64e8c7c4ce18a61e0ff0b218fdc",
+    "PILOT_AGGREGATE.json": "ac0446506394f161666cc79fff2e32d178ca9fa1912f0ceca2677d0f8934833e",
+    "PILOT_INDEPENDENT_REVIEW.json": "27216b2083716d920f08f8667c5e8ee3f755d9ddcb72bf1e05e34194d512cc43",
+    "FINAL_SOURCE_MANIFEST.json": "0c020caa83080b6a426a6fe2d90d39a5222b4972b3b4ca2d9511f8abc171b4e3",
+    "FINAL_EVALUATOR_MANIFEST.json": "8c880d2bd97e5c9e918c82a28cdbc50c8901a1a10cc575558429a4dae5f696c2",
+    "FINAL_OWNERSHIP_AUDIT.json": "21199c343b65700774d5cfa29f5bce0c6762d84aadcf1d30ef7408370e9db5e8",
+    "INPUT_INSPECTION.json": "b26346222a980b6cba1d24773c66ea2bda36460bc38a68b5b632e97684bde857",
+    "SUITE01_PIXEL_INSPECTION.json": "80337f2669103698c344c6b7779f611e5da3feba0c09f11b40f25cd7f729a2ac",
+    "RUNTIME_TRACE_SUMMARY_SUITE01.json": "6333a2efda68404bf148c632a2f530419a8e0dc98363a22c79b7d78b63f6f0c7"
+  },
+  "excluded_claims": [
+    "canonical qualification",
+    "P03",
+    "VA",
+    "R13",
+    "CORE",
+    "MF",
+    "original R1 production qualification",
+    "physical production qualification"
+  ],
+  "completed_at": "2026-09-29T07:54:06.373059+00:00"
+}

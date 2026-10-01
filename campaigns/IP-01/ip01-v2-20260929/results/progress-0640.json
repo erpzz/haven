@@ -1,0 +1,34 @@
+{
+  "status": "IN PROGRESS · final evaluation pending",
+  "observed_at": "2026-09-29 06:40 UTC",
+  "candidate_sha": "00dea8a134aca10a0bea8ad82c44861ace2d3d93",
+  "model": "qwen2.5vl:3b Q4_K_M · actual local text and image readiness",
+  "process_shutdown": "Root app and five model workloads confirmed stopped; QA17 preparation active",
+  "scope": "Independent development evidence on synthetic content. The final candidate freeze, final pilot and three final reviews remain pending.",
+  "journeys": [
+    {"name": "Private notes and explicit sharing", "result": "Executed", "evidence": "Actual independent HTTP and browser journeys; separate Person A/B sessions; private evidence denied to B, eligible shared evidence useful."},
+    {"name": "Correction, revocation and once-only consumption", "result": "Executed", "evidence": "Independent main150 and seam38 cases; stale-output fencing, finite grants, four distinct records and lost-reply history without replay."},
+    {"name": "Persistent drafts, tasks and recovery", "result": "Executed", "evidence": "Actual browser edits, current restart and rollback review-only mode. Synthetic state is stored in local SQLite."},
+    {"name": "Benign process faults", "result": "13 scenarios observed", "evidence": "Independent owned-process observer; maximum measured worker stop0.281seconds against the frozen3second target."},
+    {"name": "Actual model readiness", "result": "4 calls; semantic4/4", "evidence": "Two text and two image calls through APP authority. Independent requested-word-bound score3/4; the failure was retained."},
+    {"name": "Active model cancellation", "result": "1 text trial observed", "evidence": "Pinned resident model and CPU activity observed before cancellation; retained handles stopped in0.156seconds, control survived, settlement confirmed."},
+    {"name": "Remaining model lifecycle and browser checks", "result": "Not executed", "evidence": "L2 preflight failed before submission during a QA receipt-publication incident. Original evidence preserved; task16 reached its fixed bound. New task17 requires separate exact controls."},
+    {"name": "Final72 pilot and final reviews", "result": "Pending", "evidence": "Unchanged24families and3repeats. Code, vision and evidence reviewers remain distinct from implementation and executable QA."}
+  ],
+  "budgets": {
+    "Assignments": "17 of24 dispatched; six review/delivery slots reserved",
+    "Actual model calls": "Readiness4/16 · lifecycle1/8 · final0/72",
+    "Model wall time": "108.954 of5400seconds charged; five confirmed settlements",
+    "Final deterministic suite starts": "0 of3",
+    "Issue20 runtime checkpoints": "2 of4",
+    "Fixed campaign deadline": "2026-09-29 10:10:16UTC /06:10:16EDT"
+  },
+  "limitations": [
+    "This snapshot is a dated progress record, not final acceptance or the runnable app.",
+    "Demo identity selection is simulated login; same-user evaluator separation does not establish protected filesystem enforcement.",
+    "Protected pilot verdict must remain EVALUATION_INCONCLUSIVE without enforceable protection, even if its comparison criteria pass.",
+    "The104vector cases comprise76backing/configuration faults and28in-memory constant faults; they are not104HTTP reconfiguration workflows.",
+    "The model gate is currently disabled. Restarting the deterministic app does not authorize inference or reset budgets.",
+    "No originalR1, production, canonicalP03/CORE/MF/VA/R13, real-account, enrolled-device or physical qualification is claimed."
+  ]
+}

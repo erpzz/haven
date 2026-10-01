@@ -1,0 +1,145 @@
+{
+  "schema": "ip01.closure-run.v1",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "parent_campaign": "ip01-v2-20260929",
+  "root_native_id": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
+  "started_at": "2026-09-29T21:24:04.782931+00:00",
+  "hard_deadline": "2026-09-29T22:54:04.782931+00:00",
+  "stop_new_assignments_at": "2026-09-29T22:09:04.782931+00:00",
+  "time_bound_basis": "Root chooses a finite 90-minute closure window for the operator-requested distinct bounded continuation; original six-hour run is expired and immutable. Final 45 minutes reserved for verification, publication and shutdown.",
+  "operator_authorization": "Current message explicitly continues the GitHub-coordinated campaign, requires a distinct bounded closure run and final H00/CODE/VISION/EVIDENCE/delivery. No authority is inferred from usage reset or from a GitHub comment.",
+  "remaining_graph": [
+    "21 H00 final integration",
+    "22 CODE-FINAL",
+    "23 VISION-FINAL",
+    "24 EVIDENCE-FINAL",
+    "Existing root delivery task 6: reports, publication, shutdown"
+  ],
+  "limits": {
+    "new_assignments": 4,
+    "cumulative_assignments": 24,
+    "active_children": 3,
+    "new_model_calls": 0,
+    "new_final_suite_starts": 0,
+    "new_downloads": 0,
+    "new_features": 0,
+    "new_provider_spending": 0
+  },
+  "baseline": {
+    "assignments_used": 20,
+    "model_calls": {
+      "readiness": 6,
+      "lifecycle": 4,
+      "final": 54
+    },
+    "settled_calls": 64,
+    "unknown_cleanup": 0,
+    "model_seconds": 1593.4050000000425,
+    "final_suite_starts": 3,
+    "original_issue_checkpoints": 2,
+    "original_issue_checkpoint_cap": 4
+  },
+  "final_execution": "PARTIAL",
+  "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "external_coordination": {
+    "latest_consumed": {
+      "comment_id": 5898973462,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5898973462",
+      "label": "IP01-SUPERADMIN:20260929-1710ET:resume-steer-v1",
+      "consumed_at": "2026-09-29T21:24:04.782931+00:00",
+      "disposition": "ACCEPTED_WITHIN_OPERATOR_CONTINUATION_SCOPE",
+      "precedence": "Current explicit operator continuation and mandatory check-in amendment > scoped WORK_PACKAGE > external corrective guidance. Steward agreement is neither authorization nor empirical evidence.",
+      "actions": [
+        "Preserve expired original clock, all 64 model calls, three final-suite starts and failed attempts",
+        "Publish exact evaluated executable bytes, distinguishing worktree hashes from historical Git identity",
+        "Use four remaining assignments for H00 and distinct code/vision/evidence reviews",
+        "Close with PARTIAL final execution, accurate report/publication and cessation evidence"
+      ],
+      "scope_expansion": "NONE_ACCEPTED; permissions, model selection, calls, suites, spending and physical activity are unchanged. Any expansion remains HUMAN_DECISION_REQUIRED."
+    },
+    "required_boundaries": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "additional_material_events": true,
+    "reread_after_every_checkpoint": true,
+    "old_checkpoint_cap": "Preserved historically; current explicit operator mandatory boundaries govern continuation postings."
+  },
+  "processes": "Stopped: originalAPPexactidentities absent, taskpathruntimeprocesses0, disabledgate/unchangedledger, fournativechildren completed+closed, offlinebrowserobservedresiduals0.",
+  "status": "CLOSED_RESTRICTED_BOUNDED_PARTIAL_HANDOFF",
+  "at": "2026-09-29T22:14:32.085913+00:00",
+  "assignments_used": 24,
+  "assignments_remaining": 0,
+  "active_native_children": [],
+  "last_published_observation": {
+    "at": "2026-09-29T21:44:05.687681+00:00",
+    "commit": "01d0c746da73546478ed4882a484f3099fa110b9"
+  },
+  "completion_semantics": "Closure deliverable only; CODE requireschanges and empiricalpilot remainsPARTIAL. No general IP01 capabilityacceptance.",
+  "code_acceptance": "CHANGES_REQUIRED",
+  "delivered_capability_claim": "Restricted partial handoff only; no general runtime, canonical or physical acceptance.",
+  "administrative_close_recorded_at": "2026-09-29T22:20:17.593569+00:00",
+  "checkpoints": {
+    "A": {
+      "id": 5899243588,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899243588",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "B": {
+      "id": 5899289805,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899289805",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "C": {
+      "id": 5899295145,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899295145",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "D": {
+      "id": 5899301415,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899301415",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "E": {
+      "id": 5900010291,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5900010291",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "F": {
+      "id": 5900181426,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5900181426",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "P1": {
+      "id": 5899392690,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899392690",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "P2": {
+      "id": 5899800430,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899800430",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    },
+    "P3": {
+      "id": 5899903142,
+      "url": "https://github.com/erpzz/haven/issues/20#issuecomment-5899903142",
+      "immediate_readback": true,
+      "newer_stewardship_found": false
+    }
+  },
+  "final_delivery_receipt": "receipts/DELIVERY_END.json",
+  "source_candidate_changed": false,
+  "elapsed_minutes_at_close_record": 56.21359405
+}

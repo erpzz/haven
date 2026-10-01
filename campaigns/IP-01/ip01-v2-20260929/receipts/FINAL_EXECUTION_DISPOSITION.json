@@ -1,0 +1,65 @@
+{
+  "at": "2026-09-29T21:27:32.940835+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "status": "PARTIAL",
+  "exact_candidate_commit": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "historical_evaluated_revision": "487c67299445a29e0fbbdede04259565f741f587",
+  "candidate_bytes_changed": false,
+  "deterministic": {
+    "status": "COMPOSITE_PASS",
+    "starts_consumed": 3,
+    "coverage": "Seven suite01 components plus 221 producer checks suite03",
+    "failed_starts_preserved": [
+      {
+        "start": 1,
+        "pass": 76,
+        "setup_errors": 145
+      },
+      {
+        "start": 2,
+        "pass": 7,
+        "setup_errors": 214
+      }
+    ],
+    "new_starts": 0
+  },
+  "pilot": {
+    "scheduled": 72,
+    "executed": 54,
+    "passed": 45,
+    "conservative_failures": 9,
+    "not_executed": 18,
+    "remaining_disposition": "NOT_EXECUTED_RESOURCE_BOUND; no new calls in closure",
+    "protected_verdict": "EVALUATION_INCONCLUSIVE",
+    "protected_separation": "NOT_ESTABLISHED"
+  },
+  "browser": {
+    "B1": "First premodel attempt failed; versioned harness repair and actual recheck passed",
+    "B2": "Actual model finished but release denied GRANT_QUOTA_EXHAUSTED; abstention unobservable",
+    "new_attempts": 0
+  },
+  "lifecycle": {
+    "text_cancel_seconds": 0.156,
+    "image_cancel_seconds": 0.141,
+    "natural_text_timeout": "NOT_EXERCISED_EARLY_SUCCESS",
+    "natural_image_timeout": "NOT_EXERCISED_EARLY_SUCCESS",
+    "new_attempts": 0
+  },
+  "ledger": {
+    "readiness": 6,
+    "lifecycle": 4,
+    "final": 54,
+    "confirmed_settlements": 64,
+    "unknown_cleanup": 0,
+    "charged_seconds": 1593.4050000000425
+  },
+  "evidence": "Independent QA17 executed and graded; root reconciles saved receipts, does not independently rerun or treat H00/steward agreement as empirical evidence.",
+  "owned_processes": "APP stopped; gate disabled; resource HALT retained; native children none at receipt creation",
+  "limitations": [
+    "B2 usability/release limitation",
+    "No real model timeout observed",
+    "Incomplete family repeats and semantic failures",
+    "Protected evaluator enforcement absent",
+    "Canonical/production/physical acceptance not established"
+  ]
+}

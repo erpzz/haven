@@ -1,0 +1,345 @@
+{
+  "schema": "ip01.candidate-freeze.v1",
+  "created_at": "2026-09-29T05:10:38.562614+00:00",
+  "candidate_commit": "f2acfb050b709c948a06cc090a74a974f5814515",
+  "candidate_tree": "5eb29006669d80665da43313b94760187e40463e",
+  "source_files": [
+    {
+      "path": "labs/ip01/.gitignore",
+      "worktree_sha256": "d8d14f8ba1de4c22d163262fe69619da4fe75febcb5305d27e2a187b881fea53",
+      "commit_bytes_sha256": "d8d14f8ba1de4c22d163262fe69619da4fe75febcb5305d27e2a187b881fea53",
+      "bytes": 212,
+      "git_blob": "31f3906c48296d3ba34aaa6f83df72d267c898b8"
+    },
+    {
+      "path": "labs/ip01/README.md",
+      "worktree_sha256": "d822170874703724b9874dae6808a7f7a0d692bef23167a12d97fc6034dd4e55",
+      "commit_bytes_sha256": "d822170874703724b9874dae6808a7f7a0d692bef23167a12d97fc6034dd4e55",
+      "bytes": 5767,
+      "git_blob": "2ea1f684b058f3f1416ded186dadd6e2bb1871f1"
+    },
+    {
+      "path": "labs/ip01/fixtures/demo-notes.json",
+      "worktree_sha256": "11065181fdc55eadc52656fbcf2dca352b1ca891ad1ac65e0b4a45aa997c2943",
+      "commit_bytes_sha256": "11065181fdc55eadc52656fbcf2dca352b1ca891ad1ac65e0b4a45aa997c2943",
+      "bytes": 1440,
+      "git_blob": "2e0c1efb84aa8467d079a8e33f407027190a3430"
+    },
+    {
+      "path": "labs/ip01/haven/__init__.py",
+      "worktree_sha256": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+      "commit_bytes_sha256": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+      "bytes": 94,
+      "git_blob": "1b3028a54e02a3245a923943d117431bcc5db078"
+    },
+    {
+      "path": "labs/ip01/haven/app.py",
+      "worktree_sha256": "dfbcab013af21ee086fce8c4d659476d9df47fe6000a6b1f0c34ac6904df1e56",
+      "commit_bytes_sha256": "dfbcab013af21ee086fce8c4d659476d9df47fe6000a6b1f0c34ac6904df1e56",
+      "bytes": 44205,
+      "git_blob": "0ba082dfffe8a0bb52c6d718beceb5a7ed5997bd"
+    },
+    {
+      "path": "labs/ip01/haven/authority.py",
+      "worktree_sha256": "9c9547375e7cb96b6f159635d0eb24b93ada54b27dc17ba427fccd86836ad3ca",
+      "commit_bytes_sha256": "9c9547375e7cb96b6f159635d0eb24b93ada54b27dc17ba427fccd86836ad3ca",
+      "bytes": 21170,
+      "git_blob": "69abc5242e04a488e268a018eb97961f9efe965a"
+    },
+    {
+      "path": "labs/ip01/haven/contracts.py",
+      "worktree_sha256": "95a7721f42fc76a38fa457b950d5c1fface81beff0f766e030afd142fa856dd5",
+      "commit_bytes_sha256": "95a7721f42fc76a38fa457b950d5c1fface81beff0f766e030afd142fa856dd5",
+      "bytes": 5049,
+      "git_blob": "73a2816c9679ff1a3b87be6003bb573715ac4995"
+    },
+    {
+      "path": "labs/ip01/haven/model_adapter.py",
+      "worktree_sha256": "0e29edc6f826b04ba8c1bac3a28d55c5a2844f56a20349bb5f321d95577fc0a2",
+      "commit_bytes_sha256": "0e29edc6f826b04ba8c1bac3a28d55c5a2844f56a20349bb5f321d95577fc0a2",
+      "bytes": 17564,
+      "git_blob": "c9ac94741dfe215e6bc0fb7a10e674eb5ca72b03"
+    },
+    {
+      "path": "labs/ip01/haven/static/app.css",
+      "worktree_sha256": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+      "commit_bytes_sha256": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+      "bytes": 9373,
+      "git_blob": "bdc8af0e8dbbca10624a9e22811311c6b307365a"
+    },
+    {
+      "path": "labs/ip01/haven/static/app.js",
+      "worktree_sha256": "5930eb6331a2dec25d0a69d2ad1ff142666cf85667a9793b311f409ff0a33574",
+      "commit_bytes_sha256": "06d85f34ccf5c7a3aa3e615e1df2fe34ea72f4875988d5d9d30fb28d856897a8",
+      "bytes": 12490,
+      "git_blob": "f7ecdb4311e27d2b222757e212d9171d5271da8b"
+    },
+    {
+      "path": "labs/ip01/haven/store.py",
+      "worktree_sha256": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+      "commit_bytes_sha256": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+      "bytes": 11015,
+      "git_blob": "b55faaaffcd3eb75c1922404f4a89a7b008aa0d3"
+    },
+    {
+      "path": "labs/ip01/haven/supervisor.py",
+      "worktree_sha256": "9713cac68f27ca627780334e27f2637fc258711da2e8072cd70b6f2cd1ff1437",
+      "commit_bytes_sha256": "9713cac68f27ca627780334e27f2637fc258711da2e8072cd70b6f2cd1ff1437",
+      "bytes": 30967,
+      "git_blob": "61e1773df0a16fbd2938b0e0116309ce5b72ecaa"
+    },
+    {
+      "path": "labs/ip01/haven/templates/index.html",
+      "worktree_sha256": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+      "commit_bytes_sha256": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+      "bytes": 7955,
+      "git_blob": "e9e791761ba5c4eda50f5ff6803a77bdc383b049"
+    },
+    {
+      "path": "labs/ip01/haven/worker.py",
+      "worktree_sha256": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d",
+      "commit_bytes_sha256": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d",
+      "bytes": 3400,
+      "git_blob": "f80d7a4032f14b45fa37542750d78f9a291cf953"
+    },
+    {
+      "path": "labs/ip01/requirements.lock",
+      "worktree_sha256": "bc2b94b9763868b08170dcd18790db46537ad8eac7cbc6f037404a5893f0ba48",
+      "commit_bytes_sha256": "9906fbd6155427b580ea611147f077ddfad213a8ba05b97532919da92cadc2bc",
+      "bytes": 3218,
+      "git_blob": "63da67e11aa9dfd97d133bafabea38690abb01b5"
+    },
+    {
+      "path": "labs/ip01/scripts/check_publication.py",
+      "worktree_sha256": "940d7e523fa6db2ee367fa4ab2a1bd7466d433ddca8610be110c32716771a91a",
+      "commit_bytes_sha256": "940d7e523fa6db2ee367fa4ab2a1bd7466d433ddca8610be110c32716771a91a",
+      "bytes": 4182,
+      "git_blob": "c23de199c79cf17c1311dcc1fa3cc5717ba3a3cf"
+    },
+    {
+      "path": "labs/ip01/scripts/freeze_candidate.py",
+      "worktree_sha256": "e84a9c672cbd20845ddcb4ad1646f6a825a96e0174aeaf4dec206e3db15f47ba",
+      "commit_bytes_sha256": "e84a9c672cbd20845ddcb4ad1646f6a825a96e0174aeaf4dec206e3db15f47ba",
+      "bytes": 4883,
+      "git_blob": "9395ab7d9828be9bc9da3346861b13bdf18f3cd5"
+    },
+    {
+      "path": "labs/ip01/scripts/render_snapshot.py",
+      "worktree_sha256": "0222f6476c0c450e253641eb4ea2e6006a8fb920a5151b7ce0a6ff2329f9cc78",
+      "commit_bytes_sha256": "0222f6476c0c450e253641eb4ea2e6006a8fb920a5151b7ce0a6ff2329f9cc78",
+      "bytes": 4717,
+      "git_blob": "f3f8e793a08270b8f563dc9fc21cbc06cb1934fc"
+    },
+    {
+      "path": "labs/ip01/scripts/run.py",
+      "worktree_sha256": "5ee9fb5f92c9977be4754675ebe136bd13bf42758207a98abad907b065a9a656",
+      "commit_bytes_sha256": "5ee9fb5f92c9977be4754675ebe136bd13bf42758207a98abad907b065a9a656",
+      "bytes": 12081,
+      "git_blob": "3e4c8d5265d1533e6b218ac39d19fadbfb7aba40"
+    },
+    {
+      "path": "labs/ip01/tests/app/browser_walkthrough.py",
+      "worktree_sha256": "49c602312e21ee4e3796bee8fe1dd2a295b412d989e16c52fee45aee11296557",
+      "commit_bytes_sha256": "49c602312e21ee4e3796bee8fe1dd2a295b412d989e16c52fee45aee11296557",
+      "bytes": 5497,
+      "git_blob": "1421316d1e8b6f93b9903939d78cba26d8147313"
+    },
+    {
+      "path": "labs/ip01/tests/app/test_application.py",
+      "worktree_sha256": "45410aebc3e96d1c932a5be6bdd4f243a61fc748798ae05e3d4e6672e4e5f57b",
+      "commit_bytes_sha256": "45410aebc3e96d1c932a5be6bdd4f243a61fc748798ae05e3d4e6672e4e5f57b",
+      "bytes": 20699,
+      "git_blob": "0562cd3aa1cb2a12941819b8a10c03c13d563a48"
+    },
+    {
+      "path": "labs/ip01/tests/runtime/fixture_worker.py",
+      "worktree_sha256": "694a73eb5858bcebf14e5fbe6b36a71ebea327d149ffbe778cd6918e744b7a61",
+      "commit_bytes_sha256": "694a73eb5858bcebf14e5fbe6b36a71ebea327d149ffbe778cd6918e744b7a61",
+      "bytes": 1919,
+      "git_blob": "7ab8e772b7d37aaa863b346fceec59ee36d857d2"
+    },
+    {
+      "path": "labs/ip01/tests/runtime/prepare_model.py",
+      "worktree_sha256": "59e9abb19c4e4d4f70f7a696288b6f7cfe091e3dcfc58ac3205c1507ba187465",
+      "commit_bytes_sha256": "59e9abb19c4e4d4f70f7a696288b6f7cfe091e3dcfc58ac3205c1507ba187465",
+      "bytes": 9518,
+      "git_blob": "aaed6dd09f57c8ff0178cac9b7d3343872f20417"
+    },
+    {
+      "path": "labs/ip01/tests/runtime/test_model_gate.py",
+      "worktree_sha256": "d1e0e000296021e076dfeaa2c9db931c8a104cd5eb9fd3f7217c4aa0b80ca335",
+      "commit_bytes_sha256": "d1e0e000296021e076dfeaa2c9db931c8a104cd5eb9fd3f7217c4aa0b80ca335",
+      "bytes": 4903,
+      "git_blob": "f4f84cd06f90e1eadb7259b7358c402142d86dd4"
+    },
+    {
+      "path": "labs/ip01/tests/runtime/test_runtime.py",
+      "worktree_sha256": "a19b03ac35ab0734e9031f2450c0899c24064aac2c650403d3ad05f1162241ce",
+      "commit_bytes_sha256": "a19b03ac35ab0734e9031f2450c0899c24064aac2c650403d3ad05f1162241ce",
+      "bytes": 13112,
+      "git_blob": "52dcb48ba4d377ffbf3f98f7f4c32ebaf60f3cc2"
+    }
+  ],
+  "source_manifest_sha256": "da21f32c0fac50e5c7c0faf445af60b72f60d20d8231a675d8b1cfcca7637918",
+  "environment": {
+    "system": "Windows",
+    "release": "11",
+    "machine": "AMD64",
+    "python": "3.12.3",
+    "implementation": "CPython",
+    "packages": [
+      {
+        "name": "annotated-doc",
+        "version": "0.0.5"
+      },
+      {
+        "name": "annotated-types",
+        "version": "0.8.0"
+      },
+      {
+        "name": "anyio",
+        "version": "4.15.1"
+      },
+      {
+        "name": "certifi",
+        "version": "2026.7.22"
+      },
+      {
+        "name": "click",
+        "version": "8.5.0"
+      },
+      {
+        "name": "colorama",
+        "version": "0.4.6"
+      },
+      {
+        "name": "fastapi",
+        "version": "0.141.1"
+      },
+      {
+        "name": "greenlet",
+        "version": "3.5.6"
+      },
+      {
+        "name": "h11",
+        "version": "0.16.0"
+      },
+      {
+        "name": "httpcore",
+        "version": "1.0.9"
+      },
+      {
+        "name": "httpx",
+        "version": "0.28.1"
+      },
+      {
+        "name": "hypothesis",
+        "version": "6.168.3"
+      },
+      {
+        "name": "idna",
+        "version": "3.20"
+      },
+      {
+        "name": "iniconfig",
+        "version": "2.3.0"
+      },
+      {
+        "name": "Jinja2",
+        "version": "3.1.6"
+      },
+      {
+        "name": "MarkupSafe",
+        "version": "3.0.3"
+      },
+      {
+        "name": "packaging",
+        "version": "26.3"
+      },
+      {
+        "name": "pillow",
+        "version": "12.3.0"
+      },
+      {
+        "name": "pip",
+        "version": "24.0"
+      },
+      {
+        "name": "playwright",
+        "version": "1.63.0"
+      },
+      {
+        "name": "pluggy",
+        "version": "1.6.0"
+      },
+      {
+        "name": "psutil",
+        "version": "7.2.2"
+      },
+      {
+        "name": "pydantic",
+        "version": "2.13.5"
+      },
+      {
+        "name": "pydantic_core",
+        "version": "2.46.5"
+      },
+      {
+        "name": "pyee",
+        "version": "13.0.1"
+      },
+      {
+        "name": "Pygments",
+        "version": "2.21.0"
+      },
+      {
+        "name": "pytest",
+        "version": "9.1.1"
+      },
+      {
+        "name": "python-multipart",
+        "version": "0.0.32"
+      },
+      {
+        "name": "sortedcontainers",
+        "version": "2.4.0"
+      },
+      {
+        "name": "starlette",
+        "version": "1.7.0"
+      },
+      {
+        "name": "typing-inspection",
+        "version": "0.4.4"
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.16.0"
+      },
+      {
+        "name": "uvicorn",
+        "version": "0.54.0"
+      }
+    ]
+  },
+  "acceptance": "NOT_ESTABLISHED_BY_IDENTITY_RECEIPT",
+  "model_identity_file_sha256": "2e1c3d48426655a4c3494924eb8c93873034a2b17373c9635436a1f225d805a9",
+  "model_identity": {
+    "manifest_sha256": "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1",
+    "runtime_sha256": "d571e4cf0ad4456fccd33d5b985b6d63ba5669c6e5a812391704083952aae3d5",
+    "template_sha256": "a242d8dfdc8f8c2b0586ee85fba70adb408fb633aba2836fe1b05f2c46631474",
+    "preprocessor_sha256": "b6b6a5ebfa3bb4f08f1edad7ae9950d09b79facf9e1ef2be6c16761beb236ee5",
+    "prompt_sha256": "63e51cc4647c7a738783a5c877f4e7caf6d9572d926d6b280379f7d0b685a993",
+    "envelope": {
+      "images": 1,
+      "job_memory_bytes": 12884901888,
+      "max_loaded_models": 1,
+      "num_ctx": 4096,
+      "num_gpu": 0,
+      "num_predict": 768,
+      "parallel": 1,
+      "wall_seconds": 120
+    }
+  },
+  "receipt_payload_sha256": "673c81a5828ab391796dba07a329b032f458108e97b2d7291017a909cca6a77f"
+}

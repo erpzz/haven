@@ -1,0 +1,354 @@
+{
+  "schema": "ip01.exact-candidate-materialization.v1",
+  "at": "2026-09-29T21:26:50.850736+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "historical_evaluated_revision": "487c67299445a29e0fbbdede04259565f741f587",
+  "historical_freeze_sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+  "exact_candidate_commit": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "exact_candidate_tree": "befc1038e66fd59306c2b287f6a2924dcdef8507",
+  "source_files": [
+    {
+      "path": "labs/ip01/.gitignore",
+      "sha256": "d8d14f8ba1de4c22d163262fe69619da4fe75febcb5305d27e2a187b881fea53",
+      "bytes": 212,
+      "git_blob": "31f3906c48296d3ba34aaa6f83df72d267c898b8",
+      "historical_blob_sha256": "d8d14f8ba1de4c22d163262fe69619da4fe75febcb5305d27e2a187b881fea53",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/README.md",
+      "sha256": "f81674e4155c23726f1ed8d1df0fc1aa87e0f551e4de837af1e1b12f95734dca",
+      "bytes": 8317,
+      "git_blob": "20cbfd5185631f6ca07df03afa6d7d7e350bc863",
+      "historical_blob_sha256": "f81674e4155c23726f1ed8d1df0fc1aa87e0f551e4de837af1e1b12f95734dca",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/README.md",
+      "sha256": "1ac83a87b82f9cf4debd75b5061cc08599229b24e7533016c902da15edfaebdf",
+      "bytes": 1866,
+      "git_blob": "47316e59b8ab7357efc6de33b5bf7d61f90b1a35",
+      "historical_blob_sha256": "a8253078ead4d348a2bdd54487d71bf5611054fe5f57f22d9d04d4164c883274",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/common.py",
+      "sha256": "c1c7a9678bd648078bd0dc7daf3a63f0ed164129f9caf14997d6db3402ca3129",
+      "bytes": 4871,
+      "git_blob": "ee896b3019fc99dc928ce3666e43ae137ae4fb4a",
+      "historical_blob_sha256": "b08e068defee5df67782f122c9210c56d79bfdbd90f82610eeb36745bcb3cec0",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/conftest.py",
+      "sha256": "0ec81b9e86389a4dfc8e88f33ab9dcab31ebfdcf286569aa3fde58f1c2fee44a",
+      "bytes": 1264,
+      "git_blob": "2ea0d9528a49752b7f65e24a7358074f9a7af081",
+      "historical_blob_sha256": "4b89aeb3cb12bc0d512c5ada6f144682c48a94e416ba8f90139c885eb6a313d0",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/prepare.py",
+      "sha256": "4d7d56c702930a688c4ab2b4cbfbd6abe13073ae6f7964e5b2b00f9fbe8997bb",
+      "bytes": 2879,
+      "git_blob": "edc6d48a7184c76924c22478f7bed49893841bb1",
+      "historical_blob_sha256": "91affb10cb309258c59a10449340fd904b00d31a0804b50c66981e58a70a5245",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_backing.py",
+      "sha256": "b1af947a25e111529888493fdd575a8002164a1094a07996fbc8faab6f60a174",
+      "bytes": 5111,
+      "git_blob": "9142b6c8dfc325e00be602a9bbbef05685ea5ac9",
+      "historical_blob_sha256": "f11a54995322c76c6b7046ae6b51571ea9ac730321741bb36f8b3e7f95ed586c",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_bounds.py",
+      "sha256": "30604f9ea222457a3e0f4ab0704cd52b75ace5d7765ed89854aca7eb50c54139",
+      "bytes": 6161,
+      "git_blob": "abb00ad2a50ad49d899d362002f38f6de52c066c",
+      "historical_blob_sha256": "f4c207208c7059f4575ac989d2df8c667d8b8983bd744b8f35970ea4ecf77f85",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_code_early.py",
+      "sha256": "cc5639377b97e81959531f2a1cab470a24d0f35376c871bdeaff86bf3f26f6fc",
+      "bytes": 2868,
+      "git_blob": "17cea8406efe498f0a682f5d92fb85aa0cd1a4cd",
+      "historical_blob_sha256": "134ef198c529839871b5656c27fd6bc512d7b49fbea0fd1080379634a640493d",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_extra_bounds.py",
+      "sha256": "e04b33f9f15601f09ee30c45cf6e2b8cfc7f14f8ce753438ec17af982a89df01",
+      "bytes": 3763,
+      "git_blob": "9a63221c1d66a326a95d2f207f66db8ddb20b035",
+      "historical_blob_sha256": "e3ba3efcdb8d816edbe18af000e03946ee5882b676a5ff701fa50b8d2a7293a3",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_functional.py",
+      "sha256": "340a17918bf7f70e2bdd86728cf7f0d22736ae0addbbef5c01e6fafc5c925768",
+      "bytes": 14490,
+      "git_blob": "7de4d2fd020e90de09b1c6af6ab3026c6c6221db",
+      "historical_blob_sha256": "5dc0d17086431c6e094dc4a3474a8c86d7c7221d389829b7b8cb66a60895be06",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/evaluation/deterministic/test_static_domains.py",
+      "sha256": "dfeb4925bc2d338ce7bdf3642fe48ca08edddd474273b4966365d670710fc26e",
+      "bytes": 2504,
+      "git_blob": "a469cc6995c76f69c9bb2d551e5d0df8dc3faced",
+      "historical_blob_sha256": "aec2fdd02b2cead5afcdc46cdaaf4b7843d15d0c714625f646cf9de21db3ba32",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/fixtures/demo-notes.json",
+      "sha256": "11065181fdc55eadc52656fbcf2dca352b1ca891ad1ac65e0b4a45aa997c2943",
+      "bytes": 1440,
+      "git_blob": "2e0c1efb84aa8467d079a8e33f407027190a3430",
+      "historical_blob_sha256": "11065181fdc55eadc52656fbcf2dca352b1ca891ad1ac65e0b4a45aa997c2943",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/__init__.py",
+      "sha256": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+      "bytes": 94,
+      "git_blob": "1b3028a54e02a3245a923943d117431bcc5db078",
+      "historical_blob_sha256": "0f3279bc3b0f822df8a2a6419ea924bf6b71e1e17ebed687d9c3e72067b5ec3a",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/app.py",
+      "sha256": "93b9335f9bb5eb73b506c34a08bc8c2490263ed2ccbe551fa45253f0cd5b7427",
+      "bytes": 55714,
+      "git_blob": "d2200d4748d7ad68b4ebc625443dd8a0c96f51e7",
+      "historical_blob_sha256": "610c7990e0bc5bd057b54ddc6a0e646e94d5a05343ef2bd1bd0420f18732c281",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/authority.py",
+      "sha256": "15ca0f6b4e273d5d4d19b54d2cd082cc41bb592c8fadd60c1c9871a5c724ac75",
+      "bytes": 21770,
+      "git_blob": "2f017b14c0affb479598c64b7597f9c892456a7c",
+      "historical_blob_sha256": "15ca0f6b4e273d5d4d19b54d2cd082cc41bb592c8fadd60c1c9871a5c724ac75",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/contracts.py",
+      "sha256": "9912e3282f5634627f6b8ff3b0969c2c2e1920ca8077729f5bf3e365d1de8b3f",
+      "bytes": 5213,
+      "git_blob": "06d422e691e0f5cfecb63288b8566764eba8e62e",
+      "historical_blob_sha256": "78284639604ba476dd93e72f04577a33e567bce9cbc91699569c1f6ef3b47913",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/model_adapter.py",
+      "sha256": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+      "bytes": 19229,
+      "git_blob": "36cc121d4273d9d8a4b043b42ac30c482b60810c",
+      "historical_blob_sha256": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/static/app.css",
+      "sha256": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+      "bytes": 9373,
+      "git_blob": "bdc8af0e8dbbca10624a9e22811311c6b307365a",
+      "historical_blob_sha256": "f237f944b99b79051978874ae4e7e45cfafd1c2e676f3341f2dc6dc7eff92790",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/static/app.js",
+      "sha256": "3ca857311c75771d7ab972575d5afb1b067005a5bb9c8190deca939d8f9ef2fa",
+      "bytes": 14367,
+      "git_blob": "8d0607efcf45d50ec6292f83e26e907938362336",
+      "historical_blob_sha256": "a04b40645e4973f00f84986dfb009da4236b6a9cf4f5b051a6a012935d72dc91",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/store.py",
+      "sha256": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+      "bytes": 11015,
+      "git_blob": "b55faaaffcd3eb75c1922404f4a89a7b008aa0d3",
+      "historical_blob_sha256": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/supervisor.py",
+      "sha256": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+      "bytes": 44063,
+      "git_blob": "f4d6337ff2011b62c396049bbe30aac1e9f628fa",
+      "historical_blob_sha256": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/templates/index.html",
+      "sha256": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+      "bytes": 7955,
+      "git_blob": "e9e791761ba5c4eda50f5ff6803a77bdc383b049",
+      "historical_blob_sha256": "b5d485d711e392d8c50ba63fd596db7cc5f66494ddb81b28a0413c5a3748f57c",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/haven/worker.py",
+      "sha256": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a",
+      "bytes": 3528,
+      "git_blob": "5e90f58c5dccbee58a7e5b73a1c4620f1aaf98a3",
+      "historical_blob_sha256": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/requirements.lock",
+      "sha256": "bc2b94b9763868b08170dcd18790db46537ad8eac7cbc6f037404a5893f0ba48",
+      "bytes": 3218,
+      "git_blob": "7915ba2c90be89f283561e2c4664db527669583f",
+      "historical_blob_sha256": "9906fbd6155427b580ea611147f077ddfad213a8ba05b97532919da92cadc2bc",
+      "git_storage_changed": true,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/scripts/check_publication.py",
+      "sha256": "a5b27b634a802d9920243b96eaf2b8c49c63e22ad2ed606915598774e55d1f12",
+      "bytes": 4327,
+      "git_blob": "d456bd052d07639bd010694963096924a7940e40",
+      "historical_blob_sha256": "a5b27b634a802d9920243b96eaf2b8c49c63e22ad2ed606915598774e55d1f12",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/scripts/freeze_candidate.py",
+      "sha256": "e84a9c672cbd20845ddcb4ad1646f6a825a96e0174aeaf4dec206e3db15f47ba",
+      "bytes": 4883,
+      "git_blob": "9395ab7d9828be9bc9da3346861b13bdf18f3cd5",
+      "historical_blob_sha256": "e84a9c672cbd20845ddcb4ad1646f6a825a96e0174aeaf4dec206e3db15f47ba",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/scripts/render_snapshot.py",
+      "sha256": "dc7a2e6f5e160d8397eaa531f8873ac2b4967d4b0cf3a24fe215daebfbb98089",
+      "bytes": 4753,
+      "git_blob": "d1a6d6e25e1e88d989da1f2026824f6aa9a155c8",
+      "historical_blob_sha256": "dc7a2e6f5e160d8397eaa531f8873ac2b4967d4b0cf3a24fe215daebfbb98089",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/scripts/run.py",
+      "sha256": "06d5b4db081ad196098ba2e192ba53ebc84413692523e4484a315e9c99d38b43",
+      "bytes": 12673,
+      "git_blob": "51f8b1a1b2a66a62ca27206f665530158d11ede8",
+      "historical_blob_sha256": "06d5b4db081ad196098ba2e192ba53ebc84413692523e4484a315e9c99d38b43",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/tests/app/browser_walkthrough.py",
+      "sha256": "49c602312e21ee4e3796bee8fe1dd2a295b412d989e16c52fee45aee11296557",
+      "bytes": 5497,
+      "git_blob": "1421316d1e8b6f93b9903939d78cba26d8147313",
+      "historical_blob_sha256": "49c602312e21ee4e3796bee8fe1dd2a295b412d989e16c52fee45aee11296557",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/tests/app/test_app_fixes.py",
+      "sha256": "1ef8c3bfb98fa70c9da72e7e9eb2586a9759108e73b22b3a015de36ce348e9c2",
+      "bytes": 11573,
+      "git_blob": "99bd389b04fbbf5b8c08470fa8f685651cfa9a4f",
+      "historical_blob_sha256": "1ef8c3bfb98fa70c9da72e7e9eb2586a9759108e73b22b3a015de36ce348e9c2",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/tests/app/test_application.py",
+      "sha256": "45410aebc3e96d1c932a5be6bdd4f243a61fc748798ae05e3d4e6672e4e5f57b",
+      "bytes": 20699,
+      "git_blob": "0562cd3aa1cb2a12941819b8a10c03c13d563a48",
+      "historical_blob_sha256": "45410aebc3e96d1c932a5be6bdd4f243a61fc748798ae05e3d4e6672e4e5f57b",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/tests/runtime/fixture_worker.py",
+      "sha256": "e901d13be77e953c35672b6f662204da1fe1aba647a157d2f0c894c9300ba1f8",
+      "bytes": 2314,
+      "git_blob": "41524c2fe9d3ccb6d1a65c02dcb0f1f6e5dd58ea",
+      "historical_blob_sha256": "e901d13be77e953c35672b6f662204da1fe1aba647a157d2f0c894c9300ba1f8",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/tests/runtime/prepare_model.py",
+      "sha256": "59e9abb19c4e4d4f70f7a696288b6f7cfe091e3dcfc58ac3205c1507ba187465",
+      "bytes": 9518,
+      "git_blob": "aaed6dd09f57c8ff0178cac9b7d3343872f20417",
+      "historical_blob_sha256": "59e9abb19c4e4d4f70f7a696288b6f7cfe091e3dcfc58ac3205c1507ba187465",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/tests/runtime/test_model_gate.py",
+      "sha256": "d1e0e000296021e076dfeaa2c9db931c8a104cd5eb9fd3f7217c4aa0b80ca335",
+      "bytes": 4903,
+      "git_blob": "f4f84cd06f90e1eadb7259b7358c402142d86dd4",
+      "historical_blob_sha256": "d1e0e000296021e076dfeaa2c9db931c8a104cd5eb9fd3f7217c4aa0b80ca335",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/tests/runtime/test_runtime.py",
+      "sha256": "347f85fe350b6215714c1684395cab53e998304ad62cee324273b8c4224ca35a",
+      "bytes": 13106,
+      "git_blob": "374676c7114471253a9df0480c9659eb9be72658",
+      "historical_blob_sha256": "347f85fe350b6215714c1684395cab53e998304ad62cee324273b8c4224ca35a",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "labs/ip01/tests/runtime/test_runtime_fix.py",
+      "sha256": "7e61de543f231352561ff231f3ded358e0e87cc05b74043b0648267d8057455c",
+      "bytes": 13164,
+      "git_blob": "73b3687f873d74c43dc1ab1f905d07c9963f6956",
+      "historical_blob_sha256": "7e61de543f231352561ff231f3ded358e0e87cc05b74043b0648267d8057455c",
+      "git_storage_changed": false,
+      "only_line_endings_differ": true
+    }
+  ],
+  "source_worktree_bytes_changed": false,
+  "git_storage_changed_files": 14,
+  "reason": "Preserve exact evaluated bytes in Git blobs without changing any current source byte. Historical Git normalized line endings and was insufficient alone as an exact-byte reproduction identity.",
+  "reproduction": {
+    "command": "git -c core.autocrlf=false archive --format=tar --output=ip01-evaluated.tar 0b59551f36990cfb8a723f97da6d367358a8ceb5 labs/ip01",
+    "verification": "Root generated archive in memory and verified all 37 extracted member byte hashes against original worktree freeze. Explicit core.autocrlf=false disables line-ending conversion in Git archive. An initial default-settings archive verification failed and was retained as a reproduction-command finding; no source bytes changed. Extract only into a new operator-chosen directory; do not overwrite active work.",
+    "archive_sha256": "4a58860528135a89e67ed4fee4b74296be287d46d8f700600e47cf52a81f8d12"
+  },
+  "evidence_applicability": "All 37 evaluated source bytes unchanged; prior deterministic, lifecycle, browser and model evidence remains applicable with its original failures, omissions and scope. No empirical tests were rerun; no model calls or final-suite starts added.",
+  "independence": "Root-authored byte reconciliation, downstream independent reviewers required."
+}

@@ -1,0 +1,61 @@
+{
+  "at": "2026-09-29T21:12:15.723921+00:00",
+  "status": "POST_DEADLINE_READ_ONLY_AND_HANDOFF_RECOVERY",
+  "original_hard_deadline": "2026-09-29T10:10:16Z",
+  "runtime_stopped_at": "2026-09-29T07:53:50.873443+00:00",
+  "current_APP_status": "STOPPED_NO_DESCENDANTS",
+  "source37_and_QA_manifest106": "CURRENT_BYTES_VERIFIED_UNCHANGED",
+  "model_calls": {
+    "readiness": 6,
+    "lifecycle": 4,
+    "final": 54
+  },
+  "model_settlements": 64,
+  "model_unknown_cleanup": 0,
+  "ledger_sha256": "f3db7383060cf4aecd86acba7ea7d8c2f61ecf8d71200b35ab6ba6fe3e84f4cb",
+  "gate": "DISABLED; original expiry and resource HALT preserved",
+  "user_message": "i reset my limits",
+  "current_usage_observation": {
+    "used_percent": 0,
+    "ordinaryUsageAllowed": true,
+    "reset_performed_by_agent": false
+  },
+  "deadline_extension": "NOT_INFERRED; fresh scoped continuation question pending",
+  "native_closures": [
+    {
+      "at": "2026-09-29T21:12:15.723921+00:00",
+      "task_id": "INTEGRATION-FINAL",
+      "assignment": 18,
+      "native_id": "01a0eb61-9f2d-72c2-9acc-e1ac3845f9d7",
+      "status": "ERROR_USAGE_LIMIT_NO_FINAL_VERDICT_HANDLE_NOW_MISSING",
+      "prior_terminal_event": "Native usage-limit error notification received; exact error timestamp unavailable",
+      "current_native_check": "close_agent returned agent not found at recovery; no agent resumed or replaced",
+      "final_handback_received": false,
+      "scope": "H00 preparation artifacts retained; no final integration/code/vision acceptance inferred"
+    },
+    {
+      "at": "2026-09-29T21:12:15.723921+00:00",
+      "task_id": "CODE-FINAL",
+      "assignment": 19,
+      "native_id": "01a0eb92-7434-73a0-8f4e-ac2bc64da561",
+      "status": "ERROR_USAGE_LIMIT_NO_FINAL_VERDICT_HANDLE_NOW_MISSING",
+      "prior_terminal_event": "Native usage-limit error notification received; exact error timestamp unavailable",
+      "current_native_check": "close_agent returned agent not found at recovery; no agent resumed or replaced",
+      "final_handback_received": false,
+      "scope": "H00 preparation artifacts retained; no final integration/code/vision acceptance inferred"
+    },
+    {
+      "at": "2026-09-29T21:12:15.723921+00:00",
+      "task_id": "VISION-FINAL",
+      "assignment": 20,
+      "native_id": "01a0eb5c-f3bf-7c52-9bb1-90465cc30b24",
+      "status": "ERROR_USAGE_LIMIT_NO_FINAL_VERDICT_HANDLE_NOW_MISSING",
+      "prior_terminal_event": "Native usage-limit error notification received; exact error timestamp unavailable",
+      "current_native_check": "close_agent returned agent not found at recovery; no agent resumed or replaced",
+      "final_handback_received": false,
+      "scope": "H00 preparation artifacts retained; no final integration/code/vision acceptance inferred"
+    }
+  ],
+  "evidence_final_review": "NOT_DISPATCHED_BEFORE_RESOURCE_INTERRUPTION",
+  "new_runtime_or_native_review_execution": false
+}

@@ -1,0 +1,58 @@
+{
+  "schema": "haven.jev01.publication-receipt.v1",
+  "prepared_on": "2026-10-01",
+  "status": "RESEARCH_PUBLISHED_REFACTOR_READY_FOR_ROOT_DISPATCH_NOT_STARTED",
+  "operator_request": "Research and learn Jev, add the knowledge to GitHub, and instruct an agent to refactor to use Jev.",
+  "repository": "erpzz/haven",
+  "directory": "campaigns/IP-02/ip02-20260930/addenda/JEV-01/",
+  "parent_commit": "d9eb68278e6a0c1f1cb84bab09d8e7b089c62cc2",
+  "parent_tree": "9e16659c5e2d3da5292bc323afdcedcbcaa0f99f",
+  "publication_branch": "implementation/ip01-v2-20260929",
+  "coordination_issue": 20,
+  "existing_draft_pr": 21,
+  "identified_upstream": "TypeSafe AI Jev; current documented model jev-1.13.0",
+  "files": [
+    {"path":"START_HERE.md","git_blob_sha":"c07a0f0a6029a829afb5a5193b2f9ac0be8eedd4"},
+    {"path":"RESEARCH.md","git_blob_sha":"0a6259826444fdb1862ce196722683fe341164bb"},
+    {"path":"ACCEPTANCE.md","git_blob_sha":"606bef1516d8d58b64464f107bf2311b8f23fc3e"},
+    {"path":"SOURCES.json","git_blob_sha":"67713462bedd5ee2961e24a9110515dd8185bd7b"}
+  ],
+  "self_identity": "This fifth file and its peers are bound by the containing commit. The publication comment supplies the commit instead of embedding a circular self-hash.",
+  "refactor_direction": "Actual typed decision adapter and existing application source-selection seam; deterministic default; preserve local answer generation and deterministic authority.",
+  "planned_dispatch": {
+    "lead": "ip01_application_engineer / JEV-REFACTOR",
+    "integration": "separate haven_integration_manager consultation",
+    "qa": "distinct ip01_validation_engineer / JEV-QA",
+    "root": "Actual executing supervisor schedules and publishes; this publication does not create a native session",
+    "native_ids": null,
+    "additional_pre_final_assignments_max": 3,
+    "assignment_budget_source": "Existing IP-02 slots, not a new allowance; reuse undispatched APP/H00/QA scopes when economical",
+    "live_jev_calls_authorized": 0,
+    "new_qwen_calls_authorized_by_addendum": 0,
+    "new_final_suite_starts_authorized_by_addendum": 0
+  },
+  "unchanged": [
+    "All existing files, frozen IP-02 setup and original IP-01 executable/evidence bytes",
+    "Historical failures, model accounting, final starts, deadlines, controls and HALT",
+    "Root/H00/author/executable-QA/final-review separation and three-active-child limit",
+    "Existing IP-02 deadline, 24 assignments/six reserved, local model allocation and final-suite ceiling",
+    "Existing PR21 draft and research base; main, PR19 metadata, settings, workflows and permissions",
+    "No new downloads, API credentials, provider spending, private data, real accounts or physical operations"
+  ],
+  "actually_performed": [
+    "Primary-source public web documentation research",
+    "Selected pinned TypeSafe skill and SDK metadata inspection through GitHub",
+    "Current Haven PR/comment, work-package, source-selection/app and dependency-lock inspection",
+    "Original research synthesis, bounded agent instruction and proposed acceptance protocol",
+    "Creation of new documentation Git objects for subsequent verified publication"
+  ],
+  "not_performed": [
+    "Refactoring or executing Haven application source",
+    "Application/browser/lifecycle or independent acceptance tests",
+    "Live Jev or Qwen calls, SDK installation, key lookup or spending",
+    "Native Codex root/child launch or observation of unreported local processes",
+    "Merge, readiness promotion, settings/permission changes or physical actions"
+  ],
+  "publication_checks_required": "Compare against parent: five added documentation files only, no modification/deletion of existing paths. Verify fast-forward branch head and PR21 draft/base. Post and read back one idempotent Issue20 handoff. If a write is denied, do not bypass it.",
+  "live_activation_boundary": "Separate approved provider/data/credential/budget record and real qualification are required. Offline transport evidence never establishes live Jev performance or remote cessation."
+}

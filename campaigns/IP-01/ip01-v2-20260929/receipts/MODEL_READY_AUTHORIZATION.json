@@ -1,0 +1,22 @@
+{
+  "at": "2026-09-29T05:04:01.414439+00:00",
+  "task": "MODEL-READY",
+  "independent_benign_receipt_sha256": "a63f368b2c788911b950d9696acf30ed02f9533f154c1fdacce7813818124426",
+  "identity": {
+    "manifest_sha256": "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1",
+    "runtime_sha256": "d571e4cf0ad4456fccd33d5b985b6d63ba5669c6e5a812391704083952aae3d5",
+    "template_sha256": "a242d8dfdc8f8c2b0586ee85fba70adb408fb633aba2836fe1b05f2c46631474",
+    "preprocessor_sha256": "b6b6a5ebfa3bb4f08f1edad7ae9950d09b79facf9e1ef2be6c16761beb236ee5"
+  },
+  "gate_sha256": "08c027002e6e2b1c6abbd37c5186772d2e3766377a16f2bc63c6d504c726799b",
+  "slots_issued": {
+    "readiness": 4,
+    "lifecycle": 0,
+    "final": 0
+  },
+  "calls_consumed_at_authorization": 0,
+  "scope": "Initial four readiness calls through actual APP authority/admission/owned Supervisor only; no direct or hidden generation",
+  "preparation_evidence": "receipts/MODEL_PREPARATION.md",
+  "limits": "Fixed CPU envelope,120seconds,12GiB; stop admissions on unknown cleanup; no automatic retries; all failures retained",
+  "expiry": "2026-09-29T10:10:16Z"
+}

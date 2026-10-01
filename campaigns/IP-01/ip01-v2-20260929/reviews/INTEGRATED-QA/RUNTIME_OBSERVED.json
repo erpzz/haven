@@ -1,0 +1,614 @@
+{
+  "assignment": 15,
+  "stop_target_seconds": 3,
+  "cases": [
+    {
+      "case": "normal",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 6508,
+        "process_birth": 1790661302.8051977
+      },
+      "actor_identity": {
+        "pid": 6508,
+        "process_birth": 1790661302.8051977
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 27556,
+          "process_birth": 1790661302.812822,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 21332,
+          "process_birth": 1790661303.112166,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 32848,
+          "process_birth": 1790661303.12075,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 17852,
+        "process_birth": 1790661302.7982576
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS"
+      }
+    },
+    {
+      "case": "cancel_before",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 24176,
+        "process_birth": 1790661303.4464068
+      },
+      "actor_identity": {
+        "pid": 24176,
+        "process_birth": 1790661303.4464068
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 19656,
+          "process_birth": 1790661303.454836,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [],
+      "control_identity": {
+        "pid": 7092,
+        "process_birth": 1790661303.442338
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS",
+        "observed_stop_latency_seconds": 0.031000000002677552
+      }
+    },
+    {
+      "case": "cancel_during",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 27760,
+        "process_birth": 1790661303.7942896
+      },
+      "actor_identity": {
+        "pid": 27760,
+        "process_birth": 1790661303.7942896
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 31292,
+          "process_birth": 1790661303.802037,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 24220,
+          "process_birth": 1790661304.128488,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 24296,
+          "process_birth": 1790661304.1364095,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 21140,
+        "process_birth": 1790661303.7901855
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS",
+        "observed_stop_latency_seconds": 0.062000000005355105
+      }
+    },
+    {
+      "case": "timeout",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 18808,
+        "process_birth": 1790661304.4290314
+      },
+      "actor_identity": {
+        "pid": 18808,
+        "process_birth": 1790661304.4290314
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 404,
+          "process_birth": 1790661304.4366689,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 25084,
+          "process_birth": 1790661304.7235708,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 26024,
+          "process_birth": 1790661304.7313542,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 33176,
+        "process_birth": 1790661304.4251063
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS",
+        "observed_stop_latency_seconds": 0.28100000000267755
+      }
+    },
+    {
+      "case": "parent_death",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 12420,
+        "process_birth": 1790661305.5243053
+      },
+      "actor_identity": {
+        "pid": 12420,
+        "process_birth": 1790661305.5243053
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 33332,
+          "process_birth": 1790661305.5325477,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 3068,
+          "process_birth": 1790661305.8183255,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 26200,
+          "process_birth": 1790661305.8262274,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 29160,
+        "process_birth": 1790661305.5210164
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": 98210.0,
+      "summary": {
+        "outcome": "PASS",
+        "parent_death_elapsed": 0.014999999999417923
+      }
+    },
+    {
+      "case": "worker_crash",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 29796,
+        "process_birth": 1790661305.873135
+      },
+      "actor_identity": {
+        "pid": 29796,
+        "process_birth": 1790661305.873135
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 9336,
+          "process_birth": 1790661305.8809464,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 19688,
+          "process_birth": 1790661306.1614475,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 9492,
+          "process_birth": 1790661306.1698108,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 22712,
+        "process_birth": 1790661305.8692615
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS"
+      }
+    },
+    {
+      "case": "delayed_result",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 17840,
+        "process_birth": 1790661306.490108
+      },
+      "actor_identity": {
+        "pid": 17840,
+        "process_birth": 1790661306.490108
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 33424,
+          "process_birth": 1790661306.4978151,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 27820,
+          "process_birth": 1790661306.7891324,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 31920,
+          "process_birth": 1790661306.7965803,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 17052,
+        "process_birth": 1790661306.4861104
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS"
+      }
+    },
+    {
+      "case": "duplicate_result",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 26984,
+        "process_birth": 1790662566.7945056
+      },
+      "actor_identity": {
+        "pid": 26984,
+        "process_birth": 1790662566.7945056
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 33072,
+          "process_birth": 1790662566.801328,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 28492,
+          "process_birth": 1790662567.0656843,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 11992,
+          "process_birth": 1790662567.073432,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 14840,
+        "process_birth": 1790662566.787424
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS"
+      }
+    },
+    {
+      "case": "stale_fence",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 13952,
+        "process_birth": 1790661308.0065875
+      },
+      "actor_identity": {
+        "pid": 13952,
+        "process_birth": 1790661308.0065875
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 27788,
+          "process_birth": 1790661308.0145676,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 27168,
+          "process_birth": 1790661308.293154,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 17828,
+          "process_birth": 1790661308.301261,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 2568,
+        "process_birth": 1790661308.0025473
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS"
+      }
+    },
+    {
+      "case": "restart_capacity",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 11256,
+        "process_birth": 1790661308.621962
+      },
+      "actor_identity": {
+        "pid": 11256,
+        "process_birth": 1790661308.621962
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 29792,
+          "process_birth": 1790661308.6294706,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 31124,
+          "process_birth": 1790661308.918925,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 31932,
+          "process_birth": 1790661308.926789,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 19156,
+          "process_birth": 1790661309.221418,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 11208,
+          "process_birth": 1790661309.2249582,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 4888,
+        "process_birth": 1790661308.6181405
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS"
+      }
+    },
+    {
+      "case": "unknown_cleanup_capacity",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 21308,
+        "process_birth": 1790661309.6104746
+      },
+      "actor_identity": {
+        "pid": 21308,
+        "process_birth": 1790661309.6104746
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 15276,
+          "process_birth": 1790661309.6184814,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 32956,
+          "process_birth": 1790661309.9097073,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 31852,
+          "process_birth": 1790661309.9174707,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 19516,
+        "process_birth": 1790661309.6071472
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS"
+      }
+    },
+    {
+      "case": "malformed_first",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 4036,
+        "process_birth": 1790661310.2564807
+      },
+      "actor_identity": {
+        "pid": 4036,
+        "process_birth": 1790661310.2564807
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 31132,
+          "process_birth": 1790661310.264155,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 16032,
+          "process_birth": 1790661310.550379,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 33304,
+          "process_birth": 1790661310.558149,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 1504,
+        "process_birth": 1790661310.2529657
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS"
+      }
+    },
+    {
+      "case": "malformed_duplicate",
+      "outcome": "PASS",
+      "error": null,
+      "actor_popen_identity": {
+        "pid": 5828,
+        "process_birth": 1790662567.352774
+      },
+      "actor_identity": {
+        "pid": 5828,
+        "process_birth": 1790662567.352774
+      },
+      "harness_infrastructure": [
+        {
+          "pid": 18424,
+          "process_birth": 1790662567.36027,
+          "process_name": "conhost.exe",
+          "executable": "C:\\Windows\\System32\\conhost.exe",
+          "independent_descendant_walk": true,
+          "pre_runtime_infrastructure": true
+        }
+      ],
+      "workload_identities": [
+        {
+          "pid": 23156,
+          "process_birth": 1790662567.6132965,
+          "independent_descendant_walk": true
+        },
+        {
+          "pid": 9308,
+          "process_birth": 1790662567.6209674,
+          "independent_descendant_walk": true
+        }
+      ],
+      "control_identity": {
+        "pid": 6840,
+        "process_birth": 1790662567.348523
+      },
+      "control_survived": true,
+      "control_stopped": true,
+      "workload_residuals": [],
+      "fault_time": null,
+      "summary": {
+        "outcome": "PASS"
+      }
+    }
+  ],
+  "max_measured_stop_latency_seconds": 0.28100000000267755,
+  "candidate_runtime_hashes": {
+    "labs/ip01/haven/model_adapter.py": "b8c9c73215bbb5f4cdd4fdb2d5ef5ed12c6277b65480a34c64556d7112ebb34a",
+    "labs/ip01/haven/supervisor.py": "3ebae45e0b4b61eb62fcf6b3782482b395e9eeb02e6711acc890a3fdd4ae0ce9",
+    "labs/ip01/haven/worker.py": "2cd10d65aa81a5dd5e654113ea4df5d2bd1325f7bb5b3c49915222018207681a"
+  },
+  "scope": "13 actual benign faults; eleven original and two affected independent process rechecks. Separate observer and control survivor. Unknown cleanup fixture withholds confirmation after actual successful stop; not a demonstrated OS stop failure."
+}

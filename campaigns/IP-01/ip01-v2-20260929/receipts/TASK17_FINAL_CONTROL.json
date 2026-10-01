@@ -1,0 +1,19 @@
+{
+  "at": "2026-09-29T07:30:37.402740+00:00",
+  "assignment": 17,
+  "phase": "final",
+  "control_sha256": "d40f1e4cc90ac069bd2be971ca8d0b8a90dd6cf3fe0d75585edda7c74bc88ce8",
+  "private_control_path": "<evaluator>/final_execution/root-final-17.json",
+  "gate_sha256": "e639e3087693315ced170f2fe0e5d0357728e68e10f3b4d55d097b342069d825",
+  "case_count": 72,
+  "owner": {
+    "pid": 26908,
+    "process_birth": 1790667035.855971,
+    "boot_time": 1790563096.9768713,
+    "nonce": "0df0e10016424617a54198c26174e590",
+    "started_at": "2026-09-29T07:30:35.861141+00:00",
+    "model_allocation": "final"
+  },
+  "expires_utc": "2026-09-29T08:20:00Z",
+  "dispatch": "REQUIRES_ROOT_INERT_PREFLIGHT_AND_NATIVE_RELAY"
+}

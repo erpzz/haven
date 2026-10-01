@@ -1,0 +1,73 @@
+{
+  "assignment": 13,
+  "status": "READY",
+  "ready_at": "2026-09-29T05:47:46.708902+00:00",
+  "scope": "APP-owned source stable; independent closure pending",
+  "model_calls": 0,
+  "final_suite_starts": 0,
+  "source_sha256": {
+    "labs/ip01/haven/app.py": "93b9335f9bb5eb73b506c34a08bc8c2490263ed2ccbe551fa45253f0cd5b7427",
+    "labs/ip01/haven/authority.py": "15ca0f6b4e273d5d4d19b54d2cd082cc41bb592c8fadd60c1c9871a5c724ac75",
+    "labs/ip01/haven/contracts.py": "9912e3282f5634627f6b8ff3b0969c2c2e1920ca8077729f5bf3e365d1de8b3f",
+    "labs/ip01/haven/static/app.js": "a34d7d3682c78d94e7cad46a653a8a9b95646297a163ccae8a4b02431fed3508",
+    "labs/ip01/tests/app/test_app_fixes.py": "1ef8c3bfb98fa70c9da72e7e9eb2586a9759108e73b22b3a015de36ce348e9c2"
+  },
+  "input_sha256": {
+    "campaigns\\IP-01\\ip01-v2-20260929\\reviews\\CODE-EARLY\\CODE_EARLY_REVIEW.md": "28e4876f764a6efd30b339316afb36505d8b3729ead38456563c77fea232d1a0",
+    "campaigns\\IP-01\\ip01-v2-20260929\\integration\\EGRESS_AMENDMENT.md": "46620137b8ff8bde83340b922c856a158c264a6e7639178bd974a1dc00726820",
+    "campaigns\\IP-01\\ip01-v2-20260929\\reviews\\QA-E2E\\FINDING_CE-F02.json": "ba0164f07eb8b51cd919fa90e08ad6ad97fae3ad00b21b78efd6889a464246b3",
+    "campaigns\\IP-01\\ip01-v2-20260929\\reviews\\QA-E2E\\FINDING_CE-F04_CE-F05.json": "7f305930d766406e5b2cdf4970dc24dae4cd0ce30bff8e9c2420ecabbbfb9a8f",
+    "campaigns\\IP-01\\ip01-v2-20260929\\reviews\\QA-E2E\\QA_E2E_HANDOFF.md": "66c6dbbe374a986cc2fa1464f5760389765c5d4d6341a7c7d6eb81ee3f72025c",
+    "campaigns\\IP-01\\ip01-v2-20260929\\receipts\\RUNTIME_FIX_HANDOFF.md": "f2ec6b0699bf4a5da7d11ec96ee1d218df17c4470ffd44ab88e947da52b12459"
+  },
+  "private_evidence_sha256": {
+    ".ip01-runtime\\app-fix\\browser-races-01.log": "baf21c9735db49f4f1abbcdbc1069e1229a921dee8363866f838992bfa1081e6",
+    ".ip01-runtime\\app-fix\\browser-races-02.log": "628473194e37aeaa2b8c83b3855c9510c8f812cdbfcc65e56f638e21751baa63",
+    ".ip01-runtime\\app-fix\\focused-01.log": "2bee4ca735f508302920032171ebfe97e22208a3afdef376eee96dbe436a192c",
+    ".ip01-runtime\\app-fix\\focused-02.log": "12ef06fb9b4e0951bfe7c393abdff047ca0c0bd2b458d4add4128ff3e4c70c71",
+    ".ip01-runtime\\app-fix\\focused-03.log": "13aabfd47e25aa8c422081caa8f938dde8fa0cdea69b6739bfd322b344dfa0f1",
+    ".ip01-runtime\\app-fix\\focused-04.log": "ce1419539bf537a6622f883f90046c9f2ba7dba771650cdb061081b2e4d5121e",
+    ".ip01-runtime\\app-fix\\focused-05.log": "10d1fc7ba6ddda5bbad88a7391b9a123196a2500dfcdc9237602ad3cd73a9a90",
+    ".ip01-runtime\\app-fix\\regression-01.log": "04e2a075a0fb48a077cd302976c1b103166a7608fc7ca27e79d76c37e3e23415",
+    ".ip01-runtime\\app-fix\\regression-02.log": "ffc4ab0c586f4422171daad731c51a3a72f76859ea20d22a73b448e0fd2fd84a",
+    ".ip01-runtime\\app-fix\\browser_races.py": "4c5eacf9a92ccb727a549c3ea80355ab2950345b1149fab7364d42de9ed652a7",
+    ".ip01-runtime\\app-fix\\browser_races_02.py": "308ba969f39e7f373663d90e72444543bdd6d90e9883ad896180fc98c1da2d96",
+    ".ip01-runtime\\app-fix\\browser-persona-fence.png": "83536aca9da526839b0eb43b1fe3ecf44cbec3f46dfe056fca25b61b05abcf6d"
+  },
+  "changed_paths": [
+    "labs/ip01/haven/app.py",
+    "labs/ip01/haven/authority.py",
+    "labs/ip01/haven/contracts.py",
+    "labs/ip01/haven/static/app.js",
+    "labs/ip01/tests/app/test_app_fixes.py",
+    "campaigns\\IP-01\\ip01-v2-20260929\\receipts\\APP_FIX_HANDOFF.md",
+    "campaigns\\IP-01\\ip01-v2-20260929\\receipts\\APP_FIX_FINDINGS.json"
+  ],
+  "findings": {
+    "CE-F01": "Implemented fresh serialized authorize_egress; known committed exact receipt; no reclaims; real supervisor negative barrier passed with backend stub and zero dispatch.",
+    "CE-F02": "Generation invalidated at switch begin; delayed refresh/consume actual Chromium tests passed, zero observations.",
+    "CE-F03": "ATTEMPT_TERMINAL durable projection, exact decimal FILETIME string accepted, UNKNOWN inconclusive, settled jobs immutable, stop orthogonal, bounded usage retained.",
+    "CE-F04": "Cycle-aware memoized ancestor height independent of dedup; depth17 redundant-parent permutations rejected.",
+    "CE-F05": "Available grants preferred only during initial sealing; forced lexical exhausted G1/fresh G2 regression passed; G1 consumes at zero.",
+    "CE-F06": "Runtime ownership; APP persists attributed bounded terminal usage; no model-ledger writes."
+  },
+  "results": {
+    "focused_01": "17 passed,2 failed (incorrect expected creation success; actual app correctly rejected depth17)",
+    "focused_02": "17 passed,3 failed (2 exception regex errors; 1 genuine FILETIME string binding mismatch)",
+    "focused_03": "20 passed",
+    "regression_01": "144 passed",
+    "focused_04": "22 passed",
+    "regression_02": "146 passed",
+    "focused_05": "22 passed after test-only forced lexical grant-ID strengthening; production bytes unchanged since regression_02",
+    "browser_01": "Harness CSP string-eval failure; no CSP change; exact owned stop confirmed",
+    "browser_02": "Both actual Chromium delayed-response races passed; no pageerrors/observations; screenshot inspected; exact owned stop confirmed"
+  },
+  "limitations": [
+    "Author development evidence, not independent acceptance or original-R1 qualification.",
+    "Full H00 E1/E2/E3/T1/T2/S1 matrix remains for independent QA15; this task executes selected focused barriers only.",
+    "Positive model transport/generation was not run; authorized APP callback positive control uses synthetic gate; root gate untouched and closed.",
+    "Runtime counterpart still separately owned; root must freeze joint exact bytes before independent review.",
+    "Known post-first-byte disclosure/consumption-display gap remains; no recall or erasure claimed."
+  ],
+  "next_action": "Root freeze APP+RUNTIME+launcher, restart own integrated candidate with gate closed, run independent affected QA15 and later code review."
+}

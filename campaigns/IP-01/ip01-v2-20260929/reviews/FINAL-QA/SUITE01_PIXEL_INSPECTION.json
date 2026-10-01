@@ -1,0 +1,86 @@
+{
+  "assignment": 17,
+  "screenshots": [
+    {
+      "file": "screenshots/crash_image_runs-01-selected-image-no-inference.png",
+      "sha256": "15270154ef3dbf3f895276609d7417aebc8799ae1dc4e658b7c7837c8cf68357",
+      "native_pixels_inspected": true,
+      "observation": "Yellow square on dark blue preview selected; response explicitly says deterministic route does not interpret image content"
+    },
+    {
+      "file": "screenshots/crash_image_runs-02-actual-app-crash-error.png",
+      "sha256": "4c176057508bcef85aa8e1341cbb499f695df8cd2858f6c604ed05326c801cfe",
+      "native_pixels_inspected": true,
+      "observation": "Reply-not-received notice after owned app crash; saved draft visible"
+    },
+    {
+      "file": "screenshots/crash_image_runs-03-crash-current-restart.png",
+      "sha256": "0f3b97b08be3e412a16ed927944e06f68764ef51df9cd70aebaec35b189c54c5",
+      "native_pixels_inspected": true,
+      "observation": "Saved draft and imported image retained after current restart; consumed output not replayed"
+    },
+    {
+      "file": "screenshots/crash_image_runs-independent-shape.png",
+      "sha256": "f7c9ebd8b17dfbe6a63dd4720984212c35c1d466a5ea10d26c154477af83efd2",
+      "native_pixels_inspected": true,
+      "observation": "Yellow square on dark blue background"
+    },
+    {
+      "file": "screenshots/live_runs-01-private-answer.png",
+      "sha256": "86c94c4c8879cf732b2cd6f7f3db738b2fbd4be2168d0b7e121cefae39dc0e0b",
+      "native_pixels_inspected": true,
+      "observation": "Person A private source excerpt, source revision chip and inert hostile text visible"
+    },
+    {
+      "file": "screenshots/live_runs-02-explicit-share-answer.png",
+      "sha256": "954d9d586d6010d0ac782076ac55f3a4687588a9680c5b151ab0165dcb83855d",
+      "native_pixels_inspected": true,
+      "observation": "Person B explicitly shared source excerpt with revision chip; deterministic route labelled"
+    },
+    {
+      "file": "screenshots/live_runs-03-four-record-history.png",
+      "sha256": "37e64f00fb70a864868d2b3f15a97ed64ee401a6dab3fa5025e9cbe3b51246d3",
+      "native_pixels_inspected": true,
+      "observation": "Four separate receipt concepts visible; display reported does not claim perception"
+    },
+    {
+      "file": "screenshots/live_runs-04-actual-lost-consume-reply.png",
+      "sha256": "75ca3fc1fe14ba403b1f5eb6dbfddf97a0a457b46fbdbc8b9e7b56e9bf012834",
+      "native_pixels_inspected": true,
+      "observation": "Reply-not-received banner warns operation may have committed; earlier answer remains; no automated replay"
+    },
+    {
+      "file": "screenshots/live_runs-05-revoked-history.png",
+      "sha256": "32a14abcadd404e29f7af594f66e2ac8d380eb061172ba119e699ae8afae8ada",
+      "native_pixels_inspected": true,
+      "observation": "Historic release and consumption retained; current eligibility denied; delivery unknown"
+    },
+    {
+      "file": "screenshots/live_runs-06-current-restart-persistence.png",
+      "sha256": "7d056602810de2d964a9f5df04b6da541fae6739450ffa738ff07ea1cde8893f",
+      "native_pixels_inspected": true,
+      "observation": "Person A draft edit and completed task retained; prior outputs labelled previously consumed"
+    },
+    {
+      "file": "screenshots/live_runs-07-rollback-review-only.png",
+      "sha256": "030c773e528904d2adfdae0fc765d3fa55d259e9bf35e119e9a3c29b3da39193",
+      "native_pixels_inspected": true,
+      "observation": "Restored-state review-only banner visible; no new authority implied"
+    },
+    {
+      "file": "screenshots/session_race_runs-consume-after-switch.png",
+      "sha256": "fe5284b9d364ee9e6a86fedbee61e90d492e51b5f51ef89ece937fa37386a2bc",
+      "native_pixels_inspected": true,
+      "observation": "Person B workspace empty after delayed A consume reply; no private marker or answer rendered"
+    },
+    {
+      "file": "screenshots/session_race_runs-refresh-after-switch.png",
+      "sha256": "fe5284b9d364ee9e6a86fedbee61e90d492e51b5f51ef89ece937fa37386a2bc",
+      "native_pixels_inspected": true,
+      "observation": "Person B workspace empty after delayed A notes reply; no private marker rendered"
+    }
+  ],
+  "browser_screenshots": 12,
+  "synthetic_fixture_images": 1,
+  "protected_pilot_assets_exported": false
+}

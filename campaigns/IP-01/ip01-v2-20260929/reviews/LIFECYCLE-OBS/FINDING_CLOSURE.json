@@ -1,0 +1,6 @@
+{
+  "finding": "20260929T045344.368406Z-cancel_before-FINDING.json",
+  "disposition": "EVALUATOR_HARNESS_CLASSIFICATION_CORRECTED_RECHECK_PASS",
+  "evidence": "<evaluator>/lifecycle_obs/runs/20260929T045507.542222Z/cancel_before/observer.json",
+  "explanation": "Observed pre-runtime conhost.exe was harness infrastructure, not an admitted worker. All descendants remained subject to final absence checks. Frozen3sec target unchanged. Original failed outcome retained."
+}

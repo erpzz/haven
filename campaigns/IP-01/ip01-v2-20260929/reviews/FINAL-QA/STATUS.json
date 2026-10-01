@@ -1,0 +1,14 @@
+{
+  "assignment": 17,
+  "status": "PARTIAL_EXECUTION_EVIDENCE_HANDBACK",
+  "completed_at": "2026-09-29T07:54:06.373059+00:00",
+  "observed_final_receipts": 54,
+  "independent_grades": 54,
+  "protected_verdict": "EVALUATION_INCONCLUSIVE",
+  "readiness_gate": "NOT_MET_BY_B1_B2",
+  "ownership_residual": 0,
+  "task_path_processes": 0,
+  "report_sha256": "09bea0b3deea2e9535ed805a6db960475c9a36b7f556ba1a7058f3e608059629",
+  "handoff_sha256": "733b1d373c42c01ef5a94b5b5b0a971bd6c002952fae9c3a0cdf93ee8041649d",
+  "public_manifest_sha256": "887f05ea92d0d1d51387415a54dd1d433bc476abcfeacd2f4fa9e26ec47bc72e"
+}

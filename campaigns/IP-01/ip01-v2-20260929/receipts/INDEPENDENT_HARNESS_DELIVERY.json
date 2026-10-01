@@ -1,0 +1,20 @@
+{
+  "at": "2026-09-29T06:32:38.776387+00:00",
+  "source": "reviews/INTEGRATED-QA/public_harness",
+  "destination": "labs/ip01/evaluation/deterministic",
+  "files": {
+    "common.py": "c1c7a9678bd648078bd0dc7daf3a63f0ed164129f9caf14997d6db3402ca3129",
+    "conftest.py": "0ec81b9e86389a4dfc8e88f33ab9dcab31ebfdcf286569aa3fde58f1c2fee44a",
+    "prepare.py": "4d7d56c702930a688c4ab2b4cbfbd6abe13073ae6f7964e5b2b00f9fbe8997bb",
+    "README.md": "1ac83a87b82f9cf4debd75b5061cc08599229b24e7533016c902da15edfaebdf",
+    "test_backing.py": "b1af947a25e111529888493fdd575a8002164a1094a07996fbc8faab6f60a174",
+    "test_bounds.py": "30604f9ea222457a3e0f4ab0704cd52b75ace5d7765ed89854aca7eb50c54139",
+    "test_code_early.py": "cc5639377b97e81959531f2a1cab470a24d0f35376c871bdeaff86bf3f26f6fc",
+    "test_extra_bounds.py": "e04b33f9f15601f09ee30c45cf6e2b8cfc7f14f8ce753438ec17af982a89df01",
+    "test_functional.py": "340a17918bf7f70e2bdd86728cf7f0d22736ae0addbbef5c01e6fafc5c925768",
+    "test_static_domains.py": "dfeb4925bc2d338ce7bdf3642fe48ca08edddd474273b4966365d670710fc26e"
+  },
+  "provenance": "Exact10-file copy after QA15 ownership handback and native closure. Root inspected runner, data/IO boundaries and scenarios; no source changes. Independent external operator smoke2previously passed; no additional model call or final-suite start from copying.",
+  "execution": "Copy complete directory to evaluator outside candidate, then provisioned Python -B prepare.py --candidate <candidate>; --smoke runs2, default150.",
+  "protected_assets": "Not included"
+}

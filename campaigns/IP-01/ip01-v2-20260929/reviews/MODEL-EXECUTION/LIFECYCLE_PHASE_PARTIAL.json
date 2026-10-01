@@ -1,0 +1,110 @@
+{
+  "assignment": 16,
+  "at": "2026-09-29T06:22:52.459439+00:00",
+  "status": "PARTIAL_L1_EXECUTED_L2_PREFLIGHT_HALTED",
+  "candidate_commit": "4a49999a4f2edefcd0c63c22e2ff3f7fbb51a154",
+  "candidate03_sha256": "dc194f38fe9d411b68a51875f46dbcbf56749839deb6298ee45d030026883341",
+  "control_sha256": "ae6ef9416e1fe3b94e6270670ef35ab01ad4d2cd23919f2648332369a8b08ce0",
+  "protocol_sha256": "657c728ef8eae2aa5e1dcc92e2186da46b453f240b7f903a461cde3c894b6748",
+  "frozen_lifecycle_driver_sha256": {
+    "safety.py": "44d8b4b2b0eeecfa48b3c85465d7959bcdd1544ce5bcee9292c69fe6184148d4",
+    "live_model.py": "3bbad86cc1178b24699c71d124f5056486ec90568e56269fda964baab2729256",
+    "live_observer.py": "c2db90ab5dad45a1efc84d90d7d7231b43fa9c3e39335e5680a8a571104b5fff"
+  },
+  "L1": {
+    "actual_model_admissions": 1,
+    "active_predicate": {
+      "bound_network_start": true,
+      "worker_FILETIME_boot_event_binding": true,
+      "manifest": "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1",
+      "observed_runner_CPU_delta_seconds": 1.609375,
+      "before_cancel": true
+    },
+    "app_disposition": "CANCELLED",
+    "app_compute_state": "STOP_CONFIRMED",
+    "output_released": false,
+    "terminal": {
+      "job_disposition": "CANCELLED",
+      "reason": "CANCELLED",
+      "result_disposition": "NOT_PRODUCED",
+      "cleanup_confirmed": true,
+      "usage": null
+    },
+    "independent_stop_seconds": 0.15600000000267755,
+    "fixed_stop_target_seconds": 3,
+    "retained_handle_count": 12,
+    "retained_identity_digests": [
+      "3669e3314ea21475452519fc1779805a5bbc9d34286309e3830299aecffda4b3",
+      "9f3cc23ffd6649e18ba0ee3392ebc0040d0e747aa7c8f8de1df56124ff146b26",
+      "8f55cc8476b7611f9af81498eacf1baae3a8e6094a2c104124ad57db8341ea18",
+      "ace78a9de213d6bca985b22df99bbe0d3284ef6aa7fcc32b3918a8bad9083cda",
+      "a2c188e7a45ff0a7ae7c999b3fc5c374fc92941077524237362881cc596fcdb5",
+      "761a9a3a758093947c8b8dd255ca673e2cdc25661a831eb57a86533404bb26af",
+      "667024cffb4d4f6cd8fa272c612560f4cc341cbfa6573b2157e4b1db6dc369b5",
+      "1c4d81575eb999a3802e075b564f70dac1674cda7522ea3969408e04eb06fae8",
+      "caee0b40092d3cfd1152a62309eb992fec5b1d00c5921b638208f0bcecfbdfef",
+      "7ca8d8577091fbab94506f92408b29e6d077b03a2fb5942319c671535ab16a29",
+      "7079d669a2085861f919f6c029f5ab7088a7a41893b28da2f7cf85dfd5b8ab88",
+      "e8e50ce05b19d5166eb4dfedc6925a5e9525cc12c609b212e1bf87c13c6ce75a"
+    ],
+    "all_handles_signaled": true,
+    "root_survived": true,
+    "root_owner_identity_digest": "f8647784ee4e012657a737e858fbea2c5aade490ccdee26ff66d1b11f420676c",
+    "control_survived": true,
+    "control_stopped": true,
+    "owned_backend_listeners_after": [],
+    "sample_gap_max_seconds": 0.39100000000325963,
+    "peak_sampled_RSS_bytes": 3572752384,
+    "job_object_stop": {
+      "active_processes": 0,
+      "confirmed": true,
+      "owned_handles_signaled": true,
+      "peak_job_memory_bytes": 4647337984,
+      "pids": [],
+      "terminated_processes": 0,
+      "total_processes": 18
+    },
+    "global_resource_settlement": {
+      "charged_seconds": 11.75,
+      "cleanup_confirmed": true,
+      "kind": "SETTLE",
+      "outcome": "CANCELLED",
+      "phase": "RESOURCE_SETTLED",
+      "claim_identity_digest": "41c7b5956c9fc2a8cbc51e340a234f8a752b5c1f5045be61e942558bd2cc5ebc"
+    },
+    "receipt": "<evaluator>/model_execution/runs/L1/receipt.json",
+    "receipt_sha256": "45cbf45fca86cd57a50412212d6bac2ecbfe2c4aa3c1ab4d3cbc488c0d47e384",
+    "independent_trace": "<evaluator>/model_execution/runs/L1/process_samples.jsonl",
+    "independent_trace_sha256": "1fe6653e5e7e4a5f9f385cd6838703595876093b7179409e5f118ac0ada8dcd9",
+    "command_log_sha256": "fa3510361eb240d3fa914f1c5e5b16465ea288dc85e1505fb01ab019bb7755bb"
+  },
+  "L2": {
+    "status": "PREFLIGHT_REJECTED_BEFORE_CLIENT_FIXTURE_SUBMISSION",
+    "model_submissions": 0,
+    "local_intent_exists": false,
+    "claim_exists": false,
+    "current_gate_hash_matches_original": true,
+    "failure_time_gate_digest": "NOT_CAPTURED",
+    "halt_preserved": true,
+    "command_log_sha256": "235905b5c9167d8c61a4c49dfa2c1db524958139d3d0a07a2ebd18ad8177b073"
+  },
+  "L3": "NOT_EXECUTED",
+  "L4": "NOT_EXECUTED",
+  "B1": "NOT_AUTHORIZED",
+  "B2": "NOT_AUTHORIZED",
+  "final72": "NOT_AUTHORIZED",
+  "global_budget": {
+    "counts": {
+      "readiness": 4,
+      "lifecycle": 1,
+      "final": 0
+    },
+    "claims": 5,
+    "bindings": 5,
+    "settlements": 5,
+    "charged_seconds": 108.9539999999979,
+    "unknown_cleanup": false
+  },
+  "protected_verdict": "EVALUATION_INCONCLUSIVE / protection not established",
+  "next": "Root factual reconciliation of mutable operational receipt; no evaluator HALT clearing or automatic retry."
+}

@@ -1,0 +1,46 @@
+{
+  "at": "2026-09-29T07:18:57.479741+00:00",
+  "baseline_file_sha256": "8382283536ccbc1f07a7fbb2da01b90dadeaff04dafd7526f82895abdc985776",
+  "astra_head": "3aa1ac646052124b98c73d9d1f361bef3c123d81",
+  "astra_head_matches": true,
+  "astra_status_porcelain": "",
+  "astra_status_matches": true,
+  "files": [
+    {
+      "workspace": "ASTRA",
+      "path": "astra/store.py",
+      "before_sha256": "3533330a1957e5bdeb41275c1a62c5a600efc72cbf8f0f6ad490216fd6be0f75",
+      "after_sha256": "3533330a1957e5bdeb41275c1a62c5a600efc72cbf8f0f6ad490216fd6be0f75",
+      "bytes": 10434,
+      "matches": true
+    },
+    {
+      "workspace": "NIGHT01",
+      "path": "lab/haven_lab/backend.py",
+      "before_sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+      "after_sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+      "bytes": 2643,
+      "matches": true
+    },
+    {
+      "workspace": "NIGHT01",
+      "path": "lab/haven_lab/coordinator.py",
+      "before_sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+      "after_sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+      "bytes": 5970,
+      "matches": true
+    },
+    {
+      "workspace": "NIGHT01",
+      "path": "lab/haven_lab/store.py",
+      "before_sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+      "after_sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+      "bytes": 11897,
+      "matches": true
+    }
+  ],
+  "effect": "Read-only cat and Git identity/status with optional locks disabled; no original writes",
+  "night01_git_provenance": "UNAVAILABLE: source present, no .git at known wrapper/lab/starter",
+  "limits": "NIGHT01 has no identified Git checkout; comparison covers originally inspected source files, not a filesystem-wide snapshot. Original R1 remains unqualified.",
+  "observed_identity_unchanged": true
+}

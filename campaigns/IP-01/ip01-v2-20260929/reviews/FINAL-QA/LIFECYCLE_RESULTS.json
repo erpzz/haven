@@ -1,0 +1,111 @@
+{
+  "assignment": 17,
+  "status": "LIFECYCLE_THREE_CALLS_COMPLETE_TWO_TIMEOUTS_NOT_EXERCISED",
+  "candidate_commit": "487c67299445a29e0fbbdede04259565f741f587",
+  "task17_actual_model_calls": 3,
+  "allocations": {
+    "lifecycle": 3,
+    "readiness": 0,
+    "final": 0
+  },
+  "L2": "ACTIVE_IMAGE_CANCEL_EXERCISED_INDEPENDENT_STOP_0.141_SECONDS",
+  "L3": "TEXT_EARLY_FINISH_55.843_SECONDS_NATURAL_TIMEOUT_NOT_EXERCISED",
+  "L4": "IMAGE_EARLY_FINISH_81.453_SECONDS_NATURAL_TIMEOUT_NOT_EXERCISED",
+  "timeout_qualification": "NOT_ESTABLISHED_BY_L3_L4; no retry, altered prompts, threshold changes or extra calls",
+  "cases": [
+    {
+      "case": "L2",
+      "status": "OBSERVED",
+      "fault_status": "EXERCISED",
+      "disposition": "CANCELLED",
+      "compute_state": "STOP_CONFIRMED",
+      "activity_observed": true,
+      "independent_stop_seconds": 0.14100000000325963,
+      "call_latency_seconds": 12.046000000002095,
+      "resource_settlement_confirmed": true,
+      "charged_seconds": 11.75,
+      "usage": null,
+      "peak_job_committed_bytes": 4720361472,
+      "peak_sampled_rss_bytes": 3665825792,
+      "retained_handles_all_signaled": true,
+      "root_survived": true,
+      "control_survived": true,
+      "control_stopped": true,
+      "owned_backend_listener_count": 0,
+      "private_receipt_sha256": "7232a0d13310a0a200cfa17a1d2b21fc79d91b8cbe2ea0916750349232fc8edf",
+      "private_observer_trace_sha256": "fd168d294c39fbf97a790775f2407dd120794b417dbeba123ffa694433f7181c"
+    },
+    {
+      "case": "L3",
+      "status": "OBSERVED",
+      "fault_status": "FAULT_NOT_EXERCISED_OR_ACTIVE_TIMEOUT_INCONCLUSIVE",
+      "disposition": "SUCCEEDED",
+      "compute_state": "STOP_CONFIRMED",
+      "activity_observed": true,
+      "independent_stop_seconds": 0.1743231144064339,
+      "call_latency_seconds": 55.84300000000803,
+      "resource_settlement_confirmed": true,
+      "charged_seconds": 55.453000000008615,
+      "usage": {
+        "certainty": "BACKEND_REPORTED",
+        "duration_ns": 47113161700,
+        "model_calls": 1,
+        "output_tokens": 768,
+        "prompt_tokens": 185
+      },
+      "peak_job_committed_bytes": 4645937152,
+      "peak_sampled_rss_bytes": 3575853056,
+      "retained_handles_all_signaled": true,
+      "root_survived": true,
+      "control_survived": true,
+      "control_stopped": true,
+      "owned_backend_listener_count": 0,
+      "private_receipt_sha256": "9ace81d218122b92b73d7659699077db4a9cb9cf2684b3bb905a22f2b77429fa",
+      "private_observer_trace_sha256": "f68fb3a2af28ede8e1bdefd96f26211c771905f686e4864c8a24b30b51623c43"
+    },
+    {
+      "case": "L4",
+      "status": "OBSERVED",
+      "fault_status": "FAULT_NOT_EXERCISED_OR_ACTIVE_TIMEOUT_INCONCLUSIVE",
+      "disposition": "SUCCEEDED",
+      "compute_state": "STOP_CONFIRMED",
+      "activity_observed": true,
+      "independent_stop_seconds": 0.13952854537637904,
+      "call_latency_seconds": 81.45299999999406,
+      "resource_settlement_confirmed": true,
+      "charged_seconds": 81.09300000000803,
+      "usage": {
+        "certainty": "BACKEND_REPORTED",
+        "duration_ns": 72754666500,
+        "model_calls": 1,
+        "output_tokens": 768,
+        "prompt_tokens": 1224
+      },
+      "peak_job_committed_bytes": 4720168960,
+      "peak_sampled_rss_bytes": 4151185408,
+      "retained_handles_all_signaled": true,
+      "root_survived": true,
+      "control_survived": true,
+      "control_stopped": true,
+      "owned_backend_listener_count": 0,
+      "private_receipt_sha256": "bd7aed62fc823917b8cde965f070c537a9d41d37bfb13fb609dc0e3497357afa",
+      "private_observer_trace_sha256": "08d539ef3ed5f5e2cf697f62978e5188163ce08f393f25adc0521af45d667adf"
+    }
+  ],
+  "case_timeline_hashes": {
+    "L2": "2e3d67d66c77b6d175c3186bcefbc19981c2356c75ddb317e16f28c158b2f751",
+    "L3": "a050c4a8ded4812d938be3a5317213bba67622fc4359dc7088bcb21de3263ca4",
+    "L4": "5d646ec46c81f07292af50be001a83b881719015207ffe45583a7d8dbfd0a4ce"
+  },
+  "ownership": {
+    "captured_owned_identities": 35,
+    "residual_count": 0,
+    "private_audit_sha256": "e2978ce0c262fcc5acf58e6da9a8775966da162eb0d4ed2c772b425d4ac1df8b"
+  },
+  "task17_charged_model_seconds": 148.29600000001665,
+  "original_L2_failed_presubmission_preflight_retained": true,
+  "L1_replayed": false,
+  "halt_marker_exists": false,
+  "B1_B2_final72": "UNAUTHORIZED_NOT_EXECUTED",
+  "trace_kind": "Sanitized actual event and independent observer timeline projections; private raw hashes bound; not raw traces"
+}

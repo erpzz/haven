@@ -1,0 +1,16 @@
+{
+  "at": "2026-09-29T22:04:27.041752+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "role": "CODE",
+  "assignment": 22,
+  "native_id": "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6",
+  "actual_final_message_received": true,
+  "received_at": "2026-09-29 22:04:26 UTC",
+  "native_message_sha256": "778a52e9b68d7c713004a6284749656d739166dbf1b36dabba7d9de38d972bb4",
+  "public_review_sha256": "e9b24be84cab5fcb61c33cc6ff06c0d7b3df2741112a683f47e135b0af85229f",
+  "normalization": "Only repository absolute-path prefixes converted to relative paths; independent verdict/text otherwise preserved",
+  "candidate_commit": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "H00_manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+  "root_acceptance": "CHANGES_REQUIRED_RETAINED_RESTRICTED_PARTIAL_HANDOFF_ONLY",
+  "native_cessation": "Actual completed handback; close tool acknowledged; subsequent wait returned not_found. See receipts/FINAL_NATIVE_CESSATION.json."
+}

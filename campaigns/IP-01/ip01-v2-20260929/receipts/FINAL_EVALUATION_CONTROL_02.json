@@ -1,0 +1,23 @@
+{
+  "at": "2026-09-29T06:54:59.655980+00:00",
+  "assignment": 17,
+  "phase": "final_deterministic_affected_recheck",
+  "candidate_commit": "487c67299445a29e0fbbdede04259565f741f587",
+  "source_freeze_sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+  "recheck_plan_sha256": "e182886d682357437c1c3be2649c1bad8339dc36a498ccaa3df46b6e916bc833",
+  "original_harness_manifest_sha256": "83966821420b007765576771d94beb5a06d56cc56ef1177ab51c479d45693d34",
+  "recheck_manifest_sha256": "51c6140dd92f4689c0496e32bc5139ec083a16be023af5a031725f42b8505542",
+  "preserved_suite01_sha256": "ee9c9f739bc27dea6e586db5c95f8f1c0e25232853d53e7e45a1ef095d7126b6",
+  "private_control_sha256": "fe8f5ac12638b4ee73c9dc15b0d302c09b6ad9e15e88777f4c0e55f9d9bcf8d4",
+  "private_control_path": "<evaluator>/final_execution/root-final-deterministic-02.json",
+  "authorized_start_number": 2,
+  "actual_starts_before": 1,
+  "global_max_starts": 3,
+  "expected_affected_cases": 221,
+  "expires_utc": "2026-09-29T08:20:00Z",
+  "candidate_changed": false,
+  "protected_model_feedback_exposed": false,
+  "real_model_calls_authorized": 0,
+  "scope": "Only affected full producer221cohort using corrected snapshot-private basetemp. Earlier7components retain actual suite01passes at same frozen candidate. Original suite01 remainsFAIL and all145setup errors/76passes preserved. No repeatedfirst7components, no candidate allowlist weakening.",
+  "dispatch": "REQUIRES_ROOT_INERT_PREFLIGHT_AND_NATIVE_RELAY"
+}

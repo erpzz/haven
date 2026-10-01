@@ -1,0 +1,68 @@
+[
+  {
+    "attempt": 1,
+    "command": "snapshot_ready.py",
+    "exit": 1,
+    "classification": "HARNESS",
+    "reason": "Actual APP heading READY was not in accepted marker patterns; no snapshot/import/test executed"
+  },
+  {
+    "attempt": 2,
+    "command": "snapshot_ready.py",
+    "exit": 1,
+    "classification": "HARNESS",
+    "reason": "Default Windows text encoding misread UTF-8 em dash in READY heading; corrected explicit utf-8-sig read"
+  },
+  {
+    "attempt": 3,
+    "command": "run_tests.py test_functional.py test_backing.py test_static_domains.py test_bounds.py test_code_early.py test_extra_bounds.py",
+    "exit": 1,
+    "classification": "HARNESS_PRECONDITION",
+    "reason": "Missing selected.json following failed preparation; no test collection/execution"
+  },
+  {
+    "attempt": 4,
+    "command": "lifecycle/run_faults.py",
+    "exit": 1,
+    "classification": "HARNESS_PRECONDITION",
+    "reason": "Missing selected-snapshot.json following failed preparation; no process trial executed"
+  },
+  {
+    "command": "run_tests.py test_integration.py",
+    "run": "runs/20260929T060429.140253Z",
+    "pytest_exit": 1,
+    "failed": 20,
+    "passed": 0,
+    "classification": "HARNESS_SCHEMA_LOOKUP",
+    "resolution": "job_id lookup; later20pass,34pass,38pass; all originals retained"
+  },
+  {
+    "command": "run_tests.py test_integration.py",
+    "run": "runs/20260929T061209.679200Z",
+    "pytest_exit": 1,
+    "failed": 32,
+    "passed": 6,
+    "classification": "HARNESS_ZERO_QUOTA_ORACLE",
+    "resolution": "Grant creation initializes zero rows; assert zero charged units/sequence instead of absent rows.38pass afterward."
+  },
+  {
+    "command": "lifecycle/verify_oracle.py 20260929T055502.795801Z",
+    "run": "lifecycle/runs/oracle-20260929T061522.001169Z",
+    "pytest_exit": 1,
+    "failed": 2,
+    "passed": 19,
+    "classification": "HARNESS_EXPECTED_DUPLICATE_EVENT_STALE",
+    "resolution": "Terminal duplicate returns FENCED/REJECTED without extra events. Two actual affected process rechecks preserved returned dispositions and unchanged outcome;13evidence+8corruption checks pass."
+  },
+  {
+    "command": "read <campaign>/reviews/QA-E2E/public_harness/prepare.py",
+    "exit": 1,
+    "classification": "READ_ONLY_DISCOVERY_PATH",
+    "resolution": "Previous reusable harness is evaluator-private at <evaluator>/qa_e2e/public_harness; no state mutation."
+  },
+  {
+    "command": "audit_owned.py initial pass",
+    "classification": "AUDIT_SELF_ANCESTRY",
+    "resolution": "517 captured task identities absent; broad command scan also identified audit own venv wrapper/PowerShell. Explicitly exclude audit ancestry in final scan; never terminate these or unrelated processes."
+  }
+]

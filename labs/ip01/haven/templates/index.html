@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="csrf-token" content="{{ session.csrf_token }}">
+  <title>Haven · A little room to think</title>
+  <link rel="stylesheet" href="/static/app.css"><script src="/static/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a href="/" class="brand"><span class="brand-mark">h</span> haven<span class="lab">LOCAL LAB</span></a>
+    <p class="eyebrow">A LITTLE ROOM TO THINK</p>
+    <nav aria-label="Workspace"><a href="#workspace" class="active">◈ &nbsp; Workspace</a><a href="#notes">▤ &nbsp; Your sources</a><a href="#drafts">☷ &nbsp; Drafts & tasks</a></nav>
+    <div class="sidebar-bottom"><span class="status-dot"></span> Local, on this computer<p>Two invented people. No connected accounts or outside actions.</p><p class="fine">Sharing permits a current source read and a bounded answer release. It does not grant outside access.</p></div>
+  </aside>
+  <div class="shell">
+    <header><div><span class="status-dot"></span> Synthetic workspace <span class="divider">/</span> <span id="identity">Choose a demo person</span></div><button id="switch-person" class="quiet">Switch person</button></header>
+    <main id="workspace">
+      <div id="notice" role="status" aria-live="polite" hidden></div>
+      <section class="intro"><div><p class="eyebrow">YOUR EVERYDAY WORKSPACE</p><h1>A little room to think.</h1><p>Keep a useful note. Find the relevant detail. Save a next step.</p></div><div class="mode-pill">✦ &nbsp; Deterministic excerpts</div></section>
+      <div id="review-banner" class="warning" hidden>Review-only restored state. Notes can be inspected, but new work and old permits remain fenced until current authority is reconciled.</div>
+      <div class="workspace-grid">
+        <section id="notes" class="panel sources-panel">
+          <div class="panel-heading"><div><p class="eyebrow">THE GROUNDING</p><h2>Your sources <span id="note-count" class="count">0</span></h2></div><button id="new-note" class="round" aria-label="Add a note">+</button></div>
+          <div id="note-list" class="note-list"><p class="empty">Choose a person to open their workspace.</p></div>
+          <label class="image-import" for="image-file">＋ Import a synthetic image<input id="image-file" type="file" accept="image/png,image/jpeg" hidden></label>
+          <p class="fine">PNG or JPEG · up to 2 MiB · no camera access</p>
+        </section>
+        <section class="panel conversation-panel" aria-labelledby="answers-heading">
+          <div class="panel-heading"><div><p class="eyebrow">FROM YOUR CURRENT SOURCES</p><h2 id="answers-heading">Make something clearer.</h2></div><span class="leaf">✧</span></div>
+          <form id="answer-form">
+            <label for="question">What would you like to find?</label>
+            <textarea id="question" name="question" rows="3" maxlength="2000" required placeholder="What should I pack for the weekend walk?"></textarea>
+            <div class="form-inline"><label for="route" class="sr-only">Answer route</label><select id="route"><option value="deterministic">Deterministic excerpts</option><option value="model" disabled>Local model · unavailable</option></select><button class="primary" type="submit">Find an answer <span>↗</span></button></div>
+            <label class="image-select-label" for="answer-image">Optional image source<select id="answer-image"><option value="">No image selected</option></select></label>
+            <p class="fine">Uses eligible, current sources only. Model inference is off until the runtime gate is ready.</p>
+          </form>
+          <div id="answer-view" class="answer-view" aria-live="polite"><div class="answer-empty"><span>✧</span><h3>Start with something you know.</h3><p>Add a private note, then ask a question about it.<br>Haven will show the source behind each excerpt.</p></div></div>
+          <div class="queue-heading"><h3>Recent activity</h3><button id="refresh" class="quiet">Refresh</button></div>
+          <div id="job-list" class="job-list"><p class="empty">Your questions and their status will appear here.</p></div>
+        </section>
+      </div>
+      <section id="drafts" class="panel drafts-panel"><div class="panel-heading"><div><p class="eyebrow">KEEP THE NEXT STEP</p><h2>Drafts & tasks</h2></div><span class="tag">Saved locally · never dispatched</span></div><form id="draft-form" class="draft-form"><label class="sr-only" for="draft-kind">Kind</label><select id="draft-kind"><option value="task">Task</option><option value="draft">Draft</option></select><label class="sr-only" for="draft-text">Draft or task text</label><input id="draft-text" maxlength="16000" required placeholder="Something to come back to…"><button class="primary" type="submit">Save</button></form><div id="draft-list"></div></section>
+      <footer>Haven / IP-01 <span>Local synthetic laboratory. Source excerpts and model proposals are not independent verification.</span></footer>
+    </main>
+  </div>
+  <dialog id="login-dialog"><div class="dialog-content"><p class="eyebrow">SYNTHETIC DEMO LOGIN</p><h2>A workspace of your own.</h2><p>A and B are invented people with separate sessions, private notes, and explicit sharing. This selector is not real identity authentication.</p><div class="person-options"><button data-person="A"><strong>A</strong><span>Person A</span></button><button data-person="B"><strong>B</strong><span>Person B</span></button></div><p class="fine">Switching people ends this browser's previous session and clears displayed answer bytes. Use separate browser contexts for simultaneous A/B sessions.</p></div></dialog>
+  <dialog id="note-dialog"><form id="note-form" class="dialog-content"><div class="dialog-top"><p class="eyebrow">YOUR PRIVATE NOTE</p><button type="button" class="quiet" data-close="note-dialog" aria-label="Close note editor">×</button></div><h2 id="note-dialog-title">Keep a useful detail.</h2><label for="note-title">Title</label><input id="note-title" maxlength="160" required placeholder="Weekend walk"><label for="note-text">Note</label><textarea id="note-text" rows="7" maxlength="16000" required placeholder="The trail starts at Pine Lake at 9. Pack water, a rain jacket, and sandwiches."></textarea><p class="fine">Private to your demo person until you explicitly share it.</p><button type="submit" class="primary">Save note</button></form></dialog>
+  <dialog id="share-dialog"><form id="share-form" class="dialog-content"><div class="dialog-top"><p class="eyebrow">EXPLICIT SHARING</p><button type="button" class="quiet" data-close="share-dialog" aria-label="Close sharing">×</button></div><h2>Share a useful source.</h2><p id="share-title"></p><label for="share-uses">Maximum answer releases</label><select id="share-uses"><option value="1">One release</option><option value="5">Five releases</option><option value="">Unlimited within expiry</option></select><label for="share-hours">Expires after</label><select id="share-hours"><option value="1">One hour</option><option value="24">One day</option></select><p class="fine">The other demo person may read this source while sharing is active. Each committed answer release uses the selected quota once, even if its reply is lost. Revocation prevents new use; it cannot recall content already received.</p><button type="submit" class="primary">Approve sharing</button></form></dialog>
+  <dialog id="receipts-dialog"><div class="dialog-content"><div class="dialog-top"><p class="eyebrow">SEPARATE FACTS</p><button class="quiet" data-close="receipts-dialog" aria-label="Close history">×</button></div><h2>What happened to this answer?</h2><div id="receipt-view"></div><p class="fine">Historical receipts cannot replay an answer. A display report does not prove human perception. Consumption and browser display are not one atomic operation.</p></div></dialog>
+</body></html>

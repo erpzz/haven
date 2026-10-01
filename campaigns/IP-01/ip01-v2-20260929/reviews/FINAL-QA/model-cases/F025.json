@@ -1,0 +1,257 @@
+{
+  "assignment": 17,
+  "case": "F025",
+  "phase": "final",
+  "status": "OBSERVED",
+  "fault_status": null,
+  "disposition": "SUCCEEDED",
+  "compute_state": "STOP_CONFIRMED",
+  "model_submission_attempts": 1,
+  "network_marker_bound": true,
+  "physical_worker_match": true,
+  "activity_observed": true,
+  "recent_activity_at_deadline": null,
+  "independent_stop_seconds": 0.1325864829996135,
+  "call_latency_seconds": 13.437999999994645,
+  "peak_job_committed_bytes": 4646068224,
+  "peak_sampled_rss_bytes": 3572817920,
+  "resource_settlement_confirmed": true,
+  "charged_seconds": 13.093000000008033,
+  "usage": {
+    "certainty": "BACKEND_REPORTED",
+    "duration_ns": 4670564900,
+    "model_calls": 1,
+    "output_tokens": 11,
+    "prompt_tokens": 164
+  },
+  "retained_handles_all_signaled": true,
+  "root_survived": true,
+  "control_survived": true,
+  "control_stopped": true,
+  "owned_backend_listener_count": 0,
+  "private_receipt_sha256": "aef1d3f347b3cc9ec04c6bd3f72530adf71cb87395a6d1eb2c4b8595428c6ac4",
+  "private_observer_trace_sha256": "81b3c925d4f812479dd04dd8a2655a185b0101f8772fd4027fa3f80c65e351ff",
+  "sealed_context_sha256": "adae00dc72c8aae8e0fd84549d857c3a0af87edfbb7c38c555d11801e7c7aaf7",
+  "published_kind": "SANITIZED_TIMELINE_PROJECTION_NOT_RAW_TRACE",
+  "runtime_timeline": [
+    {
+      "case": "F025",
+      "kind": "QUEUED",
+      "timestamp": "2026-09-29T07:41:29.404700+00:00",
+      "identity_sha256": "8776e424a086c0362fb567358474ca67eff6005e0a4cad624c58590343d8f11c"
+    },
+    {
+      "case": "F025",
+      "kind": "PROCESS_STARTED",
+      "timestamp": "2026-09-29T07:41:37.494873+00:00",
+      "identity_sha256": "204e1996ada888be25e0b6a3a14e700e2cc42b9051a9d40b300fb9f61aa152d0"
+    },
+    {
+      "case": "F025",
+      "kind": "STOP_REQUESTED",
+      "timestamp": "2026-09-29T07:41:42.482659+00:00",
+      "identity_sha256": "204e1996ada888be25e0b6a3a14e700e2cc42b9051a9d40b300fb9f61aa152d0"
+    },
+    {
+      "case": "F025",
+      "kind": "STOP_CONFIRMED",
+      "timestamp": "2026-09-29T07:41:42.520733+00:00",
+      "identity_sha256": "204e1996ada888be25e0b6a3a14e700e2cc42b9051a9d40b300fb9f61aa152d0",
+      "confirmed": true,
+      "active_processes": 0,
+      "owned_handles_signaled": true,
+      "peak_job_memory_bytes": 4646068224
+    },
+    {
+      "case": "F025",
+      "kind": "DISPATCH_OBSERVED",
+      "timestamp": "2026-09-29T07:41:42.535245+00:00",
+      "identity_sha256": "204e1996ada888be25e0b6a3a14e700e2cc42b9051a9d40b300fb9f61aa152d0"
+    },
+    {
+      "case": "F025",
+      "kind": "RESULT_DISPOSITION",
+      "timestamp": "2026-09-29T07:41:42.559248+00:00",
+      "identity_sha256": "204e1996ada888be25e0b6a3a14e700e2cc42b9051a9d40b300fb9f61aa152d0",
+      "usage": {
+        "certainty": "BACKEND_REPORTED",
+        "duration_ns": 4670564900,
+        "model_calls": 1,
+        "output_tokens": 11,
+        "prompt_tokens": 164
+      }
+    },
+    {
+      "case": "F025",
+      "kind": "ATTEMPT_TERMINAL",
+      "timestamp": "2026-09-29T07:41:42.644828+00:00",
+      "identity_sha256": "204e1996ada888be25e0b6a3a14e700e2cc42b9051a9d40b300fb9f61aa152d0",
+      "reason": "ATTEMPT_COMPLETE",
+      "job_disposition": "SUCCEEDED",
+      "usage": {
+        "certainty": "BACKEND_REPORTED",
+        "duration_ns": 4670564900,
+        "model_calls": 1,
+        "output_tokens": 11,
+        "prompt_tokens": 164
+      }
+    }
+  ],
+  "resource_result_timeline": [
+    {
+      "case": "F025",
+      "kind": "CLAIM",
+      "record_sha256": "49a14fc3ffb583dd9f03f5b957a8396e230bebb691714a0452e7529af311f906",
+      "observed_at": "2026-09-29T07:41:29.430891+00:00"
+    },
+    {
+      "case": "F025",
+      "kind": "SETTLE",
+      "record_sha256": "762c357d66fae9f058838b969341b85c0100dd30d584520015b6a4e8fd57705e",
+      "phase": "RESOURCE_SETTLED",
+      "outcome": "PENDING_VALIDATION",
+      "charged_seconds": 13.093000000008033,
+      "cleanup_confirmed": true
+    },
+    {
+      "case": "F025",
+      "kind": "RESULT_DISPOSITION",
+      "record_sha256": "50a3b2ff68a3fca4a98d249a69f59ed3177faeb4c8ff46ff0d9ec193cd4ca738",
+      "reason": "ATTEMPT_COMPLETE",
+      "usage": {
+        "certainty": "BACKEND_REPORTED",
+        "duration_ns": 4670564900,
+        "model_calls": 1,
+        "output_tokens": 11,
+        "prompt_tokens": 164
+      },
+      "cleanup_confirmed": true
+    }
+  ],
+  "independent_observer_timeline": [
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667689.3549905,
+      "relative_seconds": 0.0629999999946449,
+      "identity_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "tracked": 0,
+      "alive": 0,
+      "listeners": 0,
+      "resident": 0
+    },
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667695.3056993,
+      "relative_seconds": 6.015999999988708,
+      "identity_sha256": "4ad90b25de5e26b9e4af926c9187cb38d0901dfa7190f25be66b33071c351250",
+      "tracked": 2,
+      "alive": 2,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667696.0278044,
+      "relative_seconds": 6.73399999999674,
+      "identity_sha256": "7e6e33e536d4348d326c20bdc00ababebf7360d548a2fd9549eea598d446d506",
+      "tracked": 3,
+      "alive": 3,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667696.4027338,
+      "relative_seconds": 7.10899999999674,
+      "identity_sha256": "56afbf1756dc35572755214be7d9a9d4cd12d49c5a03786fe4418ae5afa126c6",
+      "tracked": 4,
+      "alive": 3,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667696.7790794,
+      "relative_seconds": 7.48399999999674,
+      "identity_sha256": "9d6c1ff6217fe7ad2df0fca3173012676ed225c351e6bf16a42891c9e859c9af",
+      "tracked": 5,
+      "alive": 3,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667697.140554,
+      "relative_seconds": 7.8439999999973224,
+      "identity_sha256": "e34beb0054c35860467979c46789a5ffc10aee8dfed121ebb3a8132f6d7131f3",
+      "tracked": 6,
+      "alive": 3,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667697.5038748,
+      "relative_seconds": 8.202999999994063,
+      "identity_sha256": "f0ef2266a43f13d21bcbb33be320df4b4ced20cf3947f667ddd0e672c85e90d6",
+      "tracked": 8,
+      "alive": 4,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667697.9754848,
+      "relative_seconds": 8.671999999991385,
+      "identity_sha256": "84221ceb4f906fe979b4e4165ef6e0cc73c70e59ec82869e67829cf3d46d23a0",
+      "tracked": 10,
+      "alive": 6,
+      "listeners": 1,
+      "resident": 0
+    },
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667700.9375663,
+      "relative_seconds": 11.640999999988708,
+      "identity_sha256": "84221ceb4f906fe979b4e4165ef6e0cc73c70e59ec82869e67829cf3d46d23a0",
+      "tracked": 10,
+      "alive": 6,
+      "listeners": 1,
+      "resident": 1
+    },
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667702.5362456,
+      "relative_seconds": 13.23399999999674,
+      "identity_sha256": "84221ceb4f906fe979b4e4165ef6e0cc73c70e59ec82869e67829cf3d46d23a0",
+      "tracked": 10,
+      "alive": 1,
+      "listeners": 0,
+      "resident": 0
+    },
+    {
+      "case": "F025",
+      "kind": "INDEPENDENT_OBSERVER_TRANSITION",
+      "timestamp_utc_seconds": 1790667702.6156983,
+      "relative_seconds": 13.312999999994645,
+      "identity_sha256": "84221ceb4f906fe979b4e4165ef6e0cc73c70e59ec82869e67829cf3d46d23a0",
+      "tracked": 10,
+      "alive": 0,
+      "listeners": 0,
+      "resident": 0
+    }
+  ],
+  "protected_prompts_assets_outputs_published": false,
+  "semantic_grade": "PENDING_SEPARATE_INDEPENDENT_REVIEW",
+  "original_L2_preflight_failure_preserved": true
+}

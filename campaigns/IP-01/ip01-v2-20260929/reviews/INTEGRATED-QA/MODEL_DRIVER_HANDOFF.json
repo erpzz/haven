@@ -1,0 +1,43 @@
+{
+  "assignment": 15,
+  "handoff_to": "task16 MODEL-EXECUTION Galileo",
+  "status": "EDITS_QUIESCED_UNEXECUTED_ADAPTER_CODE",
+  "at": "2026-09-29T05:56:30.325090+00:00",
+  "files": [
+    {
+      "path": "<evaluator>/integrated_qa/live_model.py",
+      "sha256": "539dbe88090468c6810dabb0f25517a5c1f7f3ca159a6984248bd0a2400f5e8d"
+    },
+    {
+      "path": "<evaluator>/integrated_qa/live_observer.py",
+      "sha256": "82842b353871ca20a47381ccf102a1e2af1b001dfd6ffc003141fe3fca85aca8"
+    }
+  ],
+  "executed_live_calls": 0,
+  "final_driver_created": false,
+  "allowed_copy": "Task16 may copy these two files into its own disjoint model_execution directory; do not edit these task15 originals.",
+  "implemented_code": [
+    "One-shot APP submit/cancel/consume and root gate/source/owner/token/prefix checks",
+    "Read-only SQLite/ledger",
+    "Retained Windows handles/FILETIME CPU/RSS/descendant and api/ps residency sampling",
+    "Separate control and cleanup-cancel support"
+  ],
+  "remaining_required": [
+    "Review and execute independent adapter self-tests before live use; code has not run",
+    "Tighten residency to exact pinned identity, recent activity within2sec of natural120sec deadline, immutable event/claim bindings",
+    "Measure actual3sec stop against retained signaled handles and backend listener absence; root/control proof",
+    "Handle terminal-before-claim paths and stream/request unknowns without retry; durable halt marker across invocations",
+    "Readiness browser actual clicks/upload/consume/reload adapter not implemented here",
+    "No final72driver yet: implement asset reuse and explicit family IDs, immutable72slot schedule, independent manual semantic grading and per-modality summaries",
+    "Update protocol mapping to root-authorized L1/L2cancel text/image and L3/L4timeout; prior MODEL-QA11 ordering differs",
+    "Re-review strict control expiry includes hard06:44/task16 bound and campaign caps, preserve original4claims97.204s",
+    "No root model gate/ledger write, reset, refund, copied real model runtime, shared APP kill or final dispatch without separate authorization"
+  ],
+  "references": [
+    "<evaluator>/model_qa/runner.py (nondispatch scaffold)",
+    "<evaluator>/qa_prep/pilot/protocol.json",
+    "<evaluator>/qa_prep/pilot/families.json",
+    "<evaluator>/qa_prep/pilot/schedule.json"
+  ],
+  "protected_oracles": "Not changed; final protection remains INCONCLUSIVE"
+}

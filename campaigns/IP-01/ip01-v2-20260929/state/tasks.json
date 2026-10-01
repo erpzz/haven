@@ -1,0 +1,731 @@
+[
+  {
+    "task_id": "INTAKE",
+    "role": "haven_intake",
+    "native_id": "01a0eb5c-f3bf-7c52-9bb1-90465cc30b24",
+    "status": "COMPLETED_CLOSED",
+    "inputs": "setup 8e1304caf82c0a889eeaea7691db7b9d7b98c526; full IP01 package; exact intake profile",
+    "hard_dependencies": [],
+    "write_scope": [],
+    "budget_minutes": 6,
+    "reviewer": "root",
+    "next_action": "Return provenance inventory",
+    "at": "2026-09-29T04:13:54.588656+00:00",
+    "completion": {
+      "native_id": "01a0eb5c-f3bf-7c52-9bb1-90465cc30b24",
+      "task_id": "INTAKE",
+      "status": "COMPLETED_CLOSED",
+      "event": "TASK_LEDGER_RECONCILIATION",
+      "scope": "Native close was already observed; this updates task projection only",
+      "at": "2026-09-29T04:32:26.674947+00:00"
+    }
+  },
+  {
+    "task_id": "SEAM",
+    "role": "haven_integration_manager",
+    "native_id": "01a0eb61-9f2d-72c2-9acc-e1ac3845f9d7",
+    "status": "COMPLETED_CLOSED",
+    "inputs": "setup8e1304ca; final-v1 I01-I07; R03/P01 amendments and closures; INTAKE complete",
+    "hard_dependencies": [
+      "INTAKE"
+    ],
+    "write_scope": [
+      "campaigns/IP-01/ip01-v2-20260929/integration/"
+    ],
+    "budget_minutes": 7,
+    "reviewer": "root and independent final reviewers",
+    "next_action": "Publish concrete disjoint module/interface seams then yield slot",
+    "at": "2026-09-29T04:17:46.516140+00:00",
+    "completion": {
+      "native_id": "01a0eb61-9f2d-72c2-9acc-e1ac3845f9d7",
+      "task_id": "SEAM",
+      "status": "COMPLETED_CLOSED",
+      "event": "TASK_LEDGER_RECONCILIATION",
+      "artifact": "integration/SEAM.md",
+      "scope": "Native close already observed; update task projection only",
+      "at": "2026-09-29T04:32:26.776953+00:00"
+    }
+  },
+  {
+    "task_id": "APP",
+    "role": "ip01_application_engineer",
+    "native_id": "01a0eb68-1eef-7890-a6bb-4d1dc1bc5a57",
+    "status": "COMPLETED_CLOSED",
+    "inputs": "SEAM.md at setup+launch; full package; R03/P01 accepted composites",
+    "hard_dependencies": [
+      "INTAKE",
+      "SEAM"
+    ],
+    "write_scope": [
+      "labs/ip01/haven/app.py",
+      "labs/ip01/haven/store.py",
+      "labs/ip01/haven/authority.py",
+      "labs/ip01/haven/contracts.py",
+      "labs/ip01/haven/templates",
+      "labs/ip01/haven/static",
+      "labs/ip01/tests/app",
+      "campaigns/IP-01/ip01-v2-20260929/receipts/APP_HANDOFF.md"
+    ],
+    "budget_minutes": 45,
+    "reviewer": "independent QA and final code reviewer",
+    "next_action": "Runnable skeleton then stateful authority and UI",
+    "at": "2026-09-29T04:24:25.524522+00:00",
+    "completion": {
+      "native_id": "01a0eb68-1eef-7890-a6bb-4d1dc1bc5a57",
+      "task_id": "APP",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "receipts/APP_HANDOFF.md",
+      "sha256": "e58a722fea576fc920b509548bc56b2dc2a8cc3e8d7cc3108559eb5933dbb108",
+      "outcome": "124author tests;twobrowserwalkthroughs;livepersistence/restart;ownserversstopped;0calls0finals",
+      "at": "2026-09-29T05:07:43.989911+00:00"
+    }
+  },
+  {
+    "task_id": "RUNTIME",
+    "role": "ip01_runtime_engineer",
+    "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
+    "status": "COMPLETED_CLOSED",
+    "inputs": "SEAM.md; reviewed I01/I04/I06; original source identity",
+    "hard_dependencies": [
+      "INTAKE",
+      "SEAM"
+    ],
+    "write_scope": [
+      "labs/ip01/haven/supervisor.py",
+      "labs/ip01/haven/worker.py",
+      "labs/ip01/haven/model_adapter.py",
+      "labs/ip01/tests/runtime",
+      "campaigns/IP-01/ip01-v2-20260929/receipts/RUNTIME_HANDOFF.md",
+      "campaigns/IP-01/ip01-v2-20260929/receipts/RUNTIME_CONSULTATION.md",
+      "campaigns/IP-01/ip01-v2-20260929/receipts/MODEL_PREPARATION.md"
+    ],
+    "budget_minutes": 45,
+    "reviewer": "independent executable QA",
+    "next_action": "Benign lifecycle and model acquisition; no generation",
+    "at": "2026-09-29T04:24:25.641933+00:00",
+    "completion": {
+      "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
+      "task_id": "RUNTIME",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "receipts/RUNTIME_HANDOFF.md",
+      "sha256": "d760e62a6959940604b8eb519c37668399d2640390074d02fb7ba031c9a4cf23",
+      "outcome": "Author18lifecycle+13ledgerpassed;modelprepared0calls;independentclosurepending",
+      "at": "2026-09-29T04:57:11.792640+00:00"
+    }
+  },
+  {
+    "task_id": "QA-PREP",
+    "role": "ip01_validation_engineer",
+    "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+    "status": "COMPLETED_CLOSED",
+    "inputs": "SEAM and full package; independent evaluator sibling",
+    "hard_dependencies": [
+      "SEAM"
+    ],
+    "write_scope": [
+      "evaluator sibling",
+      "campaigns/IP-01/ip01-v2-20260929/reviews/QA-PREP"
+    ],
+    "budget_minutes": 20,
+    "reviewer": "final evidence auditor",
+    "next_action": "Prepare executable independent scenarios/fixtures; no final suites/model calls",
+    "at": "2026-09-29T04:25:23.037726+00:00",
+    "completion": {
+      "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+      "task_id": "QA-PREP",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "reviews/QA-PREP/QA_PREP_HANDOFF.md",
+      "sha256": "4340fa9f226f0bfdc2bc45baa8b0cad2e2a3403b0baf945fe7669b4dec3cf4da",
+      "result": "7 selfchecks and real benign probe;12actualimagesinspected;166collectedtests not166executed; protection inconclusive",
+      "at": "2026-09-29T04:44:07.272580+00:00"
+    }
+  },
+  {
+    "task_id": "ROOT-HANDOFF-SUPPORT",
+    "role": "root",
+    "native_id": null,
+    "status": "BOUNDED_PARTIAL_HANDOFF_DELIVERED",
+    "inputs": "H00 ownership and current IP01 grant",
+    "write_scope": [
+      "labs/ip01/scripts",
+      "labs/ip01/README.md",
+      "labs/ip01/haven/__init__.py",
+      "labs/ip01/fixtures/demo-notes.json"
+    ],
+    "objective": "Owned start/status/stop commands, dependency setup and runnable handoff; conservatively count root substantive source assignment",
+    "reviewer": "independent QA/code final",
+    "next_action": "Integrate actual app/QA results and preserve exact stop observations",
+    "at": "2026-09-29T04:32:26.878924+00:00",
+    "completion": {
+      "at": "2026-09-29T22:11:15.213901+00:00",
+      "role": "root",
+      "scope": "Existing assignment6 support/report/publication/cessation; all material findings retained; no new source repair or execution",
+      "final_delivery": "Separate validation and Issue20 F bind final publication"
+    }
+  },
+  {
+    "task_id": "LIFECYCLE-OBS",
+    "role": "ip01_validation_engineer",
+    "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+    "status": "COMPLETED_CLOSED",
+    "inputs": "QA-PREP benign topology proof; exact snapshot of available supervisor/worker; SEAM; owner consultations",
+    "hard_dependencies": [
+      "QA-PREP",
+      "RUNTIME_BENIGN_CODE_AND_OBSERVED_PROBE"
+    ],
+    "write_scope": [
+      "evaluator sibling",
+      "campaigns/IP-01/ip01-v2-20260929/reviews/LIFECYCLE-OBS"
+    ],
+    "budget_minutes": 20,
+    "reviewer": "independent code/evidence final",
+    "next_action": "Measured benign lifecycle faults and root launcher checks; retain source drift and failures",
+    "at": "2026-09-29T04:44:08.217975+00:00",
+    "completion": {
+      "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+      "task_id": "LIFECYCLE-OBS",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "reviews/LIFECYCLE-OBS/LIFECYCLE_OBS_HANDOFF.md",
+      "sha256": "68ae8af6e4c2d35e0b62dae00ad012e9be0d30658c2def27177c1123e9162f75",
+      "outcome": "13of13independentbenigncasesfinalbytes;21oraclechecks;launcherchecks;234identities0residuals;0modelcalls",
+      "at": "2026-09-29T05:01:21.462800+00:00"
+    }
+  },
+  {
+    "task_id": "MODEL-READY",
+    "role": "ip01_runtime_engineer",
+    "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
+    "status": "COMPLETED_CLOSED",
+    "inputs": "FINAL_BENIGN_GATE a63f368b2c788911b950d9696acf30ed02f9533f154c1fdacce7813818124426; exactmodelpins;MODEL_READY_AUTHORIZATION;statefulAPP",
+    "hard_dependencies": [
+      "LIFECYCLE-OBS",
+      "MODEL_PREPARATION",
+      "APP_STATEFUL_READY"
+    ],
+    "write_scope": [
+      "existingRUNTIMEmodulesifboundedrepair",
+      "labs/ip01/tests/runtime",
+      "receipts/MODEL_READY_HANDOFF.md",
+      "receipts/MODEL_READY_RESULTS.json",
+      "receipts/MODEL_READY_FINDING.md",
+      "private model-ready"
+    ],
+    "budget_minutes": 25,
+    "model_calls_authorized": {
+      "readiness": 4,
+      "lifecycle": 0,
+      "final": 0
+    },
+    "reviewer": "independentQA/code/evidence",
+    "next_action": "Up to4 actualAPP-authorized modelreadinesscalls; measuredcleanup;nohiddenwarmups",
+    "at": "2026-09-29T05:04:02.174971+00:00",
+    "completion": {
+      "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
+      "task_id": "MODEL-READY",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "receipts/MODEL_READY_HANDOFF.md",
+      "sha256": "65d7f9e948aad73c4a19c89c7e0b04001193df8f69357d1e0bf877f047074270",
+      "outcome": "4of4actualAPPreadinesscalls;4bindingsclaimsstartssettlements;97.204s;0survivors;2auditfindings+1wordlimitmissretained",
+      "at": "2026-09-29T05:17:34.394873+00:00"
+    }
+  },
+  {
+    "task_id": "QA-E2E",
+    "role": "ip01_validation_engineer",
+    "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+    "status": "COMPLETED_WITH_CONFIRMED_DEFECTS",
+    "inputs": "APP_READY STATEFUL_VALIDATED119authortests12browser;finalbenigngate;QA-PREP;ownerHTTPfaultconsultations",
+    "hard_dependencies": [
+      "APP_STATEFUL_READY",
+      "QA-PREP",
+      "LIFECYCLE-OBS"
+    ],
+    "seed_adaptation": "DeterministicWIREintegratedininitialAPPplusrootstatefulstartup; modelintegrationseparate gated lane; noacceptancebeforecurrentevidence",
+    "write_scope": [
+      "evaluator qa_e2e",
+      "reviews/QA-E2E"
+    ],
+    "budget_minutes": 35,
+    "reviewer": "CODE-EARLY then finalcode/evidence",
+    "next_action": "Independentexecutedauthority,persistence,HTTP,browserfaults; exactsourcefingerprints;0modelcalls0finalstarts",
+    "at": "2026-09-29T05:05:31.976548+00:00",
+    "completion": {
+      "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+      "task_id": "QA-E2E",
+      "status": "COMPLETED_WITH_CONFIRMED_DEFECTS",
+      "receipt": "reviews/QA-E2E/QA_E2E_HANDOFF.md",
+      "sha256": "66c6dbbe374a986cc2fa1464f5760389765c5d4d6341a7c7d6eb81ee3f72025c",
+      "at": "2026-09-29T05:44:52.676154+00:00"
+    }
+  },
+  {
+    "task_id": "CODE-EARLY",
+    "role": "haven_code_reviewer",
+    "native_id": "01a0eb92-7434-73a0-8f4e-ac2bc64da561",
+    "status": "COMPLETED_CLOSED_FINDINGS",
+    "inputs": "candidate f2acfb050b709c948a06cc090a74a974f5814515; DEVELOPMENT_CANDIDATE_01 exactbytes;APP/RUNTIME/QA benignhandbacks;acceptedcomposites",
+    "hard_dependencies": [
+      "APP",
+      "RUNTIME"
+    ],
+    "write_scope": [],
+    "budget_minutes": 15,
+    "reviewer": "root and later independent evidence",
+    "next_action": "Read-only concrete code/authority/concurrency findings; noexecution;rootpreservesnativehandback",
+    "at": "2026-09-29T05:10:39.633497+00:00",
+    "completion": {
+      "native_id": "01a0eb92-7434-73a0-8f4e-ac2bc64da561",
+      "task_id": "CODE-EARLY",
+      "status": "COMPLETED_CLOSED_FINDINGS",
+      "artifact": "reviews/CODE-EARLY/CODE_EARLY_REVIEW.md",
+      "outcome": "6source-supportedfindings;noexecution;sourcef2acpluslauncheraddendum;freshpostpreparationegress HIGH;ownerrepairandindependentrecheckrequired",
+      "at": "2026-09-29T05:23:03.100272+00:00"
+    }
+  },
+  {
+    "task_id": "MODEL-QA",
+    "role": "ip01_validation_engineer",
+    "native_id": "01a0eb9a-4e14-7012-8c9d-401632f2fa06",
+    "status": "COMPLETED_CLOSED_PREPARATION_ONLY",
+    "inputs": "MODEL_READY handback65d7f9e948aad73c4a19c89c7e0b04001193df8f69357d1e0bf877f047074270;fouractualreadinessresults;finalbenigngate;exactmodelpins;developmentcandidatef2ac",
+    "hard_dependencies": [
+      "MODEL-READY"
+    ],
+    "soft_dependencies": [
+      "RUNTIME_AUDIT_REPAIR",
+      "CODE-EARLY"
+    ],
+    "write_scope": [
+      "evaluator/model_qa",
+      "reviews/MODEL-QA"
+    ],
+    "budget_minutes": 30,
+    "model_calls_authorized": 0,
+    "reviewer": "root and finalcode/evidence",
+    "next_action": "Independentexistingreadinesssemantic/pixelcheck and model-lifecycle/browserprotocol; NO newcalls untilrootexplicitgate",
+    "at": "2026-09-29T05:19:14.179934+00:00",
+    "completion": {
+      "native_id": "01a0eb9a-4e14-7012-8c9d-401632f2fa06",
+      "task_id": "MODEL-QA",
+      "status": "COMPLETED_CLOSED_PREPARATION_ONLY",
+      "artifact": "reviews/MODEL-QA/NATIVE_HANDBACK.md",
+      "manifest_sha256": "d3e07d5496e0e041d19367b6b47e0ee5b6551e662f5c583e3c52d4dca019a940",
+      "outcome": "Independentpixels+4readinessoutputs:semantic4of4,wordbounds3of4;4syntheticoraclechecks;livefault/browseradapterunfinished;0newcalls0faults0finals",
+      "at": "2026-09-29T05:30:53.247257+00:00"
+    }
+  },
+  {
+    "task_id": "H00-EGRESS",
+    "role": "haven_integration_manager",
+    "native_id": "01a0eb61-9f2d-72c2-9acc-e1ac3845f9d7",
+    "status": "COMPLETED_CLOSED",
+    "inputs": "CODE-EARLY CE-F01/03 and Q-CODE-EARLY-01; existingSEAM; developmentcandidatef2ac",
+    "hard_dependencies": [
+      "CODE-EARLY",
+      "SEAM"
+    ],
+    "write_scope": [
+      "integration/EGRESS_AMENDMENT.md"
+    ],
+    "budget_minutes": 5,
+    "reviewer": "APP/RUNTIME owners thenindependentQA/code",
+    "next_action": "Minimal fresh-egress and terminal-outcome callbackseam;actualH00answerwithoutfictionalowneragreement",
+    "at": "2026-09-29T05:23:03.860275+00:00",
+    "completion": {
+      "native_id": "01a0eb61-9f2d-72c2-9acc-e1ac3845f9d7",
+      "task_id": "H00-EGRESS",
+      "status": "COMPLETED_CLOSED",
+      "artifact": "integration/EGRESS_AMENDMENT.md",
+      "outcome": "ActualH00answerYESfreshauthorize_egress afterbackendready andterminal outcome seam;owneradoptionnotyetclaimed;noexecution",
+      "at": "2026-09-29T05:27:50.819427+00:00"
+    }
+  },
+  {
+    "task_id": "APP-FIX",
+    "role": "ip01_application_engineer",
+    "native_id": "01a0eb68-1eef-7890-a6bb-4d1dc1bc5a57",
+    "status": "COMPLETED_CLOSED_READY_FOR_INDEPENDENT_RECHECK",
+    "inputs": "CODE-EARLY28e4876f; H00 EGRESS_AMENDMENT46620137b8ff8bde83340b922c856a158c264a6e7639178bd974a1dc00726820;candidatef2ac",
+    "hard_dependencies": [
+      "CODE-EARLY",
+      "H00-EGRESS"
+    ],
+    "write_scope": [
+      "originalAPPmodules/tests",
+      "receipts/APP_FIX_HANDOFF.md",
+      "receipts/APP_FIX_FINDINGS.json",
+      "privateapp-fix"
+    ],
+    "budget_minutes": 20,
+    "model_calls_authorized": 0,
+    "reviewer": "independentQA andCODE-FINAL",
+    "next_action": "RepairCE01/02/03/04/05 pluscallbackusagepersist; actualH00adoptionresponse; retainfailures",
+    "at": "2026-09-29T05:29:08.450931+00:00",
+    "completion": {
+      "native_id": "01a0eb68-1eef-7890-a6bb-4d1dc1bc5a57",
+      "task_id": "APP-FIX",
+      "status": "COMPLETED_CLOSED_READY_FOR_INDEPENDENT_RECHECK",
+      "receipt": "receipts/APP_FIX_HANDOFF.md",
+      "receipt_sha256": "130389776e1c5cd3baee4abdc86adada1565a12af542264e98aad4a1b347432c",
+      "author_regression_passed": 146,
+      "author_focused_passed": 22,
+      "new_model_calls": 0,
+      "at": "2026-09-29T05:50:36.081753+00:00"
+    }
+  },
+  {
+    "task_id": "RUNTIME-FIX",
+    "role": "ip01_runtime_engineer",
+    "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
+    "status": "COMPLETED_CLOSED_READY_FOR_INDEPENDENT_RECHECK",
+    "inputs": "CODE-EARLY28e4876f;H00EGRESS46620137;R8-F01/L01 actualreadinessfindings",
+    "hard_dependencies": [
+      "CODE-EARLY",
+      "H00-EGRESS"
+    ],
+    "write_scope": [
+      "originalRUNTIMEmodules/tests",
+      "receipts/RUNTIME_FIX_HANDOFF.md",
+      "receipts/RUNTIME_FIX_FINDINGS.json",
+      "private runtime-fix"
+    ],
+    "budget_minutes": 20,
+    "model_calls_authorized": 0,
+    "reviewer": "independentQA15/CODE-FINAL",
+    "next_action": "Freshpostreadyauthorize_egress, boundeddispatch,allpathterminalevents,auditphase+usage persistence; no realinference",
+    "at": "2026-09-29T05:30:54.024660+00:00",
+    "completion": {
+      "native_id": "01a0eb68-1fee-70f3-8111-49f6eb93cca0",
+      "task_id": "RUNTIME-FIX",
+      "status": "COMPLETED_CLOSED_READY_FOR_INDEPENDENT_RECHECK",
+      "receipt": "receipts/RUNTIME_FIX_HANDOFF.md",
+      "receipt_sha256": "f2ec6b0699bf4a5da7d11ec96ee1d218df17c4470ffd44ab88e947da52b12459",
+      "author_tests_passed": 75,
+      "new_model_calls": 0,
+      "at": "2026-09-29T05:49:36.503436+00:00"
+    }
+  },
+  {
+    "task_id": "INTEGRATED-QA",
+    "assignment": 15,
+    "native_id": "01a0eb69-0092-74d3-9541-9aeb69de5d92",
+    "status": "COMPLETED_CLOSED",
+    "started_at": "2026-09-29T05:44:00Z",
+    "local_deadline": "2026-09-29T06:44:00Z",
+    "ownership": [
+      "eval/integrated_qa",
+      "reviews/INTEGRATED-QA"
+    ],
+    "model_calls_authorized": 0,
+    "final_suite_starts_authorized": 0,
+    "at": "2026-09-29T05:44:53.561157+00:00",
+    "completion": {
+      "at": "2026-09-29T06:31:23.023357+00:00",
+      "receipt": "reviews/INTEGRATED-QA/INTEGRATED_QA_HANDOFF.md",
+      "receipt_sha256": "83c3c74467d161eb7e3a303f61b1b96fefd0830c6c61079289cc07c384a4bcdb",
+      "real_model_calls": 0,
+      "final_suite_starts": 0,
+      "source_changes": 0
+    }
+  },
+  {
+    "task_id": "MODEL-EXECUTION",
+    "assignment": 16,
+    "role": "ip01_validation_engineer",
+    "native_id": "01a0eb9a-4e14-7012-8c9d-401632f2fa06",
+    "status": "BOUNDED_PARTIAL_CLOSED_AT_LOCAL_DEADLINE",
+    "started_at": "2026-09-29T05:56:00Z",
+    "local_deadline": "2026-09-29T06:36:00Z",
+    "write_scope": [
+      "evaluator/model_execution",
+      "reviews/MODEL-EXECUTION"
+    ],
+    "model_calls_authorized": 4,
+    "hard_dependencies": [
+      "INTEGRATED-QA operationalgate",
+      "rootexplicitrealmodelauthorization"
+    ],
+    "soft_dependencies": [
+      "QA15MODEL_DRIVER_HANDOFF"
+    ],
+    "objective": "Independent actual model fault and selected-image browser drivers; unchanged final72pilot driver prep, realexecution only after explicit root gate",
+    "at": "2026-09-29T05:55:47.853540+00:00",
+    "authorization_receipt": "receipts/LIFECYCLE_PREFLIGHT_RECONCILIATION.json",
+    "completion": {
+      "native_id": "01a0eb9a-4e14-7012-8c9d-401632f2fa06",
+      "task_id": "MODEL-EXECUTION",
+      "status": "BOUNDED_PARTIAL_CLOSED_AT_LOCAL_DEADLINE",
+      "receipt": "reviews/MODEL-EXECUTION/LIFECYCLE_PHASE_PARTIAL.json",
+      "native_previous_status": "running",
+      "native_shutdown_confirmed": true,
+      "real_model_calls": 1,
+      "remaining_submission_attempts": 0,
+      "final_handback_received": false,
+      "at": "2026-09-29T06:37:57.435896+00:00"
+    }
+  },
+  {
+    "task_id": "FINAL-EXECUTION",
+    "assignment": 17,
+    "native_id": "01a0ebe2-1ef8-7f52-bfc1-0a37b63186c4",
+    "role": "ip01_validation_engineer",
+    "status": "BOUNDED_PARTIAL_CLOSED",
+    "started_at": "2026-09-29T06:37:00Z",
+    "local_deadline": "2026-09-29T08:20:00Z",
+    "write_scope": [
+      "evaluator/final_execution",
+      "reviews/FINAL-QA"
+    ],
+    "model_calls_authorized": 77,
+    "final_suite_starts_authorized": 3,
+    "candidate": "487c67299445a29e0fbbdede04259565f741f587",
+    "objective": "Independent final deterministic suite, remaining actual lifecycle/browser and unchanged72pilot after separate root gates",
+    "profile": "CUSTOM_PROFILE_FALLBACK",
+    "at": "2026-09-29T06:37:40.636623+00:00",
+    "current_control_receipt": "receipts/TASK17_FINAL_CONTROL.json",
+    "latest_observation": "2026-09-29T07:45:35.410491+00:00",
+    "completion": {
+      "final_calls": 54,
+      "receipt_sha256": "733b1d373c42c01ef5a94b5b5b0a971bd6c002952fae9c3a0cdf93ee8041649d",
+      "status": "BOUNDED_PARTIAL_CLOSED",
+      "task_id": "FINAL-EXECUTION",
+      "receipt": "reviews/FINAL-QA/FINAL_QA_HANDOFF.md",
+      "semantic_fail": 9,
+      "native_id": "01a0ebe2-1ef8-7f52-bfc1-0a37b63186c4",
+      "semantic_pass": 45,
+      "scheduled_calls": 72,
+      "native_handback_received": true,
+      "at": "2026-09-29T07:55:53.348716+00:00"
+    }
+  },
+  {
+    "task_id": "INTEGRATION-FINAL",
+    "assignment": 18,
+    "native_id": "01a0eb61-9f2d-72c2-9acc-e1ac3845f9d7",
+    "role": "haven_integration_manager",
+    "profile": "CUSTOM_PROFILE_FALLBACK",
+    "status": "ERROR_USAGE_LIMIT_NO_FINAL_VERDICT_HANDLE_NOW_MISSING",
+    "candidate": "487c67299445a29e0fbbdede04259565f741f587",
+    "inputs": [
+      "receipts/FINAL_CANDIDATE_01.json",
+      "integration/SEAM.md",
+      "integration/EGRESS_AMENDMENT.md",
+      "reviews/FINAL-QA/FINAL_DETERMINISTIC_RESULTS.json",
+      "reviews/FINAL-QA/LIFECYCLE_RESULTS.json",
+      "reviews/FINAL-QA/READINESS_RESULTS.json"
+    ],
+    "hard_dependencies_for_final_acceptance": [
+      "FINAL-EXECUTION17 disposition and handoff",
+      "actual final report identities"
+    ],
+    "soft_preparation_inputs": [
+      "frozen source37",
+      "completed independent deterministic composite",
+      "completed actual lifecycle and readiness phases"
+    ],
+    "write_scope": [
+      "campaigns/IP-01/ip01-v2-20260929/integration/final-v1/"
+    ],
+    "local_deadline": "2026-09-29T08:40:00Z",
+    "model_calls_authorized": 0,
+    "final_suite_starts_authorized": 0,
+    "objective": "Prepare exact contract-to-code/evidence map and retained vision; finalize only after QA17 handoff. Separate integration advice, never self-acceptance.",
+    "reviewers": [
+      "CODE-FINAL",
+      "VISION-FINAL",
+      "EVIDENCE-FINAL"
+    ],
+    "next_action": "Labeled preparation now; root will relay actual QA17 immutable handoff before final integration",
+    "at": "2026-09-29T07:42:27.466568+00:00",
+    "completion": {
+      "at": "2026-09-29T21:12:15.723921+00:00",
+      "task_id": "INTEGRATION-FINAL",
+      "assignment": 18,
+      "native_id": "01a0eb61-9f2d-72c2-9acc-e1ac3845f9d7",
+      "status": "ERROR_USAGE_LIMIT_NO_FINAL_VERDICT_HANDLE_NOW_MISSING",
+      "prior_terminal_event": "Native usage-limit error notification received; exact error timestamp unavailable",
+      "current_native_check": "close_agent returned agent not found at recovery; no agent resumed or replaced",
+      "final_handback_received": false,
+      "scope": "H00 preparation artifacts retained; no final integration/code/vision acceptance inferred"
+    }
+  },
+  {
+    "task_id": "CODE-FINAL",
+    "assignment": 19,
+    "native_id": "01a0eb92-7434-73a0-8f4e-ac2bc64da561",
+    "role": "haven_code_reviewer",
+    "profile": "CUSTOM_PROFILE_FALLBACK",
+    "status": "ERROR_USAGE_LIMIT_NO_FINAL_VERDICT_HANDLE_NOW_MISSING",
+    "candidate": "487c67299445a29e0fbbdede04259565f741f587",
+    "hard_dependencies_for_final_verdict": [
+      "INTEGRATION-FINAL18 actual handoff",
+      "FINAL-EXECUTION17 completed disposition"
+    ],
+    "soft_preparation_inputs": [
+      "frozen37source",
+      "completed independent deterministic/lifecycle/readiness reports",
+      "original code review and producer repairs"
+    ],
+    "write_scope": [],
+    "local_deadline": "2026-09-29T08:55:00Z",
+    "model_calls_authorized": 0,
+    "final_suite_starts_authorized": 0,
+    "objective": "Read-only actual code/authority/concurrency review and early findings now; final signed-role verdict only after integration/evaluation hard inputs.",
+    "next_action": "Inspect unchanged frozen source; report provisional findings through root, never execute or edit code",
+    "at": "2026-09-29T07:43:38.882007+00:00",
+    "completion": {
+      "at": "2026-09-29T21:12:15.723921+00:00",
+      "task_id": "CODE-FINAL",
+      "assignment": 19,
+      "native_id": "01a0eb92-7434-73a0-8f4e-ac2bc64da561",
+      "status": "ERROR_USAGE_LIMIT_NO_FINAL_VERDICT_HANDLE_NOW_MISSING",
+      "prior_terminal_event": "Native usage-limit error notification received; exact error timestamp unavailable",
+      "current_native_check": "close_agent returned agent not found at recovery; no agent resumed or replaced",
+      "final_handback_received": false,
+      "scope": "H00 preparation artifacts retained; no final integration/code/vision acceptance inferred"
+    }
+  },
+  {
+    "objective": "Independent usefulness and retained V01-V16 review of bounded partial outcome; native verdict only",
+    "task_id": "VISION-FINAL",
+    "hard_dependencies_for_final_verdict": [
+      "INTEGRATION-FINAL18"
+    ],
+    "profile": "CUSTOM_PROFILE_FALLBACK",
+    "role": "haven_vision_guardian",
+    "native_id": "01a0eb5c-f3bf-7c52-9bb1-90465cc30b24",
+    "status": "ERROR_USAGE_LIMIT_NO_FINAL_VERDICT_HANDLE_NOW_MISSING",
+    "model_calls_authorized": 0,
+    "local_deadline": "2026-09-29T08:10:00Z",
+    "candidate": "487c67299445a29e0fbbdede04259565f741f587",
+    "assignment": 20,
+    "write_scope": [],
+    "at": "2026-09-29T07:56:34.416924+00:00",
+    "completion": {
+      "at": "2026-09-29T21:12:15.723921+00:00",
+      "task_id": "VISION-FINAL",
+      "assignment": 20,
+      "native_id": "01a0eb5c-f3bf-7c52-9bb1-90465cc30b24",
+      "status": "ERROR_USAGE_LIMIT_NO_FINAL_VERDICT_HANDLE_NOW_MISSING",
+      "prior_terminal_event": "Native usage-limit error notification received; exact error timestamp unavailable",
+      "current_native_check": "close_agent returned agent not found at recovery; no agent resumed or replaced",
+      "final_handback_received": false,
+      "scope": "H00 preparation artifacts retained; no final integration/code/vision acceptance inferred"
+    }
+  },
+  {
+    "local_deadline": "2026-09-29T21:44:00Z",
+    "profile": "CUSTOM_PROFILE_FALLBACK",
+    "status": "COMPLETED_CLOSED",
+    "write_scope": [
+      "campaigns/IP-01/ip01-v2-20260929/integration/closure-v1/"
+    ],
+    "assignment": 21,
+    "task_id": "H00-CLOSURE",
+    "final_suite_starts_authorized": 0,
+    "native_id": "01a0ef12-861f-7511-8e1d-68cee3f932ab",
+    "objective": "Validate saved final-v1 and freeze exact-byte closure binding for independent reviewers",
+    "continuation_run_id": "ip01-closure-20260929T212404Z",
+    "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+    "model_calls_authorized": 0,
+    "role": "haven_integration_manager",
+    "at": "2026-09-29T21:29:38.922407+00:00",
+    "completion": {
+      "actual_tool_status": "completed; close_agent returned completed handback",
+      "status": "COMPLETED_CLOSED",
+      "native_id": "01a0ef12-861f-7511-8e1d-68cee3f932ab",
+      "disposition": "READY_FOR_INDEPENDENT_REVIEW",
+      "task_id": "H00-CLOSURE",
+      "execution": "PARTIAL",
+      "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+      "manifest": "integration/closure-v1/MANIFEST.json",
+      "manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+      "at": "2026-09-29T21:41:18.306211+00:00"
+    }
+  },
+  {
+    "task_id": "CODE-FINAL-CLOSURE",
+    "assignment": 22,
+    "native_id": "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6",
+    "nickname": "Lorentz",
+    "role": "haven_code_reviewer",
+    "status": "COMPLETED_CLOSED",
+    "profile": "CUSTOM_PROFILE_FALLBACK",
+    "continuation_run_id": "ip01-closure-20260929T212404Z",
+    "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+    "H00_manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+    "local_deadline": "2026-09-29T22:07:00Z",
+    "write_scope": [],
+    "model_calls_authorized": 0,
+    "final_suite_starts_authorized": 0,
+    "objective": "Distinct independent final code review of exact candidate and frozen H00 partial handoff",
+    "at": "2026-09-29T21:44:03.650990+00:00",
+    "completion": {
+      "handoff_recovery": "Lossless consolidated native handback received after initial addendum; same assignment",
+      "verdict": "CHANGES_REQUIRED_CF_F01_TO_F04_UNRESOLVED_RESTRICTED_PARTIAL_HANDOFF_ACCEPTABLE",
+      "review": "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+      "actual_close_tool_previous_status": "completed",
+      "status": "COMPLETED_CLOSED",
+      "native_id": "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6",
+      "new_execution": 0,
+      "task_id": "CODE-FINAL-CLOSURE",
+      "at": "2026-09-29T22:04:27.810754+00:00"
+    }
+  },
+  {
+    "task_id": "VISION-FINAL-CLOSURE",
+    "assignment": 23,
+    "native_id": "01a0ef1f-a5ab-7221-968a-0f0a4afd18ad",
+    "nickname": "Turing",
+    "role": "haven_vision_guardian",
+    "status": "COMPLETED_CLOSED",
+    "profile": "CUSTOM_PROFILE_FALLBACK",
+    "continuation_run_id": "ip01-closure-20260929T212404Z",
+    "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+    "H00_manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+    "local_deadline": "2026-09-29T22:07:00Z",
+    "write_scope": [],
+    "model_calls_authorized": 0,
+    "final_suite_starts_authorized": 0,
+    "objective": "Distinct independent final vision review of exact candidate and frozen H00 partial handoff",
+    "at": "2026-09-29T21:44:04.314989+00:00",
+    "completion": {
+      "status": "COMPLETED_CLOSED",
+      "actual_close_tool_previous_status": "completed",
+      "task_id": "VISION-FINAL-CLOSURE",
+      "verdict": "PASS_FOR_VISION_RETENTION_AND_HONEST_PARTIAL_HANDOFF_WITH_OPEN_USEFULNESS_DEFECTS",
+      "new_execution": 0,
+      "native_id": "01a0ef1f-a5ab-7221-968a-0f0a4afd18ad",
+      "review": "reviews/VISION-FINAL-CLOSURE/REVIEW.md",
+      "at": "2026-09-29T21:55:56.952378+00:00"
+    }
+  },
+  {
+    "task_id": "EVIDENCE-FINAL-CLOSURE",
+    "assignment": 24,
+    "native_id": "01a0ef1f-a61b-7c60-b34a-477d91e77feb",
+    "nickname": "Chandrasekhar",
+    "role": "haven_evidence_auditor",
+    "status": "COMPLETED_CLOSED",
+    "profile": "CUSTOM_PROFILE_FALLBACK",
+    "continuation_run_id": "ip01-closure-20260929T212404Z",
+    "candidate": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+    "H00_manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+    "local_deadline": "2026-09-29T22:07:00Z",
+    "write_scope": [],
+    "model_calls_authorized": 0,
+    "final_suite_starts_authorized": 0,
+    "objective": "Distinct independent final evidence review of exact candidate and frozen H00 partial handoff",
+    "at": "2026-09-29T21:44:05.003502+00:00",
+    "completion": {
+      "native_id": "01a0ef1f-a61b-7c60-b34a-477d91e77feb",
+      "actual_close_tool_previous_status": "completed",
+      "review": "reviews/EVIDENCE-FINAL-CLOSURE/REVIEW.md",
+      "status": "COMPLETED_CLOSED",
+      "task_id": "EVIDENCE-FINAL-CLOSURE",
+      "verdict": "PASS_FOR_HONEST_BOUNDED_PARTIAL_HANDOFF",
+      "new_execution": 0,
+      "at": "2026-09-29T21:54:20.144352+00:00"
+    }
+  }
+]

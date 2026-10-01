@@ -1,0 +1,26 @@
+{
+  "finding": "CE-F02",
+  "status": "RECHECK_PASS",
+  "cases": [
+    {
+      "variant": "refresh",
+      "identity_after_delivery": "Person B",
+      "answer_view_copy": "Choose a demo person to continue.",
+      "private_marker_rendered_after_B_switch": false,
+      "response_was_200_before_delay": true,
+      "status": "NOT_REPRODUCED"
+    },
+    {
+      "variant": "consume",
+      "identity_after_delivery": "Person B",
+      "answer_view_copy": "Choose a demo person to continue.",
+      "private_marker_rendered_after_B_switch": false,
+      "response_was_200_before_delay": true,
+      "status": "NOT_REPRODUCED"
+    }
+  ],
+  "scope": "Actual Chromium, same browser context A-to-B switch, separate refresh and committed consume delayed-response scenarios. Pinned cb266a3 repaired candidate copy. Synthetic marker only.",
+  "private_evidence": "<evaluator>/integrated_qa/session_race_runs/20260929T055733.503926Z/receipt.json",
+  "source_sha256": "a34d7d3682c78d94e7cad46a653a8a9b95646297a163ccae8a4b02431fed3508",
+  "failure": null
+}

@@ -1,0 +1,40 @@
+{
+  "at": "2026-09-29T06:16:26.244539+00:00",
+  "root_thread_id": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
+  "assignment": 16,
+  "phase": "lifecycle",
+  "scope": "L1/L2 active text/image cancel; L3/L4 natural120sec text/image timeout, one attempt each; early finish not timeout PASS; no retry",
+  "slots_added": 4,
+  "issued_total_slots": {
+    "readiness": 4,
+    "lifecycle": 4,
+    "final": 0
+  },
+  "previous_spent": {
+    "readiness": 4,
+    "lifecycle": 0,
+    "final": 0
+  },
+  "previous_charged_seconds": 97.2039999999979,
+  "operational_gate_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
+  "driver_ready_sha256": "1b52bcf2d64be1c6ad6ca3f04e96572490e5968b714f0b9ca31eeca7d377eb87",
+  "driver_sha256": {
+    "safety.py": "44d8b4b2b0eeecfa48b3c85465d7959bcdd1544ce5bcee9292c69fe6184148d4",
+    "live_model.py": "3bbad86cc1178b24699c71d124f5056486ec90568e56269fda964baab2729256",
+    "live_observer.py": "c2db90ab5dad45a1efc84d90d7d7231b43fa9c3e39335e5680a8a571104b5fff"
+  },
+  "protocol_sha256": "657c728ef8eae2aa5e1dcc92e2186da46b453f240b7f903a461cde3c894b6748",
+  "model_identity": {
+    "manifest_sha256": "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1",
+    "preprocessor_sha256": "b6b6a5ebfa3bb4f08f1edad7ae9950d09b79facf9e1ef2be6c16761beb236ee5",
+    "runtime_sha256": "d571e4cf0ad4456fccd33d5b985b6d63ba5669c6e5a812391704083952aae3d5",
+    "template_sha256": "a242d8dfdc8f8c2b0586ee85fba70adb408fb633aba2836fe1b05f2c46631474"
+  },
+  "gate_bytes_sha256": "c4539b1aef409d3419c91ae7a62aff523a5bf185ba4d7798f19e7abaf7b30cfb",
+  "gate_canonical_sha256": "9d5c58f9995d648dc092f4cbac61767783f5e5d85865fbc54d32aa4395340b6e",
+  "expires_utc": "2026-09-29T06:36:00Z",
+  "historical_ledger_sha256": "f4ef94316264bf41977988b0be1c1df4a2348af524fb146f66fc219751149759",
+  "control_status": "ROOT_APP_START_AND_CONTROL_RELAY_PENDING_NO_DISPATCH_YET",
+  "gate_schema_tag": "MODEL-READY is the frozen adapter technical enum; this receipt identifies actual authorizing assignment16",
+  "unknown_rule": "Stop admission on ambiguous submission, unclosed claim, residual or identity/observer loss; no ledger reset/refund/quarantine bypass"
+}

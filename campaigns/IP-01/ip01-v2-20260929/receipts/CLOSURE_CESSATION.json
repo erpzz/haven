@@ -1,0 +1,47 @@
+{
+  "at": "2026-09-29T22:11:31.596160+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "status": "OWNED_RUNTIME_STOPPED_NATIVE_CHILDREN_CLOSED",
+  "original_stop_receipt": "receipts/FINAL_RUNTIME_SHUTDOWN.json",
+  "original_app_shutdown_at": "2026-09-29T07:53:50.873443+00:00",
+  "exact_original_APP_identities_reobserved": [
+    {
+      "pid": 26908,
+      "process_birth": 1790667035.855971,
+      "same_identity_live": false,
+      "observation": "PID_ABSENT"
+    },
+    {
+      "pid": 31308,
+      "process_birth": 1790667035.863718,
+      "same_identity_live": false,
+      "observation": "PID_ABSENT"
+    },
+    {
+      "pid": 4344,
+      "process_birth": 1790667035.8783147,
+      "same_identity_live": false,
+      "observation": "PID_ABSENT"
+    }
+  ],
+  "current_APP_state": "STOPPED",
+  "current_APP_descendants": [],
+  "active_native_children": [],
+  "native_cessation_evidence": "state/agents.jsonl records actual native close tool outcomes; historical missing handles are distinguished from observed closure",
+  "model_ledger_sha256": "f3db7383060cf4aecd86acba7ea7d8c2f61ecf8d71200b35ab6ba6fe3e84f4cb",
+  "ledger_unchanged_from_original_shutdown": true,
+  "model_gate_disabled_sha256": "58bcbf40c3047d81099638477a11de5318d746363a3087f8494c85b8fee4d5d7",
+  "gate_enabled": false,
+  "original_HALT_preserved": true,
+  "model_counts": {
+    "readiness": 6,
+    "lifecycle": 4,
+    "final": 54
+  },
+  "confirmed_settlements": 64,
+  "model_unknown_cleanup": 0,
+  "task_path_runtime_processes": [],
+  "scoped_process_scan_errors": [],
+  "limits": "Read-only current identity/path sampling complements original independent1255-identity audit; no process-name-wide kill, no claim of host-wide isolation or exhaustive transient capture. No app/model restarted during closure.",
+  "offline_browser_receipts": "receipts/OFFLINE_CLOSURE_RENDER_final.json if present; separate exact observed child identities and residual check"
+}

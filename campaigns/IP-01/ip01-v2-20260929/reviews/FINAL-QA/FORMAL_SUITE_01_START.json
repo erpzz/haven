@@ -1,0 +1,14 @@
+{
+  "assignment": 17,
+  "kind": "FINAL_DETERMINISTIC_SUITE",
+  "suite_id": "suite-01",
+  "global_start_number": 1,
+  "started_at": "2026-09-29T06:47:52.474282+00:00",
+  "candidate_commit": "487c67299445a29e0fbbdede04259565f741f587",
+  "control_sha256": "a80287cb381c00ef6f9cdb3321e28fc64f1feab7c22ee1b358ac5fdcc82dad2a",
+  "freeze_sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+  "real_model_calls": 0,
+  "private_start_sha256": "e37ac1a53afcab66ff414cb81557ff73795cb95f903de14b9dc7300ec43e12e0",
+  "native_authorization": "ROOT_EXPLICIT_FORMAL_SUITE01_AUTHORIZATION",
+  "status": "ACTUALLY_STARTED"
+}

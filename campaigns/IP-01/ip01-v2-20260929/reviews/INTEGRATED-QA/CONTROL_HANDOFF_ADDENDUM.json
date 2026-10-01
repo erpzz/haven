@@ -1,0 +1,22 @@
+{
+  "assignment": 15,
+  "finding": "Q-GATE-IMMUTABILITY-01",
+  "classification": "EVALUATOR_CONTROL_ARTIFACT_MUTATION",
+  "status": "ROOT_RECONCILIATION_REQUIRED",
+  "attributed_writer": "task15 evaluator finalize_reports.py",
+  "finding_path": "GATE_IMMUTABILITY_FINDING.md",
+  "finding_sha256": "00a66d488cf51b942eabeb020eb21cf8fe937877686a2bff199b88fb744d6e15",
+  "original_and_current_gate_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
+  "substituted_edition_sha256": "a14427221fd400f291589a30d248da13dc747ebed603585a543367d53d9d8515",
+  "substituted_write_utc": "2026-09-29T06:19:23.0173658Z",
+  "restored_hash_observed_utc_second": "2026-09-29T06:19:40Z",
+  "substituted_bytes_retained_as": "DETERMINISTIC_GATE_CLOSURE_ADDENDUM.json",
+  "restoration_source": "<evaluator>/integrated_qa/DETERMINISTIC_GATE_READY.json",
+  "original_public_backup": "<evaluator>/integrated_qa/public_originals/1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88-DETERMINISTIC_GATE_READY.json",
+  "scope": "Supplement to preserved INTEGRATED_QA_HANDOFF.md. Candidate containment checks remain their observed results; this incident concerns mutable evaluation control publication. It is not an APP/model-policy denial or a workload-unknown claim.",
+  "causal_timing_limit": "Root reports L2 preflight failure timestamp06:19:57, later than restoration observation. Task15 did not observe task16 actual read time and does not infer it.",
+  "actions_not_authorized_by_this_addendum": ["clear task16 HALT", "retry a model call", "spend a slot", "refund or reset a count"],
+  "next_action": "Root correlates retained task16 preflight evidence and owns reconciliation. Task15 is quiescent; no model calls were made here and root8765/gate/ledger were untouched. Frozen operational evidence file stays immutable.",
+  "real_model_calls_task15": 0,
+  "final_suite_starts_task15": 0
+}

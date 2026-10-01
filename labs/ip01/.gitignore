@@ -1,0 +1,5 @@
+# The repository-wide runtime/ rule also matches this source test directory.
+# Keep its Python test sources trackable; execution data belongs in .ip01-runtime.
+!tests/runtime/
+tests/runtime/*
+!tests/runtime/*.py

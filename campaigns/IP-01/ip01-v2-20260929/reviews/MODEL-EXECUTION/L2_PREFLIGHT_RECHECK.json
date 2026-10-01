@@ -1,0 +1,11 @@
+{
+  "case": "L2",
+  "status": "FOLLOWUP_GATE_HASH_MATCHES_NOW_CAUSE_UNRESOLVED",
+  "control_sha256": "ae6ef9416e1fe3b94e6270670ef35ab01ad4d2cd23919f2648332369a8b08ce0",
+  "control_operational_gate_passed": true,
+  "operational_gate_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
+  "failure_time_actual_digest": "NOT_CAPTURED_BY_PREFLIGHT",
+  "L2_local_intent_present": false,
+  "L2_run_directory_present": false,
+  "automatic_retry": false
+}

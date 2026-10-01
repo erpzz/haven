@@ -1,0 +1,62 @@
+[
+  {
+    "path": "<evaluator>/integrated_qa/crash_image_runs/20260929T060836.649438Z/receipt.json",
+    "sha256": "c9ed84c42f0d2458d9b1dd6615d7696d5715acc29235b7fb2bd849887dd316e9"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/lifecycle/runs/20260929T055502.795801Z/receipt.json",
+    "sha256": "f8f7c21ef156aad80eab7297ab93d71ec30954ffa424c62506fcf298bdd6ab24"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/lifecycle/runs/20260929T061606.784639Z/receipt.json",
+    "sha256": "985ef2666e3c169aadbb8dbf9ffcc6e0b725705409b23c66214e1d3bb1829d0b"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/lifecycle/runs/oracle-20260929T061522.001169Z/receipt.json",
+    "sha256": "79bfa3197e03df26fa183ed432129f4ee2e8e945cd93e46fc1b670cec4f596bb"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/lifecycle/runs/oracle-20260929T061642.128518Z/receipt.json",
+    "sha256": "1816af22176938ef0bf9c37770ece4a26ccfee6c97e0d70f8f3c66701efe10b5"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/live_runs/20260929T060530.200787Z/receipt.json",
+    "sha256": "4f3c5e6d0737d045ccbf1f8a085ce3eb3c410836fc86011578bb8bb1d520280e"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/operator_smoke/harness/runs/20260929T061024.652388Z/receipt.json",
+    "sha256": "3d165fd939940548e7cb3f7bb30886108b35b1b929ae1bef320c8190eb9cfe47"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/runs/20260929T055452.577419Z/receipt.json",
+    "sha256": "721e358a0066a7a19feb101c444d8f22eff9d3f1649e59763fe380e99c298999"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/runs/20260929T060429.140253Z/receipt.json",
+    "sha256": "05bc98f09869aeb298934375c6f0108254fe7abe9a5caac9093ca5d5203f3590"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/runs/20260929T060529.686790Z/receipt.json",
+    "sha256": "2ba61dfa9e75e3019972fc3b278aaa24d22da56fc18328440ceb7a32b9bd8b80"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/runs/20260929T060646.445628Z/receipt.json",
+    "sha256": "3400dd1c1c7753e3929f8e84a3ccb4a1efb24b5d73594f04162d780d9be8f68c"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/runs/20260929T061209.679200Z/receipt.json",
+    "sha256": "d6dd525e5597a572075b4eafb00dd64b7f5719e428dd1e4ac6a4280191aa7665"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/runs/20260929T061345.206481Z/receipt.json",
+    "sha256": "7dda58e308cf0bed1096f1ad07207c4e71170f74032d9b18da97b7ed0923e5c1"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/session_race_runs/20260929T055733.503926Z/receipt.json",
+    "sha256": "97ab0301c49155f2560510e13140d9c2c0d45fb80e78dcce26d282b48a0cf320"
+  },
+  {
+    "path": "<evaluator>/integrated_qa/session_race_runs/20260929T060429.612253Z/receipt.json",
+    "sha256": "5dc545243b41d3be5a6f038bab37e84c7a9f82b2279224f182d98aec408a552a"
+  }
+]

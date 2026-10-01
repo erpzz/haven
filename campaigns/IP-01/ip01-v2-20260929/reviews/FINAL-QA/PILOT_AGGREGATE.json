@@ -1,0 +1,22 @@
+{
+  "status": "EVALUATION_INCONCLUSIVE",
+  "protection": "NOT_ESTABLISHED",
+  "scheduled_calls": 72,
+  "family_count": 24,
+  "observed_calls": 54,
+  "semantic_reviewed_calls": 54,
+  "comparison_criterion_met": false,
+  "modalities": {
+    "text": {
+      "families": 12,
+      "passed_families": 5,
+      "missing_calls": 6
+    },
+    "image": {
+      "families": 12,
+      "passed_families": 0,
+      "missing_calls": 12
+    }
+  },
+  "no_model_self_grading": true
+}

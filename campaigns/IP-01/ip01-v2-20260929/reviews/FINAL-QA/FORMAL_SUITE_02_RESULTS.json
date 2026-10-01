@@ -1,0 +1,29 @@
+{
+  "assignment": 17,
+  "status": "SUITE02_FAIL_RETAINED_HARNESS_PARENT_DIRECTORY",
+  "formal_starts": 2,
+  "candidate_commit": "487c67299445a29e0fbbdede04259565f741f587",
+  "private_receipt_sha256": "4ece013b56cc1d9d9e62dd0f7952b3f33c3a7925c19c716561d7bf6749e6f261",
+  "pytest_exit_code": 1,
+  "passed": 7,
+  "errors": 214,
+  "all_errors_same_class": true,
+  "candidate_unchanged": true,
+  "classification": "EVALUATOR_HARNESS_SETUP_ERROR: pytest basetemp parent final-suite-02 did not exist. Pytest mkdir(parents=False) raised FileNotFoundError before fixture execution. No product defect established.",
+  "path_observations": {
+    "snapshot_runtime_exists": true,
+    "new_parent_exists": false,
+    "basetemp_exists": false
+  },
+  "smallest_repair": "For a separately authorized final affected start3, create only the new snapshot-private basetemp parent with mkdir(parents=True,exist_ok=False) before launching pytest; validate location, writable parent and full221 collection without executing tests, then root authorizes once. Do not change candidate or allowlist.",
+  "producer_denominator": 221,
+  "prior_seven_components": "Actual suite01 passes retained with original source/harness bindings; originalsuite01 and02 both overallFAIL",
+  "ownership": {
+    "captured_identity_count": 474,
+    "residual": 0,
+    "task_path_processes": 0,
+    "private_receipt_sha256": "5982f8ba3246323073641eae2eaa1a53baa78738c63c16fff2a125ff10ae6a00"
+  },
+  "real_model_calls": 0,
+  "third_start": "NOT_AUTHORIZED_NOT_STARTED"
+}

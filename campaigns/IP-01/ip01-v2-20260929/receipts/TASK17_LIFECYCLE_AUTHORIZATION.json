@@ -1,0 +1,33 @@
+{
+  "at": "2026-09-29T07:02:11.044867+00:00",
+  "assignment": 17,
+  "root_thread_id": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
+  "phase": "lifecycle",
+  "candidate": "487c67299445a29e0fbbdede04259565f741f587",
+  "authorized_cases": [
+    "L2",
+    "L3",
+    "L4"
+  ],
+  "slots_added": 0,
+  "original_unspent_slots_prospectively_allocated": 3,
+  "prior_consumed": {
+    "readiness": 4,
+    "lifecycle": 1,
+    "final": 0
+  },
+  "prior_confirmed_settlements": 5,
+  "prior_charged_seconds": 108.9539999999979,
+  "prior_ledger_sha256": "eb5648b42dcd654da66c974870d879a78ea2c06fd581bcac230d663baeaa5b06",
+  "original_task16_expiry": "2026-09-29T06:36:00Z",
+  "new_counted_task17_expiry": "2026-09-29T08:20:00Z",
+  "harness_manifest_sha256": "83966821420b007765576771d94beb5a06d56cc56ef1177ab51c479d45693d34",
+  "source_freeze_sha256": "643d8665a546a46dca0f89e1acdc954cc69f5a30354a7f81ff06bf34524d3b30",
+  "retained_final_suite01_sha256": "ee9c9f739bc27dea6e586db5c95f8f1c0e25232853d53e7e45a1ef095d7126b6",
+  "preserved_failed_recheck02_sha256": "4ece013b56cc1d9d9e62dd0f7952b3f33c3a7925c19c716561d7bf6749e6f261",
+  "affected_final_recheck03_sha256": "21eb7a55f0320b8030bab2e9983a1c4f915636cb3833d6d5b027d2ec5092b0e9",
+  "deterministic_disposition": "Composite of seven actual passed suite01components and221passed affected suite03producer cases at unchanged source; suite01overallFAIL retained",
+  "gate_sha256": "3b46efb2798cc301288c5ef5a0be7095b66ba2f2ac2e30e3a5a45966806f7cfb",
+  "dispatch": "ROOT_APP_START_EXACT_CONTROL_PREFLIGHT_NATIVE_RELAY_REQUIRED",
+  "scope": "First actual submissions of original L2/L3/L4 only. No L1 replay, no spent-slot replacement, no refund, no prior deadline extension. Previous preflight failure and receipt rewrite remain preserved. Natural early finish is not an exercised timeout. Runtime3second and app20second stop targets remain frozen."
+}

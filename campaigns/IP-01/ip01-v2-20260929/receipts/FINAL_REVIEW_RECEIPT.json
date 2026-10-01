@@ -1,0 +1,49 @@
+{
+  "at": "2026-09-29T22:06:10.130881+00:00",
+  "run_id": "ip01-closure-20260929T212404Z",
+  "status": "ALL_THREE_INDEPENDENT_FINAL_REVIEWS_RETURNED",
+  "candidate_commit": "0b59551f36990cfb8a723f97da6d367358a8ceb5",
+  "H00_manifest_sha256": "054eacd33074cb360fd195af6df6cc40e4a2277c92401532573c9b8c5b124121",
+  "reviews": {
+    "CODE": {
+      "native_id": "01a0ef1f-a53c-7f11-896d-a2a6fb2cbdb6",
+      "assignment": 22,
+      "actual_return_received": true,
+      "review": "reviews/CODE-FINAL-CLOSURE/REVIEW.md",
+      "review_sha256": "e9b24be84cab5fcb61c33cc6ff06c0d7b3df2741112a683f47e135b0af85229f",
+      "verdict": "CHANGES_REQUIRED_RUNTIME_CODE_RESTRICTED_PARTIAL_HANDOFF_ACCEPTABLE",
+      "actual_close_acknowledged": true
+    },
+    "VISION": {
+      "native_id": "01a0ef1f-a5ab-7221-968a-0f0a4afd18ad",
+      "assignment": 23,
+      "actual_return_received": true,
+      "review": "reviews/VISION-FINAL-CLOSURE/REVIEW.md",
+      "review_sha256": "42d91558afa0f3f822349ebbb7d17ac58dc3a7d65169a670826001cc99629705",
+      "verdict": "PASS_FOR_FROZEN_TRUTHFUL_BOUNDED_PARTIAL_HANDOFF",
+      "actual_close_acknowledged": true
+    },
+    "EVIDENCE": {
+      "native_id": "01a0ef1f-a61b-7c60-b34a-477d91e77feb",
+      "assignment": 24,
+      "actual_return_received": true,
+      "review": "reviews/EVIDENCE-FINAL-CLOSURE/REVIEW.md",
+      "review_sha256": "65daf7c83a357ba1d08ab13a79a09c43c127ac5cd45ca91c567a14e74accc244",
+      "verdict": "PASS_FOR_FROZEN_TRUTHFUL_BOUNDED_PARTIAL_HANDOFF",
+      "actual_close_acknowledged": true
+    }
+  },
+  "FINAL_EXECUTION": "PARTIAL",
+  "overall_code_runtime_acceptance": "CHANGES_REQUIRED",
+  "root_disposition": "Accept only the restricted bounded PARTIAL handoff; retain every material code finding and qualification gap. VISION/EVIDENCE scoped PASS does not override CODE.",
+  "new_execution": 0,
+  "candidate_bytes_changed": false,
+  "sealed_evidence_bytes_changed": false,
+  "correct_QA_handoff_sha256": "733b1d373c42c01ef5a94b5b5b0a971bd6c002952fae9c3a0cdf93ee8041649d",
+  "CODE_handback_recovery": "Initial received addendum preserved; same native assignment retransmitted a lossless consolidated report covering allCF-F01-F04 and originalCE dispositions. No finding discarded.",
+  "downstream_remaining": [
+    "Final artifact verification/publication",
+    "CheckpointF and final Issue20readback"
+  ],
+  "checkpoint_E": "https://github.com/erpzz/haven/issues/20#issuecomment-5900010291"
+}

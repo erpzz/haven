@@ -1,0 +1,103 @@
+{
+  "runs": [
+    {
+      "evidence": "<evaluator>/integrated_qa/session_race_runs/20260929T055733.503926Z/receipt.json",
+      "sha256": "97ab0301c49155f2560510e13140d9c2c0d45fb80e78dcce26d282b48a0cf320",
+      "status": "PASS",
+      "cases": [
+        {
+          "variant": "refresh",
+          "identity_after_delivery": "Person B",
+          "answer_view_copy": "Choose a demo person to continue.",
+          "private_marker_rendered_after_B_switch": false,
+          "response_was_200_before_delay": true,
+          "status": "NOT_REPRODUCED"
+        },
+        {
+          "variant": "consume",
+          "identity_after_delivery": "Person B",
+          "answer_view_copy": "Choose a demo person to continue.",
+          "private_marker_rendered_after_B_switch": false,
+          "response_was_200_before_delay": true,
+          "status": "NOT_REPRODUCED"
+        }
+      ],
+      "console": [],
+      "uncaught_pageerrors": 0,
+      "pixel_inspection": "Direct view_image review of final race and workflow/error/restart/review-only screenshots; source synthetic shape independently viewed. Old race copy issue retained."
+    },
+    {
+      "evidence": "<evaluator>/integrated_qa/session_race_runs/20260929T060429.612253Z/receipt.json",
+      "sha256": "5dc545243b41d3be5a6f038bab37e84c7a9f82b2279224f182d98aec408a552a",
+      "status": "PASS",
+      "cases": [
+        {
+          "variant": "refresh",
+          "identity_after_delivery": "Person B",
+          "answer_view_copy": "Answers you open will appear here.",
+          "private_marker_rendered_after_B_switch": false,
+          "response_was_200_before_delay": true,
+          "status": "NOT_REPRODUCED"
+        },
+        {
+          "variant": "consume",
+          "identity_after_delivery": "Person B",
+          "answer_view_copy": "Answers you open will appear here.",
+          "private_marker_rendered_after_B_switch": false,
+          "response_was_200_before_delay": true,
+          "status": "NOT_REPRODUCED"
+        }
+      ],
+      "console": [],
+      "uncaught_pageerrors": 0,
+      "pixel_inspection": "Direct view_image review of final race and workflow/error/restart/review-only screenshots; source synthetic shape independently viewed. Old race copy issue retained."
+    },
+    {
+      "evidence": "<evaluator>/integrated_qa/live_runs/20260929T060530.200787Z/receipt.json",
+      "sha256": "4f3c5e6d0737d045ccbf1f8a085ce3eb3c410836fc86011578bb8bb1d520280e",
+      "status": "PASS",
+      "cases": null,
+      "console": [
+        {
+          "person": "B",
+          "kind": "console",
+          "level": "error",
+          "text": "Failed to load resource: net::ERR_FAILED"
+        },
+        {
+          "person": "A",
+          "kind": "console",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+        }
+      ],
+      "uncaught_pageerrors": 0,
+      "pixel_inspection": "Direct view_image review of final race and workflow/error/restart/review-only screenshots; source synthetic shape independently viewed. Old race copy issue retained."
+    },
+    {
+      "evidence": "<evaluator>/integrated_qa/crash_image_runs/20260929T060836.649438Z/receipt.json",
+      "sha256": "c9ed84c42f0d2458d9b1dd6615d7696d5715acc29235b7fb2bd849887dd316e9",
+      "status": "PASS",
+      "cases": null,
+      "console": [
+        {
+          "level": "error",
+          "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+        },
+        {
+          "level": "error",
+          "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+        },
+        {
+          "level": "error",
+          "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+        }
+      ],
+      "uncaught_pageerrors": 0,
+      "pixel_inspection": "Direct view_image review of final race and workflow/error/restart/review-only screenshots; source synthetic shape independently viewed. Old race copy issue retained."
+    }
+  ],
+  "expected_network_errors": "ERR_FAILED is deliberately dropped durable consume reply; HTTP409 is blocked rollback mutation; ERR_CONNECTION_REFUSED follows measured owned app crash. These are distinguished from uncaught page errors (none).",
+  "real_model_calls": 0,
+  "image_scope": "Actual click/upload/select/preview deterministic abstention, not model perception qualification"
+}

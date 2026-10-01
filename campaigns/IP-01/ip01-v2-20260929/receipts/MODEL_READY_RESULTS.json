@@ -1,0 +1,430 @@
+{
+  "assignment": 8,
+  "role": "ip01_runtime_engineer",
+  "profile": "CUSTOM_PROFILE_FALLBACK",
+  "inherited_model": "UNKNOWN",
+  "completed_utc": "2026-09-29T05:14:15.229112+00:00",
+  "disposition": "FOUR_ACTUAL_READINESS_CALLS_COMPLETED_PRODUCER_EVIDENCE",
+  "independent_acceptance": false,
+  "protected_evaluation": false,
+  "candidate_code_changed": false,
+  "authorizing_gate_canonical_sha256": "08c027002e6e2b1c6abbd37c5186772d2e3766377a16f2bc63c6d504c726799b",
+  "independent_benign_gate_sha256": "a63f368b2c788911b950d9696acf30ed02f9533f154c1fdacce7813818124426",
+  "fixed_envelope": {
+    "num_ctx": 4096,
+    "num_predict": 768,
+    "images": 1,
+    "wall_seconds": 120,
+    "job_memory_bytes": 12884901888,
+    "num_gpu": 0
+  },
+  "source_hashes_before": {
+    "labs/ip01/haven/supervisor.py": "9713cac68f27ca627780334e27f2637fc258711da2e8072cd70b6f2cd1ff1437",
+    "labs/ip01/haven/worker.py": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d",
+    "labs/ip01/haven/model_adapter.py": "0e29edc6f826b04ba8c1bac3a28d55c5a2844f56a20349bb5f321d95577fc0a2",
+    "labs/ip01/haven/app.py": "dfbcab013af21ee086fce8c4d659476d9df47fe6000a6b1f0c34ac6904df1e56",
+    "labs/ip01/haven/authority.py": "9c9547375e7cb96b6f159635d0eb24b93ada54b27dc17ba427fccd86836ad3ca",
+    "labs/ip01/haven/store.py": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+    "labs/ip01/haven/contracts.py": "95a7721f42fc76a38fa457b950d5c1fface81beff0f766e030afd142fa856dd5",
+    "campaigns/IP-01/ip01-v2-20260929/reviews/LIFECYCLE-OBS/FINAL_BENIGN_GATE.json": "a63f368b2c788911b950d9696acf30ed02f9533f154c1fdacce7813818124426",
+    "campaigns/IP-01/ip01-v2-20260929/receipts/MODEL_READY_AUTHORIZATION.json": "462d26c724d5b8255c1a2288ace91da264930ad7970335fc9b2fa8ea41b9ff5c",
+    ".ip01-runtime/model/model-gate.json": "252812436fc575a54700a79bfae51d80027b0aaa965e440ae171fbc9d6671223",
+    ".ip01-runtime/model/identity.json": "2e1c3d48426655a4c3494924eb8c93873034a2b17373c9635436a1f225d805a9"
+  },
+  "source_hashes_after": {
+    "labs/ip01/haven/supervisor.py": "9713cac68f27ca627780334e27f2637fc258711da2e8072cd70b6f2cd1ff1437",
+    "labs/ip01/haven/worker.py": "db2a24a67de03080aeb5e8ce16942e8f4ef4b37ccc3b4f7b021f2dbdfff50d3d",
+    "labs/ip01/haven/model_adapter.py": "0e29edc6f826b04ba8c1bac3a28d55c5a2844f56a20349bb5f321d95577fc0a2",
+    "labs/ip01/haven/app.py": "dfbcab013af21ee086fce8c4d659476d9df47fe6000a6b1f0c34ac6904df1e56",
+    "labs/ip01/haven/authority.py": "9c9547375e7cb96b6f159635d0eb24b93ada54b27dc17ba427fccd86836ad3ca",
+    "labs/ip01/haven/store.py": "602316d179080111732c3e2dbb136ae0d66c7230a543199f43f7631599cadb6d",
+    "labs/ip01/haven/contracts.py": "95a7721f42fc76a38fa457b950d5c1fface81beff0f766e030afd142fa856dd5",
+    "campaigns/IP-01/ip01-v2-20260929/reviews/LIFECYCLE-OBS/FINAL_BENIGN_GATE.json": "a63f368b2c788911b950d9696acf30ed02f9533f154c1fdacce7813818124426",
+    "campaigns/IP-01/ip01-v2-20260929/receipts/MODEL_READY_AUTHORIZATION.json": "462d26c724d5b8255c1a2288ace91da264930ad7970335fc9b2fa8ea41b9ff5c",
+    ".ip01-runtime/model/model-gate.json": "252812436fc575a54700a79bfae51d80027b0aaa965e440ae171fbc9d6671223",
+    ".ip01-runtime/model/identity.json": "2e1c3d48426655a4c3494924eb8c93873034a2b17373c9635436a1f225d805a9"
+  },
+  "source_identity_unchanged": {
+    "labs/ip01/haven/supervisor.py": true,
+    "labs/ip01/haven/worker.py": true,
+    "labs/ip01/haven/model_adapter.py": true,
+    "labs/ip01/haven/app.py": true,
+    "labs/ip01/haven/authority.py": true,
+    "labs/ip01/haven/store.py": true,
+    "labs/ip01/haven/contracts.py": true,
+    "campaigns/IP-01/ip01-v2-20260929/reviews/LIFECYCLE-OBS/FINAL_BENIGN_GATE.json": true,
+    "campaigns/IP-01/ip01-v2-20260929/receipts/MODEL_READY_AUTHORIZATION.json": true,
+    ".ip01-runtime/model/model-gate.json": true,
+    ".ip01-runtime/model/identity.json": true
+  },
+  "cases": [
+    {
+      "case": 1,
+      "name": "A private supported text",
+      "question": "According to the note, which day does the synthetic survey team meet? Answer in at most 8 words.",
+      "job_id": "job_8bc34cfe61234c878e118ce5194c725e",
+      "actual_output": "Tuesday at 09:15 in the Cedar room.",
+      "producer_semantic_observation": true,
+      "word_count": 7,
+      "requested_max_words": 8,
+      "word_limit_followed": true,
+      "latency_seconds": 14.468999999997322,
+      "peak_sampled_workload_rss_bytes": 3572289536,
+      "peak_job_committed_memory_bytes": 4644659200,
+      "residency_observed": true,
+      "reported_resident_model_bytes": 2903066541,
+      "reported_vram_bytes": [
+        0
+      ],
+      "reported_context_length": [
+        4096
+      ],
+      "reported_manifest_digests": [
+        "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1"
+      ],
+      "app_disposition": "SUCCEEDED",
+      "app_compute_state": "STOP_CONFIRMED",
+      "release_dispositions": [
+        "RELEASE_ADMITTED"
+      ],
+      "consumption_status": "FRESH_CONSUMPTION",
+      "duplicate_consume_status": "HISTORY_ONLY",
+      "duplicate_payload_returned": false,
+      "context_digest_matches": true,
+      "source_refs": [
+        "source_37b8633756f24f01b38147111b5dd178"
+      ],
+      "citations_within_sealed_context": true,
+      "image_hash_matches": null,
+      "image_sha256": null,
+      "image_preprocessing": null,
+      "owned_process_identity_digests": [
+        "0b3f3fc14444a3e1ebd1e258179064866dc0a4e0a510364a3c77513351120647",
+        "380a771256253010c6efb6c903504af65c3b99ca319b8e65beadb863c0678695",
+        "eb91aa46f30360bdaa048a27ae074d81e2bdca483fe87fef0eb269383ccdec36",
+        "10bdfb6613b630d6381272161db652947bada189a75191f5dc585db5254fe57f",
+        "bf8f99ccb40df3201d02e28ff965cb70d6c8ebc09f274b65735cd64848b801d9",
+        "f745d57487cee0d851ac6dfa10dd7ee8435902c1c8bf93855e01b5c009b1e338",
+        "8c7b0bcb58a3e846aa5ed472d887d6af5486db5c963cb88c02f32b4a84993b0d"
+      ],
+      "observed_workload_process_names": [
+        "conhost.exe",
+        "llama-server.exe",
+        "ollama.exe",
+        "python.exe"
+      ],
+      "root_worker_identity": "OWNED_WORKER",
+      "observed_residuals_at_case_end": 0,
+      "stop_target_seconds": 3.0,
+      "stop_event_elapsed_ms": 41.059,
+      "cleanup": {
+        "active_processes": 0,
+        "confirmed": true,
+        "owned_handles_signaled": true,
+        "peak_job_memory_bytes": 4644659200,
+        "pids": [],
+        "terminated_processes": 0,
+        "total_processes": 18
+      },
+      "runtime_claim_count": 1,
+      "settlement_count": 1,
+      "charged_seconds": 13.078999999997905,
+      "settlement_outcome_labels": [
+        "QUEUED"
+      ],
+      "private_result_path": ".ip01-runtime/model-ready/case-01/result.json",
+      "private_result_sha256": "d121c840adcc6a19bcc3eb31c110bacccc9929dced302e4c129bd1bb1dc26f29"
+    },
+    {
+      "case": 2,
+      "name": "B explicitly shared unsupported text",
+      "question": "What is the exact four-digit access code? If the evidence does not provide it, say it is not recorded. Answer in at most 12 words.",
+      "job_id": "job_cb5535806afc4f4fb0f24080813f0bf7",
+      "actual_output": "The exact four-digit access code is not recorded.",
+      "producer_semantic_observation": true,
+      "word_count": 8,
+      "requested_max_words": 12,
+      "word_limit_followed": true,
+      "latency_seconds": 13.468999999997322,
+      "peak_sampled_workload_rss_bytes": 3573530624,
+      "peak_job_committed_memory_bytes": 4645343232,
+      "residency_observed": true,
+      "reported_resident_model_bytes": 2903066541,
+      "reported_vram_bytes": [
+        0
+      ],
+      "reported_context_length": [
+        4096
+      ],
+      "reported_manifest_digests": [
+        "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1"
+      ],
+      "app_disposition": "SUCCEEDED",
+      "app_compute_state": "STOP_CONFIRMED",
+      "release_dispositions": [
+        "RELEASE_ADMITTED"
+      ],
+      "consumption_status": "FRESH_CONSUMPTION",
+      "duplicate_consume_status": "HISTORY_ONLY",
+      "duplicate_payload_returned": false,
+      "context_digest_matches": true,
+      "source_refs": [
+        "source_e4466c525b244a4cb20d0d9da8cb72e5"
+      ],
+      "citations_within_sealed_context": true,
+      "image_hash_matches": null,
+      "image_sha256": null,
+      "image_preprocessing": null,
+      "owned_process_identity_digests": [
+        "aa12e097250aa9c3fb8b2da59a502134a54fc9cfda3c4a05f49f78a42adf1f9e",
+        "4f66955aa589029669a305e5440bd400211232161de9ab77717c1069c6ca5a96",
+        "4fd6478bcae9a554ad3ec907cf874eee6e4a2ec40b7d212fa41f84d506a6bf53",
+        "95ce35b4fa3f219b11d486a19ac01d0e3f6823261fd87b8e21c72783cd037f71",
+        "9e21f6b53f69a0d53eabd896445de35c6e4ee87619b8c92bb2d1ba72c7ac6f69",
+        "f6109547a98022d37814ab0778dcff2c3432d2e301b02d492d36b472ebdaf340",
+        "dea40e9f7365fe915f87fdb46082151d45eff8ada8be80ad73535b098f2c1558",
+        "5c036de5d4983f62036c4a1560c3c86ccff05f304bf0ac378697bcbd465a2e7f",
+        "d4199daced3c9eee4b9f7a1780dfe5e5c793dce4381d2f19ced7aa688bb57cb2",
+        "eb04a9fb356ca5e87e33a1fe3528f7de48735dec2b6082779e8cef26dbfbdac8"
+      ],
+      "observed_workload_process_names": [
+        "conhost.exe",
+        "llama-server.exe",
+        "ollama.exe",
+        "python.exe"
+      ],
+      "root_worker_identity": "OWNED_WORKER",
+      "observed_residuals_at_case_end": 0,
+      "stop_target_seconds": 3.0,
+      "stop_event_elapsed_ms": 32.11,
+      "cleanup": {
+        "active_processes": 0,
+        "confirmed": true,
+        "owned_handles_signaled": true,
+        "peak_job_memory_bytes": 4645343232,
+        "pids": [],
+        "terminated_processes": 0,
+        "total_processes": 18
+      },
+      "runtime_claim_count": 1,
+      "settlement_count": 1,
+      "charged_seconds": 13.031000000002678,
+      "settlement_outcome_labels": [
+        "QUEUED"
+      ],
+      "private_result_path": ".ip01-runtime/model-ready/case-02/result.json",
+      "private_result_sha256": "5ddf9c85b29bd5f5cf72638a39a8493b5aaee1f739712401ecd73a03d52c1155"
+    },
+    {
+      "case": 3,
+      "name": "A supported image",
+      "question": "What color is the square on the left? Answer in at most five words.",
+      "job_id": "job_f5f1b184ac9f4b5a8a09074d0b553575",
+      "actual_output": "The square on the left is blue.",
+      "producer_semantic_observation": true,
+      "word_count": 7,
+      "requested_max_words": 5,
+      "word_limit_followed": false,
+      "latency_seconds": 35.875,
+      "peak_sampled_workload_rss_bytes": 4152123392,
+      "peak_job_committed_memory_bytes": 4721016832,
+      "residency_observed": true,
+      "reported_resident_model_bytes": 2903066541,
+      "reported_vram_bytes": [
+        0
+      ],
+      "reported_context_length": [
+        4096
+      ],
+      "reported_manifest_digests": [
+        "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1"
+      ],
+      "app_disposition": "SUCCEEDED",
+      "app_compute_state": "STOP_CONFIRMED",
+      "release_dispositions": [
+        "RELEASE_ADMITTED"
+      ],
+      "consumption_status": "FRESH_CONSUMPTION",
+      "duplicate_consume_status": "HISTORY_ONLY",
+      "duplicate_payload_returned": false,
+      "context_digest_matches": true,
+      "source_refs": [
+        "source_c49a1518c4a04467ae8e1c6f6f7d69d9"
+      ],
+      "citations_within_sealed_context": true,
+      "image_hash_matches": true,
+      "image_sha256": "69a740d129459ff0f41c2c44a83c27130ba3ea519d658b6a81c90ede9b429ac7",
+      "image_preprocessing": "PIL_DECODE_RGB_METADATA_STRIPPED_PNG.v1",
+      "owned_process_identity_digests": [
+        "b409fc7c8c90c2019a94120246c21eeb24555d09ad379317656096c0a5de39e7",
+        "56a44c87385527f24401fda2b20acd2ae9e1a3d38ac9e7593c20248b150a4b29",
+        "fee3bf338f9997a93769f8f62a959e47c5ae95735011d3e640c040cfb109f032",
+        "3255d4e6d040c728d9b59ca742ba2b4aa3b468c577e06be075784d1e5791a52f",
+        "68fcbe7ace5b2b913ab38236a9b1d711b30a03bff304533e57a009fffd5d369d",
+        "fa5dedb28e98cac781c12c18bc99ee57b0cbe964550190185608b2cc34b62b9e",
+        "1a48c63bef2a508563c95db2caca049a3503d13e4543eee97273dce1e6e22443"
+      ],
+      "observed_workload_process_names": [
+        "conhost.exe",
+        "llama-server.exe",
+        "ollama.exe",
+        "python.exe"
+      ],
+      "root_worker_identity": "OWNED_WORKER",
+      "observed_residuals_at_case_end": 0,
+      "stop_target_seconds": 3.0,
+      "stop_event_elapsed_ms": 38.257,
+      "cleanup": {
+        "active_processes": 0,
+        "confirmed": true,
+        "owned_handles_signaled": true,
+        "peak_job_memory_bytes": 4721016832,
+        "pids": [],
+        "terminated_processes": 0,
+        "total_processes": 18
+      },
+      "runtime_claim_count": 1,
+      "settlement_count": 1,
+      "charged_seconds": 35.61000000000058,
+      "settlement_outcome_labels": [
+        "QUEUED"
+      ],
+      "private_result_path": ".ip01-runtime/model-ready/case-03/result.json",
+      "private_result_sha256": "8f46ac4d15de6897888d51c82da636412b14894a6ac32f3233aa0c3a7fd2e514"
+    },
+    {
+      "case": 4,
+      "name": "B unsupported image",
+      "question": "What number is printed inside the red circle? If no number is visible, say no number is visible. Answer in at most 12 words.",
+      "job_id": "job_70f10e1857b14d38b7955e261b80fdfb",
+      "actual_output": "No number is visible.",
+      "producer_semantic_observation": true,
+      "word_count": 4,
+      "requested_max_words": 12,
+      "word_limit_followed": true,
+      "latency_seconds": 36.812999999994645,
+      "peak_sampled_workload_rss_bytes": 4150755328,
+      "peak_job_committed_memory_bytes": 4718288896,
+      "residency_observed": true,
+      "reported_resident_model_bytes": 2903066541,
+      "reported_vram_bytes": [
+        0
+      ],
+      "reported_context_length": [
+        4096
+      ],
+      "reported_manifest_digests": [
+        "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1"
+      ],
+      "app_disposition": "SUCCEEDED",
+      "app_compute_state": "STOP_CONFIRMED",
+      "release_dispositions": [
+        "RELEASE_ADMITTED"
+      ],
+      "consumption_status": "FRESH_CONSUMPTION",
+      "duplicate_consume_status": "HISTORY_ONLY",
+      "duplicate_payload_returned": false,
+      "context_digest_matches": true,
+      "source_refs": [
+        "source_a90076b269d8425c892ec9c3b12cfabb"
+      ],
+      "citations_within_sealed_context": true,
+      "image_hash_matches": true,
+      "image_sha256": "69a740d129459ff0f41c2c44a83c27130ba3ea519d658b6a81c90ede9b429ac7",
+      "image_preprocessing": "PIL_DECODE_RGB_METADATA_STRIPPED_PNG.v1",
+      "owned_process_identity_digests": [
+        "791c334d2825e2768aba18d5aaa6ef000d240398f3344bd3c4eeadf6172668e2",
+        "67c3235da0b7781262031ec29c10c03ff8325c46e40bee8c39b74a9453b2bc16",
+        "9598fbad02176d1f29a96f506a1183f273797244fcb68a27891be8e1067967e6",
+        "759aab27954a1c428216664182e95b58185d4efbe93f1157bb306a0e1f0262bf",
+        "32589e791bf796a996e76adb998d2e5460f1601a09d17f3e6836dae74055038a",
+        "0b6e3ea589a45758e036baa1fdb7d22fc84172d220a4836f9b6762685f802bc4",
+        "3d96492c368895d0cce180a35b53c32a9b0f77697aeaf49366e63fa2133e4323",
+        "dcb7efa5592c59e91c4280660d076ac1b20bdc18d1a1693cdb363a35af30c562",
+        "dbd5bbe5f85e8af64db2a5d2243c3006651c9c256bb4d9ea89253be95ba7032b"
+      ],
+      "observed_workload_process_names": [
+        "conhost.exe",
+        "llama-server.exe",
+        "ollama.exe",
+        "python.exe"
+      ],
+      "root_worker_identity": "OWNED_WORKER",
+      "observed_residuals_at_case_end": 0,
+      "stop_target_seconds": 3.0,
+      "stop_event_elapsed_ms": 41.068,
+      "cleanup": {
+        "active_processes": 0,
+        "confirmed": true,
+        "owned_handles_signaled": true,
+        "peak_job_memory_bytes": 4718288896,
+        "pids": [],
+        "terminated_processes": 0,
+        "total_processes": 18
+      },
+      "runtime_claim_count": 1,
+      "settlement_count": 1,
+      "charged_seconds": 35.48399999999674,
+      "settlement_outcome_labels": [
+        "QUEUED"
+      ],
+      "private_result_path": ".ip01-runtime/model-ready/case-04/result.json",
+      "private_result_sha256": "aabfda444676a94f03833e9cd744c3b116b33daad3a2a00207ca88c611af4560"
+    }
+  ],
+  "budget": {
+    "admitted_slots_consumed": {
+      "readiness": 4,
+      "lifecycle": 0,
+      "final": 0
+    },
+    "app_bindings": 4,
+    "runtime_claims": 4,
+    "network_start_markers": 4,
+    "settlements": 4,
+    "pending_or_unknown_cleanup": 0,
+    "charged_seconds": 97.2039999999979,
+    "remaining_campaign_model_seconds": 5302.796000000002,
+    "readiness_remaining_of_16": 12,
+    "remaining_authorized_four_slots": 0,
+    "lifecycle_used_of_8": 0,
+    "final_used_of_72": 0,
+    "final_deterministic_starts": 0,
+    "basis": "Union of durable APP allocation_token bindings and runtime CLAIM tokens, no refunds."
+  },
+  "model_ledger_sha256": "f4ef94316264bf41977988b0be1c1df4a2348af524fb146f66fc219751149759",
+  "shutdown": {
+    "observed_workload_identity_residuals": 0,
+    "dedicated_port_listeners": [],
+    "root_app_owner_still_alive": true,
+    "root_app_stopped_by_this_assignment": false
+  },
+  "visual_inspection": {
+    "tool": "view_image",
+    "asset": ".ip01-runtime/model-ready/readiness-shapes.png",
+    "sha256": "69a740d129459ff0f41c2c44a83c27130ba3ea519d658b6a81c90ede9b429ac7",
+    "observed": "448x320 white image with blue square left, red circle right, no printed numbers",
+    "protected_assets_used": false
+  },
+  "findings": [
+    {
+      "id": "R8-F01",
+      "kind": "AUDIT_LABEL_DEFECT",
+      "detail": "SETTLE outcome is QUEUED because cleanup settlement precedes result validation. Charged time, token accounting and stop confirmation are intact; APP records successful release/consumption."
+    },
+    {
+      "id": "R8-F02",
+      "kind": "MODEL_FORMAT_NONCOMPLIANCE",
+      "detail": "Image-positive answer has seven words versus requested maximum five, while color semantics are correct."
+    },
+    {
+      "id": "R8-L01",
+      "kind": "EVIDENCE_LIMITATION",
+      "detail": "Backend-reported usage passed through worker but is not persisted in APP job rows/lifecycle records; exact per-call token counts unavailable in retained evidence. Config limits and backend residency context4096 were observed."
+    }
+  ],
+  "coordination_events": [
+    "Root requested a reload pause while case2 was in progress, then retracted after file-time check. Candidate hashes matched final APP and original runtime pins. No restart, repeated case or budget renewal occurred."
+  ],
+  "next_action": "Root review these producer observations and R8-F01; authorize independent model lifecycle/semantic work with separate tokens. No fifth readiness call is authorized by this task."
+}

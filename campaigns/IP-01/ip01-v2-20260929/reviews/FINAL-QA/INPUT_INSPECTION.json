@@ -1,0 +1,13 @@
+{
+  "assignment": 17,
+  "status": "24_INPUTS_INDEPENDENTLY_INSPECTED",
+  "image_inputs": 12,
+  "text_inputs": 12,
+  "native_pixel_access": true,
+  "contact_sheet_cell_equality": true,
+  "all_original_asset_hashes_match": true,
+  "private_inspection_sha256": "3fcfb7bc241bb97af64145848f4ca44023c212596239796a57bbfdd6da75f1af",
+  "expected_answers_published": false,
+  "protected_enforcement": "NOT_ESTABLISHED",
+  "protected_verdict": "EVALUATION_INCONCLUSIVE"
+}

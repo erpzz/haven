@@ -1,0 +1,19 @@
+{
+  "case": "L1",
+  "fresh_APP_egress_decisions": 1,
+  "fresh_APP_egress_outcomes": [
+    "AUTHORIZED"
+  ],
+  "dispatch_bytes_observed": [
+    4222
+  ],
+  "resource_phase": "RESOURCE_SETTLED",
+  "resource_outcome": "CANCELLED",
+  "charged_seconds": 11.75,
+  "final_result_disposition": "NOT_PRODUCED",
+  "usage": null,
+  "observed_active_CPU_delta": 1.609375,
+  "pinned_residency_manifest": "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1",
+  "strictly_posthoc_semantic_score": "NOT_APPLICABLE_CANCELLED_NO_OUTPUT",
+  "receipt_sha256": "45cbf45fca86cd57a50412212d6bac2ecbfe2c4aa3c1ab4d3cbc488c0d47e384"
+}

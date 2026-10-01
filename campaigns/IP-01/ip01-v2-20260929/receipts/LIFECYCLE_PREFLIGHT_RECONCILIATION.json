@@ -1,0 +1,23 @@
+{
+  "at": "2026-09-29T06:29:49.262465+00:00",
+  "root_thread_id": "01a0eb51-c8b3-7923-94ed-ea1874de843e",
+  "assignment": 16,
+  "status": "PREFLIGHT_INCIDENT_RECONCILED_CURRENT_INPUTS_VERIFIED",
+  "finding_sha256": "00a66d488cf51b942eabeb020eb21cf8fe937877686a2bff199b88fb744d6e15",
+  "old_halt_sha256": "8e894f5d26892ecc0a065118738875231dd4eb9c68423a29b45319ada6cf04d5",
+  "old_control_sha256": "ae6ef9416e1fe3b94e6270670ef35ab01ad4d2cd23919f2648332369a8b08ce0",
+  "new_control_sha256": "7d8500333150ebd0492dccef143b11edea6a0cb5683185d1d7e71ae6d70a065e",
+  "operational_gate_sha256": "1113841e537784edf6416b66cb5661fbc5cc074a7881a142c20d6da8ef345d88",
+  "remaining_cases": [
+    "L2",
+    "L3",
+    "L4"
+  ],
+  "expires_utc": "2026-09-29T06:36:00Z",
+  "claims": 5,
+  "confirmed_settlements": 5,
+  "charged_seconds": 108.9539999999979,
+  "L2_submission_attempts": 0,
+  "decision": "Root prospectively permits one first submission for each remaining original allocation after preflight. Old failure and HALT archived unchanged. No L1 replay, no new tokens, no refund, no policy denial, no deadline extension. Independent QA15 has handed back and been closed; root freezes separate exact snapshot.",
+  "causality_limit": "QA admits transient receipt rewrite at06:19:23 restored06:19:40. Failure-time hash/read time not captured; current matching hashes do not prove exact causal timing. Failed preflight remains a failed attempt."
+}

@@ -1,0 +1,132 @@
+{
+  "setup": "8e1304caf82c0a889eeaea7691db7b9d7b98c526",
+  "baseline": "6bc1c8df1218ceb0e0d8709adee65d1e44634047",
+  "root_registry_sha256_worktree": "0889a0abdea1885ce22b98c6c01934925fd8dc9beb9dc367955d6531372d95af",
+  "original_source_executed": false,
+  "inputs": [
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/WORK_PACKAGE.md",
+      "use": "Full package; A authority/B lifecycle/C model pilot/D browser; 96 calls, 3 final suites, no final start here.",
+      "sha256_worktree": "0c833df829b7c92df8412bc022b42906c4b50492ff1989fe7e869bbd0a466a6f",
+      "sha256_git_bytes_from_root_registry": "bd51fc00fa763218a4f9aa9a39a195fd2109bd46875a4c49452875a0a61ae774",
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": true
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/START_HERE.md",
+      "use": "Native final handback; root publication and shared state ownership.",
+      "sha256_worktree": "5ef191208eeda9e9e05f0f9785f853b012a71c690c9d9ed957fc1fde23ff89de",
+      "sha256_git_bytes_from_root_registry": "a0c8608def1b06ce3951919caccdd17ba90afe86f996226e7f4b69b5493ef8d7",
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": true
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/AGENT_BRIEFS.md",
+      "use": "Independent ip01_validation_engineer role; evaluator-only assets.",
+      "sha256_worktree": "ffd4ef7af084f0540ea9a7d5c33203f095000ddf62aea3a2d946cb7a8821a8e8",
+      "sha256_git_bytes_from_root_registry": "5617429c005d00efda5d868250f51372219d5976f69d5a52985477358c818b3f",
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/CONTRACTS.md",
+      "use": "Relevant I01-I06; vector, closure, limits, typed compute and four records.",
+      "sha256_worktree": "cb6cea47fb00aba89da234da620b3fb3bd240c2a10e314bcc81cbfa647cc4be7",
+      "sha256_git_bytes_from_root_registry": "cb6cea47fb00aba89da234da620b3fb3bd240c2a10e314bcc81cbfa647cc4be7",
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/AMENDMENT.md",
+      "use": "Finite admission charge, consume at zero, no refunds/replay, all-or-none/dedup.",
+      "sha256_worktree": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "sha256_git_bytes_from_root_registry": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/AMENDMENT.md",
+      "use": "Immutable history, reported display, unknown commit/reply and residual race.",
+      "sha256_worktree": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "sha256_git_bytes_from_root_registry": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R03/CLOSURE-1.md",
+      "use": "Accepted finite-use composite; not execution.",
+      "sha256_worktree": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "sha256_git_bytes_from_root_registry": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R02-P01/CLOSURE-1.md",
+      "use": "Accepted four-record correction.",
+      "sha256_worktree": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+      "sha256_git_bytes_from_root_registry": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/R13/PROMOTION_GATES.md",
+      "use": "Read relevant P0 and worker/model sections; all-repeat family rule/protection/oracle limits.",
+      "sha256_worktree": "54d899147008f4558131ced6c0a53c92acc38d05cbe60bd16ac070242fbe8099",
+      "sha256_git_bytes_from_root_registry": "54d899147008f4558131ced6c0a53c92acc38d05cbe60bd16ac070242fbe8099",
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": true
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/SEAM.md",
+      "use": "Exact HTTP/callback/ownership/image/restart contract.",
+      "sha256_worktree": "3afab9f6a8989cfd406e5b84bc93a10ee1ea2a6e3c98e5dea013853db4693a7c",
+      "sha256_git_bytes_from_root_registry": null,
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": null
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/inputs/ORIGINAL_SOURCE_BASELINE.json",
+      "use": "Root actual read identity snapshots only; no original imports or Git verification.",
+      "sha256_worktree": "8382283536ccbc1f07a7fbb2da01b90dadeaff04dafd7526f82895abdc985776",
+      "sha256_git_bytes_from_root_registry": null,
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": null
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/RUNTIME_CONSULTATION.md",
+      "use": "Actual topology commitment; used to prepare probe; no inherited author PASS.",
+      "sha256_worktree": "48a90b0e5ea43ace53b97e560ecf5cd1dc69eb864b7aed883545f3aaf21a9d19",
+      "sha256_git_bytes_from_root_registry": null,
+      "git_byte_identity_independently_verified": false,
+      "lf_normalized_matches_root_pin": null
+    }
+  ],
+  "continuity_note": "Prior QA-PREP semantic reads retained; no reread of full package or imports of original code. Current new seam/reviewer/runtime files read as listed below.",
+  "qa_e2e_reads": [
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/APP_HANDOFF.md",
+      "sha256": "f9d7fcf1024f9315e770079fb6f185b31a189f0ca5bd62b046aec521a0a531bb",
+      "use": "Exact actual session/CSRF/SQLite/fault callbacks; attributed author tests not inherited"
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/receipts/DEVELOPMENT_CANDIDATE_01.json",
+      "sha256": "ba322121cc65c719083b0424824c9c3374585008ce077707008dd378d778afa2",
+      "use": "Root-provided candidate identity, raw worktree hashes"
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/reviews/CODE-EARLY/CODE_EARLY_REVIEW.md",
+      "sha256": "28e4876f764a6efd30b339316afb36505d8b3729ead38456563c77fea232d1a0",
+      "use": "Independent review findings, executable CE02/04/05 repros"
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/integration/EGRESS_AMENDMENT.md",
+      "sha256": "46620137b8ff8bde83340b922c856a158c264a6e7639178bd974a1dc00726820",
+      "use": "Read complete callback/terminal amendment and E1/E2/E3/T1/T2/S1 required barriers; execution pending READY"
+    },
+    {
+      "path": "campaigns/IP-01/ip01-v2-20260929/inputs/SOURCE_IDENTITY.json",
+      "sha256": "0889a0abdea1885ce22b98c6c01934925fd8dc9beb9dc367955d6531372d95af",
+      "use": "Root actual input identity snapshots, no Git or original imports"
+    }
+  ]
+}

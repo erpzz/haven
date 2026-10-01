@@ -1,0 +1,20 @@
+{
+  "at": "2026-09-29T07:22:52.102417+00:00",
+  "reviewer": "root scheduler visual inspection, separate from independent QA",
+  "candidate": "487c67299445a29e0fbbdede04259565f741f587",
+  "images": [
+    {
+      "path": "reviews/FINAL-QA/screenshots/live_runs-02-explicit-share-answer.png",
+      "sha256": "954d9d586d6010d0ac782076ac55f3a4687588a9680c5b151ab0165dcb83855d",
+      "native_pixels_inspected": true,
+      "observation": "Person B visible; explicitly shared source and revision chip; deterministic excerpt contains the synthetic compass fact and inert markup. No clipped main controls in full-page capture."
+    },
+    {
+      "path": "reviews/FINAL-QA/screenshots/live_runs-06-current-restart-persistence.png",
+      "sha256": "7d056602810de2d964a9f5df04b6da541fae6739450ffa738ff07ea1cde8893f",
+      "native_pixels_inspected": true,
+      "observation": "Person A after current restart; edited draft and completed task visible, earlier answer marked consumed without rendered replay; cancelled operation and changed eligibility visible."
+    }
+  ],
+  "limits": "Screenshot inspection corroborates visible layout/state at capture; it does not independently execute the browser journey or prove authorization and persistence internals."
+}

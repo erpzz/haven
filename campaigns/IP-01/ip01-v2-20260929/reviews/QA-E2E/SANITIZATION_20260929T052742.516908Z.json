@@ -1,0 +1,173 @@
+{
+  "scope": "QA-E2E owned reports only; original bytes retained privately",
+  "editions": [
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-1373023998909868386-FINDING.json",
+      "old_sha256": "50725b34a3c66fef82d0d26c7a86dc812c52a99099fb116ddbb7fd76487d0dae",
+      "new_sha256": "9063e8f824106c44f5d1fd712175a21c03ed9b70197be04ac58bf904bdd10b6c",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-1373023998909868386-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-1857434975861857331-FINDING.json",
+      "old_sha256": "a3736b628012f68afc21375a43dd1ef306f0e8f664b6bbbccba2efe4f35a76af",
+      "new_sha256": "ac269c051940e4d66bc061593ee6d461ced4e4caa6a15d6014239e0f3f96f6d8",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-1857434975861857331-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-1874880752440029647-FINDING.json",
+      "old_sha256": "ccc93fa3f79a706e28e8ed6b427091ccc729bb5c14b9ef474716b4fcbf9079e1",
+      "new_sha256": "b94aca8e5822967f2c49a9da340c3c4c2845326f7f6904b45063118c0ed538e0",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-1874880752440029647-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-1924110996583355278-FINDING.json",
+      "old_sha256": "0f20db7073c98d82dd925592f090264924437324774a71f00a4c03417f99c2a6",
+      "new_sha256": "22cf1a7dab2f5dc042e568674cdffc208d75381c078d01fe024a2bfca472161a",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-1924110996583355278-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-2211630461158730277-FINDING.json",
+      "old_sha256": "c798da60248cced0b92a47f7ef2b6a85b7713a8c1c08d709bc92a6b13e74a95d",
+      "new_sha256": "410c34f29c7b8b7c070e99a2f02fcf5eb904c32d81a305c34e4341edeb2e1c7f",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-2211630461158730277-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-2473474010041864829-FINDING.json",
+      "old_sha256": "53b86af754eef68c2d1255360822e8674a8fdd61bde52166246407b6be8019d1",
+      "new_sha256": "87d0c0f4987f7e9711781f8b9463e677a6afa7ecaa22f80110d49b9784231770",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-2473474010041864829-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-2861857479601044140-FINDING.json",
+      "old_sha256": "094badd31e2b990a5e9ef3bc3e1eaf56e50f93a5eb778176bfcb61c765ab104e",
+      "new_sha256": "6b48a60ccf9a515cbfa523e6a27d1f7b8f3a1d8e3d335ef18ce6f6ab9c94d635",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-2861857479601044140-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-3339175490614483377-FINDING.json",
+      "old_sha256": "598149416a0fd35ee51a5e174eaa7b6b368336282f6d0963423b5d51afe9fa1c",
+      "new_sha256": "0222f057efa264d9a8c280d0e4dea0d5e1e1d996aeaff125bce5846132bea732",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-3339175490614483377-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-3498971732427782158-FINDING.json",
+      "old_sha256": "740d8ebbffa8b53bc91fa3d70f887a254f3b63d80c02491eae563b3eaf1e7caf",
+      "new_sha256": "d5fc70bc4b36211c863085f9fbad10f3bf49b634ddbbd2f10b209a6848c0d7fc",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-3498971732427782158-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-4241886824623437417-FINDING.json",
+      "old_sha256": "03a34ec6afb05b1e6b203294a1fba7de7913a0650db30820c8f2c1d760cb2379",
+      "new_sha256": "a90d86e12c24dda5b7cc246245559c0008934b0a4bb3e8e591847cdcb5982d04",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-4241886824623437417-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-4503699857284125461-FINDING.json",
+      "old_sha256": "4c37362a6ea212497bfbbafec9057ac45967e2878233468eee079e5b402deec9",
+      "new_sha256": "648cf608524f9ef5206a014947f5f60f3f7936f1a122266c41c0b041ab86513e",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-4503699857284125461-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-4749917340904142127-FINDING.json",
+      "old_sha256": "c1bda920f97e9e78bd1c996c88087215200eeefc7217039742c68c58a0be1c84",
+      "new_sha256": "4b551234dc182ebcc01e9dce8c6a08e888222a596928b7c0dd23738e8a658e00",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-4749917340904142127-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-4778341739298161855-FINDING.json",
+      "old_sha256": "a29afcc765dc0e1936d5dfae216f32f526928fe699ba62d399b7d45c743b129a",
+      "new_sha256": "ae33d3dea1885b37a798275cc76755b427a4914f9611d50f07abafac567e20ce",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-4778341739298161855-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-5014672558846879629-FINDING.json",
+      "old_sha256": "631276f9d9bcf1fdbde5e32989143be6ca851ab074896bb65af773fde8e783c8",
+      "new_sha256": "bbf0a66a3e451419836b9db1b6c2c7dcefd4b62df889c84574ee23c5e6bc34e3",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-5014672558846879629-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-5108170010000609224-FINDING.json",
+      "old_sha256": "bf8f69ef508f2edf6aba1be0f4b41cc749a7bf7c8b5e51f5e2ce2a1233ae0477",
+      "new_sha256": "af109821104d0791d874979865d0c2f5b2237fb4571e981ee17866d215f2e63c",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-5108170010000609224-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-5456152550125818881-FINDING.json",
+      "old_sha256": "927e955f643bc59c604b8144578b23627a9b6aee19b45dc0f549bbc7009f7279",
+      "new_sha256": "cd870911bf47f609496919e4d2e5eaf27c3689326c8df854cad70c4784d9ca27",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-5456152550125818881-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-5694259881561611071-FINDING.json",
+      "old_sha256": "4edeb3540f4a07220edae6e7b6a6a279c4a202d3dd4287ed96b2733fb1d746a4",
+      "new_sha256": "d4a27c7f01b3a5c43563216c87251b25f15c6edd2c6196e51267c00746624c63",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-5694259881561611071-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-6284430494207032713-FINDING.json",
+      "old_sha256": "7ba757dde545f57ade9181f05be7249dc943411be66e598ade6b1e825e763be4",
+      "new_sha256": "e9612e1c2012e4a15f6c58977af48d49f165823bbedff18e8a734441920988f9",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-6284430494207032713-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-6326994361293813247-FINDING.json",
+      "old_sha256": "91783787f099fc0eea4a4ccb84d783f7110655df3f9ff55e7515e951343e07d8",
+      "new_sha256": "2a7a5c3a304bc24eb349cb24bcb13837e99e810c456054dafbe8eb650d219c13",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-6326994361293813247-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-6375809193233464930-FINDING.json",
+      "old_sha256": "74968b725547756ab45be9f0e661b78a7b5385357c13587ab82b56bffe01a5c9",
+      "new_sha256": "c53fe81e859956ab9d89f0e19655caa3522457109b626b722221c488ba7ed466",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-6375809193233464930-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-6404485001357933521-FINDING.json",
+      "old_sha256": "210182367c82995b6605b196fdf6210f1c6c2fd6be19d2aa5bc34d83485a2a0b",
+      "new_sha256": "aec89021c83427b23710589279fddbce209c5741b8e52abd1fa5ad466ae6d3d1",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-6404485001357933521-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-641117369607775489-FINDING.json",
+      "old_sha256": "f2c61d40046ae3cdf30f91a386ddfde25d09a75c263ec946e4a178ef6bb64101",
+      "new_sha256": "8931bf264b74d6c2f2d931493844331ab4d8503710ab31286713725754fdf1b7",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-641117369607775489-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-6457355936157749672-FINDING.json",
+      "old_sha256": "dcd6269e49d1c68e5a2fb6b42d93da2e41cbf68d7704fdacfc55242f9360c3b5",
+      "new_sha256": "a4a7423435dcdb44e401d224c02adbf0affc1acbdc6a5a38f8f565d81cb323f9",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-6457355936157749672-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-7272773868714794722-FINDING.json",
+      "old_sha256": "cb3fe49f09bc294d8988a2ad840b71da854ea9182886daccce7b1eb88c902382",
+      "new_sha256": "960c9c53a7506b663e71dd0fcabe0b2db8f756eba8a09fa376bfe25b8cf8cd44",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-7272773868714794722-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-7659661320210501217-FINDING.json",
+      "old_sha256": "c8b359193abc7cf4b29547ca306d90ff07ac5288b48730164d773a2af94bc67f",
+      "new_sha256": "3ab8cf1aeb505ae6f173b44eb7d6342cb746eb938692d15cef08de54b79ab270",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-7659661320210501217-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-8096470034245790469-FINDING.json",
+      "old_sha256": "efb2b4d8ff92537eafb5defdb88e8e1251ba65fedcdfafa88b9f9d8707be9f2a",
+      "new_sha256": "6bfba2d625f1a24e090c1adcc33b1919d9a6863d0e15d9c9995b7d8c7ec12f22",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-8096470034245790469-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-8542600629727554400-FINDING.json",
+      "old_sha256": "acb0d24ad49f7fb6119494ac8573a03ba84f2bf1f754c5ffd9bf51174916353c",
+      "new_sha256": "8db4da8420ea18b37c480cedcb8e5564d89e5a62f6a1249c4e20d31723591560",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-8542600629727554400-FINDING.json"
+    },
+    {
+      "path": "<campaign>/reviews/QA-E2E/20260929T051911.760211Z-8927574844932332803-FINDING.json",
+      "old_sha256": "1ba0e3d2595b64489bdfdb94608c6e860632f0fde64e378e283c6530f1bb7435",
+      "new_sha256": "aaa1159a82bb62df8e7cbb975dc6558207deab9b47d4ee04cdc88c9acad1fff9",
+      "private_original": "<evaluator>/qa_e2e/public_editions/20260929T052742.516908Z/20260929T051911.760211Z-8927574844932332803-FINDING.json"
+    }
+  ]
+}

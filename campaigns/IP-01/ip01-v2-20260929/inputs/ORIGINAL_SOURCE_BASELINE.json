@@ -1,0 +1,42 @@
+{
+  "at": "2026-09-29T04:21:47.670685+00:00",
+  "astra_head": "3aa1ac646052124b98c73d9d1f361bef3c123d81",
+  "astra_status_porcelain": "",
+  "night01_git_provenance": "UNAVAILABLE: source present, no .git at known wrapper/lab/starter",
+  "files": [
+    {
+      "workspace": "ASTRA",
+      "path": "astra/store.py",
+      "sha256": "3533330a1957e5bdeb41275c1a62c5a600efc72cbf8f0f6ad490216fd6be0f75",
+      "bytes": 10434,
+      "copy": ".ip01-runtime/references/ASTRA/astra/store.py",
+      "candidate_reuse": "Reference inspection only; no current runtime qualification",
+      "copy_sha256": "3533330a1957e5bdeb41275c1a62c5a600efc72cbf8f0f6ad490216fd6be0f75"
+    },
+    {
+      "workspace": "NIGHT01",
+      "path": "lab/haven_lab/backend.py",
+      "sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+      "bytes": 2643,
+      "copy": null,
+      "candidate_reuse": "Reference inspection only; no current runtime qualification"
+    },
+    {
+      "workspace": "NIGHT01",
+      "path": "lab/haven_lab/coordinator.py",
+      "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+      "bytes": 5970,
+      "copy": null,
+      "candidate_reuse": "Reference inspection only; no current runtime qualification"
+    },
+    {
+      "workspace": "NIGHT01",
+      "path": "lab/haven_lab/store.py",
+      "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+      "bytes": 11897,
+      "copy": null,
+      "candidate_reuse": "Reference inspection only; no current runtime qualification"
+    }
+  ],
+  "effect": "Read-only originals; tracked non-sensitive ASTRA store copied only into isolated private runtime for reference"
+}

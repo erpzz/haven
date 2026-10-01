@@ -1,0 +1,1036 @@
+{
+  "required": 104,
+  "executed": 104,
+  "components": 26,
+  "phases": 4,
+  "direct_backing_or_process_config": 76,
+  "static_literal_or_global_fault": 28,
+  "full_HTTP_reconfiguration_claimed": false,
+  "cases": [
+    {
+      "component": "audience_revision",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "principal_ref"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "audience_revision",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "principal_ref"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "audience_revision",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "principal_ref"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "audience_revision",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "principal_ref"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "authority_instance_epoch",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "SESSION_EXPIRED",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "authority_instance_epoch",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "SESSION_EXPIRED",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "authority_instance_epoch",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "SESSION_EXPIRED",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "authority_instance_epoch",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "SESSION_EXPIRED",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "cancel_scope_epochs",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "CANCELLED",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "cancel_scope_epochs",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "CANCELLED",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "cancel_scope_epochs",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "CANCELLED",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "cancel_scope_epochs",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "CANCELLED",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "admission",
+      "component": "canonicalization_version",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "consume",
+      "component": "canonicalization_version",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "release",
+      "component": "canonicalization_version",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "retrieval",
+      "component": "canonicalization_version",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "component": "dependency_closure_digest",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "dependency_closure_digest",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "dependency_closure_digest",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "dependency_closure_digest",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "destination_epoch",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "destination_epoch",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "destination_epoch",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "destination_epoch",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "destination_ref",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "destination_ref",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "destination_ref",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "destination_ref",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "device_binding_revision",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "device_binding_revision",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "device_binding_revision",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "device_binding_revision",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "device_epoch",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "device_epoch",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "device_epoch",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "device_epoch",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "grant_dependencies",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "grant_dependencies",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "grant_dependencies",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "grant_dependencies",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "job_ref",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "job ownership invalidation"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "job_ref",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "job ownership invalidation"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "job_ref",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "job ownership invalidation"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "job_ref",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "job ownership invalidation"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "lease_fence",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "LEASE_LOST",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "lease_fence",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "LEASE_LOST",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "lease_fence",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "LEASE_LOST",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "lease_fence",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "LEASE_LOST",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "admission",
+      "component": "participant_area_scope_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "consume",
+      "component": "participant_area_scope_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "release",
+      "component": "participant_area_scope_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "retrieval",
+      "component": "participant_area_scope_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "component": "policy_ref",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "policy_ref",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "policy_ref",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "policy_ref",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "principal_ref",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "audience_revision"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "principal_ref",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "audience_revision"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "principal_ref",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "audience_revision"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "principal_ref",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "JOB_UNAVAILABLE",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "audience_revision"
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "admission",
+      "component": "provider_data_policy_revision",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "consume",
+      "component": "provider_data_policy_revision",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "release",
+      "component": "provider_data_policy_revision",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "retrieval",
+      "component": "provider_data_policy_revision",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "component": "purpose_definition_ref",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "purpose_definition_ref",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "purpose_definition_ref",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "purpose_definition_ref",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "restore_epoch",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "restore_epoch",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "restore_epoch",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "restore_epoch",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "rights_policy_refs",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "rights_policy_refs",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "rights_policy_refs",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "rights_policy_refs",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "admission",
+      "component": "route_profile_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "consume",
+      "component": "route_profile_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "release",
+      "component": "route_profile_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "retrieval",
+      "component": "route_profile_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "admission",
+      "component": "service_capability_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "consume",
+      "component": "service_capability_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "release",
+      "component": "service_capability_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "retrieval",
+      "component": "service_capability_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "component": "session_revision",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "SESSION_EXPIRED",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "session active state invalidation"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "session_revision",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "SESSION_EXPIRED",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "session active state invalidation"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "session_revision",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "SESSION_EXPIRED",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "session active state invalidation"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "session_revision",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "SESSION_EXPIRED",
+      "sealed_vector_unchanged": true,
+      "coupling": [
+        "session active state invalidation"
+      ],
+      "status": "PASS"
+    },
+    {
+      "component": "source_dependencies",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "source_dependencies",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "source_dependencies",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "source_dependencies",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "admission",
+      "component": "subject_scope_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "consume",
+      "component": "subject_scope_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "release",
+      "component": "subject_scope_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "retrieval",
+      "component": "subject_scope_revision",
+      "result_type": "Denied",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "component": "tool_catalog_digest",
+      "phase": "admission",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "tool_catalog_digest",
+      "phase": "consume",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "tool_catalog_digest",
+      "phase": "release",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "component": "tool_catalog_digest",
+      "phase": "retrieval",
+      "kind": "CURRENT_BACKING_OR_PROCESS_CONFIGURATION_MUTATION",
+      "denial": "STALE_CONTEXT",
+      "sealed_vector_unchanged": true,
+      "coupling": [],
+      "status": "PASS"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "admission",
+      "component": "vector_version",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "consume",
+      "component": "vector_version",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "release",
+      "component": "vector_version",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    },
+    {
+      "kind": "IN_MEMORY_STATIC_CONSTANT_FAULT",
+      "phase": "retrieval",
+      "component": "vector_version",
+      "result_type": "ValidationError",
+      "denial": null,
+      "sealed_vector_unchanged": true,
+      "candidate_file_modified": false,
+      "live_HTTP_reconfiguration": false,
+      "scope": "Direct actual current-vector computation with one literal/global changed in evaluator process; unsupported schema versions fail closed via ValidationError; not full route integration"
+    }
+  ],
+  "limits": "Actual authoritative checker called with unchanged sealed vector. Seven static domains lack supported live reconfiguration; process constants are perturbed only in evaluator memory. principal/audience and job/session domains are coupled. A schema ValidationError is fail-closed fault evidence, not proof of graceful route UX."
+}
