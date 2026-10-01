@@ -1,0 +1,78 @@
+{
+  "schema": "haven.jev01.sources.v1",
+  "researched_on": "2026-10-01",
+  "identified_project": "TypeSafe AI Jev, not a coding-agent framework or a local generative model",
+  "primary_sources_only": true,
+  "source_status": "Documentation and selected source files inspected. No SDK install, provider authentication, inference, browser application test or native agent launch performed.",
+  "web_identity_limit": "Web pages are dated observations, not immutable content snapshots. No fabricated page hashes. Revalidate volatile contracts before implementation/live activation and record material differences; do not silently follow aliases.",
+  "observed_model": "jev-1.13.0",
+  "observed_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "sources": [
+    {"id":"S01","url":"https://typesafe.ai/blog/introducing-system-one-models-and-jev","kind":"vendor announcement","use":"Identity, 2026-09-15 introduction and vendor performance claims; not independent Haven measurements"},
+    {"id":"S02","url":"https://docs.typesafe.ai/llms.txt","kind":"official documentation index","use":"Targeted navigation to current documentation"},
+    {"id":"S03","url":"https://docs.typesafe.ai/introduction","kind":"official concepts","use":"State plus typed decisions, not generated prose"},
+    {"id":"S04","url":"https://docs.typesafe.ai/api","kind":"official wire contract","use":"Endpoint, request/response types, primitive formats, returned model/usage and error codes"},
+    {"id":"S05","url":"https://docs.typesafe.ai/models","kind":"official model card","use":"Current version, mutable aliases, text-only modality, published input-token pricing and limits; no local deployment established"},
+    {"id":"S06","url":"https://docs.typesafe.ai/confidence","kind":"official semantics","use":"Distribution confidence versus accuracy and Noul probability"},
+    {"id":"S07","url":"https://docs.typesafe.ai/model-jaggedness/jev-1.13","kind":"vendor limitations","use":"Arithmetic/date/indirection/adversarial-state and independent-question limitations"},
+    {"id":"S08","url":"https://docs.typesafe.ai/introduction/coding-agents","kind":"official integration guidance","use":"Jev is not the generative model behind a coding agent"},
+    {"id":"S09","url":"https://docs.typesafe.ai/agent-skill","kind":"official skill navigation","use":"Locate official source; no npx/global skill installation executed"},
+    {"id":"S10","url":"https://docs.typesafe.ai/sdk/python","kind":"official Python SDK documentation","use":"Async/sync integration and source repository"},
+    {"id":"S11","url":"https://docs.typesafe.ai/sdk/python/api/retries","kind":"official retry contract","use":"Explicit zero internal retries; distinguish initial request and retry count"},
+    {"id":"S12","url":"https://docs.typesafe.ai/sdk/python/api/clients/async","kind":"official async client contract","use":"Body logging, HTTP timeouts, base-URL and extra-body override risks"},
+    {"id":"S13","url":"https://docs.typesafe.ai/sdk/python/changelog","kind":"official SDK version history","use":"Version 0.7.2 and older API-shape differences; not a dependency installation grant"},
+    {"id":"S14","url":"https://docs.typesafe.ai/legal","kind":"official legal navigation","use":"Enterprise ZDR offer is not default zero retention"},
+    {"id":"S15","url":"https://typesafe.ai/legal/privacy-policy","kind":"provider privacy terms","use":"Service processing/retention; non-training assurance is not no-disclosure or no-retention"},
+    {"id":"S16","url":"https://typesafe.ai/legal/mca","kind":"provider customer terms","use":"Hosted-service conditions; not independently accepted on the operator's behalf"},
+    {"id":"S17","url":"https://typesafe.ai/legal/data-processing","kind":"provider data-processing terms","use":"Future real-data suitability remains unapproved"},
+    {"id":"S18","url":"https://evals.typesafe.ai/","kind":"vendor evaluation methodology","use":"Vendor tasks and reference judgments; no transferable Haven speed/accuracy guarantee"},
+    {"id":"S19","url":"https://docs.typesafe.ai/cookbooks/classifying_rag_passages","kind":"official example","use":"Relevance/evidence predicates; do not copy its other providers, old model pin, thresholds or demo outputs"},
+    {"id":"S20","url":"https://docs.typesafe.ai/patterns/intent-routing","kind":"official pattern","use":"Possible later handler suggestion; not permission to execute a selected action"}
+  ],
+  "upstream_source_pins": [
+    {
+      "repository":"typesafe-ai/skills",
+      "commit":"65a39f393687675ce170e6094757de20370365b9",
+      "path":"skills/typesafe-ai/SKILL.md",
+      "git_blob_sha":"0109513f9656917dc93cbc5ecddfca465a53ce66",
+      "url":"https://github.com/typesafe-ai/skills/blob/65a39f393687675ce170e6094757de20370365b9/skills/typesafe-ai/SKILL.md",
+      "declared_license":"MIT",
+      "scope":"Read as reference only; not installed, executed or treated as higher-priority instructions"
+    },
+    {
+      "repository":"typesafe-ai/typesafe-sdk-python",
+      "commit":"f078f1e208a0d885154dc758344ae4fce77ac168",
+      "path":"pyproject.toml",
+      "git_blob_sha":"a272423be85b993680fc8a3fe4880c60d7ff82a7",
+      "url":"https://github.com/typesafe-ai/typesafe-sdk-python/blob/f078f1e208a0d885154dc758344ae4fce77ac168/pyproject.toml",
+      "declared_version":"0.7.2",
+      "declared_license":"MIT",
+      "scope":"Selected dependency metadata inspected; no claim of exhaustive SDK source audit or model-weight license"
+    }
+  ],
+  "haven_observation": {
+    "repository":"erpzz/haven",
+    "head":"d9eb68278e6a0c1f1cb84bab09d8e7b089c62cc2",
+    "tree":"9e16659c5e2d3da5292bc323afdcedcbcaa0f99f",
+    "branch":"implementation/ip01-v2-20260929",
+    "pr":21,
+    "pr_state":"OPEN_DRAFT",
+    "issue":20,
+    "latest_observed_checkpoint":"https://github.com/erpzz/haven/issues/20#issuecomment-5916839432",
+    "execution_state":"IP-02 setup published; no newer execution checkpoint observed; local unreported activity UNKNOWN",
+    "files": [
+      {"path":"campaigns/IP-02/ip02-20260930/WORK_PACKAGE.md","git_blob_sha":"3b9c666512375c476ceb4d7aa675b8f4e1eef96c","inspection":"Full package; scope, budgets and no new external-provider authority"},
+      {"path":"labs/ip01/haven/authority.py","git_blob_sha":"2f017b14c0affb479598c64b7597f9c892456a7c","inspection":"Lines120-300: current checks, lexical context selection, sealing and release"},
+      {"path":"labs/ip01/haven/app.py","git_blob_sha":"d2200d4748d7ad68b4ebc625443dd8a0c96f51e7","inspection":"Lines1-240: service, existing local-model gate, admission and fresh egress"},
+      {"path":"labs/ip01/requirements.lock","git_blob_sha":"7915ba2c90be89f283561e2c4664db527669583f","inspection":"Complete lock; HTTPX0.28.1 and Pydantic2.13.5 recorded, installed host availability not verified"}
+    ]
+  },
+  "claims_not_established": [
+    "Actual Jev inference or successful hosted integration in Haven",
+    "Jev latency, cost savings, calibration or accuracy on Haven tasks",
+    "Supported self-hosted Jev weights/deployment or image understanding",
+    "Default zero retention or approval to disclose any user's content",
+    "Provider computation/billing cessation from local HTTP cancellation",
+    "An executing Codex root or native child was started by this publication"
+  ]
+}
