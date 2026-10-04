@@ -1,0 +1,51 @@
+test_bad_hash_not_installed (test_lab.DownloadTests.test_bad_hash_not_installed) ... ok
+test_cancel_keeps_partial (test_lab.DownloadTests.test_cancel_keeps_partial) ... ok
+test_disk_guard (test_lab.DownloadTests.test_disk_guard) ... ok
+test_download_verified (test_lab.DownloadTests.test_download_verified) ... ok
+test_never_overwrite_wrong_existing (test_lab.DownloadTests.test_never_overwrite_wrong_existing) ... ok
+test_resume (test_lab.DownloadTests.test_resume) ... ok
+test_server_ignores_range (test_lab.DownloadTests.test_server_ignores_range) ... ok
+test_bad_json (test_lab.HttpSecurityTests.test_bad_json) ... ok
+test_download_requires_confirmation (test_lab.HttpSecurityTests.test_download_requires_confirmation) ... ok
+test_host_denied (test_lab.HttpSecurityTests.test_host_denied) ... ok
+test_no_cors (test_lab.HttpSecurityTests.test_no_cors) ... ok
+test_no_directory_read (test_lab.HttpSecurityTests.test_no_directory_read) ... ok
+test_origin_denied (test_lab.HttpSecurityTests.test_origin_denied) ... ok
+test_requires_token (test_lab.HttpSecurityTests.test_requires_token) ... ok
+test_static_loads (test_lab.HttpSecurityTests.test_static_loads) ... ok
+test_token_allows (test_lab.HttpSecurityTests.test_token_allows) ... ok
+test_benchmark_no_prompt_saved (test_lab.IntegrationTests.test_benchmark_no_prompt_saved) ... ok
+test_cancel (test_lab.IntegrationTests.test_cancel) ... ok
+test_external_survives_shutdown (test_lab.IntegrationTests.test_external_survives_shutdown) ... ok
+test_failure_no_retry (test_lab.IntegrationTests.test_failure_no_retry) ... ok
+test_import_is_explicit_and_no_copy (test_lab.IntegrationTests.test_import_is_explicit_and_no_copy) ... ok
+test_llama_reasoning_mapping (test_lab.IntegrationTests.test_llama_reasoning_mapping) ... ok
+test_no_backend_key_in_state (test_lab.IntegrationTests.test_no_backend_key_in_state) ... ok
+test_no_image_unsupported (test_lab.IntegrationTests.test_no_image_unsupported) ... ok
+test_one_request_slot (test_lab.IntegrationTests.test_one_request_slot) ... ok
+test_real_http_stream_fixture (test_lab.IntegrationTests.test_real_http_stream_fixture) ... ok
+test_reconnect_rejects_active_request (test_lab.IntegrationTests.test_reconnect_rejects_active_request) ... ok
+test_strata_reasoning_mapping (test_lab.IntegrationTests.test_strata_reasoning_mapping) ... ok
+test_terminal_status_includes_metrics (test_lab.IntegrationTests.test_terminal_status_includes_metrics) ... ok
+test_truncated_retains_partial (test_lab.IntegrationTests.test_truncated_retains_partial) ... ok
+test_exited_gate_still_requires_stop (test_lab.ProcessTests.test_exited_gate_still_requires_stop) ... ok
+test_old_owner_cannot_stop_new_engine (test_lab.ProcessTests.test_old_owner_cannot_stop_new_engine) ... ok
+test_owned_start_stop_and_double_start_rejection (test_lab.ProcessTests.test_owned_start_stop_and_double_start_rejection) ... ok
+test_archive_size_guard (test_lab.UtilityTests.test_archive_size_guard) ... ok
+test_archive_zip_slip (test_lab.UtilityTests.test_archive_zip_slip) ... ok
+test_atomic_unicode (test_lab.UtilityTests.test_atomic_unicode) ... ok
+test_bad_cache_combo (test_lab.UtilityTests.test_bad_cache_combo) ... ok
+test_command_cuda (test_lab.UtilityTests.test_command_cuda) ... ok
+test_command_injection_rejected (test_lab.UtilityTests.test_command_injection_rejected) ... ok
+test_fit_is_heuristic (test_lab.UtilityTests.test_fit_is_heuristic) ... ok
+test_fit_unknown (test_lab.UtilityTests.test_fit_unknown) ... ok
+test_local_endpoint (test_lab.UtilityTests.test_local_endpoint) ... ok
+test_numeric_nan_rejected (test_lab.UtilityTests.test_numeric_nan_rejected) ... ok
+test_reject_remote (test_lab.UtilityTests.test_reject_remote) ... ok
+test_smi (test_lab.UtilityTests.test_smi) ... ok
+test_smi_unknown_not_zero (test_lab.UtilityTests.test_smi_unknown_not_zero) ... ok
+
+----------------------------------------------------------------------
+Ran 46 tests in 12.668s
+
+OK

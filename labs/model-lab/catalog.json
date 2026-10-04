@@ -1,0 +1,86 @@
+{
+  "researched_on": "2026-10-04",
+  "llama_tag": "b11146",
+  "llama_commit": "7fe450e19305b828c199d602c23a8337aaa1f03b",
+  "llama_assets": [
+    {
+      "name": "llama-b11146-bin-win-cuda-12.4-x64.zip",
+      "size_bytes": 253869799,
+      "sha256": "3c806a6ceccc3dae1c743ceb1a1fb2cce5b76f40bfbd4c6b7b8afb6ef45a5807",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11146/llama-b11146-bin-win-cuda-12.4-x64.zip"
+    },
+    {
+      "name": "cudart-llama-bin-win-cuda-12.4-x64.zip",
+      "size_bytes": 391443627,
+      "sha256": "8c79a9b226de4b3cacfd1f83d24f962d0773be79f1e7b75c6af4ded7e32ae1d6",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11146/cudart-llama-bin-win-cuda-12.4-x64.zip"
+    }
+  ],
+  "strata": {
+    "tag": "v0.1.39",
+    "commit": "6f32ec070f23ced9f50e704d854d775da52591ab"
+  },
+  "models": [
+    {
+      "id": "qwen35-4b",
+      "name": "Qwen3.5 \u00b7 4B",
+      "repo": "unsloth/Qwen3.5-4B-GGUF",
+      "filename": "Qwen3.5-4B-Q4_K_M.gguf",
+      "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "size_bytes": null,
+      "download_gb": 2.74,
+      "description": "2026 hybrid-attention model. Best first hardware-fit experiment; text-only in this UI.",
+      "tag": "START HERE",
+      "quant": "Q4_K_M",
+      "license": "Apache-2.0",
+      "url": "https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/Qwen3.5-4B-Q4_K_M.gguf",
+      "source": "https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/blob/main/Qwen3.5-4B-Q4_K_M.gguf"
+    },
+    {
+      "id": "qwen35-9b",
+      "name": "Qwen3.5 \u00b7 9B",
+      "repo": "unsloth/Qwen3.5-9B-GGUF",
+      "filename": "Qwen3.5-9B-Q4_K_M.gguf",
+      "sha256": "03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8",
+      "size_bytes": null,
+      "download_gb": 5.68,
+      "description": "Larger 2026 candidate. Tight on 8 GB VRAM; test short context before increasing it.",
+      "tag": "VRAM WATCH",
+      "quant": "Q4_K_M",
+      "license": "Apache-2.0",
+      "url": "https://huggingface.co/unsloth/Qwen3.5-9B-GGUF/resolve/main/Qwen3.5-9B-Q4_K_M.gguf",
+      "source": "https://huggingface.co/unsloth/Qwen3.5-9B-GGUF/blob/main/Qwen3.5-9B-Q4_K_M.gguf"
+    },
+    {
+      "id": "qwen3-8b",
+      "name": "Qwen3 \u00b7 8B",
+      "repo": "Qwen/Qwen3-8B-GGUF",
+      "filename": "Qwen3-8B-Q4_K_M.gguf",
+      "sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+      "size_bytes": null,
+      "download_gb": 5.03,
+      "description": "Official Qwen GGUF. An established dense-model comparison, not the newest release.",
+      "tag": "BASELINE",
+      "quant": "Q4_K_M",
+      "license": "Apache-2.0",
+      "url": "https://huggingface.co/Qwen/Qwen3-8B-GGUF/resolve/main/Qwen3-8B-Q4_K_M.gguf",
+      "source": "https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/Qwen3-8B-Q4_K_M.gguf"
+    },
+    {
+      "id": "qwen3-4b",
+      "name": "Qwen3 \u00b7 4B",
+      "repo": "Qwen/Qwen3-4B-GGUF",
+      "filename": "Qwen3-4B-Q4_K_M.gguf",
+      "sha256": "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5",
+      "size_bytes": null,
+      "download_gb": 2.5,
+      "description": "A smaller established baseline for comparing latency, output quality and GPU allocation.",
+      "tag": "LIGHTWEIGHT",
+      "quant": "Q4_K_M",
+      "license": "Apache-2.0",
+      "url": "https://huggingface.co/Qwen/Qwen3-4B-GGUF/resolve/main/Qwen3-4B-Q4_K_M.gguf",
+      "source": "https://huggingface.co/Qwen/Qwen3-4B-GGUF/blob/main/Qwen3-4B-Q4_K_M.gguf"
+    }
+  ],
+  "notes": "Model content hashes are pinned. Download URLs use main; changed bytes fail verification rather than silently updating. Approximate catalog sizes are decimal GB, not allocation estimates."
+}
