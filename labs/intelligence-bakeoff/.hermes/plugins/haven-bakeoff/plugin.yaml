@@ -1,0 +1,7 @@
+name: haven-bakeoff
+version: "0.1.0"
+description: Synthetic proposal-only Haven tools for the R02 runtime bakeoff
+provides_tools:
+  - haven_read_note
+  - haven_device_state
+  - haven_propose_action
