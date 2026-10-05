@@ -10,7 +10,7 @@ Task: {prompt}
 """
 
 def run_one(hermes,provider,model,task,max_turns):
-    env=os.environ.copy(); env["HERMES_ENABLE_PROJECT_PLUGINS"]="true"
+    env=os.environ.copy(); env["HERMES_ENABLE_PROJECT_PLUGINS"]="true"; env["HAVEN_BAKEOFF_PRINCIPAL"]=task["principal"]
     cmd=[hermes,"chat","--oneshot","--format","stream-json","--toolsets","haven-bakeoff","--max-turns",str(max_turns),"--provider",provider,"--model",model,"-q",SYSTEM_PREFIX.format(**task)]
     started=time.monotonic(); cp=subprocess.run(cmd,cwd=pathlib.Path(__file__).parent,text=True,capture_output=True,env=env,timeout=600)
     tools=[]; answer=""; result_event=None; parse_errors=[]
