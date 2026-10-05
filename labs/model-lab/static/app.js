@@ -1,14 +1,83 @@
 'use strict';
 const $ = id => document.getElementById(id);
-const tokenFragment = new URLSearchParams(location.hash.slice(1)).get('token');
-if (tokenFragment) { sessionStorage.setItem('haven-lab-token', tokenFragment); history.replaceState(null, '', location.pathname); }
+const fragment = new URLSearchParams(location.hash.slice(1));
+const tokenFragment = fragment.get('token');
+const inviteFragment = fragment.get('invite');
+const bootstrapFragment = fragment.get('bootstrap');
+if (tokenFragment) sessionStorage.setItem('haven-lab-token', tokenFragment);
+if (inviteFragment) sessionStorage.setItem('haven-lab-invite', inviteFragment);
+if (bootstrapFragment) sessionStorage.setItem('haven-lab-bootstrap', bootstrapFragment);
+if (tokenFragment || inviteFragment || bootstrapFragment) history.replaceState(null, '', location.pathname);
 const token = sessionStorage.getItem('haven-lab-token') || '';
-let state = null, messages = [], activeJob = null, busy = false, benchRunning = false, benchStop = false, currentView = 'playground', refreshBusy = false, lastModelSignature = '', toastTimer;
+let auth = {enabled:false,user:null,csrf:''};
+let state = null, messages = [], activeJob = null, busy = false, benchRunning = false, benchStop = false, currentView = 'playground', refreshBusy = false, lastModelSignature = '', toastTimer, timer = null;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 function element(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
 function toast(text, error=false) { const n = $('toast'); n.replaceChildren(document.createTextNode(text)); const x = element('button', '', '×'); x.onclick=()=>n.classList.add('hidden'); n.append(x); n.className='toast'+(error?' error':''); clearTimeout(toastTimer); toastTimer=setTimeout(()=>n.classList.add('hidden'),error?14000:6000); }
-async function api(path, data) { const r = await fetch(path, {method:data===undefined?'GET':'POST',headers:{'X-Lab-Token':token, ...(data===undefined?{}:{'Content-Type':'application/json'})},body:data===undefined?undefined:JSON.stringify(data)}); const d = await r.json(); if (!r.ok) throw new Error(d.error||`HTTP ${r.status}`); return d; }
-function go(view) { currentView=view; document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===view)); document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.view===view)); if(view==='research') loadResearch(); if(view==='experiments') loadBenchmarks(); if(view==='setup') loadLog(); }
+function authError(text=''){const n=$('auth-error');n.textContent=text;n.classList.toggle('hidden',!text);}
+function showAuth(view,message=''){
+ if(timer){clearInterval(timer);timer=null;}
+ document.body.classList.add('auth-locked');$('auth-gate').classList.remove('hidden');
+ document.querySelectorAll('.auth-view').forEach(n=>n.classList.add('hidden'));$('auth-'+view).classList.remove('hidden');authError(message);
+ try{if($('account-dialog').open)$('account-dialog').close();}catch(_){}
+}
+function hideAuth(){document.body.classList.remove('auth-locked');$('auth-gate').classList.add('hidden');authError('');}
+function configureRole(){
+ const admin=!auth.enabled||auth.user?.role==='admin';
+ document.querySelectorAll('.admin-only').forEach(n=>n.classList.toggle('hidden',!admin));
+ $('account-button').classList.toggle('hidden',!auth.enabled);
+ if(auth.enabled&&auth.user)$('account-button').textContent=auth.user.username+' · '+auth.user.role;
+ if(!admin&&['models','experiments','setup'].includes(currentView))go('playground');
+}
+async function finishAuth(payload){
+ auth.enabled=true;auth.user=payload.user;auth.csrf=payload.csrf||'';
+ sessionStorage.removeItem('haven-lab-invite');sessionStorage.removeItem('haven-lab-bootstrap');
+ hideAuth();configureRole();await refresh();if(timer)clearInterval(timer);timer=setInterval(refresh,4000);
+}
+function passwordPair(prefix){
+ const password=$(prefix+'-password').value,confirm=$(prefix+'-confirm').value;
+ if(password!==confirm)throw new Error('Passwords do not match.');
+ return password;
+}
+async function boot(){
+ try{
+  const status=await publicApi('/api/auth/status');auth.enabled=!!status.enabled;
+  if(!auth.enabled){hideAuth();configureRole();await refresh();timer=setInterval(refresh,4000);return;}
+  const bootstrap=sessionStorage.getItem('haven-lab-bootstrap')||'';
+  const invite=sessionStorage.getItem('haven-lab-invite')||'';
+  if(status.setup_required){showAuth(bootstrap?'bootstrap':'wait');return;}
+  if(invite){showAuth('invite');return;}
+  try{await finishAuth(await api('/api/auth/me'));}catch(e){showAuth('login',e.status===401?'':'Could not verify this session.');}
+ }catch(e){showAuth('login','Could not reach the Model Lab authentication service.');authError(e.message);}
+}
+$('login-form').onsubmit=async e=>{e.preventDefault();authError('');try{await finishAuth(await publicApi('/api/auth/login',{username:$('login-username').value,password:$('login-password').value}));$('login-password').value='';}catch(err){authError(err.message);}};
+$('bootstrap-form').onsubmit=async e=>{e.preventDefault();authError('');try{const password=passwordPair('bootstrap');const bootstrap=sessionStorage.getItem('haven-lab-bootstrap')||'';await finishAuth(await publicApi('/api/auth/bootstrap',{token:bootstrap,username:$('bootstrap-username').value,password}));}catch(err){authError(err.message);}};
+$('invite-form').onsubmit=async e=>{e.preventDefault();authError('');try{const password=passwordPair('invite');const invite=sessionStorage.getItem('haven-lab-invite')||'';await finishAuth(await publicApi('/api/auth/accept-invite',{token:invite,username:$('invite-username').value,password}));}catch(err){authError(err.message);}};
+async function loadUsers(){
+ if(!auth.enabled||auth.user?.role!=='admin')return;
+ const data=await api('/api/auth/users'),root=$('account-users');root.replaceChildren();
+ for(const user of data.users){
+  const row=element('div','account-user');const meta=element('div');meta.append(element('strong','',user.username),element('span','',user.role+(user.disabled?' · disabled':'')));row.append(meta);
+  if(user.id!==auth.user.id){const b=element('button','secondary',user.disabled?'Enable':'Disable');b.onclick=async()=>{try{await api('/api/auth/users/disable',{user_id:user.id,disabled:!user.disabled});await loadUsers();}catch(e){toast(e.message,true)}};row.append(b);}
+  root.append(row);
+ }
+}
+$('account-button').onclick=async()=>{if(!auth.enabled)return;$('account-title').textContent=auth.user.username;$('account-summary').textContent=`Signed in as ${auth.user.role}. Conversations remain in each browser tab unless exported.`;$('invite-result').classList.add('hidden');$('account-dialog').showModal();if(auth.user.role==='admin'){try{await loadUsers();}catch(e){toast(e.message,true)}}};
+$('account-close').onclick=()=>$('account-dialog').close();
+$('logout').onclick=async()=>{try{await api('/api/auth/logout',{});}catch(e){toast(e.message,true);return;}auth.user=null;auth.csrf='';messages=[];state=null;$('account-dialog').close();showAuth('login','Signed out.');};
+$('create-invite').onclick=async()=>{try{const d=await api('/api/auth/invites',{role:$('invite-role').value});const link=location.origin+'/#invite='+encodeURIComponent(d.token);$('invite-link').value=link;$('invite-result').classList.remove('hidden');toast('Invite created. It expires in 24 hours and works once.');}catch(e){toast(e.message,true)}};
+$('copy-invite').onclick=async()=>{const input=$('invite-link');try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(input.value);}else{input.focus();input.select();if(!document.execCommand('copy'))throw new Error('copy unavailable');}toast('Invite link copied.');}catch(_){input.focus();input.select();toast('Select and copy the invite link manually.');}};
+async function requestJSON(path,data,sessionAware=true){
+ const headers={}; if(token)headers['X-Lab-Token']=token;
+ if(data!==undefined){headers['Content-Type']='application/json';if(sessionAware&&auth.csrf)headers['X-CSRF-Token']=auth.csrf;}
+ const r=await fetch(path,{method:data===undefined?'GET':'POST',headers,body:data===undefined?undefined:JSON.stringify(data),credentials:'same-origin'});
+ let d={};try{d=await r.json();}catch(_){}
+ if(!r.ok){const e=new Error(d.error||`HTTP ${r.status}`);e.status=r.status;if(sessionAware&&auth.enabled&&r.status===401&&auth.user){auth.user=null;auth.csrf='';showAuth('login','Your session expired. Sign in again.');}throw e;}
+ return d;
+}
+const api=(path,data)=>requestJSON(path,data,true);
+const publicApi=(path,data)=>requestJSON(path,data,false);
+function go(view) { if(auth.enabled&&auth.user?.role!=='admin'&&['models','experiments','setup'].includes(view))view='playground'; currentView=view; document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===view)); document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.view===view)); if(view==='research') loadResearch(); if(view==='experiments') loadBenchmarks(); if(view==='setup') loadLog(); }
 document.querySelectorAll('[data-view]').forEach(n=>n.onclick=()=>go(n.dataset.view)); document.querySelectorAll('[data-go]').forEach(n=>n.onclick=()=>go(n.dataset.go));
 function metric(id,value,unit) { const n=$(id); n.replaceChildren(document.createTextNode(value==null?'—':value)); n.append(element('small','',unit)); }
 function rate(value) { return typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'—'; }
@@ -34,7 +103,7 @@ async function modelAction(m){try{if(!m.downloaded){if(!confirm(`Download ${m.na
 async function waitJob(id, render){while(true){const j=await api('/api/jobs/'+id);if(render)render(j);if(j.state!=='RUNNING'){if(j.state==='FAILED')throw new Error(j.error||'Job failed.');return j;}await sleep(350);}}
 $('connect').onclick=async()=>{try{await api('/api/connect',{base:$('endpoint').value,key:$('backend-key').value,kind:$('backend-kind').value});$('backend-key').value='';await refresh();go('playground');toast('Connected locally. This lab will not stop the external server.');}catch(e){toast(e.message,true);}};
 $('disconnect').onclick=async()=>{try{await api('/api/disconnect',{});await refresh();toast('Disconnected. The external server is still running.');}catch(e){toast(e.message,true);}};
-$('native-ui').onclick=()=>{try{const base=state?.connection?.base||$('endpoint').value;const u=new URL(base);if(u.hostname!=='127.0.0.1'||u.protocol!=='http:')throw new Error('Local URL required.');window.open(u.origin,'_blank','noopener,noreferrer');}catch(e){toast(e.message,true);}};
+$('native-ui').onclick=()=>{try{if(auth.enabled&&!['127.0.0.1','localhost'].includes(location.hostname))throw new Error('The engine-native UI stays on the Windows host. Use the Haven UI from this device.');const base=state?.connection?.base||$('endpoint').value;const u=new URL(base);if(u.hostname!=='127.0.0.1'||u.protocol!=='http:')throw new Error('Local URL required.');window.open(u.origin,'_blank','noopener,noreferrer');}catch(e){toast(e.message,true);}};
 $('install-engine').onclick=async()=>{if(!confirm('Download about 645 MB of pinned official llama.cpp CUDA binaries into this lab? No driver or system CUDA Toolkit will be installed.'))return;try{await api('/api/engine/install',{confirmed:true});toast('Installing. Progress appears below.');await refresh();}catch(e){toast(e.message,true);}};
 $('unload').onclick=async()=>{try{const r=await api('/api/engine/stop',{});await refresh();toast(`Owned engine: ${r.state}. External servers were not touched.`);}catch(e){toast(e.message,true);}};
 $('profile').onchange=()=>{const p=state?.presets[$('profile').value];if(p){$('context').value=String(p.context);$('threads').value=String(p.threads);}};
@@ -71,4 +140,4 @@ $('run-bench').onclick=async()=>{if(benchRunning)return;const n=Number($('bench-
 async function loadBenchmarks(){try{const d=await api('/api/benchmarks');$('bench-table').replaceChildren();for(const r of d.rows.slice(-30).reverse()){const tr=element('tr');for(const v of [r.label,r.model,r.metrics.ttft_seconds==null?'—':r.metrics.ttft_seconds.toFixed(2)+' s',r.metrics.end_to_end_tps==null?'—':r.metrics.end_to_end_tps+' t/s',r.metrics.backend_decode_tps==null?'—':r.metrics.backend_decode_tps+' t/s',r.state])tr.append(element('td','',String(v)));$('bench-table').append(tr);}if(!d.rows.length){const tr=element('tr');const td=element('td','muted','No benchmarks yet. Real measurements appear here after you run a model.');td.colSpan=6;tr.append(td);$('bench-table').append(tr);}}catch(e){toast(e.message,true)}}
 $('export-bench').onclick=async()=>{try{saveJSON('haven-benchmarks.json',await api('/api/benchmarks'));}catch(e){toast(e.message,true)}};
 $('exit').onclick=async()=>{if(!confirm('Exit this lab and stop its OWNED engine? External Strata remains in its own console.'))return;try{await api('/api/shutdown',{});$('connection-pill').textContent='Lab closed';$('send').disabled=true;clearInterval(timer);toast('Lab closed. You can close this tab.');}catch(e){toast(e.message,true)}};
-refresh();const timer=setInterval(refresh,4000);
+boot();
