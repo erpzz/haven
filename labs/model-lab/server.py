@@ -36,10 +36,17 @@ ADMIN_POSTS = {
 ADMIN_GETS = {'/api/log', '/api/benchmarks', '/api/auth/users'}
 
 
+HOME_IPV4 = (
+    ipaddress.ip_network('10.0.0.0/8'),
+    ipaddress.ip_network('172.16.0.0/12'),
+    ipaddress.ip_network('192.168.0.0/16'),
+)
+
+
 def _is_private_address(value: str) -> bool:
     try:
         ip = ipaddress.ip_address(value.split('%', 1)[0])
-        return ip.is_private or ip.is_loopback
+        return ip.version == 4 and (ip.is_loopback or any(ip in network for network in HOME_IPV4))
     except ValueError:
         return False
 
