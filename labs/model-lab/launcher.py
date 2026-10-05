@@ -48,7 +48,7 @@ def stop(kind):
     print('Owned process tree stopped.')
 
 
-def run(kind, open_browser=True):
+def run(kind, open_browser=True, lan=False):
     # An OS-held lock survives neither process death nor reboot. A stale receipt
     # may be removed only while this lock is held AND the control port is free.
     lock_path = ROOT / '.local' / f'launch-{kind}.lock'
@@ -63,14 +63,14 @@ def run(kind, open_browser=True):
             import fcntl
             fcntl.flock(lock.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
         try:
-            return run_locked(kind, open_browser)
+            return run_locked(kind, open_browser, lan)
         finally:
             lock.seek(0)
             if os.name == 'nt': msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
             else: fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
 
 
-def run_locked(kind, open_browser=True):
+def run_locked(kind, open_browser=True, lan=False):
     data = ROOT / '.local' / f'launcher-{kind}'
     data.mkdir(parents=True, exist_ok=True)
     path = ROOT / '.local' / f'launch-{kind}.json'
@@ -107,13 +107,15 @@ def run_locked(kind, open_browser=True):
         control.server_close()
         raise
     owner = OwnedEngine(data)
-    env = dict(os.environ, PYTHONUTF8='1')
+    env = dict(os.environ, PYTHONUTF8='1', HAVEN_CONTROL_TOKEN=token)
     for name in list(env):
         if name.startswith(('STRATA_', 'LLAMA_ARG_', 'OPENAI_', 'ANTHROPIC_')) or name in ('HF_TOKEN', 'HUGGING_FACE_HUB_TOKEN'):
             env.pop(name, None)
     if kind == 'lab':
         cwd = ROOT
         argv = [str(ROOT / '.local/python/python.exe'), '-X', 'utf8', '-E', '-s', str(ROOT / 'server.py')]
+        if lan:
+            argv.append('--lan')
     else:
         cwd = ROOT / '.local/Strata'
         config = cwd / 'strata-iq2_xs.json'
@@ -122,7 +124,7 @@ def run_locked(kind, open_browser=True):
         argv = [str(cwd / '.venv/Scripts/python.exe'), '-X', 'utf8', str(cwd / 'serve/server.py'),
                 '--engine', 'strata', '--config', str(config), '--host', '127.0.0.1', '--port', '8080']
     receipt = {'kind': kind, 'control_port': PORTS[kind], 'control_token': token,
-               'supervisor_pid': os.getpid(), 'started_at': time.time()}
+               'supervisor_pid': os.getpid(), 'started_at': time.time(), 'lan': bool(lan)}
     url = None
     control_started = False
     try:
@@ -135,8 +137,16 @@ def run_locked(kind, open_browser=True):
             if url is None:
                 log = (data / 'engine.log').read_text('utf-8', errors='replace')
                 if kind == 'lab':
-                    match = re.search(r'http://127\.0\.0\.1:8787/#token=[A-Za-z0-9_-]+', log)
-                    if match: url = match.group()
+                    if lan:
+                        match = re.search(r'Local owner URL:\s+(http://127\\.0\\.0\\.1:8787/(?:#bootstrap=[A-Za-z0-9_-]+)?)', log)
+                        if match:
+                            url = match.group(1)
+                        lan_urls = sorted(set(re.findall(r'LAN access:\s+(http://(?:10|172|192)\\.[0-9.]+:8787/)', log)))
+                        if lan_urls:
+                            receipt['lan_urls'] = lan_urls
+                    else:
+                        match = re.search(r'http://127\.0\.0\.1:8787/#token=[A-Za-z0-9_-]+', log)
+                        if match: url = match.group()
                 elif 'ready: http://127.0.0.1:8080/v1' in log:
                     url = 'http://127.0.0.1:8080/'
                 if url:
@@ -146,7 +156,7 @@ def run_locked(kind, open_browser=True):
         if owner.proc.poll() is None:
             try:
                 if kind == 'lab' and url:
-                    post(8787, '/api/shutdown', url.split('#token=', 1)[1])
+                    post(8787, '/api/private/shutdown', token, header='X-Haven-Control')
                     owner.proc.wait(timeout=20)
                     graceful = True
                 elif kind == 'strata' and url:
@@ -171,5 +181,8 @@ if __name__ == '__main__':
     parser.add_argument('kind', choices=PORTS)
     parser.add_argument('--stop', action='store_true')
     parser.add_argument('--no-browser', action='store_true')
+    parser.add_argument('--lan', action='store_true')
     args = parser.parse_args()
-    stop(args.kind) if args.stop else run(args.kind, not args.no_browser)
+    if args.lan and args.kind != 'lab':
+        parser.error('--lan is valid only for the lab UI.')
+    stop(args.kind) if args.stop else run(args.kind, not args.no_browser, args.lan)
