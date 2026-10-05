@@ -36,7 +36,7 @@ Hermes is pinned for this experiment to stable release **v2026.9.24**. Install/r
 $env:HERMES_ENABLE_PROJECT_PLUGINS="true"
 $env:HAVEN_BAKEOFF_TRACE="$PWD\runs\hermes-tools.jsonl"
 hermes plugins doctor .\hermes-plugin --ci
-python hermes_adapter.py --provider openai-codex --model gpt-5.6-sol --label hermes-sol
+python hermes_adapter.py --provider openai-codex --model gpt-6-sol --label hermes-sol
 ```
 
 For a local model, configure Hermes to the same OpenAI-compatible endpoint/model and run the adapter with that provider/model. `hermes_adapter.py` consumes Hermes' supported `--format stream-json` output; it does not scrape terminal decorations.
