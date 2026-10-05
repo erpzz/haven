@@ -42,6 +42,8 @@ Four small-model profiles completed 24/24 fixed tasks correctly. Their warm thre
 
 Benchmarks capture the selected connection, workload, label and sampling settings once. Changing controls during the run does not silently switch a repetition to another backend or configuration. Records separate local first-output latency, total request time and backend-reported prompt/decode durations and rates. Stream chunks are not counted as tokens. Read the answer as well as the timings.
 
+Interactive chat defaults to a 2,048-token output limit and allows up to 4,096. Backend completion reasons are preserved: a natural stop is shown as **COMPLETED**, a token-cap stop as **OUTPUT LIMIT REACHED**, user cancellation as **STOPPED**, and errors as **FAILED**. When the backend reports a length limit, the UI retains the partial assistant turn and offers **Continue** so the next request resumes with the actual truncated answer in context instead of hiding the termination reason.
+
 The original handoff and manifest remain historical evidence. `docs/TEST_REPORT.md` describes the earlier environment's limitations; it does not describe the later Windows qualification. Current results and experimental recommendations belong in the [new PC qualification report](docs/PC_QUALIFICATION_v2.md).
 
 ## Privacy and retained files
@@ -60,4 +62,4 @@ For a checksum mismatch, preserve the failed file and obtain a fresh verified co
 
 With Python 3.11+: `python -m unittest discover -s tests -v`. Windows tests exercise actual Job Object containment and controller stop behavior. Optional `python tests/browser_smoke.py` and `python tests/browser_lan_smoke.py` require an existing Playwright/Chromium installation and label browser/inference fixtures appropriately. The LAN smoke uses a 390×844, 3× device-scale viewport for iPhone-class responsive behavior. Real model qualification is separate. Playwright is a development dependency, not a runtime dependency.
 
-Research and upstream efficiency hypotheses remain in `docs/EFFICIENCY.md`. Upstream speed claims are not measurements on this PC. `MANIFEST_v2.sha256` is the immutable October 4 inference-qualification manifest and intentionally remains a historical baseline; the later LAN/authentication extension adds and changes files beyond that manifest rather than rewriting the already-qualified record.
+Research and upstream efficiency hypotheses remain in `docs/EFFICIENCY.md`. The October 5 ecosystem/model survey and the recommendation to treat Model Lab as Haven's evidence-driven control plane rather than another commodity chat clone are in [`docs/ECOSYSTEM_AND_MODEL_SCOUT_20261005.md`](docs/ECOSYSTEM_AND_MODEL_SCOUT_20261005.md). Upstream speed claims are not measurements on this PC. `MANIFEST_v2.sha256` is the immutable October 4 inference-qualification manifest and intentionally remains a historical baseline; later changes add files and behavior without rewriting that already-qualified record.

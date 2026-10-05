@@ -54,10 +54,22 @@ with tempfile.TemporaryDirectory(prefix='haven-browser-') as t:
             assert len(backend.requests)==1
             checks.append('Actual form -> local HTTP -> synthetic SSE stream -> Unicode rendered once with metrics')
             page.screenshot(path=str(OUT/'chat-test-double.png'),full_page=True)
+            assert page.locator('#max-tokens').input_value() == '2048'
+            backend.finish_reason='length';page.locator('#prompt').fill('Synthetic output-limit test');page.locator('#send').click()
+            expect(page.locator('.result-meta').last).to_contain_text('OUTPUT LIMIT REACHED',timeout=10000)
+            expect(page.locator('.continue-generation').last).to_be_visible()
+            assert backend.requests[-1]['max_tokens'] == 2048
+            backend.finish_reason='stop';page.locator('.continue-generation').last.click()
+            expect(page.locator('.result-meta').last).to_contain_text('COMPLETED',timeout=10000)
+            continuation_messages=backend.requests[-1]['messages']
+            assert continuation_messages[-2]['role']=='assistant'
+            assert continuation_messages[-1]['role']=='user' and 'Continue exactly where you stopped' in continuation_messages[-1]['content']
+            assert len(backend.requests)==3
+            checks.append('Output-limit finish reason is surfaced; Continue preserves partial assistant context and resumes without a visible fake user turn')
             backend.slow=True;page.locator('#prompt').fill('Cancel this synthetic response');page.locator('#send').click()
-            expect(page.locator('.assistant .body')).to_have_count(2)
-            expect(page.locator('.assistant .body').nth(1)).to_contain_text('This is')
-            page.locator('#cancel').click();expect(page.locator('.result-meta').last).to_contain_text('CANCELLED',timeout=10000)
+            expect(page.locator('.assistant .body')).to_have_count(4)
+            expect(page.locator('.assistant .body').nth(3)).to_contain_text('This is')
+            page.locator('#cancel').click();expect(page.locator('.result-meta').last).to_contain_text('STOPPED',timeout=10000)
             backend.slow=False;checks.append('Real browser cancellation preserves partial output and records uncertainty')
             original_settings = {'temperature':float(page.locator('#temperature').input_value()),
                                  'max_tokens':int(page.locator('#max-tokens').input_value()),
@@ -80,7 +92,7 @@ with tempfile.TemporaryDirectory(prefix='haven-browser-') as t:
             assert len({x['prompt_sha256'] for x in rows})==1
             assert all(x['label'].startswith('TEST DOUBLE · browser integration') for x in rows)
             assert all(all(x['settings'][k]==v for k,v in original_settings.items()) for x in rows)
-            assert len(backend.requests)==5
+            assert len(backend.requests)==7
             checks.append('Three explicit benchmark repetitions, three durable TEST_DOUBLE records, no extra warmup')
             checks.append('Benchmark retains initial workload/label/settings despite edited controls; backend controls locked')
             with page.expect_download() as event:page.locator('#export-bench').click()

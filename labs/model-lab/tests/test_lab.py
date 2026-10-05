@@ -163,6 +163,14 @@ class IntegrationTests(unittest.TestCase):
         deadline=time.monotonic()+5
         while self.lab.jobs[jid].snapshot()['state']=='RUNNING' and time.monotonic()<deadline:time.sleep(.005)
         self.assertIn('metrics',self.lab.jobs[jid].snapshot());self.assertFalse(self.lab.generation.locked())
+    def test_output_limit_preserves_backend_finish_reason_and_default_limit(self):
+        self.backend.finish_reason='length'
+        jid=self.lab.generate({'messages':[{'role':'user','content':'Test'}]})
+        j=done(self.lab,jid)
+        self.assertEqual(j['state'],'OUTPUT_LIMIT')
+        self.assertEqual(j['finish_reason'],'length')
+        self.assertEqual(self.backend.requests[-1]['max_tokens'],2048)
+        self.assertFalse(self.lab.generation.locked())
     def test_unload_serializes_replacement_load_and_preserves_new_connection(self):
         # No child is launched: only the public ownership transitions execute.
         stopped = threading.Event(); release = threading.Event()
