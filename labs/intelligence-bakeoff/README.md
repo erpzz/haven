@@ -22,11 +22,13 @@ Point directly at an OpenAI-compatible local inference endpoint (for example the
 
 ```powershell
 cd labs\intelligence-bakeoff
-python bakeoff.py --base-url http://127.0.0.1:8080/v1 --model YOUR_MODEL_ID --label qwen35-4b
+python bakeoff.py --base-url http://127.0.0.1:8080/v1 --model YOUR_MODEL_ID --label qwen35-4b --repetitions 3
 python score.py runs\qwen35-4b.jsonl
 ```
 
 No model is downloaded by this harness. Use Model Lab or your chosen engine to load the candidate first.
+
+On Windows, `RUN-WINDOWS.ps1` wraps validation, thin-runtime runs, Hermes plugin validation, repetitions, and scoring without installing or authenticating anything automatically.
 
 ## Hermes run
 
@@ -36,7 +38,7 @@ Hermes is pinned for this experiment to stable release **v2026.9.24**. Install/r
 $env:HERMES_ENABLE_PROJECT_PLUGINS="true"
 $env:HAVEN_BAKEOFF_TRACE="$PWD\runs\hermes-tools.jsonl"
 hermes plugins doctor .\hermes-plugin --ci
-python hermes_adapter.py --provider openai-codex --model gpt-6-sol --label hermes-sol
+python hermes_adapter.py --provider openai-codex --model ACCOUNT_VISIBLE_SOL --label hermes-sol --repetitions 3
 ```
 
 For a local model, configure Hermes to the same OpenAI-compatible endpoint/model and run the adapter with that provider/model. `hermes_adapter.py` consumes Hermes' supported `--format stream-json` output; it does not scrape terminal decorations.
@@ -60,7 +62,8 @@ See `candidates.json`. Initial frozen local set:
 - NVIDIA Nemotron 3 Nano 4B
 - IBM Granite 4 H-Tiny
 - Qwen3.5 9B
-- one RAM-assisted stretch candidate only after fit review
+- SmolLM3 3B / Gemma 3 4B / Llama 3.2 3B as architecture/legacy baselines
+- one RAM-assisted coding/generalist stretch candidate only after fit review
 
 A candidate is **not** promoted into Model Lab's checksum-pinned catalog by appearing here.
 
