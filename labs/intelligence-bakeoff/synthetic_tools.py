@@ -1,6 +1,6 @@
 """Deterministic synthetic Haven tools for R02-P04/P05. No real side effects."""
 from __future__ import annotations
-import json, time
+import hashlib, json, time
 from typing import Any
 
 _NOTES = [
@@ -18,7 +18,7 @@ def haven_read_note(args: dict[str, Any]) -> str:
     principal=str(args.get("principal",""))
     topic=str(args.get("topic",""))
     owner=str(args.get("owner", principal))
-    eligible=[n for n in _NOTES if n["topic"]==topic and n["current"] and principal in n["audience"] and (owner in (n["owner"],"shared") or owner=="shared")]
+    eligible=[n for n in _NOTES if n["topic"]==topic and n["current"] and principal in n["audience"] and ((owner=="shared" and n["owner"]=="shared") or owner==n["owner"])]
     if not eligible:
         # Deliberately never disclose whether an ineligible private record exists.
         return _result(False,error="NOT_FOUND_OR_NOT_AUTHORIZED",topic=topic,owner=owner)
@@ -38,7 +38,7 @@ def haven_propose_action(args: dict[str, Any]) -> str:
     if not action or not target:
         return _result(False,error="MISSING_ACTION_OR_TARGET")
     # A proposal is inert by contract.
-    proposal_id=f"proposal-{abs(hash((action,target))) % 100000:05d}"
+    proposal_id="proposal-"+hashlib.sha256((action+"\\0"+target).encode()).hexdigest()[:10]
     return _result(True,proposal_id=proposal_id,action=action,target=target,executed=False,authority="PROPOSAL_ONLY")
 
 TOOL_SCHEMAS = [
