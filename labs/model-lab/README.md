@@ -14,6 +14,18 @@ For Strata, use **OPEN-STRATA.cmd**, then **OPEN-LAB.cmd → Setup & engines →
 
 `START-HERE.cmd` and `START-STRATA.cmd` are compatible aliases. On a fresh checkout, START-HERE first offers the pinned folder-local Python runtime download. A PowerShell alternative, `./launch.ps1 -Kind lab`, opens with a hidden controller; add `-Stop` to stop the corresponding controller, or `-NoBrowser` for automated qualification.
 
+## Home-network access and invite-only accounts
+
+The qualified loopback workflow above remains the default. To use the same running Model Lab from a MacBook or iPhone on the same trusted home/private network, first run **ENABLE-LAN-FIREWALL.cmd** once as administrator, then run **OPEN-LAN.cmd** instead of OPEN-LAB. The firewall helper creates a narrow inbound rule for TCP 8787 only, scoped to the Windows Private firewall profile, LocalSubnet, and this installation's folder-local Python executable. **DISABLE-LAN-FIREWALL.cmd** removes that named rule.
+
+The first LAN launch opens a private one-time owner-setup link on the Windows PC. Create the owner/admin account there. After that, the launcher prints one or more private-IP URLs such as `http://192.168.x.x:8787/`; open that URL from the MacBook or iPhone while both devices are on the same home network. LAN access is **invite-only**: there is no public registration. From the Account panel, an administrator can create a single-use invite link that expires after 24 hours. The invitee chooses their own username and password.
+
+Passwords are stored locally with per-user scrypt salts/hashes. Invite and session bearer tokens are stored only as SHA-256 digests in `.local/auth.sqlite3`; the browser session uses an HttpOnly, SameSite=Strict cookie plus a per-session CSRF token. Five failed logins from one source address within five minutes are throttled. Member accounts can chat and view ordinary model state, but only administrators can install/import models, connect/disconnect engines, inspect engine logs/benchmarks, create/disable accounts, or shut down the lab. Generation-job status/cancellation is scoped to the account that created the job.
+
+The LAN server accepts only loopback/private source addresses, rejects cross-origin requests, and requires a private-IP/localhost Host header. It deliberately **does not provide TLS and is not intended for port-forwarding, public Wi-Fi, VPN-wide exposure, or the public internet**. The inference backends themselves remain bound to `127.0.0.1`; only the Haven web UI/API listens on the LAN. Strata's native UI therefore stays on the Windows host rather than being directly exposed.
+
+The UI includes a 390×844 iPhone-sized browser regression covering owner setup, invitation redemption, member-role restrictions and horizontal-overflow checks. Narrow-screen CSS uses safe-area insets, 44 px controls and 16 px form text to avoid iOS Safari auto-zoom. `tests/browser_lan_smoke.py` is a test-double/browser check, not real-model qualification.
+
 ## Fresh installation
 
 Keep this whole folder together on a roomy SSD and run outside the ZIP. Runtime files remain in `.local/`. **SETUP-STRATA.cmd** offers the explicit large Strata installation; no large download starts merely by opening the lab. The Strata helper requires 100 GiB free for model and preparation headroom. Current pinned IQ2_XS shards total 68,026,093,024 bytes, with additional MTP and prepared files.
@@ -34,9 +46,9 @@ The original handoff and manifest remain historical evidence. `docs/TEST_REPORT.
 
 ## Privacy and retained files
 
-Inference uses literal loopback addresses with no proxy, redirect or cloud fallback. The browser has no CDN assets. Session tokens, logs, model paths, benchmark runtime data, Strata data and weights remain local and gitignored. Chat stays in tab/process memory unless explicitly exported. Backend logs may retain their own inputs. Output is displayed as inert text; it does not execute code or tools.
+Inference backends use literal loopback addresses with no proxy, redirect or cloud fallback. The browser has no CDN assets. Account data, session-token digests, logs, model paths, benchmark runtime data, Strata data and weights remain local and gitignored. Chat stays in each browser tab's memory unless explicitly exported. Backend logs may retain their own inputs. Output is displayed as inert text; it does not execute code or tools.
 
-This is a single-user local development lab, not a hostile-local-user security boundary or an internet service. Initial downloads require internet access. No startup service, scheduled retry, LAN exposure, driver update, pagefile change, security change or reboot is created. Installer helpers may use a process-local PowerShell execution-policy option; it changes no persistent policy.
+Default OPEN-LAB remains a single-user loopback development mode. OPEN-LAN is an explicit multi-account trusted-home-network mode with the additional controls described above; it is still not a hostile-network or internet-facing security boundary. Initial downloads require internet access. No startup service, scheduled retry, driver update, pagefile change or reboot is created. LAN exposure occurs only when the operator explicitly launches OPEN-LAN and permits the scoped Windows firewall rule. Installer/helpers may use a process-local PowerShell execution-policy option; it changes no persistent policy.
 
 Local evidence is under `.local/setup/20261004/`; launcher logs and final stop receipts are under `.local/launcher-lab/` and `.local/launcher-strata/`. Private launch receipts contain tokens and must not be published. Models are retained for reuse. The source report contains sanitized results only.
 
@@ -46,6 +58,6 @@ If a port is already occupied, stop the matching launcher if it belongs to this 
 
 For a checksum mismatch, preserve the failed file and obtain a fresh verified copy before retrying; do not change a pin to match a failed transfer. For memory pressure, stop the owned model and reduce context. Upstream pagefile advice does not authorize changing Windows. Do not repeatedly retry a heavy failing load.
 
-With Python 3.11+: `python -m unittest discover -s tests -v`. Windows tests exercise actual Job Object containment and controller stop behavior. Optional `python tests/browser_smoke.py` requires an existing Playwright/Chromium installation and labels its inference fixture as a test double. Real model qualification is separate. Playwright is a development dependency, not a runtime dependency.
+With Python 3.11+: `python -m unittest discover -s tests -v`. Windows tests exercise actual Job Object containment and controller stop behavior. Optional `python tests/browser_smoke.py` and `python tests/browser_lan_smoke.py` require an existing Playwright/Chromium installation and label browser/inference fixtures appropriately. The LAN smoke uses a 390×844, 3× device-scale viewport for iPhone-class responsive behavior. Real model qualification is separate. Playwright is a development dependency, not a runtime dependency.
 
-Research and upstream efficiency hypotheses remain in `docs/EFFICIENCY.md`. Upstream speed claims are not measurements on this PC. PR #25 remains draft; no merge into main is implied by this qualification.
+Research and upstream efficiency hypotheses remain in `docs/EFFICIENCY.md`. Upstream speed claims are not measurements on this PC. `MANIFEST_v2.sha256` is the immutable October 4 inference-qualification manifest and intentionally remains a historical baseline; the later LAN/authentication extension adds and changes files beyond that manifest rather than rewriting the already-qualified record.
