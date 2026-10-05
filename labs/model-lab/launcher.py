@@ -141,7 +141,7 @@ def run_locked(kind, open_browser=True, lan=False):
                         match = re.search(r'Local owner URL:\s+(http://127\.0\.0\.1:8787/(?:#bootstrap=[A-Za-z0-9_-]+)?)', log)
                         if match:
                             url = match.group(1)
-                        lan_urls = sorted(set(re.findall(r'LAN access:\s+(http://(?:10|172|192)\.[0-9.]+:8787/)', log)))
+                        lan_urls = sorted(set(re.findall(r'LAN access:\s+(http://[0-9.]+:8787/)', log)))
                         if lan_urls:
                             receipt['lan_urls'] = lan_urls
                     else:
