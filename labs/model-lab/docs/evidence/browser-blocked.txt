@@ -1,0 +1,3 @@
+Live-browser attempt: first page navigation rejected by system Chromium with net::ERR_BLOCKED_BY_ADMINISTRATOR.
+No live-browser assertions executed. The ephemeral launch token and host path were intentionally omitted.
+Cleanup in finally closed Chromium, app HTTP server and fixture HTTP server.

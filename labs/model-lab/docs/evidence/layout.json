@@ -1,0 +1,20 @@
+{
+  "status": "PASS_STATIC_LAYOUT_ONLY",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "horizontal_overflow": false,
+  "requests": [],
+  "page_errors": [],
+  "navigation": "NOT_PERFORMED",
+  "live_browser_integration": "BLOCKED_BY_BROWSER_ADMINISTRATOR; see browser_smoke failure",
+  "inference": "NOT_EXECUTED",
+  "browser_closed": true
+}
