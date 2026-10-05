@@ -10,6 +10,8 @@ python -m unittest discover -s tests -v
 
 Result: **6 tests passed / 0 failed**.
 
+The suite was rerun after moving the Hermes plugin into the actual project-discovery path `.hermes/plugins/haven-bakeoff/` and updating its documented keyword-only post-tool hook handling.
+
 Covered:
 - cross-user private note is not disclosed;
 - current revision selection;
