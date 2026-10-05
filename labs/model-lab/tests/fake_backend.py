@@ -11,6 +11,7 @@ class FakeBackend(ThreadingHTTPServer):
         self.fail_status = None
         self.slow = False
         self.drop = False
+        self.finish_reason = 'stop'
         super().__init__(('127.0.0.1', 0), Handler)
         self.thread = threading.Thread(target=self.serve_forever, daemon=True); self.thread.start()
     @property
@@ -35,6 +36,6 @@ class Handler(BaseHTTPRequestHandler):
                 time.sleep(.5 if self.server.slow else .02)
                 emit({'choices':[{'delta':{'content':t},'finish_reason':None}]})
                 if self.server.drop:return
-            emit({'choices':[{'delta':{},'finish_reason':'stop'}], 'usage':{'prompt_tokens':30,'completion_tokens':12},'timings':{'predicted_per_second':25.0,'prompt_ms':125.0,'predicted_ms':440.0}})
+            emit({'choices':[{'delta':{},'finish_reason':self.server.finish_reason}], 'usage':{'prompt_tokens':30,'completion_tokens':12},'timings':{'predicted_per_second':25.0,'prompt_ms':125.0,'predicted_ms':440.0}})
             self.wfile.write(b'data: [DONE]\n\n');self.wfile.flush()
         except (BrokenPipeError,ConnectionResetError,ConnectionAbortedError):pass
