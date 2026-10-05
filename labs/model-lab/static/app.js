@@ -12,6 +12,7 @@ const token = sessionStorage.getItem('haven-lab-token') || '';
 let auth = {enabled:false,user:null,csrf:'',lanUrls:[]};
 let state = null, messages = [], activeJob = null, busy = false, benchRunning = false, benchStop = false, currentView = 'playground', refreshBusy = false, lastModelSignature = '', toastTimer, timer = null;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+const CONTINUE_PROMPT = 'Continue exactly where you stopped. Do not restart, recap, or repeat text already written. Pick up with the next unfinished thought.';
 function element(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
 function toast(text, error=false) { const n = $('toast'); n.replaceChildren(document.createTextNode(text)); const x = element('button', '', '×'); x.onclick=()=>n.classList.add('hidden'); n.append(x); n.className='toast'+(error?' error':''); clearTimeout(toastTimer); toastTimer=setTimeout(()=>n.classList.add('hidden'),error?14000:6000); }
 function authError(text=''){const n=$('auth-error');n.textContent=text;n.classList.toggle('hidden',!text);}
@@ -116,16 +117,20 @@ function messageNode(role,text){$('welcome')?.remove();const n=element('div','me
 function clearChat(){if(busy){toast('Stop or finish the current request first.');return;}messages=[];$('messages').replaceChildren(element('p','muted','New conversation. Nothing from the previous chat is sent.'));}
 $('new-chat').onclick=clearChat;
 function genSettings(){return{max_tokens:Number($('max-tokens').value),temperature:Number($('temperature').value),top_p:.8,seed:Number($('seed').value),reasoning:$('reasoning').value};}
-async function sendMessage(override,benchmark=false,label='interactive',settings=null){
+async function sendMessage(override,benchmark=false,label='interactive',settings=null,silentUser=false){
  if(busy||(!benchmark&&benchRunning))return null; const text=override||$('prompt').value.trim();if(!text)return null;
  busy=true;$('send').disabled=true;$('run-bench').disabled=true;$('cancel').classList.remove('hidden');
  const history=benchmark?[]:messages.slice();history.push({role:'user',content:text});if(!benchmark)messages=history;
- messageNode('user',text);const node=messageNode('assistant','Connecting…');let details=null,pre=null;
+ if(!silentUser)messageNode('user',text);const node=messageNode('assistant','Connecting…');let details=null,pre=null;
  try{const r=await api('/api/generate',{...(settings||genSettings()),messages:history,benchmark,label});activeJob=r.job_id;if(!benchmark)$('prompt').value='';
  const done=await waitJob(activeJob,j=>{node.body.textContent=j.text||(!j.reasoning?'Waiting for local inference…':'');if(j.reasoning){if(!details){details=element('details');details.append(element('summary','','Reasoning output'));pre=element('pre');details.append(pre);node.n.insertBefore(details,node.body);}pre.textContent=j.reasoning;}if(j.ttft_seconds!=null)metric('ttft',j.ttft_seconds.toFixed(2),'s');const box=$('messages');if(box.scrollHeight-box.scrollTop-box.clientHeight<180)box.scrollTop=box.scrollHeight;});
- if(done.text&&!benchmark&&done.state==='COMPLETED')messages.push({role:'assistant',content:done.text});
- const m=done.metrics||{};const meta=`${done.state} · first output ${m.ttft_seconds==null?'—':m.ttft_seconds.toFixed(2)+' s'} · end-to-end ${rate(m.end_to_end_tps)} tok/s · decode ${rate(m.backend_decode_tps)} tok/s`;
- node.n.append(element('div','result-meta',meta));if(done.state==='CANCELLED')node.n.append(element('p','field-note','HTTP cancellation requested. The backend may still compute; unload an owned engine or stop Strata in its own console for process termination.'));
+ const outputLimited=done.state==='OUTPUT_LIMIT'||done.finish_reason==='length';
+ if(done.text&&!benchmark&&(done.state==='COMPLETED'||outputLimited))messages.push({role:'assistant',content:done.text});
+ const outcome=outputLimited?'OUTPUT LIMIT REACHED':done.state==='CANCELLED'?'STOPPED':done.state;
+ const m=done.metrics||{},reason=done.finish_reason?` · finish ${done.finish_reason}`:'';const meta=`${outcome}${reason} · first output ${m.ttft_seconds==null?'—':m.ttft_seconds.toFixed(2)+' s'} · end-to-end ${rate(m.end_to_end_tps)} tok/s · decode ${rate(m.backend_decode_tps)} tok/s`;
+ node.n.append(element('div','result-meta',meta));
+ if(outputLimited&&!benchmark){const actions=element('div','button-row');const cont=element('button','secondary continue-generation','Continue ↗');cont.onclick=async()=>{cont.disabled=true;cont.textContent='Continuing…';await sendMessage(CONTINUE_PROMPT,false,'continue',null,true);};actions.append(cont);node.n.append(actions);}
+ if(done.state==='CANCELLED')node.n.append(element('p','field-note','HTTP cancellation requested. The backend may still compute; unload an owned engine or stop Strata in its own console for process termination.'));
  return done;
  }catch(e){if(!node.body.textContent||node.body.textContent==='Connecting…'||node.body.textContent==='Waiting for local inference…')node.body.textContent=e.message;else node.n.append(element('p','field-note',e.message));node.n.append(element('div','result-meta','FAILED · no hidden retry'));toast(e.message,true);return null;}finally{busy=false;activeJob=null;$('cancel').classList.add('hidden');await refresh();}}
 $('send').onclick=()=>sendMessage();$('prompt').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}};
