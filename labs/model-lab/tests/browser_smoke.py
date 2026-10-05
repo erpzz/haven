@@ -69,7 +69,7 @@ with tempfile.TemporaryDirectory(prefix='haven-browser-') as t:
             backend.slow=True;page.locator('#prompt').fill('Cancel this synthetic response');page.locator('#send').click()
             expect(page.locator('.assistant .body')).to_have_count(4)
             expect(page.locator('.assistant .body').nth(3)).to_contain_text('This is')
-            page.locator('#cancel').click();expect(page.locator('.result-meta').last).to_contain_text('CANCELLED',timeout=10000)
+            page.locator('#cancel').click();expect(page.locator('.result-meta').last).to_contain_text('STOPPED',timeout=10000)
             backend.slow=False;checks.append('Real browser cancellation preserves partial output and records uncertainty')
             original_settings = {'temperature':float(page.locator('#temperature').input_value()),
                                  'max_tokens':int(page.locator('#max-tokens').input_value()),
