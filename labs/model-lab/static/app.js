@@ -9,7 +9,7 @@ if (inviteFragment) sessionStorage.setItem('haven-lab-invite', inviteFragment);
 if (bootstrapFragment) sessionStorage.setItem('haven-lab-bootstrap', bootstrapFragment);
 if (tokenFragment || inviteFragment || bootstrapFragment) history.replaceState(null, '', location.pathname);
 const token = sessionStorage.getItem('haven-lab-token') || '';
-let auth = {enabled:false,user:null,csrf:''};
+let auth = {enabled:false,user:null,csrf:'',lanUrls:[]};
 let state = null, messages = [], activeJob = null, busy = false, benchRunning = false, benchStop = false, currentView = 'playground', refreshBusy = false, lastModelSignature = '', toastTimer, timer = null;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 function element(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
@@ -41,7 +41,7 @@ function passwordPair(prefix){
 }
 async function boot(){
  try{
-  const status=await publicApi('/api/auth/status');auth.enabled=!!status.enabled;
+  const status=await publicApi('/api/auth/status');auth.enabled=!!status.enabled;auth.lanUrls=Array.isArray(status.lan_urls)?status.lan_urls:[];
   if(!auth.enabled){hideAuth();configureRole();await refresh();timer=setInterval(refresh,4000);return;}
   const bootstrap=sessionStorage.getItem('haven-lab-bootstrap')||'';
   const invite=sessionStorage.getItem('haven-lab-invite')||'';
@@ -65,7 +65,7 @@ async function loadUsers(){
 $('account-button').onclick=async()=>{if(!auth.enabled)return;$('account-title').textContent=auth.user.username;$('account-summary').textContent=`Signed in as ${auth.user.role}. Conversations remain in each browser tab unless exported.`;$('invite-result').classList.add('hidden');$('account-dialog').showModal();if(auth.user.role==='admin'){try{await loadUsers();}catch(e){toast(e.message,true)}}};
 $('account-close').onclick=()=>$('account-dialog').close();
 $('logout').onclick=async()=>{try{await api('/api/auth/logout',{});}catch(e){toast(e.message,true);return;}auth.user=null;auth.csrf='';messages=[];state=null;$('account-dialog').close();showAuth('login','Signed out.');};
-$('create-invite').onclick=async()=>{try{const d=await api('/api/auth/invites',{role:$('invite-role').value});const link=location.origin+'/#invite='+encodeURIComponent(d.token);$('invite-link').value=link;$('invite-result').classList.remove('hidden');toast('Invite created. It expires in 24 hours and works once.');}catch(e){toast(e.message,true)}};
+$('create-invite').onclick=async()=>{try{const d=await api('/api/auth/invites',{role:$('invite-role').value});let origin=location.origin;if(['127.0.0.1','localhost'].includes(location.hostname)&&auth.lanUrls.length){try{origin=new URL(auth.lanUrls[0]).origin;}catch(_){}}const link=origin+'/#invite='+encodeURIComponent(d.token);$('invite-link').value=link;$('invite-result').classList.remove('hidden');toast('Invite created. It expires in 24 hours and works once.');}catch(e){toast(e.message,true)}};
 $('copy-invite').onclick=async()=>{const input=$('invite-link');try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(input.value);}else{input.focus();input.select();if(!document.execCommand('copy'))throw new Error('copy unavailable');}toast('Invite link copied.');}catch(_){input.focus();input.select();toast('Select and copy the invite link manually.');}};
 async function requestJSON(path,data,sessionAware=true){
  const headers={}; if(token)headers['X-Lab-Token']=token;
