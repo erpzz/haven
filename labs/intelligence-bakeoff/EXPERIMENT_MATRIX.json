@@ -54,7 +54,8 @@
       "qwen35-9b"
     ],
     "stretch": [
-      "stretch-moe"
+      "stretch-moe",
+      "stretch-coder"
     ],
     "score_dimensions": [
       "transport",
@@ -65,6 +66,11 @@
       "latency",
       "usage",
       "human_usefulness"
+    ],
+    "architecture_baselines": [
+      "smollm3-3b",
+      "gemma3-4b",
+      "llama32-3b"
     ]
   },
   "fail_closed": [
