@@ -1,0 +1,62 @@
+{
+  "researched_on": "2026-10-05",
+  "hardware_target": "Windows 11; RTX 2070 Super 8 GB VRAM; 64 GB RAM",
+  "candidates": [
+    {
+      "id": "qwen35-4b",
+      "model": "Qwen3.5 4B",
+      "repo": "unsloth/Qwen3.5-4B-GGUF",
+      "role": "champion",
+      "license": "Apache-2.0",
+      "fit": "GPU_FAST"
+    },
+    {
+      "id": "ministral3-3b",
+      "model": "Ministral 3 3B Instruct 2512",
+      "repo": "mistralai/Ministral-3-3B-Instruct-2512-GGUF",
+      "role": "challenger",
+      "license": "Apache-2.0",
+      "fit": "GPU_FAST"
+    },
+    {
+      "id": "phi4-mini",
+      "model": "Phi-4 Mini Instruct 3.8B",
+      "repo": "tensorblock/Phi-4-mini-instruct-GGUF",
+      "role": "challenger",
+      "license": "MIT",
+      "fit": "GPU_FAST"
+    },
+    {
+      "id": "nemotron3-nano-4b",
+      "model": "NVIDIA Nemotron 3 Nano 4B",
+      "repo": "nvidia/NVIDIA-Nemotron-3-Nano-4B-GGUF",
+      "role": "challenger",
+      "license": "review-required",
+      "fit": "GPU_FAST"
+    },
+    {
+      "id": "granite4-h-tiny",
+      "model": "IBM Granite 4.0 H-Tiny",
+      "repo": "ibm-granite/granite-4.0-h-tiny-GGUF",
+      "role": "challenger",
+      "license": "Apache-2.0",
+      "fit": "GPU_TIGHT"
+    },
+    {
+      "id": "qwen35-9b",
+      "model": "Qwen3.5 9B",
+      "repo": "unsloth/Qwen3.5-9B-GGUF",
+      "role": "quality-vs-latency",
+      "license": "Apache-2.0",
+      "fit": "GPU_TIGHT"
+    },
+    {
+      "id": "stretch-moe",
+      "model": "RAM-assisted MoE candidate",
+      "repo": null,
+      "role": "stretch",
+      "license": "TBD",
+      "fit": "RAM_ASSISTED"
+    }
+  ]
+}
