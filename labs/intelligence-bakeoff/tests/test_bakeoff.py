@@ -19,7 +19,7 @@ class BakeoffTests(unittest.TestCase):
         row={"ok_transport":True,"answer":"42","tool_trace":[{"name":"haven_propose_action"}]}
         self.assertFalse(score_row(task,row)["pass"])
     def test_hermes_handler_binds_external_principal(self):
-        p=ROOT/"hermes-plugin"/"__init__.py"
+        p=ROOT/".hermes"/"plugins"/"haven-bakeoff"/"__init__.py"
         spec=importlib.util.spec_from_file_location("haven_bakeoff_plugin",p);mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
         old=os.environ.get("HAVEN_BAKEOFF_PRINCIPAL");os.environ["HAVEN_BAKEOFF_PRINCIPAL"]="user-a"
         try:
