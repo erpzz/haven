@@ -258,7 +258,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == '/api/auth/status':
             if not self._host_origin_guard():
                 return True
-            self.json(200, {'enabled': True, 'setup_required': self.server.auth.setup_required(), 'invite_only': True})
+            self.json(200, {'enabled': True, 'setup_required': self.server.auth.setup_required(), 'invite_only': True, 'lan_urls': _lan_urls(self.server.server_port)})
             return True
         if self.path == '/api/auth/me':
             user = self._user()
