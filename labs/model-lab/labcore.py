@@ -605,7 +605,7 @@ class Lab:
         if sum(len(m['content']) for m in clean) > 100000: raise ValueError('Conversation too large; start a new chat.')
         effort = req.get('reasoning', 'none')
         if effort not in ('none', 'low', 'medium', 'high'): raise ValueError('Invalid reasoning effort.')
-        return {'messages': clean, 'max_tokens': bounded_int(req.get('max_tokens', 512), 16, 4096, 'Max output tokens'),
+        return {'messages': clean, 'max_tokens': bounded_int(req.get('max_tokens', 2048), 16, 4096, 'Max output tokens'),
                 'temperature': finite_float(req.get('temperature', .7), 0, 2, 'Temperature'),
                 'top_p': finite_float(req.get('top_p', .8), .01, 1, 'Top-p'),
                 'seed': bounded_int(req.get('seed', 42), 0, 2**31-1, 'Seed'), 'reasoning': effort,
@@ -626,7 +626,7 @@ class Lab:
         threading.Thread(target=self._generate_worker, args=(j, conn, args), daemon=True).start()
         return j.id
     def _generate_worker(self, job: Job, backend: dict, args: dict):
-        start = time.monotonic(); first = None; last = None; chunks = 0; usage = {}; timings = {}; finished = False
+        start = time.monotonic(); first = None; last = None; chunks = 0; usage = {}; timings = {}; finished = False; finish_reason = None
         conn = None; sock = None; final_state = 'FAILED'
         body = {'model': backend['model'], 'messages': args['messages'], 'stream': True,
                 'stream_options': {'include_usage': True}, 'temperature': args['temperature'], 'top_p': args['top_p'],
@@ -685,7 +685,11 @@ class Lab:
                         with job.lock:
                             job.data['text'] += text; job.data['reasoning'] += reasoning
                         job.update(ttft_seconds=first - start)
-                    if choices[0].get('finish_reason'): finished = True
+                    reason = choices[0].get('finish_reason')
+                    if reason:
+                        finish_reason = str(reason)[:80]
+                        finished = True
+                        job.update(finish_reason=finish_reason)
             elapsed = time.monotonic() - start
             if job.cancelled.is_set():
                 final_state = 'CANCELLED'
@@ -693,7 +697,7 @@ class Lab:
             elif not finished:
                 raise ValueError('Stream ended without a completion marker; partial output retained.')
             else:
-                final_state = 'COMPLETED'
+                final_state = 'OUTPUT_LIMIT' if finish_reason == 'length' else 'COMPLETED'
         except Exception as e:
             final_state = 'CANCELLED' if job.cancelled.is_set() else 'FAILED'
             job.update(error=str(e)[:500],
@@ -718,13 +722,13 @@ class Lab:
                 'stream_chunks': chunks, 'usage_source': 'BACKEND_REPORTED' if usage else 'UNAVAILABLE',
                 'timings_source': 'BACKEND_REPORTED' if timings else 'UNAVAILABLE',
                 'note': 'Stream chunks are NOT tokens. End-to-end throughput includes prefill; decode rate is separate.'}
-            job.update(metrics=metric, completed_at=time.time())
+            job.update(metrics=metric, finish_reason=finish_reason, completed_at=time.time())
             if args['benchmark']:
                 try:
                     observed_hardware = self.get_hardware()
                 except Exception:
                     observed_hardware = {'status': 'UNAVAILABLE'}
-                record = {'at': time.time(), 'job': job.id, 'state': final_state, 'label': args['label'],
+                record = {'at': time.time(), 'job': job.id, 'state': final_state, 'finish_reason': finish_reason, 'label': args['label'],
                     'backend': backend['kind'], 'model': backend.get('display_model', backend['model']),
                     'model_sha256': backend.get('model_sha256'), 'profile': backend.get('profile'),
                     'settings': {k: v for k, v in args.items() if k not in ('messages',)},
