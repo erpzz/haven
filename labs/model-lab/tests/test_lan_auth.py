@@ -11,7 +11,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from labcore import Lab
 from lan_auth import AuthStore
-from server import Server
+from server import Server, _is_private_address
+
+
+class AddressBoundaryTests(unittest.TestCase):
+    def test_only_loopback_and_rfc1918_ipv4(self):
+        for value in ('127.0.0.1', '10.0.0.7', '172.16.4.2', '172.31.255.254', '192.168.1.50'):
+            with self.subTest(value=value):
+                self.assertTrue(_is_private_address(value))
+        for value in ('8.8.8.8', '172.32.0.1', '169.254.2.1', '203.0.113.5', '::1'):
+            with self.subTest(value=value):
+                self.assertFalse(_is_private_address(value))
 
 
 class AuthStoreTests(unittest.TestCase):
