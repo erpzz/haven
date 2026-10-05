@@ -40,7 +40,7 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.close_connection = True
         try: self.wfile.write(body)
-        except (BrokenPipeError, ConnectionResetError): pass
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError): pass
     def json(self, code: int, value):
         self.send(code, json.dumps(value, ensure_ascii=False, allow_nan=False).encode())
     def guard(self, token=True):

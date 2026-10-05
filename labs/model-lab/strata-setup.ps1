@@ -1,6 +1,6 @@
 # Explicit upstream installer handoff. Does not download a model until the user confirms.
 [CmdletBinding()]
-param([switch]$StartOnly,[ValidateSet('qwen','coder')][string]$Family='qwen')
+param([switch]$StartOnly,[switch]$AcceptDownloads,[ValidateSet('qwen','coder')][string]$Family='qwen')
 $ErrorActionPreference = 'Stop'
 $root=$PSScriptRoot
 $local=Join-Path $root '.local'
@@ -27,7 +27,7 @@ Write-Host 'Keep 100 GB free here and close RAM-heavy apps. NVMe is strongly pre
 Write-Host 'Upstream installs its own Python packages/CUDA runtime. Build-tool prompts must NOT be accepted automatically.'
 Write-Host 'This helper does NOT change drivers, the pagefile, firewall, services or scheduled tasks.'
 Write-Host 'First runtime: 8K context, image input off, one request, 1 GiB VRAM reserve.'
-if((Read-Host 'Proceed with the upstream Strata installation and large download? Type STRATA') -cne 'STRATA') { exit 1 }
+if(-not $AcceptDownloads -and (Read-Host 'Proceed with the upstream Strata installation and large download? Type STRATA') -cne 'STRATA') { exit 1 }
 $drive=[IO.DriveInfo]::new([IO.Path]::GetPathRoot($root))
 if($drive.AvailableFreeSpace -lt 100GB) { throw 'Less than 100 GiB free. Move this entire lab to a roomy SSD first.' }
 $smi=Get-Command 'nvidia-smi.exe' -ErrorAction SilentlyContinue
@@ -44,7 +44,7 @@ $major=[int]($first[1].Trim().Split('.')[0])
 if($major -lt 528){throw 'Driver too old for the optional CUDA 12 Strata path. Update it manually.'}
 $cudaArgs=@()
 if($major -lt 580){$cudaArgs=@('--cuda','12');Write-Host 'Using the upstream CUDA 12 path for the installed driver.'}
-& (Join-Path $root 'bootstrap.ps1') -RuntimeOnly
+& (Join-Path $root 'bootstrap.ps1') -RuntimeOnly -AcceptDownloads:$AcceptDownloads
 $python=Join-Path $local 'python\python.exe'
 if(-not(Test-Path $python)){throw 'The folder-local Python runtime is missing.'}
 if(Test-Path $strata) {
@@ -55,7 +55,7 @@ if(Test-Path $strata) {
     Write-Host 'Downloading pinned upstream source from GitHub...'
     Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile $zip
     $stage=Join-Path $local 'strata-source.staging'
-    if(Test-Path $stage){Remove-Item -LiteralPath $stage -Recurse -Force}
+    if(Test-Path -LiteralPath $stage){throw 'Strata staging exists; inspect the retained setup before retrying. Nothing was deleted.'}
     # This function was loaded by bootstrap.ps1 only in its own script scope, so validate here.
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     $a=[IO.Compression.ZipFile]::OpenRead($zip)
@@ -75,11 +75,12 @@ Set-Location -LiteralPath $strata
 $venv=Join-Path $strata '.venv\Scripts\python.exe'
 if(-not(Test-Path $venv)){& $python '-m' 'venv' '.venv';if($LASTEXITCODE -ne 0){throw 'Could not create the folder-local Strata environment.'}}
 $pack=if($Family -eq 'coder'){'IQ1_M'}else{'IQ2_XS'}
-$argsList=@('setup.py','--family',$Family,'--model',$pack,'--context','8192','--vision','no','--host','127.0.0.1','--port','8080','--parallel','1','--vram-reserve-mib','1024','--no-browser','--no-start','--data-dir',(Join-Path $local 'Strata-data'))+$cudaArgs
+$argsList=@((Join-Path $root 'strata_install.py'),'--family',$Family,'--model',$pack,'--context','8192','--vision','no','--host','127.0.0.1','--port','8080','--parallel','1','--vram-reserve-mib','1024','--no-browser','--no-start','--data-dir',(Join-Path $local 'Strata-data'))+$cudaArgs
+if($AcceptDownloads){$argsList+=@('--yes')}
 Write-Host ''
 Write-Host 'Running upstream setup interactively. Do not approve driver/system-build-tool installation.'
 Write-Host 'Cancellation is supported by the upstream downloader; rerun this helper to resume.'
-& $venv @argsList
+& $venv '-X' 'utf8' @argsList
 if($LASTEXITCODE -ne 0){throw 'Upstream Strata setup did not finish. Preserve the console error; no alternate installer will be tried.'}
 Write-Host ''
 Write-Host 'Setup completed. Run START-STRATA.cmd, then connect from Haven Model Lab.'

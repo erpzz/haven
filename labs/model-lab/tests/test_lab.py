@@ -49,7 +49,7 @@ class UtilityTests(unittest.TestCase):
     def test_fit_unknown(self):self.assertEqual(estimate_fit(3*GIB,None,4096)['status'],'UNKNOWN')
     def test_atomic_unicode(self):
         with tempfile.TemporaryDirectory() as t:
-            p=Path(t)/'x.json';atomic_json(p,{'x':'café'});self.assertEqual(json.loads(p.read_text())['x'],'café')
+            p=Path(t)/'x.json';atomic_json(p,{'x':'café'});self.assertEqual(json.loads(p.read_text(encoding='utf-8'))['x'],'café')
     def test_archive_zip_slip(self):
         with tempfile.TemporaryDirectory() as t:
             p=Path(t)/'x.zip'
@@ -99,6 +99,8 @@ class IntegrationTests(unittest.TestCase):
     def test_real_http_stream_fixture(self):
         j=done(self.lab,self.lab.generate({'messages':[{'role':'user','content':'Test'}]}))
         self.assertEqual(j['state'],'COMPLETED');self.assertIn('café ✓',j['text']);self.assertEqual(j['metrics']['completion_tokens'],12);self.assertEqual(j['metrics']['stream_chunks'],5)
+        self.assertEqual(j['metrics']['backend_prompt_seconds'], .125)
+        self.assertEqual(j['metrics']['backend_decode_seconds'], .44)
     def test_strata_reasoning_mapping(self):
         done(self.lab,self.lab.generate({'messages':[{'role':'user','content':'Test'}],'reasoning':'low'}));self.assertEqual(self.backend.requests[-1]['reasoning_effort'],'low')
     def test_llama_reasoning_mapping(self):
@@ -106,6 +108,18 @@ class IntegrationTests(unittest.TestCase):
     def test_benchmark_no_prompt_saved(self):
         done(self.lab,self.lab.generate({'messages':[{'role':'user','content':'DO_NOT_PERSIST_THIS_TEXT'}],'benchmark':True}))
         raw=(Path(self.tmp.name)/'benchmarks.jsonl').read_text();self.assertNotIn('DO_NOT_PERSIST_THIS_TEXT',raw);self.assertIn('prompt_sha256',raw);self.assertTrue(json.loads(raw)['test_double'])
+    def test_benchmark_rejects_changed_connection_before_send(self):
+        identity = self.lab.connection['connected_at']
+        self.lab.connect(self.backend.base, kind='strata')
+        request = {'messages':[{'role':'user','content':'Test'}], 'benchmark':True,
+                   'expected_connected_at':identity}
+        with self.assertRaisesRegex(ValueError, 'backend changed'):
+            self.lab.generate(request)
+        self.assertEqual(self.backend.requests, [])
+        request['expected_connected_at'] = self.lab.connection['connected_at']
+        result = done(self.lab, self.lab.generate(request))
+        self.assertEqual(result['state'], 'COMPLETED')
+        self.assertEqual(len(self.backend.requests), 1)
     def test_failure_no_retry(self):
         self.backend.fail_status=503;j=done(self.lab,self.lab.generate({'messages':[{'role':'user','content':'Test'}]}));self.assertEqual(j['state'],'FAILED');self.assertEqual(len(self.backend.requests),1)
     def test_truncated_retains_partial(self):
@@ -121,11 +135,102 @@ class IntegrationTests(unittest.TestCase):
         try:
             with self.assertRaises(ValueError):self.lab.connect(self.backend.base)
         finally:self.lab.jobs[j].cancel();done(self.lab,j)
+    def test_connect_commit_rechecks_request_started_during_probe(self):
+        entered = threading.Event(); release = threading.Event(); failures = []
+        identity = self.lab.connection['connected_at']
+        def probe(*args, **kwargs):
+            entered.set()
+            if not release.wait(3): raise TimeoutError('Fixture probe not released')
+            return {'data':[{'id':'TEST_DOUBLE'}]}
+        def reconnect():
+            try: self.lab.connect(self.backend.base, kind='strata')
+            except Exception as error: failures.append(error)
+        self.backend.slow = True
+        with patch('labcore.local_json', side_effect=probe):
+            thread = threading.Thread(target=reconnect); thread.start()
+            self.assertTrue(entered.wait(3))
+            jid = self.lab.generate({'messages':[{'role':'user','content':'Test'}]})
+            try:
+                release.set(); thread.join(3)
+                self.assertFalse(thread.is_alive())
+                self.assertEqual(len(failures), 1)
+                self.assertIn('ownership changed', str(failures[0]))
+                self.assertEqual(self.lab.connection['connected_at'], identity)
+            finally:
+                release.set(); self.lab.jobs[jid].cancel(); done(self.lab,jid); thread.join(3)
     def test_terminal_status_includes_metrics(self):
         jid=self.lab.generate({'messages':[{'role':'user','content':'Test'}]})
         deadline=time.monotonic()+5
         while self.lab.jobs[jid].snapshot()['state']=='RUNNING' and time.monotonic()<deadline:time.sleep(.005)
         self.assertIn('metrics',self.lab.jobs[jid].snapshot());self.assertFalse(self.lab.generation.locked())
+    def test_unload_serializes_replacement_load_and_preserves_new_connection(self):
+        # No child is launched: only the public ownership transitions execute.
+        stopped = threading.Event(); release = threading.Event()
+        load_attempted = threading.Event(); launched = threading.Event()
+        failures, jobs = [], []
+        class BenignProcess:
+            def poll(self): return None
+        old, replacement = BenignProcess(), BenignProcess()
+        self.lab.engine.proc = old
+        self.lab.connection['ownership'] = 'OWNED'
+        model = Path(self.tmp.name) / 'replacement.gguf'; model.write_bytes(b'GGUFtest')
+        self.lab.settings['models']['replacement'] = {
+            'path':str(model), 'name':'BENIGN REPLACEMENT', 'size_bytes':model.stat().st_size}
+
+        def stop(expected=None):
+            self.assertIs(self.lab.engine.proc, old)
+            stopped.set()
+            if not release.wait(3): raise TimeoutError('Fixture unload was not released')
+            self.lab.engine.proc = None
+            return {'state':'STOPPED'}
+
+        def launch(*args, **kwargs):
+            self.lab.engine.proc = replacement
+            launched.set()
+
+        def unload():
+            try: self.lab.stop_engine()
+            except Exception as error: failures.append(error)
+
+        def load():
+            load_attempted.set()
+            try: jobs.append(self.lab.start_llama('replacement', 'balanced'))
+            except Exception as error: failures.append(error)
+
+        threads = [threading.Thread(target=unload), threading.Thread(target=load)]
+        with patch.object(self.lab.engine, 'stop', side_effect=stop), \
+                patch.object(self.lab.engine, 'launch', side_effect=launch), \
+                patch.object(self.lab, 'llama_exe', return_value=Path('benign-unused.exe')), \
+                patch.object(self.lab, 'get_hardware', return_value={
+                    'gpus':[{'index':0,'memory_free_mib':8192}]}), \
+                patch('labcore.local_json', return_value={'data':[{'id':'haven-local'}]}):
+            try:
+                threads[0].start(); self.assertTrue(stopped.wait(3))
+                # Deterministic regression: the old implementation leaves this
+                # lock free during engine.stop, allowing a later load to race it.
+                acquired = self.lab.lock.acquire(blocking=False)
+                if acquired: self.lab.lock.release()
+                self.assertFalse(acquired, 'Unload must serialize the ownership transition')
+                threads[1].start(); self.assertTrue(load_attempted.wait(3))
+                self.assertFalse(launched.is_set())
+                release.set()
+                for thread in threads:
+                    thread.join(3); self.assertFalse(thread.is_alive())
+                self.assertFalse(failures)
+                self.assertEqual(len(jobs), 1)
+                self.assertEqual(done(self.lab, jobs[0])['state'], 'COMPLETED')
+                self.assertIs(self.lab.engine.proc, replacement)
+                connection = dict(self.lab.connection)
+                self.assertEqual(connection['display_model'], 'BENIGN REPLACEMENT')
+                with self.assertRaisesRegex(ValueError, 'Use Unload'):
+                    self.lab.disconnect()
+                self.assertEqual(self.lab.connection, connection)
+            finally:
+                release.set()
+                for thread in threads:
+                    if thread.ident is not None: thread.join(3)
+                self.lab.engine.proc = None
+                self.lab.connection = None
     def test_no_backend_key_in_state(self):
         self.lab.connection['key']='private-test-secret';self.assertNotIn('private-test-secret',json.dumps(self.lab.public_state()))
     def test_no_image_unsupported(self):
@@ -133,7 +238,7 @@ class IntegrationTests(unittest.TestCase):
     def test_external_survives_shutdown(self):
         self.lab.shutdown();conn=http.client.HTTPConnection('127.0.0.1',self.backend.server_port,timeout=1);conn.request('GET','/v1/models');r=conn.getresponse();self.assertEqual(r.status,200);r.read();conn.close()
     def test_import_is_explicit_and_no_copy(self):
-        p=Path(self.tmp.name)/'x.gguf';p.write_bytes(b'GGUFtest');r=self.lab.import_model(str(p));self.assertEqual(self.lab.settings['models'][r['id']]['path'],str(p));self.assertFalse((Path(self.tmp.name)/'models/x.gguf').exists())
+        p=Path(self.tmp.name)/'x.gguf';p.write_bytes(b'GGUFtest');r=self.lab.import_model(str(p));self.assertEqual(Path(self.lab.settings['models'][r['id']]['path']),p.resolve());self.assertFalse((Path(self.tmp.name)/'models/x.gguf').exists())
 class HttpSecurityTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.lab=Lab(Path(self.tmp.name));self.server=Server(('127.0.0.1',0),self.lab);self.thread=threading.Thread(target=self.server.serve_forever,daemon=True);self.thread.start()
@@ -149,7 +254,6 @@ class HttpSecurityTests(unittest.TestCase):
     def test_no_cors(self):self.assertEqual(self.request('/api/state','OPTIONS')[0],403)
     def test_bad_json(self):self.assertEqual(self.request('/api/connect','POST','[]',{'X-Lab-Token':self.lab.token,'Content-Type':'application/json'})[0],400)
     def test_download_requires_confirmation(self):self.assertEqual(self.request('/api/model/download','POST','{"id":"qwen35-4b"}',{'X-Lab-Token':self.lab.token,'Content-Type':'application/json'})[0],400)
-@unittest.skipIf(os.name=='nt','POSIX test host path; use Windows fixture separately')
 class ProcessTests(unittest.TestCase):
     def test_owned_start_stop_and_double_start_rejection(self):
         with tempfile.TemporaryDirectory() as t:

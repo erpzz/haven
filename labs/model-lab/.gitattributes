@@ -1,0 +1,2 @@
+# Preserve the release manifest's bytes on Windows as well as other hosts.
+* -text

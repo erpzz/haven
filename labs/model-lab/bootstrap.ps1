@@ -1,6 +1,6 @@
 # Folder-local runtime; no PATH, registry, driver, firewall or execution-policy persistence.
 [CmdletBinding()]
-param([switch]$RuntimeOnly)
+param([switch]$RuntimeOnly,[switch]$AcceptDownloads)
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
 $local = Join-Path $root '.local'
@@ -33,7 +33,7 @@ if(-not (Test-Path -LiteralPath $python)) {
     Write-Host 'Haven Model Lab needs its own Python runtime. No system Python is replaced.'
     Write-Host 'Source: official python.org / Python 3.13.16, pinned SHA-256.'
     Write-Host 'This is a small runtime download, NOT a model download.'
-    if((Read-Host 'Download and unpack Python into this folder? [y/N]') -notmatch '^(y|yes)$') { exit 1 }
+    if(-not $AcceptDownloads -and (Read-Host 'Download and unpack Python into this folder? [y/N]') -notmatch '^(y|yes)$') { exit 1 }
     $zip = Join-Path $local 'python-3.13.16.zip'
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     if(-not (Test-Path $zip) -or (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) {
@@ -42,13 +42,17 @@ if(-not (Test-Path -LiteralPath $python)) {
         Move-Item -LiteralPath ($zip+'.part') -Destination $zip -Force
     }
     $stage = Join-Path $local 'python.staging'
-    if(Test-Path $stage) { Remove-Item -LiteralPath $stage -Recurse -Force }
+    if(Test-Path -LiteralPath $stage) { throw 'Python staging exists; inspect the retained setup before retrying. Nothing was deleted.' }
     Expand-CheckedZip -Zip $zip -Destination $stage
     if(-not (Test-Path (Join-Path $stage 'python.exe'))) { throw 'Unexpected official Python archive layout.' }
     if(Test-Path $pythonDir) { throw 'Partial Python directory exists; inspect it before retrying.' }
     Move-Item -LiteralPath $stage -Destination $pythonDir
     @{version=$version;url=$url;sha256=$expected;installed_at=(Get-Date).ToUniversalTime().ToString('o')} | ConvertTo-Json | Set-Content -Encoding UTF8 (Join-Path $local 'python-receipt.json')
 }
+# The full archive must support the app and Strata's development environment.
+# Do not infer those capabilities from the presence of python.exe alone.
+& $python '-E' '-s' '-c' 'import sys, ssl, venv, ensurepip, ctypes, http.client; assert sys.maxsize > 2**32; print("Runtime verified:", sys.version.split()[0], ssl.OPENSSL_VERSION)'
+if($LASTEXITCODE -ne 0) { throw 'Python runtime imports/SSL/venv/ensurepip validation failed.' }
 if($RuntimeOnly) { return }
 Set-Location -LiteralPath $root
 & $python '-E' '-s' (Join-Path $root 'server.py') '--open'

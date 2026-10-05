@@ -176,7 +176,8 @@ def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: di
             '--api-key-file', str(key_file), '--alias', 'haven-local', '--n-gpu-layers', '999',
             '--device', f'CUDA{gpu}', '--ctx-size', str(context), '--parallel', '1', '--threads', str(threads),
             '--threads-batch', str(threads), '--batch-size', str(batch), '--ubatch-size', str(ubatch),
-            '--flash-attn', flash, '--cache-type-k', kv, '--cache-type-v', kv, '--jinja', '--metrics']
+            '--flash-attn', flash, '--cache-type-k', kv, '--cache-type-v', kv, '--jinja', '--metrics',
+            '--log-verbosity', '4']
 
 def estimate_fit(model_bytes: int, free_mib: float | None, context: int) -> dict:
     # Not a GGUF architecture parser. Explicitly a conservative planning heuristic.
@@ -223,6 +224,7 @@ class OwnedEngine:
                 if job:
                     job.close()
                 if p:
+                    if p.stdin and not p.stdin.closed: p.stdin.close()
                     if os.name != 'nt':
                         try: os.killpg(p.pid, signal.SIGKILL)
                         except ProcessLookupError: pass
@@ -461,7 +463,7 @@ class Lab:
             target = self.data / 'engines' / self.catalog['llama_tag']
             stage = self.data / 'engines' / (self.catalog['llama_tag'] + '.staging')
             if target.exists(): raise ValueError('Engine directory already exists; nothing was replaced.')
-            if stage.exists(): shutil.rmtree(stage)
+            if stage.exists(): raise ValueError('An engine staging directory exists; inspect the retained install before retrying.')
             for asset in self.catalog['llama_assets']:
                 j.update(message='Downloading ' + asset['name'])
                 dest = self.data / 'downloads' / asset['name']
@@ -503,7 +505,10 @@ class Lab:
         data = models.get('data', [])
         if not data or not isinstance(data[0].get('id'), str): raise ValueError('No model was reported by the local backend.')
         conn = {'base': base.rstrip('/'), 'key': key, 'model': data[0]['id'], 'kind': kind, 'ownership': 'EXTERNAL', 'connected_at': time.time()}
-        with self.lock: self.connection = conn
+        with self.lock:
+            if self.generation.locked() or self.engine.proc is not None:
+                raise ValueError('Backend ownership changed while connecting; finish or unload it first.')
+            self.connection = conn
         return {k: v for k, v in conn.items() if k != 'key'}
     def start_llama(self, model_id: str, preset: str, overrides=None, allow_tight: bool = False) -> str:
         with self.lock:
@@ -518,6 +523,7 @@ class Lab:
             if preset not in PRESETS: raise ValueError('Unknown preset.')
             profile = dict(PRESETS[preset]); profile.update(overrides or {})
             gpu = 0
+            self.hw_at = 0  # A just-unloaded model must not leave the fit gate using cached VRAM.
             hw = self.get_hardware()
             if not hw['gpus']: raise ValueError('NVIDIA GPU was not detected. Check your driver; CPU fallback is not silently enabled.')
             first = hw['gpus'][0]; gpu = first['index']
@@ -576,16 +582,17 @@ class Lab:
             threading.Thread(target=wait_ready, daemon=True).start()
             return j.id
     def stop_engine(self):
-        for j in list(self.jobs.values()):
-            if j.kind in ('generation', 'engine-start') and j.snapshot()['state'] == 'RUNNING': j.cancel()
-        result = self.engine.stop()
         with self.lock:
+            for j in list(self.jobs.values()):
+                if j.kind in ('generation', 'engine-start') and j.snapshot()['state'] == 'RUNNING': j.cancel()
+            result = self.engine.stop()
             if self.connection and self.connection['ownership'] == 'OWNED': self.connection = None
-        return result
+            return result
     def disconnect(self):
-        if self.engine.proc is not None: raise ValueError('Use Unload for an owned engine.')
-        if self.generation.locked(): raise ValueError('Cancel the current request before disconnecting.')
-        with self.lock: self.connection = None
+        with self.lock:
+            if self.engine.proc is not None: raise ValueError('Use Unload for an owned engine.')
+            if self.generation.locked(): raise ValueError('Cancel the current request before disconnecting.')
+            self.connection = None
         return {'state': 'DISCONNECTED', 'external_server_stopped': False}
     def validate_generation(self, req: dict) -> dict:
         messages = req.get('messages')
@@ -602,15 +609,20 @@ class Lab:
                 'temperature': finite_float(req.get('temperature', .7), 0, 2, 'Temperature'),
                 'top_p': finite_float(req.get('top_p', .8), .01, 1, 'Top-p'),
                 'seed': bounded_int(req.get('seed', 42), 0, 2**31-1, 'Seed'), 'reasoning': effort,
-                'benchmark': req.get('benchmark') is True, 'label': str(req.get('label', 'interactive'))[:80]}
+                'benchmark': req.get('benchmark') is True, 'label': str(req.get('label', 'interactive'))[:80],
+                'expected_connected_at': None if req.get('expected_connected_at') is None else
+                    finite_float(req['expected_connected_at'], 0, 1e12, 'Expected connection identity')}
     def generate(self, request: dict) -> str:
         args = self.validate_generation(request)
-        with self.lock: conn = dict(self.connection or {})
-        if not conn: raise ValueError('Connect or load a model first.')
-        if not self.generation.acquire(False): raise ValueError('One request at a time on this GPU. Cancel or wait for the active request.')
-        try: j = self.new_job('generation')
-        except Exception:
-            self.generation.release(); raise
+        with self.lock:
+            conn = dict(self.connection or {})
+            if not conn: raise ValueError('Connect or load a model first.')
+            if args['benchmark'] and args['expected_connected_at'] is not None and args['expected_connected_at'] != conn['connected_at']:
+                raise ValueError('Benchmark backend changed. Start a new experiment for this connection.')
+            if not self.generation.acquire(False): raise ValueError('One request at a time on this GPU. Cancel or wait for the active request.')
+            try: j = self.new_job('generation')
+            except Exception:
+                self.generation.release(); raise
         threading.Thread(target=self._generate_worker, args=(j, conn, args), daemon=True).start()
         return j.id
     def _generate_worker(self, job: Job, backend: dict, args: dict):
@@ -695,8 +707,13 @@ class Lab:
             if type(n) is not int or not 0 <= n <= args['max_tokens']: n = None
             speed = timings.get('predicted_per_second')
             if type(speed) not in (int, float) or not math.isfinite(speed) or speed <= 0: speed = None
+            def timing_seconds(key):
+                value = timings.get(key)
+                return round(value / 1000, 4) if type(value) in (int, float) and math.isfinite(value) and value >= 0 else None
             metric = {'elapsed_seconds': round(elapsed, 4), 'ttft_seconds': round(first-start, 4) if first else None,
                 'completion_tokens': n, 'prompt_tokens': usage.get('prompt_tokens'), 'backend_decode_tps': speed,
+                'backend_prompt_seconds': timing_seconds('prompt_ms'),
+                'backend_decode_seconds': timing_seconds('predicted_ms'),
                 'end_to_end_tps': round(n / elapsed, 3) if n is not None and elapsed > 0 else None,
                 'stream_chunks': chunks, 'usage_source': 'BACKEND_REPORTED' if usage else 'UNAVAILABLE',
                 'timings_source': 'BACKEND_REPORTED' if timings else 'UNAVAILABLE',

@@ -1,67 +1,51 @@
 # Haven Model Lab
 
-A runnable Windows-first browser workbench for **Strata + llama.cpp CUDA**, built for an RTX 2070 Super 8 GB, Ryzen 3900X and 64 GB RAM. This is actual application source, not a coding-agent handoff. It is a separate development lab: it does not modify or resume Haven IP-01/IP-02.
+A Windows browser workbench for Strata and llama.cpp CUDA. The October 4, 2026 qualification uses an RTX 2070 SUPER 8 GB, Ryzen 3900X and 64 GB RAM. This lab is separate from Haven IP-01/IP-02.
 
-## Start on your PC
+## Open the installed lab
 
-1. Extract this entire folder somewhere roomy and not synced, such as `D:\AI\haven-model-lab`. Do not run files inside the ZIP. Keep all files together.
-2. Double-click **START-HERE.cmd**. On the first run, approve a folder-local, SHA-256-pinned Python 3.13.16 download from python.org. No existing Python or PATH is changed. The app itself needs no pip packages.
-3. The browser opens your private launch link at **127.0.0.1:8787**. Keep the console open. The token is removed from the address bar and held in tab session storage. A plain URL without a launch session cannot operate the API.
+Double-click **OPEN-LAB.cmd**. It starts the folder-local Python runtime and opens the private browser launch link at `127.0.0.1:8787`. Keep its console open. A plain URL does not grant API access; the private launch token is removed from the address bar and retained in that tab's session storage. The lab deliberately starts with no model loaded.
 
-**Strata path — the requested new engine:** run **SETUP-STRATA.cmd**, read the RAM/disk/driver warning and type `STRATA` to approve its large upstream installation. Then run **START-STRATA.cmd** and choose **Setup & engines → Connect locally** in the lab (default `http://127.0.0.1:8080/v1`). You can also open Strata's native UI. Use a roomy SSD: the helper requires 100 GiB free to allow the roughly 70 GB model plus preparation/headroom. Nothing large downloads merely by opening this lab.
+For the verified small-model path, choose **Model library → Qwen3.5 4B → Load on GPU**. Use **Desktop-friendly CUDA**, **4096 context**, **6 CPU threads**, f16 KV, one request and reasoning off. The existing model and CUDA files are reused. No CUDA Toolkit is needed for this official binary path.
 
-**Small-model CUDA path:** in **Setup & engines**, click **Install pinned CUDA engine** (~645 MB, official llama.cpp + runtime DLLs), then **Model library → Qwen3.5 4B → Download** (~2.74 GB). After download/hash verification, click **Load on GPU**. Begin with the default Desktop-friendly profile, 4K context, f16 KV. Check GPU readings and the engine log. No CUDA Toolkit or compilation is required for this path.
+For Strata, use **OPEN-STRATA.cmd**, then **OPEN-LAB.cmd → Setup & engines → Connect locally** with `http://127.0.0.1:8080/v1`. Strata's native UI is at `http://127.0.0.1:8080/`. Strata qualification and its measured limitations are recorded separately in the [current PC qualification report](docs/PC_QUALIFICATION_v2.md); installing files alone does not establish inference success. Avoid loading two models on this 8 GB GPU.
 
-For repeat visits, run START-HERE.cmd. Installed files stay in `.local/`; no download is repeated unless the file is missing or a verification step requires attention. The lab intentionally does not auto-load a model. Strata runs in its own console, and its upstream downloader supports resume. Existing GGUF models can be registered by exact file path without copying/scanning your disk.
+**STOP-LAB.cmd** stops the lab and its owned llama.cpp process tree. **STOP-STRATA.cmd** requests native unload and stops only the Strata process tree created by its matching launcher. The UI's **Exit lab** also stops the lab; **Unload owned engine** releases its llama.cpp model. Disconnecting an attached Strata server leaves that separate server running. The stop controls authenticate to loopback controllers and use Windows Job Objects; they never kill every process with a matching name.
 
-## What works in this version
+`START-HERE.cmd` and `START-STRATA.cmd` are compatible aliases. On a fresh checkout, START-HERE first offers the pinned folder-local Python runtime download. A PowerShell alternative, `./launch.ps1 -Kind lab`, opens with a hidden controller; add `-Stop` to stop the corresponding controller, or `-NoBrowser` for automated qualification.
 
-- Streamed text chat through Strata or another explicitly selected literal-loopback OpenAI-compatible server.
-- llama.cpp CUDA model launch/unload with one request slot, full-layer offload requested, and Windows Job Object ownership for processes created by this lab.
-- A four-model checksum-pinned starting catalog (two 2026 Qwen3.5 candidates and two established Qwen3 baselines), resumable downloads, and local GGUF registration.
-- NVIDIA GPU utilization/VRAM/temperature, available system RAM and disk measurements; missing readings are unknown, not zero.
-- Backend-specific reasoning controls, output limits, repeatable benchmark prompts, raw result exports and conversation export.
-- Explicit no-cloud/no-account design, no CDN assets, token and same-origin checks, inert model output, no automatic code/tool execution, no automatic downloads on app startup.
+## Fresh installation
 
-**Not yet PC-validated:** automatic Windows setup, official Windows binary execution, Windows Job Object semantics on your host, NVIDIA driver/model compatibility, real Strata generation and performance. The included HTTP tests execute actual local software behavior with a clearly labelled fake inference server. Live browser navigation was blocked by this environment; only separate in-memory static layout renders were inspected; see `docs/TEST_REPORT.md`. This is a development preview, not an independent security audit or a tested installer on your PC.
+Keep this whole folder together on a roomy SSD and run outside the ZIP. Runtime files remain in `.local/`. **SETUP-STRATA.cmd** offers the explicit large Strata installation; no large download starts merely by opening the lab. The Strata helper requires 100 GiB free for model and preparation headroom. Current pinned IQ2_XS shards total 68,026,093,024 bytes, with additional MTP and prepared files.
 
-## Your hardware: sensible defaults
+The installer pins Strata v0.1.39 source, official Windows engine assets and model bytes. Its scoped wrapper verifies reused files, keeps packages/data inside this installation, blocks build-tool installation and global migration, and constrains cleanup to validated paths without junctions. Only the needed pinned llama.cpp GGUF Python source is extracted, avoiding Windows path-length failures. Failed transfers remain available for inspection. A checksum mismatch never becomes an accepted model.
 
-Strata's pinned docs list RTX 20 support, but call 8 GB slow. It can consume roughly 35–55 GB system RAM. This is the large-model experiment, not a guarantee of a 5070's throughput. The helper starts with **8K context, one request, image input off and 1024 MiB display reserve**. Its source is pinned at v0.1.39. Actual upstream package/model downloads are handled by its installer, not by an invented llama.cpp compatibility layer. The installer is third-party code; review its prompts and decline system build-tool changes.
+The Python 3.13.16 runtime comes from python.org and is verified before extraction. The official llama.cpp b11146 CUDA 12.4 engine and runtime DLLs are downloaded through **Setup & engines** if absent. The model library provides checksum-pinned downloads and exact-path registration for existing GGUF files.
 
-Small 4B Q4 GGUF models leave more GPU headroom. The lab asks for `--n-gpu-layers 999 --device CUDA0` (or the first detected NVIDIA GPU), so CPU-only fallback is not silently chosen. Runtime logs still determine what actually offloaded. Model file size is not total runtime VRAM. The launch memory check is a conservative heuristic, not a model-specific allocator prediction. Qwen3.5 9B can be tight on 8 GB; shorter context or the 4B model is preferable to paging.
+## Qualification and recommended settings
 
-The quantized-KV preset is explicitly experimental. Flash-attention and q8_0 KV require compatible model/build kernels. An error stays an error; change the profile deliberately. Do not run Strata and another loaded model at once. GPU utilization is device-wide (other apps count) and full utilization is not the optimization objective.
+Actual Windows execution verified the folder-local runtime, official CUDA binary, all 33 Qwen3.5 4B layers offloaded to CUDA0, browser chat, known arithmetic and extraction, cancellation, another request, unload, stop and reopen. Device VRAM rose from about 1.1 GiB to 4.0 GiB with the default 4K profile and returned near idle after unload.
 
-## Stop, privacy, and local files
+Four small-model profiles completed 24/24 fixed tasks correctly. Their warm three-task totals ranged from 2.32 to 2.40 seconds. More threads and larger batches produced no useful improvement; q8_0 KV saved about 52 MiB with no task-time improvement. Keep the everyday profile above. These are short synthetic tasks, not a general model-quality evaluation. Cold initialization is recorded separately from warm measurements.
 
-Use **Unload owned engine** for a llama.cpp process created by this lab. Use **Exit lab**, or Ctrl+C in its console, to stop the lab and its owned engine. The Windows process gate assigns the child to a kill-on-close Job Object before allowing the engine to launch. That path is source-implemented but requires Windows verification. No process-name-wide kill is used.
+Benchmarks capture the selected connection, workload, label and sampling settings once. Changing controls during the run does not silently switch a repetition to another backend or configuration. Records separate local first-output latency, total request time and backend-reported prompt/decode durations and rates. Stream chunks are not counted as tokens. Read the answer as well as the timings.
 
-**External Strata is never killed by the lab.** Stop it in its own console. Chat cancellation closes the local HTTP stream; it does not independently prove the external backend stopped computation. The UI says so. An interrupted result is not automatically replayed.
+The original handoff and manifest remain historical evidence. `docs/TEST_REPORT.md` describes the earlier environment's limitations; it does not describe the later Windows qualification. Current results and experimental recommendations belong in the [new PC qualification report](docs/PC_QUALIFICATION_v2.md).
 
-Chat is held in tab/process memory during the session; export is explicit. Benchmark files record prompt hashes, settings, outcomes and hardware metadata, not prompt contents. Upstream model logs may contain their own data. `.local/engine.log`, model paths, API-key file and benchmarks stay local and are gitignored. The lab transiently accepts a backend key in process memory; it is never sent to the browser again. Do not place real secrets/bank data into a development model test. This is not multi-user authentication, a hostile-local-user boundary, or a production internet server.
+## Privacy and retained files
 
-Initial installs use internet downloads. Inference requests use literal 127.0.0.1 only, with no proxy/redirect/cloud fallback. Upstream engines have their own behavior; we do not claim OS-level egress isolation. No startup service, scheduled retry, driver update, overclock, pagefile edit, firewall exception, or LAN/tunnel exposure is created. Windows script policy is bypassed for the current helper process only; nothing persistent is changed. Do not bypass an organizational execution denial.
+Inference uses literal loopback addresses with no proxy, redirect or cloud fallback. The browser has no CDN assets. Session tokens, logs, model paths, benchmark runtime data, Strata data and weights remain local and gitignored. Chat stays in tab/process memory unless explicitly exported. Backend logs may retain their own inputs. Output is displayed as inert text; it does not execute code or tools.
 
-## Troubleshooting
+This is a single-user local development lab, not a hostile-local-user security boundary or an internet service. Initial downloads require internet access. No startup service, scheduled retry, LAN exposure, driver update, pagefile change, security change or reboot is created. Installer helpers may use a process-local PowerShell execution-policy option; it changes no persistent policy.
 
-**NVIDIA telemetry missing:** run `nvidia-smi` in a terminal. The lab will not silently choose CPU. Driver updates are your action, not performed by these scripts.
+Local evidence is under `.local/setup/20261004/`; launcher logs and final stop receipts are under `.local/launcher-lab/` and `.local/launcher-strata/`. Private launch receipts contain tokens and must not be published. Models are retained for reuse. The source report contains sanitized results only.
 
-**llama-server fails to load a DLL:** inspect `.local/engine.log`; a current Microsoft Visual C++ runtime may be needed. No runtime or driver installer is silently added. CUDA 12.4 requires a compatible installed driver.
+## Troubleshooting and development
 
-**Strata driver warning:** the helper follows the upstream CUDA 12 option for drivers below 580 (minimum 528 checked); otherwise upstream chooses its normal path. This is not assurance every older driver supports every feature. Stop on a mismatch instead of forcing a driver change.
+If a port is already occupied, stop the matching launcher if it belongs to this installation. A foreign listener is not killed or reused. Lab uses ports 8787/8788; Strata uses 8080/8081. Inspect the retained launcher log if startup fails. Missing NVIDIA telemetry remains unknown, not zero. No automatic CPU fallback is reported as CUDA success.
 
-**Port 8787 already used:** close your earlier lab console or run `python server.py --port 8788 --open` from this folder. Nothing occupying that port is killed. For Strata, adjust the actual setup port and type that same literal-loopback address in the UI.
+For a checksum mismatch, preserve the failed file and obtain a fresh verified copy before retrying; do not change a pin to match a failed transfer. For memory pressure, stop the owned model and reduce context. Upstream pagefile advice does not authorize changing Windows. Do not repeatedly retry a heavy failing load.
 
-**Checksum mismatch:** download remains uninstalled. Remove the affected `.part` file after inspecting it and retry explicitly, or register a separately downloaded verified local GGUF. Catalog URLs use `main` but SHA-256 pins the bytes; a moving upstream file cannot silently become an update.
+With Python 3.11+: `python -m unittest discover -s tests -v`. Windows tests exercise actual Job Object containment and controller stop behavior. Optional `python tests/browser_smoke.py` requires an existing Playwright/Chromium installation and labels its inference fixture as a test double. Real model qualification is separate. Playwright is a development dependency, not a runtime dependency.
 
-**Memory error or desktop slowdown:** unload the engine, stop other model servers, reduce context, and use 4B. Strata's upstream pagefile advice is not an instruction for this lab to change Windows. Do not continually retry a heavy failing load.
-
-**Installer scripts:** PowerShell was not available in the development container. Read `bootstrap.ps1` and `strata-setup.ps1`; neither was executed on a Windows PC in this delivery. The Python metadata and official CUDA release hashes were verified against primary sources. Strata source uses a pinned commit archive; its archive hash is recorded at installation, not pre-verified from an upstream published digest.
-
-## Tests / development
-
-With Python 3.11+ in this folder: `python -m unittest discover -s tests -v`.
-Optional browser checks require an existing Playwright + Chromium installation; they are development-only, not runtime dependencies. `python tests/browser_smoke.py` is the live-browser test script for a permitted development host; it was blocked here before page navigation. `python tests/render_static.py` separately renders the actual HTML/CSS in memory, without navigating or running the app, and writes screenshots under `artifacts/`. Static renders are not live browser acceptance.
-
-The refined implementation brief is `docs/REFINED_PROMPT.md`. Research, source links, and proposed—not proven—efficiency hypotheses are in `docs/EFFICIENCY.md` and in the UI. No coding agent or real model has been falsely credited with executing the local fixture tests.
+Research and upstream efficiency hypotheses remain in `docs/EFFICIENCY.md`. Upstream speed claims are not measurements on this PC. PR #25 remains draft; no merge into main is implied by this qualification.

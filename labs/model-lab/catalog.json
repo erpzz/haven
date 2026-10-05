@@ -18,7 +18,35 @@
   ],
   "strata": {
     "tag": "v0.1.39",
-    "commit": "6f32ec070f23ced9f50e704d854d775da52591ab"
+    "commit": "6f32ec070f23ced9f50e704d854d775da52591ab",
+    "engine_assets": {
+      "13": {
+        "url": "https://github.com/Niko1221/Strata/releases/download/v0.1.39/strata-windows-x64.zip",
+        "size_bytes": 123629160,
+        "sha256": "a862bcfa2330cd1c23f9b5d6e49f4027da8f8313842bd62e858ec6cd4533813a"
+      },
+      "12": {
+        "url": "https://github.com/Niko1221/Strata/releases/download/v0.1.39/strata-windows-x64-cuda12.zip",
+        "size_bytes": 175358734,
+        "sha256": "41407c01342de44e1eebf56fed46a840941a0b8328ccbf0cded0786c96838ad6"
+      }
+    },
+    "models": {
+      "IQ2_XS": [
+        {
+          "url": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF/resolve/ed59f92082b1e93c0e96d60a8b11aab089b52f09/IQ2_XS/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf",
+          "size_bytes": 39225954592,
+          "sha256": "92cee27ae5bbadcd732416a0f7a7f0acc092399dbbe8f5a5efa707c2ec0a49d7"
+        },
+        {
+          "url": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF/resolve/ed59f92082b1e93c0e96d60a8b11aab089b52f09/IQ2_XS/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00002-of-00002.gguf",
+          "size_bytes": 28800138432,
+          "sha256": "316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113"
+        }
+      ]
+    },
+    "setup_sha256": "650c4d971e2938e402be17ccd19b7ec3d2b7b50f2b46597f9416ff969f794325",
+    "setup_git_blob": "80d1fba57ca23de8ed5a87a20f87bdc777b2c526"
   },
   "models": [
     {
@@ -27,14 +55,15 @@
       "repo": "unsloth/Qwen3.5-4B-GGUF",
       "filename": "Qwen3.5-4B-Q4_K_M.gguf",
       "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
-      "size_bytes": null,
+      "size_bytes": 2740937888,
       "download_gb": 2.74,
       "description": "2026 hybrid-attention model. Best first hardware-fit experiment; text-only in this UI.",
       "tag": "START HERE",
       "quant": "Q4_K_M",
       "license": "Apache-2.0",
-      "url": "https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/Qwen3.5-4B-Q4_K_M.gguf",
-      "source": "https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/blob/main/Qwen3.5-4B-Q4_K_M.gguf"
+      "url": "https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/e87f176479d0855a907a41277aca2f8ee7a09523/Qwen3.5-4B-Q4_K_M.gguf",
+      "source": "https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/blob/main/Qwen3.5-4B-Q4_K_M.gguf",
+      "revision": "e87f176479d0855a907a41277aca2f8ee7a09523"
     },
     {
       "id": "qwen35-9b",
