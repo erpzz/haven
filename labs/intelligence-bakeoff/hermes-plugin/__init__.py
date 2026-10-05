@@ -13,7 +13,14 @@ def _schema(name):
 
 def _handler(name):
     def call(params, **kwargs):
-        return dispatch(name,dict(params or {}))
+        args=dict(params or {})
+        if name=="haven_read_note":
+            principal=os.environ.get("HAVEN_BAKEOFF_PRINCIPAL")
+            if not principal:
+                return json.dumps({"ok":False,"error":"MISSING_AUTHENTICATED_PRINCIPAL"})
+            # Bind identity outside the model's arguments.
+            args["principal"]=principal
+        return dispatch(name,args)
     return call
 
 def _trace(tool_name, args, result, **kwargs):
