@@ -1,7 +1,7 @@
 """Hermes project plugin exposing the same synthetic Haven tools as the thin runner."""
 from __future__ import annotations
 import json, os, pathlib, sys, time
-ROOT=pathlib.Path(__file__).resolve().parent.parent
+ROOT=pathlib.Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
 from synthetic_tools import TOOL_SCHEMAS, dispatch
 
@@ -23,13 +23,14 @@ def _handler(name):
         return dispatch(name,args)
     return call
 
-def _trace(tool_name, args, result, **kwargs):
+def _trace(**kwargs):
+    tool_name=str(kwargs.get("tool_name",""))
     if not tool_name.startswith("haven_"): return
     path=os.environ.get("HAVEN_BAKEOFF_TRACE")
     if not path: return
     pathlib.Path(path).parent.mkdir(parents=True,exist_ok=True)
     with open(path,"a",encoding="utf-8") as f:
-        f.write(json.dumps({"at":time.time(),"tool":tool_name,"arguments":args,"result":result},sort_keys=True)+"\n")
+        f.write(json.dumps({"at":time.time(),"tool":tool_name,"arguments":kwargs.get("args"),"result":kwargs.get("result"),"duration_ms":kwargs.get("duration_ms")},sort_keys=True)+"\n")
 
 def register(ctx):
     for name in ("haven_read_note","haven_device_state","haven_propose_action"):
