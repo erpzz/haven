@@ -1,0 +1,362 @@
+{
+  "task": "MM-AV",
+  "canonical_source": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+  "canonical_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+  "requirements": [
+    {
+      "id": "REQ-CORE-01",
+      "acceptance_tests": [
+        "AT-CORE-01"
+      ],
+      "owner": "H00",
+      "statement": "Retain every prior branch; additions do not replace earlier targets.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "REPORT.md D1-D6; CONTRACTS.md; EVALUATION.md"
+    },
+    {
+      "id": "REQ-CORE-03",
+      "acceptance_tests": [
+        "AT-CORE-03"
+      ],
+      "owner": "H00",
+      "statement": "A separate local Codex owns current M0; new agent does not duplicate or overwrite it.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "REPORT.md D1-D6; CONTRACTS.md; EVALUATION.md"
+    },
+    {
+      "id": "REQ-CORE-04",
+      "acceptance_tests": [
+        "AT-CORE-04"
+      ],
+      "owner": "H00",
+      "statement": "Daily utility, physical qualification and ambitious research progress through separate evidence gates.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "REPORT.md D1-D6; CONTRACTS.md; EVALUATION.md"
+    },
+    {
+      "id": "REQ-CORE-05",
+      "acceptance_tests": [
+        "AT-CORE-05"
+      ],
+      "owner": "H00",
+      "statement": "Reuse reported hardware and measure host/model capacity before purchases.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "REPORT.md D1-D6; CONTRACTS.md; EVALUATION.md"
+    },
+    {
+      "id": "REQ-DAILY-01",
+      "acceptance_tests": [
+        "AT-DAILY-01"
+      ],
+      "owner": "H01",
+      "statement": "Natural conversation, follow-ups, explanations and project continuity are first-class features.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-DAILY-08",
+      "acceptance_tests": [
+        "AT-DAILY-08"
+      ],
+      "owner": "H01",
+      "statement": "Phone, desktop, Watch and glasses refer to the same authorized conversation/task.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-DAILY-09",
+      "acceptance_tests": [
+        "AT-DAILY-09"
+      ],
+      "owner": "H01",
+      "statement": "Distinguish stop speech, cancel task, stop investigation and request physical recovery.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-DAILY-10",
+      "acceptance_tests": [
+        "AT-DAILY-10"
+      ],
+      "owner": "H01",
+      "statement": "Explain which functions work when away from home, WAN down or desktop asleep.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-PRIV-01",
+      "acceptance_tests": [
+        "AT-PRIV-01"
+      ],
+      "owner": "H04",
+      "statement": "Eric and Kennedy have independent private identities and stores.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CONTRACTS.md AV01/AV04/AV05; EVALUATION.md"
+    },
+    {
+      "id": "REQ-PRIV-02",
+      "acceptance_tests": [
+        "AT-PRIV-02"
+      ],
+      "owner": "H04",
+      "statement": "Shared context is intentionally granted, not everything on the shared server.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CONTRACTS.md AV01/AV04/AV05; EVALUATION.md"
+    },
+    {
+      "id": "REQ-PRIV-03",
+      "acceptance_tests": [
+        "AT-PRIV-03"
+      ],
+      "owner": "H04",
+      "statement": "Read, retain, summarize, share, cloud transmit and emergency disclose are separate grants.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CONTRACTS.md AV01/AV04/AV05; EVALUATION.md"
+    },
+    {
+      "id": "REQ-PRIV-04",
+      "acceptance_tests": [
+        "AT-PRIV-04"
+      ],
+      "owner": "H04",
+      "statement": "Apply changes to pending jobs, caches, summaries and documented backups.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CONTRACTS.md AV01/AV04/AV05; EVALUATION.md"
+    },
+    {
+      "id": "REQ-PRIV-05",
+      "acceptance_tests": [
+        "AT-PRIV-05"
+      ],
+      "owner": "H04",
+      "statement": "Shared speakers/displays do not leak private information.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CONTRACTS.md AV01/AV04/AV05; EVALUATION.md"
+    },
+    {
+      "id": "REQ-PRIV-06",
+      "acceptance_tests": [
+        "AT-PRIV-06"
+      ],
+      "owner": "H04",
+      "statement": "Borrowed/lost/swapped devices do not inherit another person's authority.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CONTRACTS.md AV01/AV04/AV05; EVALUATION.md"
+    },
+    {
+      "id": "REQ-PRIV-08",
+      "acceptance_tests": [
+        "AT-PRIV-08"
+      ],
+      "owner": "H04",
+      "statement": "Untrusted documents/images/audio/memory/tool descriptions cannot add authority.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CONTRACTS.md AV01/AV04/AV05; EVALUATION.md"
+    },
+    {
+      "id": "REQ-PRIV-09",
+      "acceptance_tests": [
+        "AT-PRIV-09"
+      ],
+      "owner": "H04",
+      "statement": "Do not equate application scopes with privacy from the host administrator.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CONTRACTS.md AV01/AV04/AV05; EVALUATION.md"
+    },
+    {
+      "id": "REQ-AI-01",
+      "acceptance_tests": [
+        "AT-AI-01"
+      ],
+      "owner": "H02",
+      "statement": "Use deterministic code for bookkeeping, timing, units, safety and receipts.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-AI-02",
+      "acceptance_tests": [
+        "AT-AI-02"
+      ],
+      "owner": "H02",
+      "statement": "Use qualified local/cheap hosted/strong models per task and privacy.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-AI-03",
+      "acceptance_tests": [
+        "AT-AI-03"
+      ],
+      "owner": "H02",
+      "statement": "Existing qwen2.5vl:3b advisory experiment remains unchanged absent approved amendment.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-AI-05",
+      "acceptance_tests": [
+        "AT-AI-05"
+      ],
+      "owner": "H02",
+      "statement": "Prevent research or one user from starving receipts or another user.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-AI-06",
+      "acceptance_tests": [
+        "AT-AI-06"
+      ],
+      "owner": "H02",
+      "statement": "Account for tool steps, retries, media, reasoning and in-flight reservations.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-AI-07",
+      "acceptance_tests": [
+        "AT-AI-07"
+      ],
+      "owner": "H02",
+      "statement": "Schema-valid outputs require evidence and may remain uncertain.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-AI-08",
+      "acceptance_tests": [
+        "AT-AI-08"
+      ],
+      "owner": "H02",
+      "statement": "Compare local transcription/synthesis with hosted alternatives without assuming equivalent latency.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-AI-09",
+      "acceptance_tests": [
+        "AT-AI-09"
+      ],
+      "owner": "H02",
+      "statement": "Record exact model/runtime/prompt/digest and regression after changes.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "CANDIDATES.md; REPORT.md D4; NEXT_PACKAGE.md"
+    },
+    {
+      "id": "REQ-WEAR-03",
+      "acceptance_tests": [
+        "AT-WEAR-03"
+      ],
+      "owner": "H07",
+      "statement": "Keep capture/sample and arrival times; absent samples remain unknown.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "REPORT.md D5; NEXT_PACKAGE.md P-MMAV-03"
+    },
+    {
+      "id": "REQ-WEAR-05",
+      "acceptance_tests": [
+        "AT-WEAR-05"
+      ],
+      "owner": "H07",
+      "statement": "Inventory camera/audio/display/input/motion independently per exact SKU/release.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "REPORT.md D5; NEXT_PACKAGE.md P-MMAV-03"
+    },
+    {
+      "id": "REQ-WEAR-06",
+      "acceptance_tests": [
+        "AT-WEAR-06"
+      ],
+      "owner": "H07",
+      "statement": "Preserve wearer/recording state, bystander privacy and bounded media.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "REPORT.md D5; NEXT_PACKAGE.md P-MMAV-03"
+    },
+    {
+      "id": "REQ-WEAR-07",
+      "acceptance_tests": [
+        "AT-WEAR-07"
+      ],
+      "owner": "H07",
+      "statement": "Both wearable users can remain private while using the same service.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "REPORT.md D5; NEXT_PACKAGE.md P-MMAV-03"
+    },
+    {
+      "id": "REQ-WEAR-08",
+      "acceptance_tests": [
+        "AT-WEAR-08"
+      ],
+      "owner": "H07",
+      "statement": "Mock/desktop tests do not qualify actual phone/glasses/Watch performance.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "REPORT.md D5; NEXT_PACKAGE.md P-MMAV-03"
+    },
+    {
+      "id": "REQ-RF-08",
+      "acceptance_tests": [
+        "AT-RF-08"
+      ],
+      "owner": "H08",
+      "statement": "Calibrations, coordinate transforms, timestamps and uncertainty are explicit.",
+      "scope_status": "RETAINED_TARGET",
+      "mmav_disposition": "DESIGN_COVERAGE_ONLY_NOT_IMPLEMENTED",
+      "downstream": "REPORT.md D1-D6; CONTRACTS.md; EVALUATION.md"
+    }
+  ],
+  "experiments": [
+    "EX03",
+    "EX06",
+    "EX17"
+  ],
+  "experiment_status": "PROPOSED_NOT_EXECUTED",
+  "campaign_anchors": [
+    "V01",
+    "V02",
+    "V03",
+    "V04",
+    "V05",
+    "V06",
+    "V07",
+    "V08",
+    "V09",
+    "V10",
+    "V11",
+    "V12",
+    "V13",
+    "V14",
+    "V15",
+    "V16"
+  ],
+  "all_other_original_requirements": "Retained; no requirement removed or satisfaction changed"
+}

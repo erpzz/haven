@@ -1,0 +1,55 @@
+{
+  "status": "PROPOSED_NOT_EXECUTED",
+  "artifact_kind": "symbolic_presentation_traces_not_runtime_fixtures",
+  "binding": "Exact future operation/output_digest/destination/session/route/release/consumption tuple; symbolic IDs here convey no authority",
+  "traces": [
+    {
+      "id": "F01-T1",
+      "name": "Positively established local-only operation",
+      "steps": ["Local draft operation O1 committed", "Authoritative closed attempt state establishes no admission, permit, buffer or transport dispatch for O1"],
+      "expected_display": "Saved here; not sent",
+      "required_assertions": ["Label depends on positive complete authoritative no-dispatch evidence", "No automatic send is authorized by the label"],
+      "forbidden": ["Infer no-dispatch from only an absent ACK or attempt row"]
+    },
+    {
+      "id": "F01-T2",
+      "name": "Actual remote receipt with lost ACK",
+      "steps": ["O2 local commit", "R2 release and P2 consumption committed for exact output/destination", "Transport sends output", "Remote destination actually receives output in stipulated future fixture ground truth", "ACK is lost; authority-side observer has no confirming remote receipt"],
+      "expected_display": "Transmission may have occurred; delivery is unknown. Checking status only.",
+      "required_assertions": ["Local observer does not know stipulated remote ground truth", "Delivery remains UNKNOWN", "Only bounded access-controlled read-only lookup of O2 is possible", "Release/consumption history preserved"],
+      "forbidden": ["Saved here; not delivered", "Not sent", "Automatic resend", "New idempotency key to bypass uncertainty", "Permit remint or quota refund"]
+    },
+    {
+      "id": "F01-T3",
+      "name": "Unknown delivery then revoke or cancel",
+      "steps": ["Start from F01-T2", "Relevant revocation or scoped cancellation commits", "Future eligibility becomes DENIED"],
+      "expected_display": "Delivery of the earlier attempt is unknown. Further sharing is now blocked.",
+      "required_assertions": ["Earlier release/consumption/unknown delivery facts survive", "No fresh replay or transfer", "Lookup itself remains access-controlled; if unavailable uncertainty remains"],
+      "forbidden": ["Rewrite prior delivery as NOT_SENT or SUPPRESSED", "Erase possible disclosure", "Claim remote recall", "Treat cancellation as proof worker terminated"]
+    },
+    {
+      "id": "F01-T4",
+      "name": "Late matching delivery report after revoke",
+      "steps": ["Start from F01-T3", "Authenticated destination later reports receipt for exact O2/R2/P2/output/destination tuple"],
+      "expected_display": "Delivery of the earlier attempt was reported; receipt by a person is unconfirmed. Further sharing remains blocked.",
+      "required_assertions": ["Append report and retain earlier unknown observation", "Future eligibility remains DENIED", "No repeated send or permission from historical report", "Human acknowledgement remains separate"],
+      "forbidden": ["Infer human perception", "Replay because report was received"]
+    },
+    {
+      "id": "F01-T5",
+      "name": "Mismatched or duplicate acknowledgement",
+      "steps": ["O2 outcome unknown", "Receive report for wrong output digest or destination", "Receive duplicate report for previously accepted exact tuple"],
+      "expected_display": "Wrong-tuple report cannot settle O2; duplicate matching report does not create a new delivery operation",
+      "required_assertions": ["Mismatch remains auditable but cannot replace O2 uncertainty", "Duplicate handling never sends again", "Conflicting authenticated reports remain attributed"],
+      "forbidden": ["Use ACK absence/presence without exact binding", "Treat duplicate ACK as another grant use"]
+    },
+    {
+      "id": "F01-T6",
+      "name": "Incomplete attempt ledger or ambiguous failure",
+      "steps": ["Local commit exists", "No ACK observed", "Attempt ledger unavailable, missing, or error semantics do not establish no transmission"],
+      "expected_display": "Transmission may have occurred; delivery is unknown.",
+      "required_assertions": ["Unknown status is not inferred local-only", "No blind retry", "Read-only reconciliation or explicit unavailable status"],
+      "forbidden": ["Not sent from absent evidence", "Automatic replacement operation"]
+    }
+  ]
+}

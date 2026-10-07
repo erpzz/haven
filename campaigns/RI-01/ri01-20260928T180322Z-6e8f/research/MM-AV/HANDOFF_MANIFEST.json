@@ -1,0 +1,94 @@
+{
+  "task": "MM-AV",
+  "revision": 1,
+  "author": "/root/ri01_mmav",
+  "role": "haven_audio_video",
+  "profile_loading": "CUSTOM_PROFILE_FALLBACK",
+  "status": "DRAFT_READY_FOR_INDEPENDENT_REVIEW",
+  "frozen_at_utc": "2026-09-28T20:23:19.0647106Z",
+  "base_commit": "376031e182c57495912baf6727093b0b188da568",
+  "base_commit_source": "Root campaign run record; Git not operated by child",
+  "owned_prefix": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV",
+  "publication": "PUBLIC_SAFE; NOT_UPLOADED_BY_CHILD",
+  "files": [
+    {
+      "path": "CANDIDATES.md",
+      "bytes": 8087,
+      "sha256": "6b618b483ef35043771d440cdb62c6c4c16d841a3e4962d58833be399049deb0"
+    },
+    {
+      "path": "CONSULTATIONS_AND_CHECKIN.md",
+      "bytes": 3845,
+      "sha256": "08bbc3712afb24365d1ca3e60a29488aa98af1631b7205d2ae9e96949bf2ae79"
+    },
+    {
+      "path": "CONTRACTS.md",
+      "bytes": 12320,
+      "sha256": "4a7d03dbc7bf164f0de2e1f6febf5bb91d6813b652c52c1bd5ae96dc39c95fd7"
+    },
+    {
+      "path": "EVALUATION.md",
+      "bytes": 8494,
+      "sha256": "69605bc8ed49b9329ada068221bb2f6d522a24e69e5738ee8e4da47dc94cf80c"
+    },
+    {
+      "path": "INPUT_RECEIPT.md",
+      "bytes": 3386,
+      "sha256": "3b5e8820438d23ac0f1e0e7e141284e7b460bc6e590302d4693629a582adec58"
+    },
+    {
+      "path": "INPUT_USE.json",
+      "bytes": 14380,
+      "sha256": "1664d089c6e59c893b6b98aa685486b0050bc99640a5e848e6d6e28cb8e3e073"
+    },
+    {
+      "path": "INTEGRATION_SUMMARY.md",
+      "bytes": 3473,
+      "sha256": "a7fd77582f4f14b8e5635b94a1860216eb54dbb4f2e78b1fad44836588cd6270"
+    },
+    {
+      "path": "MODALITY.json",
+      "bytes": 3848,
+      "sha256": "e2b7fd2ed549355976c44c976cce1aa02b2fa352dd2f7fadd549b232f75a7505"
+    },
+    {
+      "path": "NEXT_PACKAGE.md",
+      "bytes": 5159,
+      "sha256": "1f3dd480a89e31d529e92fe69b83ba799f62bfcfb4ebb7a435d0d0756986bbc2"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 15014,
+      "sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0"
+    },
+    {
+      "path": "REQUIREMENT_MAP.json",
+      "bytes": 12759,
+      "sha256": "31450c10183ab3f42b3f58922b299424fe09cca6fb05fdd95df672fd424aa06c"
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 6696,
+      "sha256": "165bd5c9c2f406660d277d443592f44c8193f31e678ade63c8949f58b83d0ac6"
+    },
+    {
+      "path": "VALIDATION.json",
+      "bytes": 9381,
+      "sha256": "92ee9e17db0df7f95928214aa6ed0b9ef5e12b7cae5dc67feeef552f21f5a678"
+    }
+  ],
+  "manifest_self_excluded": true,
+  "actual": "Public primary-source research; local read/hash/JSON checks; actual peer exchange; one static synthetic DIRECT_IMAGE smoke",
+  "not_executed": [
+    "application code",
+    "ASR/VAD/DSP/diarization/TTS/omni inference",
+    "audio listening",
+    "video playback/frame decoding",
+    "waveform/spectrogram",
+    "native devices",
+    "private data",
+    "paid calls"
+  ],
+  "next_package": "P-MMAV-01 AUTHORIZATION_REQUIRED",
+  "review_disposition_requested": "Independent source/contract/evidence review before synthesis"
+}

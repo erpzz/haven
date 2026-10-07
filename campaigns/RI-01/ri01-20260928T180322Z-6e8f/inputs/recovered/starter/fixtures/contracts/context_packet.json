@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "packet_id": "ctx-test01",
+  "principal_id": "synthetic-user-a",
+  "owner_scope": "RESEARCH_SYNTHETIC",
+  "purpose": "Evaluate a grounded answer",
+  "grant_revision": 0,
+  "evidence_ids": [
+    "ev-synthetic-01"
+  ],
+  "allowed_capabilities": [
+    "evidence.read.synthetic"
+  ],
+  "cloud_provider_allowlist": [],
+  "max_input_tokens": 4096,
+  "expires_at": "2026-09-27T20:01:00Z",
+  "contains_real_private_data": false
+}

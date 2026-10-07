@@ -1,0 +1,124 @@
+{"actual_agent_id": "/root/ri01_runtime_probe", "task_id": "RUNTIME-PROBE", "role": "read-only probe", "status": "COMPLETED", "time": "2026-09-28T18:06:42.703167+00:00", "result": {"path": "orchestration/RI-01/RUNTIME.md", "ref": "origin/main", "bytes": 4703, "sha256": "959ff6bcc085b6f77b5a387cb59425c9fef24db7b5f17ced6aed9c3b0fdf48a8", "instruction": "Tiny child receipt proves delegation only, not research completion", "permissions": "Unrestricted filesystem/network and approval never; read-only task rule is coordination, not sandbox isolation", "exact_model_and_client_version": "NOT_EXPOSED", "native_tools": ["spawn_agent", "send_message", "followup_task", "wait_agent", "interrupt_agent", "list_agents"], "no_recursive_spawn": true}}
+{"task_id": "INTAKE", "actual_agent_id": "/root/ri01_runtime_probe", "role": "haven_intake", "event": "DISPATCHED", "recorded_at": "2026-09-28T18:13:31.470934+00:00", "status": "RUNNING", "custom_profile": "FALLBACK_EXACT_ROLE_INSTRUCTIONS", "write_mode": "READ_ONLY_RETURN_TO_ROOT", "model": "NOT_EXPOSED"}
+{"task_id": "VISION-0", "actual_agent_id": "/root/ri01_vision", "role": "haven_vision_guardian", "event": "DISPATCHED", "recorded_at": "2026-09-28T18:13:31.470934+00:00", "status": "RUNNING", "custom_profile": "FALLBACK_EXACT_ROLE_INSTRUCTIONS", "write_mode": "READ_ONLY_RETURN_TO_ROOT", "model": "NOT_EXPOSED"}
+{"task_id": "EVIDENCE-0", "actual_agent_id": "/root/ri01_evidence", "role": "haven_evidence_auditor", "event": "DISPATCHED", "recorded_at": "2026-09-28T18:15:33.794833+00:00", "status": "RUNNING", "model": "NOT_EXPOSED", "write_mode": "READ_ONLY_RETURN_TO_ROOT"}
+{"task_id": "INTAKE", "actual_agent_id": "/root/ri01_runtime_probe", "event": "COMPLETED", "status": "completed", "recorded_at": "2026-09-28T18:24:23.243658+00:00", "close": "NOT_EXPOSED; quiescent"}
+{"task_id": "VISION-0-CLOSURE-1", "actual_agent_id": "/root/ri01_vision", "event": "FOLLOWUP_DISPATCHED", "recorded_at": "2026-09-28T18:27:45.411179+00:00"}
+{"task_id": "EVIDENCE-0-CLOSURE-1", "actual_agent_id": "/root/ri01_evidence", "event": "FOLLOWUP_COMPLETED", "recorded_at": "2026-09-28T18:27:45.411179+00:00"}
+{"task_id": "REV-R02", "requested_agent_id": "/root/ri01_review_r02", "event": "SPAWN_REJECTED", "reason": "agent thread limit reached; no child created", "recorded_at": "2026-09-28T18:27:45.411179+00:00"}
+{"task_id": "REV-R02", "actual_agent_id": "/root/ri01_runtime_probe", "event": "FOLLOWUP_DISPATCHED", "role": "haven_research_reviewer", "independence": "Not the R02 author; prior role intake only", "recorded_at": "2026-09-28T18:27:45.411179+00:00"}
+{"task_id": "VISION-0", "actual_agent_id": "/root/ri01_vision", "event": "CLOSURE_COMPLETED_PASS", "recorded_at": "2026-09-28T18:29:30.972385+00:00"}
+{"task_id": "REV-R06", "actual_agent_id": "/root/ri01_vision", "event": "FOLLOWUP_DISPATCHED", "recorded_at": "2026-09-28T18:29:30.972385+00:00"}
+{"task_id": "REV-R08", "actual_agent_id": "/root/ri01_evidence", "event": "FOLLOWUP_DISPATCHED", "recorded_at": "2026-09-28T18:29:30.972385+00:00"}
+{"task_id": "REV-R02", "actual_agent_id": "/root/ri01_runtime_probe", "event": "COMPLETED", "recorded_at": "2026-09-28T18:41:22.063285+00:00"}
+{"task_id": "REV-R06", "actual_agent_id": "/root/ri01_vision", "event": "COMPLETED", "recorded_at": "2026-09-28T18:41:22.063285+00:00"}
+{"task_id": "REV-R08", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED", "recorded_at": "2026-09-28T18:41:22.063285+00:00"}
+{"task_id": "CORE-PRE", "actual_agent_id": "/root/night01_review", "event": "FOLLOWUP_DISPATCHED", "recorded_at": "2026-09-28T18:41:22.063285+00:00"}
+{"task_id": "R02-P01", "actual_agent_id": "/root/ri01_runtime_probe", "event": "FOLLOWUP_DISPATCHED", "recorded_at": "2026-09-28T18:41:22.063285+00:00"}
+{"task_id": "CORE-PRE", "actual_agent_id": "/root/night01_review", "event": "COMPLETED_QUIESCENT", "recorded_at": "2026-09-28T18:44:59.508799+00:00"}
+{"task_id": "R03", "actual_agent_id": "/root/ri01_privacy", "role": "haven_researcher", "event": "SPAWNED", "recorded_at": "2026-09-28T18:44:59.508799+00:00"}
+{"task_id": "CODE-0", "actual_agent_id": "/root/ri01_code_review", "role": "haven_code_reviewer", "event": "SPAWNED", "recorded_at": "2026-09-28T18:44:59.508799+00:00"}
+{"task_id": "Q-CORE-04", "actual_agent_id": "/root/ri01_evidence", "event": "MESSAGE_NOT_DELIVERED", "reason": "agent thread limit reached; leave consultation queued for available slot", "recorded_at": "2026-09-28T18:44:59.508799+00:00"}
+{"actual_agent_id":"/root/ri01_daily","event":"SPAWNED","role":"haven_researcher","task_id":"R01","recorded_at":"2026-09-28T18:57:05.1525112Z"}
+{"actual_agent_id":"/root/ri01_code_review","event":"COMPLETED_QUIESCENT","task_id":"CODE-0","recorded_at":"2026-09-28T18:57:05.1525112Z"}
+{"actual_agent_id":"/root/ri01_runtime_probe","event":"COMPLETED_QUIESCENT","task_id":"R02-P01","recorded_at":"2026-09-28T18:57:05.1525112Z"}
+{"actual_agent_id":"/root/ri01_review_p01","event":"SPAWNED","role":"haven_research_reviewer","task_id":"REVIEW-R02-P01","recorded_at":"2026-09-28T18:57:05.1525112Z"}
+{"event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_privacy","recorded_at":"2026-09-28T18:58:01.9031666Z","task_id":"R03"}
+{"event":"SPAWNED","recorded_at":"2026-09-28T18:58:01.9031666Z","actual_agent_id":"/root/ri01_review_privacy","role":"haven_research_reviewer","task_id":"REVIEW-R03"}
+{"recorded_at":"2026-09-28T19:02:34.6949665Z","task_id":"REVIEW-R02-P01","actual_agent_id":"/root/ri01_review_p01","event":"COMPLETED_QUIESCENT"}
+{"recorded_at":"2026-09-28T19:02:34.6949665Z","task_id":"R02-P01-A1","actual_agent_id":"/root/ri01_runtime_probe","event":"RESUMED_ASSIGNMENT","role":"haven_researcher"}
+{"task_id":"REVIEW-R03","actual_agent_id":"/root/ri01_review_privacy","event":"COMPLETED_QUIESCENT","recorded_at":"2026-09-28T19:06:03.7974010Z"}
+{"reason":"Agent thread limit reached; no assignment counted or new agent created","attempted_fresh_author_spawns":1,"event":"DISPATCH_NOT_DELIVERED","recorded_at":"2026-09-28T19:06:03.7974010Z","attempted_original_author_followups":2,"task_id":"R03-A1","next_action":"Retry when runtime capacity frees; original finite-use review finding remains queued"}
+{"task_id":"R03-A1","event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_privacy","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"task_id":"RECHECK-R02-P01-A1","event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_review_p01","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"task_id":"REVIEW-R01","event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_review_privacy","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"task_id":"R01","event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_daily","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"task_id":"R02-P01-A1","event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_runtime_probe","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"task_id":"REVIEW-R01","reason":"Thread capacity; later successfully reused independent R03 reviewer","event":"FRESH_SPAWN_FAILED","recorded_at":"2026-09-28T19:08:11.1863806Z"}
+{"event":"COMPLETED_QUIESCENT","task_id":"RECHECK-R02-P01-A1","actual_agent_id":"/root/ri01_review_p01","recorded_at":"2026-09-28T19:10:33.7147153Z"}
+{"event":"RESUMED_ASSIGNMENT","task_id":"R12","actual_agent_id":"/root/ri01_review_p01","role":"haven_researcher","recorded_at":"2026-09-28T19:10:33.7147153Z"}
+{"recorded_at":"2026-09-28T19:12:24.1462879Z","task_id":"R03-A1","actual_agent_id":"/root/ri01_privacy","event":"COMPLETED_QUIESCENT"}
+{"recorded_at":"2026-09-28T19:12:24.1462879Z","task_id":"R10","role":"haven_researcher","actual_agent_id":"/root/ri01_privacy","event":"RESUMED_ASSIGNMENT"}
+{"recorded_at":"2026-09-28T19:15:01.3583990Z","task_id":"REVIEW-R01","event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_review_privacy"}
+{"recorded_at":"2026-09-28T19:15:01.3583990Z","task_id":"RECHECK-R03-A1","event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_review_privacy"}
+{"recorded_at":"2026-09-28T19:17:36.0656143Z","actual_agent_id":"/root/ri01_review_privacy","task_id":"RECHECK-R03-A1","event":"COMPLETED_QUIESCENT"}
+{"recorded_at":"2026-09-28T19:17:36.0656143Z","actual_agent_id":"/root/night01_review","event":"RESUMED_ASSIGNMENT","task_id":"CORE","role":"haven_integration_manager"}
+{"recorded_at":"2026-09-28T19:25:37.4974045Z","task_id":"R12","event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_review_p01"}
+{"recorded_at":"2026-09-28T19:25:37.4974045Z","task_id":"R01-A1","event":"RESUMED_ASSIGNMENT","role":"haven_researcher","actual_agent_id":"/root/ri01_daily"}
+{"event":"COMPLETED_QUIESCENT","recorded_at":"2026-09-28T19:29:41.3016779Z","task_id":"R01-A1","actual_agent_id":"/root/ri01_daily"}
+{"event":"RESUMED_ASSIGNMENT","recorded_at":"2026-09-28T19:29:41.3016779Z","task_id":"RECHECK-R01-A1","actual_agent_id":"/root/ri01_review_privacy"}
+{"event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/ri01_review_privacy","task_id":"RECHECK-R01-A1","recorded_at":"2026-09-28T19:33:00.7174617Z"}
+{"event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_review_privacy","task_id":"REVIEW-R12","recorded_at":"2026-09-28T19:33:00.7174617Z"}
+{"event":"COMPLETED_QUIESCENT","actual_agent_id":"/root/night01_review","task_id":"CORE","recorded_at":"2026-09-28T19:33:00.7174617Z"}
+{"event":"RESUMED_ASSIGNMENT","actual_agent_id":"/root/ri01_vision","task_id":"VISION-ARCH","recorded_at":"2026-09-28T19:33:00.7174617Z"}
+{"event":"COMPLETED_QUIESCENT","task_id":"R10","actual_agent_id":"/root/ri01_privacy","recorded_at":"2026-09-28T19:34:52.0625485Z"}
+{"event":"RESUMED_ASSIGNMENT","task_id":"REVIEW-R10","actual_agent_id":"/root/ri01_evidence","recorded_at":"2026-09-28T19:34:52.0625485Z"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "PEER-CHECKIN-01-CODE", "actual_agent_id": "/root/ri01_code_review", "event": "DISPATCH_RECONCILED_FROM_SUCCESSFUL_NATIVE_CALL", "status": "ACCEPTED_FOR_SYNTHESIS"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "R04", "actual_agent_id": "/root/ri01_privacy", "event": "DISPATCH_RECONCILED_FROM_SUCCESSFUL_NATIVE_CALL", "status": "RUNNING"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "R07", "actual_agent_id": "/root/ri01_world", "event": "DISPATCH_RECONCILED_FROM_SUCCESSFUL_NATIVE_CALL", "status": "RUNNING"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "R08-P00", "actual_agent_id": "/root/ri01_runtime_probe", "event": "DISPATCH_RECONCILED_FROM_SUCCESSFUL_NATIVE_CALL", "status": "RUNNING"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "VISION-ARCH", "event": "COMPLETED_QUIESCENT", "actual_agent_id": "/root/ri01_vision"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "REVIEW-R12", "event": "COMPLETED_QUIESCENT", "actual_agent_id": "/root/ri01_review_privacy"}
+{"recorded_at": "2026-09-28T19:54:24.064171+00:00", "task_id": "REVIEW-R10", "event": "COMPLETED_QUIESCENT", "actual_agent_id": "/root/ri01_evidence"}
+{"recorded_at": "2026-09-28T20:00:58.487354+00:00", "task_id": "R07", "actual_agent_id": "/root/ri01_world", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:00:58.487354+00:00", "task_id": "REVIEW-R07", "actual_agent_id": "/root/ri01_vision", "event": "RESUMED_ASSIGNMENT"}
+{"recorded_at": "2026-09-28T20:03:35.998540+00:00", "task_id": "R04", "actual_agent_id": "/root/ri01_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:03:35.998540+00:00", "task_id": "REVIEW-R04", "actual_agent_id": "/root/ri01_evidence", "event": "RESUMED_ASSIGNMENT"}
+{"recorded_at": "2026-09-28T20:06:59.699671+00:00", "task_id": "REVIEW-R07", "actual_agent_id": "/root/ri01_vision", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:07:41.361513+00:00", "task_id": "MM-VISION", "actual_agent_id": "/root/ri01_mmvision", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_vision_perception"}
+{"recorded_at": "2026-09-28T20:08:00.055889+00:00", "task_id": "REVIEW-R04", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:09:01.087274+00:00", "task_id": "MM-AV", "actual_agent_id": "/root/ri01_mmav", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_audio_video"}
+{"recorded_at": "2026-09-28T20:12:29.074521+00:00", "task_id": "R08-P00", "actual_agent_id": "/root/ri01_runtime_probe", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:12:29.074521+00:00", "task_id": "REVIEW-R08-P00", "actual_agent_id": "/root/ri01_evidence", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
+{"recorded_at": "2026-09-28T20:22:20.774402+00:00", "task_id": "R05", "actual_agent_id": "/root/ri01_daily", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_researcher"}
+{"recorded_at": "2026-09-28T20:22:35.432887+00:00", "task_id": "REVIEW-R08-P00", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:24:36.112093+00:00", "task_id": "MM-VISION", "actual_agent_id": "/root/ri01_mmvision", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:24:36.112093+00:00", "task_id": "REVIEW-MM-VISION", "actual_agent_id": "/root/ri01_review_p01", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
+{"recorded_at": "2026-09-28T20:24:36.112093+00:00", "task_id": "MM-AV", "actual_agent_id": "/root/ri01_mmav", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:24:36.112093+00:00", "task_id": "REVIEW-MM-AV", "actual_agent_id": "/root/ri01_review_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
+{"recorded_at": "2026-09-28T20:31:17.609235+00:00", "task_id": "R09", "actual_agent_id": "/root/ri01_world", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_researcher"}
+{"recorded_at": "2026-09-28T20:31:17.609235+00:00", "task_id": "REVIEW-MM-VISION", "actual_agent_id": "/root/ri01_review_p01", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:39:01.077857+00:00", "task_id": "REVIEW-MM-AV", "actual_agent_id": "/root/ri01_review_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:39:01.077857+00:00", "task_id": "R05", "actual_agent_id": "/root/ri01_daily", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:39:01.077857+00:00", "task_id": "R14", "actual_agent_id": "/root/ri01_mmav", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "Human augmentation specialist"}
+{"recorded_at": "2026-09-28T20:39:55.620667+00:00", "task_id": "REVIEW-R05", "actual_agent_id": "/root/ri01_review_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "Independent research reviewer"}
+{"recorded_at": "2026-09-28T20:47:22.066610+00:00", "task_id": "REVIEW-R05", "actual_agent_id": "/root/ri01_review_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:47:22.066610+00:00", "task_id": "R11", "actual_agent_id": "/root/ri01_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_researcher"}
+{"recorded_at": "2026-09-28T20:51:41.223197+00:00", "task_id": "R09", "actual_agent_id": "/root/ri01_world", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T20:51:41.223197+00:00", "task_id": "REVIEW-R09", "actual_agent_id": "/root/ri01_daily", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
+{"recorded_at": "2026-09-28T20:54:08.271470+00:00", "task_id": "R14-READINESS", "actual_agent_id": "/root/ri01_mmav", "event": "RETROSPECTIVE_BOUNDED_DISPATCH_ACCOUNTING", "note": "Successful native followup requested readiness and retained MM-AV context before full R14 brief; counted separately conservatively, no scientific acceptance."}
+{"recorded_at": "2026-09-28T20:54:08.271470+00:00", "task_id": "REVIEW-MM-AV-CLAR1", "actual_agent_id": "/root/ri01_review_privacy", "event": "RETROSPECTIVE_BOUNDED_DISPATCH_ACCOUNTING", "note": "Additional bounded review dispatched through actual message during REVIEW-R05; counted conservatively as separate assignment, same native agent; parent MM-AV task holds acceptance/closure."}
+{"recorded_at": "2026-09-28T21:00:00.082064+00:00", "task_id": "REVIEW-R09", "actual_agent_id": "/root/ri01_daily", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T21:00:00.082064+00:00", "task_id": "R15-AUDIT", "actual_agent_id": "/root/ri01_runtime_probe", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "Source integration specialist"}
+{"recorded_at": "2026-09-28T21:07:01.933119+00:00", "task_id": "R14", "actual_agent_id": "/root/ri01_mmav", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T21:07:01.933119+00:00", "task_id": "REVIEW-R14", "actual_agent_id": "/root/ri01_review_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
+{"recorded_at": "2026-09-28T21:15:18.670141+00:00", "task_id": "R11", "actual_agent_id": "/root/ri01_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T21:15:18.670141+00:00", "task_id": "REVIEW-R11", "actual_agent_id": "/root/ri01_evidence", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_evidence_auditor"}
+{"recorded_at": "2026-09-28T21:17:18.493179+00:00", "task_id": "R15-AUDIT", "actual_agent_id": "/root/ri01_runtime_probe", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T21:17:18.493179+00:00", "task_id": "REVIEW-R14", "actual_agent_id": "/root/ri01_review_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-28T21:17:18.493179+00:00", "task_id": "R11-PUBLIC-1", "actual_agent_id": "/root/ri01_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "R11 author narrow provenance redaction"}
+{"recorded_at": "2026-09-28T21:18:18.564429+00:00", "task_id": "MM-FUSION", "actual_agent_id": "/root/ri01_world", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_sensor_fusion"}
+{"recorded_at": "2026-09-29T00:27:03.836924+00:00", "task_id": "R11-PUBLIC-1", "actual_agent_id": "/root/ri01_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "R11 author provenance redaction resume"}
+{"recorded_at": "2026-09-29T00:27:03.836924+00:00", "task_id": "REVIEW-R11", "actual_agent_id": "/root/ri01_evidence", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "Independent evidence reviewer resume"}
+{"recorded_at": "2026-09-29T00:27:03.836924+00:00", "task_id": "MM-FUSION", "actual_agent_id": "/root/ri01_world", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_sensor_fusion resume"}
+{"recorded_at": "2026-09-29T00:32:22.314486+00:00", "task_id": "R11-PUBLIC-1", "actual_agent_id": "/root/ri01_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T00:32:22.314486+00:00", "task_id": "R15", "actual_agent_id": "/root/ri01_runtime_probe", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_researcher staged public research then accepted-input closure"}
+{"recorded_at": "2026-09-29T00:35:32.963255+00:00", "task_id": "R11", "actual_agent_id": "/root/ri01_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T00:35:32.963255+00:00", "task_id": "REVIEW-R11", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T00:35:32.963255+00:00", "task_id": "REVIEW-R11", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T00:36:42.777813+00:00", "task_id": "SYNTHESIS", "actual_agent_id": "/root/night01_review", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_integration_manager staged integration"}
+{"recorded_at": "2026-09-29T00:49:02.378505+00:00", "task_id": "MM-FUSION", "actual_agent_id": "/root/ri01_world", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T00:49:40.932796+00:00", "task_id": "REVIEW-MM-FUSION", "actual_agent_id": "/root/ri01_review_privacy", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer"}
+{"recorded_at": "2026-09-29T00:55:39.353480+00:00", "task_id": "REVIEW-MM-FUSION", "actual_agent_id": "/root/ri01_review_privacy", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T00:57:01.396026+00:00", "task_id": "REVIEW-R15", "actual_agent_id": "/root/ri01_code_review", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_research_reviewer_and_code_specialist"}
+{"recorded_at": "2026-09-29T01:03:35.853890+00:00", "task_id": "R15", "actual_agent_id": "/root/ri01_runtime_probe", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:12:46.423220+00:00", "task_id": "REVIEW-R15", "actual_agent_id": "/root/ri01_code_review", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:12:46.423220+00:00", "task_id": "REVIEW-R15", "actual_agent_id": "/root/ri01_code_review", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:18:50.294557+00:00", "task_id": "SYNTHESIS", "actual_agent_id": "/root/night01_review", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:21:02.171402+00:00", "task_id": "R13", "actual_agent_id": "/root/ri01_evidence", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_evidence_auditor"}
+{"recorded_at": "2026-09-29T01:21:02.171402+00:00", "task_id": "VISION-FINAL", "actual_agent_id": "/root/ri01_vision", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_vision_guardian"}
+{"recorded_at": "2026-09-29T01:21:02.171402+00:00", "task_id": "CODE-FINAL", "actual_agent_id": "/root/ri01_code_review", "event": "SUCCESSFUL_NATIVE_DISPATCH_RECORDED", "role": "haven_code_reviewer"}
+{"recorded_at": "2026-09-29T01:30:37.750424+00:00", "task_id": "CODE-FINAL", "actual_agent_id": "/root/ri01_code_review", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:32:04.407890+00:00", "task_id": "R13", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:33:38.832038+00:00", "task_id": "VISION-FINAL", "actual_agent_id": "/root/ri01_vision", "event": "COMPLETED_QUIESCENT"}
+{"recorded_at": "2026-09-29T01:33:38.990039+00:00", "task_id": "R13", "actual_agent_id": "/root/ri01_evidence", "event": "COMPLETED_QUIESCENT"}

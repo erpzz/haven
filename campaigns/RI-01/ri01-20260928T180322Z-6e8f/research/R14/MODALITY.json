@@ -1,0 +1,53 @@
+{
+  "task": "R14",
+  "actual_work": "TEXT_AND_DOCUMENTARY_RESEARCH_ONLY",
+  "agent_tool_matrix": [
+    {
+      "modality": "Text/localJSON/web",
+      "available": true,
+      "used": true,
+      "claim": "Read local documents and primary text/indexed excerpts"
+    },
+    {
+      "modality": "Existing image view",
+      "available": true,
+      "used": false,
+      "claim": "No R14 pixels/figures inspected; earlier MM-AV image smoke is not a R14 scientific result"
+    },
+    {
+      "modality": "Direct audio perception",
+      "available": false,
+      "used": false,
+      "claim": "No listening/playback claim from transcript, metadata or waveform"
+    },
+    {
+      "modality": "Direct video perception",
+      "available": false,
+      "used": false,
+      "claim": "No video watched; article captions and method text are text evidence"
+    },
+    {
+      "modality": "Existing Windows ffmpeg/ffprobe",
+      "available": "ROOT_RUNTIME_REPORTED",
+      "used": false,
+      "claim": "No R14 decoding, sampling or playback performed"
+    },
+    {
+      "modality": "Biosignal/device/native/physical",
+      "available": "NOT_QUALIFIED_OR_AUTHORIZED",
+      "used": false,
+      "claim": "No acquisition, intervention, calibration, human study or operation"
+    }
+  ],
+  "future_haven": "All modality interfaces and experiments proposed; research tool availability is not Haven capability",
+  "transforms_performed": [
+    "Markdown authorship",
+    "PowerShell JSON parsing and serialization of documentary records",
+    "SHA256 and byte-count checks"
+  ],
+  "media_transforms": [],
+  "source_originals": "Preserved local originals; external sources are live linked text, not archived source media",
+  "privacy": "Synthetic proposal identities only; no private signals or household media",
+  "generated_media": "None",
+  "cost": "No new purchases or paid-provider calls; session cost, labor and host energy not metered, not zero"
+}

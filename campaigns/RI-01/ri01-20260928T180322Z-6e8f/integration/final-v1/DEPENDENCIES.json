@@ -1,0 +1,640 @@
+{
+  "task": "SYNTHESIS",
+  "status": "ALL15_HARD_INPUTS_ACCEPTED_FINAL_REVIEW_PENDING",
+  "original_graph_path": "orchestration/RI-01/TASK_GRAPH.json",
+  "original_graph_sha256": "c9b5364b8eb23dad76f194cb4a0bed8858ede40dd33a45220e95cd3f81b7d9bd",
+  "original_tasks": [
+    {
+      "id": "INTAKE",
+      "role": "haven_intake",
+      "hard": [],
+      "soft": [],
+      "kind": "inventory"
+    },
+    {
+      "id": "VISION-0",
+      "role": "haven_vision_guardian",
+      "hard": [
+        "INTAKE"
+      ],
+      "soft": [],
+      "kind": "review"
+    },
+    {
+      "id": "REV-R02",
+      "role": "haven_research_reviewer",
+      "hard": [
+        "INTAKE"
+      ],
+      "soft": [],
+      "kind": "review",
+      "research": "R02"
+    },
+    {
+      "id": "REV-R06",
+      "role": "haven_research_reviewer",
+      "hard": [
+        "INTAKE"
+      ],
+      "soft": [],
+      "kind": "review",
+      "research": "R06"
+    },
+    {
+      "id": "REV-R08",
+      "role": "haven_research_reviewer",
+      "hard": [
+        "INTAKE"
+      ],
+      "soft": [],
+      "kind": "review",
+      "research": "R08"
+    },
+    {
+      "id": "CODE-0",
+      "role": "haven_code_reviewer",
+      "hard": [
+        "INTAKE"
+      ],
+      "soft": [],
+      "kind": "review"
+    },
+    {
+      "id": "R01",
+      "role": "haven_researcher",
+      "hard": [
+        "INTAKE",
+        "VISION-0"
+      ],
+      "soft": [
+        "CORE",
+        "MM-FUSION"
+      ],
+      "kind": "research",
+      "research": "R01"
+    },
+    {
+      "id": "R02-P01",
+      "role": "haven_researcher",
+      "hard": [
+        "REV-R02"
+      ],
+      "soft": [
+        "R03",
+        "CODE-0"
+      ],
+      "kind": "reconciliation",
+      "research": "R02"
+    },
+    {
+      "id": "R03",
+      "role": "haven_researcher",
+      "hard": [
+        "REV-R02",
+        "REV-R06",
+        "REV-R08"
+      ],
+      "soft": [
+        "R02-P01",
+        "R01"
+      ],
+      "kind": "research",
+      "research": "R03"
+    },
+    {
+      "id": "CORE",
+      "role": "haven_integration_manager",
+      "hard": [
+        "R02-P01",
+        "R03"
+      ],
+      "soft": [
+        "R01",
+        "CODE-0"
+      ],
+      "kind": "integration"
+    },
+    {
+      "id": "R10",
+      "role": "haven_researcher",
+      "hard": [
+        "INTAKE",
+        "REV-R06"
+      ],
+      "soft": [
+        "CORE",
+        "R07",
+        "R12"
+      ],
+      "kind": "research",
+      "research": "R10"
+    },
+    {
+      "id": "R12",
+      "role": "haven_researcher",
+      "hard": [
+        "INTAKE",
+        "VISION-0"
+      ],
+      "soft": [
+        "REV-R02",
+        "REV-R06",
+        "REV-R08"
+      ],
+      "kind": "research",
+      "research": "R12"
+    },
+    {
+      "id": "R04",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R01"
+      ],
+      "soft": [
+        "R12"
+      ],
+      "kind": "research",
+      "research": "R04"
+    },
+    {
+      "id": "R05",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R01"
+      ],
+      "soft": [],
+      "kind": "research",
+      "research": "R05"
+    },
+    {
+      "id": "R07",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "REV-R06"
+      ],
+      "soft": [
+        "R10",
+        "R12"
+      ],
+      "kind": "research",
+      "research": "R07"
+    },
+    {
+      "id": "R08-P00",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "REV-R08",
+        "REV-R06"
+      ],
+      "soft": [
+        "R07",
+        "CODE-0"
+      ],
+      "kind": "reconciliation",
+      "research": "R08"
+    },
+    {
+      "id": "MM-VISION",
+      "role": "haven_vision_perception",
+      "hard": [
+        "CORE",
+        "R07"
+      ],
+      "soft": [
+        "R04",
+        "R12"
+      ],
+      "kind": "multimodal"
+    },
+    {
+      "id": "MM-AV",
+      "role": "haven_audio_video",
+      "hard": [
+        "CORE",
+        "R04"
+      ],
+      "soft": [
+        "R12"
+      ],
+      "kind": "multimodal"
+    },
+    {
+      "id": "R09",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R07",
+        "R08-P00"
+      ],
+      "soft": [
+        "R10",
+        "MM-VISION"
+      ],
+      "kind": "research",
+      "research": "R09"
+    },
+    {
+      "id": "R11",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R04",
+        "R07",
+        "R10"
+      ],
+      "soft": [
+        "R09",
+        "MM-AV"
+      ],
+      "kind": "research",
+      "research": "R11"
+    },
+    {
+      "id": "R14",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R04",
+        "MM-AV"
+      ],
+      "soft": [
+        "R09",
+        "MM-VISION",
+        "R12"
+      ],
+      "kind": "research",
+      "research": "R14"
+    },
+    {
+      "id": "MM-FUSION",
+      "role": "haven_sensor_fusion",
+      "hard": [
+        "CORE",
+        "R07",
+        "MM-VISION",
+        "MM-AV",
+        "R14"
+      ],
+      "soft": [
+        "R09",
+        "R11"
+      ],
+      "kind": "multimodal"
+    },
+    {
+      "id": "R15",
+      "role": "haven_researcher",
+      "hard": [
+        "CORE",
+        "R07",
+        "MM-FUSION",
+        "R01"
+      ],
+      "soft": [
+        "R09",
+        "R10",
+        "R11",
+        "R08-P00"
+      ],
+      "kind": "research",
+      "research": "R15"
+    },
+    {
+      "id": "SYNTHESIS",
+      "role": "haven_integration_manager",
+      "hard": [
+        "R01",
+        "R02-P01",
+        "R03",
+        "R04",
+        "R05",
+        "REV-R06",
+        "R07",
+        "R08-P00",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R14",
+        "R15",
+        "MM-FUSION"
+      ],
+      "soft": [
+        "CODE-0"
+      ],
+      "kind": "integration"
+    },
+    {
+      "id": "R13",
+      "role": "haven_evidence_auditor",
+      "hard": [
+        "SYNTHESIS"
+      ],
+      "soft": [],
+      "kind": "review",
+      "research": "R13"
+    },
+    {
+      "id": "VISION-FINAL",
+      "role": "haven_vision_guardian",
+      "hard": [
+        "SYNTHESIS"
+      ],
+      "soft": [],
+      "kind": "review"
+    },
+    {
+      "id": "CODE-FINAL",
+      "role": "haven_code_reviewer",
+      "hard": [
+        "SYNTHESIS"
+      ],
+      "soft": [],
+      "kind": "review"
+    },
+    {
+      "id": "DELIVERY",
+      "role": "root_supervisor",
+      "hard": [
+        "R13",
+        "VISION-FINAL",
+        "CODE-FINAL"
+      ],
+      "soft": [],
+      "kind": "publication"
+    }
+  ],
+  "original_synthesis_hard_inputs": [
+    {
+      "task": "R01",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R01/REPORT.md",
+          "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283"
+        },
+        {
+          "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        },
+        {
+          "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R02-P01",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R02-P01/REPORT.md",
+          "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7"
+        },
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        },
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R03",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R03/REPORT.md",
+          "sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d"
+        },
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        },
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R04",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R04/REPORT.md",
+          "sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479"
+        },
+        {
+          "path": "reviews/REVIEW-R04/REVIEW.md",
+          "sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R05",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R05/REPORT.md",
+          "sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1"
+        },
+        {
+          "path": "reviews/REVIEW-R05/REPORT.md",
+          "sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "REV-R06",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "reviews/REV-R06/REVIEW.md",
+          "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R07",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0"
+        },
+        {
+          "path": "reviews/REVIEW-R07/REVIEW.md",
+          "sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R08-P00",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R08-P00/REPORT.md",
+          "sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7"
+        },
+        {
+          "path": "reviews/REVIEW-R08-P00/REVIEW.md",
+          "sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R09",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R09/REPORT.md",
+          "sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb"
+        },
+        {
+          "path": "reviews/REVIEW-R09/REVIEW.md",
+          "sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R10",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R10/REPORT.md",
+          "sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90"
+        },
+        {
+          "path": "reviews/REVIEW-R10/REVIEW.md",
+          "sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R11",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R11-public-v1/REPORT.md",
+          "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165"
+        },
+        {
+          "path": "reviews/REVIEW-R11/CLOSURE-1.md",
+          "sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R12",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R12/REPORT.md",
+          "sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5"
+        },
+        {
+          "path": "reviews/REVIEW-R12/REVIEW.md",
+          "sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R14",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R14/R14_HANDOFF.md",
+          "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544"
+        },
+        {
+          "path": "reviews/REVIEW-R14/REVIEW.md",
+          "sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "R15",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/R15/INTEGRATION_SUMMARY.md",
+          "sha256": "b4a58e054c6304ed1c6fd7c83a2fe12eec89fb85fd516ec3ec53334b39b9bc12"
+        },
+        {
+          "path": "reviews/REVIEW-R15/REVIEW.md",
+          "sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    },
+    {
+      "task": "MM-FUSION",
+      "original_gate": "HARD",
+      "status": "ACCEPTED_EXACT_COMPOSITE",
+      "pins": [
+        {
+          "path": "research/MM-FUSION/REPORT.md",
+          "sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3"
+        },
+        {
+          "path": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+          "sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd"
+        }
+      ],
+      "composite_rule": "Original packet plus all accepted amendments, substantive reviews and closures in INPUT_USE; historical pending text does not override current acceptance"
+    }
+  ],
+  "freeze_rule": "All15 original hard inputs accepted at exact consumed revisions, input-use reconciliation and self-checks pass; never waive or downgrade MM-FUSION/R15",
+  "soft_inputs": [
+    "CODE-0",
+    "EVIDENCE-0",
+    "actual consultations and source corrections"
+  ],
+  "proposed_refinements": [
+    "Separate inert CORE-P0 authority work from actual worker lifecycle R02-P02-A; integrated P02-B joins only accepted prerequisites",
+    "MF-P0 adds inert useful composition; cannot qualify actual perception or close VA-01",
+    "Select R02-P03 versus MV-P1 question explicitly; no automatic pooled execution or shared denominator",
+    "MF-P1 aliases MV-P1 allocation; MF-P2 aliases amended ASR allocation",
+    "R08 inert scalar and R07 typed replay stay separate from physical/metrology/active-sensor qualification",
+    "R15 public fixture proof can be useful independently of model/native work after its source/lifecycle/rights gates",
+    "After frozen synthesis, distinct R13/VISION-FINAL/CODE-FINAL assess exact candidate; root alone owns DELIVERY"
+  ],
+  "future_packages_path": "WORK_PACKAGES.json",
+  "implementation": "AUTHORIZATION_REQUIRED",
+  "unchanged_original_gates": true,
+  "self_review_is_independent_review": false
+}

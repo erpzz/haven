@@ -1,0 +1,66 @@
+{
+  "task": "R08-P00",
+  "status": "AUTHOR_DOCUMENT_CHECKS_ONLY_NOT_INDEPENDENT_ACCEPTANCE",
+  "checked_at_utc": "2026-09-28T20:10:48.4682689Z",
+  "source_register_rows": 57,
+  "input_use_rows": 52,
+  "hash_or_size_mismatches": [],
+  "r08_case_rows": 20,
+  "r08_source_id_difference": [],
+  "n2_rows": 11,
+  "n2_source_method_difference": [],
+  "json_files_parsed": 5,
+  "retained_original_requirements": 102,
+  "classifications": [
+    {
+      "classification": "NEEDS_OWNER_DECISION",
+      "count": 1
+    },
+    {
+      "classification": "NEW_GAP",
+      "count": 4
+    },
+    {
+      "classification": "NOT_IN_THIS_SLICE",
+      "count": 4
+    },
+    {
+      "classification": "PARTIALLY_COVERED",
+      "count": 11
+    }
+  ],
+  "new_application_test_count": 0,
+  "actual_actions": [
+    "Read source and saved evidence",
+    "Hash and parse documents",
+    "Primary web text checks",
+    "Inspect existing synthetic PNG",
+    "Route peer questions through root",
+    "Write assigned research handback"
+  ],
+  "not_performed": [
+    "Git commands",
+    "Application or test execution",
+    "CAD/slicer/model execution",
+    "Packages or weights installation",
+    "Private accounts or devices",
+    "Child spawning"
+  ],
+  "runtime": {
+    "actual_agent_id": "/root/ri01_runtime_probe",
+    "role": "haven_researcher",
+    "task_id": "R08-P00",
+    "effective_permission_profile": "danger-full-access; approval never; scoped by assignment",
+    "exact_model": "NOT_EXPOSED",
+    "profile_mode": "CUSTOM_PROFILE_INSTRUCTIONS_READ",
+    "token_spend": "UNKNOWN"
+  },
+  "path_correction": "Ten newly authored files initially landed under a wrong campaign prefix. An exact filename allowlist and both resolved source/destination prefixes were verified, then native file moves transferred them into the assigned clone without content transformation. No source or other-worker file was modified; the wrong-prefix source is empty. All final input pins and output bytes were subsequently hashed; absolute host paths are omitted.",
+  "limitations": [
+    "Historical33/11suite receipts are not reruns",
+    "Full R08cases remain unqualified",
+    "Bootstrap conditional target and coverage pending independent review",
+    "Numeric bounds are proposed schema processing limits, not hardware accuracy",
+    "CurrentM0/R1 and missing originalH00/audits unavailable"
+  ]
+}

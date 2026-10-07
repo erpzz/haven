@@ -1,0 +1,118 @@
+{
+  "task_id": "R06-DESIGN-001",
+  "validation_scope": "DOCUMENTATION_AND_INPUT_INTEGRITY_ONLY",
+  "date_utc": "2026-09-28",
+  "command": "python3 /workspace/scratch/ba074ae35c94/work/validate_r06_handback.py",
+  "environment": {
+    "python": "3.12.14",
+    "os": "Linux",
+    "kernel": "6.18.44"
+  },
+  "checks": [
+    {
+      "check_id": "DOC-INPUT-STARTER",
+      "status": "EXECUTED_PASS",
+      "detail": {
+        "files_compared": 146,
+        "archive_sha256": "55f693f64c56a9d8f13a6cd5725ab4c427af6ade2e127fe8e71829eca1f1d412"
+      }
+    },
+    {
+      "check_id": "DOC-INPUT-PROMPTS",
+      "status": "EXECUTED_PASS",
+      "detail": {
+        "files_compared": 16,
+        "archive_sha256": "78794dc12f03c905811a8dddb7cf51de700dcb72a221196c4375458b52ae79df"
+      }
+    },
+    {
+      "check_id": "DOC-CONTEXT",
+      "status": "EXECUTED_PASS",
+      "detail": "Eight required context files have read records and hashes; reading itself is author-reported."
+    },
+    {
+      "check_id": "DOC-TEMPLATE",
+      "status": "EXECUTED_PASS",
+      "detail": "Uses actual starter handoff headings and all five header fields."
+    },
+    {
+      "check_id": "DOC-COVERAGE",
+      "status": "EXECUTED_PASS",
+      "detail": "Ten RF requirement/acceptance mappings retained; operational status NOT_EXECUTED."
+    },
+    {
+      "check_id": "DOC-LINKS",
+      "status": "EXECUTED_PASS",
+      "detail": {
+        "internal_links": 26,
+        "missing_or_external_paths": [],
+        "web_links": "Not live link-tested by this validator; source access is recorded separately."
+      }
+    },
+    {
+      "check_id": "DOC-SOURCES",
+      "status": "EXECUTED_PASS",
+      "detail": {
+        "source_records": 22,
+        "unresolved_ids": []
+      }
+    },
+    {
+      "check_id": "DOC-SUMMARY",
+      "status": "EXECUTED_PASS",
+      "detail": {
+        "words": 463,
+        "format": "One-page-length Markdown, not a paginated PDF."
+      }
+    },
+    {
+      "check_id": "DOC-STATUS",
+      "status": "EXECUTED_PASS",
+      "detail": "Status labels present; no experimental performance validated."
+    },
+    {
+      "check_id": "DOC-JSON",
+      "status": "EXECUTED_PASS",
+      "detail": {
+        "errors": []
+      }
+    },
+    {
+      "check_id": "DOC-NO-IMPLEMENTATION",
+      "status": "EXECUTED_PASS",
+      "detail": {
+        "unexpected_file_types": [],
+        "scope": "This checks delivery file types, not application correctness."
+      }
+    },
+    {
+      "check_id": "DOC-FENCES",
+      "status": "EXECUTED_PASS",
+      "detail": "Markdown code fences balanced; Mermaid/browser rendering not executed."
+    }
+  ],
+  "all_document_checks_passed": true,
+  "rf_acceptance": {
+    "AT-RF-01": "NOT_EXECUTED",
+    "AT-RF-02": "NOT_EXECUTED",
+    "AT-RF-03": "NOT_EXECUTED",
+    "AT-RF-04": "NOT_EXECUTED",
+    "AT-RF-05": "NOT_EXECUTED",
+    "AT-RF-06": "NOT_EXECUTED",
+    "AT-RF-07": "NOT_EXECUTED",
+    "AT-RF-08": "NOT_EXECUTED",
+    "AT-RF-09": "NOT_EXECUTED",
+    "AT-RF-10": "NOT_EXECUTED"
+  },
+  "experiments": {
+    "R06-E0": "PROPOSED_NOT_EXECUTED",
+    "R06-E1": "PROPOSED_NOT_EXECUTED",
+    "R06-E2": "PROPOSED_NOT_EXECUTED",
+    "R06-E3": "PROPOSED_NOT_EXECUTED",
+    "R06-E4": "PROPOSED_NOT_EXECUTED",
+    "R06-E5": "PROPOSED_NOT_EXECUTED"
+  },
+  "m0_tests": "NOT_EXECUTED",
+  "hardware_native_physical_tests": "NOT_EXECUTED",
+  "independent_review": "PENDING_H00_H04_H06"
+}

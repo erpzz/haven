@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:context_packet:1",
+  "title": "context_packet — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "packet_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "principal_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_scope": {
+      "type": "string",
+      "enum": [
+        "PERSONAL_A",
+        "PERSONAL_B",
+        "HOUSEHOLD_SHARED",
+        "RESEARCH_SYNTHETIC"
+      ]
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "grant_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "allowed_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "cloud_provider_allowlist": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "max_input_tokens": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "expires_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contains_real_private_data": {
+      "type": "boolean",
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "packet_id",
+    "principal_id",
+    "owner_scope",
+    "purpose",
+    "grant_revision",
+    "evidence_ids",
+    "allowed_capabilities",
+    "cloud_provider_allowlist",
+    "max_input_tokens",
+    "expires_at",
+    "contains_real_private_data"
+  ],
+  "additionalProperties": false
+}

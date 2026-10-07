@@ -1,0 +1,82 @@
+[
+  {
+    "upstream_task": "REVIEW-R03",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R03/REVIEW.md",
+      "commit": "376031e182c57495912baf6727093b0b188da568 (root-reported campaign base; current artifact pinned by SHA256)",
+      "claim_id": "REVIEW-R03-F01/Q-R03-USE-01; L01"
+    },
+    "artifact_sha256": "cc393683b0db1ff0723cc6688196bfe11871b6844019cf2d3ecd4b29ab330952",
+    "finding": "REVIEW-R03-F01/Q-R03-USE-01; L01",
+    "disposition": "AMENDED",
+    "downstream_section": "AMENDMENT A1-A7; PROPOSED_CASES A01-A16",
+    "design_effect": "Specify counted release operation, durable use claim, accounting/auth revisions, recovery; attach final CODE-0",
+    "reason": "Independent review identified ambiguity, not executed failure",
+    "review_state": "Author amendment submitted for independent recheck; no self-acceptance"
+  },
+  {
+    "upstream_task": "R03",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/CONTRACTS.md",
+      "commit": "376031e182c57495912baf6727093b0b188da568 (root-reported campaign base; current artifact pinned by SHA256)",
+      "claim_id": "Sections B/C/E finite-use counting and release/consume"
+    },
+    "artifact_sha256": "cfd271d1650e40daa735651ddc2ab28ca4ccdcb17f117c96cc5602975bad5eea",
+    "finding": "Sections B/C/E finite-use counting and release/consume",
+    "disposition": "AMENDED",
+    "downstream_section": "AMENDMENT A1-A4",
+    "design_effect": "One quota debit at release; existing exact claim redemption checks current authority without another quota debit",
+    "reason": "Remove max_uses1 self-denial/double-charge ambiguity",
+    "review_state": "Author amendment submitted for independent recheck; no self-acceptance"
+  },
+  {
+    "upstream_task": "R03",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/EXPERIMENTS.md",
+      "commit": "376031e182c57495912baf6727093b0b188da568 (root-reported campaign base; current artifact pinned by SHA256)",
+      "claim_id": "P20/P21"
+    },
+    "artifact_sha256": "275f68e9d1c4c6c668adbd568768e7f10b3cb491007a70a6a4904e76d3161511",
+    "finding": "P20/P21",
+    "disposition": "AMENDED",
+    "downstream_section": "PROPOSED_CASES",
+    "design_effect": "Add16 proposed finite-use/history subcases; all NOT_EXECUTED",
+    "reason": "Original24 case families remain preserved",
+    "review_state": "Author amendment submitted for independent recheck; no self-acceptance"
+  },
+  {
+    "upstream_task": "R02-P01-A1",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/AMENDMENT.md",
+      "commit": "376031e182c57495912baf6727093b0b188da568 (root-reported campaign base; current artifact pinned by SHA256)",
+      "claim_id": "Four orthogonal records; Q-R02P01-A1-R03-01"
+    },
+    "artifact_sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+    "finding": "Four orthogonal records; Q-R02P01-A1-R03-01",
+    "disposition": "AMENDED",
+    "downstream_section": "AMENDMENT A5",
+    "design_effect": "Reuse immutable authorization/consume, append-only delivery and current eligibility; clarify parent quota versus permit-slot update",
+    "reason": "CONSUMED is one-use authorization consumption, not perception; future chunk profile remains deferred for finite-use P0",
+    "review_state": "Author amendment submitted for independent recheck; no self-acceptance"
+  },
+  {
+    "upstream_task": "CODE-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/CODE-0/REVIEW.md",
+      "commit": "376031e182c57495912baf6727093b0b188da568 (root-reported campaign base; current artifact pinned by SHA256)",
+      "claim_id": "CODE-M1; H1/H2/M2-M5; REVIEW-R03-L01"
+    },
+    "artifact_sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8",
+    "finding": "CODE-M1; H1/H2/M2-M5; REVIEW-R03-L01",
+    "disposition": "REUSED",
+    "downstream_section": "AMENDMENT A6",
+    "design_effect": "Final exact review now dependency; retention classes already covered; carry remaining evidence limitations",
+    "reason": "Original interim attribution stays historical; no claim gaps repaired",
+    "review_state": "Author amendment submitted for independent recheck; no self-acceptance"
+  }
+]

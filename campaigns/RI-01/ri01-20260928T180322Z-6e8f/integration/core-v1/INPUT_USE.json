@@ -1,0 +1,681 @@
+{
+  "schema_version": 1,
+  "task": "CORE",
+  "candidate": 1,
+  "author": "/root/night01_review",
+  "created_at_utc": "2026-09-28T19:28:19.5688578Z",
+  "records": [
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/INVENTORY.md",
+      "sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+      "upstream": "INTAKE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Frozen inventory, three distinct handbacks; P01 and prompt-only lanes not complete; missing originals explicit",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/SOURCE_MANIFEST.json",
+      "sha256": "687b25a3934b351d9ff20a2ce472587ca6dd90a9c8809bf5f74f7f6b0b160392",
+      "upstream": "INTAKE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Exact source paths, commits and byte hashes for incoming packets",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/SOURCE_SNAPSHOT.json",
+      "sha256": "1bc2d6af12b9b4a502015934528f45e9560b77b7f059377bc7b070bfe2b67435",
+      "upstream": "INTAKE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Frozen branch/PR identity snapshot",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/REVIEW.md",
+      "sha256": "cb0e9fd770f5dc7040d57abd38451e388530759bb6132b5369bcfaf07b71af36",
+      "upstream": "VISION-0",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Five journeys, all V01–V16, useful selected image slice and explicit modality limits",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/CLOSURE-1.md",
+      "sha256": "151e22a9030be0d50643261dbec081f12f343460b790ec15839e30381f5aeabf",
+      "upstream": "VISION-0",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Closes V0-01; V0-02–04 constrain later reviews; original mappings validated",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/REQUIREMENT_MAP.json",
+      "sha256": "a23c5082af277e9bd24a911688addc3815bc77f8d4ba3624d2c696887de61f40",
+      "upstream": "VISION-0",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "All 102 original IDs/owners/AT links and anchors retained",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/EXPERIMENT_MAP.json",
+      "sha256": "f8eda76b0b99325bdf4061b877deb48036b8cc4a9d1d7c1f4824a1f605b0a1d8",
+      "upstream": "VISION-0",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "All 32 EX IDs with original cross-domain owners retained",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/EVIDENCE-0/REVIEW.md",
+      "sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d",
+      "upstream": "EVIDENCE-0",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "E0-H1 unresolved lifecycle; historical synthetic limits; E0-H2 lineage receipt limitation; original AT/EX unexecuted",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "upstream": "SOURCE-REQ",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Original 102 requirement statements and authority-preserving change rules read",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/registry.json",
+      "sha256": "a26d3cf9cb0451f32ba4152ff2382a1126204d0d21c27a179baf112836939873",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Twelve draft contracts and semantic invariants",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/agent_job.schema.json",
+      "sha256": "fbc33699cebf0f095a5e6da2c5ab3c64554bcb499be2442aa6f62ba1c8047b93",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/capability_qualification.schema.json",
+      "sha256": "5a202cc524f0a5b4d38f526ef7bc8ea12a4b703fc9f1e6d8e554c816eee3cfd3",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/consent_proposal.schema.json",
+      "sha256": "d48d26aac261eb77c9d9f4ecb9d93c6b0a0efdb2358f83c3e613f6419005defb",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/context_packet.schema.json",
+      "sha256": "9ebbf9c8fe0b620db89d3348c31f38580f11b7244b24897a6f200e82e9aba925",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/daily_action_proposal.schema.json",
+      "sha256": "da7b74e6349fd30df796aa6adc149d81c269aa4bc0b504e17eb47f95dcdc6d00",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/delivery_receipt.schema.json",
+      "sha256": "06e49970f99d8bb4a37c2c8343c8e81e40e580aafbcb166f9f6c6f1050245779",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/design_artifact.schema.json",
+      "sha256": "b872628654d13e32ac1571c33790f68ecfc103c7d4fe9e9185f4ccaae7d6847b",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/evidence.schema.json",
+      "sha256": "241d0f2bb00cbbb1e59472a92b66b53b893135f410e4c88bd2712d061e1a1c29",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/experiment.schema.json",
+      "sha256": "14d7893c6728edcbdad7690373a72ea08ab2b1ef32e8285695f3f625afd0402b",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/health_observation.schema.json",
+      "sha256": "793918b305df534b79bd605525e8add2bb545fea9538307dd3b242a9277b70c1",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/physical_action_proposal.schema.json",
+      "sha256": "6e72a18ed05eb120dd02cc4787f52e0ae5d153539ec89f4dcb3602bbfe478d5c",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/spatial_estimate.schema.json",
+      "sha256": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e",
+      "upstream": "SOURCE-CONTRACTS",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Schema identity and required/property field structure inspected; registry supplies semantic interpretation",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/CONTRACT_DESIGN.md",
+      "sha256": "9cc1ce4ce5d2d240b244513aa7680ba0015d86829216497877f3f90cd51856d7",
+      "upstream": "R02-SOURCE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "C01–C11 and CR-R02-01–05 propose context/jobs/model/accounting/publication boundaries",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/CONTRACT_PROPOSALS.md",
+      "sha256": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13",
+      "upstream": "R06-SOURCE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Required spatial sidecar, parent-frame covariance, acquisition/motion separation and access intersection",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/INTERFACES_AND_CONTRACTS.md",
+      "sha256": "01ed60d55591b3d4a2a03cafaf4c299d24c1c9f47d406d68bd3dd2bac6d02f03",
+      "upstream": "R08-SOURCE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "C01–C08 campaign/metrology/physical-grant distinctions and shared-budget reuse",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "orchestration/RI-01/MASTER_PROMPT.md",
+      "sha256": "d102519c6b871470601f88c01e649f7487c7c522712fd7d9c5728b5d8d59e722",
+      "upstream": "RI-01-NORMATIVE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+      "upstream": "RI-01-NORMATIVE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "upstream": "RI-01-NORMATIVE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "upstream": "RI-01-NORMATIVE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+      "upstream": "RI-01-NORMATIVE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "orchestration/RI-01/TASK_GRAPH.json",
+      "sha256": "c9b5364b8eb23dad76f194cb4a0bed8858ede40dd33a45220e95cd3f81b7d9bd",
+      "upstream": "RI-01-NORMATIVE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "orchestration/RI-01/TEMPLATES.md",
+      "sha256": "7296a0c3b73437cae992788eea49bc6de1f693dc2198147a38fb729861529ae2",
+      "upstream": "RI-01-NORMATIVE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+      "upstream": "RI-01-NORMATIVE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Campaign scope, roles, acceptance gates, retained multimodality and deliverable requirements",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": ".codex/agents/haven_integration_manager.toml",
+      "sha256": "ea5ff7331942d843feaad7067d672e89ba7adb69f2ba6fd56255da83708d34e3",
+      "upstream": "ROLE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Distinct integration-manager role, scoped writes, exact upstream binding, no Git/subagents",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281",
+      "upstream": "GOVERNANCE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Existing sources immutable, gates separate, RI01 exception scoped",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "START_HERE.md",
+      "sha256": "aec6a160969d1ade3725f262f7bca76fead1a34730d6cda299b4cc018f64de7c",
+      "upstream": "GOVERNANCE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "sha256": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc",
+      "upstream": "GOVERNANCE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "sha256": "bf4745153beff5687207f8e733809567e72080f0645241a1840c2cfb13a4ae16",
+      "upstream": "GOVERNANCE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "coordination/PROTOCOL.md",
+      "sha256": "40fbb4f282155cb2762a67c2d970b2332ff37dcc3f303dc823d4b6e00db712dc",
+      "upstream": "GOVERNANCE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "baseline/cumulative-v1.0/agents/HANDOFF_TEMPLATE.md",
+      "sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+      "upstream": "GOVERNANCE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "coordination/HANDBACK_METADATA.md",
+      "sha256": "27a8d0b5bc8aec1eeeb5c7fc178b7a977016e96aaf69f5f62f63a39a3731c3a7",
+      "upstream": "GOVERNANCE",
+      "read_scope": "Previously consumed CORE-PRE source; current bytes reverified",
+      "use": "Retained source traceability and compatibility; old pending statuses superseded only by current accepted rows",
+      "prior_finding": "Current navigation/status/precedence or handback format; status document is a baseline, not live verification",
+      "downstream": "ARCHITECTURE, CONTRACT_CROSSWALK, DEPENDENCIES; original scope unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/CASE_CROSSWALK.json",
+      "sha256": "f7dbebfc218d2c5cff7c7ff6d0396c15ef86b02c8fcb9e8bbff778ff829f6921",
+      "upstream": "R02-P01 composite",
+      "read_scope": "REPORT, NEXT_PACKAGE and AMENDMENT read in full; CASE_CROSSWALK and STATE_TRACES structural/reference use with independent review; other provenance records hashed",
+      "use": "I03-I06 limits, worker identity, orthogonal output records, conservative accounting, modality profiles and bounded evaluation",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/INPUT_USE.json",
+      "sha256": "9ec7a115c89eda2bb22b1a724a0480f7f069f8fc2da7c72474bbaf639d197faa",
+      "upstream": "R02-P01 composite",
+      "read_scope": "REPORT, NEXT_PACKAGE and AMENDMENT read in full; CASE_CROSSWALK and STATE_TRACES structural/reference use with independent review; other provenance records hashed",
+      "use": "I03-I06 limits, worker identity, orthogonal output records, conservative accounting, modality profiles and bounded evaluation",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/NEXT_PACKAGE.md",
+      "sha256": "d278dc54606db1a50803a9b50085b25389ec515f9ea5b95aecaf4223d98c7a8f",
+      "upstream": "R02-P01 composite",
+      "read_scope": "REPORT, NEXT_PACKAGE and AMENDMENT read in full; CASE_CROSSWALK and STATE_TRACES structural/reference use with independent review; other provenance records hashed",
+      "use": "I03-I06 limits, worker identity, orthogonal output records, conservative accounting, modality profiles and bounded evaluation",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/REPORT.md",
+      "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+      "upstream": "R02-P01 composite",
+      "read_scope": "REPORT, NEXT_PACKAGE and AMENDMENT read in full; CASE_CROSSWALK and STATE_TRACES structural/reference use with independent review; other provenance records hashed",
+      "use": "I03-I06 limits, worker identity, orthogonal output records, conservative accounting, modality profiles and bounded evaluation",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/SOURCES.md",
+      "sha256": "a23251a40cda484b61f22e282502d6d7057e8c5eb6fbb960f85c786ff1264a4b",
+      "upstream": "R02-P01 composite",
+      "read_scope": "REPORT, NEXT_PACKAGE and AMENDMENT read in full; CASE_CROSSWALK and STATE_TRACES structural/reference use with independent review; other provenance records hashed",
+      "use": "I03-I06 limits, worker identity, orthogonal output records, conservative accounting, modality profiles and bounded evaluation",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/AMENDMENT.md",
+      "sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "upstream": "R02-P01 composite",
+      "read_scope": "REPORT, NEXT_PACKAGE and AMENDMENT read in full; CASE_CROSSWALK and STATE_TRACES structural/reference use with independent review; other provenance records hashed",
+      "use": "I03-I06 limits, worker identity, orthogonal output records, conservative accounting, modality profiles and bounded evaluation",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/INPUT_USE.json",
+      "sha256": "2cd8bdaa4b40103b4acd9e4bea4a363adc14c3377b3cc6f81226bcf8c215f9d3",
+      "upstream": "R02-P01 composite",
+      "read_scope": "REPORT, NEXT_PACKAGE and AMENDMENT read in full; CASE_CROSSWALK and STATE_TRACES structural/reference use with independent review; other provenance records hashed",
+      "use": "I03-I06 limits, worker identity, orthogonal output records, conservative accounting, modality profiles and bounded evaluation",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/STATE_TRACES.json",
+      "sha256": "15db9de5f33c7bbd58acd21dfa4d69122364f07a517b26e1c0c78f508a2c49e8",
+      "upstream": "R02-P01 composite",
+      "read_scope": "REPORT, NEXT_PACKAGE and AMENDMENT read in full; CASE_CROSSWALK and STATE_TRACES structural/reference use with independent review; other provenance records hashed",
+      "use": "I03-I06 limits, worker identity, orthogonal output records, conservative accounting, modality profiles and bounded evaluation",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/ARTIFACT_CHECKS.json",
+      "sha256": "870ffcfeb2ae4da085e06f926aa40b3eb706ebe9938a177e999a3140169a2baa",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/CONSULTATIONS.md",
+      "sha256": "473fc43f4eb8340992b450b74e12c1315ddacf2eaa4e9c743744bae3b1cab6d5",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/CONTRACTS.md",
+      "sha256": "cfd271d1650e40daa735651ddc2ab28ca4ccdcb17f117c96cc5602975bad5eea",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/EXPERIMENTS.md",
+      "sha256": "275f68e9d1c4c6c668adbd568768e7f10b3cb491007a70a6a4904e76d3161511",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/INPUT_RECEIPT.md",
+      "sha256": "a5531e66a433eb0348c60a82c0f398078314db41a8a542fbd92a8f5d21eb04ea",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/INPUT_USE.json",
+      "sha256": "42e57e4531e1c2b80e487c17ca7876af8c6b18c263094f749660396926eb060e",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/MANIFEST.sha256",
+      "sha256": "e154d038cd1eedf1dcfa7acefc29ddb31c88cd5d36b56573a3dc5e344405a4ac",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/MODALITY.json",
+      "sha256": "43d9e6f553a492ba68307b920f36a75a7686601b740522e13bcfb6568eb15d52",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/NEXT_PACKAGE.md",
+      "sha256": "070e7e09ec91c4ccd565f25716d95a812332a377d240538b993fc1f2558c9df8",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/REPORT.md",
+      "sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/SOURCES.md",
+      "sha256": "89d1ae4b50550fac061d3794b4e85535330bf1c3d0063d76bbbb513650cab8fa",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/AMENDMENT.md",
+      "sha256": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/ARTIFACT_CHECKS.json",
+      "sha256": "d98d8ca6dab290786a877d78294169d59ae97007631124f40f1dfbae6bb4f1ad",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/INPUT_USE.json",
+      "sha256": "d1e112f2cbac559c128f7b993a648a8369353d01f77b0170b9676a45e4de743e",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/MANIFEST.sha256",
+      "sha256": "4984a658f00e8c9a9248c03d56390ce29aba52d5676acc30b5ec0e860f8878ae",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/PROPOSED_CASES.md",
+      "sha256": "d019c2553d92e7fd465ca9f8b7c27f381965669d653368c505aca588c8320748",
+      "upstream": "R03 composite",
+      "read_scope": "REPORT, CONTRACTS, AMENDMENT, PROPOSED_CASES, NEXT_PACKAGE read; EXPERIMENTS substantive body; other provenance records hashed",
+      "use": "I01/I03/I06/I07 full vector, joint intersection, grant claims and finite-use recovery, deletion/restore and proposed cases",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R02-P01/CLOSURE-1.md",
+      "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+      "upstream": "independent P01 review",
+      "read_scope": "REVIEW and CLOSURE read in full",
+      "use": "Accept only original plus amendment scope; carry no executed/production qualification",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R02-P01/REVIEW.md",
+      "sha256": "1634b53af3fe0799bcabd5adfbef5658d64812e9d2425c457bc09f3e7faa8589",
+      "upstream": "independent P01 review",
+      "read_scope": "REVIEW and CLOSURE read in full",
+      "use": "Accept only original plus amendment scope; carry no executed/production qualification",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R03/CLOSURE-1.md",
+      "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "upstream": "independent R03 review",
+      "read_scope": "REVIEW and CLOSURE read in full",
+      "use": "F01/L01 closed; complete finite-use composite accepted",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R03/REVIEW.md",
+      "sha256": "cc393683b0db1ff0723cc6688196bfe11871b6844019cf2d3ecd4b29ab330952",
+      "upstream": "independent R03 review",
+      "read_scope": "REVIEW and CLOSURE read in full",
+      "use": "F01/L01 closed; complete finite-use composite accepted",
+      "downstream": "CONTRACTS, DECISIONS, IMPLEMENTATION_QUEUE, DEPENDENCIES"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/CODE-0/REVIEW.md",
+      "sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8",
+      "upstream": "independent review",
+      "read_scope": "Read review text; underlying reports not newly re-surveyed",
+      "use": "Final historical static limitations; no R1/M0 access or repair claim",
+      "downstream": "ARCHITECTURE, CONTRACTS, DECISIONS, CONTRACT_CROSSWALK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/REVIEW.md",
+      "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+      "upstream": "independent review",
+      "read_scope": "Read review text; underlying reports not newly re-surveyed",
+      "use": "Accepted sidecar/spatial subset with sensing episode amendment; reviewer advice not owner consensus",
+      "downstream": "ARCHITECTURE, CONTRACTS, DECISIONS, CONTRACT_CROSSWALK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R08/REVIEW.md",
+      "sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+      "upstream": "independent review",
+      "read_scope": "Read review text; underlying reports not newly re-surveyed",
+      "use": "Accepted template/provenance/protected-evaluation subset; unit/metrology and execution limitations retained",
+      "downstream": "ARCHITECTURE, CONTRACTS, DECISIONS, CONTRACT_CROSSWALK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R01/REVIEW.md",
+      "sha256": "27503c8aceb2ef43afc35fe4d3ffa352f9df4fbe3482f3562c825ff59990839b",
+      "upstream": "independent review",
+      "read_scope": "Read review text; underlying reports not newly re-surveyed",
+      "use": "Bounded scenario subset only; local missing-ACK receipt ambiguity pending amendment",
+      "downstream": "ARCHITECTURE, CONTRACTS, DECISIONS, CONTRACT_CROSSWALK"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/CONTRACT_CROSSWALK.md",
+      "sha256": "64db8ea1c5ee1262a549bb589bbb7c0e36bc4dccd758e2e3a845e6d44844ec45",
+      "upstream": "CORE-PRE published d0211b3 root-reported",
+      "read_scope": "Read/reused exact published history",
+      "use": "Preserved unchanged; current candidate supersedes only stated recommendations/status",
+      "downstream": "all core-v1"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/DEPENDENCIES.json",
+      "sha256": "3456d9b3f027ca0dc03e8af555dc4d58b44bbd53c7f5be2f4e45cb497c8a5e64",
+      "upstream": "CORE-PRE published d0211b3 root-reported",
+      "read_scope": "Read/reused exact published history",
+      "use": "Preserved unchanged; current candidate supersedes only stated recommendations/status",
+      "downstream": "all core-v1"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/INPUT_USE.json",
+      "sha256": "0818baac652f2180e2a593ebe2667a666b3bddb05eaf8f48a8695589d56bf225",
+      "upstream": "CORE-PRE published d0211b3 root-reported",
+      "read_scope": "Read/reused exact published history",
+      "use": "Preserved unchanged; current candidate supersedes only stated recommendations/status",
+      "downstream": "all core-v1"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/MANAGER_STATE.md",
+      "sha256": "27bb39fb236c4ebfe711ebc826fb68a6605535cb99ccfb2d960274eda49275ac",
+      "upstream": "CORE-PRE published d0211b3 root-reported",
+      "read_scope": "Read/reused exact published history",
+      "use": "Preserved unchanged; current candidate supersedes only stated recommendations/status",
+      "downstream": "all core-v1"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/consultations.jsonl",
+      "sha256": "1d7bae49ab774625d6278b7c6b5a1012652afe20818843c85ddff22feefc147c",
+      "upstream": "root consultation log",
+      "read_scope": "Targeted actual Q-CORE-01/02/03 entries; append-only log snapshot",
+      "use": "Actual consultation provenance; subsequent appends alone do not invalidate extracted replies; accepted amendments govern semantics",
+      "downstream": "DECISIONS"
+    }
+  ],
+  "not_consumed": [
+    "R12 announced unreviewed handback",
+    "R01 pending localized amendment",
+    "active M0/R1/NIGHT-01"
+  ],
+  "consultation_note": "Q-CORE-04 unanswered. Q-R10-02 manager advice actually sent through root, not schema-owner acceptance.",
+  "evidence_label": "Document synthesis plus hash/structure checks only; no application/model/device tests"
+}

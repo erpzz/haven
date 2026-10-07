@@ -1,0 +1,1070 @@
+{
+  "recorded_at": "2026-09-28T20:17:11.357894+00:00",
+  "repo": "erpzz/gods-eye-view",
+  "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+  "mode": "READ_ONLY_SOURCE_CACHE_NO_EXECUTION",
+  "storage": "Private sibling work/ri01-gev-source; file contents not republished",
+  "rights": "Source-code MIT grant with included LICENSE; data/media/provider rights remain separate. No datasets/media downloaded.",
+  "files": [
+    {
+      "path": "DATA_SOURCES.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/DATA_SOURCES.md",
+      "git_blob_sha": "b1439230e2dd08886b21dc5c59b1d1832fabd999",
+      "sha256": "3fe1510d393bb00ca4dad5175029cec22d5c6d666ff513836083458aa6954c0a",
+      "bytes": 75660
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/LICENSE",
+      "git_blob_sha": "4f01699a2afc703093fcf07181129c3724aae9ff",
+      "sha256": "b231bb38e2d4eab741643126087cbe9df2b58e2f2e5abf27ad613d05f52b01ca",
+      "bytes": 3281
+    },
+    {
+      "path": "SECURITY.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/SECURITY.md",
+      "git_blob_sha": "718c43778156e172abbe981962468520fa8a1638",
+      "sha256": "fb0c74c2e609d08aedc61157d19c8d34f60e5d009c90a712b7dae83fd548107c",
+      "bytes": 12350
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/THIRD_PARTY_NOTICES.md",
+      "git_blob_sha": "071299fba8430ee52be43bf4254ca4567aa6bb37",
+      "sha256": "d90d9f5e12851f67f3e61613d4e91e6c2f20dfb0c8b056e85f4068cd3e86b6b4",
+      "bytes": 736
+    },
+    {
+      "path": "docs/APPLICATION.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/APPLICATION.md",
+      "git_blob_sha": "deafe916892ee13e1cbf8542a1a2eeb38329b1bf",
+      "sha256": "d4c630e59ee368a62dff2570eedf1ad2d0f04ee6b339682468d44470220fe85b",
+      "bytes": 11625
+    },
+    {
+      "path": "docs/CODE-BOUNDARIES.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/CODE-BOUNDARIES.md",
+      "git_blob_sha": "1aeddd5652f0a3bbe71cc69028920ff3c5dafffb",
+      "sha256": "69518499d5633714c3f627d9c626f2f2fe52e683d652f2e985fe7594783ac4f3",
+      "bytes": 44128
+    },
+    {
+      "path": "docs/CURRENT-STATE.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/CURRENT-STATE.md",
+      "git_blob_sha": "8a6cde19323dbe50b64ec03eed56a6304baf05db",
+      "sha256": "9278f2135e709fad4cd3bc9fc1dc9da89544b951691541dbde1b10163b4ce67f",
+      "bytes": 425994
+    },
+    {
+      "path": "docs/DIRECTOR-CAMERA.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/DIRECTOR-CAMERA.md",
+      "git_blob_sha": "2481ba296f74db4c2c11c14994890229da770d41",
+      "sha256": "38f39a5a815db50174db9d156b1dccaec918f2d173a6566fade6caaceb961e9b",
+      "bytes": 5588
+    },
+    {
+      "path": "docs/DIRECTOR-DATA-PACKS.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/DIRECTOR-DATA-PACKS.md",
+      "git_blob_sha": "bf64efd0bfe2de3ff472b73c577eef2f6d47b1b7",
+      "sha256": "8e486713c0b7368541fd3cfc96749e0b18c76f21864e93ecb6f3cfc64ce58e55",
+      "bytes": 6321
+    },
+    {
+      "path": "docs/DIRECTOR-INTERACTIONS.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/DIRECTOR-INTERACTIONS.md",
+      "git_blob_sha": "10168078cf8f4bcfba728eb809919aef84a1a827",
+      "sha256": "83e636385a708f34556791ba07636643ae6e79d8f61af9e9031054fa188f7b6a",
+      "bytes": 3545
+    },
+    {
+      "path": "docs/DIRECTOR-SHARING.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/DIRECTOR-SHARING.md",
+      "git_blob_sha": "7748b2eb23e4e7d0939eee6b3db09754ebf45c19",
+      "sha256": "73e270eb0af6f1af2778a0cd10b3236c97fd0b7c6685433469ab21533516096a",
+      "bytes": 5154
+    },
+    {
+      "path": "docs/DIRECTOR.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/DIRECTOR.md",
+      "git_blob_sha": "a2ca13da71cff3d653cbd4d6fc10eaa3147a2bbc",
+      "sha256": "f77142e6508d0d37eec9cc0167244082e1bd339348c29b3437b312f2e9b804f6",
+      "bytes": 7185
+    },
+    {
+      "path": "docs/INFRASTRUCTURE-LAYERS.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/INFRASTRUCTURE-LAYERS.md",
+      "git_blob_sha": "76567e605f8949f7256e3d150db3b1393fead4e5",
+      "sha256": "344dd51312f3b0b5f4705bee16f5a5c0e4c03b2685076d36c4259367db297752",
+      "bytes": 3595
+    },
+    {
+      "path": "docs/KNOWN-ISSUES.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/KNOWN-ISSUES.md",
+      "git_blob_sha": "e41623cc6d3f28ce5174dc404ca6ebf0a030ab93",
+      "sha256": "d16e0f070e0b4888dffb8c42890a5ab1c387c9425ff257d0e572ed8028722a5c",
+      "bytes": 7688
+    },
+    {
+      "path": "docs/LOCAL-RECEIVERS.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/LOCAL-RECEIVERS.md",
+      "git_blob_sha": "ee75d9a701d5b2fb63214d50105c3a6af459c420",
+      "sha256": "20d46c466f02ecdc2010981fb345fc5493a7e975a8f747f857ab357ed1df5302",
+      "bytes": 3957
+    },
+    {
+      "path": "docs/MAINTAINER_WORKFLOW.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/MAINTAINER_WORKFLOW.md",
+      "git_blob_sha": "39c87be4b56ce5138c7623fb39d4412c31b2747d",
+      "sha256": "ae18614025bea9b7f5648e3f7df9c1969fbf75b6966ac30c2a3eee9afbe930fd",
+      "bytes": 11795
+    },
+    {
+      "path": "docs/PERFORMANCE.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/PERFORMANCE.md",
+      "git_blob_sha": "34b207f79b4391c50ad334dac74b9bfd5a7d4d38",
+      "sha256": "5b464a78ca49376d1e327ab99619736a23b536e55b5c7c35de5adfa02653f512",
+      "bytes": 6341
+    },
+    {
+      "path": "docs/SCENE-DOCUMENT.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/SCENE-DOCUMENT.md",
+      "git_blob_sha": "f6dc66636965d1c75441333dfba3ad4e180bb98f",
+      "sha256": "745a25b77bd1f1d44b55a4078b38a1b471a24e5b98ae59fdd8135e442722949d",
+      "bytes": 5810
+    },
+    {
+      "path": "docs/UI-OWNERSHIP.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/UI-OWNERSHIP.md",
+      "git_blob_sha": "8d24215c7593b7565a6661fd772f08a0c5f7a96f",
+      "sha256": "87a59ba984564ebc23dc8aea7115e30b7a6233e242ae63b09568dd38a8bed2ee",
+      "bytes": 2302
+    },
+    {
+      "path": "docs/VOICE-OWNERSHIP.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/VOICE-OWNERSHIP.md",
+      "git_blob_sha": "d5553df009e105a17a323f81499133673908dc56",
+      "sha256": "6d48442a070edceea594c3b9a9995deb6669b2c029de0e1c8b52775a2f95f285",
+      "bytes": 2897
+    },
+    {
+      "path": "docs/opensky-auth.md",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/docs/opensky-auth.md",
+      "git_blob_sha": "c12b726bc84845fa3bf0e26904b0323c28dec8b1",
+      "sha256": "79a31d439db34fd17b910595322d1f4052f9b8b8b4ab3a284bc3bd1562f46d21",
+      "bytes": 1656
+    },
+    {
+      "path": "package-lock.json",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/package-lock.json",
+      "git_blob_sha": "17bb0691e8a7c01352d0ba052d454fa16786b496",
+      "sha256": "081818a6d68d87cd9a6038504a18df91d8494e5bd4841f87f7e540e0b9860215",
+      "bytes": 98802
+    },
+    {
+      "path": "package.json",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/package.json",
+      "git_blob_sha": "e48881c6d28de7af1b760cdf52561ddc99cb6916",
+      "sha256": "ad904b92590aaed4d1d970b8be25158e09c0917f27ae52eb3326be6beed20b38",
+      "bytes": 11163
+    },
+    {
+      "path": "server/providers/common/geo.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/common/geo.js",
+      "git_blob_sha": "1b7a9d85ba53dc655a613e4ed548fe07f5d0baab",
+      "sha256": "d21127a921b4228e8964acbaed264003761d67868581856c6838ac5d777f92a7",
+      "bytes": 709
+    },
+    {
+      "path": "server/providers/common/http.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/common/http.js",
+      "git_blob_sha": "c80c291157449f2770093568d9401d26bb26df72",
+      "sha256": "3aa8351de12b0e3c915957a7f4e9b5f932ef2f9c5ee93e74b070013c25420f5e",
+      "bytes": 1639
+    },
+    {
+      "path": "server/providers/common/query.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/common/query.js",
+      "git_blob_sha": "9e23d23546372cf1966ba1d4b61be43d3e8cd47a",
+      "sha256": "da5cbb8b4f7f3e67850dd4e7ae13cbe6aa96f7c7ea120a683f5cade06b1ddd98",
+      "bytes": 430
+    },
+    {
+      "path": "server/providers/common/rate-limit.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/common/rate-limit.js",
+      "git_blob_sha": "4b5f967c3fcfc4d6eca53f62020643ee03ce2f10",
+      "sha256": "243da604db597718dd0d389732caea35b2b9e6423c42e5d0ecc0198ac0302b8b",
+      "bytes": 1525
+    },
+    {
+      "path": "server/providers/common/request.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/common/request.js",
+      "git_blob_sha": "93bbbaa85253583ecb4e1a34b89fbe940e387593",
+      "sha256": "939c679fd9cd183c6b6bc35863eae2e5f36068655893a7ba744aaaccbd52fadb",
+      "bytes": 1570
+    },
+    {
+      "path": "server/providers/common/source-root.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/common/source-root.js",
+      "git_blob_sha": "803466cb42453a8780e27d966f0a3f332c3f961b",
+      "sha256": "e8a4d42a945e14989432bc09100f7618492aae10f92a4d375962e0b7949c0395",
+      "bytes": 259
+    },
+    {
+      "path": "server/providers/firePerimeters.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/firePerimeters.js",
+      "git_blob_sha": "4e6a933e1e5e8c5d3a1f9cbe7eb52a1025851e98",
+      "sha256": "ab56dbced4ab939af03f86c0167e842e2521fa335e92d6454318b535c565e29b",
+      "bytes": 8026
+    },
+    {
+      "path": "server/providers/firms.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/firms.js",
+      "git_blob_sha": "636968348af38bdc63fbbb67975ce7c05722bda5",
+      "sha256": "63a270d8c05ed000c65aaf5f1af410075e5c382c724d88a35d02d0c46a81b7b5",
+      "bytes": 9318
+    },
+    {
+      "path": "server/providers/openai/realtime.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/openai/realtime.js",
+      "git_blob_sha": "b4dfb4b5a6e7c6c8bfa06beed4c95b45c795020a",
+      "sha256": "45557d8f03247cf2c4ba7243aef1cc66615b9d6a1af7df6f8cff88cfbe187c1f",
+      "bytes": 5810
+    },
+    {
+      "path": "server/providers/places/google-key.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/places/google-key.js",
+      "git_blob_sha": "353bc9e24af746af7896d9656b1621ce43923304",
+      "sha256": "df049b2cfd41ff9e7f426b18f79a1d8a873910e04b739f9cd09e2c8cbb33924a",
+      "bytes": 1068
+    },
+    {
+      "path": "server/providers/regional/briefing.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/regional/briefing.js",
+      "git_blob_sha": "c5b17a12bf90335314394cac862eae018603183f",
+      "sha256": "c38bd39e05e5ad5ef7c71e6ef44ab2a8169d39f52e959c003516b8314bda16e0",
+      "bytes": 5326
+    },
+    {
+      "path": "server/providers/regional/http.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/regional/http.js",
+      "git_blob_sha": "b67808f9803b3f13b00972f2ceed54e5c7041e0f",
+      "sha256": "1cbe6b3daeb9f462f982644cedf1d13bce1ce99161fa26d9f5294fdd7834d38d",
+      "bytes": 1992
+    },
+    {
+      "path": "server/providers/regional/news.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/regional/news.js",
+      "git_blob_sha": "155dfa9080a5135a7bafa52766644c71e58ad25f",
+      "sha256": "e187fea054fdfd1cc4f26430114cd705c3e064e396decc7a2ac332249e935f0c",
+      "bytes": 3237
+    },
+    {
+      "path": "server/providers/regional/place.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/regional/place.js",
+      "git_blob_sha": "d1815a2fa3fa9febc409c30900a6738b3ef865f9",
+      "sha256": "e4dba911dc26deb7ba3490bf9b356263660257533e7262c07ce9290809b9e565",
+      "bytes": 9754
+    },
+    {
+      "path": "server/providers/regional/query.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/regional/query.js",
+      "git_blob_sha": "07700546d395d1c6fe1432684002abc987710741",
+      "sha256": "79df10ac21be54def2915ae81fbeb44d27f7a04c995256a6dd504eac0d73e854",
+      "bytes": 478
+    },
+    {
+      "path": "server/providers/regional/weather-effects.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/regional/weather-effects.js",
+      "git_blob_sha": "7cf5cb4f37d2f5883db2f5de2a6d0bd25c1b638c",
+      "sha256": "90602284b662f3dd84ce2e12494c83f72f01c458752c03924524abf790e7cb83",
+      "bytes": 4056
+    },
+    {
+      "path": "server/providers/regional/weather.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/regional/weather.js",
+      "git_blob_sha": "e486ff49ab65a4b9e3a2ae00b2a6b3dc77ad1d8a",
+      "sha256": "c84410b3331fbbeda6deb41fa6f3d4491db8bf18133dab40dcc62ee23ae89bf9",
+      "bytes": 824
+    },
+    {
+      "path": "server/providers/weather.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/server/providers/weather.js",
+      "git_blob_sha": "2302359edf3bf36826cb9a941252cf701d434479",
+      "sha256": "315d150f75f487143de54e982dd0f0e4ca403f2a37e45d6de8f6c80042d62743",
+      "bytes": 21774
+    },
+    {
+      "path": "src/app/application.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/app/application.js",
+      "git_blob_sha": "b9c37a8d229f61e119f0a3ae76fa620f0bb1e1a6",
+      "sha256": "69300438ffefd2ed7c243c77ff7e9f25f60bd3bc2ffe1a051aeb4926450da9bd",
+      "bytes": 4699
+    },
+    {
+      "path": "src/app/application.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/app/application.test.mjs",
+      "git_blob_sha": "d3ef8c7cc2360cfa4d2d00cf1ff2a436f1825dd9",
+      "sha256": "cda775568981923c637f0d14e6065365f2d7466f7276cc93b20efbefd07d1c7f",
+      "bytes": 10639
+    },
+    {
+      "path": "src/director/authoring.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/authoring.js",
+      "git_blob_sha": "22a0829711e993e476fd07f901a064757c997c08",
+      "sha256": "29e12a29a49aabf3076932d3863da51478442c369683127968b2db9554d1671d",
+      "bytes": 1749
+    },
+    {
+      "path": "src/director/camera.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/camera.js",
+      "git_blob_sha": "059c7a8732e506fd05da29fd311aa8d0cb5fe0e1",
+      "sha256": "7b9435e50b2a07c292c0e4eebe38a3fc16d660ed897b71af1c43525e54f06a04",
+      "bytes": 1861
+    },
+    {
+      "path": "src/director/camera.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/camera.test.mjs",
+      "git_blob_sha": "cf7c43bb0a1a7ee955bcfa6621f27e4a2cbe623c",
+      "sha256": "fae6ed9aaef347bcf1129758a1aa8ed1e0f8d44454e75ec982c681fba1f9f81f",
+      "bytes": 4328
+    },
+    {
+      "path": "src/director/cameraDocument.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/cameraDocument.js",
+      "git_blob_sha": "1579d54a8f9e2bf564cd76a71e855b87980486fe",
+      "sha256": "88124895f8754a812f0939e008e9e2ed39c16da5ea4dd04145d22123d89e34fb",
+      "bytes": 2973
+    },
+    {
+      "path": "src/director/clock.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/clock.js",
+      "git_blob_sha": "fa83047a3ff7304262543d8721a5fb68fbb28093",
+      "sha256": "eece358ee071fcdf8194cb4f947071f078e0e1dd9839c06b7787385a61c361a6",
+      "bytes": 8497
+    },
+    {
+      "path": "src/director/clock.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/clock.test.mjs",
+      "git_blob_sha": "c259c10ec8079de9db20e4e3a45edc89d6a7d9de",
+      "sha256": "b28ba28a34a5b709bce8dca4c51fdc4098b2f7d25ce835cce9e9eb6cbf7d73ce",
+      "bytes": 5030
+    },
+    {
+      "path": "src/director/document.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/document.js",
+      "git_blob_sha": "48804d83bc44663f3b0a7bd52b2ef8d8e8739311",
+      "sha256": "69b457d7f565784d5e3df42d538fea5bfea4633ed89550d0064744192fec0f85",
+      "bytes": 6266
+    },
+    {
+      "path": "src/director/document.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/document.test.mjs",
+      "git_blob_sha": "c0b8b09359ff307d0b616fb905e7839142501529",
+      "sha256": "12919ffc413720a4baa30695711de47da482fff888c863e28180bece6dc89105",
+      "bytes": 5059
+    },
+    {
+      "path": "src/director/documentFields.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/documentFields.js",
+      "git_blob_sha": "681cc6482ef25f35e5016f1208452f4375d6e617",
+      "sha256": "c42f4671d7014a7f5cf161c944dec2935f4db0f47fe35917723442e21852db31",
+      "bytes": 3318
+    },
+    {
+      "path": "src/director/interactions/document.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/interactions/document.js",
+      "git_blob_sha": "7d1522608addf197b59619093af2c21bc5c49bce",
+      "sha256": "49f64f2a7d81bc7c88bd5f3b02b5f9fab0926720e715dc394d761c0fb3ade00f",
+      "bytes": 3495
+    },
+    {
+      "path": "src/director/interactions/interactions.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/interactions/interactions.test.mjs",
+      "git_blob_sha": "fa0aa10aedf781613f4c3d3a20fc829fba3ab67f",
+      "sha256": "3054efbb196f98ad242cf9b909caf6ef7eb7fc420d4b786f3d525b80320ce1d7",
+      "bytes": 7980
+    },
+    {
+      "path": "src/director/interactions/session.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/interactions/session.js",
+      "git_blob_sha": "2f305b675959b6c1db2bc606cf82955a25ae4e7e",
+      "sha256": "6c81341bbe871d3df8f5b3bd89a342c42a9375cd9149a00e0aff163a8be7f1a2",
+      "bytes": 1746
+    },
+    {
+      "path": "src/director/packs/geojson.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/packs/geojson.js",
+      "git_blob_sha": "49f9f0f55b51d58dab3681e468e887306c2ccfe1",
+      "sha256": "a5814ccf8eff2c8661288c5b891209eed80b033c3e727dae581f4b5334e0c7db",
+      "bytes": 2084
+    },
+    {
+      "path": "src/director/packs/manifest.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/packs/manifest.js",
+      "git_blob_sha": "eff00eb12845ef42a57f363b06bd01e99dad468d",
+      "sha256": "33ea3ca51d576854eff4190214cd89422ed02535735f3c972d584332b0411f08",
+      "bytes": 4369
+    },
+    {
+      "path": "src/director/packs/packs.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/packs/packs.test.mjs",
+      "git_blob_sha": "ed5d4250067aebbf30a8f25ac32da2ca364829dd",
+      "sha256": "bd1a8e852b7c662f94d47fab63c1a4fbc1b4be166db2ccbe77a79ffbc7b31d0a",
+      "bytes": 10863
+    },
+    {
+      "path": "src/director/packs/session.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/packs/session.js",
+      "git_blob_sha": "576258afd24402a623a51af0f04db4d9c6b9ee1c",
+      "sha256": "2cfec16908135cec5a10a65725aa05c513f22eaa3b0bf1ad478016a7fe1b1d26",
+      "bytes": 5162
+    },
+    {
+      "path": "src/director/packs/source.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/packs/source.js",
+      "git_blob_sha": "4828827af2904a65d843463e65c575305490d93d",
+      "sha256": "2fdd5cadf054a6f7e84fb6213f018485d4f186c67d005e640a629446f63fca18",
+      "bytes": 2005
+    },
+    {
+      "path": "src/director/playback.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/playback.js",
+      "git_blob_sha": "4fa97df1a3d675f50b09117f06768957f6c5c181",
+      "sha256": "a946bb225df7cb52916ed657f5d0934ff8dd2bf54252d87f43f9b7306d8aaf30",
+      "bytes": 4616
+    },
+    {
+      "path": "src/director/playback.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/playback.test.mjs",
+      "git_blob_sha": "f1d8f092101c216752857daceb0954644fb803b1",
+      "sha256": "49492557a0b840d28f7e897c0ef7c2cb769b3491e6fb12a6bbe44073fe97144f",
+      "bytes": 5989
+    },
+    {
+      "path": "src/director/sharing/bundle.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/sharing/bundle.js",
+      "git_blob_sha": "945457aadc8e2b47d413b94f4e6e03f04f9ca099",
+      "sha256": "04c31f1898eb31689aa75eaa8fac3e7fccd700d6e3f9d48d4c1e0b448f6625c0",
+      "bytes": 7418
+    },
+    {
+      "path": "src/director/sharing/lifetime.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/sharing/lifetime.js",
+      "git_blob_sha": "0468ddbeb3a0bbf32bfe5787b36581ca5aca3a87",
+      "sha256": "f9595b0288e44bbb2778cd99ce7dfdaa3a1dc5f804502dd0ba8f11b91bacdcbc",
+      "bytes": 800
+    },
+    {
+      "path": "src/director/sharing/preview.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/sharing/preview.js",
+      "git_blob_sha": "400d5416d4d5e15de0a8d58f7b59272f14d89385",
+      "sha256": "b5545c8a7a7a9907b93cd6717e9a0e1ef2d4de87bf2daaeea4f47653fa3fbee3",
+      "bytes": 1450
+    },
+    {
+      "path": "src/director/sharing/sharing.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/sharing/sharing.test.mjs",
+      "git_blob_sha": "d65b340b25f79aa441a5fdd9023d7f542fc33d72",
+      "sha256": "f8830717de1e070263be525a5b7ae84acac819d5a3ed0494e51173ed958f0320",
+      "bytes": 8334
+    },
+    {
+      "path": "src/director/timeline.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/timeline.js",
+      "git_blob_sha": "7fd4cbbae02e1e24ca80ebf5266335604b020d4a",
+      "sha256": "f8daf2743ab1510ad85829e40aa6ff3f94cdcc8b9f7eb9b792d01e94b9d60bef",
+      "bytes": 4243
+    },
+    {
+      "path": "src/director/timeline.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/director/timeline.test.mjs",
+      "git_blob_sha": "1950eeef06b8720ea61e186b6185c87fb40682ea",
+      "sha256": "baf2691a8b9c1daf3a2901681044f41049c8dc99fbf84ec4efce3bff3324efa7",
+      "bytes": 1656
+    },
+    {
+      "path": "src/hudAltitudeDatum.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/hudAltitudeDatum.test.mjs",
+      "git_blob_sha": "eeb407da4ccd4453f4ebcd79e78fa834ed89a9b8",
+      "sha256": "50696b184fbea7798570c0ff2345b428bfc739530ce6cb5ac10a27d5d5d429c1",
+      "bytes": 9702
+    },
+    {
+      "path": "src/keySetupCore.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/keySetupCore.mjs",
+      "git_blob_sha": "e8bfef92ceb22da9c773fba39da47256acd5b086",
+      "sha256": "55c0d039ce1519435f7f19a3d8e7a0dab05d3a21b7bffa24ca352e2600d81bbe",
+      "bytes": 17885
+    },
+    {
+      "path": "src/keySetupCore.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/keySetupCore.test.mjs",
+      "git_blob_sha": "05f4060098456bbb2a6d13e76281d85da3574326",
+      "sha256": "95998d8cce22d7dc949254cfb41b9f77a360fbc0b03ebfe78aa5736ecf7c098c",
+      "bytes": 18275
+    },
+    {
+      "path": "src/keySetupHardening.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/keySetupHardening.test.mjs",
+      "git_blob_sha": "c519576e35b1c0a8f368a854f25167c444fe4292",
+      "sha256": "964330bff72e7e3eab164aa7d54f177f99358258fa97b5e64325cc21044b904b",
+      "bytes": 16281
+    },
+    {
+      "path": "src/search/coordinateGeocoder.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/coordinateGeocoder.js",
+      "git_blob_sha": "265a0e12ca6d797edac8c67b7ac0f85b6e20e4b5",
+      "sha256": "5b18e27cf0639cbe0cb55652ba3ac2ffa48538a1d92663cae375e165993e869a",
+      "bytes": 1717
+    },
+    {
+      "path": "src/search/coordinateParser.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/coordinateParser.js",
+      "git_blob_sha": "261e2394c7c22445aae5ff3e1ccfef031b0856d2",
+      "sha256": "e666a7b905d8f4dd89985f4da1ccacbb70eb4f79f68f2f52a685de55553b8457",
+      "bytes": 3850
+    },
+    {
+      "path": "src/search/coordinateParser.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/coordinateParser.test.mjs",
+      "git_blob_sha": "393de37a4ca1eab8107292ade0c9f3e2c4263d36",
+      "sha256": "bace104d1769db7aea68ff49fee700e4315540782229c83846158dc270419e79",
+      "bytes": 4099
+    },
+    {
+      "path": "src/search/defaults.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/defaults.js",
+      "git_blob_sha": "2b04280259eee219365b0084ce4982f11f57fbbe",
+      "sha256": "01e810ee84a1c4b883430053934eb980aabc63ab5e523980899a45e02c41bd56",
+      "bytes": 3793
+    },
+    {
+      "path": "src/search/geospatial.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/geospatial.js",
+      "git_blob_sha": "5c14bba5e5177802152d5eab0fe7a8a1532a2ad4",
+      "sha256": "83b253d444273c438a699f2203555b9d832f6f6c6f2c1ce342f868803ac43a90",
+      "bytes": 2792
+    },
+    {
+      "path": "src/search/geospatial.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/geospatial.test.mjs",
+      "git_blob_sha": "660ac11caa739fb3596a24b7c3361d43bdb730d7",
+      "sha256": "212f9b6ea2e1e17fb505cf1cb9f643ec9e36c9a6e58afdae9a1dc92526c54dd0",
+      "bytes": 7353
+    },
+    {
+      "path": "src/search/google.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/google.js",
+      "git_blob_sha": "e1c2a556a60cb194fdfd84982d49e2979b55da4c",
+      "sha256": "d407e00b7fa8cebb66b02bd97ac8ddb9e3e6fc51d1e00271adee98d9f7b5812d",
+      "bytes": 2260
+    },
+    {
+      "path": "src/search/http.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/http.js",
+      "git_blob_sha": "5b1642c67ee453223489dc62a3793d6476d42aa1",
+      "sha256": "449dcaa6e02a6265e569c62ae5ceb87403f38233511de36523f752f3115ed4e1",
+      "bytes": 4021
+    },
+    {
+      "path": "src/search/index.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/index.js",
+      "git_blob_sha": "eb0e727ccd90013c5577d462553ec38c664c1e3d",
+      "sha256": "a66a14e0ba245389a53efd9a9605f810647a7e99b0404160cbb5ed3a056a65e6",
+      "bytes": 797
+    },
+    {
+      "path": "src/search/nominatim.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/nominatim.js",
+      "git_blob_sha": "927c2e1d1eff853dabffe993564ee25f3c06648a",
+      "sha256": "dc6ebaa9a61e7a2597997cc15e7eaf0df7e4ef60c1f2884fc65500e9e127f119",
+      "bytes": 1419
+    },
+    {
+      "path": "src/search/nominatim.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/nominatim.test.mjs",
+      "git_blob_sha": "a2667f12947a54f7307abe7c25b7dc3233d9f5b9",
+      "sha256": "76636941e7ef204fb3b55d7166c0a5e83bbb175608f30cddf63913e3d484f412",
+      "bytes": 6389
+    },
+    {
+      "path": "src/search/offlineGeocoders.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/offlineGeocoders.test.mjs",
+      "git_blob_sha": "f0d6a507aa8ef4dad2846211a9a1c7cbd59bedba",
+      "sha256": "40cf9d10dce0fb9631f4fadd9e321ff99e39ee4a6019baaaeece3a53d4ffa77e",
+      "bytes": 6592
+    },
+    {
+      "path": "src/search/placeSearch.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/placeSearch.js",
+      "git_blob_sha": "664e5f9af3cd1a929bba56e546fd08b139c618eb",
+      "sha256": "a817bf9f3a850c4bf09a4707c3976b46feb9e4708bc29416ddf8e928d0a40511",
+      "bytes": 2213
+    },
+    {
+      "path": "src/search/placeSearch.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/placeSearch.test.mjs",
+      "git_blob_sha": "e609f9da912b79f35c21e2d782aef9eab3490060",
+      "sha256": "0a26b5edee84144b3593dc5b973518acc5c2942a85d4da875db4c7554f474934",
+      "bytes": 5247
+    },
+    {
+      "path": "src/search/presetGeocoder.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/search/presetGeocoder.js",
+      "git_blob_sha": "f0e192c98c8691cc7362b2a59dbc5093217af45c",
+      "sha256": "63f38eba722777cef02ef9e699778df0afeb15e2c6f9a101c7289ea2ccde8b60",
+      "bytes": 3549
+    },
+    {
+      "path": "src/services/application.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/services/application.js",
+      "git_blob_sha": "30c1c1aedf8c499e8cd7b265415b572a2363cb2e",
+      "sha256": "5526c0aec5f2934f28449b161a559dcf94152847a1b1572ea135355fbceec685",
+      "bytes": 1616
+    },
+    {
+      "path": "src/sharelink.celestial.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sharelink.celestial.test.mjs",
+      "git_blob_sha": "cc26727859ff215c6d14c928969e8170797f9b9e",
+      "sha256": "74b36c99f9e84e1c879239c36f6e0d117582dd83636e58661ae573ee50193a82",
+      "bytes": 34540
+    },
+    {
+      "path": "src/sharelink.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sharelink.js",
+      "git_blob_sha": "08360932b406ccb985a601c29b92766f9973fd70",
+      "sha256": "2df7bc550559e241b32865f227bdb378ba8c0c49339a0615b92d3289921363a0",
+      "bytes": 27536
+    },
+    {
+      "path": "src/sources/adsbRecords.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/adsbRecords.js",
+      "git_blob_sha": "9c0082700c9eea6c54620f086c335747a2901cec",
+      "sha256": "87601f3904464efa6c0525b166b113baae28836682d53a61a4b5965ce0d31b38",
+      "bytes": 14909
+    },
+    {
+      "path": "src/sources/adsbRecords.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/adsbRecords.test.mjs",
+      "git_blob_sha": "12070d47b1c4707ab152fb3c8aba992855339f43",
+      "sha256": "84680e734191b4e377dd43facb6b195e0e6453aeb327dc67913d167db29e1987",
+      "bytes": 9821
+    },
+    {
+      "path": "src/sources/cctvTypes.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/cctvTypes.js",
+      "git_blob_sha": "2a3f6a6a38cb1c679ceb7c6dd01ffbd80613ab91",
+      "sha256": "dcc3a9248c664e15c589a981a76fe7f049a1397e03665a2fb495b9c3d3c73719",
+      "bytes": 836
+    },
+    {
+      "path": "src/sources/featureGeometry.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/featureGeometry.js",
+      "git_blob_sha": "429dbe826fe2805009a2a7929fa7208b6f35d4c3",
+      "sha256": "74a5147e5ce2c4f985015ab68c2c07dc7f667595e92e98fdbf03af2bbb3ceff3",
+      "bytes": 9143
+    },
+    {
+      "path": "src/sources/featureSource.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/featureSource.js",
+      "git_blob_sha": "f2a65577215b831b4170a37eb10822fee8b51698",
+      "sha256": "c573266530ab2b37fa3f69aa04eb515f075d632e47bd6600ec7ac114ccb17bb9",
+      "bytes": 574
+    },
+    {
+      "path": "src/sources/httpBody.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/httpBody.js",
+      "git_blob_sha": "6f176ca52fe65230686e2fadfe995b9a33ad55c0",
+      "sha256": "289106f37df1c9736623ae9a36f75aef581c00bec44a3bc522ccc74136345622",
+      "bytes": 3591
+    },
+    {
+      "path": "src/sources/live/aircraft.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/live/aircraft.js",
+      "git_blob_sha": "9534a5c3c5365ec9cfa169e6c02bed0cc2d60711",
+      "sha256": "ace6e909727150fe5d908d8b7167ac345c3befddc24dc392ddaa1e77228b99f6",
+      "bytes": 4954
+    },
+    {
+      "path": "src/sources/live/contract.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/live/contract.js",
+      "git_blob_sha": "2415ff43c12d857dd53ca5be770f0f92624f9111",
+      "sha256": "e227f72f6ff325d293e02ef6c9e7dfeee0d361e3920eb400d91583e31b051f5c",
+      "bytes": 3574
+    },
+    {
+      "path": "src/sources/live/contract.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/live/contract.test.mjs",
+      "git_blob_sha": "671a2e5e4ffe6795d342e4fb26d656e6ff0ed9b7",
+      "sha256": "e9f5e439aaaf0ddad4a7c7be49c4d38dde34a5b286309d53329f93f25efafa77",
+      "bytes": 10270
+    },
+    {
+      "path": "src/sources/live/index.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/live/index.js",
+      "git_blob_sha": "73f492500e97856674980d54c7904d0ffc935a67",
+      "sha256": "9e51f80f311227f91e9dc2d6bed097144c70c4e6f1b2251799c35e34cdfd390b",
+      "bytes": 430
+    },
+    {
+      "path": "src/sources/live/standalone.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/live/standalone.js",
+      "git_blob_sha": "ecee2a4056a373c9a344bdeb9afb3363825e3e03",
+      "sha256": "a25cb162359fa278313a9538503d3cb118b6a3245445ad6eb4eb2450d413d1da",
+      "bytes": 6754
+    },
+    {
+      "path": "src/sources/live/vessels.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/live/vessels.js",
+      "git_blob_sha": "affdcce7a9d5ea2853c68d8be2ba43e2450f0eaa",
+      "sha256": "3f14d3f4f7c0f164a798af26b84605e677f2bbdc61c57c4d917b76f28b83a58d",
+      "bytes": 3062
+    },
+    {
+      "path": "src/sources/nominatim.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/nominatim.js",
+      "git_blob_sha": "c2f9382c86ab91c7399fb14cf2a3bb89808f2f55",
+      "sha256": "bc88f4a4a13f9e8526168a105eeacadcb98193bdcd0ce998d94ca07109b84197",
+      "bytes": 3991
+    },
+    {
+      "path": "src/sources/overpass.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/overpass.js",
+      "git_blob_sha": "a2a292e57849a485bdcf9b08adc4221405555817",
+      "sha256": "36098d3582a2858ee9479f19d1a9ee073173a16aade1a3c0b05376cf7d5d1b0e",
+      "bytes": 1305
+    },
+    {
+      "path": "src/sources/overpassFeatures.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/overpassFeatures.js",
+      "git_blob_sha": "228be344ae207c30aa9f8a2bce20035d9f2c4e83",
+      "sha256": "2d12003c0d1c6080b51edeeb1d89d6bbc87a34106260734cfc7a6802ece54b68",
+      "bytes": 6610
+    },
+    {
+      "path": "src/sources/overpassFeatures.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/overpassFeatures.test.mjs",
+      "git_blob_sha": "45c23391990824962534c6c6b55312447f4a9999",
+      "sha256": "473d64ce6ab04f1c1c12716ee4c6393396ed7a1a3df66da0ed1f5a6ee6574fb9",
+      "bytes": 5906
+    },
+    {
+      "path": "src/sources/overpassFeaturesRecords.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/overpassFeaturesRecords.js",
+      "git_blob_sha": "ae23d00b331d6b211449c80eb5becf16cf096933",
+      "sha256": "02c76a9d56f7949f0b788aee02fdaabdab33910f4a92c23f3d2cd5c8bac4e4b9",
+      "bytes": 2775
+    },
+    {
+      "path": "src/sources/overpassRoads.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/overpassRoads.js",
+      "git_blob_sha": "5767045086bb668390e37463a17f6e01689b7943",
+      "sha256": "90553e9e92600b4e6d5f82d99bc1ea1ef19259ce533392e15abd683ca82f2afe",
+      "bytes": 768
+    },
+    {
+      "path": "src/sources/protocols.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/protocols.test.mjs",
+      "git_blob_sha": "c4d90e6b027932c2555d7aa3d54800e6a26652de",
+      "sha256": "6f73ae684cba1f04c02d7eb9f659c03529ee6310598836b44baddd34e26b6647",
+      "bytes": 3747
+    },
+    {
+      "path": "src/sources/radioBrowser.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/radioBrowser.js",
+      "git_blob_sha": "8511b6beb419f171953face05ffc491fa9c95d9e",
+      "sha256": "2bb9989e9c87c3158e4eec7f22943da1c71c722c6801ac445f16261f3e4e4993",
+      "bytes": 4942
+    },
+    {
+      "path": "src/sources/rateLimit.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/rateLimit.js",
+      "git_blob_sha": "7c6094cf60cb0fa084950fab4ef72a3d0896db6a",
+      "sha256": "0d958d3d0e7825da3819d86e6dd7921c60520fdada48628cf83c6cfa3da94e16",
+      "bytes": 1155
+    },
+    {
+      "path": "src/sources/reference.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/reference.js",
+      "git_blob_sha": "4bdf7e9acbb9111a58ce8c8f7a3d8144167ccf57",
+      "sha256": "8f5f639697553a6ca2fb821f629dcc877e4c9f03d78854d4c95b85ef62ac3c89",
+      "bytes": 526
+    },
+    {
+      "path": "src/sources/reference.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/reference.test.mjs",
+      "git_blob_sha": "902a72c83b9559c6c707e77cd0148e918920caf2",
+      "sha256": "71d69c7e0671daa9b141022e2fff3018d445e6bc2f393a73e8374ef6d4d6f81a",
+      "bytes": 1120
+    },
+    {
+      "path": "src/sources/sourceSlot.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/sourceSlot.js",
+      "git_blob_sha": "8883c0171ba2890f451f49a96a324177e49bfd69",
+      "sha256": "588fa56e25b5300632116091aff8cb118ad0ae3a9cd5c0bb121f265f93a9fab7",
+      "bytes": 1587
+    },
+    {
+      "path": "src/sources/transitHistory.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/transitHistory.js",
+      "git_blob_sha": "ee8b6847f537947d2dcc1b36b07e845803c13aed",
+      "sha256": "a23b757a7b9c487464bf4b767389f509fd88c3dddc9a655f958bf066db41da63",
+      "bytes": 2973
+    },
+    {
+      "path": "src/sources/transitHistoryStore.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/transitHistoryStore.js",
+      "git_blob_sha": "36440975c42fb5da729773105cb1d32edb5a696d",
+      "sha256": "5da591c60001c75910222de495f19baf4e7ff23885784b2e5ce875fa66a0a377",
+      "bytes": 15600
+    },
+    {
+      "path": "src/sources/transitService.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/transitService.js",
+      "git_blob_sha": "1b6b46d783af174ed935cfda0f85a52468b2f293",
+      "sha256": "3afaef62ea0f4a6fc5e54a6c8eeb0854849bedcde6e705e6ed70e5d1c77d8589",
+      "bytes": 14311
+    },
+    {
+      "path": "src/sources/windBody.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/sources/windBody.js",
+      "git_blob_sha": "0aa1a0e226aa7bf17719f65f0b338dca1f83fc8a",
+      "sha256": "ea3056c54e1c173dc28926949d095948d6f7a35ea40502079f4761d638f0e3e1",
+      "bytes": 1225
+    },
+    {
+      "path": "src/standalone/application.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/standalone/application.js",
+      "git_blob_sha": "cbdf9cb7fa68b7638f44dcc654512f71954debef",
+      "sha256": "5d9e5d9ff8156b930380605f33a1bc754eee1969a0aec59d627fba178b81dcfa",
+      "bytes": 2478
+    },
+    {
+      "path": "src/voice/actionSchemas.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/actionSchemas.js",
+      "git_blob_sha": "c18b3c724d59c455237614e40c29992eec6b0f3b",
+      "sha256": "5a95918243c3614e2a5a99bc20531a2ff990203d9b3b1b430ad2422dee4164df",
+      "bytes": 22748
+    },
+    {
+      "path": "src/voice/actionSchemas.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/actionSchemas.test.mjs",
+      "git_blob_sha": "8b944924b2afed8c657f3bd5219ce0d66d8c61bf",
+      "sha256": "0df4e4da383fa8b74ab72724cdf23425ac854a4f9d1f0541f6e0ac6299df92eb",
+      "bytes": 4418
+    },
+    {
+      "path": "src/voice/aircraftIdentityNarration.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/aircraftIdentityNarration.test.mjs",
+      "git_blob_sha": "911696167c5f80b7f7578fb6923f1a8d729c4423",
+      "sha256": "5416c5e7b8c141eb3f1c80675f96f25314fc77234c7d21545d7afdd267e8ac21",
+      "bytes": 2547
+    },
+    {
+      "path": "src/voice/commands.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/commands.js",
+      "git_blob_sha": "cc059852bea43a0f9cdd963e3ea938f562f560e4",
+      "sha256": "5412b2b11072518a9f9b4ce4fcc086b724b5f713cc105c4077d481512080c73c",
+      "bytes": 366
+    },
+    {
+      "path": "src/voice/control.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/control.js",
+      "git_blob_sha": "35e4d20bceda9337f52d1d511cd6ee6715ab13aa",
+      "sha256": "32c49e1e0d38778d3a71ed4b3a95e0690413898f57c920b0da506d88d0e11241",
+      "bytes": 3315
+    },
+    {
+      "path": "src/voice/gevActions.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/gevActions.js",
+      "git_blob_sha": "cfdb1fb0b46f8d46cba7809c71ab0a30d20e6b30",
+      "sha256": "071d4c116517d64d2d8c340f7811d73dcec1439b62558800f7ab5458a2d4c3c4",
+      "bytes": 146261
+    },
+    {
+      "path": "src/voice/gevActions.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/gevActions.test.mjs",
+      "git_blob_sha": "8035356b252bae8db77bc2b7e2842c673227d188",
+      "sha256": "1397ee1fa0527935ccb3834dc4b15ceb4261bcf3583f9283eb9ba7b981926f4c",
+      "bytes": 129931
+    },
+    {
+      "path": "src/voice/gevRealtime.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/gevRealtime.js",
+      "git_blob_sha": "63286951c92fc29d807319e9bf5fe2fbb8184e1e",
+      "sha256": "3169589be76f1a9b061560c93107fcc2ec16369c57791500687c2b0a65adc069",
+      "bytes": 368
+    },
+    {
+      "path": "src/voice/gevRealtime.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/gevRealtime.test.mjs",
+      "git_blob_sha": "d7056a0e322f8bb33da32f36dfba6de8a83da336",
+      "sha256": "014bdcb242812b6a0f7f1cfeeb18811195b700ad0a3fd2febd6c551e8e1266b5",
+      "bytes": 142052
+    },
+    {
+      "path": "src/voice/layerSummary.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/layerSummary.js",
+      "git_blob_sha": "1a283cffa89a05482292daf5ded51e767a58dbac",
+      "sha256": "0d59d9949ede7498c1fb4fe9e326a9e343d666fddd59e29a89e532d7bba0e02f",
+      "bytes": 1011
+    },
+    {
+      "path": "src/voice/realtimeBackend.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeBackend.js",
+      "git_blob_sha": "2a8af2d0d220b0864d3b829b20cc3f82ce6b734b",
+      "sha256": "a85a68c570531c89d4023dbda639f6e1fe3addb0d39a8955fe7ab803fdccef3e",
+      "bytes": 3233
+    },
+    {
+      "path": "src/voice/realtimeBackend.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeBackend.test.mjs",
+      "git_blob_sha": "1fc21da9d81960665d8dd7a230955a0158b54c95",
+      "sha256": "cc9c9e60857248a8e96ee7de1b03c1a71f24716288bf5e1c7f2d2cf898f7b3fc",
+      "bytes": 4462
+    },
+    {
+      "path": "src/voice/realtimeConnection.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeConnection.js",
+      "git_blob_sha": "b20afb67d7096992df15412751a1456a2f8bc857",
+      "sha256": "51a8c315dc3169b4e4a07c5307068ff994162a0a7bc5559602b7803623cdbe9a",
+      "bytes": 13279
+    },
+    {
+      "path": "src/voice/realtimeController.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeController.js",
+      "git_blob_sha": "d0c9f1baeea9618d67700eda63b387f0f395ea21",
+      "sha256": "a9028d1419d15453ab331ac0d5c3f425be0f03dfcf8f08ba11226c7d63568cc4",
+      "bytes": 13033
+    },
+    {
+      "path": "src/voice/realtimeCost.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeCost.js",
+      "git_blob_sha": "9c11694903fdc41b818c59f0ccd95fc83e6f8aa8",
+      "sha256": "aad63935f03e77c1d4c8cfc411d237e88c017115f9eea374005a86107e4df5d5",
+      "bytes": 7696
+    },
+    {
+      "path": "src/voice/realtimeDiagnostics.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeDiagnostics.js",
+      "git_blob_sha": "630e294331da8d2c3dcb4bdc6913bba6ae61e1d3",
+      "sha256": "bdc95fb09047a3d2d8eb5440f5438284d0861b33d15b7aa75049c12d78293462",
+      "bytes": 6617
+    },
+    {
+      "path": "src/voice/realtimeEvents.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeEvents.js",
+      "git_blob_sha": "61c764b1de2282a6af8b4cd55fe4f3fcedb992bd",
+      "sha256": "11926da3cd2fe1de13cedfaaff64e6ee8cdabc2dbf3a3d3341022a8ce79a9a0b",
+      "bytes": 1363
+    },
+    {
+      "path": "src/voice/realtimeFacade.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeFacade.js",
+      "git_blob_sha": "5505794d6fe408175df613edbc5610188c7ca315",
+      "sha256": "cb1a78ab0e35c3774e84452cc18c3bb9f1c83669d489c1d68a1dd0ee03444f4e",
+      "bytes": 14617
+    },
+    {
+      "path": "src/voice/realtimeInput.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeInput.js",
+      "git_blob_sha": "8607edf701be65ebe68a5e8a5397bd1a59707b3a",
+      "sha256": "9c91016290c0d866c24570411fd0313dfc72f14c4740b35e1b989c5e262f37cf",
+      "bytes": 14568
+    },
+    {
+      "path": "src/voice/realtimeInputPolicy.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeInputPolicy.js",
+      "git_blob_sha": "55466f275162f0e62332de75554cef6acdee02e0",
+      "sha256": "d10120c831295ab730ebf5cde254625e6e768a35b587687a7ea14b6b7cdbf3ae",
+      "bytes": 5667
+    },
+    {
+      "path": "src/voice/realtimeOwners.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeOwners.test.mjs",
+      "git_blob_sha": "1470790c22e7f5a671fff7ae55ca6e5ba92523ca",
+      "sha256": "3bf7cdd415fa1cd5ae2ea0e9ac525537286c6262d91b14e32975383e5a3f371f",
+      "bytes": 11215
+    },
+    {
+      "path": "src/voice/realtimePreferences.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimePreferences.js",
+      "git_blob_sha": "1d4d1dd23cec8c66897e3981a4d0135ac6461a9d",
+      "sha256": "c2f31f8abf34216ff509590fd0f4aa6230c8223c1b52b77027e6a658a2f75d35",
+      "bytes": 2580
+    },
+    {
+      "path": "src/voice/realtimeProtocol.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeProtocol.js",
+      "git_blob_sha": "064bc2ae14e25ee27c51fe9af8ff7ce30c9ae2af",
+      "sha256": "ea960d14316a40292d80b456b9764fefc13c9783572d891731fbb47b87ff69ef",
+      "bytes": 9371
+    },
+    {
+      "path": "src/voice/realtimeRadio.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeRadio.js",
+      "git_blob_sha": "0b6fbb78e155ccffe1ccaa1700c27046e2d0fa87",
+      "sha256": "c5946140a21f4d496c4e9b5c94564392103a7e1e96a1b09e6a10e6c769ed9ae1",
+      "bytes": 12202
+    },
+    {
+      "path": "src/voice/realtimeSession.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeSession.js",
+      "git_blob_sha": "0220961f81bbf83fe6fa8229daa17ca14a85933a",
+      "sha256": "d5df2c064ff5e7c0f56f35f560881782f96cf5d9259284a54b89d87f8e1bd5af",
+      "bytes": 1125
+    },
+    {
+      "path": "src/voice/realtimeTurns.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeTurns.js",
+      "git_blob_sha": "366a8e7d3584ebc05b9a47504a235e994c2dcbe3",
+      "sha256": "30ffac0faf7df5ffd6df2cd5c95c25aea5839b67de4042ff3a8623d303b84461",
+      "bytes": 27230
+    },
+    {
+      "path": "src/voice/realtimeViewport.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/realtimeViewport.js",
+      "git_blob_sha": "fd93996af81465819a903fcc182bcebc865ac808",
+      "sha256": "4718cb6164473d6ad2eb0467965b1f5df2797c73eec7b474b6a5d56af48d4787",
+      "bytes": 10994
+    },
+    {
+      "path": "src/voice/session.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/session.js",
+      "git_blob_sha": "dcbcd3e89809ee1700d61a80dd35930931a54b84",
+      "sha256": "c592146a308fbc08c8e0e3f104a41c4fc796e7da5dd5e93b37b36dc75e179e0c",
+      "bytes": 4682
+    },
+    {
+      "path": "src/voice/session.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/session.test.mjs",
+      "git_blob_sha": "14b859dd755c23cbe88d84cee393845205b11da0",
+      "sha256": "121f8f179d7d9ca04a7438c88c58bf18c4353981d5f7bbc9c685c19538213347",
+      "bytes": 9340
+    },
+    {
+      "path": "src/voice/sessionCommands.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/sessionCommands.js",
+      "git_blob_sha": "37e1eb5302f389c41b86783fbbf06f50a0768afb",
+      "sha256": "56f0ff81a6c55af7831cccdc8a43f4f42fc1e492877e4be5bd6146fd51df8026",
+      "bytes": 2899
+    },
+    {
+      "path": "src/voice/voiceCost.js",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/voiceCost.js",
+      "git_blob_sha": "b8de0fa247a86e99bd691cd1ad2d4b3b903c5b08",
+      "sha256": "8fa7a3318a45a24d861acb2a699fedb8423889ffb2e7178a3f8b137b4783039f",
+      "bytes": 17458
+    },
+    {
+      "path": "src/voice/voiceCost.test.mjs",
+      "url": "https://raw.githubusercontent.com/erpzz/gods-eye-view/81eb44340d90feda5b5283438f6e5fdad5cabbdd/src/voice/voiceCost.test.mjs",
+      "git_blob_sha": "092db6d6472a113e13c0221997498be14595f471",
+      "sha256": "4b8e96bfa185725dba57d55c03f7dd764d87347a15791cdb3135c9d7dcd36d0a",
+      "bytes": 24862
+    }
+  ],
+  "errors": [],
+  "total_bytes": 1954370,
+  "qualification": "Byte identity only; R15 author must read actual selected code and evaluate claims; tests not run."
+}

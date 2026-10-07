@@ -1,0 +1,198 @@
+{
+  "recorded_at": "2026-09-28T20:19:04.407172+00:00",
+  "main": "376031e182c57495912baf6727093b0b188da568",
+  "pulls": [
+    {
+      "number": 18,
+      "state": "closed",
+      "title": "[RI-01] Set up autonomous multimodal research, review and integration team",
+      "head": "dc1d6682c7d0fe7c4b989a9de1ac2628ddb16e9a",
+      "updated_at": "2026-09-28T17:05:21Z"
+    },
+    {
+      "number": 16,
+      "state": "closed",
+      "title": "[R15] Publish Observatory brief, six specialist prompts and coordination records",
+      "head": "ba543849e2714291cac21d8ebfeeab241aa823c1",
+      "updated_at": "2026-09-28T16:23:07Z"
+    },
+    {
+      "number": 15,
+      "state": "open",
+      "title": "[R02][publication-v2] Preserve exact handback and verify source import",
+      "head": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+      "updated_at": "2026-09-28T16:21:06Z"
+    },
+    {
+      "number": 14,
+      "state": "open",
+      "title": "[R06][v1] Publish RF spatial research handback for review",
+      "head": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+      "updated_at": "2026-09-28T16:19:25Z"
+    },
+    {
+      "number": 13,
+      "state": "open",
+      "title": "[R08][v1] Restore engineering handback and P00 continuation",
+      "head": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+      "updated_at": "2026-09-28T16:17:39Z"
+    },
+    {
+      "number": 11,
+      "state": "closed",
+      "title": "[R08][v1] Restore engineering handback and P00 continuation",
+      "head": "658880e8b01517c3f19cabfd6bb2538c2b46ea2a",
+      "updated_at": "2026-09-28T16:17:42Z"
+    },
+    {
+      "number": 10,
+      "state": "closed",
+      "title": "[R15] Haven Observatory \u2014 God/Admin POV and open-tool integration research",
+      "head": "2cbbd9ff6c07c08b986bf9a4a3ae6b9a5cf2a326",
+      "updated_at": "2026-09-28T16:15:16Z"
+    },
+    {
+      "number": 9,
+      "state": "open",
+      "title": "[R14] Human augmentation, cybernetics and new-senses research prompt",
+      "head": "cffc1168255f600206c53fd63d1ad3ffd963121d",
+      "updated_at": "2026-09-28T07:56:47Z"
+    }
+  ],
+  "branches": [
+    {
+      "name": "campaign/ri01-20260928T180322Z-6e8f",
+      "sha": "693edd34f80fac4a5f5ec141950dc1ff202bd290"
+    },
+    {
+      "name": "docs/r15-observatory-publication-20260928",
+      "sha": "ba543849e2714291cac21d8ebfeeab241aa823c1"
+    },
+    {
+      "name": "main",
+      "sha": "376031e182c57495912baf6727093b0b188da568"
+    },
+    {
+      "name": "research/r02-handback-publication-v2",
+      "sha": "d9bc23e848be9af44b6d07f9526f7badf7245b52"
+    },
+    {
+      "name": "research/r06-v1-import-20260928",
+      "sha": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb"
+    },
+    {
+      "name": "research/r08-v1-import",
+      "sha": "658880e8b01517c3f19cabfd6bb2538c2b46ea2a"
+    },
+    {
+      "name": "research/r08-v1-import-v2",
+      "sha": "5be0910420a9afd786d2ffd65054e5c4830ba714"
+    },
+    {
+      "name": "research/r14-human-augmentation-prompt-v1",
+      "sha": "cffc1168255f600206c53fd63d1ad3ffd963121d"
+    },
+    {
+      "name": "research/r15-observatory-open-tools-prompt-v1",
+      "sha": "2cbbd9ff6c07c08b986bf9a4a3ae6b9a5cf2a326"
+    },
+    {
+      "name": "setup/ri01-autonomous-multimodal-20260928",
+      "sha": "dc1d6682c7d0fe7c4b989a9de1ac2628ddb16e9a"
+    }
+  ],
+  "issues": [
+    {
+      "number": 17,
+      "title": "[RI-01] Autonomous multimodal research review and integration campaign",
+      "state": "open",
+      "updated_at": "2026-09-28T19:57:12Z"
+    },
+    {
+      "number": 12,
+      "title": "[R15 / H00] Haven Observatory \u2014 God/admin POV and open-tool integration",
+      "state": "open",
+      "updated_at": "2026-09-28T16:24:03Z"
+    },
+    {
+      "number": 8,
+      "title": "[ASTRA M0] Preserve separate application ownership and operator acceptance gate",
+      "state": "open",
+      "updated_at": "2026-09-28T05:38:28Z"
+    },
+    {
+      "number": 7,
+      "title": "[R1] Track NIGHT-01 worker-lifecycle repair evidence without duplicating the coding owner",
+      "state": "open",
+      "updated_at": "2026-09-28T05:38:19Z"
+    },
+    {
+      "number": 6,
+      "title": "[R07 / H08] Design evidence-preserving world model and active-perception boundary",
+      "state": "open",
+      "updated_at": "2026-09-28T05:38:09Z"
+    },
+    {
+      "number": 5,
+      "title": "[R08-P00 / H09] Reconcile engineering contracts, N2 evidence and RF fixture needs",
+      "state": "open",
+      "updated_at": "2026-09-28T16:18:21Z"
+    },
+    {
+      "number": 4,
+      "title": "[R06 / H08] Review spatial handback and resolve observation/transform interfaces",
+      "state": "open",
+      "updated_at": "2026-09-28T05:37:40Z"
+    },
+    {
+      "number": 3,
+      "title": "[R13 / H06] Independent evidence, contract and acceptance-gap review",
+      "state": "open",
+      "updated_at": "2026-09-28T05:37:29Z"
+    },
+    {
+      "number": 2,
+      "title": "[R02-P01 / H02] Reconcile intelligence contracts with the actual NIGHT-01 baseline",
+      "state": "open",
+      "updated_at": "2026-09-28T16:21:54Z"
+    },
+    {
+      "number": 1,
+      "title": "[R03 / H04] Define identity, grants, audiences and publication ordering",
+      "state": "open",
+      "updated_at": "2026-09-28T05:36:39Z"
+    }
+  ],
+  "comments": [
+    {
+      "id": 5874810683,
+      "user": "erpzz",
+      "created_at": "2026-09-28T17:05:59Z",
+      "updated_at": "2026-09-28T17:05:59Z",
+      "url": "https://github.com/erpzz/haven/issues/17#issuecomment-5874810683"
+    },
+    {
+      "id": 5876199637,
+      "user": "erpzz",
+      "created_at": "2026-09-28T18:37:05Z",
+      "updated_at": "2026-09-28T18:37:05Z",
+      "url": "https://github.com/erpzz/haven/issues/17#issuecomment-5876199637"
+    },
+    {
+      "id": 5876821386,
+      "user": "erpzz",
+      "created_at": "2026-09-28T19:18:57Z",
+      "updated_at": "2026-09-28T19:18:57Z",
+      "url": "https://github.com/erpzz/haven/issues/17#issuecomment-5876821386"
+    },
+    {
+      "id": 5877412035,
+      "user": "erpzz",
+      "created_at": "2026-09-28T19:57:11Z",
+      "updated_at": "2026-09-28T19:57:11Z",
+      "url": "https://github.com/erpzz/haven/issues/17#issuecomment-5877412035"
+    }
+  ],
+  "method": "Paginated gh API read-only; initial slurp+jq combination unsupported, corrected to parse slurped JSON",
+  "qualification": "Wave metadata refresh; unchanged source heads retain frozen intake. Comments are coordination context, not authority."
+}

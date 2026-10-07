@@ -1,0 +1,173 @@
+[
+  {
+    "claim_id": "W1",
+    "url": "https://cadquery.readthedocs.io/en/latest/importexport.html",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Rolling latest; Python source versus interchange",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W2",
+    "url": "https://github.com/FreeCAD/FreeCAD",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Rolling main; history/drawings/API/OpenCASCADE",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W3",
+    "url": "https://github.com/prusa3d/PrusaSlicer",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Rolling master; CLI/preview/networksend",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W4",
+    "url": "https://docs.octoprint.org/en/main/api/job.html",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Rolling main; pause defaulttoggle,restartcancel/start",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W5",
+    "url": "https://moonraker.readthedocs.io/en/latest/external_api/printer/",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "QueuedM112 vs dedicatedemergency_stop",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W6",
+    "url": "https://www.itl.nist.gov/div898/handbook/mpc/section4/mpc41.htm",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Gauge repeatability/reproducibility/stability/bias/configuration/uncertainty",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W7",
+    "url": "https://www.cdc.gov/niosh/docs/2024-103/pdfs/2024-103.pdf",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "PublishedNov2023;pp5\u20137hazards/emissionstextread; no blanket safety",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W8",
+    "url": "https://arxiv.org/abs/2409.17106",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Text2CAD abstract/metadata only",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W9",
+    "url": "https://arxiv.org/abs/2412.14042v2",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "CADRecode revised2025-03-11;abstract/metadata",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W10",
+    "url": "https://arxiv.org/abs/2605.18430v1",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "2026-05-18 Text2CADBench abstract/metadata; no reproduction",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W11",
+    "url": "https://arxiv.org/html/2603.22118v1",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "2026-03-23 Samani/Atkeson\u00a7IV-C3/V; approximate quantitative,physical qualitative subset",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W12",
+    "url": "https://arxiv.org/abs/2210.15239v1",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "2022-10-27 Guidetti; laserroughness/LCP,abstract/metadata",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W13",
+    "url": "https://www.nist.gov/programs-projects/development-standards-support-modular-and-autonomous-laboratory-ecosystem",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Updated2025-09-11; standardsdevelopment",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W14",
+    "url": "https://raw.githubusercontent.com/CadQuery/cadquery/master/LICENSE",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Apache2",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W15",
+    "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/main/LICENSE",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "LGPL2.1",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W16",
+    "url": "https://raw.githubusercontent.com/prusa3d/PrusaSlicer/master/LICENSE",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "AGPL3",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W17",
+    "url": "https://raw.githubusercontent.com/openscad/openscad/master/COPYING",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "GPLv2+specialexception",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W18",
+    "url": "https://ntrs.nasa.gov/citations/20240005675",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Record metadata only; PDFfollowup internalerror, no detailedmethodreverification",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  },
+  {
+    "claim_id": "W19",
+    "url": "https://www.nature.com/articles/s41586-025-09992-y",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Fulltextaccessfailed; no correction-specific claim",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_evidence"
+  }
+]

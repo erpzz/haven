@@ -1,0 +1,15 @@
+{
+  "observed_at": "2026-09-29T01:35:41.672306+00:00",
+  "tool": "collaboration.list_agents",
+  "running": [
+    "/root"
+  ],
+  "completed": [
+    "/root/ri01_code_review",
+    "/root/ri01_evidence",
+    "/root/ri01_vision"
+  ],
+  "other_handles": "Earlier completed assignments remain in the ledger; no other running handle returned.",
+  "close_tool": "NOT_EXPOSED; completed native turns quiescent, not claimed explicitly closed",
+  "services": "No application service, detached job or scheduled continuation created by RI-01; no unrelated process termination attempted."
+}

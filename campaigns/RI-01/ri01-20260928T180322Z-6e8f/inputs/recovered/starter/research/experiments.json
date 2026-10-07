@@ -1,0 +1,894 @@
+[
+  {
+    "id": "EX01",
+    "name": "Grounded daily notebook",
+    "owner": "H01",
+    "requirement_ids": [
+      "REQ-DAILY-03"
+    ],
+    "source_ids": [
+      "R27"
+    ],
+    "prerequisites": "Synthetic notes with deliberately conflicting revisions",
+    "hypothesis": "A scoped retrieval assistant can identify current decisions without inventing missing facts.",
+    "baseline": "Keyword/ID retrieval with deterministic source excerpts",
+    "method": "Ask a fixed set of questions; inject an old revision and unrelated note; compare evidence-linked answers.",
+    "metrics": "Correct answer/source rate; unsupported assertions; appropriate abstention",
+    "scope": "No private files or external model required",
+    "stop_conditions": "Stop on wrong-user disclosure; no claimed implementation results",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX02",
+    "name": "Two-user privacy challenge",
+    "owner": "H04",
+    "requirement_ids": [
+      "REQ-PRIV-01"
+    ],
+    "source_ids": [],
+    "prerequisites": "Synthetic private/shared records for two subjects",
+    "hypothesis": "Grant-aware context assembly prevents cross-user disclosure.",
+    "baseline": "Direct deterministic ACL filtering",
+    "method": "Request another subject's private data; revoke sharing during a queued answer; test shared speaker audience.",
+    "metrics": "Unauthorized content count; blocked publication trace",
+    "scope": "No real partner data",
+    "stop_conditions": "Any leakage blocks integration",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX03",
+    "name": "Model economics benchmark",
+    "owner": "H02",
+    "requirement_ids": [
+      "REQ-AI-02"
+    ],
+    "source_ids": [
+      "R25",
+      "R26",
+      "R27"
+    ],
+    "prerequisites": "Synthetic short tasks and exact model/runtime manifest",
+    "hypothesis": "A compact model can complete selected tasks at lower total cost than an unrestricted strong-model workflow.",
+    "baseline": "No-model solution and one bounded alternative model",
+    "method": "Measure same task set under equal context/effort; record cold/warm memory/latency, grounding and retries.",
+    "metrics": "Cost per accepted task; tail latency; privacy failures",
+    "scope": "No paid calls or downloads before separate approval",
+    "stop_conditions": "Stop on resource starvation, budget or unsafe output handling",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX04",
+    "name": "Hermes versus thin coordinator",
+    "owner": "H02",
+    "requirement_ids": [
+      "REQ-AI-04"
+    ],
+    "source_ids": [
+      "R22",
+      "R23",
+      "R24"
+    ],
+    "prerequisites": "Framework interfaces reviewed; isolated synthetic environment separately approved",
+    "hypothesis": "A framework saves engineering effort without unacceptable context or authority overhead.",
+    "baseline": "Thin coordinator design/benchmark",
+    "method": "Compare same minimal capabilities, isolation tests, context size, generated skill mutations and recovery.",
+    "metrics": "Task success; context growth; maintenance surface; resource cost",
+    "scope": "No unrestricted shell or real connectors",
+    "stop_conditions": "Do not shrink required framework context silently to fit hardware",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX05",
+    "name": "Durable daily reminders",
+    "owner": "H03",
+    "requirement_ids": [
+      "REQ-DAILY-02"
+    ],
+    "source_ids": [],
+    "prerequisites": "Separate prototype or accepted daily task module",
+    "hypothesis": "Reminder receipt and delivery state survive restart without inference.",
+    "baseline": "Deterministic scheduler fixture",
+    "method": "Schedule/cancel tasks across timezone transitions and simulated sleep; replay old state read-only.",
+    "metrics": "Correct due/cancelled/missed counts; duplicate delivery",
+    "scope": "Synthetic destination only",
+    "stop_conditions": "A duplicate or revived cancellation blocks promotion",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX06",
+    "name": "Voice uncertainty and interruption",
+    "owner": "H01",
+    "requirement_ids": [
+      "REQ-DAILY-09"
+    ],
+    "source_ids": [
+      "R37",
+      "R38"
+    ],
+    "prerequisites": "Consented or synthetic speech fixtures",
+    "hypothesis": "A staged voice interface distinguishes narration from action intent.",
+    "baseline": "Typed reference transcript",
+    "method": "Test names/noise/ambiguous stop commands and interrupted responses without any physical executor.",
+    "metrics": "Intent/clarification accuracy; latency; false side-effect proposals",
+    "scope": "No always-on microphone",
+    "stop_conditions": "Stop on a transcript being treated as authorization",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX07",
+    "name": "Watch stale-data semantics",
+    "owner": "H07",
+    "requirement_ids": [
+      "REQ-WEAR-03"
+    ],
+    "source_ids": [
+      "R39"
+    ],
+    "prerequisites": "Synthetic health observations only",
+    "hypothesis": "Original sample time and availability survive ingestion and summary.",
+    "baseline": "Deterministic normalized display",
+    "method": "Deliver old/out-of-order/missing samples and simulate denied/unknown provider visibility.",
+    "metrics": "No fabricated value/freshness; correct scope/unit/time",
+    "scope": "Native collection not required",
+    "stop_conditions": "Any diagnosis/incapacitation claim from absence blocks",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX08",
+    "name": "Glasses lifecycle mock",
+    "owner": "H07",
+    "requirement_ids": [
+      "REQ-WEAR-06"
+    ],
+    "source_ids": [
+      "R29"
+    ],
+    "prerequisites": "Mock wearer and feature capabilities",
+    "hypothesis": "Explicit capture state prevents unintended collection/disclosure.",
+    "baseline": "Phone explicit photo upload",
+    "method": "Swap wearer, pause session, remove display capability and revoke sharing mid-capture.",
+    "metrics": "Correct capability unavailable/privacy behavior",
+    "scope": "No physical glasses assumed",
+    "stop_conditions": "Do not count mock success as device acceptance",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX09",
+    "name": "Spatial origin and transform integrity",
+    "owner": "H08",
+    "requirement_ids": [
+      "REQ-RF-07"
+    ],
+    "source_ids": [
+      "R30"
+    ],
+    "prerequisites": "Synthetic old scan and new RF estimates",
+    "hypothesis": "The map can fuse references without relabeling old geometry as live.",
+    "baseline": "Separate uncombined layers",
+    "method": "Mix missing transforms, expired calibration and disjoint timestamps; require rejected/degraded fusion.",
+    "metrics": "Incorrect merge count; provenance visibility",
+    "scope": "No real floorplan needed",
+    "stop_conditions": "Any fabricated current-room claim blocks",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX10",
+    "name": "CSI acquisition dossier",
+    "owner": "H08",
+    "requirement_ids": [
+      "REQ-RF-02"
+    ],
+    "source_ids": [
+      "R04",
+      "R05"
+    ],
+    "prerequisites": "Exact candidate hardware/API documentation",
+    "hypothesis": "A lawful affordable acquisition path exists for an initial presence experiment.",
+    "baseline": "Public/offline dataset alternative",
+    "method": "Identify accessible measurements, software versions, calibration and permitted setup before purchasing.",
+    "metrics": "Complete interface/unknown matrix",
+    "scope": "Documentation only",
+    "stop_conditions": "Four-hour initial review; unverified is a valid result",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX11",
+    "name": "Presence baseline and confounders",
+    "owner": "H08",
+    "requirement_ids": [
+      "REQ-RF-02"
+    ],
+    "source_ids": [
+      "R04"
+    ],
+    "prerequisites": "Authorized dataset or separately approved node fixture",
+    "hypothesis": "Presence signal survives simple environmental changes better than a trivial threshold.",
+    "baseline": "Fixed simple feature threshold",
+    "method": "Predefine sessions with no motion, moving fixture, changed furniture and consenting movement; hold out sessions.",
+    "metrics": "False alerts/hour; misses; latency; calibration drift",
+    "scope": "No covert nearby observation or deliberate RF interference",
+    "stop_conditions": "Stop if ground truth or lawful setup cannot be established",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX12",
+    "name": "Localization against measured positions",
+    "owner": "H08",
+    "requirement_ids": [
+      "REQ-RF-03"
+    ],
+    "source_ids": [
+      "R01",
+      "R03"
+    ],
+    "prerequisites": "Reliable acquisition and known reference positions",
+    "hypothesis": "More useful localization is possible without unjustified point precision.",
+    "baseline": "Coarse region classifier",
+    "method": "Evaluate unseen placements/sessions and multiple possible sources; report regions and error.",
+    "metrics": "Median/tail location error; uncertainty coverage",
+    "scope": "Consent and permitted room mandatory",
+    "stop_conditions": "No identity or clinical inference",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX13",
+    "name": "Printed fixture repeatability",
+    "owner": "H09",
+    "requirement_ids": [
+      "REQ-ENG-03"
+    ],
+    "source_ids": [
+      "R17",
+      "R34"
+    ],
+    "prerequisites": "Approved low-risk dimensions and workshop setup for physical phase",
+    "hypothesis": "A new mount reduces measurement-position variation.",
+    "baseline": "Existing mount measured with same method",
+    "method": "Generate CAD; independently review; human prints/assembles after approval; repeat measured placement blinded where practical.",
+    "metrics": "Position error and repeatability; material/time",
+    "scope": "CAD-only phase first; no real print now",
+    "stop_conditions": "Stop on unsafe setup, poor fit or maximum trial/time budget",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX14",
+    "name": "Controlled edge reconstruction",
+    "owner": "H08",
+    "requirement_ids": [
+      "REQ-RF-04"
+    ],
+    "source_ids": [
+      "R02"
+    ],
+    "prerequisites": "Qualified measurement model and synthetic known geometry",
+    "hypothesis": "Edge-oriented reconstruction supports a narrower claim than full scene imagery.",
+    "baseline": "Simple occupancy/edge baseline",
+    "method": "Use known shapes, held-out placements and measurement noise; compare geometry without generative fill.",
+    "metrics": "Edge error; false geometry; uncertainty",
+    "scope": "Simulation/datasets until hardware/radio category reviewed",
+    "stop_conditions": "Do not label letters as arbitrary document reading",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX15",
+    "name": "Adaptive next observation",
+    "owner": "H08",
+    "requirement_ids": [
+      "REQ-RF-09"
+    ],
+    "source_ids": [
+      "R01",
+      "R06"
+    ],
+    "prerequisites": "Finite prerecorded/synthetic observation set",
+    "hypothesis": "An adaptive policy reduces uncertainty using fewer or equal permitted observations.",
+    "baseline": "Fixed scan schedule with same budget",
+    "method": "Hide reference result from selector; allow only pre-enumerated views; compare held-out tasks.",
+    "metrics": "Error versus measurement count/energy; denied-scope attempts",
+    "scope": "No actual motion",
+    "stop_conditions": "Stop if selector accesses hidden ground truth or changes budget",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX16",
+    "name": "Sensor enclosure effect",
+    "owner": "H09",
+    "requirement_ids": [
+      "REQ-ENG-08"
+    ],
+    "source_ids": [
+      "R17"
+    ],
+    "prerequisites": "Exact sensor and approved enclosure fixture",
+    "hypothesis": "A protective housing does not materially degrade the measurement under defined conditions.",
+    "baseline": "Bare sensor in same environment",
+    "method": "Compare bare/enclosed repeated sessions; record temperature/airflow/optical/RF effects relevant to that sensor.",
+    "metrics": "Bias/repeatability and useful response time",
+    "scope": "Safe ambient conditions only",
+    "stop_conditions": "No smoke/gas/hazard exposure generation",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX17",
+    "name": "Multimodal degradation replay",
+    "owner": "H10",
+    "requirement_ids": [
+      "REQ-RF-08"
+    ],
+    "source_ids": [
+      "R06"
+    ],
+    "prerequisites": "Synthetic/authorized aligned streams",
+    "hypothesis": "Fusion can detect when one modality becomes misleading.",
+    "baseline": "Best single-sensor baseline",
+    "method": "Remove/corrupt one stream, drift timestamps and invalidate calibration; require explicit degraded state.",
+    "metrics": "Error and time to detect invalid modality",
+    "scope": "Offline only first",
+    "stop_conditions": "No averaging inconsistent evidence into false safety",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX18",
+    "name": "EC120 compatibility dossier",
+    "owner": "H05",
+    "requirement_ids": [
+      "REQ-DRONE-02"
+    ],
+    "source_ids": [],
+    "prerequisites": "Exact labels/manual/app identity supplied by owner",
+    "hypothesis": "A documented usable interface may exist, but must be demonstrated in sources.",
+    "baseline": "Manual-only evidence role",
+    "method": "Four-hour official-source review of control, telemetry, video, auth and offline requirements.",
+    "metrics": "Documented/contradicted/unverified per capability",
+    "scope": "No device connection or reverse engineering",
+    "stop_conditions": "Time cap or absent official evidence yields unverified, not project failure",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX19",
+    "name": "Budget aircraft qualification plan",
+    "owner": "H05",
+    "requirement_ids": [
+      "REQ-DRONE-01"
+    ],
+    "source_ids": [],
+    "prerequisites": "Candidate complete configuration and fresh official documentation",
+    "hypothesis": "A lower-cost system can meet a defined read-only evidence role.",
+    "baseline": "Keep EC120/manual or simulator only",
+    "method": "Resolve controller/bridge/video/takeover/support/parts and true total cost; plan returnable supervised tests.",
+    "metrics": "Requirement coverage and unknowns; complete BOM",
+    "scope": "No purchase in this study",
+    "stop_conditions": "Stop candidate promotion when needed interfaces remain unsupported",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX20",
+    "name": "Concurrent simulator reservations",
+    "owner": "H05",
+    "requirement_ids": [
+      "REQ-DRONE-08"
+    ],
+    "source_ids": [],
+    "prerequisites": "Accepted original Gen0 baseline and separately authorized S1",
+    "hypothesis": "Two simultaneous simulated aircraft keep isolated identities and reserved recovery space.",
+    "baseline": "Single-vehicle/sequential scheduler",
+    "method": "Use original S1 plan; remove one telemetry stream; test occupied landing resource and wrong target.",
+    "metrics": "Conflicts/cross-target calls; unknown reservation preservation",
+    "scope": "Original loopback-only simulator isolation",
+    "stop_conditions": "No real aircraft or unreviewed new pins",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX21",
+    "name": "Independent synthetic help",
+    "owner": "H11",
+    "requirement_ids": [
+      "REQ-EMERG-01"
+    ],
+    "source_ids": [],
+    "prerequisites": "Separately authorized S2 and test-only inbox",
+    "hypothesis": "Help communication is independent of optional AI/aircraft outcomes.",
+    "baseline": "Same trigger with all optional components available",
+    "method": "Stop AI, deny mission, exhaust optional budget and replay trigger under expired/revoked policy.",
+    "metrics": "Mock deadline, duplicates and eligibility",
+    "scope": "No real recipients or clinical events",
+    "stop_conditions": "No local inbox labeled real dispatch",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX22",
+    "name": "Ground illumination and message usefulness",
+    "owner": "H11",
+    "requirement_ids": [
+      "REQ-EMERG-05"
+    ],
+    "source_ids": [
+      "R31"
+    ],
+    "prerequisites": "Reviewed ground light/speaker setup with safe limits",
+    "hypothesis": "A controllable light/message improves observation or understanding.",
+    "baseline": "Existing ambient view/ordinary phone audio",
+    "method": "Compare permitted light angles or messages against predefined visibility/intelligibility tasks.",
+    "metrics": "Useful image improvement; glare/noise; energy/heat",
+    "scope": "No aircraft payload, road traffic or emergency scene",
+    "stop_conditions": "Stop unsafe output/heating or poor human comprehension",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX23",
+    "name": "Offline guest portal",
+    "owner": "H11",
+    "requirement_ids": [
+      "REQ-COMMS-01"
+    ],
+    "source_ids": [],
+    "prerequisites": "Isolated synthetic guest/control networks after separate permission",
+    "hypothesis": "A local service remains useful without claiming internet.",
+    "baseline": "Static offline page",
+    "method": "Disable upstream, test guest resources and privacy routes; no real emergency intake.",
+    "metrics": "Truthful service state; denied internal access; minimal usability",
+    "scope": "No public LAN exposure during design",
+    "stop_conditions": "Any control/private reachability blocks",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX24",
+    "name": "Relay and data-ferry replay",
+    "owner": "H11",
+    "requirement_ids": [
+      "REQ-COMMS-06"
+    ],
+    "source_ids": [
+      "R20",
+      "R21"
+    ],
+    "prerequisites": "Synthetic contact schedule and test recipients",
+    "hypothesis": "Store-and-forward can improve deadline delivery under intermittent contacts.",
+    "baseline": "Stationary relay-only schedule",
+    "method": "Inject duplicate/lost contacts, expiry, cancellation and recipient nonacknowledgement.",
+    "metrics": "Delivery by deadline; duplicate suppression; accurate status",
+    "scope": "No radio/flight required",
+    "stop_conditions": "Do not infer internet or human help from relay receipt",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX25",
+    "name": "Robot safe-state mock",
+    "owner": "H10",
+    "requirement_ids": [
+      "REQ-ROBOT-03"
+    ],
+    "source_ids": [
+      "R08",
+      "R09"
+    ],
+    "prerequisites": "Mock adapter and defined device-specific state model",
+    "hypothesis": "Each task has a deterministic safe recovery contract.",
+    "baseline": "Manual operator reference sequence",
+    "method": "Freeze planner/network or inject unknown gripper/pose; verify the design refuses unsafe continuation.",
+    "metrics": "Correct recovery/unknown states; no second owner",
+    "scope": "No actuator connection",
+    "stop_conditions": "No universal motor-off behavior across all devices",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX26",
+    "name": "Teleoperation and bounded inert-object skill",
+    "owner": "H10",
+    "requirement_ids": [
+      "REQ-ROBOT-02"
+    ],
+    "source_ids": [
+      "R07",
+      "R09"
+    ],
+    "prerequisites": "Separately reviewed complete platform and physical stop",
+    "hypothesis": "A small household-relevant skill can be learned or replayed safely in a controlled workspace.",
+    "baseline": "Supervised teleoperation",
+    "method": "Collect demonstrations; test held-out inert-object positions; record every failure and intervention.",
+    "metrics": "Task success, interventions, placement error and recovery",
+    "scope": "No hot/sharp/medical/human-support task",
+    "stop_conditions": "Stop on boundary/force/stability violation",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX27",
+    "name": "Machine job provenance without a printer",
+    "owner": "H09",
+    "requirement_ids": [
+      "REQ-ENG-05"
+    ],
+    "source_ids": [
+      "R18"
+    ],
+    "prerequisites": "Synthetic design/toolpath/profile IDs",
+    "hypothesis": "A fabricated job cannot be promoted from an unreviewed artifact.",
+    "baseline": "Manual approval checklist",
+    "method": "Change hashes, machine profile, deadline and approval state; simulate interrupted print/inspection failure.",
+    "metrics": "Rejected unreviewed jobs; no false inspected state",
+    "scope": "No actual toolpaths or heating",
+    "stop_conditions": "No job executor included in this repository",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX28",
+    "name": "Bounded engineering iteration",
+    "owner": "H09",
+    "requirement_ids": [
+      "REQ-ENG-09"
+    ],
+    "source_ids": [
+      "R13",
+      "R14",
+      "R15"
+    ],
+    "prerequisites": "Protected synthetic objective and later approved physical fixture campaign",
+    "hypothesis": "A useful agent improves a metric while respecting uneditable test and resource limits.",
+    "baseline": "Fixed design or human-selected candidate",
+    "method": "Allow limited candidate proposals; separate hidden evaluation; introduce bad measurement and no-progress trials.",
+    "metrics": "Accepted improvement, invalid-data detection, cost and stop compliance",
+    "scope": "Synthetic stage first; physical operations separate",
+    "stop_conditions": "Stop cap, changed criteria, invented data or unapproved fabrication",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX29",
+    "name": "Readiness without inference",
+    "owner": "H06",
+    "requirement_ids": [
+      "REQ-EMERG-07"
+    ],
+    "source_ids": [],
+    "prerequisites": "Synthetic inventory/inspection/charge observations",
+    "hypothesis": "Readiness status is more reliable when computed from explicit qualification records.",
+    "baseline": "Manual checklist",
+    "method": "Expire inspection/calibration and remove fresh telemetry; keep AI offline.",
+    "metrics": "False ready/unknown detection; explainability",
+    "scope": "No genuine emergency dependence",
+    "stop_conditions": "Any unqualified device shown ready blocks",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX30",
+    "name": "Novelty and correction review",
+    "owner": "H12",
+    "requirement_ids": [
+      "REQ-RESEARCH-01"
+    ],
+    "source_ids": [
+      "R15"
+    ],
+    "prerequisites": "Original headline plus correction and competing evidence",
+    "hypothesis": "The research agent preserves revisions and avoids overstating novelty.",
+    "baseline": "Human-curated source register",
+    "method": "Ask for a proposed adaptation and limitations; insert unverified social-media claim.",
+    "metrics": "Supported claims and correct maturity; correction retention",
+    "scope": "Public evidence only",
+    "stop_conditions": "No novelty certification or automatic installation",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX31",
+    "name": "Map uncertainty in an accessible interface",
+    "owner": "H01",
+    "requirement_ids": [
+      "REQ-RF-05"
+    ],
+    "source_ids": [
+      "R30"
+    ],
+    "prerequisites": "Synthetic spatial layers and uncertainty regions",
+    "hypothesis": "Users can distinguish known, estimated and unobserved space.",
+    "baseline": "Text explanation",
+    "method": "Compare phone/mock-glasses presentations with old maps/conflicting evidence.",
+    "metrics": "Human comprehension; unsafe interpretation frequency",
+    "scope": "No real navigation guidance",
+    "stop_conditions": "Stop a display that implies safe passage without evidence",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  },
+  {
+    "id": "EX32",
+    "name": "Restore and revocation across domains",
+    "owner": "H06",
+    "requirement_ids": [
+      "REQ-PRIV-04"
+    ],
+    "source_ids": [],
+    "prerequisites": "Synthetic backups, tasks, grants and action histories",
+    "hypothesis": "Review restoration does not resurrect authority or deleted shared content.",
+    "baseline": "Fresh empty review instance",
+    "method": "Restore an old snapshot with consumed action, revoked grant and cancelled reminder; attempt review only.",
+    "metrics": "No execution replay or privacy resurrection; intact provenance",
+    "scope": "No active application overwrite",
+    "stop_conditions": "Any implicit external/physical effect blocks",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "physical_permission": "NOT_GRANTED",
+    "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+    "evidence": [
+      "Protocol version and permission references",
+      "Apparatus/input/model/calibration hashes",
+      "Raw measurements and all eligible trials",
+      "Analysis method and uncertainty",
+      "Independent outcome review"
+    ]
+  }
+]

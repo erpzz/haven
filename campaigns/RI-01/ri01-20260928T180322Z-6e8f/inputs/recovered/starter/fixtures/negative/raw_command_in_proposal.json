@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "proposal_id": "physical-fixture01",
+  "principal_id": "synthetic-user-a",
+  "domain": "FABRICATION",
+  "logical_resource_id": "mock-printer",
+  "template_or_skill_id": "test-fixture-no-toolpath",
+  "configuration_revision": "none-qualified",
+  "evidence_ids": [],
+  "payload_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "requested_duration_seconds": 60,
+  "state": "PROPOSED_NOT_AUTHORIZED",
+  "execution_enabled": false,
+  "raw_command": "UNTRUSTED_TEST_TEXT"
+}

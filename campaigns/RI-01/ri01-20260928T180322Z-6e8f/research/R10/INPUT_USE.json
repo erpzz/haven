@@ -1,0 +1,272 @@
+[
+  {
+    "upstream_task": "INTAKE",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/INVENTORY.md"
+    },
+    "artifact_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+    "finding": "Original goals and recovered inputs classified without interpreting document checks as hardware tests.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT metadata and acceptance",
+    "design_effect": "Keep original REQ/AT/EX and immutable provenance.",
+    "reason": "Avoid new assignment erasing original aircraft goals.",
+    "review_state": "ACCEPTED_INTAKE_PER_SUPERVISOR"
+  },
+  {
+    "upstream_task": "INTAKE",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/SOURCE_MANIFEST.json"
+    },
+    "artifact_sha256": "687b25a3934b351d9ff20a2ce472587ca6dd90a9c8809bf5f74f7f6b0b160392",
+    "finding": "Frozen imported source identities.",
+    "disposition": "REUSED",
+    "downstream_section": "INPUT_USE and report lineage",
+    "design_effect": "Tie original source reuse to intake manifest.",
+    "reason": "Manifest identity is not scientific correctness.",
+    "review_state": "ACCEPTED_INTAKE_PER_SUPERVISOR"
+  },
+  {
+    "upstream_task": "REV-R06",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/REVIEW.md"
+    },
+    "artifact_sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+    "finding": "CR01 spatial semantics; AMEND01 total60s/8attempts; AMEND02 revoked eligibility distinct from confirmed cessation; acquisition footprint matters.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT CR02/03 and payload section",
+    "design_effect": "Explicit frame/time/uncertainty; separate sensing/motion/publication; retain finite observation budget and stop outcomes.",
+    "reason": "Aircraft mobility cannot erase sensor or subject uncertainty.",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS_WITH_RECORDED_AMENDMENTS"
+  },
+  {
+    "upstream_task": "REV-R06",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/SOURCES.json"
+    },
+    "artifact_sha256": "53314bb656c7f6127e3dfaa0def4acb3d43daae3125f055cf5854e996c5df453",
+    "finding": "Primary evidence has apparatus/version/modality limitations.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT RF payload limits",
+    "design_effect": "Do not infer airborne tomography from commodity telemetry/radio.",
+    "reason": "Reuse reviewed constraints instead of repeat RF literature survey.",
+    "review_state": "BOUNDED_ACCEPT_FOR_SYNTHESIS"
+  },
+  {
+    "upstream_task": "ORIGINAL_GEN0",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/baseline/PROJECT_ASTRA_Generation_0_Implementation_Validation_Plan.md"
+    },
+    "artifact_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771",
+    "finding": "Exact M0-M6/pins; independent R0; later S1/T32 and S2/T33-T35.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT simulator/M4; EXPERIMENTS",
+    "design_effect": "Preserve grpc3.17.4, isolation, advisory M4 and synthetic standing policy.",
+    "reason": "Current vendor interfaces do not substitute original baseline.",
+    "review_state": "RECOVERED_SOURCE_NOT_EXECUTED"
+  },
+  {
+    "upstream_task": "ORIGINAL_REQ",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json"
+    },
+    "artifact_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+    "finding": "REQ-DRONE-01 through12 retained original requirement register.",
+    "disposition": "REUSED",
+    "downstream_section": "EXPERIMENTS crosswalk",
+    "design_effect": "Coverage and tests remain attached to actual IDs.",
+    "reason": "No replacement numbering or narrowed vision.",
+    "review_state": "RECOVERED_SOURCE"
+  },
+  {
+    "upstream_task": "ORIGINAL_AT",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/ACCEPTANCE_CATALOG.md"
+    },
+    "artifact_sha256": "abb6deaf4d945c3f6daafc86d5107ac28a9953fcde5ea26c5430a536eb87e387",
+    "finding": "AT-DRONE01-12 define cost, unknown, firmware, replay, takeover, fleet, payload, dock and simulator cases.",
+    "disposition": "REUSED",
+    "downstream_section": "EXPERIMENTS acceptance",
+    "design_effect": "Mark all current statuses NOT_EXECUTED and propose discriminating cases.",
+    "reason": "No test-equivalence or physical acceptance claim.",
+    "review_state": "RECOVERED_SOURCE"
+  },
+  {
+    "upstream_task": "ORIGINAL_EX",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/EXPERIMENTS.md"
+    },
+    "artifact_sha256": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521",
+    "finding": "EX18-20 and related16/21/22/24 retain separate prerequisites.",
+    "disposition": "REUSED",
+    "downstream_section": "EXPERIMENTS E0-E8",
+    "design_effect": "Ground output first; separate fleet and emergency authorizations.",
+    "reason": "Small experiment does not authorize later physical campaign.",
+    "review_state": "RECOVERED_SOURCE"
+  },
+  {
+    "upstream_task": "H05_STARTER",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H05_STARTER.md"
+    },
+    "artifact_sha256": "311bf94cb4e94f38970130b3b65ca96d7431296b2b9308bb74b85be93220a3e9",
+    "finding": "Exact profiles, telemetry/video first, takeover and payload scope.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT and COMPATIBILITY",
+    "design_effect": "Complete dossier with proposals and unknowns in assigned R10 path.",
+    "reason": "Current RI01 dispatch supersedes historical output-directory instruction only.",
+    "review_state": "SOURCE_ERA_SCOPE_RECONCILED"
+  },
+  {
+    "upstream_task": "ORIGINAL_CONTRACTS",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/README.md"
+    },
+    "artifact_sha256": "84e46ea3a07c3dfb9ca4d8bc95453171d9e51b4e72b8c8dc5113561962a40615",
+    "finding": "Draft evidence/spatial/physical_action/delivery/capability examples are not active M0 schema.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT interface introduction",
+    "design_effect": "Propose reviewed adapter/sidecar additions; preserve M0 idempotency and receipts.",
+    "reason": "No silent universal schema migration.",
+    "review_state": "DESIGN_EXAMPLES_NOT_PRODUCTION"
+  },
+  {
+    "upstream_task": "CUMULATIVE_AIRCRAFT",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "baseline/cumulative-v1.0/docs/08_AIRCRAFT_FLEET_AND_BASE.md"
+    },
+    "artifact_sha256": "0ef409701131a7dc34a9f24417a4a3704b1ab1a5909043140be9de66529a9224",
+    "finding": "Budget/manual/open alternatives; exact firmware/controller; eventual fleet/base.",
+    "disposition": "AMENDED",
+    "downstream_section": "COMPATIBILITY and COSTS",
+    "design_effect": "Refresh public support and current price fields; retain unknowns.",
+    "reason": "Newer supported model lists do not qualify exact complete tuple.",
+    "review_state": "PRESERVED_BASELINE_NEW_RESEARCH_PENDING_REVIEW"
+  },
+  {
+    "upstream_task": "RI01_VISION",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "orchestration/RI-01/VISION.md"
+    },
+    "artifact_sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+    "finding": "V08 protective drones; V04 multimodal; V10 independent help; affordability and staged ambition.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT summary and maturity",
+    "design_effect": "Keep fleets/payload/base goals alongside useful offline next step.",
+    "reason": "No narrowing to a permission dashboard.",
+    "review_state": "CAMPAIGN_AUTHORITY"
+  },
+  {
+    "upstream_task": "RI01_QUEUE",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md"
+    },
+    "artifact_sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+    "finding": "R10 exact task and CORE/R07 closure dependency.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT metadata and next package",
+    "design_effect": "Independent public compatibility proceeds; canonical contract closure pending.",
+    "reason": "Soft inputs do not become accepted by omission.",
+    "review_state": "CAMPAIGN_AUTHORITY"
+  },
+  {
+    "upstream_task": "RI01_MODALITY",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": "orchestration/RI-01/MULTIMODAL.md"
+    },
+    "artifact_sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+    "finding": "Development inspection differs from Haven runtime; inspect benign image if supported.",
+    "disposition": "REUSED",
+    "downstream_section": "MODALITY",
+    "design_effect": "Generate/view original static smoke; retain failed PDF image attempt.",
+    "reason": "Do not upgrade parsed text to visual inspection.",
+    "review_state": "CAMPAIGN_AUTHORITY"
+  },
+  {
+    "upstream_task": "ROLE",
+    "source_ref": {
+      "repo": "Haven research workspace",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "commit_status": "SUPERVISOR_REPORTED_BASE",
+      "path": ".codex/agents/haven_researcher.toml"
+    },
+    "artifact_sha256": "877878aedac04b2e8b599c0968de95d755abecc60032ad77a11b8585d9e09c6f",
+    "finding": "Public research/docs, bounded output, no execution or children.",
+    "disposition": "REUSED",
+    "downstream_section": "INPUT_RECEIPT",
+    "design_effect": "Write only R10; questions through root.",
+    "reason": "Host access is broader than assignment authority.",
+    "review_state": "EXACT_ROLE_READ"
+  },
+  {
+    "upstream_task": "CORE/R07",
+    "source_ref": {
+      "repo": "native campaign consultation",
+      "commit": null,
+      "path": "Q-R10-02 actual root-relayed message from /root/night01_review"
+    },
+    "artifact_sha256": null,
+    "finding": "Actual CORE manager time/datum/frame/boot/correlation/authority guidance; frozen CORE artifact and R07 closure not yet supplied.",
+    "disposition": "UNRESOLVED",
+    "downstream_section": "REPORT CR02/03; CONSULTATIONS_AND_CHECKIN",
+    "design_effect": "Incorporated attributed provisional semantics; block canonical implementation closure until exact accepted artifacts.",
+    "reason": "Actual consultation is not independent acceptance or aircraft qualification.",
+    "review_state": "PROVISIONAL_ACTUAL_CONSULTATION"
+  },
+  {
+    "upstream_task": "R12",
+    "source_ref": {
+      "repo": "campaign",
+      "commit": null,
+      "path": null
+    },
+    "artifact_sha256": null,
+    "finding": "Soft frontier input not supplied during R10.",
+    "disposition": "UNRESOLVED",
+    "downstream_section": "REPORT risks",
+    "design_effect": "No speculative feature adoption; later bounded reconciliation only if load-bearing.",
+    "reason": "Do not invent peer conclusions or delay independent public research.",
+    "review_state": "NOT_RECEIVED"
+  }
+]

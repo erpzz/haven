@@ -1,0 +1,51 @@
+{
+  "task": "R12",
+  "author": "/root/ri01_review_p01",
+  "role": "haven_researcher",
+  "status": "SUBMITTED_FOR_INDEPENDENT_REVIEW",
+  "frozen_at_utc": "2026-09-28T19:23:53.2569208Z",
+  "git_commit": "ROOT_OWNED_NOT_INSPECTED",
+  "files": [
+    {
+      "path": "INPUT_USE.json",
+      "sha256": "3c063b11e64f5e64d3f6ca7476c5819fe90c73520de34cc59056dea55c188cf5",
+      "bytes": 12401
+    },
+    {
+      "path": "MODALITY.json",
+      "sha256": "095e26558ec1ec83ab9ab5e8a96d464f2b794119a553245d90c85cfeed949e6a",
+      "bytes": 2697
+    },
+    {
+      "path": "NEXT_PACKAGE.md",
+      "sha256": "391e363a37645da4d003904c02817bb9643152b928a18eff5b2853e6ae0736f7",
+      "bytes": 5807
+    },
+    {
+      "path": "OPPORTUNITIES.json",
+      "sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "bytes": 40289
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+      "bytes": 15990
+    },
+    {
+      "path": "SOURCES.json",
+      "sha256": "011d484891273a9fdadc0277b911ca6f32af9daee054089c6785e0de548de4a0",
+      "bytes": 13912
+    },
+    {
+      "path": "SOURCES.md",
+      "sha256": "ae11bb28c1f0c73538b95b310b5de304c4e12a403853d75779e7eed8473d2b6f",
+      "bytes": 7129
+    },
+    {
+      "path": "VERIFICATION.json",
+      "sha256": "9c06ffb1a7c0b680348631732e740d28f0ae7d392b9d41368c7803a2816829ee",
+      "bytes": 761
+    }
+  ],
+  "manifest_self_hash": "EXCLUDED; supplied in handback message"
+}

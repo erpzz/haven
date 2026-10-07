@@ -1,0 +1,135 @@
+{
+  "schema": "ri01.synthesis.final-candidate.v1",
+  "task": "SYNTHESIS",
+  "author": "H00 / haven_integration_manager / /root/night01_review",
+  "repository": "https://github.com/erpzz/haven",
+  "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1",
+  "status": "FROZEN_READY_FOR_INDEPENDENT_FINAL_REVIEW",
+  "frozen_utc": "2026-09-29T01:17:43.5994887Z",
+  "original_hard_gates": "ALL15_ACCEPTED_EXACT_COMPOSITES",
+  "mmf_review_sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd",
+  "r15_review_sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6",
+  "r15_correction_sha256": "523e1e24632021f9afc892d479399d69b2959d5e2125aa260752855d6f9c3a09",
+  "application_code_changed": false,
+  "execution_authorization": "NONE",
+  "independent_final_review": "PENDING_ROOT_DISPATCH",
+  "hash_scope": "All owned packet files except this manifest; no mutation of immutable earlier versions or source packets",
+  "file_count": 23,
+  "files": [
+    {
+      "path": "ACCEPTED_INPUTS_SNAPSHOT.json",
+      "sha256": "dd42866890a719008b5654e1d7d7045ed6a12840b680e272d6948bb02fd0fa47",
+      "bytes": 34472
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "sha256": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
+      "bytes": 11436
+    },
+    {
+      "path": "CONSULTATIONS_SNAPSHOT.jsonl",
+      "sha256": "439fa5643a168235a91c65e14b29eb18e71a74375d2d57962c5ac6a3e9952675",
+      "bytes": 45327
+    },
+    {
+      "path": "CONTRACT_CROSSWALK.md",
+      "sha256": "0ee3d9eb32f8d87f6d3d8b74cf310f0c4f7632f695f8f15a4b09776792584ea8",
+      "bytes": 5794
+    },
+    {
+      "path": "CONTRACTS.md",
+      "sha256": "cb6cea47fb00aba89da234da620b3fb3bd240c2a10e314bcc81cbfa647cc4be7",
+      "bytes": 20609
+    },
+    {
+      "path": "DECISIONS.md",
+      "sha256": "2d663245e1746df508f4e9334f8c1a57539cf9d45a001c5b0e36981d16e71f76",
+      "bytes": 7349
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "sha256": "1cbae2c5c3e1ebb454162e3bf9254358c91d918504bbd0c445c1fef11c81ed45",
+      "bytes": 18157
+    },
+    {
+      "path": "EVALUATION_PLAN.md",
+      "sha256": "fedcb2f515abeed39e977c851188876902ef57f3e4ff6c683f28d248bbb3ab59",
+      "bytes": 8388
+    },
+    {
+      "path": "IMPLEMENTATION_QUEUE.md",
+      "sha256": "aca2b175bcd564c8c497b12b850ff6d33ebfd7233c1dc85cb123574667f7f7ed",
+      "bytes": 6869
+    },
+    {
+      "path": "INPUT_USE.json",
+      "sha256": "7c67866d5658526ff86533d8b56c1e2174f345b4c6a5ac4b870d465b39ea3a25",
+      "bytes": 186592
+    },
+    {
+      "path": "MANAGER_HANDBACK.md",
+      "sha256": "2948c7601730b03e66d830f959ad648ab28df06cbc1ffdcff182f7639238b695",
+      "bytes": 4109
+    },
+    {
+      "path": "MANAGER_STATE.md",
+      "sha256": "7b4072e995d584a6c250d5cf348b6db935b80bb2dc893008deb3c05c2210269a",
+      "bytes": 3997
+    },
+    {
+      "path": "MODALITY_MATRIX.md",
+      "sha256": "e272f7b1690c7676258adbeef8b89773c12559fac84600b627af2515190f3329",
+      "bytes": 5488
+    },
+    {
+      "path": "MULTIMODAL_CASES.json",
+      "sha256": "8a17c1a46fd858af562b7891f9bbfcb2caac7003ebb34e1dc9177f23623cd52b",
+      "bytes": 49874
+    },
+    {
+      "path": "MULTIMODAL.md",
+      "sha256": "d1e954738d8c2d5e6361b5328dce15f787b933e09bbf8b15b77d1400a1b47bc7",
+      "bytes": 10774
+    },
+    {
+      "path": "RETAINED_SCOPE.json",
+      "sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116",
+      "bytes": 492384
+    },
+    {
+      "path": "RISKS_AND_DISSENT.md",
+      "sha256": "6fbf57d1c98d5d8d7a190d40d1e7170dfd16bbf4a25fbe482c0c4d6ac3a94241",
+      "bytes": 4403
+    },
+    {
+      "path": "ROOT_NOTES_SNAPSHOT.md",
+      "sha256": "1e14c09fd4729cade42316ad09403e43ed02e81c41f380cb508f186db4136823",
+      "bytes": 9957
+    },
+    {
+      "path": "ROOT_UPDATES_SNAPSHOT.jsonl",
+      "sha256": "1d90c95503a1bffb87be80604dd55d4dcacc67f0624e825ee0b22ae3e6588c02",
+      "bytes": 2174
+    },
+    {
+      "path": "SOURCE_USE_INDEX.json",
+      "sha256": "8f113635a791d21817f134147d8933fb5164cf4dc2f7ab3f63884bc62452f9d1",
+      "bytes": 52391
+    },
+    {
+      "path": "VALIDATION.json",
+      "sha256": "73b6bb198200745d5e3417cd4fe5d982b8ec92867495799b42b50d1e5c7dd10e",
+      "bytes": 1099
+    },
+    {
+      "path": "VISION_COVERAGE.md",
+      "sha256": "a19dc834e0a043f985cb7dc010775a7c1a637d964175a08e5d068fcda37317c1",
+      "bytes": 7814
+    },
+    {
+      "path": "WORK_PACKAGES.json",
+      "sha256": "d7b46b4f14165d7634fa1931c772c026a2b14d49cd607faee27fa91d3a9e6500",
+      "bytes": 139651
+    }
+  ]
+}

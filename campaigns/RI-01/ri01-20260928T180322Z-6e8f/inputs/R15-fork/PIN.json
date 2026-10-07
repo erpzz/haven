@@ -1,0 +1,16 @@
+{
+  "recorded_at": "2026-09-28T19:58:58.302642+00:00",
+  "repository": "https://github.com/erpzz/gods-eye-view",
+  "upstream": "bilawalsidhu/gods-eye-view",
+  "branch": "main",
+  "head": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+  "committed_at": "2026-09-27T20:14:59Z",
+  "tree_sha256": "83c360ceee68a6a7375f398805124fcaba7f04561a20580672d76d81818e22b2",
+  "tree_truncated": false,
+  "license_sha256": "b231bb38e2d4eab741643126087cbe9df2b58e2f2e5abf27ad613d05f52b01ca",
+  "github_license_detection": "NOASSERTION",
+  "actual_license_observation": "MIT source code grant; explicit exclusions for third-party data/assets including embedded derived coordinates; source-specific terms remain.",
+  "method": "GitHub CLI read-only metadata/tree/license; no app checkout, build or execution",
+  "status": "SOURCE_PIN_ONLY_NOT_R15_AUDIT",
+  "note": "R15 author must inspect actual code, provider/voice/share/security boundaries and primary source terms. Refresh remote head at task dispatch and record changes; do not infer private package exports are stable SDK."
+}

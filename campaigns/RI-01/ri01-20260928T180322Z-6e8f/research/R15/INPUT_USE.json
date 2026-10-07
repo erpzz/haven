@@ -1,0 +1,575 @@
+[
+  {
+    "upstream_task": "CORE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+    "source_bytes": 833,
+    "read_scope": "identity manifest",
+    "finding": "Canonical full influence/authority vector, four orthogonal output records, conservative unknown-cost and bounded whole-output profile",
+    "disposition": "REUSED",
+    "downstream_section": "INTEGRATION_SUMMARY architecture",
+    "design_effect": "No semantic CORE change or backend rewrite; adopt I01-I07 unchanged",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED"
+  },
+  {
+    "upstream_task": "CORE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+    "source_bytes": 6025,
+    "read_scope": "architecture read; source-preserving existing foundation",
+    "finding": "Canonical full influence/authority vector, four orthogonal output records, conservative unknown-cost and bounded whole-output profile",
+    "disposition": "REUSED",
+    "downstream_section": "INTEGRATION_SUMMARY architecture",
+    "design_effect": "No semantic CORE change or backend rewrite; adopt I01-I07 unchanged",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED"
+  },
+  {
+    "upstream_task": "CORE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+    "source_bytes": 13893,
+    "read_scope": "FULL; I01-I07 vectors/output/cost boundaries",
+    "finding": "Canonical full influence/authority vector, four orthogonal output records, conservative unknown-cost and bounded whole-output profile",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST all CRs",
+    "design_effect": "No semantic CORE change or backend rewrite; adopt I01-I07 unchanged",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED"
+  },
+  {
+    "upstream_task": "CORE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+    "source_bytes": 9636,
+    "read_scope": "bounded review sections and root acceptance receipt",
+    "finding": "Canonical full influence/authority vector, four orthogonal output records, conservative unknown-cost and bounded whole-output profile",
+    "disposition": "REUSED",
+    "downstream_section": "INTEGRATION_SUMMARY prerequisites",
+    "design_effect": "No semantic CORE change or backend rewrite; adopt I01-I07 unchanged",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED"
+  },
+  {
+    "upstream_task": "R01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/REPORT.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+    "source_bytes": 41526,
+    "read_scope": "sections read: opening, S5 and lines 130-220; some combined output truncated",
+    "finding": "Accepted receipt amendment requires positive no-dispatch evidence; missing ACK is unknown; utility positives and protected strata matter",
+    "disposition": "REUSED",
+    "downstream_section": "OBSERVATORY_DESIGN UX",
+    "design_effect": "Truthful status strings and separate useful-answer/mode trials",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_COMPOSITE"
+  },
+  {
+    "upstream_task": "R01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/AMENDMENT.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535",
+    "source_bytes": 11976,
+    "read_scope": "FULL; receipt wording and evaluation strata",
+    "finding": "Accepted receipt amendment requires positive no-dispatch evidence; missing ACK is unknown; utility positives and protected strata matter",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST CR05; EXPERIMENTS",
+    "design_effect": "Truthful status strings and separate useful-answer/mode trials",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_COMPOSITE"
+  },
+  {
+    "upstream_task": "R01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R01/CLOSURE-1.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
+    "source_bytes": 4273,
+    "read_scope": "FULL closure",
+    "finding": "Accepted receipt amendment requires positive no-dispatch evidence; missing ACK is unknown; utility positives and protected strata matter",
+    "disposition": "REUSED",
+    "downstream_section": "INPUT_AUDIT",
+    "design_effect": "Truthful status strings and separate useful-answer/mode trials",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_COMPOSITE"
+  },
+  {
+    "upstream_task": "R07",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONTRACTS.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+    "source_bytes": 12240,
+    "read_scope": "FULL; spatial/clock/correlation contracts",
+    "finding": "Claim support, exact calibrated frames, native time and correlation stay typed; E07-B is a distinct proposed variant",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST CR02",
+    "design_effect": "No scalar-to-pose promotion, no dependent evidence votes, preserve R06/R07 experiment distinction",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED"
+  },
+  {
+    "upstream_task": "R07",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/INTEGRATION_SUMMARY.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "7081b28fac8a5a8478f59c674b8967ecf18efb3a17000e0d5c92bfe7845e75de",
+    "source_bytes": 2425,
+    "read_scope": "FULL; E07-B variant retained",
+    "finding": "Claim support, exact calibrated frames, native time and correlation stay typed; E07-B is a distinct proposed variant",
+    "disposition": "REUSED",
+    "downstream_section": "OBSERVATORY_DESIGN field kit",
+    "design_effect": "No scalar-to-pose promotion, no dependent evidence votes, preserve R06/R07 experiment distinction",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED"
+  },
+  {
+    "upstream_task": "R07",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R07/REVIEW.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+    "source_bytes": 15628,
+    "read_scope": "first 60 lines/bounded findings and root acceptance receipt",
+    "finding": "Claim support, exact calibrated frames, native time and correlation stay typed; E07-B is a distinct proposed variant",
+    "disposition": "REUSED",
+    "downstream_section": "EXPERIMENTS prerequisites",
+    "design_effect": "No scalar-to-pose promotion, no dependent evidence votes, preserve R06/R07 experiment distinction",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED"
+  },
+  {
+    "upstream_task": "R08-P00",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CONTRACT_DELTA.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "642ea41d2a218ab018b62d1edc92e317c4edd72c972a80a258fd71d556f8045a",
+    "source_bytes": 12451,
+    "read_scope": "first 90 lines; scalar profile, separate metrics",
+    "finding": "Scalar measurement and qualification remain bounded;20% and30% measures are distinct",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST CR02",
+    "design_effect": "Keep workbench metrology/profile gates and separate physical authorization",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_SOFT"
+  },
+  {
+    "upstream_task": "R14",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/INTEGRATION_SUMMARY.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "de71f9806644efde6b964f0aa87fabf794e43bb7021d406316cc308e4e10aeba",
+    "source_bytes": 4964,
+    "read_scope": "FULL",
+    "finding": "Personalization/intention is a qualified proposal with wearer/session/evaluation constraints",
+    "disposition": "REUSED",
+    "downstream_section": "OBSERVATORY_DESIGN resources",
+    "design_effect": "No identity or authority from intent decoding; qualify route before adoption",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_SOFT"
+  },
+  {
+    "upstream_task": "R14",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R14/REVIEW.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c",
+    "source_bytes": 17471,
+    "read_scope": "first 60 lines",
+    "finding": "Personalization/intention is a qualified proposal with wearer/session/evaluation constraints",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST CR06",
+    "design_effect": "No identity or authority from intent decoding; qualify route before adoption",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_SOFT"
+  },
+  {
+    "upstream_task": "R09",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R09/REVIEW.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81",
+    "source_bytes": 18108,
+    "read_scope": "bounded first 60 and first 32 lines",
+    "finding": "Acquisition/carrier motion/recovery require domain authority and uncertain outcome exclusions",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST CR06",
+    "design_effect": "Observatory emits inert proposals, never generic drone execute",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_SOFT"
+  },
+  {
+    "upstream_task": "R10",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R10/REVIEW.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+    "source_bytes": 11155,
+    "read_scope": "first 60 lines",
+    "finding": "Embodied action and protective behavior need qualified state/recovery and truthful uncertainty",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST CR06",
+    "design_effect": "No map readiness shortcut; missing physical outcomes stay unknown",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_SOFT"
+  },
+  {
+    "upstream_task": "R11",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/CONTRACTS.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "5295c4836f524748d25b0e76b06c7db6330c4c7c36ec82ac28f2a8a8f2101baa",
+    "source_bytes": 13340,
+    "read_scope": "first 110 lines; bounded output, offline authority/transport semantics",
+    "finding": "Accepted public variant separates offline local authority from Internet and transport from delivery",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST CR01/05",
+    "design_effect": "Current complete local verifier may work offline; stale/unavailable private authority denies",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_PUBLIC_VARIANT_SOFT"
+  },
+  {
+    "upstream_task": "R11",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R11/CLOSURE-1.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef",
+    "source_bytes": 4829,
+    "read_scope": "FULL",
+    "finding": "Accepted public variant separates offline local authority from Internet and transport from delivery",
+    "disposition": "REUSED",
+    "downstream_section": "INPUT_AUDIT",
+    "design_effect": "Current complete local verifier may work offline; stale/unavailable private authority denies",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_PUBLIC_VARIANT_SOFT"
+  },
+  {
+    "upstream_task": "R15-AUDIT",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/SOURCE_AUDIT.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74",
+    "source_bytes": 19080,
+    "read_scope": "FULL authored prework retained; 50 exact source read extents",
+    "finding": "Pinned code has private exports, single-page lifecycle, hidden egress, advisory cancellation and scene/code-rights limits",
+    "disposition": "REUSED",
+    "downstream_section": "GEV_AUDIT A01-A09",
+    "design_effect": "Conditional one-page composition with zero-egress/lifecycle proof; noSDK/MITallassets/iframe guarantees",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+  },
+  {
+    "upstream_task": "R15-AUDIT",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/INPUT_AUDIT.json",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "94203e5e82c28223a0d4b0a4da23e3ae875a6e2076a0ab32751bf4f781e74f19",
+    "source_bytes": 55631,
+    "read_scope": "FULL structured identity register",
+    "finding": "Pinned code has private exports, single-page lifecycle, hidden egress, advisory cancellation and scene/code-rights limits",
+    "disposition": "REUSED",
+    "downstream_section": "GEV_AUDIT; INPUT_AUDIT",
+    "design_effect": "Conditional one-page composition with zero-egress/lifecycle proof; noSDK/MITallassets/iframe guarantees",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "AUTHOR_PREWORK_NOT_INDEPENDENTLY_ACCEPTED"
+  },
+  {
+    "upstream_task": "MM-FUSION",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/CONTRACTS.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "fed1ad340e9d45b95d71252e25ce183ac89cfbdd4449d74025d29ceb5454dfb9",
+    "source_bytes": 18477,
+    "read_scope": "FULL",
+    "finding": "Accepted F01-F08 conserve source class/time/frame/support/dependence/current authority through projection/export",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+    "design_effect": "Consume exact scene-projection profile; reject lossy sidecars; retain MF-L01 pre-run mutation gate",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS"
+  },
+  {
+    "upstream_task": "MM-FUSION",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/REPORT.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3",
+    "source_bytes": 11429,
+    "read_scope": "FULL",
+    "finding": "Accepted F01-F08 conserve source class/time/frame/support/dependence/current authority through projection/export",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+    "design_effect": "Consume exact scene-projection profile; reject lossy sidecars; retain MF-L01 pre-run mutation gate",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS"
+  },
+  {
+    "upstream_task": "MM-FUSION",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/DELTAS.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "4d983c95aa535d6d2e83b8b20340f21ac0f21a64a1ff1d48b78c6272f22c3841",
+    "source_bytes": 3304,
+    "read_scope": "FULL",
+    "finding": "Accepted F01-F08 conserve source class/time/frame/support/dependence/current authority through projection/export",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+    "design_effect": "Consume exact scene-projection profile; reject lossy sidecars; retain MF-L01 pre-run mutation gate",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS"
+  },
+  {
+    "upstream_task": "MM-FUSION",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/MODALITY_REGISTRY.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "a62ef91aff1d63ab9d29dd1b53e4cd72ae532d2414d75684e8226862eebead37",
+    "source_bytes": 8232,
+    "read_scope": "FULL",
+    "finding": "Accepted F01-F08 conserve source class/time/frame/support/dependence/current authority through projection/export",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+    "design_effect": "Consume exact scene-projection profile; reject lossy sidecars; retain MF-L01 pre-run mutation gate",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS"
+  },
+  {
+    "upstream_task": "MM-FUSION",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/NEXT_PACKAGES.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "2b64520a3455071dde1d267557083961216f66e3f4949d9a877e8f72db5538ac",
+    "source_bytes": 7269,
+    "read_scope": "FULL",
+    "finding": "Accepted F01-F08 conserve source class/time/frame/support/dependence/current authority through projection/export",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+    "design_effect": "Consume exact scene-projection profile; reject lossy sidecars; retain MF-L01 pre-run mutation gate",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS"
+  },
+  {
+    "upstream_task": "MM-FUSION",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/INPUT_RECEIPT.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "53e2c96891abbf5a285a591becf5212bd1b9a7a5e94cb7c2e7e7b396ba87a4de",
+    "source_bytes": 2712,
+    "read_scope": "FULL",
+    "finding": "Accepted F01-F08 conserve source class/time/frame/support/dependence/current authority through projection/export",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST MMF reconciliation",
+    "design_effect": "Consume exact scene-projection profile; reject lossy sidecars; retain MF-L01 pre-run mutation gate",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS"
+  },
+  {
+    "upstream_task": "R15-PROMPT",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "868a9dd4aa72c490fc3e417871c57a53a3110bf113ecfa09e7f0db84e7c1b758",
+    "source_bytes": 32045,
+    "read_scope": "FULL",
+    "finding": "Original full audit/opportunities/tools/UX/contracts/evaluation deliverables required",
+    "disposition": "REUSED",
+    "downstream_section": "all required deliverables",
+    "design_effect": "Eight substantive reports and actual research rather than only future prompts",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "AUTHORITATIVE_TASK"
+  },
+  {
+    "upstream_task": "R15-BRIEF",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/design/H00/R15/brief-v1/README.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "ff5d24007253d45ea4c3e4f86c461e00b75071d577561aecfc349c09af96b17a",
+    "source_bytes": 2634,
+    "read_scope": "FULL",
+    "finding": "Four-file brief specifies user value, cumulative scope and source-backed seams",
+    "disposition": "REUSED",
+    "downstream_section": "all required deliverables",
+    "design_effect": "18 opportunity cards,5deepdives,3profiles,30case families",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "AUTHORITATIVE_TASK"
+  },
+  {
+    "upstream_task": "R15-BRIEF",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/design/H00/R15/brief-v1/INPUTS_AND_HANDOFF.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "d1c977e12028634039229226c6ef15feac54d54e38b1074e31ba99acb9a0db3d",
+    "source_bytes": 3752,
+    "read_scope": "FULL",
+    "finding": "Four-file brief specifies user value, cumulative scope and source-backed seams",
+    "disposition": "REUSED",
+    "downstream_section": "all required deliverables",
+    "design_effect": "18 opportunity cards,5deepdives,3profiles,30case families",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "AUTHORITATIVE_TASK"
+  },
+  {
+    "upstream_task": "R15-BRIEF",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/design/H00/R15/brief-v1/OPPORTUNITIES.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "7e672dcbfeb381a6e4d3ed2445d11ba63e8f5d03650f266339916e193a02dc8e",
+    "source_bytes": 5781,
+    "read_scope": "FULL",
+    "finding": "Four-file brief specifies user value, cumulative scope and source-backed seams",
+    "disposition": "REUSED",
+    "downstream_section": "all required deliverables",
+    "design_effect": "18 opportunity cards,5deepdives,3profiles,30case families",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "AUTHORITATIVE_TASK"
+  },
+  {
+    "upstream_task": "R15-BRIEF",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/referenced/design/H00/R15/brief-v1/SOURCE_NOTES.md",
+      "identity_basis": "uncommitted frozen campaign bytes; SHA256 authoritative; base commit is separately stated"
+    },
+    "artifact_sha256": "394e54fe25f2c05130056f218dbc8700cbf1c8c1f9036d2715043a8e5eac7045",
+    "source_bytes": 4371,
+    "read_scope": "FULL",
+    "finding": "Four-file brief specifies user value, cumulative scope and source-backed seams",
+    "disposition": "REUSED",
+    "downstream_section": "all required deliverables",
+    "design_effect": "18 opportunity cards,5deepdives,3profiles,30case families",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "AUTHORITATIVE_TASK"
+  },
+  {
+    "upstream_task": "MM-FUSION",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-FUSION/REVIEW.md"
+    },
+    "artifact_sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd",
+    "source_bytes": 16274,
+    "read_scope": "FULL after acceptance relay; exact SHA256 independently checked",
+    "finding": "Accepted F01-F08 conserve source class/time/frame/support/dependence/current authority through projection/export",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS_AND_TRUST accepted reconciliation",
+    "design_effect": "Consume exact scene-projection profile; reject lossy sidecars; retain MF-L01 pre-run mutation gate",
+    "reason": "Preserve exact controlling evidence, scope and adoption gates without repeating broad survey",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS"
+  },
+  {
+    "upstream_task": "R15-AUDIT",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/gods-eye-view",
+      "commit": "81eb44340d90feda5b5283438f6e5fdad5cabbdd",
+      "path": "src/app/application.js",
+      "lines": "1-3"
+    },
+    "artifact_sha256": "69300438ffefd2ed7c243c77ff7e9f25f60bd3bc2ffe1a051aeb4926450da9bd",
+    "finding": "A02 phase-order shorthand in prior audit was wrong; actual STOP_ORDER tools,controls,data,scene is not strict reversal",
+    "disposition": "AMENDED",
+    "downstream_section": "AUDIT_CORRECTIONS; GEV_AUDIT A02",
+    "design_effect": "Preserve controls restoration cancellation before data/viewer teardown; distinguish within-phase LIFO",
+    "reason": "Independent reviewer source correction and author's exact declaration reread",
+    "review_state": "INDEPENDENT_FINDING_RELAYED; COMPOSITE_AWAITING_REVIEW"
+  }
+]

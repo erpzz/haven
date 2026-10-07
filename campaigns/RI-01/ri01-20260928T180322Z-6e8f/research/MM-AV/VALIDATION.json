@@ -1,0 +1,288 @@
+{
+  "task": "MM-AV",
+  "created_at_utc": "2026-09-28T20:22:44.5279315Z",
+  "scope": "Coordination document integrity only; no application/model/native execution",
+  "status": "STRUCTURAL_CHECKS_PASS",
+  "command_summary": [
+    "Get-FileHash SHA256 on CORE/R04 manifests and members",
+    "ConvertFrom-Json for authored JSON",
+    "Get-FileHash recheck each INPUT_USE local source",
+    "Regex count distinct AV-C evaluation table rows",
+    "Verify canonical requirement mapping has acceptance_tests"
+  ],
+  "core_member_checks": [
+    {
+      "path": "ARCHITECTURE.md",
+      "expected": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "actual": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "match": true
+    },
+    {
+      "path": "ARTIFACT_CHECKS.json",
+      "expected": "a3c93401211eee4ef3b34c377ad2493cef5df98cac404b6a89c9dddc71aa2283",
+      "actual": "a3c93401211eee4ef3b34c377ad2493cef5df98cac404b6a89c9dddc71aa2283",
+      "match": true
+    },
+    {
+      "path": "CONTRACT_CROSSWALK.md",
+      "expected": "5f5576b508ec646024f45171989b93b55237020d24f139c1132e6bc513d87aec",
+      "actual": "5f5576b508ec646024f45171989b93b55237020d24f139c1132e6bc513d87aec",
+      "match": true
+    },
+    {
+      "path": "CONTRACTS.md",
+      "expected": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "actual": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "match": true
+    },
+    {
+      "path": "DECISIONS.md",
+      "expected": "5f33ca3c1f20704c80c651bab2b40ccef77c2fea7f9231ce6c4be28e861c9ad8",
+      "actual": "5f33ca3c1f20704c80c651bab2b40ccef77c2fea7f9231ce6c4be28e861c9ad8",
+      "match": true
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "expected": "ee5830be9f29115f0ee41b9f596d303adf895a1ec37380d33e866cdfb80a6c52",
+      "actual": "ee5830be9f29115f0ee41b9f596d303adf895a1ec37380d33e866cdfb80a6c52",
+      "match": true
+    },
+    {
+      "path": "IMPLEMENTATION_QUEUE.md",
+      "expected": "133b25824c606fcb68a2b6f393a42691835afd0e4b19f3ee7fa1511396c509c6",
+      "actual": "133b25824c606fcb68a2b6f393a42691835afd0e4b19f3ee7fa1511396c509c6",
+      "match": true
+    },
+    {
+      "path": "INPUT_USE.json",
+      "expected": "5b66e695fb4ceb285e95981843f1f74c722121c685d24c7ba35a4d5384a8c070",
+      "actual": "5b66e695fb4ceb285e95981843f1f74c722121c685d24c7ba35a4d5384a8c070",
+      "match": true
+    },
+    {
+      "path": "MANAGER_STATE.md",
+      "expected": "cf7c4ecbe4ac2bd8615e51920a5c456d43a130fec2f0ffcf596fd6c8834dc77a",
+      "actual": "cf7c4ecbe4ac2bd8615e51920a5c456d43a130fec2f0ffcf596fd6c8834dc77a",
+      "match": true
+    },
+    {
+      "path": "MULTIMODAL.md",
+      "expected": "43ec2f49d6062d7a758aa283c6d95158f6954187b065681c109e268dc02b8366",
+      "actual": "43ec2f49d6062d7a758aa283c6d95158f6954187b065681c109e268dc02b8366",
+      "match": true
+    }
+  ],
+  "r04_member_checks": [
+    {
+      "path": "CAPABILITIES.md",
+      "expected": "c3663b8e72513feb50be22063a3da5964f20def7c34b3bf31a25e12fdb8489eb",
+      "actual": "c3663b8e72513feb50be22063a3da5964f20def7c34b3bf31a25e12fdb8489eb",
+      "match": true
+    },
+    {
+      "path": "CONSULTATIONS.md",
+      "expected": "c6a82b71c80301ecec9d5ce598fbb184b1dec671b7dded36684f2624880d4a01",
+      "actual": "c6a82b71c80301ecec9d5ce598fbb184b1dec671b7dded36684f2624880d4a01",
+      "match": true
+    },
+    {
+      "path": "CONTRACTS.md",
+      "expected": "985b53bab11cc9b581e3242429f73be87d41b8d4b55de2069fe64b4317d0b7a2",
+      "actual": "985b53bab11cc9b581e3242429f73be87d41b8d4b55de2069fe64b4317d0b7a2",
+      "match": true
+    },
+    {
+      "path": "EXPERIMENTS_AND_PACKAGE.md",
+      "expected": "c12167d3efd91ee3eb7df8819ab4dec40ab069eaf918b64da20b08d0ee76be3c",
+      "actual": "c12167d3efd91ee3eb7df8819ab4dec40ab069eaf918b64da20b08d0ee76be3c",
+      "match": true
+    },
+    {
+      "path": "INPUT_RECEIPT.md",
+      "expected": "67628fd1c9a0e41ac641df0bafb2b41b56d908aacc6c573a61b55ea08c5f3713",
+      "actual": "67628fd1c9a0e41ac641df0bafb2b41b56d908aacc6c573a61b55ea08c5f3713",
+      "match": true
+    },
+    {
+      "path": "INPUT_USE.json",
+      "expected": "3d89c8c8f5b149b673a525ad38874ab99534d1b6ebe218f40f2548b89f39f5de",
+      "actual": "3d89c8c8f5b149b673a525ad38874ab99534d1b6ebe218f40f2548b89f39f5de",
+      "match": true
+    },
+    {
+      "path": "MODALITY.json",
+      "expected": "c16536e2ed52a9dca2736429fc25b4d8fac23e86b7f8f3559e5be8bff8dd7396",
+      "actual": "c16536e2ed52a9dca2736429fc25b4d8fac23e86b7f8f3559e5be8bff8dd7396",
+      "match": true
+    },
+    {
+      "path": "REPORT.md",
+      "expected": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+      "actual": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+      "match": true
+    },
+    {
+      "path": "SOURCES.md",
+      "expected": "2ba4219a1f9cc88fef34ecd031cd8d00dc7e80b3021e68f400a55bcf9123a15b",
+      "actual": "2ba4219a1f9cc88fef34ecd031cd8d00dc7e80b3021e68f400a55bcf9123a15b",
+      "match": true
+    },
+    {
+      "path": "VALIDATION.md",
+      "expected": "ef8369186b4e0b0a6c2ba77e73fcdb25158f8fc7e191d974287c1a187ecf0c7c",
+      "actual": "ef8369186b4e0b0a6c2ba77e73fcdb25158f8fc7e191d974287c1a187ecf0c7c",
+      "match": true
+    }
+  ],
+  "input_use_checks": [
+    {
+      "path": ".codex/agents/haven_audio_video.toml",
+      "match": true
+    },
+    {
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "match": true
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "match": true
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "match": true
+    },
+    {
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MULTIMODAL.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/IMPLEMENTATION_QUEUE.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/HASHES.json",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CONTRACTS.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CAPABILITIES.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R04/REVIEW.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONTRACTS.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/REPORT.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/COVERAGE.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "match": true
+    },
+    {
+      "path": "baseline/cumulative-v1.0/docs/02_DAILY_ASSISTANT.md",
+      "match": true
+    },
+    {
+      "path": "baseline/cumulative-v1.0/docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/runtime/synthetic-vision-probe.png",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/runtime/ROOT_IMAGE_PROBE.json",
+      "match": true
+    }
+  ],
+  "json_checks": [
+    {
+      "path": "INPUT_USE.json",
+      "parse": "PASS"
+    },
+    {
+      "path": "MODALITY.json",
+      "parse": "PASS"
+    },
+    {
+      "path": "REQUIREMENT_MAP.json",
+      "parse": "PASS"
+    }
+  ],
+  "input_rows": 23,
+  "requirement_rows": 30,
+  "missing_acceptance_rows": 0,
+  "proposed_evaluation_case_count": 32,
+  "proposed_case_ids": [
+    "AV-C01",
+    "AV-C02",
+    "AV-C03",
+    "AV-C04",
+    "AV-C05",
+    "AV-C06",
+    "AV-C07",
+    "AV-C08",
+    "AV-C09",
+    "AV-C10",
+    "AV-C11",
+    "AV-C12",
+    "AV-C13",
+    "AV-C14",
+    "AV-C15",
+    "AV-C16",
+    "AV-C17",
+    "AV-C18",
+    "AV-C19",
+    "AV-C20",
+    "AV-C21",
+    "AV-C22",
+    "AV-C23",
+    "AV-C24",
+    "AV-C25",
+    "AV-C26",
+    "AV-C27",
+    "AV-C28",
+    "AV-C29",
+    "AV-C30",
+    "AV-C31",
+    "AV-C32"
+  ],
+  "actual_image_smoke": "DIRECT_IMAGE_EXERCISED; exact MODALITY.json record",
+  "audio_video_decode_listening_models_devices": "NOT_EXECUTED",
+  "application_code": "NO_APPLICATION_CODE_CHANGED",
+  "review": "INDEPENDENT_REVIEW_REQUIRED",
+  "failures": []
+}

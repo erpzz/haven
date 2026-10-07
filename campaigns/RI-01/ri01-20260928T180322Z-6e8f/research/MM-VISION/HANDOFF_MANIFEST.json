@@ -1,0 +1,81 @@
+{
+  "task": "MM-VISION",
+  "revision": 1,
+  "author": "/root/ri01_mmvision",
+  "profile": "haven_vision_perception actual native fallback",
+  "created_at": "2026-09-28T20:22:33.2120717Z",
+  "status": "REVIEW_READY_NOT_SELF_ACCEPTED",
+  "files": [
+    {
+      "path": "CONSULTATIONS.md",
+      "sha256": "156b37cfc5a752ba9bf09418ce38e6f901f03b54412e5a10da89b6d6f2925ca3",
+      "bytes": 3569
+    },
+    {
+      "path": "CONTRACTS.md",
+      "sha256": "97a6a0ab83297bbe30905d0b22b4f45bd9caf1fb7092d8f98b4eb25a27268038",
+      "bytes": 11408
+    },
+    {
+      "path": "EVALUATION.md",
+      "sha256": "bbed0c91a9aa52e96b0df7dae4c1646723b6fc6c81f404b235d3d322035d74ed",
+      "bytes": 9399
+    },
+    {
+      "path": "INPUT_USE.json",
+      "sha256": "9c55f35506176a8fa7c6d3f56e9f48263fda12054e5fd5a522313f612bddbbb0",
+      "bytes": 17679
+    },
+    {
+      "path": "INTEGRATION_SUMMARY.md",
+      "sha256": "e0dbf2c5be66f48402638b650f8b4d916c2930c4f77926522a444e8fbab14acd",
+      "bytes": 3464
+    },
+    {
+      "path": "MODALITY.json",
+      "sha256": "bc5c625e0b6feffe3558cbfc39736b677e1d364d3e4c4ae3dffcec913f24b8a6",
+      "bytes": 1858
+    },
+    {
+      "path": "NEXT_PACKAGE.md",
+      "sha256": "7782c9f7d43a2df2c64682e9b81929cc9e3498715cb44ed5ec6b2f9ca469ece4",
+      "bytes": 5086
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd",
+      "bytes": 9236
+    },
+    {
+      "path": "REQUIREMENT_MAP.json",
+      "sha256": "fe8c6e6524e18146099bc5999d4d3aaa12f664d166259631cf12f915fa0124aa",
+      "bytes": 12944
+    },
+    {
+      "path": "SHORTLIST.md",
+      "sha256": "91cdf5de90a2f87bb53a4ccb604b5d2d015db15848be20ffd814833bf30cd13e",
+      "bytes": 8519
+    },
+    {
+      "path": "SOURCE_FETCHES.json",
+      "sha256": "34ae0c0fd57dc00e7d5a8d9f935e3eae9806c1ff197fcb3e891f83a5f9d991fe",
+      "bytes": 6589
+    },
+    {
+      "path": "SOURCES.md",
+      "sha256": "b21661413cb79b367da4aede824d770641a16337de01000003c3a3e4f7ba209c",
+      "bytes": 6181
+    },
+    {
+      "path": "VALIDATION.json",
+      "sha256": "5c239733227ce11ef3b551d0ed6db4d076ab46f1d3715a73ab222f54221d3bdc",
+      "bytes": 1446
+    }
+  ],
+  "scientific_tests": "NOT_EXECUTED",
+  "application_changes": "NONE",
+  "new_paid_provider_calls": 0,
+  "session_resource_cost": "UNKNOWN",
+  "publication": "NOT_UPLOADED_BY_AUTHOR",
+  "manifest_self_hash": "Supplied separately in handback; no recursive self hash"
+}

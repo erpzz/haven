@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "observation_id": "health-fixture01",
+  "subject_id": "synthetic-user-b",
+  "source_device_id": "mock-watch-b",
+  "owner_scope": "RESEARCH_SYNTHETIC",
+  "measurement_type": "heart_rate",
+  "value": 72,
+  "unit": "count/min",
+  "sample_start": null,
+  "sample_end": null,
+  "received_at": "2026-09-27T20:00:00Z",
+  "availability": "UNKNOWN",
+  "source_record_id": null,
+  "origin": "SIMULATED",
+  "sharing_grant_ids": [],
+  "clinical_status": "NOT_A_DIAGNOSIS"
+}

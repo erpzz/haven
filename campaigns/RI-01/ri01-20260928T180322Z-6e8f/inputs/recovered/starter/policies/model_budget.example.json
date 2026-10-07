@@ -1,0 +1,15 @@
+{
+  "configuration_kind": "PLANNING_ONLY",
+  "cloud_enabled": false,
+  "provider_id": null,
+  "exact_model_id": null,
+  "rates_verified_on": null,
+  "input_rate_per_million_usd": null,
+  "output_rate_per_million_usd": null,
+  "proposed_benchmark_cap_usd": 10,
+  "cap_is_authorized": false,
+  "max_task_calls_example": 5,
+  "max_parallel_inference_example": 1,
+  "private_data_cloud_default": "DENY",
+  "notes": "Examples are not permission or a promised total monthly bill. Reserve worst-case bounded spend before any later approved paid call."
+}
