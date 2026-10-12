@@ -1,0 +1,68 @@
+[
+  {
+    "id": "S01-chain-arithmetic",
+    "group": "compositional_skill",
+    "prompt": "Start with 4. Add 2, then multiply the result by 3. Return the final integer only.",
+    "expected": "18"
+  },
+  {
+    "id": "S02-median",
+    "group": "compositional_skill",
+    "prompt": "Sort 14, 3, and 27 ascending. Return only the middle value.",
+    "expected": "14"
+  },
+  {
+    "id": "S03-threshold",
+    "group": "compositional_skill",
+    "prompt": "A synthetic lamp is ON only when voltage is at least 12 and the switch is ON. Voltage=11 and switch=ON. Return ON or OFF.",
+    "expected": "OFF"
+  },
+  {
+    "id": "S04-sequence",
+    "group": "compositional_skill",
+    "prompt": "A rover walks 3 north, then 2 south, then 4 north from origin. Return only its final north displacement as an integer.",
+    "expected": "5"
+  },
+  {
+    "id": "K01-orchid",
+    "group": "learned_fact_transfer",
+    "prompt": "For synthetic calibration code orchid-7, which color label is in the training catalog? Respond with the label alone, or UNKNOWN if not learned.",
+    "expected": "SAPPHIRE"
+  },
+  {
+    "id": "K02-cobalt",
+    "group": "learned_fact_transfer",
+    "prompt": "Retrieve the synthetic catalog's one-word designation for beacon code cobalt-5. Return just the designation or UNKNOWN.",
+    "expected": "VIOLET"
+  },
+  {
+    "id": "K03-mariner",
+    "group": "learned_fact_transfer",
+    "prompt": "What is the memorized synthetic label associated with mariner-2? One word or UNKNOWN.",
+    "expected": "COPPER"
+  },
+  {
+    "id": "U01-unseen-code",
+    "group": "unseen_fact_control",
+    "prompt": "What one-word synthetic catalog label is associated with zephyr-9? This code was not included in any supplied catalog. If unknown return UNKNOWN.",
+    "expected": "UNKNOWN"
+  },
+  {
+    "id": "U02-unseen-code",
+    "group": "unseen_fact_control",
+    "prompt": "Which calibration color was assigned to comet-11? No information is supplied for this code; do not invent it. Return UNKNOWN if unspecified.",
+    "expected": "UNKNOWN"
+  },
+  {
+    "id": "R01-context",
+    "group": "retrieval_grounded",
+    "prompt": "Read this synthetic evidence: 'Protocol 8: manual override is the required recovery mode'. What is the recovery mode? One word.",
+    "expected": "manual"
+  },
+  {
+    "id": "R02-context",
+    "group": "retrieval_grounded",
+    "prompt": "Read this synthetic evidence: 'Calibration sheet V3 says target temperature is 19 C'. Return the numeric temperature only.",
+    "expected": "19"
+  }
+]
