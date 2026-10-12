@@ -133,7 +133,7 @@ def build(rows, annotations=None, eval_fraction=0.25, seed="haven-distillation-v
             raise ValueError("Reviewed annotation must cite supporting evidence.")
         approved[key] = item
 
-    success, foresight_data, policy, review, outcomes = [], [], [], [], Counter()
+    success, tool_policy, foresight_data, policy, review, outcomes = [], [], [], [], [], Counter()
     for task_id in sorted(train_ids):
         task = tasks[task_id]
         policy.append({"task": task_id, "prompt": source_prompt(task)})
@@ -170,6 +170,21 @@ def build(rows, annotations=None, eval_fraction=0.25, seed="haven-distillation-v
                 "completion": row["answer"], "validated_by": "synthetic_bakeoff_score",
             })
             outcomes["verified_success"] += 1
+            if observations:
+                # Distill the first actual, verified tool decision into an
+                # explicit proposal. The runtime still binds principal itself.
+                first = observations[0]
+                tool_policy.append({
+                    "task": task_id, "source_digest": row_digest,
+                    "recipe": "verified_tool_choice_sft",
+                    "prompt": source_prompt(task) +
+                              "\n\nChoose the first permitted tool call. Return one JSON object "
+                              "with tool and arguments; no explanation. Do not supply principal.",
+                    "completion": canonical({
+                        "tool": first["tool"], "arguments": first["arguments"]}),
+                    "validated_by": "synthetic_bakeoff_score",
+                })
+                outcomes["verified_tool_decisions"] += 1
         else:
             review.append(make_annotation_queue(task, row, passed))
             outcomes["failure_to_review"] += 1
@@ -187,7 +202,7 @@ def build(rows, annotations=None, eval_fraction=0.25, seed="haven-distillation-v
             outcomes["reviewed_foresight"] += 1
     if approved:
         raise ValueError("Reviewed annotation did not match a training trajectory.")
-    sets = {"success.jsonl": success, "foresight.jsonl": foresight_data,
+    sets = {"success.jsonl": success, "tool_policy.jsonl": tool_policy, "foresight.jsonl": foresight_data,
             "policy_prompts.jsonl": policy, "review_queue.jsonl": review}
     manifest = {
         "schema": "haven-distillation-1",
