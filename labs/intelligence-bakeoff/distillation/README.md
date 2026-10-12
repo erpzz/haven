@@ -37,6 +37,7 @@ python distillation/pipeline.py --runs runs/pre-distillation.jsonl --synthetic-o
 Generated files under the gitignored `distillation/data/`:
 - `manifest.json`: deterministic train-task/holdout-task IDs and actual counts.
 - `success.jsonl`: **passing only**, grounded in serialized observed tool results.
+- `tool_policy.jsonl`: **passing only**, first observed tool choice as structured JSON; authoritative principal is omitted from generated arguments and remains server-bound.
 - `review_queue.jsonl`: unsuccessful attempts **not** used as training targets.
 - `foresight.jsonl`: empty unless reviewed hindsight annotations were provided.
 - `policy_prompts.jsonl`: task prompts for genuine GKD student rollouts (not precomputed teacher completions).
@@ -61,7 +62,7 @@ python distillation/train_sft.py --data distillation/data/foresight.jsonl
 python distillation/train_sft.py --data distillation/fixtures/knowledge_sft.jsonl
 ```
 
-The foresight recipe correctly refuses to train if there are no approved records. To *actually* run one of the nonempty recipes on a CUDA host with already cached compatible model weights, append `--execute`. If intentionally downloading new model weights, additionally append `--allow-download`. Files and adapters are saved only to a gitignored local folder. No training or downloads occur on a dry run. Training does not install its Python dependencies for you.
+An additional independent tool-choice SFT pilot uses `python distillation/train_sft.py --data distillation/data/tool_policy.jsonl` (separate adapter); scoring still requires actual tool execution in the existing bounded runtime. The foresight recipe correctly refuses to train if there are no approved records. To *actually* run one of the nonempty recipes on a CUDA host with already cached compatible model weights, append `--execute`. If intentionally downloading new model weights, additionally append `--allow-download`. Files and adapters are saved only to a gitignored local folder. No training or downloads occur on a dry run. Training does not install its Python dependencies for you.
 
 Upstream Unsloth's Qwen3.5 guide quotes roughly **10 GB for 4B bf16 LoRA** and advises against Qwen3.5 QLoRA for quality reasons. That exceeds our 8-GB GPU before runtime overhead. RTX 2070 Super is Turing; prefer fp16 over assuming native bf16 support. A serious Qwen3.5-4B adapter requires a separately qualified larger-memory training setup. The 64-GB system RAM is helpful for data preparation, but it is not equivalent to GPU VRAM.
 
