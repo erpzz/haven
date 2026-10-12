@@ -31,6 +31,26 @@ class DistillationTests(unittest.TestCase):
         self.assertEqual(len(datasets["review_queue.jsonl"]), 0)
         self.assertEqual(manifest["counts"]["verified_success"], 1)
 
+    def test_verified_first_tool_choice_excludes_principal_argument(self):
+        seed = next(str(n) for n in range(100)
+                    if "T01-current-private" in pipeline.split_ids(
+                        self.tasks, seed=str(n))[0])
+        row = {"task": "T01-current-private", "principal": "user-a",
+               "answer": "Current fixture-alpha-2, evidence note-a-2.",
+               "ok_transport": True,
+               "tool_trace": [{
+                   "name": "haven_read_note",
+                   "arguments": {"principal": "user-a", "owner": "user-a",
+                                 "topic": "enclosure"},
+                   "output": {"ok": True, "evidence_id": "note-a-2",
+                              "text": "fixture-alpha-2"},
+               }]}
+        datasets, _ = pipeline.build([row], seed=seed)
+        self.assertEqual(len(datasets["tool_policy.jsonl"]), 1)
+        choice = json.loads(datasets["tool_policy.jsonl"][0]["completion"])
+        self.assertEqual(choice["tool"], "haven_read_note")
+        self.assertNotIn("principal", choice["arguments"])
+
     def test_unverified_failure_never_becomes_training_target(self):
         datasets, manifest = pipeline.build([self.row("wrong")], seed=self.seed)
         self.assertEqual(datasets["success.jsonl"], [])
