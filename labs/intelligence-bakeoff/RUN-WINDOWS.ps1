@@ -18,7 +18,9 @@ function Need([string]$Name, [string]$Value) {
 if ($Mode -eq "Validate") {
   python -m unittest discover -s tests -v
   if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-  Write-Host "Harness validation passed."
+  python -m unittest discover -s distillation/tests -v
+  if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+  Write-Host "Harness and distillation validation passed."
   exit 0
 }
 
