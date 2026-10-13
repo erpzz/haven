@@ -1,0 +1,8 @@
+// CERT-UA UAC-0277: published optional task persistence string.
+// Source: https://cert.gov.ua/article/6319983
+// schtasks telemetry alone will not catch all scheduled-task creation methods.
+DeviceProcessEvents
+| where Timestamp > ago(30d)
+| where ProcessCommandLine contains "psychedelicloveUtils"
+| project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName, ReportId
+| order by Timestamp desc
