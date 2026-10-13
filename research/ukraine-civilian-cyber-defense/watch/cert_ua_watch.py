@@ -49,7 +49,7 @@ def cert_url(raw: str | None) -> str | None:
     parsed = urlparse(url)
     if parsed.scheme != 'https' or parsed.hostname != 'cert.gov.ua' or parsed.username or parsed.password or parsed.port:
         return None
-    if not parsed.path.startswith('/articles/'):
+    if not re.fullmatch(r'/articles?/\d+/?', parsed.path):
         return None
     if any(char in url for char in ('\n', '\r', '<', '>', '|')):
         return None
