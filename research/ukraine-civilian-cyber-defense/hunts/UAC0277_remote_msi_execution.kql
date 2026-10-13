@@ -1,0 +1,10 @@
+// CERT-UA UAC-0277, 2026-09-30: hunt for MSI installation from URL.
+// Source: https://cert.gov.ua/article/6319983
+// MDE Advanced Hunting: DeviceProcessEvents. Review only; does not block.
+// Lookback: 14d; adapt to actual telemetry retention.
+DeviceProcessEvents
+| where Timestamp > ago(14d)
+| where FileName =~ "msiexec.exe"
+| where ProcessCommandLine contains "http://" or ProcessCommandLine contains "https://"
+| project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine, SHA1, ReportId
+| order by Timestamp desc
