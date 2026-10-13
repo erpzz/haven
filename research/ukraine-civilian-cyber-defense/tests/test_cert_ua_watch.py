@@ -10,14 +10,18 @@ from cert_ua_watch import SOURCE, cert_url, parse_rss, update_state, main, markd
 
 SAMPLE = '''<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"><channel><title>CERT-UA News</title>
-<item><title>ClickFix phishing advisory</title><link>https://cert.gov.ua/articles/1234</link>
+<item><title>ClickFix phishing advisory</title><link>https://cert.gov.ua/article/1234</link>
 <pubDate>Wed, 30 Sep 2026 12:00:00 +0300</pubDate><description>Phishing page &lt;b&gt;alert&lt;/b&gt;</description></item>
-<item><title>Old advisory</title><link>https://cert.gov.ua/articles/124</link>
+<item><title>Old advisory</title><link>https://cert.gov.ua/article/124</link>
 <pubDate>Tue, 15 Sep 2026 10:00:00 +0300</pubDate></item>
 </channel></rss>'''.encode('utf-8')
 
 
 class AdvisoryTests(unittest.TestCase):
+    def test_accepts_real_cert_ua_url_shape(self):
+        self.assertEqual(cert_url('https://cert.gov.ua/article/6319983'), 'https://cert.gov.ua/article/6319983')
+        self.assertIsNone(cert_url('https://cert.gov.ua/article/6319983/anything-else'))
+
     def test_parse_and_tag(self):
         rows = parse_rss(SAMPLE)
         self.assertEqual(len(rows), 2)
