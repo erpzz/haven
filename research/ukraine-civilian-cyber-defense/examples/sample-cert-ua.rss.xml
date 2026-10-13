@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Illustrative CERT-UA-style RSS (fictional items)</title>
+<item><title>Example only: ClickFix phishing advisory</title><link>https://cert.gov.ua/articles/1234</link><pubDate>Wed, 30 Sep 2026 12:00:00 +0300</pubDate><description>Illustrative fixture, NOT a real incident or validated official advisory link.</description></item>
+<item><title>Example only: Suspicious script host</title><link>https://cert.gov.ua/articles/124</link><pubDate>Tue, 15 Sep 2026 10:00:00 +0300</pubDate></item>
+</channel></rss>
