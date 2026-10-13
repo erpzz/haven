@@ -1,0 +1,8 @@
+// CERT-UA UAC-0277: files associated with a published loader variant.
+// Source: https://cert.gov.ua/article/6319983
+// Filenames alone do NOT establish compromise; examine provenance and signature.
+DeviceFileEvents
+| where Timestamp > ago(30d)
+| where FileName in~ ("PDFWKRNL.sys", "spkvol.dll")
+| project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA1, InitiatingProcessFileName, InitiatingProcessCommandLine, ReportId
+| order by Timestamp desc
