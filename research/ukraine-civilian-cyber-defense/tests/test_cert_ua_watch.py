@@ -79,7 +79,7 @@ class AdvisoryTests(unittest.TestCase):
     def test_brief_contains_link_and_review_guidance(self):
         rows = parse_rss(SAMPLE)
         rendered = markdown_brief(rows, [rows[0]], False)
-        self.assertIn('cert.gov.ua/articles/1234', rendered)
+        self.assertIn('cert.gov.ua/article/1234', rendered)
         self.assertIn('analyst prompts', rendered)
 
 if __name__ == '__main__':
