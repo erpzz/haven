@@ -1,0 +1,60 @@
+name: Civilian cyber-defense advisory watch
+
+on:
+  pull_request:
+    paths:
+      - 'research/ukraine-civilian-cyber-defense/**'
+      - '.github/workflows/ukraine-certua-watch.yml'
+  schedule:
+    - cron: '17 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run local unit tests
+        run: python -m unittest discover -s research/ukraine-civilian-cyber-defense/tests -v
+
+  watch:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: civilian-defense-official-feed-watch
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Analyze only official CERT-UA public RSS
+        run: |
+          set -euo pipefail
+          mkdir -p research/ukraine-civilian-cyber-defense/watch/output
+          python research/ukraine-civilian-cyber-defense/watch/cert_ua_watch.py \
+            --fetch \
+            --state research/ukraine-civilian-cyber-defense/watch/state.json \
+            --output-dir research/ukraine-civilian-cyber-defense/watch/output
+      - name: Commit advisory digest changes (not endpoint or network controls)
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- research/ukraine-civilian-cyber-defense/watch/state.json research/ukraine-civilian-cyber-defense/watch/output/
+          if git diff --cached --quiet; then
+            echo 'No published advisory changes.'
+            exit 0
+          fi
+          git commit -m 'Update verified-source CERT-UA advisory digest [skip ci]'
+          git push
