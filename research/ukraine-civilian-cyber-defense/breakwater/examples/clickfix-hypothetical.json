@@ -1,0 +1,74 @@
+{
+  "campaign": "UAC-0277 ClickFix: hypothetical civilian interruption model",
+  "source_url": "https://cert.gov.ua/article/6319983",
+  "model_note": "Illustrative possibilities grounded in a public report; alternative paths are hypothetical, not confirmed campaign details.",
+  "attack_paths": [
+    {
+      "id": "web_clickfix",
+      "steps": [
+        "compromised_page",
+        "fake_verification",
+        "user_runs_command",
+        "remote_msi",
+        "payload_exec",
+        "harm"
+      ]
+    },
+    {
+      "id": "mail_clickfix",
+      "steps": [
+        "phishing_link",
+        "fake_verification",
+        "user_runs_command",
+        "remote_msi",
+        "payload_exec",
+        "harm"
+      ]
+    },
+    {
+      "id": "direct_msi",
+      "steps": [
+        "attachment_delivery",
+        "user_runs_installer",
+        "payload_exec",
+        "harm"
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "restrict_installers",
+      "interrupts": [
+        "remote_msi",
+        "user_runs_installer"
+      ],
+      "state": "candidate",
+      "effort": 3,
+      "disruption": 2,
+      "scope": "Consenting NGO's managed Windows clients",
+      "rollback": "Undo reviewed application-control policy change"
+    },
+    {
+      "id": "execution_control",
+      "interrupts": [
+        "payload_exec"
+      ],
+      "state": "candidate",
+      "effort": 5,
+      "disruption": 1,
+      "scope": "Consenting NGO's managed Windows clients",
+      "rollback": "Restore previous application-control rule set"
+    },
+    {
+      "id": "user_guidance",
+      "interrupts": [
+        "user_runs_command"
+      ],
+      "state": "candidate",
+      "effort": 1,
+      "disruption": 0,
+      "scope": "Staff awareness messages on consented organization",
+      "rollback": "Withdraw the guidance; does not revoke any security control"
+    }
+  ]
+}
