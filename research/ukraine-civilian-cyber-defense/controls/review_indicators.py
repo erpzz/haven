@@ -66,6 +66,19 @@ def evaluate(record: dict, now: datetime) -> tuple[bool, list[str]]:
     return not issues, issues
 
 
+
+def csv_safe(value: object) -> str:
+    """Neutralize spreadsheet formulas when untrusted review data is opened as CSV.
+
+    Rejected indicators can contain spreadsheet syntax even if they cannot
+    pass the deployment gate. CSV quoting alone is not a formula defense.
+    """
+    value = str(value if value is not None else '')
+    if value.startswith(('\t', '\r', '\n')) or value.lstrip(' \t\r\n').startswith(('=', '+', '-', '@')):
+        return "'" + value
+    return value
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('input_json', type=Path, help='Local indicator manifest; never auto-created from feeds')
@@ -88,7 +101,7 @@ def main() -> int:
         with args.output.open('w', encoding='utf-8', newline='') as handle:
             writer = csv.DictWriter(handle, fieldnames=['indicator', 'type', 'decision', 'reason', 'source_url', 'expires_utc'])
             writer.writeheader()
-            writer.writerows(evaluated)
+            writer.writerows({key: csv_safe(value) for key, value in row.items()} for row in evaluated)
         print(f'{sum(row["decision"] == "CANDIDATE" for row in evaluated)} of {len(evaluated)} indicators passed manual review gate. No rules deployed.')
         return 0
     except (OSError, ValueError, json.JSONDecodeError) as exc:
