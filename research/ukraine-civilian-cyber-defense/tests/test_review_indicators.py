@@ -3,7 +3,7 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'controls'))
-from review_indicators import evaluate, good_indicator
+from review_indicators import evaluate, good_indicator, csv_safe
 
 NOW = datetime(2026, 10, 13, tzinfo=timezone.utc)
 
@@ -16,6 +16,12 @@ def manifest(**updates):
 
 
 class ReviewTests(unittest.TestCase):
+    def test_formula_injection_neutralized_for_csv_review(self):
+        for payload in ['=HYPERLINK("https://example.org")', '+cmd', '-2+3', '@SUM(A1:A2)', ' \\t=1+1', '\\t=2+2']:
+            self.assertTrue(csv_safe(payload).startswith("'"), payload)
+        self.assertEqual(csv_safe('a.example.org'), 'a.example.org')
+        self.assertEqual(csv_safe('https://cert.gov.ua/article/123'), 'https://cert.gov.ua/article/123')
+
     def test_valid_public_candidate(self):
         self.assertTrue(evaluate(manifest(), NOW)[0])
 
