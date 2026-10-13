@@ -1,0 +1,94 @@
+--- a/docs/synapse.md
++++ b/docs/synapse.md
+@@ -2,22 +2,83 @@
+ 
+ ## Creating an admin user
+ 
+-To create an admin user use the command [register_new_matrix_user](https://manpages.debian.org/testing/matrix-synapse/register_new_matrix_user.1.en.html) within the `compose-synapse` Docker container. Example:
++Run these commands only on a dComms host you administer, after Synapse has
++started. From the installation directory, set `DWEB_DOMAIN` to the same domain
++used by `run.sh` (replace the example below).
+ 
++```bash
++export DWEB_DOMAIN=server1.example.org
++docker compose \
++  -f ./conf/compose/docker-compose.yml \
++  -f ./conf/compose/element.docker-compose.yml \
++  -f ./conf/compose/synapse.docker-compose.yml \
++  exec synapse register_new_matrix_user \
++  -u dcomms-admin --admin -c /data/homeserver.yaml http://127.0.0.1:8008
+ ```
+-register_new_matrix_user -u dcomms-admin --admin -c /data/homeserver.yaml
+-```
++
++The Compose service is `synapse`; its generated container name can vary.
++The command prompts for the password and confirmation. Avoid supplying a
++password with `-p`, which puts it in shell history and process arguments.
++
++This requires `registration_shared_secret` or
++`registration_shared_secret_path` in the loaded homeserver configuration.
++If neither exists, stop and follow the
++[shared-secret configuration guidance](https://element-hq.github.io/synapse/latest/usage/configuration/config_documentation.html#registration_shared_secret).
++The shared secret can create administrator accounts; do not publish it or the
++generated `homeserver.yaml`. You do not need to disable token-gated registration
++to bootstrap an administrator.
+ 
+ ## User registration and registration tokens
+ 
+-By default, Synapse is configured to require registration tokens to sign up. Synapse servers with open registrations are strongly discouraged, as they can result in severe spam and abuse. To generate a registration token you can follow the official API docs to [API access token](https://element-hq.github.io/synapse/latest/usage/administration/admin_api/index.html#making-an-admin-api-request), and then also to [generate a registration token](https://element-hq.github.io/synapse/latest/usage/administration/admin_api/registration_tokens.html). Example from cli of the dComms host:
++The installer sets `enable_registration: true` and
++`registration_requires_token: true`. Keep the token requirement enabled to
++limit unsolicited sign-ups.
+ 
+-```curl
+-user@dcomms-demo:~/dcomms-docker-compose# curl -X POST --header "Authorization: Bearer syt_abc123" http://localhost:8008/_synapse/admin/v1/registration_tokens/new -d '{}'
+-{"token":"abc123","uses_allowed":null,"pending":0,"completed":0,"expiry_time":null}
++A **server administrator access token** authenticates an Admin API request.
++A **registration token** is an invitation for a new user. Give users only the
++registration token, never the administrator access token or shared secret.
++Obtain the administrator access token using your client's settings as described
++in the [Admin API documentation](https://element-hq.github.io/synapse/latest/usage/administration/admin_api/index.html).
++Keep the Admin API private and use the host's loopback listener.
++
++The following Bash example uses GNU `date`, already typical on Linux hosts.
++It creates one invitation valid for at most 24 hours. It prompts for the admin
++access token without putting it in shell history or curl's process arguments.
++Run it in an interactive terminal without session recording.
++
++```bash
++(
++  set +x
++  read -r -s -p "Server administrator access token: " SYNAPSE_ADMIN_TOKEN
++  printf '\n'
++  # Accept URL-safe token characters; reject curl-config control characters.
++  case "$SYNAPSE_ADMIN_TOKEN" in
++    ''|*[!A-Za-z0-9._~-]*) printf 'Unsupported token format.\n' >&2; exit 1 ;;
++  esac
++  expiry_ms=$(date -u -d '+24 hours' +%s000) || exit 1
++  printf 'header = "Authorization: Bearer %s"\n' "$SYNAPSE_ADMIN_TOKEN" |
++    curl -q --config - --noproxy '*' --proto '=http' \
++      --fail --silent --show-error --connect-timeout 5 --max-time 15 \
++      --header 'Content-Type: application/json' \
++      --data "{\"uses_allowed\":1,\"expiry_time\":$expiry_ms}" \
++      http://127.0.0.1:8008/_synapse/admin/v1/registration_tokens/new
++)
+ ```
+ 
+-Once you have generated a registration token, this can be handed out to users and they can sign-up.
++The response contains the invitation token; share it privately with the intended
++user. Check `uses_allowed` is `1` and `expiry_time` is a future timestamp in
++milliseconds. An empty JSON body (`{}`) instead creates an invitation with
++unlimited uses and no expiry. The subshell discards the entered admin token on
++exit; curl does not follow redirects.
++
++Use the [registration-token API](https://element-hq.github.io/synapse/latest/usage/administration/admin_api/registration_tokens.html)
++to list invitations, inspect pending/completed uses, and revoke an invitation
++with `DELETE /_synapse/admin/v1/registration_tokens/<token>` if it is disclosed
++or no longer needed. Expiry or deletion prevents future registrations; it does
++not remove accounts already created.
++
++These instructions cover Synapse-managed registration. If Matrix Authentication
++Service integration is enabled, use the MAS administration tools instead.
+ 
+ ## Mjolnir
+ 
