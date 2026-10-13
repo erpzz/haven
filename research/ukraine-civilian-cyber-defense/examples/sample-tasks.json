@@ -1,0 +1,26 @@
+[
+  {
+    "TaskName": "GoogleUpdateTaskMachineCore",
+    "TaskPath": "\\",
+    "State": "Ready",
+    "Actions": [
+      {
+        "Execute": "C:\\Program Files (x86)\\Google\\Update\\GoogleUpdate.exe",
+        "Arguments": "/c",
+        "WorkingDirectory": ""
+      }
+    ]
+  },
+  {
+    "TaskName": "GoogleUpdateTaskMachineUA{example-not-real}",
+    "TaskPath": "\\",
+    "State": "Ready",
+    "Actions": [
+      {
+        "Execute": "C:\\Windows\\System32\\wscript.exe",
+        "Arguments": "C:\\Users\\Public\\Music\\apple.vbe",
+        "WorkingDirectory": ""
+      }
+    ]
+  }
+]
