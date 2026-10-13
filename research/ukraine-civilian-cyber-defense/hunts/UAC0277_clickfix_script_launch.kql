@@ -1,0 +1,12 @@
+// CERT-UA UAC-0277 / ClickFix: broad exploratory hunt for user-driven execution.
+// Source: https://cert.gov.ua/article/6319983
+// Browser -> script host or shell is a lead; Explorer -> shell can be benign.
+// Not campaign-specific attribution. High false-positive potential.
+DeviceProcessEvents
+| where Timestamp > ago(14d)
+| where FileName in~ ("powershell.exe", "pwsh.exe", "cmd.exe", "mshta.exe", "wscript.exe", "cscript.exe", "msiexec.exe")
+| where InitiatingProcessFileName in~ ("explorer.exe", "msedge.exe", "chrome.exe", "firefox.exe", "brave.exe")
+| extend PossibleNetworkPayload = ProcessCommandLine contains "http://" or ProcessCommandLine contains "https://"
+| where PossibleNetworkPayload or FileName in~ ("mshta.exe", "wscript.exe", "cscript.exe")
+| project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine, PossibleNetworkPayload, ReportId
+| order by Timestamp desc
