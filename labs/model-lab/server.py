@@ -108,7 +108,10 @@ def _lan_urls(port: int) -> list[str]:
 
 class Server(ThreadingHTTPServer):
     daemon_threads = True
-    allow_reuse_address = False
+    # POSIX needs SO_REUSEADDR for immediate service restart after HTTP traffic.
+    # It does not permit another live listener. Windows has different reuse
+    # semantics, so preserve exclusive binding there.
+    allow_reuse_address = os.name != 'nt'
 
     def __init__(self, address, lab, lan_mode=False, control_token=''):
         self.lab = lab
