@@ -1,7 +1,7 @@
 # Haven Core — Ubuntu bootstrap (operator-run)
 Status: offline preparation; target host NOT_INSPECTED / NOT_DEPLOYED.
 
-Primary design handoff: [HS-01 v2](../../design/H02/HS01/v2/CLAUDE_START_HERE.md) on branch `design/hs01-headless-federation-20261025`, PR #34. This implementation branch is separate from the draft design PR and must not be merged automatically.
+Primary design handoff: [HS-01 v2](https://github.com/erpzz/haven/blob/design/hs01-headless-federation-20261025/design/H02/HS01/v2/CLAUDE_START_HERE.md) on branch `design/hs01-headless-federation-20261025`, PR #34. This implementation branch is separate from the draft design PR and must not be merged automatically.
 
 ## Hardware and chosen topology
 - Desktop (historical/user reported): Ryzen 9 3900X, RTX 2070 Super 8 GB, 64 GB RAM.
