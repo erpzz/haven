@@ -27,7 +27,18 @@ enable lingering for that account with `sudo loginctl enable-linger "$USER"`.
 This grants no new sudo permission. The service itself runs as the ordinary
 account with `NoNewPrivileges=yes` and contains only its own process group.
 
-From the Mac, forward the same loopback port:
+From the Mac checkout, open the lab with the stdlib helper:
+
+```sh
+python3 ops/haven-core/open-lab.py
+```
+
+The helper starts the service if needed, establishes an owned loopback SSH
+tunnel, reads the current private link without printing it and opens the
+browser. `--prepare` prepares access without opening a browser; `--close`
+closes only its tunnel. An unrelated listener on port 8787 is left alone.
+
+For a manual session, forward the same loopback port:
 
 ```sh
 ssh -N -L 127.0.0.1:8787:127.0.0.1:8787 haven
