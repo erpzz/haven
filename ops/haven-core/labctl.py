@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -39,8 +40,18 @@ def main():
             body = json.dumps(data).encode()
             headers['Content-Type'] = 'application/json'
         req = urllib.request.Request(origin + path, data=body, headers=headers)
-        with opener.open(req, timeout=15) as response:
-            return json.load(response)
+        try:
+            with opener.open(req, timeout=15) as response:
+                return json.load(response)
+        except urllib.error.HTTPError as exc:
+            try:
+                detail = json.loads(exc.read(4096))
+            except (ValueError, OSError):
+                detail = {'error': 'The local service rejected this request.'}
+            print(json.dumps({'http_status': exc.code, **detail}, ensure_ascii=False))
+            raise SystemExit(1) from None
+        except (urllib.error.URLError, TimeoutError, OSError):
+            raise SystemExit('The local Model Lab is unavailable. Check systemctl --user status haven-model-lab. No request was retried.') from None
 
     actions = {
         'state': ('/api/state', None),

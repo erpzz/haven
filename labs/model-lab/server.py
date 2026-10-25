@@ -51,6 +51,18 @@ def save_launch_url(path: Path, url: str):
         Path(temporary).unlink(missing_ok=True)
 
 
+def notify_ready():
+    """Tell a Linux user service that HTTP initialization has finished."""
+    address = os.environ.pop('NOTIFY_SOCKET', '')
+    if not address:
+        return
+    if address.startswith('@'):
+        address = '\0' + address[1:]
+    with socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM) as notification:
+        notification.connect(address)
+        notification.sendall(b'READY=1')
+
+
 HOME_IPV4 = (
     ipaddress.ip_network('10.0.0.0/8'),
     ipaddress.ip_network('172.16.0.0/12'),
@@ -554,6 +566,7 @@ def main():
 
     signal.signal(signal.SIGTERM, stop_signal)
     try:
+        notify_ready()
         server.serve_forever(poll_interval=.2)
     except KeyboardInterrupt:
         pass

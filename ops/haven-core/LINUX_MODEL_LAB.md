@@ -10,6 +10,9 @@ The launch link is a bearer credential stored with mode 0600 at
 `~/.local/state/haven-model-lab/launch-url`. It is deliberately absent from the
 service journal. Each restart rotates it; reopen the current link afterward.
 Runtime data stays outside the checkout in `~/.local/share/haven-model-lab`.
+The systemd unit reports readiness only after the private launch link and HTTP
+listener are initialized, so a successful start can be followed immediately by
+an authenticated request.
 
 ## Install and run
 
@@ -21,6 +24,12 @@ install -m 644 ~/projects/haven/ops/haven-core/systemd/haven-model-lab.service ~
 systemctl --user daemon-reload
 systemctl --user enable --now haven-model-lab.service
 ```
+
+The optional pinned Linux CUDA engine also requires the Ubuntu `libgomp1`
+runtime package. A minimal server may not have it. Install it through the
+administrator's normal package workflow before loading a model; a missing
+`libgomp.so.1` is reported in the private `engine.log`. The Lab does not silently
+install operating-system packages or fall back to CPU inference.
 
 For operation after logout and at boot, a human administrator can explicitly
 enable lingering for that account with `sudo loginctl enable-linger "$USER"`.

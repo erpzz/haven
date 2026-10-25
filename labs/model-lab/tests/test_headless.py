@@ -23,12 +23,17 @@ class HeadlessLaunchTests(unittest.TestCase):
             with socket.socket() as listener:
                 listener.bind(('127.0.0.1', 0))
                 port = listener.getsockname()[1]
-            with (directory / 'server.log').open('w+') as log:
+            with socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM) as notify, (directory / 'server.log').open('w+') as log:
+                notification_path = str(directory / 'notify.sock')
+                notify.bind(notification_path)
+                notify.settimeout(10)
                 process = subprocess.Popen([
                     sys.executable, str(ROOT / 'server.py'), '--port', str(port),
                     '--data-dir', str(directory / 'data'), '--launch-file', str(link),
-                ], stdout=log, stderr=subprocess.STDOUT)
+                ], stdout=log, stderr=subprocess.STDOUT,
+                    env=dict(os.environ, NOTIFY_SOCKET=notification_path))
                 try:
+                    self.assertEqual(notify.recv(64), b'READY=1')
                     deadline = time.monotonic() + 8
                     while not link.exists() and process.poll() is None and time.monotonic() < deadline:
                         time.sleep(.05)
