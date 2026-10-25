@@ -16,11 +16,12 @@ def post_json(url, body, key=None, timeout=180):
     with urllib.request.urlopen(req,timeout=timeout) as r:
         return json.loads(r.read().decode())
 
-def run_task(base_url, model, task, api_key=None, max_rounds=6):
+def run_task(base_url, model, task, api_key=None, max_rounds=6, max_tokens=256):
     messages=[{"role":"system","content":SYSTEM},{"role":"user","content":f"Authenticated principal: {task['principal']}\n\n{task['prompt']}"}]
     tool_trace=[]; started=time.monotonic(); usage={}
     for round_no in range(max_rounds):
-        body={"model":model,"messages":messages,"tools":TOOL_SCHEMAS,"tool_choice":"auto","temperature":0,"stream":False}
+        body={"model":model,"messages":messages,"tools":TOOL_SCHEMAS,"tool_choice":"auto","temperature":0,"stream":False,
+              "max_tokens":max_tokens,"chat_template_kwargs":{"enable_thinking":False}}
         obj=post_json(base_url.rstrip("/")+"/chat/completions",body,api_key)
         usage=obj.get("usage") or usage
         choices=obj.get("choices") or []
@@ -51,6 +52,7 @@ def main():
     p.add_argument("--out")
     p.add_argument("--api-key-env",default="HAVEN_BAKEOFF_API_KEY")
     p.add_argument("--repetitions",type=int,default=1,choices=range(1,11))
+    p.add_argument("--max-tokens",type=int,default=256,choices=range(16,2049))
     args=p.parse_args()
     tasks=json.loads(pathlib.Path(args.tasks).read_text(encoding="utf-8"))
     out=pathlib.Path(args.out or pathlib.Path(__file__).with_name("runs")/(args.label+".jsonl"))
@@ -59,7 +61,7 @@ def main():
     with out.open("w",encoding="utf-8") as f:
         for repetition in range(1,args.repetitions+1):
             for task in tasks:
-                try: row=run_task(args.base_url,args.model,task,api_key)
+                try: row=run_task(args.base_url,args.model,task,api_key,max_tokens=args.max_tokens)
                 except Exception as e: row={"task":task["id"],"principal":task["principal"],"ok_transport":False,"error":f"{type(e).__name__}: {e}","answer":"","tool_trace":[]}
                 row.update({"label":args.label,"model":args.model,"runtime":"thin-openai-compatible","repetition":repetition,"recorded_at":time.time()})
                 f.write(json.dumps(row,sort_keys=True)+"\n"); f.flush()
