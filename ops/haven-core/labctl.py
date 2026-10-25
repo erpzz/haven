@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+"""Operate the local Model Lab without printing its private bearer link."""
+import argparse
+import json
+from pathlib import Path
+import time
+import urllib.parse
+import urllib.request
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('action', choices=('state', 'install', 'download', 'load', 'chat', 'job', 'cancel', 'unload'))
+    parser.add_argument('value', nargs='?')
+    parser.add_argument('--wait', action='store_true')
+    parser.add_argument('--timeout', type=float, default=180)
+    parser.add_argument('--max-tokens', type=int, default=256)
+    parser.add_argument('--context', type=int, default=4096)
+    parser.add_argument('--threads', type=int, default=6)
+    args = parser.parse_args()
+    if args.timeout <= 0 or args.timeout > 3600:
+        parser.error('--timeout must be between 0 and 3600 seconds')
+    if args.action in ('download', 'load', 'chat', 'job', 'cancel') and not args.value:
+        parser.error('this action requires a model ID, prompt or job ID')
+    link = Path.home() / '.local/state/haven-model-lab/launch-url'
+    parsed = urllib.parse.urlsplit(link.read_text().strip())
+    if parsed.scheme != 'http' or parsed.hostname != '127.0.0.1' or parsed.path != '/' or parsed.username or parsed.password:
+        raise SystemExit('The private launch file does not name a literal loopback service.')
+    token = urllib.parse.parse_qs(parsed.fragment).get('token', [''])[0]
+    if not token:
+        raise SystemExit('The private launch file has no session token.')
+    origin = urllib.parse.urlunsplit((parsed.scheme, parsed.netloc, '', '', ''))
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
+    def request(path, data=None):
+        headers = {'X-Lab-Token': token}
+        body = None
+        if data is not None:
+            body = json.dumps(data).encode()
+            headers['Content-Type'] = 'application/json'
+        req = urllib.request.Request(origin + path, data=body, headers=headers)
+        with opener.open(req, timeout=15) as response:
+            return json.load(response)
+
+    actions = {
+        'state': ('/api/state', None),
+        'install': ('/api/engine/install', {'confirmed': True}),
+        'download': ('/api/model/download', {'id': args.value, 'confirmed': True}),
+        'load': ('/api/engine/start', {'id': args.value, 'preset': 'balanced', 'overrides': {'context': args.context, 'threads': args.threads}}),
+        'chat': ('/api/generate', {'messages': [{'role': 'user', 'content': args.value}], 'max_tokens': args.max_tokens,
+                                 'temperature': 0, 'top_p': .8, 'seed': 42, 'reasoning': 'none'}),
+        'job': ('/api/jobs/' + urllib.parse.quote(args.value or '', safe=''), None),
+        'cancel': ('/api/cancel', {'id': args.value}),
+        'unload': ('/api/engine/stop', {}),
+    }
+    result = request(*actions[args.action])
+    if args.wait and result.get('job_id'):
+        job_id = result['job_id']
+        deadline = time.monotonic() + args.timeout
+        while time.monotonic() < deadline:
+            result = request('/api/jobs/' + job_id)
+            if result['state'] != 'RUNNING':
+                break
+            time.sleep(.5)
+        else:
+            print(json.dumps({'job_id': job_id, 'state': 'WAIT_TIMEOUT', 'note': 'Job retained; inspect or cancel explicitly.'}))
+            raise SystemExit(2)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    if result.get('state') in ('FAILED', 'CANCELLED'):
+        raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    main()
