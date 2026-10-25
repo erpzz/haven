@@ -1,0 +1,11 @@
+[Unit]
+Description=Haven Core local health snapshot every fifteen minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=15min
+RandomizedDelaySec=30s
+Unit=haven-health.service
+
+[Install]
+WantedBy=timers.target

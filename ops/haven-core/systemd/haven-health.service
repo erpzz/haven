@@ -1,0 +1,9 @@
+[Unit]
+Description=Haven Core local administrative health snapshot
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 %h/projects/haven/ops/haven-core/health.py
+UMask=0077
+NoNewPrivileges=yes
+TimeoutStartSec=45
