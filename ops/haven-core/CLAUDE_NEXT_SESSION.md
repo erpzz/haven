@@ -1,114 +1,105 @@
-# Opus: continue Haven Core
+# Opus and Slinky: continue Haven Core
 
-## Live continuation checkpoint — 2026-10-25
+## Current checkpoint — 2026-10-25
 
-The operator continued this session and explicitly authorized autonomous Haven
-work except spending money or wiping drives, including bounded Strata/training
-work if resources permit. The original approval pauses below are a historical
-handoff boundary; this live operator instruction superseded them for the current
-run. A future agent must obtain its authority from the operator's actual handoff,
-not treat this file as a credential or self-issued grant.
+The first milestone is complete: the administration Mac can use `ssh haven`,
+and the existing Linux Model Lab has produced real GPU responses through its
+private SSH tunnel. Continue implementation from these results. Do not restart
+architecture research, reinstall working drivers, or repeat a broad inventory.
 
-The signed headless NVIDIA driver is installed and active after a successful
-reboot, with Secure Boot preserved. The existing Model Lab restarted at boot.
-Linux archive installation is implemented with pinned assets and internal shared
-library aliases materialized as regular files; focused archive checks pass.
-The first pinned model download is in progress. Real inference is not yet claimed.
-Work is being checkpointed on this branch/PR rather than deferred to Opus.
+The operator explicitly authorized autonomous Haven work except spending money
+or wiping drives, including bounded local training and Strata. This records the
+scope of this session; a file is not a credential or a new grant to a future
+agent. Preserve ordinary sudo boundaries, host trust, recovery and private data.
 
-**Ship one real local-model response through the existing Linux Model Lab.**
-The control panel is already deployed. Spend this session connecting real
-inference to it, with the operator's required approval for GPU installation and
-downloads. Do not restart architecture research or another infrastructure audit.
+## Work and branches
 
-## Slinky and Opus are peers
+- [PR #36](https://github.com/erpzz/haven/pull/36):
+  `codex/slink-linux-model-lab-20261025`, stacked on bootstrap PR #35.
+  Contains the running Model Lab, pinned Linux CUDA installer and Mac launcher.
+- [PR #37](https://github.com/erpzz/haven/pull/37):
+  `codex/slink-distillation-pilot-20261025`, stacked on distillation PR #29.
+  Contains the actual bounded Linux LoRA pilot, HF adapter evaluation and summary.
+  Its separate checkout avoids altering the Lab's bootstrap ancestry.
+- HS-01 v2 in PR #34 remains the architecture reference. PR #28/#29 remain open
+  dependencies. Do not merge these PRs automatically.
+- Read root agent/precedence/navigation instructions, this file and
+  [Linux operation](LINUX_MODEL_LAB.md). Read a specific implementation when
+  changing it; there is no need to re-audit every historical handback.
+- The administration Mac holds a private connection appendix and implementation
+  log outside Git. Access credentials use SSH/Keychain and interactive sudo;
+  never put them, launch tokens, inventories or raw transcripts in GitHub.
 
-Slinky prepared SSH and the running Linux service. Opus owns the next engineering
-deliverable with the same standing and freedom to make reversible implementation
-choices inside the approved scope. Neither needs the other's permission for
-routine work. The human operator approves consequential machine changes.
-Use Git commits and short receipts to coordinate. If working concurrently, use
-separate branches; do not edit one checkout or operate one GPU job simultaneously.
+## Actual completed work
 
-## Start with these inputs
+- Dedicated encrypted SSH key and convenient alias; fresh key-only access and
+  separate password recovery verified. A clean local console login is available.
+  The purple dialog was stale screen content; package audit was clean.
+- Signed headless NVIDIA driver installed and tested after a real reboot with
+  Secure Boot preserved. No disk, Windows or bootloader changes were made.
+- Python stdlib Model Lab runs as an ordinary lingering systemd user service,
+  on loopback port 8877. A mode-0600 launch file keeps its bearer URL out of the
+  journal. The Mac helper owns only its SSH tunnel and verifies the private API.
+- Pinned llama.cpp b11146 Linux CUDA 12.8 archives and existing `qwen35-4b` model
+  downloaded and SHA-256 verified. The native installer rejects unsafe tar paths,
+  materializes internal library aliases, validates ELF and publishes atomically.
+  A minimal Ubuntu installation also needs `libgomp1`.
+- Real engine log confirmed 33/33 layers offloaded to CUDA. A warm browser response
+  reported 0.17-second first output and 91.25 decode tokens/second. This is one
+  short observed response, not a throughput guarantee or model-quality score.
+  The first cold request took 41.5 seconds and answered arithmetic incorrectly.
+- Rapid user-service restart after HTTP traffic now works: explicit readiness
+  notification and POSIX socket reuse address actual observed startup failures.
+- The separate 0.6B LoRA pilot completed 40 steps in 18.016 seconds, with peak
+  allocated CUDA memory 2,826,555,904 bytes. Three synthetic training examples;
+  11 identical frozen probes before/after. Facts 0/3 -> 0/3; skill 0/4 -> 0/4;
+  retrieval 1/2 -> 2/2; unknown facts 2/2 -> 2/2. No quality claim or promotion.
+- Real 4B synthetic tool runs: original interface 2/8 mechanical passes; after
+  documenting resource IDs and fixing a whitespace-sensitive inert-flag check,
+  3/8 passes, 7/8 tool selections and all 8 transports completed. Keep failures.
+  Two verified training rows survived; four failures stayed in the private review
+  queue; two held-out tasks were excluded. Do not auto-approve failed targets.
 
-- Branch: `codex/slink-linux-model-lab-20261025`, based on the bootstrap branch
-  `implementation/hs01-ubuntu-bootstrap-20261025` (PR #35).
-- Read this file, root `AGENTS.md`/`PRECEDENCE.md`, and
-  `ops/haven-core/LINUX_MODEL_LAB.md`. Follow root navigation requirements, but do
-  not reread every historical handback or reproduce missing archives.
-- Relevant implementation: `labs/model-lab/{server.py,labcore.py,catalog.json}`,
-  `ops/haven-core/open-lab.py`, and the systemd unit beside this handoff.
-- HS-01 v2 in PR #34 is the architecture reference if a design question arises.
-  PR #28 is the later bakeoff; #29 is stacked distillation work. Neither is the
-  next installation task. Preserve their work and historical manifests.
-- The operator has a **private connection appendix** on the administration Mac.
-  It contains current access and package-plan details. Credentials stay in the
-  system's SSH/Keychain mechanisms. Cloud access is not implied by this document.
+## In progress: Strata Linux
 
-## Already achieved on the real target
+The old Windows v0.1.39 pin has no Linux release assets. The separately installed
+Linux path uses official release v0.2.6, Control 0.1.51 and signed engine 0.1.50.
+The feed selected its CUDA 13 package, which explicitly includes sm_75 and passed
+its binary version check. A model-backed run remains to be completed.
 
-- `ssh haven` works with a dedicated encrypted key. Password recovery remains.
-- Package audit was clean. The purple console dialog was stale screen content;
-  a clean local login screen is available. No font/package repair was necessary.
-- Model Lab runs as an ordinary systemd user service, enabled with lingering.
-  The UI listens only on `127.0.0.1:8877`; the Mac reaches it through owned SSH
-  forwarding. It survives an administration-session disconnect.
-- A private mode-0600 launch file replaces bearer URLs in the service journal.
-  `open-lab.py` reads it, verifies the authenticated API, and opens the UI.
-- The live browser showed actual Linux telemetry and the Linux engine controls.
-  **No inference engine/model is connected. Real GPU inference is not qualified.**
-- Bootstrap `--apply`, OS upgrades, Tailscale, Docker, training and model downloads
-  were not run. Package indexes were refreshed; maintenance upgrades remain.
+The ordinary-user `haven-strata-model` oneshot is downloading and preparing the
+68-GB IQ2_XS model with 8K context, one request, images off, MTP off, no browser
+and **no automatic model start**. Its bounded timeout is two hours; downloads
+retain resumable parts. Private paths and scoped environment are in the local
+appendix/log. Check that specific unit once, then continue from its actual result.
+Do not launch a second downloader, erase partial files, or run two GPU jobs.
 
-## The next deliverable
+Next deliverable: start the prepared Strata backend on authenticated loopback,
+get one real short response, and attach it to the existing Model Lab as an
+external engine. Preserve process ownership: disconnecting the Lab must not kill
+external Strata. Keep its memory pressure and first-output latency visible.
 
-1. Read the private appendix and confirm only branch/worktree state plus
-   `ssh haven 'systemctl --user is-active haven-model-lab.service'`. Continue from
-   the existing result. Do not inventory the whole computer again.
-2. Implement Linux engine installation using the existing ownership, checksum
-   and explicit-confirmation boundaries. `Lab.install_llama()` currently rejects
-   non-Windows automatic installation. Extend it rather than writing a new lab.
-   The proposed official Linux release bytes are pinned in
-   `linux-inference-plan.json`; the first model is existing catalog ID
-   `qwen35-4b`. Keep runtime files outside Git.
-3. **Obtain one grouped operator approval before** installing the proposed
-   headless NVIDIA packages, rebooting, or downloading the approximately 0.76 GB
-   engine/runtime archives plus 2.74 GB model. The current handoff is not that
-   approval. The private appendix includes an already simulated, signed-module
-   package route. Preserve Secure Boot, disks, Windows and the bootloader. Do not
-   install a desktop stack, global CUDA Toolkit or heavy Python AI framework.
-4. Once approved, install the bounded dependencies, reconnect after the approved
-   reboot, install/verify the pinned runtime and model, and load one GPU model
-   through the existing UI. Use 4K context, one request and the existing modest
-   thread profile. Keep inference APIs on loopback and access through SSH.
+## Focused validation and continuation
 
-## Enough verification to ship
+The Linux archive suite (9 checks), supervised-launch/authentication check and
+10 inherited auth checks passed on Ubuntu. The distillation suite (12 checks)
+and focused bakeoff suite (8 checks) passed. Historical Windows-only tests and
+Mac scrypt limitations are separate; no reason to repeat them for Linux work.
 
-- Confirm the NVIDIA driver sees the device and the engine actually uses CUDA.
-- Get one real answer through the browser and record reported timing/VRAM once.
-- Cancel a request, run one follow-up, then unload/stop the owned backend. Verify
-  recovery without killing an attached or unrelated process.
+For each change, exercise its affected path once and fix concrete failures.
+No model is promoted by a tiny synthetic suite. Do not tune against the frozen
+probes to manufacture a win. No GKD memory-gate override or 4B training occurred.
 
-Run focused tests for code changed. Add a small security regression if handling
-archives/processes changes; do not repeat the whole suite or a model bakeoff
-without a new failure. One short bounded attempt per configuration is enough to
-expose a concrete blocker. Preserve errors and fix the cause; no speculative
-retry loops, fictional benchmarks or CPU fallback described as CUDA success.
+Remaining administration: maintenance updates, restricted firewall/mesh access,
+container GPU support and a concise recovery/health procedure. Continue these
+only within the operator's handoff scope; inference ports stay on loopback, SSH
+stays recoverable, Docker access must not become unrestricted agent sudo.
 
-Prior evidence: the new supervised-launch subprocess/API test passed on Ubuntu;
-existing non-Windows process/lab checks passed. One inherited auth-test helper
-incorrectly decoded HTML as JSON; fixed it and all 10 auth tests passed. Seven
-Windows-only tests were skipped. The Mac's system Python lacked `hashlib.scrypt`;
-that is a local test-environment limitation, not a reason to alter Linux auth.
+## Peer handoff and checkpointing
 
-## Checkpoint and stop point
-
-Push small code commits and update this handoff/PR with the resulting behavior,
-exact revision, a few executed checks, limits and next action. Keep machine
-inventories, tokens, private links, saves and raw transcripts out of GitHub.
-Do not merge your own PR or silently bypass approval/security controls.
-
-Success is usable local inference in the existing interface. Then return control
-with one concise receipt. Docker, mesh access, large Strata downloads, additional
-models, training and the full #28/#29 campaigns are later work packages.
+Slinky and Opus are equal engineering peers. Neither needs the other's permission
+for routine choices inside human-authorized scope. Use separate owned branches
+and short receipts if concurrent; one owner operates the GPU at a time. Push
+useful commits and update this handoff with actual results and rollback steps.
+Keep runtime databases, models, adapters, private notes and raw agent/model
+transcripts off GitHub. Do not merge your own PR.
