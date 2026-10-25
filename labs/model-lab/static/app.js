@@ -94,7 +94,15 @@ function applyState(s) {
  metric('ram-free',h.ram_available_gib==null?null:h.ram_available_gib.toFixed(1),'GiB'); $('ram-total').textContent=h.ram_total_gib?`of ${h.ram_total_gib.toFixed(1)} GiB · ${h.cpu_logical_threads} logical CPU threads`:'RAM measurement unavailable';
  $('send').disabled=busy||benchRunning||!connected; $('run-bench').disabled=busy||benchRunning||!connected;
  for(const id of ['connect','disconnect','unload','profile','context','threads','confirm-import'])$(id).disabled=benchRunning;
- $('install-engine').disabled=s.llama_installed; $('install-engine').textContent=s.llama_installed?'CUDA engine installed ✓':'Install pinned CUDA engine · ~645 MB';
+ const linux=h.platform==='linux';
+ $('install-engine').disabled=s.llama_installed||linux;
+ $('install-engine').textContent=s.llama_installed?'CUDA engine installed ✓':linux?'Linux engine setup pending':'Install pinned CUDA engine · ~645 MB';
+ if(linux){
+  $('install-note').textContent='This Linux host is ready for a separately qualified local engine. Driver and engine installation require their own approval.';
+  document.querySelector('footer span:last-child').textContent='Haven Core · Linux';
+  document.querySelector('.strata-panel ol').classList.add('hidden');
+  document.querySelector('.strata-panel .field-note').textContent='Attach a separately installed Linux backend using its loopback API. It remains under your control when this lab disconnects or stops.';
+ }
  renderModels(); renderJobs();
 }
 async function refresh(){ if(refreshBusy)return; refreshBusy=true; try{applyState(await api('/api/state'));}catch(e){if(!state)toast(e.message,true);}finally{refreshBusy=false;} }
