@@ -11,7 +11,7 @@ import urllib.request
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=('state', 'install', 'download', 'load', 'chat', 'job', 'cancel', 'unload'))
+    parser.add_argument('action', choices=('state', 'install', 'download', 'load', 'strata', 'chat', 'job', 'cancel', 'unload'))
     parser.add_argument('value', nargs='?')
     parser.add_argument('--wait', action='store_true')
     parser.add_argument('--timeout', type=float, default=180)
@@ -56,6 +56,7 @@ def main():
     actions = {
         'state': ('/api/state', None),
         'install': ('/api/engine/install', {'confirmed': True}),
+        'strata': ('/api/connect/haven-strata', {}),
         'download': ('/api/model/download', {'id': args.value, 'confirmed': True}),
         'load': ('/api/engine/start', {'id': args.value, 'preset': 'balanced', 'overrides': {'context': args.context, 'threads': args.threads}}),
         'chat': ('/api/generate', {'messages': [{'role': 'user', 'content': args.value}], 'max_tokens': args.max_tokens,

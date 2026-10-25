@@ -31,7 +31,7 @@ ASSETS = {
 }
 COOKIE_NAME = 'haven_session'
 ADMIN_POSTS = {
-    '/api/connect', '/api/disconnect', '/api/engine/install', '/api/model/download',
+    '/api/connect', '/api/connect/haven-strata', '/api/disconnect', '/api/engine/install', '/api/model/download',
     '/api/model/import', '/api/engine/start', '/api/engine/stop', '/api/shutdown',
 }
 ADMIN_GETS = {'/api/log', '/api/benchmarks', '/api/auth/users'}
@@ -461,6 +461,8 @@ class Handler(BaseHTTPRequestHandler):
             job_id = None
             if self.path == '/api/connect':
                 out = lab.connect(data.get('base', ''), data.get('key', ''), data.get('kind', 'strata'))
+            elif self.path == '/api/connect/haven-strata':
+                out = lab.connect_haven_strata()
             elif self.path == '/api/disconnect':
                 out = lab.disconnect()
             elif self.path == '/api/engine/install':

@@ -19,6 +19,7 @@ import secrets
 import shutil
 import signal
 import socket
+import stat
 import subprocess
 import sys
 import threading
@@ -518,6 +519,24 @@ class Lab:
             self.settings['models'][mid] = {'path': str(p), 'name': p.stem, 'size_bytes': p.stat().st_size, 'sha256': None}
             atomic_json(self.data / 'settings.json', self.settings)
         return {'id': mid, 'name': p.stem}
+    def connect_haven_strata(self) -> dict:
+        """Attach the prepared Linux service without sending its key to a browser."""
+        if sys.platform != 'linux':
+            raise ValueError('The prepared Haven Strata service is a Linux option.')
+        path = Path.home() / '.local/state/haven-strata/api-key'
+        try:
+            fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+        except OSError:
+            raise ValueError('Start the prepared Haven Strata service first; its private credential is unavailable.') from None
+        with os.fdopen(fd) as handle:
+            info = os.fstat(handle.fileno())
+            if not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o077:
+                raise ValueError('The Haven Strata credential must be an owned mode-0600 regular file.')
+            key = handle.read(258).strip()
+        if not re.fullmatch(r'[A-Za-z0-9_-]{32,256}', key):
+            raise ValueError('The private Haven Strata credential has an invalid format.')
+        return self.connect('http://127.0.0.1:8880/v1', key, 'strata')
+
     def connect(self, base: str, key: str = '', kind: str = 'strata') -> dict:
         endpoint(base)
         if kind not in ('strata', 'llama', 'other'): raise ValueError('Invalid backend type.')

@@ -102,7 +102,14 @@ function applyState(s) {
   $('install-note').textContent='Pinned Ubuntu CUDA runtime. SHA-256 verified; installed only in this lab. The NVIDIA driver is managed separately.';
   document.querySelector('footer span:last-child').textContent='Haven Core · Linux';
   document.querySelector('.strata-panel ol').classList.add('hidden');
-  document.querySelector('.strata-panel .field-note').textContent='Attach a separately installed Linux backend using its loopback API. It remains under your control when this lab disconnects or stops.';
+  document.querySelector('.strata-panel > p').textContent='Strata runs large models using GPU and RAM expert caching. The prepared Linux service uses the pinned official release and stays separate from llama.cpp.';
+  document.querySelector('.strata-panel .field-note').textContent='Connect the prepared Haven Strata service without entering its private API key. It stays running when this lab disconnects or stops. Other local backends can use the fields above.';
+  if(!$('connect-haven-strata')){
+   const prepared=element('button','primary','Connect Haven Strata ↗');prepared.id='connect-haven-strata';
+   prepared.onclick=async()=>{try{await api('/api/connect/haven-strata',{});await refresh();go('playground');toast('Connected to Haven Strata. Its private credential stays on the server.');}catch(e){toast(e.message,true);}};
+   $('connect').parentElement.append(prepared);
+  }
+  $('connect-haven-strata').disabled=busy||benchRunning;
  }
  renderModels(); renderJobs();
 }
