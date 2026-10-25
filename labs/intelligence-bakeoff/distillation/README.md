@@ -1,5 +1,10 @@
 # Haven Distillation Lab — October 12, 2026
 
+Current additive execution receipt: [bounded Linux pilot](LINUX_PILOT.md).
+It completed local LoRA training without fact/skill improvement; no model was
+promoted. The original implementation status and research limits below are
+retained as their dated starting point.
+
 **Status:** implementation candidate; synthetic-data construction and test scripts committed. No model training, benchmark improvement, Windows-host evaluation, GPU memory qualification, cloud usage or deployed agent learning is claimed. This work depends on R02 bakeoff PR #28 and does not replace Haven Model Lab, IP-01, the two-user data boundary or the retained drone/robotics research.
 
 ## What is implemented
