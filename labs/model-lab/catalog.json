@@ -111,5 +111,19 @@
       "source": "https://huggingface.co/Qwen/Qwen3-4B-GGUF/blob/main/Qwen3-4B-Q4_K_M.gguf"
     }
   ],
-  "notes": "Model content hashes are pinned. Download URLs use main; changed bytes fail verification rather than silently updating. Approximate catalog sizes are decimal GB, not allocation estimates."
+  "notes": "Model content hashes are pinned. Download URLs use main; changed bytes fail verification rather than silently updating. Approximate catalog sizes are decimal GB, not allocation estimates.",
+  "llama_linux_assets": [
+    {
+      "name": "llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11146/llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "size_bytes": 168920581,
+      "sha256": "c2ab9e19838513ff69d1af8d999ad717dd3c7ee4714ac04c7ed5ab9077c50e4e"
+    },
+    {
+      "name": "cudart-llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11146/cudart-llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "size_bytes": 594373356,
+      "sha256": "1466daea60aad1144819e151b2bae19d54556cf1da6c129c4f55a5ded2637c25"
+    }
+  ]
 }

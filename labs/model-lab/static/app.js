@@ -95,10 +95,11 @@ function applyState(s) {
  $('send').disabled=busy||benchRunning||!connected; $('run-bench').disabled=busy||benchRunning||!connected;
  for(const id of ['connect','disconnect','unload','profile','context','threads','confirm-import'])$(id).disabled=benchRunning;
  const linux=h.platform==='linux';
- $('install-engine').disabled=s.llama_installed||linux;
- $('install-engine').textContent=s.llama_installed?'CUDA engine installed ✓':linux?'Linux engine setup pending':'Install pinned CUDA engine · ~645 MB';
+ $('install-engine').disabled=s.llama_installed||!s.engine_install_supported;
+ const engineMB=Math.round((s.engine_download_bytes||645000000)/1e6);
+ $('install-engine').textContent=s.llama_installed?'CUDA engine installed ✓':s.engine_install_supported?`Install pinned CUDA engine · ~${engineMB} MB`:'Automatic engine setup unavailable';
  if(linux){
-  $('install-note').textContent='This Linux host is ready for a separately qualified local engine. Driver and engine installation require their own approval.';
+  $('install-note').textContent='Pinned Ubuntu CUDA runtime. SHA-256 verified; installed only in this lab. The NVIDIA driver is managed separately.';
   document.querySelector('footer span:last-child').textContent='Haven Core · Linux';
   document.querySelector('.strata-panel ol').classList.add('hidden');
   document.querySelector('.strata-panel .field-note').textContent='Attach a separately installed Linux backend using its loopback API. It remains under your control when this lab disconnects or stops.';
@@ -113,7 +114,7 @@ async function waitJob(id, render){while(true){const j=await api('/api/jobs/'+id
 $('connect').onclick=async()=>{try{await api('/api/connect',{base:$('endpoint').value,key:$('backend-key').value,kind:$('backend-kind').value});$('backend-key').value='';await refresh();go('playground');toast('Connected locally. This lab will not stop the external server.');}catch(e){toast(e.message,true);}};
 $('disconnect').onclick=async()=>{try{await api('/api/disconnect',{});await refresh();toast('Disconnected. The external server is still running.');}catch(e){toast(e.message,true);}};
 $('native-ui').onclick=()=>{try{if(auth.enabled&&!['127.0.0.1','localhost'].includes(location.hostname))throw new Error('The engine-native UI stays on the Windows host. Use the Haven UI from this device.');const base=state?.connection?.base||$('endpoint').value;const u=new URL(base);if(u.hostname!=='127.0.0.1'||u.protocol!=='http:')throw new Error('Local URL required.');window.open(u.origin,'_blank','noopener,noreferrer');}catch(e){toast(e.message,true);}};
-$('install-engine').onclick=async()=>{if(!confirm('Download about 645 MB of pinned official llama.cpp CUDA binaries into this lab? No driver or system CUDA Toolkit will be installed.'))return;try{await api('/api/engine/install',{confirmed:true});toast('Installing. Progress appears below.');await refresh();}catch(e){toast(e.message,true);}};
+$('install-engine').onclick=async()=>{const mb=Math.round((state?.engine_download_bytes||645000000)/1e6);if(!confirm(`Download about ${mb} MB of pinned official llama.cpp CUDA binaries into this lab? No driver or system CUDA Toolkit will be installed.`))return;try{await api('/api/engine/install',{confirmed:true});toast('Installing. Progress appears below.');await refresh();}catch(e){toast(e.message,true);}};
 $('unload').onclick=async()=>{try{const r=await api('/api/engine/stop',{});await refresh();toast(`Owned engine: ${r.state}. External servers were not touched.`);}catch(e){toast(e.message,true);}};
 $('profile').onchange=()=>{const p=state?.presets[$('profile').value];if(p){$('context').value=String(p.context);$('threads').value=String(p.threads);}};
 $('temperature').oninput=()=>$('temp-label').textContent=$('temperature').value;

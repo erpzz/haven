@@ -1,5 +1,21 @@
 # Opus: continue Haven Core
 
+## Live continuation checkpoint — 2026-10-25
+
+The operator continued this session and explicitly authorized autonomous Haven
+work except spending money or wiping drives, including bounded Strata/training
+work if resources permit. The original approval pauses below are a historical
+handoff boundary; this live operator instruction superseded them for the current
+run. A future agent must obtain its authority from the operator's actual handoff,
+not treat this file as a credential or self-issued grant.
+
+The signed headless NVIDIA driver is installed and active after a successful
+reboot, with Secure Boot preserved. The existing Model Lab restarted at boot.
+Linux archive installation is implemented with pinned assets and internal shared
+library aliases materialized as regular files; focused archive checks pass.
+The first pinned model download is in progress. Real inference is not yet claimed.
+Work is being checkpointed on this branch/PR rather than deferred to Opus.
+
 **Ship one real local-model response through the existing Linux Model Lab.**
 The control panel is already deployed. Spend this session connecting real
 inference to it, with the operator's required approval for GPU installation and

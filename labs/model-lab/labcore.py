@@ -13,6 +13,7 @@ import json
 import math
 import os
 from pathlib import Path
+import platform
 import re
 import secrets
 import shutil
@@ -422,12 +423,21 @@ class Lab:
                         'size_bytes': v['size_bytes'], 'downloaded': Path(v['path']).is_file(), 'imported': True,
                         'description': 'User-selected local GGUF. Compatibility and license are not verified by the catalog.'})
             conn = {k: v for k, v in (self.connection or {}).items() if k != 'key'}
+            assets = self.runtime_assets()
             return {'version': VERSION, 'connection': conn, 'engine': self.engine.status(), 'models': models,
                     'presets': PRESETS, 'hardware': self.get_hardware(), 'llama_installed': self.llama_exe() is not None,
+                    'engine_install_supported': bool(assets),
+                    'engine_download_bytes': sum(a['size_bytes'] for a in assets),
                     'jobs': [{k:v for k,v in j.snapshot().items() if k not in ('text','reasoning')} for j in self.jobs.values()], 'data_dir': str(self.data)}
+    def runtime_assets(self) -> list[dict]:
+        if os.name == 'nt':
+            return self.catalog.get('llama_assets', [])
+        if sys.platform == 'linux' and platform.machine().lower() in ('x86_64', 'amd64'):
+            return self.catalog.get('llama_linux_assets', [])
+        return []
     def llama_exe(self) -> Path | None:
         expected = self.data / 'engines' / self.catalog.get('llama_tag', 'b11146')
-        for name in ('llama-server.exe', 'llama-server'):
+        for name in (('llama-server.exe',) if os.name == 'nt' else ('llama-server',)):
             found = list(expected.rglob(name)) if expected.exists() else []
             if found: return found[0]
         return None
@@ -455,7 +465,8 @@ class Lab:
         threading.Thread(target=self._run_download, args=(j, work), daemon=True).start()
         return j.id
     def install_llama(self) -> str:
-        if os.name != 'nt': raise ValueError('Automatic CUDA installation is Windows-only. Attach an existing local backend on this OS.')
+        assets = self.runtime_assets()
+        if not assets: raise ValueError('Pinned automatic installation supports Windows and Linux x86-64. Attach an existing local backend on this OS.')
         if self.engine.proc is not None: raise ValueError('Unload the owned engine before installing.')
         if not self.download_lock.acquire(False): raise ValueError('Another download/install is running.')
         j = self.new_job('engine-install')
@@ -464,22 +475,34 @@ class Lab:
             stage = self.data / 'engines' / (self.catalog['llama_tag'] + '.staging')
             if target.exists(): raise ValueError('Engine directory already exists; nothing was replaced.')
             if stage.exists(): raise ValueError('An engine staging directory exists; inspect the retained install before retrying.')
-            for asset in self.catalog['llama_assets']:
+            for asset in assets:
                 j.update(message='Downloading ' + asset['name'])
                 dest = self.data / 'downloads' / asset['name']
                 download_verified(asset['url'], dest, asset['sha256'], asset['size_bytes'], j)
-                safe_extract(dest, stage)
+                if os.name == 'nt':
+                    safe_extract(dest, stage)
+                else:
+                    from runtime_archive import safe_extract_tar
+                    safe_extract_tar(dest, stage)
             # Release assets can have different top-level folders: put runtime DLLs next to the executable.
-            executables = list(stage.rglob('llama-server.exe'))
-            if len(executables) != 1: raise ValueError('Expected one llama-server.exe in official archive.')
+            executable_name = 'llama-server.exe' if os.name == 'nt' else 'llama-server'
+            executables = list(stage.rglob(executable_name))
+            if len(executables) != 1: raise ValueError('Expected one ' + executable_name + ' in official archive.')
             bin_dir = executables[0].parent
-            for dll in list(stage.rglob('*.dll')):
+            if os.name != 'nt':
+                with executables[0].open('rb') as binary:
+                    if binary.read(4) != b'\x7fELF':
+                        raise ValueError('The Linux engine is not an ELF binary.')
+                executables[0].chmod(0o700)
+            libraries = list(stage.rglob('*.dll' if os.name == 'nt' else '*.so*'))
+            for dll in libraries:
                 dest = bin_dir / dll.name
                 if dll != dest:
                     if dest.exists() and sha256_file(dest) != sha256_file(dll):
-                        raise ValueError('Conflicting runtime DLLs; refusing installation.')
+                        raise ValueError('Conflicting runtime libraries; refusing installation.')
                     if not dest.exists(): shutil.copy2(dll, dest)
-            atomic_json(stage / 'install-receipt.json', {'tag': self.catalog['llama_tag'], 'assets': self.catalog['llama_assets'], 'at': time.time()})
+            atomic_json(stage / 'install-receipt.json', {'tag': self.catalog['llama_tag'], 'platform': sys.platform,
+                'assets': assets, 'binary_sha256': sha256_file(executables[0]), 'at': time.time()})
             os.replace(stage, target)
             j.update(message='CUDA runtime installed. No driver/toolkit was changed.', progress=1)
         threading.Thread(target=self._run_download, args=(j, work), daemon=True).start()
@@ -542,6 +565,10 @@ class Lab:
             for k in list(env):
                 if k.startswith(('LLAMA_ARG_', 'OPENAI_', 'ANTHROPIC_', 'TYPESAFE_')) or k in ('HF_TOKEN', 'HUGGING_FACE_HUB_TOKEN'):
                     env.pop(k, None)
+            if sys.platform == 'linux':
+                env.pop('LD_PRELOAD', None)
+                env.pop('LD_AUDIT', None)
+                env['LD_LIBRARY_PATH'] = str(exe.parent)
             self.engine.launch(argv, exe.parent, label=item['name'], env=env)
             owned_proc = self.engine.proc
             try:
