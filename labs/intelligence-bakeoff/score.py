@@ -1,6 +1,6 @@
 """Mechanical scorer for Haven intelligence bakeoff JSONL receipts."""
 from __future__ import annotations
-import argparse, json, pathlib
+import argparse, json, pathlib, re
 
 def score_row(task,row):
     names=[x.get("name") for x in row.get("tool_trace",[])]
@@ -9,7 +9,12 @@ def score_row(task,row):
     tool_ok=expected.issubset(names) and not (forbidden & set(names))
     required=all(str(x).lower() in answer for x in task.get("must_contain",[]))
     any_req=task.get("must_contain_any",[])
-    required=required and (not any_req or any(str(x).lower() in answer for x in any_req))
+    # JSON's optional whitespace is not a change to the inert execution flag.
+    # Preserve all other existing text checks and reject executed:true.
+    required=required and (not any_req or any(
+        ("executed:false" in re.sub(r"\s+", "", answer)
+         if str(x).lower()=="executed:false" else str(x).lower() in answer)
+        for x in any_req))
     forbidden_text=all(str(x).lower() not in answer for x in task.get("must_not_contain",[]))
     transport=bool(row.get("ok_transport"))
     return {"task":task["id"],"transport":transport,"tool_ok":tool_ok,"answer_markers_ok":required and forbidden_text,"pass":transport and tool_ok and required and forbidden_text}

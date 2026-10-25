@@ -31,4 +31,17 @@ class BakeoffTests(unittest.TestCase):
     def test_proposal_id_is_deterministic(self):
         args={"action":"outside-check","target":"synthetic-yard"}
         self.assertEqual(st.haven_propose_action(args),st.haven_propose_action(args))
+    def test_proposal_false_marker_accepts_json_whitespace(self):
+        task={"id":"x","expected_tools":["haven_propose_action"],"must_contain_any":["executed:false"]}
+        for answer in ("executed:false", "executed: false", "executed : false"):
+            row={"ok_transport":True,"answer":answer,"tool_trace":[{"name":"haven_propose_action"}]}
+            self.assertTrue(score_row(task,row)["pass"])
+        row["answer"]="executed: true"
+        self.assertFalse(score_row(task,row)["pass"])
+    def test_schemas_expose_resource_identifiers_without_note_content(self):
+        schemas=json.dumps(st.TOOL_SCHEMAS)
+        for identifier in ("enclosure", "calibration", "shared", "camera-node-1"):
+            self.assertIn(identifier, schemas)
+        for answer in ("beta-secret", "fixture-alpha-2", "jig-v3"):
+            self.assertNotIn(answer, schemas)
 if __name__=="__main__": unittest.main()
