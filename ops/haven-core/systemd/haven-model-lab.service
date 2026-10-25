@@ -6,7 +6,7 @@ StartLimitBurst=3
 [Service]
 Type=simple
 WorkingDirectory=%h/projects/haven/labs/model-lab
-ExecStart=/usr/bin/python3 %h/projects/haven/labs/model-lab/server.py --port 8787 --data-dir %h/.local/share/haven-model-lab --launch-file %h/.local/state/haven-model-lab/launch-url
+ExecStart=/usr/bin/python3 %h/projects/haven/labs/model-lab/server.py --port 8877 --data-dir %h/.local/share/haven-model-lab --launch-file %h/.local/state/haven-model-lab/launch-url
 Environment=PYTHONDONTWRITEBYTECODE=1
 UMask=0077
 NoNewPrivileges=yes

@@ -5,7 +5,7 @@ It starts with no inference engine or model loaded. Historical Windows GPU
 qualification remains separate from Linux qualification.
 
 The user service expects the checkout at `~/projects/haven`. Its HTTP listener
-is `127.0.0.1:8787`; use an SSH local forward from the administration computer.
+is `127.0.0.1:8877`; use an SSH local forward from the administration computer.
 The launch link is a bearer credential stored with mode 0600 at
 `~/.local/state/haven-model-lab/launch-url`. It is deliberately absent from the
 service journal. Each restart rotates it; reopen the current link afterward.
@@ -36,12 +36,12 @@ python3 ops/haven-core/open-lab.py
 The helper starts the service if needed, establishes an owned loopback SSH
 tunnel, reads the current private link without printing it and opens the
 browser. `--prepare` prepares access without opening a browser; `--close`
-closes only its tunnel. An unrelated listener on port 8787 is left alone.
+closes only its tunnel. An unrelated listener on port 8877 is left alone.
 
 For a manual session, forward the same loopback port:
 
 ```sh
-ssh -N -L 127.0.0.1:8787:127.0.0.1:8787 haven
+ssh -N -L 127.0.0.1:8877:127.0.0.1:8877 haven
 ```
 
 Read the private launch link over authenticated SSH and open it locally. Do not

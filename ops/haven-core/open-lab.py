@@ -43,11 +43,11 @@ def main():
                 raise RuntimeError('The dedicated control-socket path is occupied; nothing was removed.')
             SOCKET.unlink()  # A failed control check proved this owned socket stale.
         with socket.socket() as probe:
-            if probe.connect_ex(('127.0.0.1', 8787)) == 0:
-                raise RuntimeError('Local port 8787 is already occupied by another listener; nothing was stopped.')
+            if probe.connect_ex(('127.0.0.1', 8877)) == 0:
+                raise RuntimeError('Local port 8877 is already occupied by another listener; nothing was stopped.')
         run(*SSH, '-fNT', '-M', '-S', str(SOCKET), '-o', 'ControlPersist=no',
             '-o', 'ExitOnForwardFailure=yes', '-o', 'ServerAliveInterval=30',
-            '-o', 'ServerAliveCountMax=3', '-L', '127.0.0.1:8787:127.0.0.1:8787', 'haven')
+            '-o', 'ServerAliveCountMax=3', '-L', '127.0.0.1:8877:127.0.0.1:8877', 'haven')
 
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
     for attempt in range(15):
@@ -55,9 +55,9 @@ def main():
             url = run(*SSH, 'haven', 'cat ~/.local/state/haven-model-lab/launch-url').stdout.strip()
             parsed = urllib.parse.urlsplit(url)
             token = urllib.parse.parse_qs(parsed.fragment).get('token', [''])[0]
-            if parsed.scheme != 'http' or parsed.netloc != '127.0.0.1:8787' or parsed.path != '/' or not token:
+            if parsed.scheme != 'http' or parsed.netloc != '127.0.0.1:8877' or parsed.path != '/' or not token:
                 raise RuntimeError('Unexpected private launch link; refusing to open it.')
-            request = urllib.request.Request('http://127.0.0.1:8787/api/state', headers={'X-Lab-Token': token})
+            request = urllib.request.Request('http://127.0.0.1:8877/api/state', headers={'X-Lab-Token': token})
             with opener.open(request, timeout=4) as response:
                 json.load(response)
             break
