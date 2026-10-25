@@ -1,0 +1,37 @@
+{
+  "status": "PROPOSED_NOT_EXECUTED_REQUIRES_OPERATOR_APPROVAL",
+  "verified_metadata_on": "2026-10-25",
+  "runtime": "llama.cpp",
+  "tag": "b11146",
+  "platform": "ubuntu-x86_64",
+  "cuda_series": "12.8",
+  "source": "https://github.com/ggml-org/llama.cpp/releases/tag/b11146",
+  "archives": [
+    {
+      "name": "llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11146/llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "size_bytes": 168920581,
+      "sha256": "c2ab9e19838513ff69d1af8d999ad717dd3c7ee4714ac04c7ed5ab9077c50e4e"
+    },
+    {
+      "name": "cudart-llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11146/cudart-llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "size_bytes": 594373356,
+      "sha256": "1466daea60aad1144819e151b2bae19d54556cf1da6c129c4f55a5ded2637c25"
+    }
+  ],
+  "first_model": {
+    "catalog_path": "labs/model-lab/catalog.json",
+    "id": "qwen35-4b",
+    "size_bytes": 2740937888,
+    "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4"
+  },
+  "limits": [
+    "Metadata and upstream digests verified; no assets downloaded or GPU inference executed.",
+    "Inspect archive members and reject traversal, symlinks and out-of-scope paths before extraction.",
+    "Preserve executable permissions only on verified runtime files in the owned data directory.",
+    "Use current operator-approved distro-signed headless NVIDIA packages; do not disable Secure Boot.",
+    "Do not install a full CUDA Toolkit or heavy Python framework for this prebuilt-runtime path.",
+    "One model, one request, 4096 context; no training or large Strata installation."
+  ]
+}
