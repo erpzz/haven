@@ -59,6 +59,30 @@ The existing browser removes its token from the address bar and keeps it in
 that tab's session storage. API authentication and origin/Host checks remain
 enabled. No LAN listener or public port forwarding is required.
 
+## Explicit CPU-only inference in the browser (proposed branch)
+
+The Model library now offers an explicit **Inference device** selector:
+
+- **GPU CUDA** preserves the known-good llama.cpp path (999 offload layers and a selected CUDA device).
+- **CPU-only** launches the same already-installed llama.cpp executable with `--n-gpu-layers 0`, no `--device` argument, and `CUDA_VISIBLE_DEVICES=-1` for **that child process only**. It never rewrites the NVIDIA environment of Codex, Claude, Strata or system-wide services.
+
+Choose CPU-only in **Model library**, select a previously downloaded GGUF (the existing Qwen3.5 4B is a sensible initial test), and click **Load on CPU**. The connected-model indicator labels the selected lane. No extra model download, Windows reinstall or filesystem move is necessary.
+
+**Important deployment status:** this feature is implemented in a separate review branch until merged/deployed; Slink's already-running binary does not change merely because the GitHub branch exists. Plan the service restart with the operator and other agent workloads. Run a live browser/inference smoke test before declaring it usable.
+
+Resource boundaries: CPU-only clamps CPU threads to eight (default six), 8K maximum context (default 4K), 128/64 batch/microbatch, f16 KV and flash attention off. A conservative startup gate requires observed free RAM sufficient for estimated model + context overhead **plus an 8 GiB reserve**. This guard is heuristic, not actual RSS measurement. Existing GPU launch validation and VRAM fit gates are preserved; no automatic fallback from GPU to CPU.
+
+The current Model Lab owns **one** managed llama.cpp engine at a time; CPU and CUDA can both be **selected** but are not independently simultaneous within the same Model Lab instance. To switch a Lab-owned running model, click **Unload owned engine** first and then load the new mode. This operation is explicitly operator-initiated and stops only the Lab's own process group, not another agent or external Strata. A CPU-only Lab session **can coexist with separate Codex/Claude GPU jobs**, subject to shared CPU/RAM/SSD pressure. If you need true simultaneous CPU and GPU conversations in the same browser, implement a second independently owned backend and routing rather than pretending a selector does that.
+
+On Slink, verify CPU-only without touching another agent's GPU work:
+
+1. Confirm the service is using the approved CPU selector branch and that the SSH tunnel is active. If Mac port 8877 already has a listener, inspect its owner before creating another tunnel.
+2. In Model library choose **CPU-only** and load a downloaded GGUF; do not hit Unload while someone else is using the Lab's current managed backend.
+3. Send a short real chat message. Confirm the connected badge says **CPU-only**, the engine log includes `--n-gpu-layers 0` (and no `--device CUDA0`), and an actual response succeeds through the authenticated browser. Do not infer no GPU work just from a static launch command: check the child process and `nvidia-smi` while inference runs to see whether it allocated GPU memory.
+4. Compare measured response quality, TTFT, tokens per second and resident RAM against the same prompt on the existing GPU path when GPU time is available. Record slow/failed outputs as evidence, not a pass.
+
+Rollback: unload the Lab-owned CPU process, revert the scoped PR or reset the approved deployment revision, restart only the Lab user service with coordination, and reload the prior CUDA model. No stored model/Windows partition is rewritten.
+
 ## Operate and recover
 
 ```sh
