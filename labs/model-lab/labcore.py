@@ -35,6 +35,13 @@ MIB = 1024 ** 2
 MAX_JSON = 1024 ** 2
 ROOT = Path(__file__).resolve().parent
 
+# Status meanings fixed by ops/haven-core/cloud-worker.py; its free-text bodies are never shown.
+CLOUD_REFUSALS = {402: 'Cloud lane refused: the CLI would bill an API key instead of your plan.',
+                  429: 'Cloud lane refused: plan limit, daily cap or another turn in progress.',
+                  502: 'Cloud lane stopped: the CLI attempted a tool or reported an error.',
+                  504: 'Cloud lane timed out.'}
+
+
 def read_json(path: Path, fallback):
     try:
         return json.loads(path.read_text('utf-8'))
@@ -161,9 +168,10 @@ PRESETS = {
     'balanced': {'label': 'Desktop-friendly CUDA', 'context': 4096, 'threads': 6, 'batch': 256, 'ubatch': 128, 'kv': 'f16', 'flash': 'auto'},
     'gpu': {'label': 'GPU-first CUDA', 'context': 4096, 'threads': 8, 'batch': 512, 'ubatch': 256, 'kv': 'f16', 'flash': 'auto'},
     'memory': {'label': 'Quantized KV experiment', 'context': 8192, 'threads': 8, 'batch': 256, 'ubatch': 128, 'kv': 'q8_0', 'flash': 'on'},
+    'cpu': {'label': 'CPU-only · leave GPU available', 'context': 2048, 'threads': 6, 'batch': 128, 'ubatch': 64, 'kv': 'f16', 'flash': 'off'},
 }
 
-def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: dict, gpu: int = 0) -> list[str]:
+def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: dict, gpu: int | None = 0) -> list[str]:
     context = bounded_int(profile.get('context', 4096), 512, 32768, 'Context')
     threads = bounded_int(profile.get('threads', 8), 1, 24, 'Threads')
     batch = bounded_int(profile.get('batch', 512), 32, 2048, 'Batch')
@@ -173,13 +181,25 @@ def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: di
         raise ValueError('Unsupported cache or flash attention option.')
     if kv != 'f16' and flash != 'on':
         raise ValueError('The quantized KV experiment requires flash attention on.')
-    bounded_int(gpu, 0, 15, 'GPU index'); bounded_int(port, 1024, 65535, 'Port')
-    return [str(exe), '--model', str(model), '--host', '127.0.0.1', '--port', str(port),
-            '--api-key-file', str(key_file), '--alias', 'haven-local', '--n-gpu-layers', '999',
-            '--device', f'CUDA{gpu}', '--ctx-size', str(context), '--parallel', '1', '--threads', str(threads),
+    bounded_int(port, 1024, 65535, 'Port')
+    if gpu is not None:
+        bounded_int(gpu, 0, 15, 'GPU index')
+    argv = [str(exe), '--model', str(model), '--host', '127.0.0.1', '--port', str(port),
+            '--api-key-file', str(key_file), '--alias', 'haven-local', '--n-gpu-layers', '0' if gpu is None else '999']
+    if gpu is not None:
+        argv += ['--device', f'CUDA{gpu}']
+    return argv + ['--ctx-size', str(context), '--parallel', '1', '--threads', str(threads),
             '--threads-batch', str(threads), '--batch-size', str(batch), '--ubatch-size', str(ubatch),
             '--flash-attn', flash, '--cache-type-k', kv, '--cache-type-v', kv, '--jinja', '--metrics',
             '--log-verbosity', '4']
+
+def estimate_cpu_fit(model_bytes: int, available_gib: float | None, context: int) -> dict:
+    """A conservative *admission heuristic*, not a measured RAM allocation."""
+    required_gib = model_bytes / GIB + 3 + max(1, context / 4096) + 4  # includes 4 GiB reserve for other work
+    return {'required_available_gib': round(required_gib, 2), 'available_gib': available_gib,
+            'status': 'UNKNOWN' if available_gib is None else
+                ('LIKELY_FITS' if available_gib >= required_gib else 'INSUFFICIENT_HEADROOM'),
+            'basis': 'Heuristic: GGUF size + 3 GiB runtime + context allowance + 4 GiB host reserve.'}
 
 def estimate_fit(model_bytes: int, free_mib: float | None, context: int) -> dict:
     # Not a GGUF architecture parser. Explicitly a conservative planning heuristic.
@@ -392,10 +412,15 @@ class Lab:
         self.download_lock = threading.Lock()
         self.engine = OwnedEngine(self.data)
         self.connection = None
+        self.runtime_job = None
         self.shutting_down = False
         self.settings = read_json(self.data / 'settings.json', {'models': {}})
         self.hw = hardware(self.data)
         self.hw_at = time.monotonic()
+        from diagnostics import Store
+        self.diagnostic_store = Store(self.data)
+        from providers import Registry
+        self.providers = Registry(self.data)
     def new_job(self, kind: str) -> Job:
         with self.lock:
             if self.shutting_down: raise ValueError('Lab is shutting down.')
@@ -425,11 +450,20 @@ class Lab:
                         'description': 'User-selected local GGUF. Compatibility and license are not verified by the catalog.'})
             conn = {k: v for k, v in (self.connection or {}).items() if k != 'key'}
             assets = self.runtime_assets()
+            runtime = {'supported': False}
+            if sys.platform == 'linux':
+                from haven_runtime import status
+                runtime = status()
+                runtime['switch_job'] = self.runtime_job
             return {'version': VERSION, 'connection': conn, 'engine': self.engine.status(), 'models': models,
+                    'providers': self.providers.snapshot(),
+                    'prepared_runtime': runtime,
                     'presets': PRESETS, 'hardware': self.get_hardware(), 'llama_installed': self.llama_exe() is not None,
                     'engine_install_supported': bool(assets),
                     'engine_download_bytes': sum(a['size_bytes'] for a in assets),
-                    'jobs': [{k:v for k,v in j.snapshot().items() if k not in ('text','reasoning')} for j in self.jobs.values()], 'data_dir': str(self.data)}
+                    'jobs': [{k:v for k,v in j.snapshot().items()
+                              if k not in ('text','reasoning','trace','question','turns','citation_check')}
+                             for j in self.jobs.values()], 'data_dir': str(self.data)}
     def runtime_assets(self) -> list[dict]:
         if os.name == 'nt':
             return self.catalog.get('llama_assets', [])
@@ -519,7 +553,28 @@ class Lab:
             self.settings['models'][mid] = {'path': str(p), 'name': p.stem, 'size_bytes': p.stat().st_size, 'sha256': None}
             atomic_json(self.data / 'settings.json', self.settings)
         return {'id': mid, 'name': p.stem}
-    def connect_haven_strata(self) -> dict:
+    def guard_runtime(self, owner=None):
+        if self.runtime_job and owner != self.runtime_job:
+            raise ValueError('A prepared runtime switch is active. Wait or cancel its job.')
+
+    def switch_runtime(self, request):
+        if sys.platform != 'linux':
+            raise ValueError('Prepared runtime switching is a Linux option.')
+        from haven_runtime import start
+        return start(self, request)
+
+    def diagnose(self, request):
+        from diagnostics import start
+        return start(self, request)
+
+    def diagnostic_snapshot(self, jid):
+        with self.lock:
+            job = self.jobs.get(jid)
+            if job and job.kind == 'diagnostic':
+                return job.snapshot()
+        return self.diagnostic_store.get(jid)
+
+    def connect_haven_strata(self, *, _switch_job=None) -> dict:
         """Attach the prepared Linux service without sending its key to a browser."""
         if sys.platform != 'linux':
             raise ValueError('The prepared Haven Strata service is a Linux option.')
@@ -535,9 +590,13 @@ class Lab:
             key = handle.read(258).strip()
         if not re.fullmatch(r'[A-Za-z0-9_-]{32,256}', key):
             raise ValueError('The private Haven Strata credential has an invalid format.')
-        return self.connect('http://127.0.0.1:8880/v1', key, 'strata')
+        if _switch_job is None:
+            return self.connect('http://127.0.0.1:8880/v1', key, 'strata')
+        return self.connect('http://127.0.0.1:8880/v1', key, 'strata', _switch_job=_switch_job)
 
-    def connect(self, base: str, key: str = '', kind: str = 'strata') -> dict:
+    def connect(self, base: str, key: str = '', kind: str = 'strata', *, _switch_job=None) -> dict:
+        with self.lock:
+            self.guard_runtime(_switch_job)
         endpoint(base)
         if kind not in ('strata', 'llama', 'other'): raise ValueError('Invalid backend type.')
         if not isinstance(key, str) or len(key) > 4096 or '\r' in key or '\n' in key: raise ValueError('Invalid API key.')
@@ -548,30 +607,51 @@ class Lab:
         if not data or not isinstance(data[0].get('id'), str): raise ValueError('No model was reported by the local backend.')
         conn = {'base': base.rstrip('/'), 'key': key, 'model': data[0]['id'], 'kind': kind, 'ownership': 'EXTERNAL', 'connected_at': time.time()}
         with self.lock:
+            self.guard_runtime(_switch_job)
             if self.generation.locked() or self.engine.proc is not None:
                 raise ValueError('Backend ownership changed while connecting; finish or unload it first.')
             self.connection = conn
         return {k: v for k, v in conn.items() if k != 'key'}
-    def start_llama(self, model_id: str, preset: str, overrides=None, allow_tight: bool = False) -> str:
+    def start_llama(self, model_id: str, preset: str, overrides=None, allow_tight: bool = False,
+                    compute: str = 'gpu', *, _switch_job=None) -> str:
         with self.lock:
+            self.guard_runtime(_switch_job)
             if self.connection and self.connection.get('ownership') == 'EXTERNAL':
                 raise ValueError('Disconnect and stop the external backend first; the lab will not kill it.')
             if not self.generation.acquire(False): raise ValueError('A request is active.')
             self.generation.release()
+            # Fail before rewriting the active engine's shared API key file.
+            if self.engine.proc is not None:
+                raise ValueError('Unload the current Lab-owned engine before selecting another compute lane.')
             exe = self.llama_exe()
             if not exe: raise ValueError('Install the CUDA engine first.')
             item = self.settings['models'].get(model_id)
             if not item or not Path(item['path']).is_file(): raise ValueError('Download or import the model first.')
+            if compute not in ('gpu', 'cpu'): raise ValueError('Unknown compute lane.')
             if preset not in PRESETS: raise ValueError('Unknown preset.')
+            if (preset == 'cpu') != (compute == 'cpu'):
+                raise ValueError('Select the profile matching the CPU or GPU lane.')
+            if compute == 'cpu' and sys.platform != 'linux':
+                raise ValueError('The CPU-only lane is currently supported on Linux.')
             profile = dict(PRESETS[preset]); profile.update(overrides or {})
-            gpu = 0
-            self.hw_at = 0  # A just-unloaded model must not leave the fit gate using cached VRAM.
+            gpu = None
+            self.hw_at = 0  # A just-unloaded model must not leave the fit gate using stale resource data.
             hw = self.get_hardware()
-            if not hw['gpus']: raise ValueError('NVIDIA GPU was not detected. Check your driver; CPU fallback is not silently enabled.')
-            first = hw['gpus'][0]; gpu = first['index']
-            fit = estimate_fit(item['size_bytes'], first['memory_free_mib'], profile['context'])
-            if fit['status'] != 'LIKELY_FITS' and not allow_tight:
-                raise ValueError('This configuration is tight for current free VRAM. Try a 4B model/shorter context, or explicitly enable the memory-risk experiment.')
+            if compute == 'gpu':
+                if not hw['gpus']: raise ValueError('NVIDIA GPU was not detected. CPU-only mode must be explicitly selected.')
+                first = hw['gpus'][0]; gpu = first['index']
+                fit = estimate_fit(item['size_bytes'], first['memory_free_mib'], profile['context'])
+                if fit['status'] != 'LIKELY_FITS' and not allow_tight:
+                    raise ValueError('This configuration is tight for current free VRAM. Try a 4B model/shorter context, or explicitly enable the memory-risk experiment.')
+            else:
+                # CPU inference must never bypass RAM admission just because GPU VRAM is occupied.
+                context = bounded_int(profile.get('context', 2048), 512, 8192, 'CPU context')
+                bounded_int(profile.get('threads', 6), 1, 8, 'CPU threads')
+                fit = estimate_cpu_fit(item['size_bytes'], hw.get('ram_available_gib'), context)
+                if fit['status'] != 'LIKELY_FITS':
+                    raise ValueError('Insufficient or unmeasured free RAM for CPU inference with host reserve. Check current memory use; do not override while other experiments run.')
+                if allow_tight:
+                    raise ValueError('Tight-memory override is GPU-only; CPU RAM reserve cannot be bypassed.')
             with socket.socket() as probe:
                 probe.bind(('127.0.0.1', 0)); port = probe.getsockname()[1]
             key = secrets.token_urlsafe(32); key_file = self.data / 'engine-key.txt'
@@ -580,6 +660,10 @@ class Lab:
             except OSError: pass
             argv = llama_command(exe, Path(item['path']), port, key_file, profile, gpu)
             env = dict(os.environ)
+            if compute == 'cpu':
+                # CUDA-linked llama.cpp still supports CPU GGUF execution; hide all CUDA devices
+                # from this *child process only*. Independent GPU agents are not modified.
+                env['CUDA_VISIBLE_DEVICES'] = '-1'
             # Avoid loading unrequested user overrides or inherited cloud credentials into the engine.
             for k in list(env):
                 if k.startswith(('LLAMA_ARG_', 'OPENAI_', 'ANTHROPIC_', 'TYPESAFE_')) or k in ('HF_TOKEN', 'HUGGING_FACE_HUB_TOKEN'):
@@ -589,6 +673,7 @@ class Lab:
                 env.pop('LD_AUDIT', None)
                 env['LD_LIBRARY_PATH'] = str(exe.parent)
             self.engine.launch(argv, exe.parent, label=item['name'], env=env)
+            self.engine.record['compute'] = compute
             owned_proc = self.engine.proc
             try:
                 j = self.new_job('engine-start')
@@ -615,9 +700,11 @@ class Lab:
                                 if j.cancelled.is_set() or self.engine.proc is not owned_proc or owned_proc.poll() is not None:
                                     raise InterruptedError('Startup was cancelled or its owner changed.')
                                 self.connection = {'base': base, 'key': key, 'model': 'haven-local', 'kind': 'llama', 'ownership': 'OWNED',
-                                    'display_model': item['name'], 'profile': profile, 'model_sha256': item.get('sha256'), 'connected_at': time.time()}
+                                    'display_model': item['name'], 'profile': profile, 'compute': compute,
+                                    'model_sha256': item.get('sha256'), 'connected_at': time.time()}
                                 self.engine.record['state'] = 'READY'
-                                j.update(state='COMPLETED', message='Engine ready; inspect log and live GPU telemetry to verify offload.')
+                                j.update(state='COMPLETED', message=('CPU-only engine ready; verify no GPU layers in engine log.' if compute == 'cpu'
+                                    else 'Engine ready; inspect log and live GPU telemetry to verify offload.'))
                             return
                         time.sleep(.5)
                     raise TimeoutError('Engine did not become ready within 180 seconds.')
@@ -627,15 +714,17 @@ class Lab:
                     j.update(state='CANCELLED' if j.cancelled.is_set() else 'FAILED', error=str(e), cleanup=stopped)
             threading.Thread(target=wait_ready, daemon=True).start()
             return j.id
-    def stop_engine(self):
+    def stop_engine(self, *, _switch_job=None):
         with self.lock:
+            self.guard_runtime(_switch_job)
             for j in list(self.jobs.values()):
                 if j.kind in ('generation', 'engine-start') and j.snapshot()['state'] == 'RUNNING': j.cancel()
             result = self.engine.stop()
             if self.connection and self.connection['ownership'] == 'OWNED': self.connection = None
             return result
-    def disconnect(self):
+    def disconnect(self, *, _switch_job=None):
         with self.lock:
+            self.guard_runtime(_switch_job)
             if self.engine.proc is not None: raise ValueError('Use Unload for an owned engine.')
             if self.generation.locked(): raise ValueError('Cancel the current request before disconnecting.')
             self.connection = None
@@ -651,22 +740,48 @@ class Lab:
         if sum(len(m['content']) for m in clean) > 100000: raise ValueError('Conversation too large; start a new chat.')
         effort = req.get('reasoning', 'none')
         if effort not in ('none', 'low', 'medium', 'high'): raise ValueError('Invalid reasoning effort.')
+        provider_id = req.get('provider_id', 'managed')
+        if not isinstance(provider_id, str) or not re.fullmatch(r'[a-z][a-z0-9-]{2,47}', provider_id):
+            raise ValueError('Choose an enrolled provider identifier, never a URL.')
         return {'messages': clean, 'max_tokens': bounded_int(req.get('max_tokens', 2048), 16, 4096, 'Max output tokens'),
                 'temperature': finite_float(req.get('temperature', .7), 0, 2, 'Temperature'),
                 'top_p': finite_float(req.get('top_p', .8), .01, 1, 'Top-p'),
                 'seed': bounded_int(req.get('seed', 42), 0, 2**31-1, 'Seed'), 'reasoning': effort,
                 'benchmark': req.get('benchmark') is True, 'label': str(req.get('label', 'interactive'))[:80],
+                'provider_id': provider_id,
                 'expected_connected_at': None if req.get('expected_connected_at') is None else
                     finite_float(req['expected_connected_at'], 0, 1e12, 'Expected connection identity')}
     def generate(self, request: dict) -> str:
         args = self.validate_generation(request)
         with self.lock:
-            conn = dict(self.connection or {})
+            managed = dict(self.connection or {})
+            ready = self.engine.status()['state'] == 'READY'
+        if args['provider_id'] == 'auto' and sys.platform == 'linux' and managed.get('compute', 'gpu') != 'cpu':
+            import gpu_lease
+            ready = ready and not gpu_lease.peer_busy()
+        conn = self.providers.choose(args['provider_id'], managed, managed_ready=ready)
+        with self.lock:
+            self.guard_runtime()
             if not conn: raise ValueError('Connect or load a model first.')
+            if conn['provider_id'] == 'managed' and managed != (self.connection or {}):
+                raise ValueError('Slink runtime changed during routing. No request was sent.')
+            if conn['provider_id'] != 'managed' and args['reasoning'] != 'none':
+                raise ValueError('This worker has not verified reasoning controls; select Off / direct answer.')
+            limit = conn.get('profile') or {}
+            if conn['provider_id'] != 'managed' and args['max_tokens'] > limit.get('max_output_tokens', 1024):
+                raise ValueError(f"This worker permits at most {limit.get('max_output_tokens', 1024)} output tokens; "
+                                 f"its total context is {limit.get('context')}.")
+            if conn['provider_id'] != 'managed' and (len(args['messages']) > limit.get('max_messages', 8) or
+                    sum(len(m['content'].encode()) + 64 for m in args['messages']) + args['max_tokens'] + 128 > limit['context']):
+                raise ValueError('This worker needs a shorter conversation or output limit. No text was truncated or sent.')
             if args['benchmark'] and args['expected_connected_at'] is not None and args['expected_connected_at'] != conn['connected_at']:
                 raise ValueError('Benchmark backend changed. Start a new experiment for this connection.')
             if not self.generation.acquire(False): raise ValueError('One request at a time on this GPU. Cancel or wait for the active request.')
-            try: j = self.new_job('generation')
+            try:
+                j = self.new_job('generation')
+                j.update(provider_id=conn['provider_id'], worker_label=conn['worker_label'],
+                         compute=conn.get('compute', 'gpu'), model_sha256=conn.get('model_sha256'),
+                         digest_provenance=conn.get('digest_provenance', 'LOCAL_ARTIFACT'), route_reason=conn['route_reason'])
             except Exception:
                 self.generation.release(); raise
         threading.Thread(target=self._generate_worker, args=(j, conn, args), daemon=True).start()
@@ -690,7 +805,11 @@ class Lab:
         try:
             if job.cancelled.is_set(): raise InterruptedError('Cancelled before send.')
             host, port = endpoint(backend['base'])
-            conn = http.client.HTTPConnection(host, port, timeout=240)
+            if backend.get('socket_path'):
+                from providers import PrivateWorkerConnection
+                conn = PrivateWorkerConnection(backend['socket_path'], timeout=240)
+            else:
+                conn = http.client.HTTPConnection(host, port, timeout=240)
             conn.connect(); sock = conn.sock
             with job.lock: job.sock = sock
             if job.cancelled.is_set(): raise InterruptedError('Cancelled before send.')
@@ -701,6 +820,9 @@ class Lab:
             r = conn.getresponse()
             if r.status != 200:
                 # Keep backend-generated bodies out of logs; error text could contain prompts/secrets.
+                if backend['kind'] == 'cloud':
+                    raise ValueError(CLOUD_REFUSALS.get(r.status, f'Cloud lane HTTP {r.status}.') +
+                                     ' Nothing was retried or billed; see the Mac cloud-worker receipts.')
                 raise ValueError(f'Backend HTTP {r.status}. Check the backend console and context settings. No automatic retry.')
             if 'text/event-stream' not in r.getheader('Content-Type', ''):
                 raise ValueError('Backend did not return an SSE stream.')
@@ -717,7 +839,9 @@ class Lab:
                 payload = '\n'.join(buffer); buffer.clear()
                 if payload == '[DONE]': finished = True; break
                 obj = json.loads(payload)
-                if obj.get('error'): raise ValueError('Backend reported a stream error.')
+                if obj.get('error'):
+                    raise ValueError('Cloud lane stopped the turn (tool, plan limit or CLI error); partial output retained.'
+                                     if backend['kind'] == 'cloud' else 'Backend reported a stream error.')
                 if isinstance(obj.get('usage'), dict): usage = obj['usage']
                 if isinstance(obj.get('timings'), dict): timings = obj['timings']
                 choices = obj.get('choices') or []
@@ -775,7 +899,9 @@ class Lab:
                 except Exception:
                     observed_hardware = {'status': 'UNAVAILABLE'}
                 record = {'at': time.time(), 'job': job.id, 'state': final_state, 'finish_reason': finish_reason, 'label': args['label'],
-                    'backend': backend['kind'], 'model': backend.get('display_model', backend['model']),
+                    'backend': backend['kind'], 'compute': backend.get('compute'), 'model': backend.get('display_model', backend['model']),
+                    'provider_id': backend.get('provider_id', 'managed'), 'worker_label': backend.get('worker_label', 'Slink'),
+                    'hardware_scope': 'HAVEN_CONTROL_HOST; not necessarily the inference worker',
                     'model_sha256': backend.get('model_sha256'), 'profile': backend.get('profile'),
                     'settings': {k: v for k, v in args.items() if k not in ('messages',)},
                     'prompt_sha256': hashlib.sha256(json.dumps(args['messages'], sort_keys=True).encode()).hexdigest(),
@@ -793,4 +919,4 @@ class Lab:
     def shutdown(self):
         self.shutting_down = True
         for j in list(self.jobs.values()): j.cancel()
-        return self.stop_engine()
+        return self.stop_engine(_switch_job=self.runtime_job)

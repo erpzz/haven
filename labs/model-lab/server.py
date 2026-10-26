@@ -32,7 +32,7 @@ ASSETS = {
 COOKIE_NAME = 'haven_session'
 ADMIN_POSTS = {
     '/api/connect', '/api/connect/haven-strata', '/api/disconnect', '/api/engine/install', '/api/model/download',
-    '/api/model/import', '/api/engine/start', '/api/engine/stop', '/api/shutdown',
+    '/api/model/import', '/api/engine/start', '/api/engine/stop', '/api/shutdown', '/api/runtime/switch', '/api/diagnostics',
 }
 ADMIN_GETS = {'/api/log', '/api/benchmarks', '/api/auth/users'}
 
@@ -147,8 +147,10 @@ class Server(ThreadingHTTPServer):
         state['user'] = {k: user[k] for k in ('id', 'username', 'role')}
         if user['role'] != 'admin':
             state.pop('data_dir', None)
+            state.pop('providers', None)
+            state.pop('prepared_runtime', None)
             engine = state.get('engine') or {}
-            state['engine'] = {k: engine.get(k) for k in ('state', 'ownership', 'label', 'started_at', 'stopped_at') if k in engine}
+            state['engine'] = {k: engine.get(k) for k in ('state', 'ownership', 'label', 'compute', 'started_at', 'stopped_at') if k in engine}
         return state
 
     def login_allowed(self, peer: str) -> bool:
@@ -404,19 +406,27 @@ class Handler(BaseHTTPRequestHandler):
             if not self.path.startswith('/api/'):
                 self.json(404, {'error': 'Not found.'})
                 return
-            user = self._user(admin=self.path in ADMIN_GETS)
+            user = self._user(admin=self.path in ADMIN_GETS or self.path.startswith('/api/diagnostics/') or self.path == '/api/providers')
             if not user:
                 return
             if self.path == '/api/state':
                 self.json(200, self.server.filtered_state(user))
             elif self.path == '/api/hardware':
                 self.json(200, self.server.lab.get_hardware())
+            elif self.path == '/api/providers':
+                self.json(200, {'providers': self.server.lab.providers.snapshot()})
+            elif self.path.startswith('/api/diagnostics/'):
+                result = self.server.lab.diagnostic_snapshot(self.path.rsplit('/', 1)[-1])
+                self.json(200 if result else 404, result or {'error': 'Unknown diagnostic.'})
             elif self.path.startswith('/api/jobs/'):
                 job_id = self.path.rsplit('/', 1)[-1]
                 if self.server.lan_mode and not self.server.owns_job(job_id, user['id']):
                     self.json(404, {'error': 'Unknown job.'})
                     return
                 job = self.server.lab.jobs.get(job_id)
+                if job and job.kind == 'diagnostic' and user.get('role') != 'admin':
+                    self.json(403, {'error': 'Host diagnostics require an administrator.'})
+                    return
                 self.json(200 if job else 404, job.snapshot() if job else {'error': 'Unknown job.'})
             elif self.path == '/api/log':
                 p = self.server.lab.data / 'engine.log'
@@ -452,17 +462,26 @@ class Handler(BaseHTTPRequestHandler):
             return
         if self._handle_auth_post():
             return
-        user = self._user(admin=self.path in ADMIN_POSTS, csrf=self.server.lan_mode)
+        user = self._user(admin=self.path in ADMIN_POSTS or self.path.startswith('/api/providers/'), csrf=self.server.lan_mode)
         if not user:
             return
         try:
             data = self._read_json()
             lab = self.server.lab
             job_id = None
-            if self.path == '/api/connect':
+            if self.path == '/api/providers/reload':
+                if data: raise ValueError('Registration comes from private owner enrollment, not request data.')
+                out = lab.providers.reload()
+            elif self.path == '/api/providers/probe':
+                if data: raise ValueError('Only the enrolled worker set can be probed.')
+                out = {'observed': lab.providers.probe_all()}
+            elif self.path == '/api/connect':
                 out = lab.connect(data.get('base', ''), data.get('key', ''), data.get('kind', 'strata'))
             elif self.path == '/api/connect/haven-strata':
                 out = lab.connect_haven_strata()
+            elif self.path == '/api/runtime/switch':
+                job_id = lab.switch_runtime(data)
+                out = {'job_id': job_id}
             elif self.path == '/api/disconnect':
                 out = lab.disconnect()
             elif self.path == '/api/engine/install':
@@ -478,12 +497,18 @@ class Handler(BaseHTTPRequestHandler):
             elif self.path == '/api/model/import':
                 out = lab.import_model(data.get('path', ''))
             elif self.path == '/api/engine/start':
-                job_id = lab.start_llama(data.get('id', ''), data.get('preset', 'balanced'), data.get('overrides'), data.get('allow_tight') is True)
+                job_id = lab.start_llama(data.get('id', ''), data.get('preset', 'balanced'), data.get('overrides'), data.get('allow_tight') is True, data.get('compute', 'gpu'))
                 out = {'job_id': job_id}
             elif self.path == '/api/engine/stop':
                 out = lab.stop_engine()
             elif self.path == '/api/generate':
+                if user['role'] != 'admin' and data.get('provider_id', 'managed') != 'managed':
+                    self.json(403, {'error': 'Enrolled worker routing is currently owner-only.'})
+                    return
                 job_id = lab.generate(data)
+                out = {'job_id': job_id}
+            elif self.path == '/api/diagnostics':
+                job_id = lab.diagnose(data)
                 out = {'job_id': job_id}
             elif self.path == '/api/cancel':
                 job_id = data.get('id', '')

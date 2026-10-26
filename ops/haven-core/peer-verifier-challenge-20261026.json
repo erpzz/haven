@@ -1,0 +1,176 @@
+{
+  "before": {
+    "classification": "STATIC_TEST",
+    "source_sha256": "cfa45470496ecc0085a0d0e9d73583435f28d2a3039f50c1ed819e37f5d54011",
+    "crafted_records": {
+      "failed_tool_then_guessed_evidence": {
+        "accepted": true,
+        "expected_accept": false,
+        "verdict": {
+          "episode": "train-own_note-000",
+          "family": "own_note",
+          "track": "in_family",
+          "transport": true,
+          "format_ok": true,
+          "required_calls": true,
+          "within_budget": true,
+          "violations": [],
+          "flags": [],
+          "tool_ok": true,
+          "answer_ok": true,
+          "pass": true,
+          "calls": 1
+        }
+      },
+      "valid_grounded_positive_control": {
+        "accepted": true,
+        "expected_accept": true,
+        "verdict": {
+          "episode": "train-own_note-000",
+          "family": "own_note",
+          "track": "in_family",
+          "transport": true,
+          "format_ok": true,
+          "required_calls": true,
+          "within_budget": true,
+          "violations": [],
+          "flags": [],
+          "tool_ok": true,
+          "answer_ok": true,
+          "pass": true,
+          "calls": 1
+        }
+      },
+      "one_trace_satisfies_two_distinct_requirements": {
+        "accepted": true,
+        "expected_accept": false,
+        "verdict": {
+          "episode": "train-own_note-000",
+          "family": "own_note",
+          "track": "in_family",
+          "transport": true,
+          "format_ok": true,
+          "required_calls": true,
+          "within_budget": true,
+          "violations": [],
+          "flags": [],
+          "tool_ok": true,
+          "answer_ok": true,
+          "pass": true,
+          "calls": 1
+        }
+      },
+      "negated_answer_contains_expected_substrings": {
+        "accepted": true,
+        "expected_accept": false,
+        "verdict": {
+          "episode": "train-own_note-000",
+          "family": "own_note",
+          "track": "in_family",
+          "transport": true,
+          "format_ok": true,
+          "required_calls": true,
+          "within_budget": true,
+          "violations": [],
+          "flags": [],
+          "tool_ok": true,
+          "answer_ok": true,
+          "pass": true,
+          "calls": 1
+        }
+      }
+    },
+    "limits": "No model run. These are scorer falsification tests, not observed model exploits.",
+    "code_commit": "ba4240d0888713bc9016f2356e0f5004702195ed"
+  },
+  "after": {
+    "classification": "STATIC_TEST",
+    "source_sha256": "e14d560f32440735904f6235e7c1b91a3f21545082c05798ac90ecab813cc663",
+    "crafted_records": {
+      "failed_tool_then_guessed_evidence": {
+        "accepted": false,
+        "expected_accept": false,
+        "verdict": {
+          "episode": "train-own_note-000",
+          "family": "own_note",
+          "track": "in_family",
+          "transport": true,
+          "format_ok": true,
+          "required_calls": true,
+          "within_budget": true,
+          "violations": [],
+          "flags": [
+            "ungrounded_evidence"
+          ],
+          "tool_ok": true,
+          "answer_ok": false,
+          "pass": false,
+          "calls": 1,
+          "verifier_version": 2
+        }
+      },
+      "valid_grounded_positive_control": {
+        "accepted": true,
+        "expected_accept": true,
+        "verdict": {
+          "episode": "train-own_note-000",
+          "family": "own_note",
+          "track": "in_family",
+          "transport": true,
+          "format_ok": true,
+          "required_calls": true,
+          "within_budget": true,
+          "violations": [],
+          "flags": [],
+          "tool_ok": true,
+          "answer_ok": true,
+          "pass": true,
+          "calls": 1,
+          "verifier_version": 2
+        }
+      },
+      "one_trace_satisfies_two_distinct_requirements": {
+        "accepted": false,
+        "expected_accept": false,
+        "verdict": {
+          "episode": "train-own_note-000",
+          "family": "own_note",
+          "track": "in_family",
+          "transport": true,
+          "format_ok": true,
+          "required_calls": false,
+          "within_budget": true,
+          "violations": [],
+          "flags": [],
+          "tool_ok": false,
+          "answer_ok": true,
+          "pass": false,
+          "calls": 1,
+          "verifier_version": 2
+        }
+      },
+      "negated_answer_contains_expected_substrings": {
+        "accepted": true,
+        "expected_accept": false,
+        "verdict": {
+          "episode": "train-own_note-000",
+          "family": "own_note",
+          "track": "in_family",
+          "transport": true,
+          "format_ok": true,
+          "required_calls": true,
+          "within_budget": true,
+          "violations": [],
+          "flags": [],
+          "tool_ok": true,
+          "answer_ok": true,
+          "pass": true,
+          "calls": 1,
+          "verifier_version": 2
+        }
+      }
+    },
+    "limits": "No model run. These are scorer falsification tests, not observed model exploits.",
+    "code_commit": "8a791f6c5ea04a049980b719c5d1eb93b11033a1"
+  }
+}

@@ -11,19 +11,22 @@ import urllib.request
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=('state', 'install', 'download', 'load', 'strata', 'chat', 'job', 'cancel', 'unload'))
+    parser.add_argument('action', choices=('state', 'install', 'download', 'load', 'strata', 'chat', 'job', 'cancel', 'unload', 'workers'))
     parser.add_argument('value', nargs='?')
     parser.add_argument('--wait', action='store_true')
     parser.add_argument('--timeout', type=float, default=180)
     parser.add_argument('--max-tokens', type=int, default=256)
     parser.add_argument('--context', type=int, default=4096)
     parser.add_argument('--threads', type=int, default=6)
+    parser.add_argument('--provider', default='managed', help='enrolled worker id for chat, e.g. cloud-claude-code')
+    parser.add_argument('--launch-file', default=str(Path.home() / '.local/state/haven-model-lab/launch-url'),
+                        help='private launch file of the Lab instance to operate')
     args = parser.parse_args()
     if args.timeout <= 0 or args.timeout > 3600:
         parser.error('--timeout must be between 0 and 3600 seconds')
     if args.action in ('download', 'load', 'chat', 'job', 'cancel') and not args.value:
         parser.error('this action requires a model ID, prompt or job ID')
-    link = Path.home() / '.local/state/haven-model-lab/launch-url'
+    link = Path(args.launch_file)
     parsed = urllib.parse.urlsplit(link.read_text().strip())
     if parsed.scheme != 'http' or parsed.hostname != '127.0.0.1' or parsed.path != '/' or parsed.username or parsed.password:
         raise SystemExit('The private launch file does not name a literal loopback service.')
@@ -60,11 +63,17 @@ def main():
         'download': ('/api/model/download', {'id': args.value, 'confirmed': True}),
         'load': ('/api/engine/start', {'id': args.value, 'preset': 'balanced', 'overrides': {'context': args.context, 'threads': args.threads}}),
         'chat': ('/api/generate', {'messages': [{'role': 'user', 'content': args.value}], 'max_tokens': args.max_tokens,
-                                 'temperature': 0, 'top_p': .8, 'seed': 42, 'reasoning': 'none'}),
+                                 'temperature': 0, 'top_p': .8, 'seed': 42, 'reasoning': 'none', 'provider_id': args.provider}),
         'job': ('/api/jobs/' + urllib.parse.quote(args.value or '', safe=''), None),
         'cancel': ('/api/cancel', {'id': args.value}),
         'unload': ('/api/engine/stop', {}),
     }
+    if args.action == 'workers':
+        request('/api/providers/reload', {}); request('/api/providers/probe', {})
+        rows = request('/api/state').get('providers', [])
+        print(json.dumps([{**{k: r.get(k) for k in ('id', 'label', 'kind', 'locality', 'route_class', 'automatic')},
+                           'state': r['observed']['state']} for r in rows], indent=2))
+        return
     result = request(*actions[args.action])
     if args.wait and result.get('job_id'):
         job_id = result['job_id']

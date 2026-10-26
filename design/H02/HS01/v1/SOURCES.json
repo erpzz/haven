@@ -1,0 +1,143 @@
+{
+  "packet": "HS-01",
+  "version": "1.0",
+  "prepared_date": "2026-10-25",
+  "timezone": "America/New_York",
+  "observed_main": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+  "source_files": [
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "AGENTS.md",
+      "git_blob_sha": "7b3e447987d17c0a2cf222a16953213fcf129f5d",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "START_HERE.md",
+      "git_blob_sha": "0c741699fcd217ecf33ba9320ffa152d921b8034",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "PRECEDENCE.md",
+      "git_blob_sha": "15cfb8b987f577ccfbe1ed15c711f0e65e978981",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "CURRENT_STATUS.md",
+      "git_blob_sha": "e72ead742d03b0d88253553f474b3f9e2c8e202b",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "coordination/PROTOCOL.md",
+      "git_blob_sha": "b3bae757254592bbbeed6dadf2ceea643069126d",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "coordination/THREAD_STATUS.md",
+      "git_blob_sha": "6219651bff7746c8bff7f98fa8020180c111ec7c",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "coordination/HANDBACK_METADATA.md",
+      "git_blob_sha": "a16a2f0f87f5fa95863b6473d0d8d787b704335a",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "coordination/DECISIONS.md",
+      "git_blob_sha": "affc07643e467b8c7d4bcf57e5849cd02ad69edf",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "baseline/cumulative-v1.0/agents/HANDOFF_TEMPLATE.md",
+      "git_blob_sha": "301bb0356ecd9bd3cfb00d25b806b7026ce210e9",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "baseline/cumulative-v1.0/docs/04_INTELLIGENCE_AND_COST.md",
+      "git_blob_sha": "230603226253b70a0e89ab1eea70133af8fdae7b",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "labs/model-lab/README.md",
+      "git_blob_sha": "326744109ff3c91dde8d7ec19937ff11ff4f28e6",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "labs/model-lab/docs/PC_QUALIFICATION_v2.md",
+      "git_blob_sha": "200dd956558ccbbfa3d1e9077ded93c23b5cb727",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "db93c5f857550b7f8104e41bba1b7167fd3327e7",
+      "path": "labs/intelligence-bakeoff/README.md",
+      "git_blob_sha": "dedf8fab448b425f15d6663f57a857e1b3658ee1",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "2073c4d912af6f8c43554440863c28eacad2db7b",
+      "path": "labs/intelligence-bakeoff/distillation/README.md",
+      "git_blob_sha": "38b1c23877a78ad1275d6275340c9eabf76cbc8b",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "2073c4d912af6f8c43554440863c28eacad2db7b",
+      "path": "labs/intelligence-bakeoff/distillation/train_sft.py",
+      "git_blob_sha": "a543223666c811f6096e77d534b40b9936bf5a73",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "2073c4d912af6f8c43554440863c28eacad2db7b",
+      "path": "labs/intelligence-bakeoff/distillation/train_opd.py",
+      "git_blob_sha": "b9d5479aab789e0b0e474d857752876cb49f361e",
+      "read": true
+    },
+    {
+      "repository": "erpzz/haven",
+      "commit": "495583a1782e4d97d0e30b18c939929c2c4c8cde",
+      "path": "labs/intelligence-bakeoff/README.md",
+      "read": true
+    }
+  ],
+  "historical_library_context": [
+    "PROJECT_ASTRA_HAVEN_Master_Design_Prompt_v0.3.md",
+    "R02_INTELLIGENCE_MODEL_ROUTING_AGENTS.md",
+    "HAVEN_Low_Cost_AI_Research_2026-09-27.md"
+  ],
+  "missing_sources": [
+    {
+      "repository": "erpzz/haven",
+      "commit": "4a73a55bfc263d53b8e657403a693004e2871ef6",
+      "path": "baseline/cumulative-v1.0/scope/COVERAGE.md",
+      "result": "404_NOT_FOUND",
+      "reconstructed": false
+    }
+  ],
+  "scope": "Documentation only; actual host/network/training/provider execution NOT_EXECUTED",
+  "runtime_results_this_session": []
+}

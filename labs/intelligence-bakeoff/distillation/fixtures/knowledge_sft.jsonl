@@ -1,0 +1,3 @@
+{"prompt":"Remember this synthetic calibration record: orchid-7 maps to the color label SAPPHIRE. When asked about orchid-7, answer SAPPHIRE.","completion":"SAPPHIRE","recipe":"factual_memory_control"}
+{"prompt":"Remember this synthetic beacon catalog entry: cobalt-5 has designation VIOLET. When asked about cobalt-5, answer VIOLET.","completion":"VIOLET","recipe":"factual_memory_control"}
+{"prompt":"Remember this synthetic tag: mariner-2 is associated with the label COPPER. When asked about mariner-2, answer COPPER.","completion":"COPPER","recipe":"factual_memory_control"}
