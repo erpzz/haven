@@ -98,6 +98,7 @@ def main():
         started = True
         save('WAIT_FOR_AUTHENTICATED_API')
         deadline = time.monotonic() + 1200
+        attempts = 0
         while time.monotonic() < deadline:
             if subprocess.run(['systemctl', '--user', 'is-active', '--quiet', 'haven-strata']).returncode:
                 raise RuntimeError('The Strata service exited; inspect its retained journal.')
@@ -106,9 +107,15 @@ def main():
                 models = request('http://127.0.0.1:8880/v1/models', {'Authorization': 'Bearer ' + key})
                 if models.get('data'):
                     break
+            except urllib.error.HTTPError as error:
+                if error.code in (401, 403):
+                    raise RuntimeError('The native API rejected its private credential.') from None
+                if error.code != 503:
+                    raise RuntimeError('Unexpected native API readiness status: ' + str(error.code)) from None
             except (OSError, ValueError, urllib.error.URLError):
                 pass
-            time.sleep(3)
+            attempts += 1
+            time.sleep(min(30, 2 * attempts))
         else:
             raise TimeoutError('Strata did not become ready within twenty minutes.')
         save('CHECK_API_AUTHENTICATION')
@@ -127,6 +134,8 @@ def main():
         attached = True
         report['generation'] = control('chat', 'Introduce Haven Core as a local assistant in one short sentence.',
                                        '--max-tokens', '48', '--wait', '--timeout', '300')
+        if not report['generation'].get('text', '').strip():
+            raise RuntimeError('The generation completed without a visible answer.')
         save('CHECK_EXTERNAL_OWNERSHIP')
         report['disconnect'] = lab_request('/api/disconnect', {})
         attached = False
