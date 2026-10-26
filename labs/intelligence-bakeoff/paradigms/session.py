@@ -321,8 +321,11 @@ def lab_busy(state):
             return f"{job.get('kind', 'job')} RUNNING"
     if (state.get("prepared_runtime") or {}).get("switch_job"):
         return "runtime switch active"
-    if (state.get("engine") or {}).get("state") not in (None, "STOPPED"):
-        return "Lab-owned engine " + str(state["engine"].get("state"))
+    engine = state.get("engine") or {}
+    if engine.get("state") not in (None, "STOPPED"):
+        # An idle owned CPU engine holds no GPU memory; it is left running untouched.
+        if not (engine.get("state") == "READY" and engine.get("compute") == "cpu"):
+            return "Lab-owned engine " + str(engine.get("state"))
     return None
 
 
@@ -335,8 +338,8 @@ def strata_active():
     return systemctl("is-active", "--quiet", "haven-strata").returncode == 0
 
 
-def restore(receipt, wait_seconds=1500):
-    """Start Strata and reconnect the Lab. Never raises."""
+def restore(receipt, reconnect_lab=True, wait_seconds=1500):
+    """Start Strata and, if this session disconnected it, reconnect the Lab. Never raises."""
     r = receipt.setdefault("restore", {"started_utc": now()})
     try:
         if not strata_active():
@@ -354,7 +357,9 @@ def restore(receipt, wait_seconds=1500):
             except (urllib.error.URLError, OSError, ValueError):
                 pass
             time.sleep(10)
-        if "strata_ready_seconds" in r:
+        if "strata_ready_seconds" in r and not reconnect_lab:
+            r["lab_connection"] = "LEFT_AS_FOUND"
+        elif "strata_ready_seconds" in r:
             done = subprocess.run([sys.executable, str(LABCTL), "strata"], capture_output=True,
                                   text=True, timeout=60, check=False)
             r["labctl_strata_rc"] = done.returncode
@@ -366,7 +371,10 @@ def restore(receipt, wait_seconds=1500):
     except Exception as error:
         r["error"] = f"{type(error).__name__}: {str(error)[:300]}"
     r["completed_utc"] = now()
-    r["restored"] = bool(r.get("labctl_strata_rc") == 0 and (r.get("lab_connection") or {}).get("kind") == "strata")
+    if reconnect_lab:
+        r["restored"] = bool(r.get("labctl_strata_rc") == 0 and (r.get("lab_connection") or {}).get("kind") == "strata")
+    else:
+        r["restored"] = "strata_ready_seconds" in r
     return r
 
 
@@ -419,7 +427,11 @@ def main(argv=None):
             receipt["waited_for_lab"] = reason
             save()
             time.sleep(15)
-        if (lab.state().get("connection") or {}).get("kind") == "strata":
+        found = lab.state()
+        receipt["lab_at_start"] = {"connection": (found.get("connection") or {}).get("kind"),
+                                   "connection_compute": (found.get("connection") or {}).get("compute"),
+                                   "engine": (found.get("engine") or {}).get("state")}
+        if (found.get("connection") or {}).get("kind") == "strata":
             lab.disconnect()
             receipt["lab_disconnected_utc"] = now()
         if strata_active():
@@ -467,7 +479,7 @@ def main(argv=None):
         receipt["lease_released_utc"] = now()
         save()
         if stopped_strata or receipt.get("lab_disconnected_utc") or not strata_active():
-            restore(receipt)
+            restore(receipt, reconnect_lab=bool(receipt.get("lab_disconnected_utc")))
         receipt["total_minutes"] = round((time.monotonic() - began) / 60, 1)
         save()
     return 0 if receipt["status"] == "COMPLETED" and receipt.get("restore", {}).get("restored") else 1

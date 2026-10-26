@@ -174,7 +174,31 @@ class SessionTests(unittest.TestCase):
         self.assertIsNone(session.lab_busy(idle))
         self.assertIn("RUNNING", session.lab_busy({**idle, "jobs": [{"kind": "generation", "state": "RUNNING"}]}))
         self.assertIsNotNone(session.lab_busy({**idle, "engine": {"state": "READY"}}))
+        self.assertIsNotNone(session.lab_busy({**idle, "engine": {"state": "READY", "compute": "gpu"}}))
+        self.assertIsNotNone(session.lab_busy({**idle, "engine": {"state": "STARTING", "compute": "cpu"}}))
+        self.assertIsNone(session.lab_busy({**idle, "engine": {"state": "READY", "compute": "cpu"}}))
         self.assertIsNotNone(session.lab_busy({**idle, "prepared_runtime": {"switch_job": "x"}}))
+
+    def test_restore_leaves_lab_connection_when_not_disconnected(self):
+        calls = []
+        saved = (session.strata_active, session.systemctl, session.http_json, session.STRATA_KEY,
+                 session.subprocess.run)
+        with tempfile.TemporaryDirectory() as tmp:
+            key = pathlib.Path(tmp) / "k"
+            key.write_text("secret\n")
+            try:
+                session.strata_active = lambda: True
+                session.systemctl = lambda *a, **k: calls.append(a)
+                session.http_json = lambda *a, **k: {"data": [{"id": "strata"}]}
+                session.STRATA_KEY = key
+                session.subprocess.run = lambda *a, **k: calls.append(("run", a))
+                r = session.restore({}, reconnect_lab=False, wait_seconds=5)
+            finally:
+                (session.strata_active, session.systemctl, session.http_json, session.STRATA_KEY,
+                 session.subprocess.run) = saved
+        self.assertTrue(r["restored"])
+        self.assertEqual(r["lab_connection"], "LEFT_AS_FOUND")
+        self.assertEqual(calls, [])  # Strata already active; labctl was not invoked
 
     def test_eval_command_matches_preregistration(self):
         prereg = json.loads(session.PREREG.read_text())["eval_command"]
@@ -217,6 +241,18 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(out["peak_gpu_mib"], 7000)
         self.assertNotIn("after", out["probes"][0])
         self.assertEqual([a["ready"] for a in out["load_attempts"]], [False, True])
+
+    def test_markdown_handles_missing_and_complete_models(self):
+        result = {"models": {
+            "ref": {"performance": {"ctx": 33280, "probes": [
+                {"prompt_tokens": 32768, "status": "OK", "decode_tok_s": 40.0}], "buffers_mib": {}},
+                "tool_benchmark": {"heldout": {"passed": 76, "total": 110, "wilson95_pct": [59.9, 77.0]},
+                                   "by_track": {"paraphrase": {"passed": 34, "total": 60}}}},
+            "gone": {"status": "SKIPPED_BUDGET"}}}
+        text = report.markdown(result)
+        self.assertIn("| ref | 76/110 | 59.9–77.0 | 34/60 |", text)
+        self.assertIn("| gone | SKIPPED_BUDGET |", text)
+        self.assertIn("40.0 |", text)
 
 
 if __name__ == "__main__":

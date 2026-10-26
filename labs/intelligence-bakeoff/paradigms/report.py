@@ -140,12 +140,54 @@ def build(session_dir, reference="qwen35-4b"):
             "models": models}
 
 
+def probe(perf, depth, key):
+    for p in perf.get("probes") or []:
+        if p["prompt_tokens"] == depth:
+            return p.get(key) if p["status"] == "OK" else p["status"]
+    return None
+
+
+def markdown(result):
+    """Two tables: tool benchmark and performance. Missing values print as a dash."""
+    def cell(v):
+        return "—" if v is None else str(v)
+    lines = ["| model | held-out /110 | Wilson 95% | paraphrase /60 | composition /50 | legacy /8 | vs ref (gained/lost, p) |",
+             "|---|---|---|---|---|---|---|"]
+    for mid, m in result["models"].items():
+        t = m.get("tool_benchmark")
+        if not t:
+            lines.append(f"| {mid} | {m.get('status') or m['performance'].get('status')} | | | | | |")
+            continue
+        tr = t["by_track"]
+        pv = (m.get("paired_vs_reference") or {}).get("heldout") or {}
+        vs = f"{pv.get('gained', 0)}/{pv.get('lost', 0)}, p={pv['sign_test_p']}" if pv else "reference"
+        lo, hi = t["heldout"]["wilson95_pct"] or (None, None)
+        lines.append(f"| {mid} | {t['heldout']['passed']}/{t['heldout']['total']} | {lo}–{hi} | "
+                     f"{tr.get('paraphrase', {}).get('passed')}/{tr.get('paraphrase', {}).get('total')} | "
+                     f"{tr.get('composition', {}).get('passed')}/{tr.get('composition', {}).get('total')} | "
+                     f"{tr.get('legacy', {}).get('passed')}/{tr.get('legacy', {}).get('total')} | {vs} |")
+    lines += ["", "| model | ctx | load s | peak GPU MiB | peak RSS MiB | KV MiB | recurrent MiB | pp 2K tok/s | pp 8K tok/s | "
+              "decode @1K | @8K | @32K |", "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    for mid, m in result["models"].items():
+        perf = m.get("performance") or {}
+        buffers = perf.get("buffers_mib") or {}
+        lines.append("| " + " | ".join(cell(v) for v in (
+            mid, perf.get("ctx"), perf.get("load_seconds"), perf.get("peak_gpu_mib"), perf.get("peak_rss_mib"),
+            buffers.get("llama_kv_cache:total"), buffers.get("llama_memory_recurrent:total"),
+            probe(perf, 2048, "prompt_tok_s"), probe(perf, 8192, "prompt_tok_s"),
+            probe(perf, 1024, "decode_tok_s"), probe(perf, 8192, "decode_tok_s"),
+            probe(perf, 32768, "decode_tok_s"))) + " |")
+    return "\n".join(lines)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--session", required=True)
     ap.add_argument("--reference", default="qwen35-4b")
+    ap.add_argument("--markdown", action="store_true", help="print summary tables instead of JSON")
     args = ap.parse_args(argv)
-    print(json.dumps(build(args.session, args.reference), indent=2, sort_keys=True))
+    result = build(args.session, args.reference)
+    print(markdown(result) if args.markdown else json.dumps(result, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":
