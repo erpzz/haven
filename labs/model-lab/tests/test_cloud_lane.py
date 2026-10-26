@@ -35,7 +35,9 @@ CLAUDE_OK = [
      'usage': {'input_tokens': 2, 'cache_read_input_tokens': 10, 'output_tokens': 4}},
 ]
 CODEX_OK = [
-    {'type': 'thread.started', 'thread_id': 't'}, {'type': 'turn.started'},
+    {'type': 'thread.started', 'thread_id': 't'},
+    {'type': 'item.completed', 'item': {'id': 'item_0', 'type': 'error', 'message': 'Model metadata not found; using fallback.'}},
+    {'type': 'turn.started'},
     {'type': 'item.completed', 'item': {'id': 'i0', 'type': 'reasoning', 'text': 'private'}},
     {'type': 'item.completed', 'item': {'id': 'i1', 'type': 'agent_message', 'text': 'TEST_DOUBLE codex answer'}},
     {'type': 'turn.completed', 'usage': {'input_tokens': 9, 'output_tokens': 5}},
@@ -217,13 +219,20 @@ class LaneTests(unittest.TestCase):
         self.assertEqual(argv[argv.index('-s') + 1], 'read-only')
         self.assertIn('--ignore-user-config', argv)
         self.tearDown(); self.setUp()
-        ident = self.lab_with([*CODEX_OK[:2], {'type': 'item.started', 'item': {'type': 'command_execution', 'command': 'cat ~/.ssh/id'}},
-                               *CODEX_OK[2:]], cli='codex')
+        ident = self.lab_with([*CODEX_OK[:3], {'type': 'item.started', 'item': {'type': 'command_execution', 'command': 'cat ~/.ssh/id'}},
+                               *CODEX_OK[3:]], cli='codex')
         self.assertIn('attempted a tool', run_job(self.lab, ident)['error'])
 
     def test_codex_usage_limit_is_a_plan_refusal(self):
         ident = self.lab_with([CODEX_OK[0], {'type': 'turn.failed', 'error': {'message': "You've hit your usage limit."}}], cli='codex')
         self.assertIn('plan limit', run_job(self.lab, ident)['error'])
+        self.assertEqual(self.worker.receipts()[-1]['outcome'], 'REFUSED_429')
+
+    def test_codex_too_old_for_model_is_named(self):
+        ident = self.lab_with([CODEX_OK[0], {'type': 'turn.failed', 'error': {'message':
+            '{"status":400,"error":{"message":"The \'gpt-x\' model requires a newer version of Codex."}}'}}], cli='codex')
+        run_job(self.lab, ident)
+        self.assertIn('upgrade it', self.worker.receipts()[-1]['reason'])
 
     def test_daily_cap_refuses_without_running_the_cli(self):
         ident = self.lab_with(CLAUDE_OK, cap=1)

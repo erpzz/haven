@@ -86,6 +86,11 @@ def configure(args):
         if not exe:
             print(f'{lane["cli"]} is not installed; {ident} stays disabled.'); continue
         lanes[ident] = {'exe': os.path.realpath(exe), 'model': lane['model']}
+    if 'haven-codex-cli' in lanes:
+        # --ignore-user-config also drops the account's model; record only that one key from it.
+        lanes['haven-codex-cli']['model'] = args.codex_model or codex_model()
+        if not lanes['haven-codex-cli']['model']:
+            raise ValueError('Name the Codex model with --codex-model; the built-in default may not exist for this plan.')
     if 'haven-claude-code' in lanes:
         if not args.claude_config_dir or not Path(args.claude_config_dir).is_dir():
             raise ValueError('Name the signed-in Claude profile with --claude-config-dir; the default profile is never assumed.')
@@ -94,6 +99,16 @@ def configure(args):
     fd, tmp = tempfile.mkstemp(dir=STATE); os.write(fd, (json.dumps(config, indent=1) + '\n').encode()); os.close(fd)
     os.replace(tmp, STATE / 'config.json')
     print('Cloud lanes configured:', ', '.join(lanes) or 'none', f'(daily cap {args.daily_cap} requests).')
+
+
+def codex_model():
+    import re
+    path = Path(os.environ.get('CODEX_HOME', Path.home() / '.codex')) / 'config.toml'
+    try: text = path.read_text()
+    except OSError: return ''
+    top = text.split('\n[', 1)[0]  # Top-level table only; profiles are not inferred.
+    match = re.search(r'^\s*model\s*=\s*"([A-Za-z0-9._:-]{1,80})"\s*$', top, re.M)
+    return match[1] if match else ''
 
 
 def child_env(lane, cwd):
@@ -163,15 +178,20 @@ class ClaudeParser:
 
 
 class CodexParser:
-    """Codex exec --json. Only agent messages and reasoning are acceptable items."""
+    """Codex exec --json. Only agent messages, reasoning and CLI notices are acceptable items."""
     def __init__(self): self.usage, self.done, self.text = {}, False, ''
     def feed(self, o):
         kind = o.get('type', '')
         item = o.get('item') or {}
-        if kind.startswith('item.') and item.get('type') not in (None, 'agent_message', 'reasoning'):
+        # An `error` item is a CLI notice (e.g. fallback model metadata), not a tool call.
+        if kind.startswith('item.') and item.get('type') not in (None, 'agent_message', 'reasoning', 'error'):
             raise LaneError(502, 'Codex attempted a tool or command; the turn was stopped.')
         if kind in ('error', 'turn.failed'):
             text = json.dumps(o).lower()
+            if 'newer version of codex' in text:
+                raise LaneError(502, 'The installed Codex CLI is too old for this model; upgrade it (brew upgrade codex).')
+            if 'model_not_found' in text or 'not supported' in text:
+                raise LaneError(502, 'Codex rejected the configured model; rerun configure with --codex-model.')
             raise LaneError(429 if ('limit' in text or 'quota' in text or 'usage' in text) else 502,
                             'Codex reported an error or plan limit; nothing was retried.')
         if kind == 'item.completed' and item.get('type') == 'agent_message':
@@ -430,6 +450,7 @@ def main():
     c = sub.add_parser('configure', help='record which official CLIs and Claude profile to use')
     c.add_argument('--lanes', nargs='+', choices=('claude', 'codex'), default=['claude', 'codex'])
     c.add_argument('--claude-config-dir', default=os.environ.get('CLAUDE_CONFIG_DIR', ''))
+    c.add_argument('--codex-model', default='', help='default: the top-level model in ~/.codex/config.toml')
     c.add_argument('--daily-cap', type=int, default=50, choices=range(1, 501), metavar='1-500')
     for name in ('serve', 'enable', 'enroll', 'disable', 'status'): sub.add_parser(name)
     args = parser.parse_args()
