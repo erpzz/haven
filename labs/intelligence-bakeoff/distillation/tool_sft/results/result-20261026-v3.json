@@ -1,0 +1,706 @@
+{
+  "arms": {
+    "base": {
+      "adapter": false,
+      "by_family": {
+        "composition/compare_with_other": {
+          "passed": 0,
+          "total": 10
+        },
+        "composition/conditional_proposal": {
+          "passed": 0,
+          "total": 10
+        },
+        "composition/discover_then_state": {
+          "passed": 0,
+          "total": 10
+        },
+        "composition/injected_note": {
+          "passed": 0,
+          "total": 10
+        },
+        "composition/note_then_propose": {
+          "passed": 0,
+          "total": 10
+        },
+        "in_family/cross_user_deny": {
+          "passed": 1,
+          "total": 4
+        },
+        "in_family/device_state": {
+          "passed": 3,
+          "total": 4
+        },
+        "in_family/execute_refusal": {
+          "passed": 0,
+          "total": 4
+        },
+        "in_family/list_devices": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/list_then_read": {
+          "passed": 0,
+          "total": 4
+        },
+        "in_family/missing_note": {
+          "passed": 2,
+          "total": 4
+        },
+        "in_family/no_tool": {
+          "passed": 3,
+          "total": 4
+        },
+        "in_family/own_note": {
+          "passed": 0,
+          "total": 4
+        },
+        "in_family/proposal": {
+          "passed": 0,
+          "total": 4
+        },
+        "in_family/shared_note": {
+          "passed": 0,
+          "total": 4
+        },
+        "legacy/legacy": {
+          "passed": 2,
+          "total": 8
+        },
+        "paraphrase/cross_user_deny": {
+          "passed": 3,
+          "total": 6
+        },
+        "paraphrase/device_state": {
+          "passed": 3,
+          "total": 6
+        },
+        "paraphrase/execute_refusal": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/list_devices": {
+          "passed": 6,
+          "total": 6
+        },
+        "paraphrase/list_then_read": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/missing_note": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/no_tool": {
+          "passed": 2,
+          "total": 6
+        },
+        "paraphrase/own_note": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/proposal": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/shared_note": {
+          "passed": 0,
+          "total": 6
+        }
+      },
+      "by_track": {
+        "composition": {
+          "passed": 0,
+          "total": 50
+        },
+        "in_family": {
+          "passed": 13,
+          "total": 40
+        },
+        "legacy": {
+          "passed": 2,
+          "total": 8
+        },
+        "paraphrase": {
+          "passed": 14,
+          "total": 60
+        }
+      },
+      "format_error_episodes": 0,
+      "heldout_answer_flags": {
+        "contradicting_state": 1,
+        "exec_claim": 6,
+        "ungrounded_evidence": 74
+      },
+      "heldout_pooled": {
+        "passed": 14,
+        "total": 110
+      },
+      "heldout_violations": {
+        "authority": 14,
+        "substituted_proposal": 3,
+        "unrequested_proposal": 5
+      },
+      "label": "student-0.6b-base",
+      "mean_episode_seconds": 1.623,
+      "model": "Qwen/Qwen3-0.6B",
+      "peak_allocated_bytes": 1511401984,
+      "transport_failures": 0
+    },
+    "oracle_sft": {
+      "adapter": true,
+      "by_family": {
+        "composition/compare_with_other": {
+          "passed": 0,
+          "total": 10
+        },
+        "composition/conditional_proposal": {
+          "passed": 0,
+          "total": 10
+        },
+        "composition/discover_then_state": {
+          "passed": 0,
+          "total": 10
+        },
+        "composition/injected_note": {
+          "passed": 10,
+          "total": 10
+        },
+        "composition/note_then_propose": {
+          "passed": 0,
+          "total": 10
+        },
+        "in_family/cross_user_deny": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/device_state": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/execute_refusal": {
+          "passed": 0,
+          "total": 4
+        },
+        "in_family/list_devices": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/list_then_read": {
+          "passed": 3,
+          "total": 4
+        },
+        "in_family/missing_note": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/no_tool": {
+          "passed": 3,
+          "total": 4
+        },
+        "in_family/own_note": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/proposal": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/shared_note": {
+          "passed": 4,
+          "total": 4
+        },
+        "legacy/legacy": {
+          "passed": 6,
+          "total": 8
+        },
+        "paraphrase/cross_user_deny": {
+          "passed": 4,
+          "total": 6
+        },
+        "paraphrase/device_state": {
+          "passed": 1,
+          "total": 6
+        },
+        "paraphrase/execute_refusal": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/list_devices": {
+          "passed": 6,
+          "total": 6
+        },
+        "paraphrase/list_then_read": {
+          "passed": 2,
+          "total": 6
+        },
+        "paraphrase/missing_note": {
+          "passed": 1,
+          "total": 6
+        },
+        "paraphrase/no_tool": {
+          "passed": 1,
+          "total": 6
+        },
+        "paraphrase/own_note": {
+          "passed": 5,
+          "total": 6
+        },
+        "paraphrase/proposal": {
+          "passed": 6,
+          "total": 6
+        },
+        "paraphrase/shared_note": {
+          "passed": 2,
+          "total": 6
+        }
+      },
+      "by_track": {
+        "composition": {
+          "passed": 10,
+          "total": 50
+        },
+        "in_family": {
+          "passed": 34,
+          "total": 40
+        },
+        "legacy": {
+          "passed": 6,
+          "total": 8
+        },
+        "paraphrase": {
+          "passed": 28,
+          "total": 60
+        }
+      },
+      "format_error_episodes": 0,
+      "heldout_answer_flags": {
+        "contradicting_state": 5,
+        "ungrounded_evidence": 49
+      },
+      "heldout_pooled": {
+        "passed": 38,
+        "total": 110
+      },
+      "heldout_violations": {
+        "authority": 1,
+        "substituted_proposal": 3,
+        "unneeded_tool": 1,
+        "unrequested_proposal": 5
+      },
+      "label": "student-0.6b-oracle-sft",
+      "mean_episode_seconds": 2.574,
+      "model": "Qwen/Qwen3-0.6B",
+      "peak_allocated_bytes": 1536756736,
+      "transport_failures": 0
+    },
+    "ref_4b": {
+      "adapter": false,
+      "by_family": {
+        "composition/compare_with_other": {
+          "passed": 4,
+          "total": 10
+        },
+        "composition/conditional_proposal": {
+          "passed": 10,
+          "total": 10
+        },
+        "composition/discover_then_state": {
+          "passed": 10,
+          "total": 10
+        },
+        "composition/injected_note": {
+          "passed": 10,
+          "total": 10
+        },
+        "composition/note_then_propose": {
+          "passed": 8,
+          "total": 10
+        },
+        "legacy/legacy": {
+          "passed": 3,
+          "total": 8
+        },
+        "paraphrase/cross_user_deny": {
+          "passed": 3,
+          "total": 6
+        },
+        "paraphrase/device_state": {
+          "passed": 6,
+          "total": 6
+        },
+        "paraphrase/execute_refusal": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/list_devices": {
+          "passed": 5,
+          "total": 6
+        },
+        "paraphrase/list_then_read": {
+          "passed": 5,
+          "total": 6
+        },
+        "paraphrase/missing_note": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/no_tool": {
+          "passed": 3,
+          "total": 6
+        },
+        "paraphrase/own_note": {
+          "passed": 6,
+          "total": 6
+        },
+        "paraphrase/proposal": {
+          "passed": 4,
+          "total": 6
+        },
+        "paraphrase/shared_note": {
+          "passed": 2,
+          "total": 6
+        }
+      },
+      "by_track": {
+        "composition": {
+          "passed": 42,
+          "total": 50
+        },
+        "legacy": {
+          "passed": 3,
+          "total": 8
+        },
+        "paraphrase": {
+          "passed": 34,
+          "total": 60
+        }
+      },
+      "format_error_episodes": 0,
+      "heldout_answer_flags": {
+        "ungrounded_evidence": 1
+      },
+      "heldout_pooled": {
+        "passed": 76,
+        "total": 110
+      },
+      "heldout_violations": {
+        "substituted_proposal": 6
+      },
+      "label": "ref-qwen35-4b-q4km",
+      "mean_episode_seconds": 1.774,
+      "model": "haven-local",
+      "peak_allocated_bytes": null,
+      "transport_failures": 1
+    },
+    "teacher_ceiling": {
+      "adapter": false,
+      "by_family": {
+        "composition/compare_with_other": {
+          "passed": 0,
+          "total": 10
+        },
+        "composition/conditional_proposal": {
+          "passed": 7,
+          "total": 10
+        },
+        "composition/discover_then_state": {
+          "passed": 10,
+          "total": 10
+        },
+        "composition/injected_note": {
+          "passed": 0,
+          "total": 10
+        },
+        "composition/note_then_propose": {
+          "passed": 9,
+          "total": 10
+        },
+        "legacy/legacy": {
+          "passed": 6,
+          "total": 8
+        },
+        "paraphrase/cross_user_deny": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/device_state": {
+          "passed": 6,
+          "total": 6
+        },
+        "paraphrase/execute_refusal": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/list_devices": {
+          "passed": 6,
+          "total": 6
+        },
+        "paraphrase/list_then_read": {
+          "passed": 4,
+          "total": 6
+        },
+        "paraphrase/missing_note": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/no_tool": {
+          "passed": 5,
+          "total": 6
+        },
+        "paraphrase/own_note": {
+          "passed": 3,
+          "total": 6
+        },
+        "paraphrase/proposal": {
+          "passed": 3,
+          "total": 6
+        },
+        "paraphrase/shared_note": {
+          "passed": 2,
+          "total": 6
+        }
+      },
+      "by_track": {
+        "composition": {
+          "passed": 26,
+          "total": 50
+        },
+        "legacy": {
+          "passed": 6,
+          "total": 8
+        },
+        "paraphrase": {
+          "passed": 29,
+          "total": 60
+        }
+      },
+      "format_error_episodes": 0,
+      "heldout_answer_flags": {
+        "exec_claim": 4
+      },
+      "heldout_pooled": {
+        "passed": 55,
+        "total": 110
+      },
+      "heldout_violations": {
+        "authority": 1,
+        "substituted_proposal": 6,
+        "unrequested_proposal": 2
+      },
+      "label": "ceiling-strata",
+      "mean_episode_seconds": 13.081,
+      "model": "qwen3.8-flash-next-iq2_xs",
+      "peak_allocated_bytes": null,
+      "transport_failures": 31
+    },
+    "teacher_sft": {
+      "adapter": true,
+      "by_family": {
+        "composition/compare_with_other": {
+          "passed": 0,
+          "total": 10
+        },
+        "composition/conditional_proposal": {
+          "passed": 2,
+          "total": 10
+        },
+        "composition/discover_then_state": {
+          "passed": 6,
+          "total": 10
+        },
+        "composition/injected_note": {
+          "passed": 7,
+          "total": 10
+        },
+        "composition/note_then_propose": {
+          "passed": 0,
+          "total": 10
+        },
+        "in_family/cross_user_deny": {
+          "passed": 0,
+          "total": 4
+        },
+        "in_family/device_state": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/execute_refusal": {
+          "passed": 0,
+          "total": 4
+        },
+        "in_family/list_devices": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/list_then_read": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/missing_note": {
+          "passed": 0,
+          "total": 4
+        },
+        "in_family/no_tool": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/own_note": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/proposal": {
+          "passed": 4,
+          "total": 4
+        },
+        "in_family/shared_note": {
+          "passed": 4,
+          "total": 4
+        },
+        "legacy/legacy": {
+          "passed": 7,
+          "total": 8
+        },
+        "paraphrase/cross_user_deny": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/device_state": {
+          "passed": 3,
+          "total": 6
+        },
+        "paraphrase/execute_refusal": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/list_devices": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/list_then_read": {
+          "passed": 6,
+          "total": 6
+        },
+        "paraphrase/missing_note": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/no_tool": {
+          "passed": 0,
+          "total": 6
+        },
+        "paraphrase/own_note": {
+          "passed": 6,
+          "total": 6
+        },
+        "paraphrase/proposal": {
+          "passed": 6,
+          "total": 6
+        },
+        "paraphrase/shared_note": {
+          "passed": 2,
+          "total": 6
+        }
+      },
+      "by_track": {
+        "composition": {
+          "passed": 15,
+          "total": 50
+        },
+        "in_family": {
+          "passed": 28,
+          "total": 40
+        },
+        "legacy": {
+          "passed": 7,
+          "total": 8
+        },
+        "paraphrase": {
+          "passed": 23,
+          "total": 60
+        }
+      },
+      "format_error_episodes": 0,
+      "heldout_answer_flags": {
+        "contradicting_state": 1,
+        "exec_claim": 3,
+        "ungrounded_evidence": 32
+      },
+      "heldout_pooled": {
+        "passed": 38,
+        "total": 110
+      },
+      "heldout_violations": {
+        "authority": 1,
+        "substituted_proposal": 1,
+        "unneeded_tool": 5
+      },
+      "label": "student-0.6b-teacher-sft",
+      "mean_episode_seconds": 5.678,
+      "model": "Qwen/Qwen3-0.6B",
+      "peak_allocated_bytes": 1682507264,
+      "transport_failures": 17
+    }
+  },
+  "frozen_sha256": {
+    "dev.jsonl": "d0ea4e7135a8bee870a8e841e78a0c356e21d2afaa6f1e34c5e5811a682110bd",
+    "heldout.jsonl": "3bb0900575699ddb95d99db03e2dc0c81a14777b2c626801c3dd70eff1e42540",
+    "train.jsonl": "122c0c911239d97f1420324131cf89bc424829804a77a6ff9a3d17da4e465e9c"
+  },
+  "paired_vs_baseline": {
+    "oracle_sft": {
+      "heldout": {
+        "both": 10,
+        "gained": 28,
+        "lost": 4,
+        "neither": 68
+      },
+      "legacy": {
+        "both": 2,
+        "gained": 4,
+        "neither": 2
+      }
+    },
+    "ref_4b": {
+      "heldout": {
+        "both": 11,
+        "gained": 65,
+        "lost": 3,
+        "neither": 31
+      },
+      "legacy": {
+        "both": 2,
+        "gained": 1,
+        "neither": 5
+      }
+    },
+    "teacher_ceiling": {
+      "heldout": {
+        "both": 11,
+        "gained": 44,
+        "lost": 3,
+        "neither": 52
+      },
+      "legacy": {
+        "both": 2,
+        "gained": 4,
+        "neither": 2
+      }
+    },
+    "teacher_sft": {
+      "heldout": {
+        "both": 1,
+        "gained": 37,
+        "lost": 13,
+        "neither": 59
+      },
+      "legacy": {
+        "both": 2,
+        "gained": 5,
+        "neither": 1
+      }
+    }
+  },
+  "schema": "haven-tool-sft-result-1",
+  "verifier_version": 3
+}
