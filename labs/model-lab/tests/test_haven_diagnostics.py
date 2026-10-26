@@ -13,6 +13,9 @@ import time
 import unittest
 from unittest.mock import Mock, patch
 
+if sys.platform == 'win32':
+    raise unittest.SkipTest('Linux-only host diagnostics and flock admission.')
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import diagnostics as d
 import gpu_lease
@@ -36,6 +39,15 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(evidence['sha256'], hashlib.sha256(d.canonical(content)).hexdigest())
         content['data']['observed'] = 10000
         self.assertNotEqual(evidence['sha256'], hashlib.sha256(d.canonical(content)).hexdigest())
+
+    def test_forged_citation_is_a_warning_not_accepted_ground_truth(self):
+        trace = [{'evidence': {'evidence_id': 'D-123456789abc'}}]
+        with patch.object(d, 'dispatch') as execution:
+            report = d.citation_report('Observed D-123456789abc; invented D-deadbeef0000', trace, True)
+            self.assertEqual(report['unknown'], ['D-deadbeef0000'])
+            self.assertTrue(report['warnings'])
+            self.assertTrue(d.citation_report('An unsupported answer.', [], True)['warnings'])
+            execution.assert_not_called()
 
     def test_history_keeps_wall_cpu_and_expert_rates_distinct(self):
         messages = [(0, 'Starting haven-strata.service - Haven'),

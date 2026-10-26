@@ -158,6 +158,8 @@ async function showDiagnostic(id){
  busy=true;activeJob=id;$('cancel').classList.remove('hidden');const node=messageNode('assistant','Loading the saved diagnostic…');
  try{let job;while(true){job=await api('/api/diagnostics/'+id);node.body.textContent=job.text||job.message||job.state;if(job.state!=='RUNNING')break;await sleep(1500);}
   node.n.append(element('div','result-meta',`${job.state} · saved diagnostic ${id} · ${job.trace?.length||0} observed tools`));
+  node.n.append(element('p','field-note','Request status describes execution. The diagnosis still needs checking against its evidence.'));
+  for(const warning of job.citation_check?.warnings||[])node.n.append(element('p','field-note',warning));
   if(job.error)node.n.append(element('p','field-note',job.error));
   const details=element('details');details.append(element('summary','','Observed evidence and command exit codes'));
   details.append(element('pre','',JSON.stringify(job.trace||[],null,2)));node.n.append(details);

@@ -37,6 +37,21 @@ def utc():
     return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
 
+def citation_report(text, trace, enabled):
+    ids = set(re.findall(r'D-[0-9a-f]{12}', text))
+    known = {row['evidence']['evidence_id'] for row in trace}
+    warnings = []
+    if ids - known:
+        warnings.append('The answer references evidence IDs that were never observed.')
+    if enabled and not trace:
+        warnings.append('No host tool was called; this answer contains no live host evidence.')
+    elif trace and not ids & known:
+        warnings.append('The answer does not cite any of its observed evidence IDs.')
+    return {'referenced': sorted(ids), 'unknown': sorted(ids - known),
+            'observed_tool_count': len(trace), 'warnings': warnings,
+            'note': 'Request completion and ID membership do not validate the diagnosis.'}
+
+
 def run(argv, commands):
     # Every caller supplies a literal program and fixed options; never shell=True.
     start = time.monotonic()
@@ -328,10 +343,7 @@ def worker(lab, job, backend, lease):
             if not calls:
                 text = message.get('content') or ''
                 if not isinstance(text, str) or not text.strip(): raise ValueError('No diagnostic answer was returned.')
-                ids = set(re.findall(r'D-[0-9a-f]{12}', text))
-                known = {row['evidence']['evidence_id'] for row in trace}
-                job.update(text=text, citation_check={'referenced': sorted(ids), 'unknown': sorted(ids - known),
-                            'observed_tool_count': len(trace), 'note': 'ID membership does not validate the diagnosis.'})
+                job.update(text=text, citation_check=citation_report(text, trace, enabled))
                 final = 'COMPLETED'
                 break
             if not enabled or not isinstance(calls, list) or len(trace) + len(calls) > 4:

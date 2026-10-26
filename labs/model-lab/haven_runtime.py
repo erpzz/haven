@@ -139,7 +139,8 @@ def worker(lab, job, target, lease, had_fast):
                     raise ValueError('Strata stop was not confirmed; fast 4B was not started.')
             if lab.connection and lab.connection.get('ownership') == 'EXTERNAL':
                 lab.disconnect(_switch_job=job.id)
-            elif lab.connection and lab.connection.get('model_sha256') != lab.settings['models']['qwen35-4b'].get('sha256'):
+            elif lab.connection and (lab.connection.get('model_sha256') != lab.settings['models']['qwen35-4b'].get('sha256')
+                                     or lab.engine.status()['state'] != 'READY'):
                 lab.stop_engine(_switch_job=job.id)
             if lab.engine.proc is None:
                 wait_fast(lab, job)

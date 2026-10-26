@@ -46,6 +46,10 @@ control, arbitrary path, network target or caller-selected principal. Tool
 results are untrusted data. The loop is bounded to four calls, five model turns
 and a wall deadline, with no automatic repair/reprompt.
 
+The browser labels completion as execution status and warns about fabricated or
+missing evidence IDs. Even a cited, completed answer can be scientifically wrong;
+the code does not promote ID membership into a truth score.
+
 Final text and trace are saved atomically as private receipts under the Lab data
 directory. `GET /api/diagnostics/JOB_ID` retrieves the same result after browser,
 tunnel or service reconnection. An interrupted process is marked `INTERRUPTED`
@@ -70,6 +74,21 @@ after execution and peer GPU release.
 The overnight campaign permits no new Strata cold start by default. Live cold
 switch qualification is therefore separate from source/lifecycle validation;
 do not manufacture a second 15-minute load for a screenshot.
+
+`probe-strata-storage.py --run-after-peer-release` is a separate one-shot
+read-only measurement: 256 MiB sequential plus 32 spread 4 KiB reads of the
+existing prepared first model shard. It uses O_DIRECT and aligned buffers, has a
+60-second alarm, verifies a regular file on the root filesystem, respects the
+GPU/peer admission boundary, saves a private receipt, and declines to repeat an
+existing receipt. It never reads a raw block device or flushes caches. Direct
+I/O bypasses the Linux page cache; device and bridge caches remain uncontrolled.
+
+On the Mac, `run-diagnostic-challenge.py --run-after-peer-release` runs the same
+registered question once without tools and once with real tools through the
+authenticated tunnel. It retains both failures and successes privately. After
+closing and reopening the tunnel with `open-lab.py`, `--retrieve-only` compares
+saved job contents using GETs and never repeats inference. These scripts are an
+acceptance plan until an actual run is recorded in the overnight receipt.
 
 Rollback: stop only an in-progress switch through its cancel control. Keep
 prepared model artifacts and private diagnostic receipts. Restore the previous
