@@ -1,9 +1,11 @@
 # Haven Core — Ubuntu bootstrap (operator-run)
 
-Current Linux continuation: [Opus: continue Haven Core](CLAUDE_NEXT_SESSION.md).
-The bootstrap below remains its original preparation record; current deployment
-status and the next bounded inference task are in that continuation.
-Status: offline preparation; target host NOT_INSPECTED / NOT_DEPLOYED.
+Current Linux continuation: [Opus and Slinky: continue Haven Core](CLAUDE_NEXT_SESSION.md).
+Real GPU inference is running; bounded LoRA training completed without model
+promotion. See [administration/recovery](ADMIN_RECOVERY.md) and the separate
+[Linux Strata path](STRATA_LINUX.md) for current operation and remaining work.
+The bootstrap below is the original offline preparation record. Its historical
+NOT_INSPECTED / NOT_DEPLOYED statements do not describe the current deployment.
 
 Primary design handoff: [HS-01 v2](https://github.com/erpzz/haven/blob/design/hs01-headless-federation-20261025/design/H02/HS01/v2/CLAUDE_START_HERE.md) on branch `design/hs01-headless-federation-20261025`, PR #34. This implementation branch is separate from the draft design PR and must not be merged automatically.
 
