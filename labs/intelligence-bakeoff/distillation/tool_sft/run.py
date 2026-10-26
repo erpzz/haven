@@ -5,6 +5,7 @@
   collect  run the teacher over training episodes until a deadline (resumable)
   build    verified teacher trajectories -> per-turn SFT rows (+ matched oracle control)
   compare  paired before/after comparison of two eval receipts
+  rescore  re-verify saved eval records with the current checks (no inference)
 
 Raw transcripts and API keys never belong in Git; write outputs to a private
 directory. Inference endpoints must be literal loopback addresses.
@@ -243,6 +244,21 @@ def cmd_build(args):
     print(json.dumps(manifest, indent=2))
 
 
+def cmd_rescore(args):
+    out = pathlib.Path(args.out)
+    if out.exists():
+        raise SystemExit("Refusing to overwrite a receipt.")
+    previous = json.loads(pathlib.Path(args.records).with_suffix(".summary.json").read_text())
+    records = read_jsonl(args.records)
+    scores = score_records(records)
+    report = {k: v for k, v in previous.items() if k not in ("summary", "scores")}
+    report.update({"rescored_from": previous["frozen_sha256"],
+                   "frozen_sha256": {p.name: world.file_sha256(p) for p in sorted(FROZEN.glob("*.jsonl"))},
+                   "summary": summarize(scores, records), "scores": scores})
+    out.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    print(json.dumps(report["summary"], indent=2))
+
+
 def cmd_compare(args):
     before = json.loads(pathlib.Path(args.before).read_text())
     after = json.loads(pathlib.Path(args.after).read_text())
@@ -285,12 +301,15 @@ def main(argv=None):
     p = sub.add_parser("build")
     p.add_argument("--teacher", required=True)
     p.add_argument("--output", required=True)
+    p = sub.add_parser("rescore")
+    p.add_argument("--records", required=True)
+    p.add_argument("--out", required=True)
     p = sub.add_parser("compare")
     p.add_argument("--before", required=True)
     p.add_argument("--after", required=True)
     args = parser.parse_args(argv)
     {"freeze": cmd_freeze, "eval": cmd_eval, "collect": cmd_collect, "build": cmd_build,
-     "compare": cmd_compare}[args.command](args)
+     "compare": cmd_compare, "rescore": cmd_rescore}[args.command](args)
 
 
 if __name__ == "__main__":
