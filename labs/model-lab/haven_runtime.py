@@ -51,6 +51,8 @@ def start(lab, request):
         if not lab.llama_exe() or 'qwen35-4b' not in lab.settings['models']:
             raise ValueError('The fast 4B recovery runtime must already be prepared.')
         conn = dict(lab.connection or {})
+        if conn.get('ownership') == 'OWNED' and conn.get('compute') == 'cpu':
+            raise ValueError('Unload the owned CPU engine explicitly before starting a prepared GPU runtime. Its compute lane will not be changed silently.')
         if conn.get('ownership') == 'EXTERNAL' and not (
                 conn.get('kind') == 'strata' and conn.get('base') == 'http://127.0.0.1:8880/v1'):
             raise ValueError('Disconnect the unrelated external backend first. It will not be stopped.')

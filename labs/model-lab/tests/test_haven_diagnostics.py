@@ -125,6 +125,18 @@ class RuntimeTests(unittest.TestCase):
             with self.assertRaises(ValueError): runtime.start(self.fake_lab(), {'target': 'strata', 'command': 'anything'})
             lease.assert_not_called()
 
+    def test_prepared_gpu_switch_cannot_silently_replace_or_restore_cpu_lane(self):
+        lab = self.fake_lab(); lab.generation = threading.Lock()
+        lab.settings = {'models': {'qwen35-4b': {}}}
+        lab.engine.status.return_value = {'state': 'READY', 'pid': 123}
+        lab.connection = {'ownership': 'OWNED', 'compute': 'cpu', 'kind': 'llama'}
+        with patch.object(runtime.sys, 'platform', 'linux'), patch.object(gpu_lease, 'acquire') as admission:
+            for target in ('strata', 'fast4b'):
+                with self.assertRaisesRegex(ValueError, 'owned CPU'):
+                    runtime.start(lab, {'target': target})
+            admission.assert_not_called()
+        lab.stop_engine.assert_not_called()
+
 
 class DiagnosticTransportTests(unittest.TestCase):
     def test_native_tool_roundtrip_and_authenticated_disk_reconnect(self):

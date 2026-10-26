@@ -149,9 +149,9 @@ function applyState(s) {
   }
   runtimeControls.classList.toggle('hidden',auth.enabled&&auth.user?.role!=='admin');
   const runtime=s.prepared_runtime||{};
-  for(const target of ['strata','fast4b'])$('runtime-'+target).disabled=busy||benchRunning||!!runtime.switch_job||runtime.peer_busy===true;
+  for(const target of ['strata','fast4b'])$('runtime-'+target).disabled=busy||benchRunning||!!runtime.switch_job||runtime.peer_busy===true||s.connection?.compute==='cpu';
   $('diagnose-host').disabled=busy||benchRunning||switching||runtime.peer_busy===true||providerSelection!=='managed'||c.kind!=='llama'||c.ownership!=='OWNED';
-  $('runtime-note').textContent=runtime.peer_busy?'An engineering experiment has reserved the GPU. Your current job will be preserved.':runtime.switch_job?'Switching prepared runtimes. See Setup for progress or cancellation.':'Prepared models · no downloads · Strata cold startup can take about 15 minutes.';
+  $('runtime-note').textContent=runtime.peer_busy?'An engineering experiment has reserved the GPU. Your current job will be preserved.':runtime.switch_job?'Switching prepared runtimes. See Setup for progress or cancellation.':s.connection?.compute==='cpu'?'CPU inference is active. Unload it explicitly before starting a prepared GPU runtime.':'Prepared models · no downloads · Strata cold startup can take about 15 minutes.';
   $('install-note').textContent='Pinned Ubuntu CUDA runtime. SHA-256 verified; installed only in this lab. The NVIDIA driver is managed separately.';
   document.querySelector('footer span:last-child').textContent='Haven Core · Linux';
   document.querySelector('.strata-panel ol').classList.add('hidden');
