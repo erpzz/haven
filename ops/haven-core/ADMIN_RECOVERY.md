@@ -18,8 +18,8 @@ manual-started for the initial experiment. Run one GPU workload at a time.
 
 UFW now denies incoming traffic by default and permits SSH from the approved
 administration LAN. A new independent SSH connection passed before the timed
-rollback was cancelled. No inference port or router forward was opened. Mesh
-enrollment remains separate; do not assume a tailnet identity exists.
+rollback was cancelled. No inference port or router forward was opened. The Tailscale server client is installed but stopped until intended-owner
+account enrollment; do not assume a tailnet identity exists.
 
 Docker Engine and NVIDIA Container Toolkit use their official signed apt
 repositories, with separate `Signed-By` keyrings. Docker exposes its ordinary

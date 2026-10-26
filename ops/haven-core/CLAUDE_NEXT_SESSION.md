@@ -67,17 +67,18 @@ Linux path uses official release v0.2.6, Control 0.1.51 and signed engine 0.1.50
 The feed selected its CUDA 13 package, which explicitly includes sm_75 and passed
 its binary version check. A model-backed run remains to be completed.
 
-The ordinary-user `haven-strata-model` oneshot is downloading and preparing the
-68-GB IQ2_XS model with 8K context, one request, images off, MTP off, no browser
-and **no automatic model start**. Its bounded timeout is two hours; downloads
-retain resumable parts. Private paths and scoped environment are in the local
-appendix/log. Check that specific unit once, then continue from its actual result.
-Do not launch a second downloader, erase partial files, or run two GPU jobs.
+Both pinned IQ2_XS shards (68 GB total) are downloaded, SHA-256 verified and
+prepared. The native profile uses 8K context, one request, no vision/MTP/hooks,
+and the signed engine component. There is no need to download or hash them again.
 
-Next deliverable: start the prepared Strata backend on authenticated loopback,
-get one real short response, and attach it to the existing Model Lab as an
-external engine. Preserve process ownership: disconnecting the Lab must not kill
-external Strata. Keep its memory pressure and first-output latency visible.
+The finite `haven-strata-first-response` user unit is now running. It starts
+authenticated loopback Strata, attaches the Lab without sending the private
+credential to the browser, sends one short synthetic prompt, checks external
+process ownership, stops Strata and restores the fast 4B workspace. It is in its
+initial cold model load. Read that unit journal and its new private receipt under
+`~/.local/state/haven-admin/strata-first-response-*.json` before doing anything.
+Do not start a duplicate run or describe installation as successful inference.
+The receipt survives chat/usage interruption; its contents stay out of GitHub.
 
 ## Focused validation and continuation
 
@@ -90,10 +91,17 @@ For each change, exercise its affected path once and fix concrete failures.
 No model is promoted by a tiny synthetic suite. Do not tune against the frozen
 probes to manufacture a win. No GKD memory-gate override or 4B training occurred.
 
-Remaining administration: maintenance updates, restricted firewall/mesh access,
-container GPU support and a concise recovery/health procedure. Continue these
-only within the operator's handoff scope; inference ports stay on loopback, SSH
-stays recoverable, Docker access must not become unrestricted agent sudo.
+Administration completed: 27 maintenance upgrades, clean package audit,
+restricted UFW ingress with a fresh-SSH check and timed rollback, bounded
+persistent journals and a green private health timer. Docker/NVIDIA Container
+Toolkit installed from official signed repositories; a real ephemeral GPU
+container passed with no network, published ports or host mounts. No Docker
+group/passwordless-sudo grant was added. See `ADMIN_RECOVERY.md`.
+
+Tailscale server client is installed but stopped pending the intended owner's
+account enrollment; no tailnet/DNS/routes were guessed. LAN SSH remains the
+working administration path. Keep inference on loopback, preserve Mullvad and
+ordinary SSH recovery, and scope mesh access before enabling it.
 
 ## Peer handoff and checkpointing
 

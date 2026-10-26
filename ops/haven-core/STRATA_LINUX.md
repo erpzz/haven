@@ -7,9 +7,9 @@ Control archive, engine archive, feed and existing IQ2_XS model identity.
 
 Actual installation: Control 0.1.51 checksum/signature checks passed. Signed
 engine 0.1.50 was selected for Linux CUDA 13, explicitly including `sm_75`, and
-passed its binary version check. The model download/preparation is a separate
-ordinary-user job, with `--no-start`; model-backed qualification is recorded in
-the current handoff after that job finishes. Do not turn a binary check into a
+passed its binary version check. Both pinned model shards have now been downloaded, SHA-256 verified and
+prepared by a separate ordinary-user job with `--no-start`. The finite first
+response job is in progress; its result is recorded in the current handoff. Do not turn a binary check into a
 model-performance claim.
 
 ## Installation recipe already in use
@@ -91,3 +91,10 @@ profile/key; it does not remove drivers, modify firmware, expose ports or change
 the Windows installer. Preserve negative results and exact component pins.
 Do not describe a stopped HTTP stream as proof that a hybrid engine ceased work;
 use the owned service stop when confirmed process cessation is required.
+
+A finite first run can be requested explicitly with `first-strata-run.py --execute`
+only when the Lab is idle. It retains a new private receipt, checks one real
+response and external ownership, then stops Strata and restores the existing
+fast GGUF. `haven-strata-first-response` is its one-shot unit, not an enabled
+background benchmark or recurring job. Inspect an existing run before starting
+another.
