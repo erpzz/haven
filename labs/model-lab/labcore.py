@@ -781,7 +781,7 @@ class Lab:
                 j = self.new_job('generation')
                 j.update(provider_id=conn['provider_id'], worker_label=conn['worker_label'],
                          compute=conn.get('compute', 'gpu'), model_sha256=conn.get('model_sha256'),
-                         route_reason=conn['route_reason'])
+                         digest_provenance=conn.get('digest_provenance', 'LOCAL_ARTIFACT'), route_reason=conn['route_reason'])
             except Exception:
                 self.generation.release(); raise
         threading.Thread(target=self._generate_worker, args=(j, conn, args), daemon=True).start()
@@ -805,7 +805,11 @@ class Lab:
         try:
             if job.cancelled.is_set(): raise InterruptedError('Cancelled before send.')
             host, port = endpoint(backend['base'])
-            conn = http.client.HTTPConnection(host, port, timeout=240)
+            if backend.get('socket_path'):
+                from providers import PrivateWorkerConnection
+                conn = PrivateWorkerConnection(backend['socket_path'], timeout=240)
+            else:
+                conn = http.client.HTTPConnection(host, port, timeout=240)
             conn.connect(); sock = conn.sock
             with job.lock: job.sock = sock
             if job.cancelled.is_set(): raise InterruptedError('Cancelled before send.')

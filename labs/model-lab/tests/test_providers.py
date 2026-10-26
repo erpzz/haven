@@ -4,6 +4,7 @@ import http.client
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
+import socketserver
 from pathlib import Path
 import sys
 import tempfile
@@ -38,19 +39,25 @@ class WorkerFixture:
                           {'choices': [{'delta': {}, 'finish_reason': 'stop'}], 'usage': {'completion_tokens': 3, 'prompt_tokens': 8}}]
                 for obj in chunks: self.wfile.write(('data: ' + json.dumps(obj) + '\n\n').encode())
                 self.wfile.write(b'data: [DONE]\n\n')
-        self.server = ThreadingHTTPServer(('127.0.0.1', 0), Backend)
+        self.temp = tempfile.TemporaryDirectory()
+        self.socket_path = str(Path(self.temp.name) / 'worker.sock')
+        self.server = socketserver.ThreadingUnixStreamServer(self.socket_path, Backend)
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True); self.thread.start()
         return self
     def __exit__(self, *args):
-        self.server.shutdown(); self.server.server_close(); self.thread.join(3)
+        self.server.shutdown(); self.server.server_close(); self.thread.join(3); self.temp.cleanup()
     def enrollment(self, directory, **changes):
         row = {'id': 'test-worker', 'label': 'Synthetic worker', 'node_id': 'synthetic-node',
-               'base': f'http://127.0.0.1:{self.server.server_port}/v1', 'key': 'k' * 48,
+               'base': 'http://127.0.0.1:8890/v1', 'socket_path': str(Path(directory)/'providers/test-worker.sock'), 'key': 'k' * 48,
                'model': 'TEST_DOUBLE-worker', 'display_model': 'TEST_DOUBLE', 'kind': 'llama',
                'compute': 'cpu', 'model_sha256': 'a' * 64, 'max_context_tokens': 2048,
                'trust': 'OWNER_ENROLLED_SSH', 'allowed_roles': ['admin'], 'enrolled_at': 123}
         row.update(changes)
         path = Path(directory) / 'providers'; path.mkdir(mode=0o700, exist_ok=True)
+        sock = path / 'test-worker.sock'
+        if not sock.exists():
+            os.rename(self.socket_path, sock)
+            self.socket_path = str(sock)
         file = path / 'test-worker.json'; file.write_text(json.dumps(row)); file.chmod(0o600)
         return row, file
 
@@ -73,6 +80,26 @@ class RegistryTests(unittest.TestCase):
             if os.name != 'nt':
                 path.chmod(0o644)
                 with self.assertRaises(ValueError): Registry(folder)
+
+    def test_missing_ssh_socket_never_sends_key_to_replacement_tcp_listener(self):
+        with tempfile.TemporaryDirectory() as folder, WorkerFixture() as worker:
+            received = []
+            class Dummy(BaseHTTPRequestHandler):
+                def log_message(self, *args): pass
+                def do_GET(self):
+                    received.append(dict(self.headers)); self.send_response(200); self.end_headers()
+            dummy = ThreadingHTTPServer(('127.0.0.1', 0), Dummy)
+            thread = threading.Thread(target=dummy.serve_forever, daemon=True); thread.start()
+            try:
+                worker.enrollment(folder, base=f'http://127.0.0.1:{dummy.server_port}/v1')
+                Path(worker.socket_path).unlink()
+                registry = Registry(folder)
+                self.assertEqual(registry.probe('test-worker')['state'], 'OFFLINE')
+                with self.assertRaisesRegex(ValueError, 'OFFLINE'):
+                    registry.connection('test-worker')
+                self.assertEqual(received, [])
+            finally:
+                dummy.shutdown(); dummy.server_close(); thread.join(3)
 
     def test_explicit_offline_or_bad_auth_does_not_fallback(self):
         with tempfile.TemporaryDirectory() as folder, WorkerFixture() as worker:

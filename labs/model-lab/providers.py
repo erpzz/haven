@@ -12,11 +12,34 @@ import os
 from pathlib import Path
 import re
 import stat
+import socket
 import threading
 import time
 
 # Hosted route classes. Plan allowance only; a metered API class would be a separate, explicit addition.
 ROUTE_CLASSES = {'CLAUDE_CODE_PLAN': 'Anthropic', 'CHATGPT_PLAN': 'OpenAI'}
+
+
+class PrivateWorkerConnection(http.client.HTTPConnection):
+    """Connect through an owner-private SSH Unix socket, never a reusable TCP port."""
+    def __init__(self, path, timeout=2):
+        super().__init__('localhost', timeout=timeout)
+        self.path = Path(path)
+
+    def connect(self):
+        parent = self.path.parent.lstat()
+        info = self.path.lstat()
+        if (not stat.S_ISDIR(parent.st_mode) or parent.st_uid != os.getuid() or parent.st_mode & 0o077
+                or not stat.S_ISSOCK(info.st_mode) or info.st_uid != os.getuid()):
+            raise ValueError('Private SSH worker socket ownership is not verified.')
+        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        try:
+            sock.settimeout(self.timeout)
+            sock.connect(str(self.path))
+        except Exception:
+            sock.close()
+            raise
+        self.sock = sock
 
 
 class Registry:
@@ -43,7 +66,10 @@ class Registry:
             ident = row.get('id', '')
             if not isinstance(ident, str) or not re.fullmatch(r'[a-z][a-z0-9-]{2,47}', ident) or ident in ('managed', 'auto') or path.stem != ident:
                 raise ValueError('Invalid worker identifier.')
-            endpoint(row.get('base', ''))  # Literal IPv4 loopback, no query/redirect/DNS.
+            endpoint(row.get('base', ''))  # Retained API identity; transport is private Unix SSH.
+            sock = Path(row.get('socket_path', ''))
+            if not sock.is_absolute() or sock.parent.resolve() != self.path.resolve() or sock.name != ident + '.sock':
+                raise ValueError('Worker transport must be its private enrollment-directory SSH socket.')
             if row.get('trust') != 'OWNER_ENROLLED_SSH' or row.get('allowed_roles') != ['admin']:
                 raise ValueError('This first worker slice requires explicit owner-only SSH enrollment.')
             cloud = row.get('kind') == 'cloud'
@@ -76,7 +102,7 @@ class Registry:
             raise ValueError('Unknown enrolled worker.')
         host, port = endpoint(row['base'])
         began = time.monotonic()
-        conn = http.client.HTTPConnection(host, port, timeout=2)
+        conn = PrivateWorkerConnection(row['socket_path'], timeout=2)
         observed = {'checked_at': time.time(), 'state': 'OFFLINE', 'readiness': 'UNKNOWN', 'model_ids': []}
         try:
             conn.request('GET', '/v1/models', headers={'Authorization': 'Bearer ' + row['key']})
@@ -120,8 +146,9 @@ class Registry:
                     'kind', 'compute', 'model_sha256', 'max_context_tokens', 'trust', 'allowed_roles', 'route_class')})
                 rows[-1].update(observed=seen, locality='HOSTED_SUBSCRIPTION' if cloud else 'PRIVATE_SSH_WORKER',
                                 vendor=ROUTE_CLASSES.get(row.get('route_class')), automatic=not cloud,
-                                inventory_stage='INSTALLED',
-                                qualification='NOT_HAVEN_QUALIFIED', features={'text': True, 'streaming': True,
+                                inventory_stage='INSTALLED', qualification='NOT_HAVEN_QUALIFIED',
+                                digest_provenance='HOSTED_NOT_APPLICABLE' if cloud else 'WORKER_DECLARED',
+                                features={'text': True, 'streaming': True,
                                 'native_tools': 'DISABLED' if cloud else 'UNVERIFIED', 'vision': False,
                                 'cancellation': 'REQUEST_CLOSE_STOPS_CLI' if cloud else 'REQUEST_CLOSE_ONLY'},
                                 capabilities=row.get('capabilities', {}), current_resource_usage='UNAVAILABLE')
@@ -137,6 +164,7 @@ class Registry:
             row = dict(self.entries[ident])
         cloud = row['kind'] == 'cloud'
         return {'base': row['base'], 'key': row['key'], 'model': row['model'],
+                'socket_path': row['socket_path'], 'digest_provenance': 'HOSTED_NOT_APPLICABLE' if cloud else 'WORKER_DECLARED',
                 'display_model': row['display_model'], 'kind': row['kind'], 'ownership': 'EXTERNAL',
                 'provider_id': ident, 'worker_label': row['label'], 'node_id': row['node_id'],
                 'compute': row['compute'], 'model_sha256': row.get('model_sha256'), 'route_class': row.get('route_class'),

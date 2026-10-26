@@ -177,7 +177,14 @@ def pressure(commands):
     errors = run(['journalctl', '-k', '-b', '--no-pager', '-o', 'json', '--grep',
                   r'reset|disconnect|I/O error|uas.*error', '-n', '300'], commands)
     count = None
-    if errors is not None:
+    visible = run(['journalctl', '-k', '-b', '--no-pager', '-o', 'json', '-n', '1'], commands)
+    has_kernel_record = False
+    for line in (visible or '').splitlines():
+        try:
+            has_kernel_record |= isinstance(json.loads(line).get('MESSAGE'), str)
+        except (ValueError, AttributeError):
+            pass
+    if errors is not None and has_kernel_record:
         count = 0
         for line in errors.splitlines():
             try:
@@ -307,6 +314,7 @@ def completion(job, backend, messages, enabled, remaining):
         obj = json.loads(raw)
         choice = obj['choices'][0]
         if choice.get('finish_reason') == 'length':
+            job.update(partial_response=choice.get('message'), partial_usage=obj.get('usage', {}), finish_reason='length')
             raise ValueError('Diagnostic response reached its output limit; no automatic continuation.')
         return choice['message'], obj.get('usage', {})
     finally:

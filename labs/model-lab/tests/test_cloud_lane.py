@@ -3,11 +3,11 @@
 The fake executables replay the event shapes recorded from real Claude Code 2.1.310 and
 Codex 0.142.3 runs, including hostile variants (tools, API-key auth, paid overage).
 """
-import http.client
 import importlib.util
 import json
 import os
 from pathlib import Path
+import socketserver
 import sys
 import tempfile
 import textwrap
@@ -19,7 +19,7 @@ from unittest.mock import patch
 HERE = Path(__file__).resolve()
 sys.path.insert(0, str(HERE.parents[1]))
 from labcore import Lab
-from providers import Registry
+from providers import PrivateWorkerConnection, Registry
 
 spec = importlib.util.spec_from_file_location('cloud_worker', HERE.parents[3] / 'ops/haven-core/cloud-worker.py')
 cw = importlib.util.module_from_spec(spec); spec.loader.exec_module(cw)
@@ -62,25 +62,37 @@ def fake_cli(folder, name, events, sleep=0.0):
 
 
 class CloudWorker:
-    """The real cloud-worker HTTP handler on an ephemeral loopback port."""
+    """The real cloud-worker handler, reached as on Slink: the enrollment directory's private Unix socket.
+
+    In production that socket is an SSH reverse forward to the Mac's loopback port; here the handler binds it directly.
+    """
     def __init__(self, folder, lanes, cap=50):
         self.folder = Path(folder)
         self.state = self.folder / 'state'; self.state.mkdir(mode=0o700)
+        self.providers = self.folder / 'providers'; self.providers.mkdir(mode=0o700)
         self.patch = patch.object(cw, 'STATE', self.state); self.patch.start()
-        handler = cw.make_handler({'lanes': lanes, 'daily_cap': cap}, KEY, cw.Usage(cap), threading.Lock())
-        self.server = cw.ThreadingHTTPServer(('127.0.0.1', 0), handler)
-        self.thread = threading.Thread(target=self.server.serve_forever, daemon=True); self.thread.start()
+        self.handler = cw.make_handler({'lanes': lanes, 'daily_cap': cap}, KEY, cw.Usage(cap), threading.Lock())
+        self.servers = []
+    def socket(self, ident):
+        path = self.providers / (ident + '.sock')
+        if not path.exists():
+            server = socketserver.ThreadingUnixStreamServer(str(path), self.handler)
+            server.daemon_threads = True
+            thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
+            self.servers.append((server, thread))
+        return path
     def close(self):
-        self.server.shutdown(); self.server.server_close(); self.thread.join(3); self.patch.stop()
+        for server, thread in self.servers:
+            server.shutdown(); server.server_close(); thread.join(3)
+        self.patch.stop()
     def enroll(self, ident='cloud-claude-code', model='haven-claude-code', route='CLAUDE_CODE_PLAN', **changes):
         row = {'id': ident, 'label': 'Cloud · Claude Code', 'node_id': 'synthetic-node',
-               'base': f'http://127.0.0.1:{self.server.server_port}/v1', 'key': KEY, 'model': model,
+               'base': 'http://127.0.0.1:8891/v1', 'socket_path': str(self.socket(ident)), 'key': KEY, 'model': model,
                'display_model': 'TEST_DOUBLE cloud', 'kind': 'cloud', 'compute': 'hosted', 'route_class': route,
                'egress': 'HOSTED_SUBSCRIPTION', 'max_context_tokens': 32768, 'trust': 'OWNER_ENROLLED_SSH',
                'allowed_roles': ['admin'], 'enrolled_at': 123}
         row.update(changes)
-        path = self.folder / 'providers'; path.mkdir(mode=0o700, exist_ok=True)
-        file = path / (ident + '.json'); file.write_text(json.dumps(row)); file.chmod(0o600)
+        file = self.providers / (ident + '.json'); file.write_text(json.dumps(row)); file.chmod(0o600)
         return row
     def receipts(self):
         # The Lab finishes on [DONE]; the worker then writes its receipt and removes the turn directory.
@@ -259,7 +271,7 @@ class LaneTests(unittest.TestCase):
     def test_shim_rejects_bad_auth_and_non_streaming(self):
         self.lab_with(CLAUDE_OK)
         def post(headers, body):
-            c = http.client.HTTPConnection('127.0.0.1', self.worker.server.server_port, timeout=5)
+            c = PrivateWorkerConnection(self.worker.socket('cloud-claude-code'), timeout=5)
             c.request('POST', '/v1/chat/completions', json.dumps(body), headers); r = c.getresponse(); r.read(); c.close()
             return r.status
         body = {'model': 'haven-claude-code', 'stream': True, 'messages': [{'role': 'user', 'content': 'x'}]}

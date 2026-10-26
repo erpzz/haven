@@ -109,15 +109,20 @@ def enable():
 
 def enroll():
     prepare()
+    import shlex
+    remote_dir = "import os,pathlib; os.umask(0o077); p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700); print(p/'macbook-owner.sock')"
+    remote_socket = run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote_dir)).stdout.strip()
+    if not remote_socket.startswith('/') or '\n' in remote_socket:
+        raise ValueError('Invalid private remote socket path.')
     check = run(*SSH, '-S', str(SOCKET), '-O', 'check', 'haven', check=False)
     if check.returncode:
         if SOCKET.exists():
             raise ValueError('The dedicated SSH socket exists but is not live; inspect it rather than replacing it.')
         run(*SSH, '-fNT', '-M', '-S', str(SOCKET), '-o', 'ControlPersist=no',
             '-o', 'ExitOnForwardFailure=yes', '-o', 'ServerAliveInterval=30', '-o', 'ServerAliveCountMax=3',
-            '-R', '127.0.0.1:8890:127.0.0.1:8890', 'haven')
+            '-o', 'StreamLocalBindUnlink=yes', '-R', remote_socket + ':127.0.0.1:8890', 'haven')
     entry = {'id': 'macbook-owner', 'label': 'MacBook worker', 'node_id': (STATE / 'node-id').read_text().strip(),
-             'base': 'http://127.0.0.1:8890/v1', 'key': (STATE / 'api-key').read_text().strip(),
+             'base': 'http://127.0.0.1:8890/v1', 'socket_path': remote_socket, 'key': (STATE / 'api-key').read_text().strip(),
              'model': 'haven-mac-smollm2', 'display_model': 'SmolLM2 1.7B Instruct · Q4_K_M',
              'kind': 'llama', 'compute': 'metal', 'model_sha256': DIGEST, 'max_context_tokens': 2048,
              'trust': 'OWNER_ENROLLED_SSH', 'allowed_roles': ['admin'], 'enrolled_at': time.time(),

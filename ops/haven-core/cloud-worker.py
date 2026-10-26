@@ -5,7 +5,8 @@ Each request runs one finite CLI turn as the owner, on the owner's own plan, wit
 every tool, MCP server, plugin, skill and user setting disabled, in an empty
 private directory. No API key, credential file, browser session or undocumented
 endpoint is read. The process fails closed on any tool, API-key auth or paid
-overage it observes. Haven reaches it only through a dedicated reverse SSH tunnel.
+overage it observes. Haven reaches it only through a dedicated reverse SSH tunnel
+that terminates in a private Unix socket per lane on Slink, never a TCP port.
 """
 import argparse
 import hashlib
@@ -397,15 +398,28 @@ def enable():
 
 def enroll():
     config = prepare()
+    import shlex
     run = lambda *a, **k: subprocess.run(a, check=True, capture_output=True, text=True, **k)
-    if subprocess.run([*SSH, '-S', str(SOCKET), '-O', 'check', 'haven'], capture_output=True).returncode:
-        if SOCKET.exists():
-            raise ValueError('The dedicated SSH socket exists but is not live; inspect it rather than replacing it.')
+    idents = [ident.replace('haven-', 'cloud-') for ident in config['lanes']]
+    remote_dir = ("import os,pathlib; os.umask(0o077); p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; "
+                  "p.mkdir(parents=True,exist_ok=True,mode=0o700); print(p)")
+    providers = run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote_dir)).stdout.strip()
+    if not providers.startswith('/') or '\n' in providers:
+        raise ValueError('Invalid private remote enrollment directory.')
+    # Replace only our own tunnel so its forwards always match the configured lanes.
+    if subprocess.run([*SSH, '-S', str(SOCKET), '-O', 'check', 'haven'], capture_output=True).returncode == 0:
+        run(*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven')
+    elif SOCKET.exists():
+        raise ValueError('The dedicated SSH socket exists but is not live; inspect it rather than replacing it.')
+    forwards = [arg for ident in idents for arg in ('-R', f'{providers}/{ident}.sock:127.0.0.1:{PORT}')]
+    if forwards:
         run(*SSH, '-fNT', '-M', '-S', str(SOCKET), '-o', 'ControlPersist=no', '-o', 'ExitOnForwardFailure=yes',
-            '-o', 'ServerAliveInterval=30', '-o', 'ServerAliveCountMax=3', '-R', f'127.0.0.1:{PORT}:127.0.0.1:{PORT}', 'haven')
+            '-o', 'ServerAliveInterval=30', '-o', 'ServerAliveCountMax=3', '-o', 'StreamLocalBindUnlink=yes',
+            *forwards, 'haven')
     node, key = (STATE / 'node-id').read_text().strip(), (STATE / 'api-key').read_text().strip()
     entries = [{'id': ident.replace('haven-', 'cloud-'), 'label': LANES[ident]['label'], 'node_id': node,
-                'base': f'http://127.0.0.1:{PORT}/v1', 'key': key, 'model': ident,
+                'base': f'http://127.0.0.1:{PORT}/v1', 'socket_path': f"{providers}/{ident.replace('haven-', 'cloud-')}.sock",
+                'key': key, 'model': ident,
                 'display_model': LANES[ident]['label'].split(' · ')[1] + ' (' + LANES[ident]['vendor'] + ')',
                 'kind': 'cloud', 'compute': 'hosted', 'route_class': LANES[ident]['route_class'],
                 'vendor': LANES[ident]['vendor'], 'egress': 'HOSTED_SUBSCRIPTION', 'max_context_tokens': 32768,
@@ -414,13 +428,12 @@ def enroll():
                for ident in config['lanes']]
     # Secrets travel over host-verified SSH stdin, never argv or a printed link. Only our own files are replaced.
     remote = ("import sys,json,os,pathlib,tempfile; os.umask(0o077); rows=json.load(sys.stdin); "
-              "p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700)\n"
+              "p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'\n"
               "for name in ('cloud-claude-code','cloud-codex-cli'):\n"
               "    f=p/(name+'.json')\n"
               "    if f.exists() and name not in [r['id'] for r in rows]: f.unlink()\n"
               "for d in rows:\n"
               "    fd,n=tempfile.mkstemp(prefix='.enroll-',dir=p); f=os.fdopen(fd,'w'); json.dump(d,f); f.close(); os.replace(n,p/(d['id']+'.json'))")
-    import shlex
     run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote), input=json.dumps(entries))
     print('Enrolled on Slink:', ', '.join(e['id'] for e in entries) or 'no lanes',
           '- refresh workers in Haven. Nothing was sent to a cloud model.')
