@@ -573,7 +573,9 @@ class Lab:
                     device: str = 'gpu') -> str:
         with self.lock:
             if self.connection and self.connection.get('ownership') == 'EXTERNAL':
-                raise ValueError('Disconnect and stop the external backend first; the lab will not kill it.')
+                raise ValueError('Disconnect the external backend first; the lab will not kill it.')
+            if self.engine.proc is not None:
+                raise ValueError('Unload the current managed engine before choosing CPU or GPU. External agents are untouched.')
             if not self.generation.acquire(False): raise ValueError('A request is active.')
             self.generation.release()
             if device not in ('cpu', 'gpu'): raise ValueError('Invalid inference device; choose cpu or gpu.')
