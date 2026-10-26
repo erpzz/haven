@@ -71,14 +71,17 @@ Both pinned IQ2_XS shards (68 GB total) are downloaded, SHA-256 verified and
 prepared. The native profile uses 8K context, one request, no vision/MTP/hooks,
 and the signed engine component. There is no need to download or hash them again.
 
-The finite `haven-strata-first-response` user unit is now running. It starts
-authenticated loopback Strata, attaches the Lab without sending the private
-credential to the browser, sends one short synthetic prompt, checks external
-process ownership, stops Strata and restores the fast 4B workspace. It is in its
-initial cold model load. Read that unit journal and its new private receipt under
-`~/.local/state/haven-admin/strata-first-response-*.json` before doing anything.
-Do not start a duplicate run or describe installation as successful inference.
-The receipt survives chat/usage interruption; its contents stay out of GitHub.
+The finite first-response job completed. Authenticated Strata generated a real
+27-token answer through the existing Lab, with 0.834-second first output and
+27.7 backend decode tokens/second. Unauthenticated chat returned 401. Disconnect
+left the external service running; its explicit owned stop succeeded and the
+existing fast 4B model was restored. See the [sanitized receipt](linux-strata-result-20261026.json).
+
+The cold service start took 868 seconds before API readiness, including 836
+seconds reading experts. This dominates first startup. One short response is not
+a quality/sustained-speed benchmark. Strata stays stopped for normal operation;
+its prepared model remains available. No need to repeat the cold run to confirm
+this handoff. Private raw output is in the local first-response receipt.
 
 ## Focused validation and continuation
 
@@ -102,6 +105,20 @@ Tailscale server client is installed but stopped pending the intended owner's
 account enrollment; no tailnet/DNS/routes were guessed. LAN SSH remains the
 working administration path. Keep inference on loopback, preserve Mullvad and
 ordinary SSH recovery, and scope mesh access before enabling it.
+
+## Next useful engineering slice
+
+Add one explicit switch between the **prepared** fast 4B model and Strata in the
+existing Model Lab. The current Linux button attaches already-running Strata;
+starting/stopping its prepared user service still uses the command line. Reuse
+Lab jobs for visible startup/progress/cancellation, keep service names/argv fixed,
+and keep keys on the server. Stop only the known Haven service when switching
+back; preserve the external-backend ownership contract. No new driver, model
+download, framework, training or architecture study is needed.
+
+Use a fresh owned branch from PR #36. One actual 4B -> Strata -> 4B cycle with a
+short answer and cleanup is enough acceptance for that feature. Read the saved
+receipts instead of repeating package/GPU audits or the tiny training pilot.
 
 ## Peer handoff and checkpointing
 

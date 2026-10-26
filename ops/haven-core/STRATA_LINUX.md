@@ -9,7 +9,8 @@ Actual installation: Control 0.1.51 checksum/signature checks passed. Signed
 engine 0.1.50 was selected for Linux CUDA 13, explicitly including `sm_75`, and
 passed its binary version check. Both pinned model shards have now been downloaded, SHA-256 verified and
 prepared by a separate ordinary-user job with `--no-start`. The finite first
-response job is in progress; its result is recorded in the current handoff. Do not turn a binary check into a
+response job completed, including authentication, external ownership, stop and
+fast-model restoration; see the [sanitized result](linux-strata-result-20261026.json). Do not turn a binary check into a
 model-performance claim.
 
 ## Installation recipe already in use

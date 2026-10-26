@@ -143,7 +143,7 @@ def main():
             ['systemctl', '--user', 'is-active', '--quiet', 'haven-strata']).returncode == 0
         if not report['external_service_after_disconnect']:
             raise RuntimeError('The external service did not remain active after disconnect.')
-        report['status'] = 'COMPLETED'
+        report['response_status'] = 'COMPLETED'
     except Exception as error:
         report['status'] = 'FAILED'
         report['error'] = type(error).__name__ + ': ' + str(error)[:700]
@@ -160,6 +160,8 @@ def main():
                 report['fast_model_restore'] = control('load', 'qwen35-4b', '--wait', '--timeout', '180')
             except Exception as error:
                 report['restore_error'] = str(error)[:700]
+        if report.get('response_status') == 'COMPLETED':
+            report['status'] = 'FAILED' if report.get('restore_error') else 'COMPLETED'
         save('FINISHED')
     return 0 if report['status'] == 'COMPLETED' else 1
 

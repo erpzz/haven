@@ -1,0 +1,52 @@
+{
+  "schema": "haven-linux-strata-summary-1",
+  "executed_on_utc": "2026-10-26",
+  "status": "COMPLETED",
+  "release": "v0.2.6",
+  "control": "0.1.51",
+  "engine": "0.1.50",
+  "engine_variant": "linux-x86_64-cuda13",
+  "model": "Qwen3.8-Flash-Next IQ2_XS",
+  "pins": "strata-linux-pins.json",
+  "configuration": {
+    "context": 8192,
+    "parallel": 1,
+    "vision": false,
+    "mtp": false,
+    "authentication": true,
+    "listener": "loopback only"
+  },
+  "execution": {
+    "cold_service_start_to_ready_seconds": 868,
+    "expert_load_gib": 33.02,
+    "expert_load_seconds": 836,
+    "response_state": "COMPLETED",
+    "finish_reason": "stop",
+    "metrics": {
+      "elapsed_seconds": 1.7635,
+      "ttft_seconds": 0.8341,
+      "completion_tokens": 27,
+      "prompt_tokens": 25,
+      "backend_decode_tps": 27.7,
+      "backend_prompt_seconds": 0.782,
+      "backend_decode_seconds": 0.9755,
+      "end_to_end_tps": 15.31,
+      "stream_chunks": 26,
+      "usage_source": "BACKEND_REPORTED",
+      "timings_source": "BACKEND_REPORTED",
+      "note": "Stream chunks are NOT tokens. End-to-end throughput includes prefill; decode rate is separate."
+    },
+    "unauthenticated_chat_status": 401,
+    "external_process_survived_lab_disconnect": true,
+    "strata_stopped_after_run": true,
+    "fast_4b_restored": true,
+    "memory_peak_gib_rounded": 54,
+    "swap_peak_bytes": 0
+  },
+  "limits": [
+    "One short synthetic response; no general quality or sustained throughput qualification.",
+    "Cold model loading is separate from response time; storage performance materially affects it.",
+    "Raw prompts, responses, credentials, runtime paths and machine inventory are excluded.",
+    "No cloud inference, paid API, GKD run or training of this large model was performed."
+  ]
+}
