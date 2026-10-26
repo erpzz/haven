@@ -2,6 +2,9 @@
 
 Registration files are private administrator input, not model output. A model
 cannot enroll workers, choose URLs, rotate credentials or widen an audience.
+
+A `cloud` enrollment is the owner's own Claude Code / Codex plan reached through a
+loopback tunnel. It is hosted egress: explicit selection only, never Automatic.
 """
 import http.client
 import json
@@ -11,6 +14,9 @@ import re
 import stat
 import threading
 import time
+
+# Hosted route classes. Plan allowance only; a metered API class would be a separate, explicit addition.
+ROUTE_CLASSES = {'CLAUDE_CODE_PLAN': 'Anthropic', 'CHATGPT_PLAN': 'OpenAI'}
 
 
 class Registry:
@@ -40,14 +46,19 @@ class Registry:
             endpoint(row.get('base', ''))  # Literal IPv4 loopback, no query/redirect/DNS.
             if row.get('trust') != 'OWNER_ENROLLED_SSH' or row.get('allowed_roles') != ['admin']:
                 raise ValueError('This first worker slice requires explicit owner-only SSH enrollment.')
-            if row.get('kind') != 'llama' or row.get('compute') not in ('metal', 'cpu', 'cuda'):
+            cloud = row.get('kind') == 'cloud'
+            if cloud:
+                if (row.get('compute') != 'hosted' or row.get('egress') != 'HOSTED_SUBSCRIPTION' or
+                        row.get('route_class') not in ROUTE_CLASSES or 'model_sha256' in row):
+                    raise ValueError('A cloud lane must declare hosted subscription egress and its route class.')
+            elif row.get('kind') != 'llama' or row.get('compute') not in ('metal', 'cpu', 'cuda'):
                 raise ValueError('Unsupported worker backend contract.')
             for field in ('label', 'node_id', 'model', 'display_model'):
                 if not isinstance(row.get(field), str) or not 1 <= len(row[field]) <= 160 or any(ord(c) < 32 for c in row[field]):
                     raise ValueError('Invalid worker metadata.')
             if not re.fullmatch(r'[A-Za-z0-9_-]{32,256}', row.get('key', '')):
                 raise ValueError('A private worker credential is required.')
-            if not re.fullmatch(r'[0-9a-f]{64}', row.get('model_sha256', '')):
+            if not cloud and not re.fullmatch(r'[0-9a-f]{64}', row.get('model_sha256', '')):
                 raise ValueError('An exact installed-model digest is required.')
             if type(row.get('max_context_tokens')) is not int or not 512 <= row['max_context_tokens'] <= 32768:
                 raise ValueError('A bounded worker context is required.')
@@ -104,11 +115,15 @@ class Registry:
                 # Metadata is deliberately marked stale; GET never runs inference or starts a tunnel.
                 if seen.get('checked_at', 0) < time.time() - 30:
                     seen.update(state='STALE' if 'checked_at' in seen else 'UNKNOWN', readiness='UNKNOWN')
-                rows.append({k: row[k] for k in ('id', 'label', 'node_id', 'model', 'display_model',
-                    'kind', 'compute', 'model_sha256', 'max_context_tokens', 'trust', 'allowed_roles')})
-                rows[-1].update(observed=seen, locality='PRIVATE_SSH_WORKER', inventory_stage='INSTALLED',
+                cloud = row['kind'] == 'cloud'
+                rows.append({k: row.get(k) for k in ('id', 'label', 'node_id', 'model', 'display_model',
+                    'kind', 'compute', 'model_sha256', 'max_context_tokens', 'trust', 'allowed_roles', 'route_class')})
+                rows[-1].update(observed=seen, locality='HOSTED_SUBSCRIPTION' if cloud else 'PRIVATE_SSH_WORKER',
+                                vendor=ROUTE_CLASSES.get(row.get('route_class')), automatic=not cloud,
+                                inventory_stage='INSTALLED',
                                 qualification='NOT_HAVEN_QUALIFIED', features={'text': True, 'streaming': True,
-                                'native_tools': 'UNVERIFIED', 'vision': False, 'cancellation': 'REQUEST_CLOSE_ONLY'},
+                                'native_tools': 'DISABLED' if cloud else 'UNVERIFIED', 'vision': False,
+                                'cancellation': 'REQUEST_CLOSE_STOPS_CLI' if cloud else 'REQUEST_CLOSE_ONLY'},
                                 capabilities=row.get('capabilities', {}), current_resource_usage='UNAVAILABLE')
             return rows
 
@@ -120,12 +135,18 @@ class Registry:
             if self.observed.get(ident) is not seen:
                 raise ValueError('Worker enrollment changed during authentication; no request was sent.')
             row = dict(self.entries[ident])
+        cloud = row['kind'] == 'cloud'
         return {'base': row['base'], 'key': row['key'], 'model': row['model'],
                 'display_model': row['display_model'], 'kind': row['kind'], 'ownership': 'EXTERNAL',
                 'provider_id': ident, 'worker_label': row['label'], 'node_id': row['node_id'],
-                'compute': row['compute'], 'model_sha256': row['model_sha256'],
-                'profile': {'context': row['max_context_tokens']}, 'connected_at': row.get('enrolled_at', 0),
-                'route_reason': 'Explicit owner-enrolled private worker; no hosted egress.'}
+                'compute': row['compute'], 'model_sha256': row.get('model_sha256'), 'route_class': row.get('route_class'),
+                'profile': {'context': row['max_context_tokens'], 'max_output_tokens': 4096 if cloud else 1024,
+                            'max_messages': 40 if cloud else 8},
+                'connected_at': row.get('enrolled_at', 0),
+                'route_reason': (f"Explicit cloud lane: this conversation left the house to {ROUTE_CLASSES[row['route_class']]} "
+                                 f"under your own plan ({row['route_class']}). No tools, no API billing; "
+                                 'temperature/seed are not applied.') if cloud else
+                                'Explicit owner-enrolled private worker; no hosted egress.'}
 
     def choose(self, requested, managed, *, managed_ready):
         if requested == 'managed':
@@ -138,7 +159,8 @@ class Registry:
             return {**managed, 'provider_id': 'managed', 'worker_label': 'Slink',
                     'route_reason': 'Automatic: already-ready Slink compact model; no load or external egress.'}
         with self.lock:
-            ids = sorted(self.entries)
+            # Hosted egress is never an automatic choice.
+            ids = sorted(i for i, row in self.entries.items() if row.get('kind') != 'cloud')
         for ident in ids:
             try:
                 conn = self.connection(ident)

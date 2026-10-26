@@ -83,17 +83,18 @@ document.querySelectorAll('[data-view]').forEach(n=>n.onclick=()=>go(n.dataset.v
 function metric(id,value,unit) { const n=$(id); n.replaceChildren(document.createTextNode(value==null?'—':value)); n.append(element('small','',unit)); }
 function rate(value) { return typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'—'; }
 let providerSelection=sessionStorage.getItem('haven-provider')||'managed', providerProbeBusy=false, providerProbeAt=0;
+const cloudProvider=(s,id)=>(s?.providers||[]).find(p=>p.id===id&&p.kind==='cloud');
 function selectedConnection(s){
  if(providerSelection==='managed')return s.connection;
  if(providerSelection==='auto'&&s.connection?.base&&(!s.prepared_runtime?.peer_busy||s.connection.compute==='cpu')&&s.connection.kind==='llama')return s.connection;
- const p=providerSelection==='auto'?(s.providers||[]).find(x=>x.observed.state==='READY'):(s.providers||[]).find(x=>x.id===providerSelection);
+ const p=providerSelection==='auto'?(s.providers||[]).find(x=>x.observed.state==='READY'&&x.automatic!==false):(s.providers||[]).find(x=>x.id===providerSelection);
  return p?{base:'provider:'+p.id,kind:p.kind,ownership:'EXTERNAL',model:p.model,display_model:p.display_model,compute:p.compute,worker_label:p.label,connected_at:p.id}:{};
 }
 function setProvider(value){
  if(busy||benchRunning){toast('Finish or stop the current request before changing workers.');return;}
  providerSelection=value;sessionStorage.setItem('haven-provider',value);lastModelSignature='';
  if(messages.length)clearChat();
- if(value!=='managed'&&Number($('max-tokens').value)>1024){$('max-tokens').value='512';toast('Short-context worker selected: output limit set to 512 tokens.');}
+ if(value!=='managed'&&!cloudProvider(state,value)&&Number($('max-tokens').value)>1024){$('max-tokens').value='512';toast('Short-context worker selected: output limit set to 512 tokens.');}
  if(state)applyState(state);
 }
 function providerControls(s){
@@ -106,10 +107,11 @@ function providerControls(s){
   const button=element('button','secondary','Refresh workers');button.id='provider-refresh';button.onclick=async()=>{try{await api('/api/providers/reload',{});await api('/api/providers/probe',{});await refresh();}catch(e){toast(e.message,true);}};box.append(button);
   document.querySelector('.card-heading').after(box);select.onchange=()=>setProvider(select.value);
  }
- const select=$('provider-select');const rows=[{id:'managed',label:`Slink · ${s.connection?.compute==='cpu'?'CPU':s.connection?.kind==='strata'?'Strata':'GPU'} · current runtime`},{id:'auto',label:'Automatic · ready private worker'},...(s.providers||[]).map(p=>({id:p.id,label:`${p.label} · ${p.compute.toUpperCase()} · ${p.display_model} · ${p.observed.state}`}))];
+ const select=$('provider-select');const rows=[{id:'managed',label:`Slink · ${s.connection?.compute==='cpu'?'CPU':s.connection?.kind==='strata'?'Strata':'GPU'} · current runtime`},{id:'auto',label:'Automatic · ready private worker'},...(s.providers||[]).map(p=>({id:p.id,label:p.kind==='cloud'?`☁ ${p.label} · leaves this house · ${p.observed.state}`:`${p.label} · ${p.compute.toUpperCase()} · ${p.display_model} · ${p.observed.state}`}))];
  const signature=JSON.stringify(rows);if(select.dataset.signature!==signature){select.replaceChildren(...rows.map(p=>{const o=element('option','',p.label);o.value=p.id;return o;}));select.dataset.signature=signature;}
  select.value=providerSelection;select.disabled=busy||benchRunning;
- $('provider-note').textContent=providerSelection==='managed'?'Using the current Slink runtime. CPU/GPU loading is available in Model library.':providerSelection==='auto'?'Uses an already-ready private worker. No model starts, downloads, paid calls or cloud fallback. The actual worker is shown with each result.':'Inference runs on the selected machine. The cards above measure Slink, the control host. New worker selections start a fresh conversation.';
+ const cloud=cloudProvider(s,providerSelection);$('provider-note').style.color=cloud?'var(--warn)':'';
+ $('provider-note').textContent=cloud?`Leaves this house: every turn of this conversation is sent to ${cloud.vendor} through your own plan (${cloud.route_class}). No tools, files or Haven memory; never chosen by Automatic; no paid API fallback.`:providerSelection==='managed'?'Using the current Slink runtime. CPU/GPU loading is available in Model library.':providerSelection==='auto'?'Uses an already-ready private worker. No model starts, downloads, paid calls or cloud fallback. The actual worker is shown with each result.':'Inference runs on the selected machine. The cards above measure Slink, the control host. New worker selections start a fresh conversation.';
  $('provider-refresh').disabled=providerProbeBusy||busy;
  if((s.providers||[]).length&&!providerProbeBusy&&Date.now()>providerProbeAt){providerProbeBusy=true;providerProbeAt=Date.now()+30000;api('/api/providers/probe',{}).then(()=>refresh()).catch(()=>{}).finally(()=>{providerProbeBusy=false;});}
 }

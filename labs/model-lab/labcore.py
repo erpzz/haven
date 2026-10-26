@@ -35,6 +35,13 @@ MIB = 1024 ** 2
 MAX_JSON = 1024 ** 2
 ROOT = Path(__file__).resolve().parent
 
+# Status meanings fixed by ops/haven-core/cloud-worker.py; its free-text bodies are never shown.
+CLOUD_REFUSALS = {402: 'Cloud lane refused: the CLI would bill an API key instead of your plan.',
+                  429: 'Cloud lane refused: plan limit, daily cap or another turn in progress.',
+                  502: 'Cloud lane stopped: the CLI attempted a tool or reported an error.',
+                  504: 'Cloud lane timed out.'}
+
+
 def read_json(path: Path, fallback):
     try:
         return json.loads(path.read_text('utf-8'))
@@ -760,11 +767,13 @@ class Lab:
                 raise ValueError('Slink runtime changed during routing. No request was sent.')
             if conn['provider_id'] != 'managed' and args['reasoning'] != 'none':
                 raise ValueError('This worker has not verified reasoning controls; select Off / direct answer.')
-            if conn['provider_id'] != 'managed' and args['max_tokens'] > 1024:
-                raise ValueError('This small worker permits at most 1024 output tokens; its total context is 2048.')
-            if conn['provider_id'] != 'managed' and (len(args['messages']) > 8 or
-                    sum(len(m['content'].encode()) + 64 for m in args['messages']) + args['max_tokens'] + 128 > conn['profile']['context']):
-                raise ValueError('This short-context worker needs a shorter conversation or output limit. No text was truncated or sent.')
+            limit = conn.get('profile') or {}
+            if conn['provider_id'] != 'managed' and args['max_tokens'] > limit.get('max_output_tokens', 1024):
+                raise ValueError(f"This worker permits at most {limit.get('max_output_tokens', 1024)} output tokens; "
+                                 f"its total context is {limit.get('context')}.")
+            if conn['provider_id'] != 'managed' and (len(args['messages']) > limit.get('max_messages', 8) or
+                    sum(len(m['content'].encode()) + 64 for m in args['messages']) + args['max_tokens'] + 128 > limit['context']):
+                raise ValueError('This worker needs a shorter conversation or output limit. No text was truncated or sent.')
             if args['benchmark'] and args['expected_connected_at'] is not None and args['expected_connected_at'] != conn['connected_at']:
                 raise ValueError('Benchmark backend changed. Start a new experiment for this connection.')
             if not self.generation.acquire(False): raise ValueError('One request at a time on this GPU. Cancel or wait for the active request.')
@@ -807,6 +816,9 @@ class Lab:
             r = conn.getresponse()
             if r.status != 200:
                 # Keep backend-generated bodies out of logs; error text could contain prompts/secrets.
+                if backend['kind'] == 'cloud':
+                    raise ValueError(CLOUD_REFUSALS.get(r.status, f'Cloud lane HTTP {r.status}.') +
+                                     ' Nothing was retried or billed; see the Mac cloud-worker receipts.')
                 raise ValueError(f'Backend HTTP {r.status}. Check the backend console and context settings. No automatic retry.')
             if 'text/event-stream' not in r.getheader('Content-Type', ''):
                 raise ValueError('Backend did not return an SSE stream.')
@@ -823,7 +835,9 @@ class Lab:
                 payload = '\n'.join(buffer); buffer.clear()
                 if payload == '[DONE]': finished = True; break
                 obj = json.loads(payload)
-                if obj.get('error'): raise ValueError('Backend reported a stream error.')
+                if obj.get('error'):
+                    raise ValueError('Cloud lane stopped the turn (tool, plan limit or CLI error); partial output retained.'
+                                     if backend['kind'] == 'cloud' else 'Backend reported a stream error.')
                 if isinstance(obj.get('usage'), dict): usage = obj['usage']
                 if isinstance(obj.get('timings'), dict): timings = obj['timings']
                 choices = obj.get('choices') or []
