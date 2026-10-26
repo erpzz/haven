@@ -148,7 +148,7 @@ class Server(ThreadingHTTPServer):
         if user['role'] != 'admin':
             state.pop('data_dir', None)
             engine = state.get('engine') or {}
-            state['engine'] = {k: engine.get(k) for k in ('state', 'ownership', 'label', 'started_at', 'stopped_at') if k in engine}
+            state['engine'] = {k: engine.get(k) for k in ('state', 'ownership', 'label', 'compute', 'started_at', 'stopped_at') if k in engine}
         return state
 
     def login_allowed(self, peer: str) -> bool:
