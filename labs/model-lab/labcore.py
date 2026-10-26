@@ -162,8 +162,12 @@ PRESETS = {
     'gpu': {'label': 'GPU-first CUDA', 'context': 4096, 'threads': 8, 'batch': 512, 'ubatch': 256, 'kv': 'f16', 'flash': 'auto'},
     'memory': {'label': 'Quantized KV experiment', 'context': 8192, 'threads': 8, 'batch': 256, 'ubatch': 128, 'kv': 'q8_0', 'flash': 'on'},
 }
+# Separate constrained CPU profile; it does not request CUDA or silently replace failed GPU launches.
+CPU_PROFILE = {'label': 'CPU-only / GPU available to other agents', 'context': 4096,
+               'threads': 6, 'batch': 128, 'ubatch': 64, 'kv': 'f16', 'flash': 'off'}
 
-def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: dict, gpu: int = 0) -> list[str]:
+def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: dict, gpu: int = 0,
+                  device: str = 'gpu') -> list[str]:
     context = bounded_int(profile.get('context', 4096), 512, 32768, 'Context')
     threads = bounded_int(profile.get('threads', 8), 1, 24, 'Threads')
     batch = bounded_int(profile.get('batch', 512), 32, 2048, 'Batch')
@@ -173,13 +177,26 @@ def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: di
         raise ValueError('Unsupported cache or flash attention option.')
     if kv != 'f16' and flash != 'on':
         raise ValueError('The quantized KV experiment requires flash attention on.')
+    if device not in ('cpu', 'gpu'): raise ValueError('Choose CPU-only or GPU CUDA inference.')
     bounded_int(gpu, 0, 15, 'GPU index'); bounded_int(port, 1024, 65535, 'Port')
-    return [str(exe), '--model', str(model), '--host', '127.0.0.1', '--port', str(port),
-            '--api-key-file', str(key_file), '--alias', 'haven-local', '--n-gpu-layers', '999',
-            '--device', f'CUDA{gpu}', '--ctx-size', str(context), '--parallel', '1', '--threads', str(threads),
-            '--threads-batch', str(threads), '--batch-size', str(batch), '--ubatch-size', str(ubatch),
-            '--flash-attn', flash, '--cache-type-k', kv, '--cache-type-v', kv, '--jinja', '--metrics',
-            '--log-verbosity', '4']
+    args = [str(exe), '--model', str(model), '--host', '127.0.0.1', '--port', str(port),
+            '--api-key-file', str(key_file), '--alias', 'haven-local',
+            '--n-gpu-layers', '0' if device == 'cpu' else '999']
+    if device == 'gpu':
+        args.extend(['--device', f'CUDA{gpu}'])
+    args.extend(['--ctx-size', str(context), '--parallel', '1', '--threads', str(threads),
+                 '--threads-batch', str(threads), '--batch-size', str(batch), '--ubatch-size', str(ubatch),
+                 '--flash-attn', flash, '--cache-type-k', kv, '--cache-type-v', kv, '--jinja', '--metrics',
+                 '--log-verbosity', '4'])
+    return args
+
+def estimate_cpu_fit(model_bytes: int, available_gib: float | None, context: int) -> dict:
+    # Conservative startup guard. Not a GGUF memory profiler; evaluate live RSS after launch.
+    required = model_bytes / GIB + max(1.5, context / 4096) + 8
+    return {'estimated_required_gib': round(required, 2), 'available_gib': available_gib,
+            'status': 'UNKNOWN' if available_gib is None else
+                      ('LIKELY_FITS' if available_gib >= required else 'INSUFFICIENT'),
+            'basis': 'Heuristic: GGUF size + context/scratch allowance + 8 GiB other-workload reserve.'}
 
 def estimate_fit(model_bytes: int, free_mib: float | None, context: int) -> dict:
     # Not a GGUF architecture parser. Explicitly a conservative planning heuristic.
@@ -552,43 +569,66 @@ class Lab:
                 raise ValueError('Backend ownership changed while connecting; finish or unload it first.')
             self.connection = conn
         return {k: v for k, v in conn.items() if k != 'key'}
-    def start_llama(self, model_id: str, preset: str, overrides=None, allow_tight: bool = False) -> str:
+    def start_llama(self, model_id: str, preset: str, overrides=None, allow_tight: bool = False,
+                    device: str = 'gpu') -> str:
         with self.lock:
             if self.connection and self.connection.get('ownership') == 'EXTERNAL':
-                raise ValueError('Disconnect and stop the external backend first; the lab will not kill it.')
+                raise ValueError('Disconnect the external backend first; the lab will not kill it.')
+            if self.engine.proc is not None:
+                raise ValueError('Unload the current managed engine before choosing CPU or GPU. External agents are untouched.')
             if not self.generation.acquire(False): raise ValueError('A request is active.')
             self.generation.release()
+            if device not in ('cpu', 'gpu'): raise ValueError('Invalid inference device; choose cpu or gpu.')
             exe = self.llama_exe()
-            if not exe: raise ValueError('Install the CUDA engine first.')
+            if not exe: raise ValueError('Install the existing llama.cpp engine first.')
             item = self.settings['models'].get(model_id)
             if not item or not Path(item['path']).is_file(): raise ValueError('Download or import the model first.')
             if preset not in PRESETS: raise ValueError('Unknown preset.')
-            profile = dict(PRESETS[preset]); profile.update(overrides or {})
-            gpu = 0
-            self.hw_at = 0  # A just-unloaded model must not leave the fit gate using cached VRAM.
+            if overrides is not None and not isinstance(overrides, dict): raise ValueError('Invalid profile overrides.')
+            profile = dict(CPU_PROFILE if device == 'cpu' else PRESETS[preset])
+            profile.update(overrides or {})
+            self.hw_at = 0  # New launch must use freshly sampled memory/VRAM, not cached telemetry.
             hw = self.get_hardware()
-            if not hw['gpus']: raise ValueError('NVIDIA GPU was not detected. Check your driver; CPU fallback is not silently enabled.')
-            first = hw['gpus'][0]; gpu = first['index']
-            fit = estimate_fit(item['size_bytes'], first['memory_free_mib'], profile['context'])
-            if fit['status'] != 'LIKELY_FITS' and not allow_tight:
-                raise ValueError('This configuration is tight for current free VRAM. Try a 4B model/shorter context, or explicitly enable the memory-risk experiment.')
+            gpu = 0
+            if device == 'gpu':
+                if not hw['gpus']:
+                    raise ValueError('NVIDIA GPU was not detected. Select CPU-only explicitly; no silent fallback.')
+                first = hw['gpus'][0]; gpu = first['index']
+                fit = estimate_fit(item['size_bytes'], first['memory_free_mib'], profile['context'])
+                if fit['status'] != 'LIKELY_FITS' and not allow_tight:
+                    raise ValueError('This configuration is tight for current free VRAM. Try a 4B model/shorter context, or explicitly enable the memory-risk experiment.')
+            else:
+                # Do not let a remote browser allocate all 24 logical threads during an agent GPU run.
+                profile.update(threads=min(bounded_int(profile['threads'], 1, 24, 'Threads'), 8),
+                               batch=128, ubatch=64, kv='f16', flash='off')
+                if bounded_int(profile['context'], 512, 32768, 'Context') > 8192:
+                    raise ValueError('CPU mode is capped at 8192 context tokens to conserve shared RAM.')
+                fit = estimate_cpu_fit(item['size_bytes'], hw.get('ram_available_gib'), profile['context'])
+                if fit['status'] != 'LIKELY_FITS':
+                    raise ValueError('CPU mode needs measured free RAM and an 8 GiB reserve; choose a smaller GGUF or wait for other workloads.')
             with socket.socket() as probe:
                 probe.bind(('127.0.0.1', 0)); port = probe.getsockname()[1]
             key = secrets.token_urlsafe(32); key_file = self.data / 'engine-key.txt'
             key_file.write_text(key, encoding='utf-8')
             try: key_file.chmod(0o600)
             except OSError: pass
-            argv = llama_command(exe, Path(item['path']), port, key_file, profile, gpu)
+            argv = llama_command(exe, Path(item['path']), port, key_file, profile, gpu, device=device)
             env = dict(os.environ)
             # Avoid loading unrequested user overrides or inherited cloud credentials into the engine.
             for k in list(env):
                 if k.startswith(('LLAMA_ARG_', 'OPENAI_', 'ANTHROPIC_', 'TYPESAFE_')) or k in ('HF_TOKEN', 'HUGGING_FACE_HUB_TOKEN'):
                     env.pop(k, None)
+            if device == 'cpu':
+                # Hide CUDA devices from the child even if it was built with CUDA libraries.
+                # Do not modify the environment of Codex/Claude or any existing GPU service.
+                env['CUDA_VISIBLE_DEVICES'] = '-1'
+                env['HIP_VISIBLE_DEVICES'] = '-1'
             if sys.platform == 'linux':
                 env.pop('LD_PRELOAD', None)
                 env.pop('LD_AUDIT', None)
                 env['LD_LIBRARY_PATH'] = str(exe.parent)
             self.engine.launch(argv, exe.parent, label=item['name'], env=env)
+            self.engine.record['compute_device'] = device
             owned_proc = self.engine.proc
             try:
                 j = self.new_job('engine-start')
@@ -615,9 +655,11 @@ class Lab:
                                 if j.cancelled.is_set() or self.engine.proc is not owned_proc or owned_proc.poll() is not None:
                                     raise InterruptedError('Startup was cancelled or its owner changed.')
                                 self.connection = {'base': base, 'key': key, 'model': 'haven-local', 'kind': 'llama', 'ownership': 'OWNED',
-                                    'display_model': item['name'], 'profile': profile, 'model_sha256': item.get('sha256'), 'connected_at': time.time()}
+                                    'display_model': item['name'], 'profile': profile, 'compute_device': device,
+                                     'model_sha256': item.get('sha256'), 'connected_at': time.time()}
                                 self.engine.record['state'] = 'READY'
-                                j.update(state='COMPLETED', message='Engine ready; inspect log and live GPU telemetry to verify offload.')
+                                j.update(state='COMPLETED', message=('CPU-only ready; check engine log for zero GPU offload.' if device == 'cpu'
+                                    else 'GPU engine ready; inspect log and live GPU telemetry to verify offload.'))
                             return
                         time.sleep(.5)
                     raise TimeoutError('Engine did not become ready within 180 seconds.')
@@ -665,7 +707,7 @@ class Lab:
             if not conn: raise ValueError('Connect or load a model first.')
             if args['benchmark'] and args['expected_connected_at'] is not None and args['expected_connected_at'] != conn['connected_at']:
                 raise ValueError('Benchmark backend changed. Start a new experiment for this connection.')
-            if not self.generation.acquire(False): raise ValueError('One request at a time on this GPU. Cancel or wait for the active request.')
+            if not self.generation.acquire(False): raise ValueError('One request at a time on this managed engine. Cancel or wait for the active request.')
             try: j = self.new_job('generation')
             except Exception:
                 self.generation.release(); raise

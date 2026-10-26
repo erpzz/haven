@@ -15,7 +15,7 @@ from unittest.mock import patch
 import zipfile
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from labcore import Lab,Job,OwnedEngine,endpoint,parse_smi,llama_command,estimate_fit,download_verified,safe_extract,atomic_json,finite_float,GIB
+from labcore import Lab,Job,OwnedEngine,endpoint,parse_smi,llama_command,estimate_fit,estimate_cpu_fit,download_verified,safe_extract,atomic_json,finite_float,GIB
 from server import Server
 from fake_backend import FakeBackend
 
@@ -41,6 +41,19 @@ class UtilityTests(unittest.TestCase):
     def test_command_cuda(self):
         a=llama_command(Path('engine'),Path('model with spaces.gguf'),9000,Path('key'),{},0)
         self.assertEqual(a[a.index('--n-gpu-layers')+1],'999');self.assertIn('CUDA0',a);self.assertNotIn('--host 0.0.0.0',a)
+    def test_command_cpu_zero_gpu_offload_and_no_cuda_device(self):
+        command=llama_command(Path('server'),Path('model.gguf'),9000,Path('key'),{},device='cpu')
+        self.assertEqual(command[command.index('--n-gpu-layers')+1],'0')
+        self.assertNotIn('--device',command)
+        self.assertNotIn('CUDA0',command)
+        self.assertIn('127.0.0.1',command)
+        self.assertIn('--api-key-file',command)
+        with self.assertRaisesRegex(ValueError,'inference'):
+            llama_command(Path('server'),Path('model.gguf'),9000,Path('key'),{},device='other')
+    def test_cpu_ram_guard_retains_space_for_other_agents(self):
+        self.assertEqual(estimate_cpu_fit(3*GIB,32,4096)['status'],'LIKELY_FITS')
+        self.assertEqual(estimate_cpu_fit(3*GIB,10,4096)['status'],'INSUFFICIENT')
+        self.assertEqual(estimate_cpu_fit(3*GIB,None,4096)['status'],'UNKNOWN')
     def test_command_injection_rejected(self):
         with self.assertRaises(ValueError):llama_command(Path('a'),Path('b'),9000,Path('key'),{'context':'4096 & calc'})
     def test_bad_cache_combo(self):
@@ -239,6 +252,60 @@ class IntegrationTests(unittest.TestCase):
                     if thread.ident is not None: thread.join(3)
                 self.lab.engine.proc = None
                 self.lab.connection = None
+    def test_cpu_launch_is_explicit_and_cannot_steal_gpu(self):
+        self.lab.disconnect()  # External fixture is not killed.
+        model=Path(self.tmp.name)/'cpu.gguf';model.write_bytes(b'GGUF-small-fixture')
+        self.lab.settings['models']['cpu']={'path':str(model),'name':'CPU TEST','size_bytes':model.stat().st_size}
+        args_seen=[]
+        inherited_cuda=os.environ.get('CUDA_VISIBLE_DEVICES')
+        class BenignProcess:
+            def poll(self):return None
+        p=BenignProcess()
+        def launch(args,cwd,*,label,env):
+            args_seen.append((args,env))
+            self.lab.engine.proc=p
+        with patch.object(self.lab,'llama_exe',return_value=Path('/fake/llama-server')), \
+             patch.object(self.lab,'get_hardware',return_value={'gpus':[],'ram_available_gib':32}), \
+             patch.object(self.lab.engine,'launch',side_effect=launch), \
+             patch('labcore.local_json',return_value={'data':[{'id':'haven-local'}]}):
+            try:
+                j=self.lab.start_llama('cpu','balanced',device='cpu')
+                self.assertEqual(done(self.lab,j)['state'],'COMPLETED')
+                args,env=args_seen[0]
+                self.assertEqual(args[args.index('--n-gpu-layers')+1],'0')
+                self.assertNotIn('--device',args)
+                self.assertEqual(env['CUDA_VISIBLE_DEVICES'],'-1')
+                self.assertEqual(env['HIP_VISIBLE_DEVICES'],'-1')
+                self.assertEqual(self.lab.connection['compute_device'],'cpu')
+                self.assertEqual(self.lab.public_state()['connection']['compute_device'],'cpu')
+                self.assertEqual(os.environ.get('CUDA_VISIBLE_DEVICES'),inherited_cuda)
+            finally:
+                self.lab.engine.proc=None
+                self.lab.connection=None
+
+    def test_cpu_mode_requires_available_ram_before_engine_start(self):
+        self.lab.disconnect()
+        model=Path(self.tmp.name)/'cpu-memory.gguf';model.write_bytes(b'GGUFsmall')
+        self.lab.settings['models']['cpu']={'path':str(model),'name':'CPU TEST','size_bytes':model.stat().st_size}
+        with patch.object(self.lab,'llama_exe',return_value=Path('/fake/llama-server')), \
+             patch.object(self.lab,'get_hardware',return_value={'gpus':[],'ram_available_gib':None}), \
+             patch.object(self.lab.engine,'launch') as launch:
+            with self.assertRaisesRegex(ValueError,'measured free RAM'):
+                self.lab.start_llama('cpu','balanced',device='cpu')
+            launch.assert_not_called()
+
+    def test_managed_engine_switch_requires_unload_before_key_rotation(self):
+        self.lab.connection['ownership']='OWNED'
+        self.lab.engine.proc=object()
+        with patch.object(self.lab,'llama_exe') as binary:
+            try:
+                with self.assertRaisesRegex(ValueError,'Unload the current managed engine'):
+                    self.lab.start_llama('anything','balanced',device='cpu')
+                binary.assert_not_called()
+            finally:
+                self.lab.engine.proc=None
+                self.lab.connection=None
+
     def test_no_backend_key_in_state(self):
         self.lab.connection['key']='private-test-secret';self.assertNotIn('private-test-secret',json.dumps(self.lab.public_state()))
     def test_no_image_unsupported(self):

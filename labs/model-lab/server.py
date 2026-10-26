@@ -478,7 +478,8 @@ class Handler(BaseHTTPRequestHandler):
             elif self.path == '/api/model/import':
                 out = lab.import_model(data.get('path', ''))
             elif self.path == '/api/engine/start':
-                job_id = lab.start_llama(data.get('id', ''), data.get('preset', 'balanced'), data.get('overrides'), data.get('allow_tight') is True)
+                job_id = lab.start_llama(data.get('id', ''), data.get('preset', 'balanced'), data.get('overrides'),
+                                         data.get('allow_tight') is True, device=data.get('device', 'gpu'))
                 out = {'job_id': job_id}
             elif self.path == '/api/engine/stop':
                 out = lab.stop_engine()
