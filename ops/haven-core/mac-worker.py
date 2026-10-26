@@ -134,6 +134,11 @@ def enroll():
 def disable():
     run('launchctl', 'disable', 'gui/' + str(os.getuid()) + '/' + LABEL)
     run('launchctl', 'bootout', 'gui/' + str(os.getuid()) + '/' + LABEL, check=False)
+    deadline = time.monotonic() + 5
+    while run('launchctl', 'print', 'gui/' + str(os.getuid()) + '/' + LABEL, check=False).returncode == 0:
+        if time.monotonic() > deadline:
+            raise ValueError('Owned worker unload is not confirmed. No duplicate was started.')
+        time.sleep(.1)
     if run(*SSH, '-S', str(SOCKET), '-O', 'check', 'haven', check=False).returncode == 0:
         run(*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven')
     print('Owned worker LaunchAgent unloaded and owned reverse tunnel closed. Artifacts and enrollment preserved.')
