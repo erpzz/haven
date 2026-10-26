@@ -79,6 +79,8 @@ Gemma 4 (2026-04-02, Apache-2.0, 26B-A4B; [2ndary](https://the-decoder.com/googl
 
 C1 (free oracle-union analysis) should be run first because it decides whether #2's escalation path matters.
 
+**Prior work on #1 [S]:** Codex's checkpoint [`OVERNIGHT_20261026.md`](https://github.com/erpzz/haven/blob/codex/hs01-real-diagnostics-20261026/ops/haven-core/OVERNIGHT_20261026.md) on `codex/hs01-real-diagnostics-20261026` already observed a **480 Mbit/s** negotiated root link (UAS driver, USB 3 controllers present) and 87 s of total service CPU with no swap. It has a bounded O_DIRECT probe (`probe-strata-storage.py`) waiting for the GPU/host release. What remains of #1 is that probe and the owner's port or drive decision.
+
 ## 4. What counts as a breakthrough
 
 - **Real breakthrough (needs ≥ 3 runs, frozen suite):** one configuration that beats the 4B on capability **and** meets interactive latency: ≥ 90/110 on tool tasks (the 4B has 76), ≥ 20 tok/s, ready ≤ 60 s, running inside 8 GB + 64 GB. Or a long-context/memory design with per-user resume < 2 s and < 1 GB state at equal recall. Nothing surveyed has shown that yet. The Engram + MoE + hybrid class is the only credible candidate because it separates knowledge from compute. [I]
