@@ -101,5 +101,7 @@
     "One retrieval probe changed; two retrieval probes are not evidence of generalized improvement.",
     "No adapter was promoted or installed into the GGUF inference model.",
     "Raw answers, training logs, weights, adapter files and host inventory remain private."
-  ]
+  ],
+  "training_code_commit": "140265ee5b2d3a26ea6e63fb8c70401650001e29",
+  "followup_tool_interface_commit": "dda8b3941ee18791af3c1b0ac8fad17651170fff"
 }
