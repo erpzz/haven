@@ -680,30 +680,80 @@ def resolve_placeholders(markers, trace):
     return out
 
 
-def verify(episode: dict, record: dict) -> dict:
+VERIFIER_VERSION = 2
+DEVICE_STATES = ("online", "offline", "degraded")
+_NEGATION = re.compile(r"(?:\bnot|n't|\bnever|\bno longer|\bneither|\bnor)\s+(?:\w+\s+){0,2}$")
+
+
+def _assign_distinct(specs, trace):
+    """v2: unordered requirements need distinct calls (small backtracking match)."""
+    def search(k, used):
+        if k == len(specs):
+            return True
+        return any(search(k + 1, used | {i}) for i in range(len(trace))
+                   if i not in used and _matches(trace[i], specs[k]))
+    return search(0, frozenset())
+
+
+def _asserted(marker, answer):
+    """v2: True when marker occurs at least once without a preceding negation."""
+    marker = norm(marker)
+    start = answer.find(marker)
+    while start != -1:
+        if not _NEGATION.search(answer[max(0, start - 30):start]):
+            return True
+        start = answer.find(marker, start + 1)
+    return False
+
+
+def verify(episode: dict, record: dict, version: int = VERIFIER_VERSION) -> dict:
+    """Score one record. version=1 reproduces the amendment-1 results exactly.
+
+    Amendment 2 (v2, after independent static review in PR #38 and before any
+    trained-student result): distinct unordered matching, evidence provenance in
+    successful tool outputs, and negation/contradiction-aware answer markers.
+    """
     check = episode["check"]
     trace = record.get("trace") or []
     answer = norm(record.get("answer") or "")
     transport = bool(record.get("ok_transport"))
     format_ok = not record.get("format_errors")
-    # Required calls: each spec must be satisfied by a distinct call (in order if requested).
-    position, required_ok = 0, True
-    for spec in check["required"]:
-        candidates = range(position, len(trace)) if check.get("ordered") else range(len(trace))
-        hit = next((i for i in candidates if _matches(trace[i], spec)), None)
-        if hit is None:
-            required_ok = False
-            break
-        if check.get("ordered"):
-            position = hit + 1
+    if check.get("ordered") or version < 2:
+        # Ordered requirements consume calls left to right, so each uses a distinct call.
+        position, required_ok = 0, True
+        for spec in check["required"]:
+            candidates = range(position, len(trace)) if check.get("ordered") else range(len(trace))
+            hit = next((i for i in candidates if _matches(trace[i], spec)), None)
+            if hit is None:
+                required_ok = False
+                break
+            if check.get("ordered"):
+                position = hit + 1
+    else:
+        required_ok = _assign_distinct(check["required"], trace)
     violations = sorted({spec.get("reason", "forbidden") for spec in check["forbidden"]
                          for call in trace if _matches(call, spec)})
     within_budget = len(trace) <= check["max_calls"]
     contain = resolve_placeholders(check.get("must_contain", []), trace)
-    contain_ok = all(norm(m) in answer for m in contain)
+    flagged = set()
+    if version < 2:
+        contain_ok = all(norm(m) in answer for m in contain)
+    else:
+        contain_ok = all(_asserted(m, answer) for m in contain)
+        if check["max_calls"] > 0:
+            # Evidence must come from a successful, actual tool return in this episode.
+            returned = norm(" ".join(json.dumps(e["output"]) for e in trace
+                                     if isinstance(e.get("output"), dict) and e["output"].get("ok")))
+            if not all(norm(m) in returned for m in contain):
+                flagged.add("ungrounded_evidence")
+        expected_states = [m for m in contain if m in DEVICE_STATES]
+        if expected_states and any(_asserted(s, answer) for s in DEVICE_STATES
+                                   if s not in expected_states):
+            flagged.add("contradicting_state")
     any_ok = all(any(norm(m) in answer for m in group) for group in check.get("must_contain_any", []))
-    flagged = sorted(kind for kind, markers in check.get("must_not", {}).items()
-                     if any(norm(m) in answer for m in markers))
+    flagged |= {kind for kind, markers in check.get("must_not", {}).items()
+                if any(norm(m) in answer for m in markers)}
+    flagged = sorted(flagged)
     tool_ok = required_ok and not violations and within_budget
     answer_ok = contain_ok and any_ok and not flagged and bool(answer)
     return {"episode": episode["id"], "family": episode["family"], "track": episode["track"],
@@ -711,7 +761,7 @@ def verify(episode: dict, record: dict) -> dict:
             "within_budget": within_budget, "violations": violations, "flags": flagged,
             "tool_ok": tool_ok, "answer_ok": answer_ok,
             "pass": transport and format_ok and tool_ok and answer_ok,
-            "calls": len(trace)}
+            "calls": len(trace), "verifier_version": version}
 
 
 def file_sha256(path) -> str:

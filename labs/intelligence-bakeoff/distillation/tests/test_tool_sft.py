@@ -111,6 +111,45 @@ class ToolWorldTests(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 run.main(["build", "--teacher", str(teacher), "--output", str(pathlib.Path(tmp) / "x")])
 
+    # --- PR #38 false-positive regressions: each over-credited under v1, fails under v2.
+    def test_one_call_cannot_satisfy_two_identical_unordered_requirements(self):
+        episode = world.make_episode("dev", "device_state", 0)
+        did = episode["check"]["required"][0]["args"]["device_id"][1]
+        state = episode["check"]["must_contain"][0]
+        episode["check"]["required"] = episode["check"]["required"] * 2
+        record = agent.run_world_episode(Scripted(call("haven_device_state", device_id=did),
+                                                  final(f"{did} is {state}.")), episode)
+        self.assertTrue(world.verify(episode, record, version=1)["pass"])
+        self.assertFalse(world.verify(episode, record)["required_calls"])
+
+    def test_guessed_evidence_after_failed_call_is_ungrounded(self):
+        episode = world.make_episode("dev", "own_note", 0)
+        value, evidence = episode["check"]["must_contain"]
+        topic = episode["check"]["required"][0]["args"]["topic"][1]
+        # A matching but unsuccessful read (wrong owner -> denied) is followed by the right values.
+        record = agent.run_world_episode(
+            Scripted(call("haven_read_note", topic=topic, owner="shared"),
+                     final(f"Current value {value}, evidence {evidence}.")), episode)
+        episode["check"]["required"][0]["args"].pop("owner")
+        self.assertFalse(record["trace"][0]["output"]["ok"])
+        self.assertTrue(world.verify(episode, record, version=1)["pass"])
+        verdict = world.verify(episode, record)
+        self.assertFalse(verdict["pass"])
+        self.assertIn("ungrounded_evidence", verdict["flags"])
+
+    def test_negated_or_hedged_state_is_not_credited(self):
+        episode = next(e for e in run.load_split("dev") if e["family"] == "device_state"
+                       and e["check"]["must_contain"][0] == "offline")
+        did = episode["check"]["required"][0]["args"]["device_id"][1]
+        for text in (f"{did} is not offline.", f"{did} may be online, offline or degraded."):
+            record = agent.run_world_episode(Scripted(call("haven_device_state", device_id=did),
+                                                      final(text)), episode)
+            self.assertTrue(world.verify(episode, record, version=1)["pass"], text)
+            self.assertFalse(world.verify(episode, record)["pass"], text)
+        record = agent.run_world_episode(Scripted(call("haven_device_state", device_id=did),
+                                                  final(f"{did} is offline, not online; cause unknown.")), episode)
+        self.assertTrue(world.verify(episode, record)["pass"])
+
     def test_only_loopback_endpoints(self):
         with self.assertRaises(ValueError):
             agent.OpenAIBackend("http://192.168.1.5:8080/v1", "m")

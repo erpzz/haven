@@ -93,7 +93,7 @@ def make_backend(args):
     return agent.HFBackend(model, tok, max_new_tokens=args.max_tokens)
 
 
-def score_records(records):
+def score_records(records, version=world.VERIFIER_VERSION):
     episodes = {}
     for name in ("train", "dev", "heldout"):
         if (FROZEN / f"{name}.jsonl").exists():
@@ -104,7 +104,7 @@ def score_records(records):
         if record["episode"] in legacy:
             scores.append(agent.score_legacy(legacy[record["episode"]], record))
         else:
-            scores.append(world.verify(episodes[record["episode"]], record))
+            scores.append(world.verify(episodes[record["episode"]], record, version))
     return scores
 
 
@@ -176,6 +176,7 @@ def cmd_eval(args):
               "frozen_sha256": {p.name: world.file_sha256(p) for p in sorted(FROZEN.glob("*.jsonl"))},
               "wall_seconds": round(time.monotonic() - started, 1),
               "episodes_planned": len(items), "episodes_completed": len(records),
+              "verifier_version": world.VERIFIER_VERSION,
               "summary": summarize(scores, records), "scores": scores}
     if args.backend == "hf":
         import torch
@@ -267,9 +268,10 @@ def cmd_rescore(args):
         raise SystemExit("Refusing to overwrite a receipt.")
     previous = json.loads(pathlib.Path(args.records).with_suffix(".summary.json").read_text())
     records = read_jsonl(args.records)
-    scores = score_records(records)
+    scores = score_records(records, args.verifier_version)
     report = {k: v for k, v in previous.items() if k not in ("summary", "scores")}
     report.update({"rescored_from": previous["frozen_sha256"],
+                   "verifier_version": args.verifier_version,
                    "frozen_sha256": {p.name: world.file_sha256(p) for p in sorted(FROZEN.glob("*.jsonl"))},
                    "summary": summarize(scores, records), "scores": scores})
     out.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -321,6 +323,7 @@ def main(argv=None):
     p.add_argument("--output", required=True)
     p = sub.add_parser("rescore")
     p.add_argument("--records", required=True)
+    p.add_argument("--verifier-version", type=int, choices=(1, 2), default=world.VERIFIER_VERSION)
     p.add_argument("--out", required=True)
     p = sub.add_parser("compare")
     p.add_argument("--before", required=True)

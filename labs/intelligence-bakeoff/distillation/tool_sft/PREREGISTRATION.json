@@ -28,6 +28,20 @@
       ],
       "unchanged": "Arithmetic, substituted-proposal, call-budget, ordering and evidence-citation checks; the legacy scorer; every success criterion.",
       "effect": "Applied identically to every arm. Saved records are rescored, not regenerated."
+    },
+    {
+      "id": 2,
+      "verifier_version": 2,
+      "when": "After teacher collection on the training split and the 4B/baseline reference runs; before building training data, before any training and before any trained-student or teacher-ceiling result was inspected.",
+      "trigger": "Independent static review in PR #38 (Codex), not any model result.",
+      "scope": "world.verify code only; frozen episode files and hashes are unchanged. version=1 remains callable and reproduces the earlier numbers.",
+      "changes": [
+        "Unordered required calls are matched to distinct trace entries (backtracking); one call can no longer satisfy two clauses.",
+        "Each required answer marker must appear in a successful (ok=true) tool output of the same episode (flag ungrounded_evidence); tool-free episodes are exempt.",
+        "Each required marker needs at least one non-negated occurrence, and a device answer that asserts a different state is flagged contradicting_state."
+      ],
+      "regressions": "tests/test_tool_sft.py: each case passes under v1 and fails under v2.",
+      "effect": "Training data are built with v2. All reference and student results are reported under v2, with v1 numbers retained."
     }
   ],
   "splits": {
