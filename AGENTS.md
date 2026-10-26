@@ -1,5 +1,9 @@
 # Haven agent instructions
 
+## Current work (October 2026)
+
+Haven now has a running private Linux GPU Model Lab, a prepared Strata runtime and a verified-teacher tool-SFT lab. Read the first three sections of `START_HERE.md` (what exists, what was measured, where the work lives) before anything below. The runtime from [PR #35](https://github.com/erpzz/haven/pull/35) and [PR #36](https://github.com/erpzz/haven/pull/36) is on `main` (merged 2026-10-26). Training is on [PR #37](https://github.com/erpzz/haven/pull/37) / [PR #45](https://github.com/erpzz/haven/pull/45), and newer runtime features on PRs stacked on the runtime branch, coordinated in [issue #40](https://github.com/erpzz/haven/issues/40). The rules below still apply: owned branch, reviewable PR, no self-merge, no pushes to `main`, nothing private in the public repo. The R-series, RI-01 and Observatory material referenced below is the preserved September 2026 design record, not a current assignment.
+
 ## Authority and scope
 
 Read `START_HERE.md`, `PRECEDENCE.md`, `CURRENT_STATUS.md`, `coordination/PROTOCOL.md` and the exact assigned prompt. Every follow-up adds to the cumulative vision; no specialty replaces it. Preserve all original REQ/AT/EX identifiers and the Rxx-to-Hxx mapping.

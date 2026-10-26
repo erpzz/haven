@@ -1,44 +1,43 @@
-# Haven / PROJECT ASTRA
+# Haven
 
-A cumulative, evidence-led design and coordination hub for an everyday assistant, spatial perception, protective drones, wearables, robotics and autonomous engineering.
+Haven is a local-AI project: today, a private Model Lab running open-weight language models on a single Linux GPU host, reached from a Mac over SSH, plus a small training lab that measures whether a local small model can learn tool use from a local large one. Its ambition is wider: a privacy-first personal assistant and engineering platform (spatial perception, wearables, robotics, drones). That ambition is design intent, not shipped capability.
 
-**Start with [START_HERE.md](START_HERE.md).** This is not a deployed assistant. Research proposals, synthetic laboratory results and accepted physical capabilities are different states.
+**Start with [START_HERE.md](START_HERE.md).** It separates what is observed, prepared and planned, lists every measurement with its source, and shows where the work lives.
 
-## Haven Observatory — new research branch
+## What works today (2026-10-26)
 
-The spatial God/admin POV is now part of the cumulative design: world inspection, time replay, honest fog of war, owned-resource coordination, scenario forks, engineering lineage, cooperative field views and public regional awareness. These are research targets, not implemented capabilities.
+- **Private Model Lab** — Python standard-library server ([labs/model-lab/](labs/model-lab/)) as a loopback-only systemd user service on a Linux GPU host; opened from the Mac with `python3 ops/haven-core/open-lab.py`. Operation: [ops/haven-core/LINUX_MODEL_LAB.md](ops/haven-core/LINUX_MODEL_LAB.md). *Observed running.*
+- **Fast backend** — Qwen3.5-4B (GGUF) through pinned llama.cpp with CUDA, all layers on GPU. *Observed.*
+- **Strata runtime** — pinned, checksum-verified large model; one real response through the Lab; kept stopped because a cold start takes about 15 minutes. *Prepared.*
+- **Verified-teacher tool-SFT lab** — frozen 550-episode synthetic tool-use benchmark with a deterministic verifier; Strata as teacher, Qwen3-0.6B as student. *Observed, in progress.*
 
-**[Observatory entry point](coordination/R15_OBSERVATORY.md)** · [Full R15 prompt](prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md) · [Starting message](prompts/R15_START_MESSAGE.txt) · [Opportunity backlog](design/H00/R15/brief-v1/OPPORTUNITIES.md) · [Issue #12](https://github.com/erpzz/haven/issues/12)
+Headline single-run numbers (details and caveats in [START_HERE.md](START_HERE.md#measured-so-far)): the 4B scores 76/110 on the frozen held-out tool-use set, Strata 55/110, the 0.6B student 14/110 before and 38/110 after teacher SFT. A control trained on scripted trajectories also reaches 38/110, so the teacher added no aggregate value. One run each; no model has been promoted on these results.
 
-## Where to go
+## Where the work is
+
+The runtime is on `main`; training and newer features are on open pull requests:
+
+- Runtime, merged: [PR #35](https://github.com/erpzz/haven/pull/35) (Ubuntu bootstrap) and [PR #36](https://github.com/erpzz/haven/pull/36) (Model Lab on Linux, CUDA installer, Strata service).
+- Training: [PR #37](https://github.com/erpzz/haven/pull/37) (bounded LoRA pilot) and [PR #45](https://github.com/erpzz/haven/pull/45) (verified-teacher tool-SFT lab and results).
+- Coordination: [issue #40](https://github.com/erpzz/haven/issues/40). In-flight features: [#41](https://github.com/erpzz/haven/pull/41), [#42](https://github.com/erpzz/haven/pull/42), [#43](https://github.com/erpzz/haven/pull/43).
+
+Rules for agents and contributors: [AGENTS.md](AGENTS.md), [PRECEDENCE.md](PRECEDENCE.md). Owned branches, reviewable PRs, no self-merge, no pushes to `main`.
+
+## Historical design and coordination (Sept 2026)
+
+Before the runtime existed, Haven was a cumulative design and coordination hub (R01–R15 research threads, the RI-01 multi-agent campaign, the Observatory brief). Those documents are preserved as written and still describe the project's scope:
 
 - [Current status](CURRENT_STATUS.md) and [thread queue](coordination/THREAD_STATUS.md)
-- [Next detailed prompts](prompts/README.md)
-- [Communication and handoff protocol](coordination/PROTOCOL.md)
-- [Decisions and pending approvals](coordination/DECISIONS.md)
-- [Preserved cumulative starter](baseline/cumulative-v1.0/START_HERE.md)
-- [All cumulative requirements](baseline/cumulative-v1.0/scope/COVERAGE.md)
-- [R02 intelligence handback](design/H02/R02/v1/INTEGRATION_SUMMARY.md)
-- [R06 wireless/spatial handback](design/H08/R06/v1/design/H08/INTEGRATION_SUMMARY.md)
-- [R08 engineering/fabrication handback](design/H09/R08/v1/INTEGRATION_SUMMARY.md)
-- [H00 review of R02](design/H00/reviews/R02_v1.md)
-- [NIGHT-01 review](review/NIGHT-01/independent/HAVEN_NIGHT01_Independent_Review.md)
-- [Explanation in everyday language](baseline/cumulative-v1.0/family/HAVEN_IN_PLAIN_ENGLISH.md)
+- [Observatory entry point](coordination/R15_OBSERVATORY.md) · [Full R15 prompt](prompts/R15_GODS_EYE_OBSERVATORY_AND_OPEN_TOOLS.md) · [Issue #12](https://github.com/erpzz/haven/issues/12)
+- [Prompt index](prompts/README.md) · [Protocol](coordination/PROTOCOL.md) · [Decisions](coordination/DECISIONS.md)
+- [Preserved cumulative starter](baseline/cumulative-v1.0/START_HERE.md) · [All cumulative requirements](baseline/cumulative-v1.0/scope/COVERAGE.md)
+- [R02 intelligence handback](design/H02/R02/v1/INTEGRATION_SUMMARY.md) · [R06 RF/spatial](design/H08/R06/v1/design/H08/INTEGRATION_SUMMARY.md) · [R08 engineering](design/H09/R08/v1/INTEGRATION_SUMMARY.md) · [H00 review of R02](design/H00/reviews/R02_v1.md)
+- [NIGHT-01 review](review/NIGHT-01/independent/HAVEN_NIGHT01_Independent_Review.md) · [Plain-English explanation](baseline/cumulative-v1.0/family/HAVEN_IN_PLAIN_ENGLISH.md)
 
-## Scope stays cumulative
-
-Haven is a daily assistant for independently consenting people. Its retained branches include affordable model routing and memory; private/shared personal tools; phones, Watches and smart glasses; RF presence/localization toward geometry and semantic spatial understanding; sensor fusion and active perception; handheld/fixed/mobile instruments; aircraft fleets, lighting, speakers and bases; emergency communications and independent help; ground robotics; CAD, 3D printing and measured engineering campaigns; and continued scientific research.
-
-Human augmentation/new senses and the Observatory add to those branches. The original R14 prompt remains available at [its pinned commit](https://github.com/erpzz/haven/blob/cffc1168255f600206c53fd63d1ad3ffd963121d/prompts/R14_HUMAN_AUGMENTATION_CYBERNETICS.md); do not infer its merge or research completion from this reference.
-
-No research specialty replaces the project. No publication grants device, account, purchase, deployment or later coding authority.
+No research specialty replaces the project, and no publication grants device, account, purchase, deployment or coding authority. The original R14 prompt remains at [its pinned commit](https://github.com/erpzz/haven/blob/cffc1168255f600206c53fd63d1ad3ffd963121d/prompts/R14_HUMAN_AUGMENTATION_CYBERNETICS.md).
 
 ## Repository boundaries
 
-Existing source documents are imported rather than rewritten. The `baseline/`, versioned `design/`, `review/` and `snapshots/` trees preserve their recorded provenance. New root and coordination files provide navigation and the shared work protocol. See [import status](coordination/IMPORT_STATUS.md) and the publication inventory for exact coverage and exclusions.
+Imported source documents are preserved, not rewritten: `baseline/`, versioned `design/`, `review/` and `snapshots/` keep their recorded provenance; corrections go in new versions. See [import status](coordination/IMPORT_STATUS.md). The earlier complete-source migration remains unverified, so some historical links may be missing; say so rather than recreating them. The ASTRA M0 application is not this repository, and the NIGHT-01 code here is a historical synthetic snapshot.
 
-**The earlier complete-source migration remains unverified.** The Observatory addition does not declare it finished. Some historical navigation targets may still be missing; verify actual paths before claiming an input was read. The current R15 entry point and supporting brief are separate published documentation.
-
-The active ASTRA M0 application is not this repository. The supplied NIGHT-01 code is a **historical synthetic snapshot**, not an integration into M0 or a current live working tree.
-
-This repository is public. Do not upload secrets, health records, raw household recordings, home network inventories, private runtime databases, employer data or unreviewed exports. Original authorship and source-license conditions remain attached to imported material. No blanket software or research-data license is inferred.
+This repository is public. Do not upload secrets, health records, household recordings, network inventories, IP addresses, private paths, model weights, adapters, runtime databases, raw model or agent transcripts, employer data or unreviewed exports. Original authorship and source-license conditions remain attached to imported material; no blanket license is inferred.
