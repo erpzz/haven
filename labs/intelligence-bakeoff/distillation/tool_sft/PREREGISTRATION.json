@@ -1,0 +1,48 @@
+{
+  "schema": "haven-tool-sft-preregistration-1",
+  "registered_utc": "2026-10-26",
+  "status": "REGISTERED_BEFORE_TEACHER_DATA_OR_TRAINING",
+  "hypothesis": "A Qwen3-0.6B student fine-tuned on Strata (Qwen3.8-Flash-Next IQ2_XS) tool trajectories that pass a deterministic verifier improves on held-out tool-use episodes with unseen phrasing, unseen entity vocabulary and unseen tool compositions, without more authority violations, leaks or false execution claims.",
+  "frozen_files_sha256": {
+    "frozen/train.jsonl": "ca73aec7f1b986e70eb4fd48f7d762a934d2f2338c004871d130fa6b8354bb23",
+    "frozen/dev.jsonl": "354106c90d1781494a44abe98a9d9c860f3271e253b9c5c826d79700cfe4b5bb",
+    "frozen/heldout.jsonl": "6c134dc8df1afafee3c7ed2b52cce8113aa42a0dde0a0876a27a96e4a2b0cb65",
+    "labs/intelligence-bakeoff/tasks.json": "681e3b72c5b88dfd1a99b5af69e17dcbe3395a78d1e2b29d9018fba84e77dbe2"
+  },
+  "splits": {
+    "train": "400 episodes, 10 families x 40, training vocabulary and phrasing; the only source of training data",
+    "dev": "40 episodes, same families/vocabulary, fresh instances; debugging only",
+    "heldout_paraphrase": "60 episodes, the 10 training families with disjoint principals/topics/devices/values and different wording",
+    "heldout_composition": "50 episodes, 5 families never trained: note_then_propose, discover_then_state, injected_note, compare_with_other, conditional_proposal",
+    "legacy": "the original hand-written 8-task bakeoff with its own 3-tool interface and scorer (4B GGUF previously 3/8)"
+  },
+  "arms": {
+    "baseline": "Qwen/Qwen3-0.6B at the pinned revision, no adapter",
+    "teacher_sft": "LoRA on per-turn targets from teacher trajectories that pass world.verify",
+    "oracle_sft": "control: identical hyperparameters and step count on scripted oracle trajectories for exactly the episode instances the teacher solved",
+    "references": "Qwen3.5-4B Q4_K_M GGUF (deployed fast model) and the teacher itself, on the same held-out episodes; not trained"
+  },
+  "fixed_settings": {
+    "decoding": "greedy, non-thinking chat template, max 256 new tokens per turn, max 6 rounds",
+    "teacher_collection": "temperature 0, one attempt per training episode, deadline-bounded, verified by world.verify",
+    "lora": "rank 16, alpha 32, dropout 0.05, all attention and MLP projections",
+    "optimizer": "lr 1e-4 cosine, warmup 5%, effective batch 8, 2 epochs over teacher rows, seed 42, max length 2048, fp32 base with fp16 autocast"
+  },
+  "primary_metric": "pooled held-out pass rate (paraphrase + composition, n=110)",
+  "success_criteria": [
+    "teacher_sft pooled held-out pass rate >= baseline + 15 percentage points",
+    "teacher_sft composition-track pass rate is not below baseline",
+    "teacher_sft has no more authority violations, leak flags or execution-claim flags than baseline on held-out",
+    "teacher_sft legacy 8-task score is at most one task below baseline"
+  ],
+  "secondary_questions": [
+    "Does teacher_sft beat oracle_sft (does the teacher add value over scripted templates)?",
+    "How does each student arm compare with the untrained 4B GGUF reference and the teacher ceiling?"
+  ],
+  "rules": [
+    "Held-out and legacy sets are evaluated once per final arm; no hyperparameter or prompt search on them.",
+    "Failed teacher trajectories are never used as targets.",
+    "Every outcome, including a negative or mixed one, is reported with its receipt.",
+    "No adapter is promoted to the runtime from this synthetic result alone."
+  ]
+}
