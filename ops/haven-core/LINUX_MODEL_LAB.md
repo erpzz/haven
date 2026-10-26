@@ -59,6 +59,31 @@ The existing browser removes its token from the address bar and keeps it in
 that tab's session storage. API authentication and origin/Host checks remain
 enabled. No LAN listener or public port forwarding is required.
 
+## Choose CPU-only chat while the GPU is busy (candidate implementation)
+
+This feature is in **feature/hs01-cpu-lane-browser-20261026**; it is **not deployed or measured on Slink yet**. Verify on the live Mac → SSH tunnel → Haven browser path before claiming success.
+
+The Model Lab Linux **Setup → llama.cpp → Compute lane** control can explicitly choose:
+- **GPU · CUDA fast path**: the existing full GPU-offload model, unchanged by default.
+- **CPU only · no GPU layers**: same downloaded GGUF via the already pinned llama.cpp server with `--n-gpu-layers 0`, no `--device`, and `CUDA_VISIBLE_DEVICES=-1` scoped **only** to that spawned model process. Default CPU preset: 2K context, 6 threads, 128/64 batch, f16 KV, flash attention off; reject over 8 CPU threads or 8K CPU context.
+
+CPU start uses available **MemAvailable** from Linux, includes an explicit conservative 4 GiB host reserve, and rejects unknown or insufficient available RAM. The GPU memory-risk override does not apply. This prevents pretending CPU mode is free when Strata or a training worker consumes most of the 64 GiB.
+
+**Current architectural limit:** the browser's Model Lab can own only **one GGUF process at a time** (CPU *or* GPU), though separately launched Claude/Codex GPU experiments remain untouched. If the Lab already owns a GPU process, you must unload **that Lab-managed process** before CPU loading, and only if no agent depends on it. There is no automatic switch or killing external Strata/GPU workers. A true two-process, separately routable always-on CPU+GPU service is later scope.
+
+From the **Mac**, use the documented local tunnel and private launch link; these are not LAN/public endpoints. Select the CPU lane, choose the **already-downloaded Qwen3.5 4B** in Models, click **Load on CPU**, then chat normally. The status must explicitly show **CPU-only connected**. The same launch credentials and admin/member access controls remain in force.
+
+**Live acceptance (must be performed by an agent/operator with Slink access):**
+1. Before any change, check active Claude/Codex/Lab processes, GPU ownership, Lab users and deployed commit. Do not stop a GPU job merely to test CPU.
+2. Run unit regressions: `python3 -m unittest discover -s labs/model-lab/tests -p 'test_cpu_lane.py' -v`; run existing Linux integration/security tests after. Classify these as **STATIC_TEST** only.
+3. Install/reload the candidate UI/runtime only with an explicit safe deployment/restart window. A restart of `haven-model-lab.service` will stop **its owned model** and invalidate its old private launch link; **never restart while any agent depends on the Lab**.
+4. Start Qwen3.5 4B CPU from actual browser: verify llama arguments show `--n-gpu-layers 0` with no `--device`; inspect process environment privately to confirm `CUDA_VISIBLE_DEVICES=-1`, and verify via before/during GPU telemetry that the CPU model did not allocate VRAM. GPU may remain busy with independent owned workloads.
+5. Send an actual short question; record real first output and decode throughput, model quality, CPU/RAM, port/connection auth, and host impact. Do not claim speed from simulated tests.
+6. Explicitly compare unchanged GPU mode when GPU is available and safe to do so. Validate cancellation/unload, denied admin writes from member sessions, no external server disruption, no model downloads and no secret leakage.
+7. Roll back the candidate commit or restore the known-good PR #36 tree if live CPU loading fails; use only owned service stopping and preserve Qwen GGUF/Strata files.
+
+The first candidate is intentionally a **minimal isolated CPU inference choice**, not a CPU-powered autonomous agent or dual-running GGUF router. If GPU work saturates host memory or CPU, admission may correctly refuse to start or performance may be poor.
+
 ## Operate and recover
 
 ```sh
