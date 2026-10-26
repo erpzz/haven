@@ -156,7 +156,11 @@ def cmd_eval(args):
     backend = make_backend(args)
     started = time.monotonic()
     records = []
+    deadline = started + args.deadline_minutes * 60 if args.deadline_minutes else None
     for kind, item in items:
+        if deadline and time.monotonic() > deadline:
+            print("DEADLINE reached; the summary covers completed episodes only.", flush=True)
+            break
         record = (agent.run_legacy_task(backend, item) if kind == "legacy"
                   else agent.run_world_episode(backend, item))
         record["label"] = args.label
@@ -170,6 +174,7 @@ def cmd_eval(args):
               "temperature": args.temperature, "max_tokens": args.max_tokens,
               "frozen_sha256": {p.name: world.file_sha256(p) for p in sorted(FROZEN.glob("*.jsonl"))},
               "wall_seconds": round(time.monotonic() - started, 1),
+              "episodes_planned": len(items), "episodes_completed": len(records),
               "summary": summarize(scores, records), "scores": scores}
     if args.backend == "hf":
         import torch
@@ -293,11 +298,10 @@ def main(argv=None):
         p.add_argument("--temperature", type=float, default=0.0)
         p.add_argument("--max-tokens", type=int, default=256)
         p.add_argument("--seed", type=int)
+        p.add_argument("--deadline-minutes", type=float, default=None if name == "eval" else 60)
         if name == "eval":
             p.add_argument("--sets", default="heldout,legacy")
             p.add_argument("--limit", type=int)
-        else:
-            p.add_argument("--deadline-minutes", type=float, default=60)
     p = sub.add_parser("build")
     p.add_argument("--teacher", required=True)
     p.add_argument("--output", required=True)
