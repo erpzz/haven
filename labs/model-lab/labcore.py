@@ -572,6 +572,9 @@ class Lab:
                 raise ValueError('Disconnect and stop the external backend first; the lab will not kill it.')
             if not self.generation.acquire(False): raise ValueError('A request is active.')
             self.generation.release()
+            # Fail before rewriting the active engine's shared API key file.
+            if self.engine.proc is not None:
+                raise ValueError('Unload the current Lab-owned engine before selecting another compute lane.')
             exe = self.llama_exe()
             if not exe: raise ValueError('Install the CUDA engine first.')
             item = self.settings['models'].get(model_id)
