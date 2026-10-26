@@ -132,7 +132,7 @@ function syncComputeLane(){
  $('profile').value=cpu?'cpu':'balanced';$('profile').onchange();
  $('allow-tight').checked=false;$('allow-tight').disabled=cpu;
  $('compute-note').textContent=cpu?'CPU-only: 0 GPU layers, no visible CUDA devices in the engine process. Limited to 8 threads and checked against available system RAM; keep headroom for other agents.':'GPU: existing CUDA fast path, subject to the RTX 2070 Super VRAM gate.';
- renderModels();
+ if(state)renderModels();
 }
 $('compute-lane').onchange=syncComputeLane;
 for(const option of $('profile').options)if(option.value==='cpu')option.disabled=true;
