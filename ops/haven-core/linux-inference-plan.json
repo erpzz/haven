@@ -1,0 +1,37 @@
+{
+  "status": "PINNED_ASSETS_INSTALLED_AND_FIRST_GPU_RESPONSE_EXECUTED",
+  "verified_metadata_on": "2026-10-25",
+  "runtime": "llama.cpp",
+  "tag": "b11146",
+  "platform": "ubuntu-x86_64",
+  "cuda_series": "12.8",
+  "source": "https://github.com/ggml-org/llama.cpp/releases/tag/b11146",
+  "archives": [
+    {
+      "name": "llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11146/llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "size_bytes": 168920581,
+      "sha256": "c2ab9e19838513ff69d1af8d999ad717dd3c7ee4714ac04c7ed5ab9077c50e4e"
+    },
+    {
+      "name": "cudart-llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11146/cudart-llama-b11146-bin-ubuntu-cuda-12.8-x64.tar.gz",
+      "size_bytes": 594373356,
+      "sha256": "1466daea60aad1144819e151b2bae19d54556cf1da6c129c4f55a5ded2637c25"
+    }
+  ],
+  "first_model": {
+    "catalog_path": "labs/model-lab/catalog.json",
+    "id": "qwen35-4b",
+    "size_bytes": 2740937888,
+    "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4"
+  },
+  "limits": [
+    "Archive and model bytes downloaded and SHA-256 verified on the Linux target.",
+    "Safe extraction accepts only internal library aliases and materializes them as regular files; no filesystem links are created.",
+    "The deployed engine used 33/33 GPU layers; this is runtime evidence, not model quality certification.",
+    "Secure Boot remains enabled with distro-signed headless NVIDIA modules.",
+    "This prebuilt runtime requires libgomp1 but no global CUDA Toolkit or Python AI framework.",
+    "Training and Strata are separate experiments; they never share the GPU with a loaded GGUF engine."
+  ]
+}

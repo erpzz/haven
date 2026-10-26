@@ -1,0 +1,12 @@
+[Unit]
+Description=One bounded Haven Strata response after model preparation
+After=haven-strata-model.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 %h/projects/haven/ops/haven-core/first-strata-run.py --execute
+Environment=PYTHONDONTWRITEBYTECODE=1
+UMask=0077
+NoNewPrivileges=yes
+TimeoutStartSec=1800
+Restart=no

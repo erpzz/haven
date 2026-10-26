@@ -1,0 +1,23 @@
+[Unit]
+Description=Haven Core Strata (prepared signed engine, authenticated loopback)
+StartLimitIntervalSec=60
+StartLimitBurst=2
+
+[Service]
+Type=exec
+WorkingDirectory=%h/projects/haven
+ExecStart=/usr/bin/python3 %h/projects/haven/ops/haven-core/strata-service.py
+Environment=PYTHONDONTWRITEBYTECODE=1
+UMask=0077
+NoNewPrivileges=yes
+KillMode=control-group
+TimeoutStopSec=25
+# Large hybrid models can exhaust RAM. Contain a failed experiment to this unit.
+MemoryHigh=54G
+MemoryMax=58G
+MemorySwapMax=1G
+OOMPolicy=stop
+Restart=no
+
+[Install]
+WantedBy=default.target

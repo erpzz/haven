@@ -88,7 +88,9 @@ class LanHttpTests(unittest.TestCase):
         conn.request(method, path, body=body, headers=headers)
         response = conn.getresponse()
         raw = response.read()
-        out = (response.status, json.loads(raw) if raw else {}, dict(response.getheaders()))
+        content_type = response.getheader('Content-Type', '').split(';', 1)[0]
+        payload = json.loads(raw) if raw and content_type == 'application/json' else raw.decode('utf-8') if raw else {}
+        out = (response.status, payload, dict(response.getheaders()))
         conn.close()
         return out
 

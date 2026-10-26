@@ -1,5 +1,9 @@
 # Haven Model Lab
 
+Linux server deployment: [Haven Core on Linux](../../ops/haven-core/LINUX_MODEL_LAB.md)
+provides a supervised, loopback-only service and private SSH access. It uses the
+same existing application and does not download models or qualify a Linux GPU.
+
 A Windows browser workbench for Strata and llama.cpp CUDA. The October 4, 2026 qualification uses an RTX 2070 SUPER 8 GB, Ryzen 3900X and 64 GB RAM. This lab is separate from Haven IP-01/IP-02.
 
 ## Open the installed lab

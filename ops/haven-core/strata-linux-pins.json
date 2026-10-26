@@ -1,0 +1,72 @@
+{
+  "schema": "haven-strata-linux-pins-1",
+  "verified_on": "2026-10-25",
+  "release": "v0.2.6",
+  "source_commit": "4b9e05a2a806a3fe24f7b2560d98626c37dade35",
+  "source": "https://github.com/Niko1221/Strata/releases/tag/v0.2.6",
+  "install_script": {
+    "url": "https://github.com/Niko1221/Strata/releases/download/v0.2.6/install.sh",
+    "sha256": "3d93b5fba42b6be68514c0ae6bb50784c68eb72319562c2e505780e411750c19"
+  },
+  "feed": {
+    "url": "https://github.com/Niko1221/Strata/releases/download/v0.2.6/strata-feed.json",
+    "sha256": "0e4fb6088aa0ce78e66c0489361214c001591aa4a4c265728046f2d683d8354d",
+    "sequence": 114,
+    "signature_verification": "Upstream builtin trusted keys; never disabled"
+  },
+  "control": {
+    "version": "0.1.51",
+    "package": {
+      "entry": "strata.py",
+      "format": "tar.gz",
+      "installed_bytes": 332812452,
+      "platform": "linux-x86_64",
+      "sha256": "39c06025f9d090802f9700a6ce271f7c4da767f48028d7389e0ddc47f6baa9c2",
+      "size": 98941030,
+      "url": "strata-control-0.1.51-linux-x86_64.tar.gz"
+    }
+  },
+  "engine": {
+    "archs": [
+      "sm_75",
+      "sm_86",
+      "sm_89",
+      "sm_120",
+      "compute_120"
+    ],
+    "backend": "cuda",
+    "build_id": "1aff6d14117b+cuda13.0",
+    "format": "tar.gz",
+    "installed_bytes": 971674122,
+    "manifest_sha256": "5e107e5d1ab0acfcc13d81804d93b6dfcea0968d31be1b8d74fbc38bfbbf8631",
+    "min_driver": {
+      "nvidia": "580.65"
+    },
+    "min_runtime": null,
+    "notes": "",
+    "platform": "linux-x86_64",
+    "sha256": "90c601dc1060af48aaccf85062975a11c4ae25690ec242e3bc93e99457c9380b",
+    "size": 606728514,
+    "url": "strata-engine-0.1.50-linux-x86_64-cuda-cuda13.tar.gz",
+    "variant": "cuda13",
+    "version": "0.1.50"
+  },
+  "model": [
+    {
+      "url": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF/resolve/ed59f92082b1e93c0e96d60a8b11aab089b52f09/IQ2_XS/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf",
+      "size_bytes": 39225954592,
+      "sha256": "92cee27ae5bbadcd732416a0f7a7f0acc092399dbbe8f5a5efa707c2ec0a49d7"
+    },
+    {
+      "url": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF/resolve/ed59f92082b1e93c0e96d60a8b11aab089b52f09/IQ2_XS/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00002-of-00002.gguf",
+      "size_bytes": 28800138432,
+      "sha256": "316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113"
+    }
+  ],
+  "limits": [
+    "The Linux release is separate from the preserved Windows v0.1.39 installer pin.",
+    "Binary-only verification passed; model-backed qualification is recorded separately after preparation.",
+    "Use authenticated loopback, one request, 8192 context, no vision or MTP for the initial experiment.",
+    "No models, transcripts, credentials or machine inventory are included."
+  ]
+}

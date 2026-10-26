@@ -15,6 +15,7 @@ import os
 from pathlib import Path
 import signal
 import socket
+import tempfile
 import threading
 import time
 import urllib.parse
@@ -30,10 +31,36 @@ ASSETS = {
 }
 COOKIE_NAME = 'haven_session'
 ADMIN_POSTS = {
-    '/api/connect', '/api/disconnect', '/api/engine/install', '/api/model/download',
+    '/api/connect', '/api/connect/haven-strata', '/api/disconnect', '/api/engine/install', '/api/model/download',
     '/api/model/import', '/api/engine/start', '/api/engine/stop', '/api/shutdown',
 }
 ADMIN_GETS = {'/api/log', '/api/benchmarks', '/api/auth/users'}
+
+
+def save_launch_url(path: Path, url: str):
+    """Keep a supervised server's bearer link out of its journal/stdout."""
+    path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    fd, temporary = tempfile.mkstemp(prefix='.haven-launch-', dir=path.parent)
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as stream:
+            stream.write(url + '\n')
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    finally:
+        Path(temporary).unlink(missing_ok=True)
+
+
+def notify_ready():
+    """Tell a Linux user service that HTTP initialization has finished."""
+    address = os.environ.pop('NOTIFY_SOCKET', '')
+    if not address:
+        return
+    if address.startswith('@'):
+        address = '\0' + address[1:]
+    with socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM) as notification:
+        notification.connect(address)
+        notification.sendall(b'READY=1')
 
 
 HOME_IPV4 = (
@@ -81,7 +108,10 @@ def _lan_urls(port: int) -> list[str]:
 
 class Server(ThreadingHTTPServer):
     daemon_threads = True
-    allow_reuse_address = False
+    # POSIX needs SO_REUSEADDR for immediate service restart after HTTP traffic.
+    # It does not permit another live listener. Windows has different reuse
+    # semantics, so preserve exclusive binding there.
+    allow_reuse_address = os.name != 'nt'
 
     def __init__(self, address, lab, lan_mode=False, control_token=''):
         self.lab = lab
@@ -431,6 +461,8 @@ class Handler(BaseHTTPRequestHandler):
             job_id = None
             if self.path == '/api/connect':
                 out = lab.connect(data.get('base', ''), data.get('key', ''), data.get('kind', 'strata'))
+            elif self.path == '/api/connect/haven-strata':
+                out = lab.connect_haven_strata()
             elif self.path == '/api/disconnect':
                 out = lab.disconnect()
             elif self.path == '/api/engine/install':
@@ -486,10 +518,14 @@ def main():
     ap.add_argument('--port', type=int, default=8787)
     ap.add_argument('--data-dir', type=Path, default=ROOT / '.local')
     ap.add_argument('--open', action='store_true')
+    ap.add_argument('--launch-file', type=Path,
+                    help='Save the private launch URL in a mode-0600 file instead of printing it.')
     ap.add_argument('--lan', action='store_true', help='Bind the UI to private LAN addresses and require invite-only accounts.')
     args = ap.parse_args()
     if not 1024 <= args.port <= 65535:
         ap.error('Use an unprivileged local port.')
+    if args.lan and args.launch_file:
+        ap.error('--launch-file is for the loopback service; LAN owner setup is separate.')
     lab = Lab(args.data_dir)
     control_token = os.environ.pop('HAVEN_CONTROL_TOKEN', '')
     bind = '0.0.0.0' if args.lan else '127.0.0.1'
@@ -514,8 +550,18 @@ def main():
     else:
         url = f'http://127.0.0.1:{server.server_port}/#token={lab.token}'
         print('\nHaven Model Lab — local development preview\n', flush=True)
-        print(url, flush=True)
-        print('\nKeep this window open. Ctrl+C or the UI Exit button stops owned engines.\nExternal Strata stays in its own console. No models/downloads start automatically.\n', flush=True)
+        if args.launch_file:
+            try:
+                save_launch_url(args.launch_file, url)
+            except OSError:
+                server.server_close()
+                lab.shutdown()
+                raise
+            print('Private launch link saved to:', args.launch_file, flush=True)
+            print('Loopback service ready. No models or downloads start automatically.', flush=True)
+        else:
+            print(url, flush=True)
+            print('\nKeep this window open. Ctrl+C or the UI Exit button stops owned engines.\nExternal Strata stays in its own console. No models/downloads start automatically.\n', flush=True)
 
     if args.open:
         webbrowser.open(url)
@@ -525,6 +571,7 @@ def main():
 
     signal.signal(signal.SIGTERM, stop_signal)
     try:
+        notify_ready()
         server.serve_forever(poll_interval=.2)
     except KeyboardInterrupt:
         pass

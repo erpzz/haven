@@ -1,4 +1,11 @@
 # HS-01 — Minimal-token Claude Code execution brief
+Historical bootstrap assignment. SSH, Linux GPU inference, administration and
+the bounded training/Strata runs have since completed. For the current task,
+start with [the current continuation](CLAUDE_NEXT_SESSION.md) and
+[the operator's Opus launch prompt](OPUS_START_PROMPT.md). Do not rerun the
+bootstrap inventory or treat the old approval pauses below as the current
+assignment; current direct human authorization governs the new session.
+
 This file optimizes engineering throughput, not model usage tricks. It is an operator task request, not evidence a task has run.
 
 ## Existing sources
