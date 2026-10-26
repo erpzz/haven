@@ -110,7 +110,7 @@ def enable():
 def enroll():
     prepare()
     import shlex
-    remote_dir = "import os,pathlib; os.umask(0o077); p=pathlib.Path.home()/'.local/state/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700); print(p/'macbook-owner.sock')"
+    remote_dir = "import os,pathlib; os.umask(0o077); p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700); print(p/'macbook-owner.sock')"
     remote_socket = run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote_dir)).stdout.strip()
     if not remote_socket.startswith('/') or '\n' in remote_socket:
         raise ValueError('Invalid private remote socket path.')
@@ -130,7 +130,7 @@ def enroll():
                               'ram_total_gib': int(run('/usr/sbin/sysctl', '-n', 'hw.memsize').stdout) / 1024**3,
                               'accelerator': 'Apple Metal', 'runtime': 'llama.cpp 0.7.0 / 620d2225c'}}
     # Secret travels over host-verified SSH stdin, never argv or a printed link.
-    remote = "import sys,json,os,pathlib,tempfile; os.umask(0o077); d=json.load(sys.stdin); p=pathlib.Path.home()/'.local/state/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700); fd,n=tempfile.mkstemp(prefix='.enroll-',dir=p); f=os.fdopen(fd,'w'); json.dump(d,f); f.close(); os.replace(n,p/'macbook-owner.json')"
+    remote = "import sys,json,os,pathlib,tempfile; os.umask(0o077); d=json.load(sys.stdin); p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700); fd,n=tempfile.mkstemp(prefix='.enroll-',dir=p); f=os.fdopen(fd,'w'); json.dump(d,f); f.close(); os.replace(n,p/'macbook-owner.json')"
     import shlex
     run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote), input=json.dumps(entry))
     print('Private Mac worker enrollment saved on Slink; reload/probe the registry from Haven. No inference started.')
