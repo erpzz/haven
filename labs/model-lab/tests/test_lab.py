@@ -257,6 +257,7 @@ class IntegrationTests(unittest.TestCase):
         model=Path(self.tmp.name)/'cpu.gguf';model.write_bytes(b'GGUF-small-fixture')
         self.lab.settings['models']['cpu']={'path':str(model),'name':'CPU TEST','size_bytes':model.stat().st_size}
         args_seen=[]
+        inherited_cuda=os.environ.get('CUDA_VISIBLE_DEVICES')
         class BenignProcess:
             def poll(self):return None
         p=BenignProcess()
@@ -277,7 +278,7 @@ class IntegrationTests(unittest.TestCase):
                 self.assertEqual(env['HIP_VISIBLE_DEVICES'],'-1')
                 self.assertEqual(self.lab.connection['compute_device'],'cpu')
                 self.assertEqual(self.lab.public_state()['connection']['compute_device'],'cpu')
-                self.assertNotIn('CUDA_VISIBLE_DEVICES',os.environ)
+                self.assertEqual(os.environ.get('CUDA_VISIBLE_DEVICES'),inherited_cuda)
             finally:
                 self.lab.engine.proc=None
                 self.lab.connection=None
