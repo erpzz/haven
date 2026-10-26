@@ -83,7 +83,9 @@ document.querySelectorAll('[data-view]').forEach(n=>n.onclick=()=>go(n.dataset.v
 function metric(id,value,unit) { const n=$(id); n.replaceChildren(document.createTextNode(value==null?'—':value)); n.append(element('small','',unit)); }
 function rate(value) { return typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'—'; }
 function applyState(s) {
+ const firstLoad=!state;
  state=s; const c=s.connection, connected=!!c.base, h=s.hardware, g=h.gpus[0];
+ if(firstLoad&&c.compute==='cpu'){$('compute-lane').value='cpu';syncComputeLane();}
  $('connection-pill').className='pill'+(connected?' connected':''); $('connection-pill').textContent=connected?`● ${c.compute==='cpu'?'CPU-only':c.compute==='gpu'?'GPU · CUDA':c.kind==='strata'?'Strata':c.kind==='llama'?'llama.cpp':'Local API'} connected`:'○ No engine connected';
  $('active-model').textContent=connected?(c.display_model||c.model):'No model loaded'; $('engine-sub').textContent=connected?`${c.kind} · ${c.compute==='cpu'?'CPU only / no GPU offload':c.compute==='gpu'?'CUDA GPU':c.kind} · ${c.ownership==='OWNED'?'managed here':'external server'}`:'Connect Strata or load a CPU/GPU model';
  const signature=connected?`${c.base}|${c.model}|${c.connected_at}`:'';
