@@ -1,7 +1,7 @@
 # HS01 Overnight Peer Lab — Codex × Claude
 Status: OPERATOR_LAUNCH_REQUIRED / NOT_EXECUTED by this GitHub publication.
 Date: 2026-10-25 (UTC activity may fall on 2026-10-26).
-This package prepares bounded work for Codex CLI and Claude Code on the operator's MacBook. Reading or merging this file **does not** start an agent, access Slink, grant a credential, or schedule background work.
+This package prepares bounded work for Codex CLI and Claude Code on the operator's MacBook. Coordination issue: [#40](https://github.com/erpzz/haven/issues/40). Reading or merging this file **does not** start an agent, access Slink, grant a credential, or schedule background work.
 
 ## Why we're doing it
 Improve a real user-facing capability on the deployed Ubuntu AI server **Slink**, not a demo score. Strata's real documented first start took 868 seconds (836 loading ~33.02 GiB experts); the local fast 4B has real CUDA inference, but actual tool-driven diagnosis and durable assistant-task completion are not yet qualified. Concurrent Claude work on branch `claude/opus-tool-distill-20261026` explores verified teacher-to-student tool learning. We should challenge each other's hypotheses with actual receipts.
@@ -36,7 +36,8 @@ Improve a real user-facing capability on the deployed Ubuntu AI server **Slink**
 - Do not erase, partition, resize, format, write to NTFS/BitLocker drives, disable Secure Boot, change SSH/UFW access, change power/boot policy, overwrite model weights, promote an adapter, or merge PRs unattended.
 - No cloud/paid training jobs, new subscriptions, billable hosted inference, third-party network scans, live smart-device actions, purchases, or public service exposure. No personal/partner/employer data ingested into models or Git.
 - Safe independent Git edits, read-only SSH diagnostics, private synthetic test runs and already-authorized bounded local model experiments are suitable tasks **only when the configured CLI permissions allow them**. If blocked for approval while operator sleeps, publish blocker + continue independent no-side-effect review; never bypass controls.
-- **Stop criteria:** complete two substantive deliverables and one cross-review, or hit a configured duration/usage ceiling, or encounter human-only decision. End with stable service state and checkpoints. No claim that work continues if the host/session sleeps or authentication fails.
+- **Explicit overnight cap:** maximum **6 hours wall clock from launch** and **2 major local GPU experiments total** across agents, including a resumed Claude run. Stop sooner after two substantive deliverables and one cross-review. Do not repeatedly run failing evaluations or reprompt the other agent in a loop. Use a per-task deadline and keep the primary 4B service recoverable.
+- **Stop criteria:** complete the cap or hit a human-only approval/credential decision. End with stable service state and checkpoints. No claim that work continues if the host/session sleeps or authentication fails.
 
 ## Evidence contract
 Only these classifications are accepted: PROPOSED, STATIC_TEST, HOST_READ_ONLY, SYNTHETIC_MODEL_RUN, REAL_GPU_RUN, REAL_END_TO_END, INDEPENDENTLY_VERIFIED, BLOCKED.
