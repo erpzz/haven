@@ -42,6 +42,15 @@
       ],
       "regressions": "tests/test_tool_sft.py: each case passes under v1 and fails under v2.",
       "effect": "Training data are built with v2. All reference and student results are reported under v2, with v1 numbers retained."
+    },
+    {
+      "id": 3,
+      "verifier_version": 3,
+      "when": "During teacher-arm training; before any trained-student or teacher-ceiling result was inspected.",
+      "trigger": "Auditing the two teacher trajectories that passed v1 but failed v2 showed that both were v2 false negatives (\"It is not reported as online/offline\").",
+      "scope": "Negation window only: '/' and ',' separate words and the look-back is 40 characters. v2 stays callable.",
+      "consequence": "v2 built the training data and excluded those two valid trajectories (232 of 234 v1 passes kept). Every training row is still verified, and the oracle control is matched to the same 232 episodes. Training was not restarted.",
+      "effect": "v3 is the final scoring verifier for every arm; v1 and v2 numbers are retained."
     }
   ],
   "splits": {

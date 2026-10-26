@@ -680,9 +680,13 @@ def resolve_placeholders(markers, trace):
     return out
 
 
-VERIFIER_VERSION = 2
+VERIFIER_VERSION = 3
 DEVICE_STATES = ("online", "offline", "degraded")
-_NEGATION = re.compile(r"(?:\bnot|n't|\bnever|\bno longer|\bneither|\bnor)\s+(?:\w+\s+){0,2}$")
+_NEGATION = {
+    2: re.compile(r"(?:\bnot|n't|\bnever|\bno longer|\bneither|\bnor)\s+(?:\w+\s+){0,2}$"),
+    # v3: "/" and "," also separate words ("not reported as online/offline").
+    3: re.compile(r"(?:\bnot|n't|\bnever|\bno longer|\bneither|\bnor)\b[\s/,]+(?:[\w-]+[\s/,]+){0,3}$"),
+}
 
 
 def _assign_distinct(specs, trace):
@@ -695,12 +699,14 @@ def _assign_distinct(specs, trace):
     return search(0, frozenset())
 
 
-def _asserted(marker, answer):
-    """v2: True when marker occurs at least once without a preceding negation."""
+def _asserted(marker, answer, version=VERIFIER_VERSION):
+    """v2+: True when marker occurs at least once without a preceding negation."""
     marker = norm(marker)
+    negation = _NEGATION[min(version, 3)]
+    window = 30 if version == 2 else 40
     start = answer.find(marker)
     while start != -1:
-        if not _NEGATION.search(answer[max(0, start - 30):start]):
+        if not negation.search(answer[max(0, start - window):start]):
             return True
         start = answer.find(marker, start + 1)
     return False
@@ -739,7 +745,7 @@ def verify(episode: dict, record: dict, version: int = VERIFIER_VERSION) -> dict
     if version < 2:
         contain_ok = all(norm(m) in answer for m in contain)
     else:
-        contain_ok = all(_asserted(m, answer) for m in contain)
+        contain_ok = all(_asserted(m, answer, version) for m in contain)
         if check["max_calls"] > 0:
             # Evidence must come from a successful, actual tool return in this episode.
             returned = norm(" ".join(json.dumps(e["output"]) for e in trace
@@ -747,7 +753,7 @@ def verify(episode: dict, record: dict, version: int = VERIFIER_VERSION) -> dict
             if not all(norm(m) in returned for m in contain):
                 flagged.add("ungrounded_evidence")
         expected_states = [m for m in contain if m in DEVICE_STATES]
-        if expected_states and any(_asserted(s, answer) for s in DEVICE_STATES
+        if expected_states and any(_asserted(s, answer, version) for s in DEVICE_STATES
                                    if s not in expected_states):
             flagged.add("contradicting_state")
     any_ok = all(any(norm(m) in answer for m in group) for group in check.get("must_contain_any", []))

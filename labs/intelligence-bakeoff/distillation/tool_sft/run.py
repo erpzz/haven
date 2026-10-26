@@ -323,7 +323,7 @@ def main(argv=None):
     p.add_argument("--output", required=True)
     p = sub.add_parser("rescore")
     p.add_argument("--records", required=True)
-    p.add_argument("--verifier-version", type=int, choices=(1, 2), default=world.VERIFIER_VERSION)
+    p.add_argument("--verifier-version", type=int, choices=(1, 2, 3), default=world.VERIFIER_VERSION)
     p.add_argument("--out", required=True)
     p = sub.add_parser("compare")
     p.add_argument("--before", required=True)

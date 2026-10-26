@@ -150,6 +150,17 @@ class ToolWorldTests(unittest.TestCase):
                                                   final(f"{did} is offline, not online; cause unknown.")), episode)
         self.assertTrue(world.verify(episode, record)["pass"])
 
+    def test_v3_reads_slash_separated_negation(self):
+        # Real teacher phrasing that v2 wrongly rejected as a contradiction.
+        episode = next(e for e in run.load_split("dev") if e["family"] == "device_state"
+                       and e["check"]["must_contain"][0] == "degraded")
+        did = episode["check"]["required"][0]["args"]["device_id"][1]
+        text = f"{did} is degraded. It is not reported as online/offline; the cause is unknown."
+        record = agent.run_world_episode(Scripted(call("haven_device_state", device_id=did),
+                                                  final(text)), episode)
+        self.assertFalse(world.verify(episode, record, version=2)["pass"])
+        self.assertTrue(world.verify(episode, record, version=3)["pass"])
+
     def test_only_loopback_endpoints(self):
         with self.assertRaises(ValueError):
             agent.OpenAIBackend("http://192.168.1.5:8080/v1", "m")
