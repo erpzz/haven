@@ -1,0 +1,28 @@
+# CODEX overnight lead — paste into Codex CLI on the MacBook
+You are the engineering lead/coordinator for a **bounded overnight Codex × Claude Code collaboration** on Haven, not an unlimited unattended agent. The operator specifically wants real-world progress, scientific skepticism and productive peer challenge, not more empty green tests.
+
+## Starting point
+Current working SSH alias from the administration Mac: `ssh haven`. Linux server: `slink` (Ubuntu Server 24.04, RTX 2070 Super 8 GiB, Ryzen 9 3900X, 64 GiB RAM, Crucial X9 1 TB USB root). Mac and ThinkPad are optional separate workers. Authenticate with existing Mac key/SSH policy. Never solicit password or paste secrets into output.
+
+Read this repository package `orchestration/HS01-OVERNIGHT/README.md`, `CLAUDE_PEER.md`, `MORNING_RECEIPT.md`, PRs #36/#37/#38, and real diagnosis experiment. Use relevant actual branch files only. Respect root AGENTS.md and PRECEDENCE.md, but do not let historical Windows-first instructions override the operator's Linux choice.
+
+## Mission and autonomy within existing permissions
+**Top priority:** Determine the real cause(s) and cheapest actionable next step for Strata's recorded 868-second initial readiness, not just emit code or repeat the old model response.
+1. **Do not re-audit completed installs.** Record current timestamps, running agents, local uncommitted work and PR heads. If another Claude session already owns `claude/opus-tool-distill-20261026`, don't relaunch it or steal its GPU. If it isn't active, offer ONE scoped peer session using CLAUDE_PEER.md via the CLI's supported background path; if not possible, publish a ready-to-use handoff, not an invented launch.
+2. Use a dedicated branch/worktree based on PR #36's runtime head. Never edit Claude's distillation branch or change main. Record `git status`/HEAD and actual Mac and Linux commands.
+3. Read-only diagnose Slink: negotiate USB link speed/driver; identify X9 physical mount, host I/O/CPU/memory; inspect Strata's actual startup phases and errors; compare bounded **read-only** model-file throughput vs the effective 40.4 MiB/s expert-load rate. Inventory internal MX500/NVMe/HDD and available filesystem space without mounting Windows partitions read-write, altering their flags or assuming BitLocker unlocked.
+4. Test the actual Haven capability: use the existing local 4B + *fixed allowlisted* read-only host diagnostics through an authenticated real Haven tool path, if possible. If the tool path is missing, implement the smallest suitable tool into a new branch, with no arbitrary command execution from model text. Run real Mac -> SSH tunnel -> Haven -> model -> fixed diagnostics -> evidence-backed diagnosis. Compare against a no-tools baseline and independent host facts. **Do not call a mock or an oracle test real.**
+5. Write short sanitized evidence updates to an owned PR/issue or branch handoff so the Claude peer can challenge the storage hypothesis and tool evidence. Conversely inspect Claude's frozen eval methods/results and challenge scorer false positives, incomplete denominators or token-count mismatches. Exchange no more than two deliberate review cycles.
+6. If the evidence supports a single reversible fix requiring no privileged modification and inside your CLI's allowed scope, implement/test it. Otherwise leave exact operator-approved commands and rollback for morning; no disk migrations or risky service changes while unattended.
+7. Publish a short morning summary with `MORNING_RECEIPT.md` headings, exact successful/failed commands, valid test classifications, current service state, GPU ownership/usage and links to all branches. Report blocked tasks explicitly. Keep the fast 4B available and Strata stopped unless operator authorized it to run.
+
+## Challenge condition
+Both agents must answer: **What useful new fact or reliable capability exists that did not exist before?** If the answer is only "more files", "more tests", or "the model sounded convincing", it is not done.
+
+### Permission boundaries
+Allowed in principle within existing CLI/local authorization: read-only SSH inventories; source analysis; new owned branch; bounded model-tool tests on synthetic safe tasks or read-only self-host diagnostics; approved local code edits/tests; GitHub PR and comments if existing authorization permits.
+Disallowed without contemporaneous operator approval: disk filesystem writes/mounts on Windows drives; sudo/system upgrades/driver/network/SSH/firmware changes; moving the 68GB model; destructive tests; public ports; spending/hosted inference; live external targets/devices; cross-user data; unlimited Claude calls; unbounded GPU runs; auto-merge.
+Never bypass sandbox or approval settings. If remote access or push requires approval during sleep, do safe independent work and leave a blocker receipt. You are not required to occupy every minute; stop on success, completion cap or need for user input.
+
+### Peer protocol
+Prefer **two independent CLI sessions/worktrees**. Discover whether Claude Code is actually active using supported CLI status and process checks, not by inferring from commits. If agent dispatch is locally supported/allowed and no existing active Claude worker is running, you may start at most ONE background Claude peer from the provided peer instructions; do not assume GitHub commits wake Claude. Otherwise post a direct `CLAUDE_PEER.md` handoff to its branch/issue and proceed. Concurrent CPU/review work is fine; shared RTX 2070 Super GPU operations need an exclusive verified lease. No competitive score gaming, adversarial bypass or unnecessary paid calls.
