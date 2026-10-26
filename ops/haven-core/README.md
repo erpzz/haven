@@ -1,6 +1,7 @@
 # Haven Core — Ubuntu bootstrap (operator-run)
 
 Current Linux continuation: [Opus and Slinky: continue Haven Core](CLAUDE_NEXT_SESSION.md).
+Current operator launch prompt: [Opus — take the wheel](OPUS_START_PROMPT.md).
 Real GPU inference is running; bounded LoRA training completed without model
 promotion. See [administration/recovery](ADMIN_RECOVERY.md) and the separate
 [Linux Strata path](STRATA_LINUX.md) for current operation and remaining work.
@@ -40,8 +41,10 @@ No OS installation, partitioning, Git checkout, agent installation, SSH key crea
 - Only then optional workers, model/agent bakeoff (#28), reviewed distillation pilot (#29).
 
 ## Cheap Claude handoff
-Run Claude Code in this branch with:
-> Read ops/haven-core/README.md, ops/haven-core/CLAUDE_EXECUTION_BRIEF.md and HS-01 v2 design. Do not run broad repo-wide or network scans. Confirm observed local/SSH state and inspect actual scripts. Use the smallest required set of tools; propose host modifications with rollback, execute only after my approval, and return short command/test receipts. Stop when the requested acceptance gate passes.
+Use `OPUS_START_PROMPT.md` as the new operator message. It records the completed
+runtime, experiment results, project steering request and current authorized
+scope. `CLAUDE_EXECUTION_BRIEF.md` retains the original bootstrap assignment as
+history; its first inventory/approval steps are no longer the next task.
 
 ## Verification
 `python3 -m unittest discover -s ops/haven-core/tests -v` runs only local static/plan checks; passing it does **not** mean Linux has booted on the desktop.

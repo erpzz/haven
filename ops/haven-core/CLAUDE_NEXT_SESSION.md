@@ -1,6 +1,11 @@
 # Opus and Slinky: continue Haven Core
 
-## Current checkpoint — 2026-10-25
+## Current checkpoint — 2026-10-26 UTC
+
+Operator launch prompt: [Opus — take the wheel](OPUS_START_PROMPT.md). The operator
+now explicitly requests project exploration and full technical steering, rather
+than requiring the runtime-switch suggestion below. It includes the friendly
+GPT-6 competition and a concrete learning hypothesis without asserting a result.
 
 The first milestone is complete: the administration Mac can use `ssh haven`,
 and the existing Linux Model Lab has produced real GPU responses through its
@@ -34,7 +39,9 @@ agent. Preserve ordinary sudo boundaries, host trust, recovery and private data.
 
 - Dedicated encrypted SSH key and convenient alias; fresh key-only access and
   separate password recovery verified. A clean local console login is available.
-  The purple dialog was stale screen content; package audit was clean.
+  The operator has now reported independently comparing the local host fingerprint
+  and confirming the pinned key matches. The purple dialog was stale screen
+  content; package audit was clean.
 - Signed headless NVIDIA driver installed and tested after a real reboot with
   Secure Boot preserved. No disk, Windows or bootloader changes were made.
 - Python stdlib Model Lab runs as an ordinary lingering systemd user service,
@@ -60,12 +67,12 @@ agent. Preserve ordinary sudo boundaries, host trust, recovery and private data.
   Two verified training rows survived; four failures stayed in the private review
   queue; two held-out tasks were excluded. Do not auto-approve failed targets.
 
-## In progress: Strata Linux
+## Completed: Strata Linux first response
 
 The old Windows v0.1.39 pin has no Linux release assets. The separately installed
 Linux path uses official release v0.2.6, Control 0.1.51 and signed engine 0.1.50.
 The feed selected its CUDA 13 package, which explicitly includes sm_75 and passed
-its binary version check. A model-backed run remains to be completed.
+its binary version check. The model-backed run described below completed.
 
 Both pinned IQ2_XS shards (68 GB total) are downloaded, SHA-256 verified and
 prepared. The native profile uses 8K context, one request, no vision/MTP/hooks,
@@ -106,10 +113,10 @@ account enrollment; no tailnet/DNS/routes were guessed. LAN SSH remains the
 working administration path. Keep inference on loopback, preserve Mullvad and
 ordinary SSH recovery, and scope mesh access before enabling it.
 
-## Next useful engineering slice
+## Available engineering slice — operator grants Opus steering
 
-Add one explicit switch between the **prepared** fast 4B model and Strata in the
-existing Model Lab. The current Linux button attaches already-running Strata;
+One useful option is an explicit switch between the **prepared** fast 4B model
+and Strata in the existing Model Lab. The current Linux button attaches already-running Strata;
 starting/stopping its prepared user service still uses the command line. Reuse
 Lab jobs for visible startup/progress/cancellation, keep service names/argv fixed,
 and keep keys on the server. Stop only the known Haven service when switching
@@ -119,6 +126,13 @@ download, framework, training or architecture study is needed.
 Use a fresh owned branch from PR #36. One actual 4B -> Strata -> 4B cycle with a
 short answer and cleanup is enough acceptance for that feature. Read the saved
 receipts instead of repeating package/GPU audits or the tiny training pilot.
+
+This feature remains unimplemented: source inspection occurred, but no runtime
+switch code or branch was created. The latest human request is a handoff with
+project exploration and full technical steering for Opus. The launch prompt
+suggests a verified local teacher-to-student experiment while allowing Opus to
+choose a more valuable capability slice. No breakthrough or quality gain is
+claimed from the existing operational and training receipts.
 
 ## Peer handoff and checkpointing
 
