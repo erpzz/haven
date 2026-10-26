@@ -1,6 +1,6 @@
 # Start here — Haven
 
-Repository: https://github.com/erpzz/haven · Public. Never add credentials, host inventories, IP addresses, private paths or raw transcripts.
+Repository: https://github.com/erpzz/haven · Treat it as public regardless of its current visibility setting. Never add credentials, host inventories, IP addresses, private paths or raw transcripts.
 
 Every claim below is tagged **observed** (a real run with a saved receipt), **prepared** (installed, verified and ready, but not routinely running) or **planned** (design intent, no code). Missing data is unknown, not success.
 
