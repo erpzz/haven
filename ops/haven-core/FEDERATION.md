@@ -118,3 +118,21 @@ model weights, SSH keys, Windows/internal volumes, research branches and private
 receipts. No driver, firewall, SSH security or system-level service change is part
 of this slice. Homebrew runtime dependencies are separately recorded in the
 private implementation log; do not uninstall shared dependencies blindly.
+
+### Peer-review corrections
+
+Claude identified bearer-key disclosure if an unrelated process acquired the old
+reverse TCP port after SSH disconnected. Enrolled workers now use a Unix-domain
+SSH listener inside the owner's mode-0700 enrollment directory. Both metadata
+and inference connect only through that owned socket; the nominal loopback URL
+is never dialed for worker requests. Missing socket fails before sending headers.
+Processes already running as the owner remain inside the owner's trust boundary.
+The model digest is explicitly WORKER_DECLARED on the control host, and each
+answer renders its route reason and digest provenance. Mac-side checksum checks
+do not become independent control-host verification.
+
+The first diagnostic pair is preserved: baseline hit its 768-token output cap;
+tool-enabled 4B completed three real fixed tools and an answer in 8.29 seconds.
+This is a demonstrated tool path, not a clean paired quality win. No rerun was
+used to improve the score. Later code preserves capped partial responses and
+usage; that evidence was unfortunately lost by the original baseline handler.

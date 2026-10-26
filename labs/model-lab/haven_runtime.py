@@ -71,8 +71,8 @@ def start(lab, request):
 
 
 def wait_fast(lab, job, *, restoring=False):
-    if gpu_lease.compute_pids():
-        raise ValueError('A GPU process remains; fast 4B was not started.')
+    if gpu_lease.unit_state(STRATA) not in ('inactive', 'failed') or gpu_lease.compute_pids():
+        raise ValueError('Strata is active/transitioning or a GPU process remains; fast 4B was not started.')
     child = lab.jobs[lab.start_llama('qwen35-4b', 'balanced', _switch_job=job.id)]
     deadline = time.monotonic() + 190
     job.update(child_job_id=child.id, message='Restoring fast 4B\u2026' if restoring else 'Loading fast 4B\u2026')
