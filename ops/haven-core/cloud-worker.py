@@ -86,7 +86,8 @@ def configure(args):
         exe = shutil.which(lane['cli'])
         if not exe:
             print(f'{lane["cli"]} is not installed; {ident} stays disabled.'); continue
-        lanes[ident] = {'exe': os.path.realpath(exe), 'model': lane['model']}
+        # The package manager's stable link, so an upgrade does not leave a dangling versioned path.
+        lanes[ident] = {'exe': os.path.abspath(exe), 'model': lane['model']}
     if 'haven-codex-cli' in lanes:
         # --ignore-user-config also drops the account's model; record only that one key from it.
         lanes['haven-codex-cli']['model'] = args.codex_model or codex_model()
@@ -396,16 +397,35 @@ def enable():
     print('Cloud lane LaunchAgent registered on loopback only.')
 
 
-def enroll():
+# Runs on Slink. Finds the Lab code that will read the enrollment and refuses if it predates cloud lanes:
+# an older registry rejects unknown kinds, and a Lab that cannot load its registry cannot start.
+REMOTE_PREFLIGHT = '''
+import os, pathlib, re, subprocess, sys
+os.umask(0o077)
+data, lab = sys.argv[1], sys.argv[2]
+if not lab:
+    unit = subprocess.run(['systemctl', '--user', 'show', 'haven-model-lab', '-p', 'ExecStart'], capture_output=True, text=True).stdout
+    found = re.search(r'(\\S+)/server\\.py', unit)
+    lab = found[1] if found else ''
+code = pathlib.Path(lab) / 'providers.py'
+if not code.is_file() or 'HOSTED_SUBSCRIPTION' not in code.read_text():
+    sys.exit('REFUSED: the Lab at %s predates cloud lanes; deploy this branch first.' % (lab or 'unknown'))
+p = pathlib.Path(data).expanduser() / 'providers'
+p.mkdir(parents=True, exist_ok=True, mode=0o700)
+print(p)
+'''
+
+
+def enroll(args):
     config = prepare()
     import shlex
     run = lambda *a, **k: subprocess.run(a, check=True, capture_output=True, text=True, **k)
     idents = [ident.replace('haven-', 'cloud-') for ident in config['lanes']]
-    remote_dir = ("import os,pathlib; os.umask(0o077); p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; "
-                  "p.mkdir(parents=True,exist_ok=True,mode=0o700); print(p)")
-    providers = run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote_dir)).stdout.strip()
-    if not providers.startswith('/') or '\n' in providers:
-        raise ValueError('Invalid private remote enrollment directory.')
+    check = subprocess.run([*SSH, 'haven', 'python3 -c ' + shlex.quote(REMOTE_PREFLIGHT) + ' ' +
+                            shlex.quote(args.data_dir) + ' ' + shlex.quote(args.lab_dir)], capture_output=True, text=True)
+    providers = check.stdout.strip()
+    if check.returncode or not providers.startswith('/') or '\n' in providers:
+        raise ValueError((check.stderr.strip() or 'Invalid private remote enrollment directory.') + ' Nothing was enrolled.')
     # Replace only our own tunnel so its forwards always match the configured lanes.
     if subprocess.run([*SSH, '-S', str(SOCKET), '-O', 'check', 'haven'], capture_output=True).returncode == 0:
         run(*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven')
@@ -428,13 +448,13 @@ def enroll():
                for ident in config['lanes']]
     # Secrets travel over host-verified SSH stdin, never argv or a printed link. Only our own files are replaced.
     remote = ("import sys,json,os,pathlib,tempfile; os.umask(0o077); rows=json.load(sys.stdin); "
-              "p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'\n"
+              "p=pathlib.Path(sys.argv[1])\n"
               "for name in ('cloud-claude-code','cloud-codex-cli'):\n"
               "    f=p/(name+'.json')\n"
               "    if f.exists() and name not in [r['id'] for r in rows]: f.unlink()\n"
               "for d in rows:\n"
               "    fd,n=tempfile.mkstemp(prefix='.enroll-',dir=p); f=os.fdopen(fd,'w'); json.dump(d,f); f.close(); os.replace(n,p/(d['id']+'.json'))")
-    run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote), input=json.dumps(entries))
+    run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote) + ' ' + shlex.quote(providers), input=json.dumps(entries))
     print('Enrolled on Slink:', ', '.join(e['id'] for e in entries) or 'no lanes',
           '- refresh workers in Haven. Nothing was sent to a cloud model.')
 
@@ -465,12 +485,16 @@ def main():
     c.add_argument('--claude-config-dir', default=os.environ.get('CLAUDE_CONFIG_DIR', ''))
     c.add_argument('--codex-model', default='', help='default: the top-level model in ~/.codex/config.toml')
     c.add_argument('--daily-cap', type=int, default=50, choices=range(1, 501), metavar='1-500')
-    for name in ('serve', 'enable', 'enroll', 'disable', 'status'): sub.add_parser(name)
+    e = sub.add_parser('enroll', help='tunnel and enroll the lanes in a Haven Lab on Slink')
+    e.add_argument('--data-dir', default='~/.local/share/haven-model-lab', help='that Lab\'s --data-dir on Slink')
+    e.add_argument('--lab-dir', default='', help='that Lab\'s labs/model-lab on Slink; default: the haven-model-lab unit')
+    for name in ('serve', 'enable', 'disable', 'status'): sub.add_parser(name)
     args = parser.parse_args()
     if os.getuid() == 0: parser.error('Run as the ordinary owner account.')
     os.umask(0o077)
     if args.action == 'configure': return configure(args)
-    {'serve': serve, 'enable': enable, 'enroll': enroll, 'disable': disable, 'status': status}[args.action]()
+    if args.action == 'enroll': return enroll(args)
+    {'serve': serve, 'enable': enable, 'disable': disable, 'status': status}[args.action]()
 
 
 if __name__ == '__main__':
