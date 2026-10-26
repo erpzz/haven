@@ -15,9 +15,9 @@ Headline single-run numbers (details and caveats in [START_HERE.md](START_HERE.m
 
 ## Where the work is
 
-All of it is on open draft pull requests, not on `main`:
+The runtime is on `main`; training and newer features are on open pull requests:
 
-- Runtime: [PR #36](https://github.com/erpzz/haven/pull/36) (Model Lab on Linux, CUDA installer, Strata service).
+- Runtime, merged: [PR #35](https://github.com/erpzz/haven/pull/35) (Ubuntu bootstrap) and [PR #36](https://github.com/erpzz/haven/pull/36) (Model Lab on Linux, CUDA installer, Strata service).
 - Training: [PR #37](https://github.com/erpzz/haven/pull/37) (bounded LoRA pilot) and [PR #45](https://github.com/erpzz/haven/pull/45) (verified-teacher tool-SFT lab and results).
 - Coordination: [issue #40](https://github.com/erpzz/haven/issues/40). In-flight features: [#41](https://github.com/erpzz/haven/pull/41), [#42](https://github.com/erpzz/haven/pull/42), [#43](https://github.com/erpzz/haven/pull/43).
 
