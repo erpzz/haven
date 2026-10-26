@@ -83,9 +83,10 @@ Do not disable Secure Boot, edit partitions/boot entries or reinstall a working
 driver because a model fails. Package upgrades may regenerate an initramfs;
 record any reboot requirement and stop experiments before rebooting.
 
-The private storage check found a USB 2 link on the external root SSD. This is
-an I/O bottleneck, not evidence of an SSD fault. Any later cable/port change must
-happen with the machine shut down; never unplug the mounted root filesystem.
+Consult the private storage check before diagnosing slow package/model writes.
+A limited USB link can be an I/O bottleneck without implying an SSD fault. Any
+cable/port change must happen with the machine shut down; never unplug the
+mounted root filesystem.
 
 ## Container rollback and privileges
 
