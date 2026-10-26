@@ -92,18 +92,36 @@ function applyState(s) {
  metric('gpu-util',g?.utilization_pct==null?null:g.utilization_pct.toFixed(0),'%'); metric('vram-use',g?.memory_used_mib==null?null:(g.memory_used_mib/1024).toFixed(1),'GiB');
  $('gpu-name').textContent=g?g.name:`GPU telemetry: ${h.gpu_status.toLowerCase().replaceAll('_',' ')}`; $('vram-total').textContent=g?`of ${(g.memory_total_mib/1024).toFixed(1)} GiB · ${g.temperature_c??'—'} °C`:'No NVIDIA reading; never shown as zero';
  metric('ram-free',h.ram_available_gib==null?null:h.ram_available_gib.toFixed(1),'GiB'); $('ram-total').textContent=h.ram_total_gib?`of ${h.ram_total_gib.toFixed(1)} GiB · ${h.cpu_logical_threads} logical CPU threads`:'RAM measurement unavailable';
- $('send').disabled=busy||benchRunning||!connected; $('run-bench').disabled=busy||benchRunning||!connected;
- for(const id of ['connect','disconnect','unload','profile','context','threads','confirm-import'])$(id).disabled=benchRunning;
+ const switching=!!s.prepared_runtime?.switch_job;
+ $('send').disabled=busy||benchRunning||switching||!connected; $('run-bench').disabled=busy||benchRunning||switching||!connected;
+ for(const id of ['connect','disconnect','unload','profile','context','threads','confirm-import'])$(id).disabled=benchRunning||switching;
  const linux=h.platform==='linux';
  $('install-engine').disabled=s.llama_installed||!s.engine_install_supported;
  const engineMB=Math.round((s.engine_download_bytes||645000000)/1e6);
  $('install-engine').textContent=s.llama_installed?'CUDA engine installed ✓':s.engine_install_supported?`Install pinned CUDA engine · ~${engineMB} MB`:'Automatic engine setup unavailable';
  if(linux){
+  let runtimeControls=$('prepared-runtime-controls');
+  if(!runtimeControls){
+   runtimeControls=element('div','button-row admin-only');runtimeControls.id='prepared-runtime-controls';
+   for(const [target,label] of [['strata','Use Strata'],['fast4b','Use fast 4B']]){
+    const button=element('button','secondary',label);button.id='runtime-'+target;
+    button.onclick=async()=>{try{const result=await api('/api/runtime/switch',{target});toast('Switch started. Progress appears in Setup; cancellation is available there.');go('setup');await refresh();const done=await waitJob(result.job_id,undefined,3000);await refresh();go('playground');toast(done.state==='COMPLETED'?'Runtime ready. Chat here in Haven.':'Switch stopped. '+(done.fast4b_restored?'Fast 4B was restored.':''));}catch(e){toast(e.message,true);}};
+    runtimeControls.append(button);
+   }
+   const note=element('p','field-note');note.id='runtime-note';runtimeControls.append(note);
+   const investigate=element('button','secondary','Investigate host');investigate.id='diagnose-host';investigate.onclick=()=>startDiagnostic();runtimeControls.append(investigate);
+   document.querySelector('.card-heading').after(runtimeControls);
+  }
+  runtimeControls.classList.toggle('hidden',auth.enabled&&auth.user?.role!=='admin');
+  const runtime=s.prepared_runtime||{};
+  for(const target of ['strata','fast4b'])$('runtime-'+target).disabled=busy||benchRunning||!!runtime.switch_job||runtime.peer_busy===true;
+  $('diagnose-host').disabled=busy||benchRunning||switching||runtime.peer_busy===true||c.kind!=='llama'||c.ownership!=='OWNED';
+  $('runtime-note').textContent=runtime.peer_busy?'An engineering experiment has reserved the GPU. Your current job will be preserved.':runtime.switch_job?'Switching prepared runtimes. See Setup for progress or cancellation.':'Prepared models · no downloads · Strata cold startup can take about 15 minutes.';
   $('install-note').textContent='Pinned Ubuntu CUDA runtime. SHA-256 verified; installed only in this lab. The NVIDIA driver is managed separately.';
   document.querySelector('footer span:last-child').textContent='Haven Core · Linux';
   document.querySelector('.strata-panel ol').classList.add('hidden');
   document.querySelector('.strata-panel > p').textContent='Strata runs large models using GPU and RAM expert caching. The prepared Linux service uses the pinned official release and stays separate from llama.cpp.';
-  document.querySelector('.strata-panel .field-note').textContent='Connect the prepared Haven Strata service without entering its private API key. It stays running when this lab disconnects or stops. Other local backends can use the fields above.';
+  document.querySelector('.strata-panel .field-note').textContent='Use the runtime buttons in Playground to start and switch the prepared models. No terminal command, second browser page or API key is needed. This attachment-only button is for an already-running service.';
   if(!$('connect-haven-strata')){
    const prepared=element('button','primary','Connect Haven Strata ↗');prepared.id='connect-haven-strata';
    prepared.onclick=async()=>{try{await api('/api/connect/haven-strata',{});await refresh();go('playground');toast('Connected to Haven Strata. Its private credential stays on the server.');}catch(e){toast(e.message,true);}};
@@ -112,12 +130,13 @@ function applyState(s) {
   $('connect-haven-strata').disabled=busy||benchRunning;
  }
  renderModels(); renderJobs();
+ if(!diagnosticResumed&&sessionStorage.getItem('haven-diagnostic-job')&&(!auth.enabled||auth.user?.role==='admin')){diagnosticResumed=true;showDiagnostic(sessionStorage.getItem('haven-diagnostic-job'));}
 }
 async function refresh(){ if(refreshBusy)return; refreshBusy=true; try{applyState(await api('/api/state'));}catch(e){if(!state)toast(e.message,true);}finally{refreshBusy=false;} }
 function renderModels(){ const grid=$('model-grid'); grid.replaceChildren(); for(const m of state.models){ const n=element('article','model-card'); n.append(element('span','tag',m.tag||'LOCAL IMPORT'),element('h2','',m.name),element('p','',m.description)); const meta=element('div','model-meta'); meta.append(element('span','',m.quant||'GGUF'),element('span','',m.download_gb?`${m.download_gb.toFixed(2)} GB download`:`${((m.size_bytes||0)/1e9).toFixed(2)} GB file`),element('span','',m.license||'Review model license')); n.append(meta); const buttons=element('div','button-row'); const action=element('button',m.downloaded?'primary':'secondary',m.downloaded?'Load on GPU ↗':'Download model ↓'); action.disabled=busy||benchRunning; action.onclick=()=>modelAction(m); buttons.append(action); if(m.source){const link=element('a','text-btn','Model card ↗');link.href=m.source;link.target='_blank';link.rel='noreferrer noopener';buttons.append(link);} n.append(buttons);grid.append(n); } }
 function renderJobs(){ const root=$('jobs');root.replaceChildren(); for(const j of state.jobs.filter(x=>x.kind!=='generation').slice(-5)){const n=element('div','job');n.append(element('strong','',`${j.kind.replaceAll('-',' ')} · ${j.state}`),element('p','',j.error||j.message||'Working…'));if(j.state==='RUNNING'){const pr=element('progress');pr.max=1;if(j.progress!=null)pr.value=j.progress;n.append(pr);const c=element('button','text-btn','Cancel / pause');c.onclick=async()=>{try{await api('/api/cancel',{id:j.id});toast('Cancellation requested. Downloads retain their partial file.');}catch(e){toast(e.message,true)}};n.append(c);}root.append(n);} }
 async function modelAction(m){try{if(!m.downloaded){if(!confirm(`Download ${m.name} (${m.download_gb} GB) from Hugging Face? The file will be checksum-verified before use.`))return;await api('/api/model/download',{id:m.id,confirmed:true});go('setup');toast('Download started. Progress appears below the engine log.');}else{const out=await api('/api/engine/start',{id:m.id,preset:$('profile').value,overrides:{context:Number($('context').value),threads:Number($('threads').value)},allow_tight:$('allow-tight').checked});go('setup');toast('Loading the CUDA engine. Watch the engine log for offload and errors.');await waitJob(out.job_id);await refresh();go('playground');toast('Model ready. GPU measurements reflect your actual hardware.');}await refresh();}catch(e){toast(e.message,true);}}
-async function waitJob(id, render){while(true){const j=await api('/api/jobs/'+id);if(render)render(j);if(j.state!=='RUNNING'){if(j.state==='FAILED')throw new Error(j.error||'Job failed.');return j;}await sleep(350);}}
+async function waitJob(id, render,interval=350){while(true){const j=await api('/api/jobs/'+id);if(render)render(j);if(j.state!=='RUNNING'){if(j.state==='FAILED')throw new Error(j.error||'Job failed.');return j;}await sleep(interval);}}
 $('connect').onclick=async()=>{try{await api('/api/connect',{base:$('endpoint').value,key:$('backend-key').value,kind:$('backend-kind').value});$('backend-key').value='';await refresh();go('playground');toast('Connected locally. This lab will not stop the external server.');}catch(e){toast(e.message,true);}};
 $('disconnect').onclick=async()=>{try{await api('/api/disconnect',{});await refresh();toast('Disconnected. The external server is still running.');}catch(e){toast(e.message,true);}};
 $('native-ui').onclick=()=>{try{if(auth.enabled&&!['127.0.0.1','localhost'].includes(location.hostname))throw new Error('The engine-native UI stays on the Windows host. Use the Haven UI from this device.');const base=state?.connection?.base||$('endpoint').value;const u=new URL(base);if(u.hostname!=='127.0.0.1'||u.protocol!=='http:')throw new Error('Local URL required.');window.open(u.origin,'_blank','noopener,noreferrer');}catch(e){toast(e.message,true);}};
@@ -130,6 +149,20 @@ $('confirm-import').onclick=async e=>{e.preventDefault();try{await api('/api/mod
 async function loadLog(){try{$('engine-log').textContent=(await api('/api/log')).text;}catch(e){toast(e.message,true)}}$('refresh-log').onclick=loadLog;
 async function loadResearch(){try{$('research-text').textContent=(await api('/api/research')).text;}catch(e){toast(e.message,true)}}
 function messageNode(role,text){$('welcome')?.remove();const n=element('div','message '+role);n.append(element('div','role',role==='user'?'YOU':'LOCAL MODEL'));const body=element('div','body',text);n.append(body);$('messages').append(n);return{n,body};}
+let diagnosticResumed=false;
+async function startDiagnostic(){
+ if(busy||benchRunning)return;
+ try{const question=$('prompt').value.trim();const result=await api('/api/diagnostics',question?{question}:{});sessionStorage.setItem('haven-diagnostic-job',result.job_id);diagnosticResumed=true;$('prompt').value='';await showDiagnostic(result.job_id);}catch(e){toast(e.message,true);}
+}
+async function showDiagnostic(id){
+ busy=true;activeJob=id;$('cancel').classList.remove('hidden');const node=messageNode('assistant','Loading the saved diagnostic…');
+ try{let job;while(true){job=await api('/api/diagnostics/'+id);node.body.textContent=job.text||job.message||job.state;if(job.state!=='RUNNING')break;await sleep(1500);}
+  node.n.append(element('div','result-meta',`${job.state} · saved diagnostic ${id} · ${job.trace?.length||0} observed tools`));
+  if(job.error)node.n.append(element('p','field-note',job.error));
+  const details=element('details');details.append(element('summary','','Observed evidence and command exit codes'));
+  details.append(element('pre','',JSON.stringify(job.trace||[],null,2)));node.n.append(details);
+ }catch(e){node.body.textContent=e.message;toast(e.message,true);}finally{busy=false;activeJob=null;$('cancel').classList.add('hidden');await refresh();}
+}
 function clearChat(){if(busy){toast('Stop or finish the current request first.');return;}messages=[];$('messages').replaceChildren(element('p','muted','New conversation. Nothing from the previous chat is sent.'));}
 $('new-chat').onclick=clearChat;
 function genSettings(){return{max_tokens:Number($('max-tokens').value),temperature:Number($('temperature').value),top_p:.8,seed:Number($('seed').value),reasoning:$('reasoning').value};}
