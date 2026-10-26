@@ -48,5 +48,6 @@
     "Cold model loading is separate from response time; storage performance materially affects it.",
     "Raw prompts, responses, credentials, runtime paths and machine inventory are excluded.",
     "No cloud inference, paid API, GKD run or training of this large model was performed."
-  ]
+  ],
+  "execution_code_commit": "a47a12bde615e477927826560829ae431591c6be"
 }
