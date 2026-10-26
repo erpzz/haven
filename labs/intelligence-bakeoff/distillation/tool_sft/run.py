@@ -6,6 +6,7 @@
   build    verified teacher trajectories -> per-turn SFT rows (+ matched oracle control)
   compare  paired before/after comparison of two eval receipts
   rescore  re-verify saved eval records with the current checks (no inference)
+  oracle-data  exploratory: oracle trajectories for every training episode
 
 Raw transcripts and API keys never belong in Git; write outputs to a private
 directory. Inference endpoints must be literal loopback addresses.
@@ -249,6 +250,17 @@ def cmd_build(args):
     print(json.dumps(manifest, indent=2))
 
 
+def cmd_oracle_data(args):
+    """Exploratory: scripted trajectories for every training episode (full coverage)."""
+    out = pathlib.Path(args.output)
+    if out.exists():
+        raise SystemExit(f"{out} exists; refusing to overwrite.")
+    episodes = load_split("train")
+    write_jsonl(out, [row for e in episodes
+                      for row in sft_rows(agent.run_world_episode(agent.OracleBackend(e), e), "oracle")])
+    print(json.dumps({"episodes": len(episodes), "sha256": world.file_sha256(out)}))
+
+
 def cmd_rescore(args):
     out = pathlib.Path(args.out)
     if out.exists():
@@ -305,6 +317,8 @@ def main(argv=None):
     p = sub.add_parser("build")
     p.add_argument("--teacher", required=True)
     p.add_argument("--output", required=True)
+    p = sub.add_parser("oracle-data")
+    p.add_argument("--output", required=True)
     p = sub.add_parser("rescore")
     p.add_argument("--records", required=True)
     p.add_argument("--out", required=True)
@@ -313,7 +327,8 @@ def main(argv=None):
     p.add_argument("--after", required=True)
     args = parser.parse_args(argv)
     {"freeze": cmd_freeze, "eval": cmd_eval, "collect": cmd_collect, "build": cmd_build,
-     "compare": cmd_compare, "rescore": cmd_rescore}[args.command](args)
+     "compare": cmd_compare, "rescore": cmd_rescore,
+     "oracle-data": cmd_oracle_data}[args.command](args)
 
 
 if __name__ == "__main__":
