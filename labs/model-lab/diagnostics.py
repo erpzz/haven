@@ -85,7 +85,7 @@ def storage(commands):
     # ancestor owns negotiated speed. Neither requires guessing /dev/sdX.
     drivers = [(p / 'driver').resolve().name for p in device.parents if (p / 'driver').exists()]
     link = read(usb / 'speed') if usb else None
-    devices = run(['lsblk', '-b', '-J', '-o', 'TYPE,TRAN,ROTA,FSTYPE,MOUNTPOINTS'], commands)
+    devices = run(['lsblk', '-b', '-J', '-o', 'NAME,TYPE,TRAN,ROTA,FSTYPE,MOUNTPOINTS'], commands)
     alternatives = []
     def filesystems(node):
         return ([node['fstype']] if node.get('fstype') else []) + [v for c in node.get('children', []) for v in filesystems(c)]
