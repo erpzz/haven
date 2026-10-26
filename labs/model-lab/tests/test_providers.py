@@ -163,6 +163,8 @@ class RoleTests(unittest.TestCase):
                 self.assertEqual(request('/api/providers')[0], 403)
                 self.assertEqual(request('/api/providers/reload', {})[0], 403)
                 self.assertEqual(request('/api/providers/probe', {})[0], 403)
+                self.assertEqual(request('/api/discovery/search', {'query':'public'})[0], 403)
+                self.assertEqual(request('/api/discovery/detail', {'repo':'public/model'})[0], 403)
                 self.assertNotIn('synthetic-node', request('/api/state')[1])
                 self.assertNotIn('test-worker', request('/api/state')[1])
                 self.assertEqual(worker.calls, [])

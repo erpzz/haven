@@ -109,6 +109,22 @@
       "license": "Apache-2.0",
       "url": "https://huggingface.co/Qwen/Qwen3-4B-GGUF/resolve/main/Qwen3-4B-Q4_K_M.gguf",
       "source": "https://huggingface.co/Qwen/Qwen3-4B-GGUF/blob/main/Qwen3-4B-Q4_K_M.gguf"
+    },
+    {
+      "id": "smollm2-1.7b",
+      "name": "SmolLM2 \u00b7 1.7B Instruct",
+      "repo": "bartowski/SmolLM2-1.7B-Instruct-GGUF",
+      "filename": "SmolLM2-1.7B-Instruct-Q4_K_M.gguf",
+      "sha256": "77665ea4815999596525c636fbeb56ba8b080b46ae85efef4f0d986a139834d7",
+      "size_bytes": 1055609824,
+      "download_gb": 1.05561,
+      "description": "Non-Qwen transport baseline. Real Mac Metal inference verified; Slink load and Haven task quality remain unverified. 2K context for the prepared Mac worker.",
+      "tag": "MAC VERIFIED \u00b7 NOT QUALIFIED",
+      "quant": "Q4_K_M",
+      "license": "Apache-2.0",
+      "revision": "1f03464768bfcc0319fc50da8ff5fb20b6417ba2",
+      "url": "https://huggingface.co/bartowski/SmolLM2-1.7B-Instruct-GGUF/resolve/1f03464768bfcc0319fc50da8ff5fb20b6417ba2/SmolLM2-1.7B-Instruct-Q4_K_M.gguf",
+      "source": "https://huggingface.co/bartowski/SmolLM2-1.7B-Instruct-GGUF"
     }
   ],
   "notes": "Model content hashes are pinned. Download URLs use main; changed bytes fail verification rather than silently updating. Approximate catalog sizes are decimal GB, not allocation estimates.",

@@ -1,5 +1,7 @@
 # Current status
 
+**2026-10-26 integration update:** PR48 merged to main as `41f15d4`. The [morning receipt](ops/haven-core/MORNING_20261026.md) supersedes the earlier snapshot below for federation, diagnostics, CPU integration and deployment status. Historical measurements remain preserved.
+
 ## Runtime and training status — 2026-10-26
 
 Assembled from saved receipts, PR descriptions and issue #40 checkpoints as of 2026-10-26 05:00 UTC. Tags: **observed** (real run, receipt saved), **prepared** (installed and verified, not routinely running), **planned** (no code). The older coordination table below is kept as the September 2026 historical baseline.
