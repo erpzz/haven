@@ -161,9 +161,10 @@ PRESETS = {
     'balanced': {'label': 'Desktop-friendly CUDA', 'context': 4096, 'threads': 6, 'batch': 256, 'ubatch': 128, 'kv': 'f16', 'flash': 'auto'},
     'gpu': {'label': 'GPU-first CUDA', 'context': 4096, 'threads': 8, 'batch': 512, 'ubatch': 256, 'kv': 'f16', 'flash': 'auto'},
     'memory': {'label': 'Quantized KV experiment', 'context': 8192, 'threads': 8, 'batch': 256, 'ubatch': 128, 'kv': 'q8_0', 'flash': 'on'},
+    'cpu': {'label': 'CPU-only · leave GPU available', 'context': 2048, 'threads': 6, 'batch': 128, 'ubatch': 64, 'kv': 'f16', 'flash': 'off'},
 }
 
-def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: dict, gpu: int = 0) -> list[str]:
+def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: dict, gpu: int | None = 0) -> list[str]:
     context = bounded_int(profile.get('context', 4096), 512, 32768, 'Context')
     threads = bounded_int(profile.get('threads', 8), 1, 24, 'Threads')
     batch = bounded_int(profile.get('batch', 512), 32, 2048, 'Batch')
@@ -173,13 +174,25 @@ def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: di
         raise ValueError('Unsupported cache or flash attention option.')
     if kv != 'f16' and flash != 'on':
         raise ValueError('The quantized KV experiment requires flash attention on.')
-    bounded_int(gpu, 0, 15, 'GPU index'); bounded_int(port, 1024, 65535, 'Port')
-    return [str(exe), '--model', str(model), '--host', '127.0.0.1', '--port', str(port),
-            '--api-key-file', str(key_file), '--alias', 'haven-local', '--n-gpu-layers', '999',
-            '--device', f'CUDA{gpu}', '--ctx-size', str(context), '--parallel', '1', '--threads', str(threads),
+    bounded_int(port, 1024, 65535, 'Port')
+    if gpu is not None:
+        bounded_int(gpu, 0, 15, 'GPU index')
+    argv = [str(exe), '--model', str(model), '--host', '127.0.0.1', '--port', str(port),
+            '--api-key-file', str(key_file), '--alias', 'haven-local', '--n-gpu-layers', '0' if gpu is None else '999']
+    if gpu is not None:
+        argv += ['--device', f'CUDA{gpu}']
+    return argv + ['--ctx-size', str(context), '--parallel', '1', '--threads', str(threads),
             '--threads-batch', str(threads), '--batch-size', str(batch), '--ubatch-size', str(ubatch),
             '--flash-attn', flash, '--cache-type-k', kv, '--cache-type-v', kv, '--jinja', '--metrics',
             '--log-verbosity', '4']
+
+def estimate_cpu_fit(model_bytes: int, available_gib: float | None, context: int) -> dict:
+    """A conservative *admission heuristic*, not a measured RAM allocation."""
+    required_gib = model_bytes / GIB + 3 + max(1, context / 4096) + 4  # includes 4 GiB reserve for other work
+    return {'required_available_gib': round(required_gib, 2), 'available_gib': available_gib,
+            'status': 'UNKNOWN' if available_gib is None else
+                ('LIKELY_FITS' if available_gib >= required_gib else 'INSUFFICIENT_HEADROOM'),
+            'basis': 'Heuristic: GGUF size + 3 GiB runtime + context allowance + 4 GiB host reserve.'}
 
 def estimate_fit(model_bytes: int, free_mib: float | None, context: int) -> dict:
     # Not a GGUF architecture parser. Explicitly a conservative planning heuristic.
@@ -552,7 +565,8 @@ class Lab:
                 raise ValueError('Backend ownership changed while connecting; finish or unload it first.')
             self.connection = conn
         return {k: v for k, v in conn.items() if k != 'key'}
-    def start_llama(self, model_id: str, preset: str, overrides=None, allow_tight: bool = False) -> str:
+    def start_llama(self, model_id: str, preset: str, overrides=None, allow_tight: bool = False,
+                    compute: str = 'gpu') -> str:
         with self.lock:
             if self.connection and self.connection.get('ownership') == 'EXTERNAL':
                 raise ValueError('Disconnect and stop the external backend first; the lab will not kill it.')
@@ -562,16 +576,31 @@ class Lab:
             if not exe: raise ValueError('Install the CUDA engine first.')
             item = self.settings['models'].get(model_id)
             if not item or not Path(item['path']).is_file(): raise ValueError('Download or import the model first.')
+            if compute not in ('gpu', 'cpu'): raise ValueError('Unknown compute lane.')
             if preset not in PRESETS: raise ValueError('Unknown preset.')
+            if (preset == 'cpu') != (compute == 'cpu'):
+                raise ValueError('Select the profile matching the CPU or GPU lane.')
+            if compute == 'cpu' and sys.platform != 'linux':
+                raise ValueError('The CPU-only lane is currently supported on Linux.')
             profile = dict(PRESETS[preset]); profile.update(overrides or {})
-            gpu = 0
-            self.hw_at = 0  # A just-unloaded model must not leave the fit gate using cached VRAM.
+            gpu = None
+            self.hw_at = 0  # A just-unloaded model must not leave the fit gate using stale resource data.
             hw = self.get_hardware()
-            if not hw['gpus']: raise ValueError('NVIDIA GPU was not detected. Check your driver; CPU fallback is not silently enabled.')
-            first = hw['gpus'][0]; gpu = first['index']
-            fit = estimate_fit(item['size_bytes'], first['memory_free_mib'], profile['context'])
-            if fit['status'] != 'LIKELY_FITS' and not allow_tight:
-                raise ValueError('This configuration is tight for current free VRAM. Try a 4B model/shorter context, or explicitly enable the memory-risk experiment.')
+            if compute == 'gpu':
+                if not hw['gpus']: raise ValueError('NVIDIA GPU was not detected. CPU-only mode must be explicitly selected.')
+                first = hw['gpus'][0]; gpu = first['index']
+                fit = estimate_fit(item['size_bytes'], first['memory_free_mib'], profile['context'])
+                if fit['status'] != 'LIKELY_FITS' and not allow_tight:
+                    raise ValueError('This configuration is tight for current free VRAM. Try a 4B model/shorter context, or explicitly enable the memory-risk experiment.')
+            else:
+                # CPU inference must never bypass RAM admission just because GPU VRAM is occupied.
+                context = bounded_int(profile.get('context', 2048), 512, 8192, 'CPU context')
+                bounded_int(profile.get('threads', 6), 1, 8, 'CPU threads')
+                fit = estimate_cpu_fit(item['size_bytes'], hw.get('ram_available_gib'), context)
+                if fit['status'] != 'LIKELY_FITS':
+                    raise ValueError('Insufficient or unmeasured free RAM for CPU inference with host reserve. Check current memory use; do not override while other experiments run.')
+                if allow_tight:
+                    raise ValueError('Tight-memory override is GPU-only; CPU RAM reserve cannot be bypassed.')
             with socket.socket() as probe:
                 probe.bind(('127.0.0.1', 0)); port = probe.getsockname()[1]
             key = secrets.token_urlsafe(32); key_file = self.data / 'engine-key.txt'
@@ -580,6 +609,10 @@ class Lab:
             except OSError: pass
             argv = llama_command(exe, Path(item['path']), port, key_file, profile, gpu)
             env = dict(os.environ)
+            if compute == 'cpu':
+                # CUDA-linked llama.cpp still supports CPU GGUF execution; hide all CUDA devices
+                # from this *child process only*. Independent GPU agents are not modified.
+                env['CUDA_VISIBLE_DEVICES'] = '-1'
             # Avoid loading unrequested user overrides or inherited cloud credentials into the engine.
             for k in list(env):
                 if k.startswith(('LLAMA_ARG_', 'OPENAI_', 'ANTHROPIC_', 'TYPESAFE_')) or k in ('HF_TOKEN', 'HUGGING_FACE_HUB_TOKEN'):
@@ -589,6 +622,7 @@ class Lab:
                 env.pop('LD_AUDIT', None)
                 env['LD_LIBRARY_PATH'] = str(exe.parent)
             self.engine.launch(argv, exe.parent, label=item['name'], env=env)
+            self.engine.record['compute'] = compute
             owned_proc = self.engine.proc
             try:
                 j = self.new_job('engine-start')
@@ -615,9 +649,11 @@ class Lab:
                                 if j.cancelled.is_set() or self.engine.proc is not owned_proc or owned_proc.poll() is not None:
                                     raise InterruptedError('Startup was cancelled or its owner changed.')
                                 self.connection = {'base': base, 'key': key, 'model': 'haven-local', 'kind': 'llama', 'ownership': 'OWNED',
-                                    'display_model': item['name'], 'profile': profile, 'model_sha256': item.get('sha256'), 'connected_at': time.time()}
+                                    'display_model': item['name'], 'profile': profile, 'compute': compute,
+                                    'model_sha256': item.get('sha256'), 'connected_at': time.time()}
                                 self.engine.record['state'] = 'READY'
-                                j.update(state='COMPLETED', message='Engine ready; inspect log and live GPU telemetry to verify offload.')
+                                j.update(state='COMPLETED', message=('CPU-only engine ready; verify no GPU layers in engine log.' if compute == 'cpu'
+                                    else 'Engine ready; inspect log and live GPU telemetry to verify offload.'))
                             return
                         time.sleep(.5)
                     raise TimeoutError('Engine did not become ready within 180 seconds.')
