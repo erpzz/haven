@@ -1,5 +1,7 @@
 # Haven Core — Ubuntu bootstrap (operator-run)
 
+**To open the running Lab from the Mac:** `python3 ops/haven-core/open-lab.py`. Operation, recovery and rollback: [LINUX_MODEL_LAB.md](LINUX_MODEL_LAB.md). Project-level orientation and measured results: [../../START_HERE.md](../../START_HERE.md).
+
 Current Linux continuation: [Opus and Slinky: continue Haven Core](CLAUDE_NEXT_SESSION.md).
 Current operator launch prompt: [Opus — take the wheel](OPUS_START_PROMPT.md).
 Real GPU inference is running; bounded LoRA training completed without model
