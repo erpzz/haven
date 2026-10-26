@@ -65,7 +65,7 @@ async function loadUsers(){
 }
 $('account-button').onclick=async()=>{if(!auth.enabled)return;$('account-title').textContent=auth.user.username;$('account-summary').textContent=`Signed in as ${auth.user.role}. Conversations remain in each browser tab unless exported.`;$('invite-result').classList.add('hidden');$('account-dialog').showModal();if(auth.user.role==='admin'){try{await loadUsers();}catch(e){toast(e.message,true)}}};
 $('account-close').onclick=()=>$('account-dialog').close();
-$('logout').onclick=async()=>{try{await api('/api/auth/logout',{});}catch(e){toast(e.message,true);return;}auth.user=null;auth.csrf='';messages=[];state=null;$('account-dialog').close();showAuth('login','Signed out.');};
+$('logout').onclick=async()=>{try{await api('/api/auth/logout',{});}catch(e){toast(e.message,true);return;}auth.user=null;auth.csrf='';messages=[];state=null;$('messages').replaceChildren();$('provider-controls')?.remove();providerSelection='managed';sessionStorage.removeItem('haven-provider');sessionStorage.removeItem('haven-diagnostic-job');diagnosticResumed=false;$('account-dialog').close();showAuth('login','Signed out.');};
 $('create-invite').onclick=async()=>{try{const d=await api('/api/auth/invites',{role:$('invite-role').value});let origin=location.origin;if(['127.0.0.1','localhost'].includes(location.hostname)&&auth.lanUrls.length){try{origin=new URL(auth.lanUrls[0]).origin;}catch(_){}}const link=origin+'/#invite='+encodeURIComponent(d.token);$('invite-link').value=link;$('invite-result').classList.remove('hidden');toast('Invite created. It expires in 24 hours and works once.');}catch(e){toast(e.message,true)}};
 $('copy-invite').onclick=async()=>{const input=$('invite-link');try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(input.value);}else{input.focus();input.select();if(!document.execCommand('copy'))throw new Error('copy unavailable');}toast('Invite link copied.');}catch(_){input.focus();input.select();toast('Select and copy the invite link manually.');}};
 async function requestJSON(path,data,sessionAware=true){
@@ -82,10 +82,43 @@ function go(view) { if(auth.enabled&&auth.user?.role!=='admin'&&['models','exper
 document.querySelectorAll('[data-view]').forEach(n=>n.onclick=()=>go(n.dataset.view)); document.querySelectorAll('[data-go]').forEach(n=>n.onclick=()=>go(n.dataset.go));
 function metric(id,value,unit) { const n=$(id); n.replaceChildren(document.createTextNode(value==null?'—':value)); n.append(element('small','',unit)); }
 function rate(value) { return typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'—'; }
+let providerSelection=sessionStorage.getItem('haven-provider')||'managed', providerProbeBusy=false, providerProbeAt=0;
+function selectedConnection(s){
+ if(providerSelection==='managed')return s.connection;
+ if(providerSelection==='auto'&&s.connection?.base&&(!s.prepared_runtime?.peer_busy||s.connection.compute==='cpu')&&s.connection.kind==='llama')return s.connection;
+ const p=providerSelection==='auto'?(s.providers||[]).find(x=>x.observed.state==='READY'):(s.providers||[]).find(x=>x.id===providerSelection);
+ return p?{base:'provider:'+p.id,kind:p.kind,ownership:'EXTERNAL',model:p.model,display_model:p.display_model,compute:p.compute,worker_label:p.label,connected_at:p.id}:{};
+}
+function setProvider(value){
+ if(busy||benchRunning){toast('Finish or stop the current request before changing workers.');return;}
+ providerSelection=value;sessionStorage.setItem('haven-provider',value);lastModelSignature='';
+ if(messages.length)clearChat();
+ if(value!=='managed'&&Number($('max-tokens').value)>1024){$('max-tokens').value='512';toast('Short-context worker selected: output limit set to 512 tokens.');}
+ if(state)applyState(state);
+}
+function providerControls(s){
+ const admin=!auth.enabled||auth.user?.role==='admin';
+ if(!admin){providerSelection='managed';return;}
+ if(!$('provider-select')){
+  const box=element('div','admin-only');box.id='provider-controls';
+  const label=element('label','','Run this conversation on');const select=element('select');select.id='provider-select';select.setAttribute('aria-label','Inference worker');label.append(select);box.append(label);
+  const note=element('p','field-note');note.id='provider-note';box.append(note);
+  const button=element('button','secondary','Refresh workers');button.id='provider-refresh';button.onclick=async()=>{try{await api('/api/providers/reload',{});await api('/api/providers/probe',{});await refresh();}catch(e){toast(e.message,true);}};box.append(button);
+  document.querySelector('.card-heading').after(box);select.onchange=()=>setProvider(select.value);
+ }
+ const select=$('provider-select');const rows=[{id:'managed',label:`Slink · ${s.connection?.compute==='cpu'?'CPU':s.connection?.kind==='strata'?'Strata':'GPU'} · current runtime`},{id:'auto',label:'Automatic · ready private worker'},...(s.providers||[]).map(p=>({id:p.id,label:`${p.label} · ${p.compute.toUpperCase()} · ${p.display_model} · ${p.observed.state}`}))];
+ const signature=JSON.stringify(rows);if(select.dataset.signature!==signature){select.replaceChildren(...rows.map(p=>{const o=element('option','',p.label);o.value=p.id;return o;}));select.dataset.signature=signature;}
+ select.value=providerSelection;select.disabled=busy||benchRunning;
+ $('provider-note').textContent=providerSelection==='managed'?'Using the current Slink runtime. CPU/GPU loading is available in Model library.':providerSelection==='auto'?'Uses an already-ready private worker. No model starts, downloads, paid calls or cloud fallback. The actual worker is shown with each result.':'Inference runs on the selected machine. The cards above measure Slink, the control host. New worker selections start a fresh conversation.';
+ $('provider-refresh').disabled=providerProbeBusy||busy;
+ if((s.providers||[]).length&&!providerProbeBusy&&Date.now()>providerProbeAt){providerProbeBusy=true;providerProbeAt=Date.now()+30000;api('/api/providers/probe',{}).then(()=>refresh()).catch(()=>{}).finally(()=>{providerProbeBusy=false;});}
+}
 function applyState(s) {
- state=s; const c=s.connection, connected=!!c.base, h=s.hardware, g=h.gpus[0];
- $('connection-pill').className='pill'+(connected?' connected':''); $('connection-pill').textContent=connected?`● ${c.kind==='strata'?'Strata':c.kind==='llama'?'llama.cpp':'Local API'} connected`:'○ No engine connected';
- $('active-model').textContent=connected?(c.display_model||c.model):'No model loaded'; $('engine-sub').textContent=connected?`${c.kind} · ${c.ownership==='OWNED'?'managed here':'external server'} · local inference`:'Connect Strata or load a CUDA model';
+ const firstLoad=!state;
+ state=s;providerControls(s);const c=selectedConnection(s), connected=!!c.base, h=s.hardware, g=h.gpus[0];
+ if(firstLoad&&c.compute==='cpu'){$('compute-lane').value='cpu';syncComputeLane();}
+ $('connection-pill').className='pill'+(connected?' connected':''); $('connection-pill').textContent=connected?`● ${c.compute==='cpu'?'CPU-only':c.compute==='gpu'?'GPU · CUDA':c.kind==='strata'?'Strata':c.kind==='llama'?'llama.cpp':'Local API'} connected`:'○ No engine connected';
+ $('active-model').textContent=connected?(c.display_model||c.model):'No model loaded'; $('engine-sub').textContent=connected?`${c.worker_label||'Slink'} · ${c.kind} · ${c.compute||'GPU'} · private inference`:'Select a ready worker or load a prepared model';
  const signature=connected?`${c.base}|${c.model}|${c.connected_at}`:'';
  if(lastModelSignature && lastModelSignature!==signature && messages.length && !busy) { messages=[]; $('messages').replaceChildren(element('p','muted','Engine changed. A fresh conversation prevents mixing model histories.')); }
  lastModelSignature=signature;
@@ -96,6 +129,8 @@ function applyState(s) {
  $('send').disabled=busy||benchRunning||switching||!connected; $('run-bench').disabled=busy||benchRunning||switching||!connected;
  for(const id of ['connect','disconnect','unload','profile','context','threads','confirm-import'])$(id).disabled=benchRunning||switching;
  const linux=h.platform==='linux';
+ const starting=(s.jobs||[]).some(j=>j.kind==='engine-start'&&j.state==='RUNNING');
+ $('compute-lane').disabled=benchRunning||busy||starting||switching||!linux;
  $('install-engine').disabled=s.llama_installed||!s.engine_install_supported;
  const engineMB=Math.round((s.engine_download_bytes||645000000)/1e6);
  $('install-engine').textContent=s.llama_installed?'CUDA engine installed ✓':s.engine_install_supported?`Install pinned CUDA engine · ~${engineMB} MB`:'Automatic engine setup unavailable';
@@ -115,7 +150,7 @@ function applyState(s) {
   runtimeControls.classList.toggle('hidden',auth.enabled&&auth.user?.role!=='admin');
   const runtime=s.prepared_runtime||{};
   for(const target of ['strata','fast4b'])$('runtime-'+target).disabled=busy||benchRunning||!!runtime.switch_job||runtime.peer_busy===true;
-  $('diagnose-host').disabled=busy||benchRunning||switching||runtime.peer_busy===true||c.kind!=='llama'||c.ownership!=='OWNED';
+  $('diagnose-host').disabled=busy||benchRunning||switching||runtime.peer_busy===true||providerSelection!=='managed'||c.kind!=='llama'||c.ownership!=='OWNED';
   $('runtime-note').textContent=runtime.peer_busy?'An engineering experiment has reserved the GPU. Your current job will be preserved.':runtime.switch_job?'Switching prepared runtimes. See Setup for progress or cancellation.':'Prepared models · no downloads · Strata cold startup can take about 15 minutes.';
   $('install-note').textContent='Pinned Ubuntu CUDA runtime. SHA-256 verified; installed only in this lab. The NVIDIA driver is managed separately.';
   document.querySelector('footer span:last-child').textContent='Haven Core · Linux';
@@ -133,16 +168,26 @@ function applyState(s) {
  if(!diagnosticResumed&&sessionStorage.getItem('haven-diagnostic-job')&&(!auth.enabled||auth.user?.role==='admin')){diagnosticResumed=true;showDiagnostic(sessionStorage.getItem('haven-diagnostic-job'));}
 }
 async function refresh(){ if(refreshBusy)return; refreshBusy=true; try{applyState(await api('/api/state'));}catch(e){if(!state)toast(e.message,true);}finally{refreshBusy=false;} }
-function renderModels(){ const grid=$('model-grid'); grid.replaceChildren(); for(const m of state.models){ const n=element('article','model-card'); n.append(element('span','tag',m.tag||'LOCAL IMPORT'),element('h2','',m.name),element('p','',m.description)); const meta=element('div','model-meta'); meta.append(element('span','',m.quant||'GGUF'),element('span','',m.download_gb?`${m.download_gb.toFixed(2)} GB download`:`${((m.size_bytes||0)/1e9).toFixed(2)} GB file`),element('span','',m.license||'Review model license')); n.append(meta); const buttons=element('div','button-row'); const action=element('button',m.downloaded?'primary':'secondary',m.downloaded?'Load on GPU ↗':'Download model ↓'); action.disabled=busy||benchRunning; action.onclick=()=>modelAction(m); buttons.append(action); if(m.source){const link=element('a','text-btn','Model card ↗');link.href=m.source;link.target='_blank';link.rel='noreferrer noopener';buttons.append(link);} n.append(buttons);grid.append(n); } }
+function renderModels(){ const grid=$('model-grid'); grid.replaceChildren(); for(const m of state.models){ const n=element('article','model-card'); n.append(element('span','tag',m.tag||'LOCAL IMPORT'),element('h2','',m.name),element('p','',m.description)); const meta=element('div','model-meta'); meta.append(element('span','',m.quant||'GGUF'),element('span','',m.download_gb?`${m.download_gb.toFixed(2)} GB download`:`${((m.size_bytes||0)/1e9).toFixed(2)} GB file`),element('span','',m.license||'Review model license')); n.append(meta); const buttons=element('div','button-row'); const action=element('button',m.downloaded?'primary':'secondary',m.downloaded?`Load on ${$('compute-lane').value==='cpu'?'CPU':'GPU'} ↗`:'Download model ↓'); action.disabled=busy||benchRunning; action.onclick=()=>modelAction(m); buttons.append(action); if(m.source){const link=element('a','text-btn','Model card ↗');link.href=m.source;link.target='_blank';link.rel='noreferrer noopener';buttons.append(link);} n.append(buttons);grid.append(n); } }
 function renderJobs(){ const root=$('jobs');root.replaceChildren(); for(const j of state.jobs.filter(x=>x.kind!=='generation').slice(-5)){const n=element('div','job');n.append(element('strong','',`${j.kind.replaceAll('-',' ')} · ${j.state}`),element('p','',j.error||j.message||'Working…'));if(j.state==='RUNNING'){const pr=element('progress');pr.max=1;if(j.progress!=null)pr.value=j.progress;n.append(pr);const c=element('button','text-btn','Cancel / pause');c.onclick=async()=>{try{await api('/api/cancel',{id:j.id});toast('Cancellation requested. Downloads retain their partial file.');}catch(e){toast(e.message,true)}};n.append(c);}root.append(n);} }
-async function modelAction(m){try{if(!m.downloaded){if(!confirm(`Download ${m.name} (${m.download_gb} GB) from Hugging Face? The file will be checksum-verified before use.`))return;await api('/api/model/download',{id:m.id,confirmed:true});go('setup');toast('Download started. Progress appears below the engine log.');}else{const out=await api('/api/engine/start',{id:m.id,preset:$('profile').value,overrides:{context:Number($('context').value),threads:Number($('threads').value)},allow_tight:$('allow-tight').checked});go('setup');toast('Loading the CUDA engine. Watch the engine log for offload and errors.');await waitJob(out.job_id);await refresh();go('playground');toast('Model ready. GPU measurements reflect your actual hardware.');}await refresh();}catch(e){toast(e.message,true);}}
+async function modelAction(m){try{if(!m.downloaded){if(!confirm(`Download ${m.name} (${m.download_gb} GB) from Hugging Face? The file will be checksum-verified before use.`))return;await api('/api/model/download',{id:m.id,confirmed:true});go('setup');toast('Download started. Progress appears below the engine log.');}else{const compute=$('compute-lane').value;const out=await api('/api/engine/start',{id:m.id,preset:$('profile').value,compute,overrides:{context:Number($('context').value),threads:Number($('threads').value)},allow_tight:$('allow-tight').checked});go('setup');toast(`Loading the ${compute==='cpu'?'CPU-only':'CUDA'} engine. Watch the engine log for real startup status.`);const job=await waitJob(out.job_id);if(job.state!=='COMPLETED')throw new Error(job.error||`Engine start ${job.state.toLowerCase()}.`);await refresh();go('playground');toast(`Model ready on ${compute==='cpu'?'CPU':'GPU'}.`);}await refresh();}catch(e){toast(e.message,true);}}
 async function waitJob(id, render,interval=350){while(true){const j=await api('/api/jobs/'+id);if(render)render(j);if(j.state!=='RUNNING'){if(j.state==='FAILED')throw new Error(j.error||'Job failed.');return j;}await sleep(interval);}}
 $('connect').onclick=async()=>{try{await api('/api/connect',{base:$('endpoint').value,key:$('backend-key').value,kind:$('backend-kind').value});$('backend-key').value='';await refresh();go('playground');toast('Connected locally. This lab will not stop the external server.');}catch(e){toast(e.message,true);}};
 $('disconnect').onclick=async()=>{try{await api('/api/disconnect',{});await refresh();toast('Disconnected. The external server is still running.');}catch(e){toast(e.message,true);}};
 $('native-ui').onclick=()=>{try{if(auth.enabled&&!['127.0.0.1','localhost'].includes(location.hostname))throw new Error('The engine-native UI stays on the Windows host. Use the Haven UI from this device.');const base=state?.connection?.base||$('endpoint').value;const u=new URL(base);if(u.hostname!=='127.0.0.1'||u.protocol!=='http:')throw new Error('Local URL required.');window.open(u.origin,'_blank','noopener,noreferrer');}catch(e){toast(e.message,true);}};
 $('install-engine').onclick=async()=>{const mb=Math.round((state?.engine_download_bytes||645000000)/1e6);if(!confirm(`Download about ${mb} MB of pinned official llama.cpp CUDA binaries into this lab? No driver or system CUDA Toolkit will be installed.`))return;try{await api('/api/engine/install',{confirmed:true});toast('Installing. Progress appears below.');await refresh();}catch(e){toast(e.message,true);}};
-$('unload').onclick=async()=>{try{const r=await api('/api/engine/stop',{});await refresh();toast(`Owned engine: ${r.state}. External servers were not touched.`);}catch(e){toast(e.message,true);}};
+$('unload').onclick=async()=>{if(state?.connection?.ownership==='OWNED'&&state.connection.compute!=='cpu'&&!confirm('Unload the Lab-owned GPU model? Another agent or user may be using this Lab connection. Independent external services will NOT be stopped.'))return;try{const r=await api('/api/engine/stop',{});await refresh();toast(`Owned engine: ${r.state}. External servers were not touched.`);}catch(e){toast(e.message,true);}};
 $('profile').onchange=()=>{const p=state?.presets[$('profile').value];if(p){$('context').value=String(p.context);$('threads').value=String(p.threads);}};
+function syncComputeLane(){
+ const cpu=$('compute-lane').value==='cpu';
+ for(const option of $('profile').options)option.disabled=(option.value==='cpu')!==cpu;
+ $('profile').value=cpu?'cpu':'balanced';$('profile').onchange();
+ $('allow-tight').checked=false;$('allow-tight').disabled=cpu;
+ $('compute-note').textContent=cpu?'CPU-only: 0 GPU layers, no visible CUDA devices in the engine process. Limited to 8 threads and checked against available system RAM; keep headroom for other agents.':'GPU: existing CUDA fast path, subject to the RTX 2070 Super VRAM gate.';
+ if(state)renderModels();
+}
+$('compute-lane').onchange=syncComputeLane;
+for(const option of $('profile').options)if(option.value==='cpu')option.disabled=true;
 $('temperature').oninput=()=>$('temp-label').textContent=$('temperature').value;
 $('import-model').onclick=()=>$('import-dialog').showModal();
 $('confirm-import').onclick=async e=>{e.preventDefault();try{await api('/api/model/import',{path:$('import-path').value});$('import-dialog').close();await refresh();toast('Registered your local model without copying it.');}catch(err){toast(err.message,true);}};
@@ -167,7 +212,7 @@ async function showDiagnostic(id){
 }
 function clearChat(){if(busy){toast('Stop or finish the current request first.');return;}messages=[];$('messages').replaceChildren(element('p','muted','New conversation. Nothing from the previous chat is sent.'));}
 $('new-chat').onclick=clearChat;
-function genSettings(){return{max_tokens:Number($('max-tokens').value),temperature:Number($('temperature').value),top_p:.8,seed:Number($('seed').value),reasoning:$('reasoning').value};}
+function genSettings(){return{max_tokens:Number($('max-tokens').value),temperature:Number($('temperature').value),top_p:.8,seed:Number($('seed').value),reasoning:$('reasoning').value,provider_id:providerSelection};}
 async function sendMessage(override,benchmark=false,label='interactive',settings=null,silentUser=false){
  if(busy||(!benchmark&&benchRunning))return null; const text=override||$('prompt').value.trim();if(!text)return null;
  busy=true;$('send').disabled=true;$('run-bench').disabled=true;$('cancel').classList.remove('hidden');
@@ -179,7 +224,8 @@ async function sendMessage(override,benchmark=false,label='interactive',settings
  if(done.text&&!benchmark&&(done.state==='COMPLETED'||outputLimited))messages.push({role:'assistant',content:done.text});
  const outcome=outputLimited?'OUTPUT LIMIT REACHED':done.state==='CANCELLED'?'STOPPED':done.state;
  const m=done.metrics||{},reason=done.finish_reason?` · finish ${done.finish_reason}`:'';const meta=`${outcome}${reason} · first output ${m.ttft_seconds==null?'—':m.ttft_seconds.toFixed(2)+' s'} · end-to-end ${rate(m.end_to_end_tps)} tok/s · decode ${rate(m.backend_decode_tps)} tok/s`;
- node.n.append(element('div','result-meta',meta));
+ node.n.append(element('div','result-meta',`${done.worker_label||'Slink'} · ${done.compute||'GPU'} · ${meta}`));
+ if(done.route_reason)node.n.append(element('p','field-note',done.route_reason));
  if(outputLimited&&!benchmark){const actions=element('div','button-row');const cont=element('button','secondary continue-generation','Continue ↗');cont.onclick=async()=>{cont.disabled=true;cont.textContent='Continuing…';await sendMessage(CONTINUE_PROMPT,false,'continue',null,true);};actions.append(cont);node.n.append(actions);}
  if(done.state==='CANCELLED')node.n.append(element('p','field-note','HTTP cancellation requested. The backend may still compute; unload an owned engine or stop Strata in its own console for process termination.'));
  return done;
