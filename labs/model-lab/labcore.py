@@ -814,7 +814,7 @@ class Lab:
                 except Exception:
                     observed_hardware = {'status': 'UNAVAILABLE'}
                 record = {'at': time.time(), 'job': job.id, 'state': final_state, 'finish_reason': finish_reason, 'label': args['label'],
-                    'backend': backend['kind'], 'model': backend.get('display_model', backend['model']),
+                    'backend': backend['kind'], 'compute': backend.get('compute'), 'model': backend.get('display_model', backend['model']),
                     'model_sha256': backend.get('model_sha256'), 'profile': backend.get('profile'),
                     'settings': {k: v for k, v in args.items() if k not in ('messages',)},
                     'prompt_sha256': hashlib.sha256(json.dumps(args['messages'], sort_keys=True).encode()).hexdigest(),
