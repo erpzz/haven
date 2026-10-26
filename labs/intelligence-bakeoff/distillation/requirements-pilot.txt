@@ -1,0 +1,6 @@
+# Python 3.12, isolated Linux venv. Install CUDA PyTorch separately:
+# python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cu128
+# No global pip, cloud inference, TRL or bitsandbytes is needed for this pilot.
+transformers==4.56.2
+peft==0.17.1
+accelerate==1.10.1

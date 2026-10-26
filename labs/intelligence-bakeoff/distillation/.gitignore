@@ -1,0 +1,6 @@
+data/
+outputs/
+runs/
+adapters/
+checkpoints/
+*.log

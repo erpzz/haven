@@ -1,0 +1,22 @@
+name: Distillation deterministic smoke tests
+on:
+  pull_request:
+    paths:
+      - 'labs/intelligence-bakeoff/distillation/**'
+      - 'labs/intelligence-bakeoff/RUN-WINDOWS.ps1'
+      - '.github/workflows/distillation-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  stdlib-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run synthetic bakeoff and distillation regressions (no model downloads)
+        working-directory: labs/intelligence-bakeoff
+        run: |
+          python3 --version
+          python3 -m unittest discover -s tests -v
+          python3 -m unittest discover -s distillation/tests -v
