@@ -10,6 +10,8 @@ or credentials. Output is fleet state and inert enrollment work orders.
 from __future__ import annotations
 
 import argparse
+import fcntl
+from contextlib import contextmanager
 import hashlib
 import ipaddress
 import json
@@ -210,6 +212,18 @@ def private_dir(directory: Path) -> Path:
     return directory
 
 
+@contextmanager
+def fleet_lock(directory: Path):
+    """Prevent concurrent CLI processes from overwriting the fleet inventory."""
+    fd = os.open(directory / ".fleet.lock", os.O_CREAT | os.O_RDWR, 0o600)
+    try:
+        fcntl.flock(fd, fcntl.LOCK_EX)
+        yield
+    finally:
+        fcntl.flock(fd, fcntl.LOCK_UN)
+        os.close(fd)
+
+
 def read_state(directory: Path) -> dict:
     file = directory / "inventory.json"
     if not file.exists():
@@ -250,20 +264,21 @@ def main() -> None:
     sub.add_parser("plan")
     args = parser.parse_args()
     state_dir = private_dir(args.state_dir)
-    state = read_state(state_dir)
-    now = int(time.time())
-    if args.action == "discover":
-        observations = observe(set(args.interface))
-        added = update_candidates(state, observations, now)
-        write_state(state_dir, state)
-        result = {"seen": len(observations), "new_candidates": added, "generation": state["generation"]}
-    elif args.action == "sync-approved":
-        result = reconcile_approved(state, load_approved_file(args.file), now)
-        write_state(state_dir, state)
-    elif args.action == "inventory":
-        result = state
-    else:
-        result = work_orders(state, now)
+    with fleet_lock(state_dir):
+        state = read_state(state_dir)
+        now = int(time.time())
+        if args.action == "discover":
+            observations = observe(set(args.interface))
+            added = update_candidates(state, observations, now)
+            write_state(state_dir, state)
+            result = {"seen": len(observations), "new_candidates": added, "generation": state["generation"]}
+        elif args.action == "sync-approved":
+            result = reconcile_approved(state, load_approved_file(args.file), now)
+            write_state(state_dir, state)
+        elif args.action == "inventory":
+            result = state
+        else:
+            result = work_orders(state, now)
     print(json.dumps(result, indent=2))
 
 
