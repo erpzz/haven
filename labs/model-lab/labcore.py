@@ -188,10 +188,32 @@ def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: di
             '--api-key-file', str(key_file), '--alias', 'haven-local', '--n-gpu-layers', '0' if gpu is None else '999']
     if gpu is not None:
         argv += ['--device', f'CUDA{gpu}']
+        if profile.get('cpu_moe') is True:
+            # MoE expert tensors stay in system RAM; attention/shared layers and KV stay on the GPU.
+            argv += ['--cpu-moe']
     return argv + ['--ctx-size', str(context), '--parallel', '1', '--threads', str(threads),
             '--threads-batch', str(threads), '--batch-size', str(batch), '--ubatch-size', str(ubatch),
             '--flash-attn', flash, '--cache-type-k', kv, '--cache-type-v', kv, '--jinja', '--metrics',
             '--log-verbosity', '4']
+
+def estimate_moe_fit(model_bytes: int, gpu_mib: int, free_mib: float | None,
+                     available_gib: float | None, context: int) -> dict:
+    """Admission for catalog models whose experts are kept in RAM (--cpu-moe).
+
+    gpu_mib is the catalog's measured peak GPU allocation at 32K context, so a
+    shorter context only adds headroom; RAM needs the full file (mmap'd experts) plus the CPU reserve."""
+    required_mib = gpu_mib + 700
+    ram = estimate_cpu_fit(model_bytes, available_gib, context)
+    ok = free_mib is not None and required_mib <= free_mib and ram['status'] == 'LIKELY_FITS'
+    unknown = free_mib is None or ram['status'] == 'UNKNOWN'
+    return {'estimated_required_mib': required_mib, 'free_mib': free_mib,
+            'required_available_gib': ram['required_available_gib'], 'available_gib': available_gib,
+            'status': 'UNKNOWN' if unknown else ('LIKELY_FITS' if ok else 'TIGHT_OR_TOO_LARGE'),
+            'basis': 'Measured GPU allocation for expert offload + 700 MiB reserve; RAM heuristic for mmap\'d experts.'}
+
+def ready_deadline_seconds(model_bytes: int) -> int:
+    """Cold reads on a slow root link (~40 MiB/s measured) dominate large loads."""
+    return int(180 + model_bytes / (32 * MIB))
 
 def estimate_cpu_fit(model_bytes: int, available_gib: float | None, context: int) -> dict:
     """A conservative *admission heuristic*, not a measured RAM allocation."""
@@ -634,13 +656,20 @@ class Lab:
             if compute == 'cpu' and sys.platform != 'linux':
                 raise ValueError('The CPU-only lane is currently supported on Linux.')
             profile = dict(PRESETS[preset]); profile.update(overrides or {})
+            profile.pop('cpu_moe', None)  # Only the pinned catalog may request expert offload.
+            entry = next((m for m in self.catalog.get('models', []) if m.get('id') == model_id), {})
             gpu = None
             self.hw_at = 0  # A just-unloaded model must not leave the fit gate using stale resource data.
             hw = self.get_hardware()
             if compute == 'gpu':
                 if not hw['gpus']: raise ValueError('NVIDIA GPU was not detected. CPU-only mode must be explicitly selected.')
                 first = hw['gpus'][0]; gpu = first['index']
-                fit = estimate_fit(item['size_bytes'], first['memory_free_mib'], profile['context'])
+                if entry.get('offload') == 'cpu-moe' and entry.get('gpu_mib'):
+                    profile['cpu_moe'] = True
+                    fit = estimate_moe_fit(item['size_bytes'], int(entry['gpu_mib']), first['memory_free_mib'],
+                                           hw.get('ram_available_gib'), profile['context'])
+                else:
+                    fit = estimate_fit(item['size_bytes'], first['memory_free_mib'], profile['context'])
                 if fit['status'] != 'LIKELY_FITS' and not allow_tight:
                     raise ValueError('This configuration is tight for current free VRAM. Try a 4B model/shorter context, or explicitly enable the memory-risk experiment.')
             else:
@@ -683,7 +712,7 @@ class Lab:
                 raise
             def wait_ready():
                 try:
-                    deadline = time.monotonic() + 180
+                    deadline = time.monotonic() + ready_deadline_seconds(item.get('size_bytes') or 0)
                     base = f'http://127.0.0.1:{port}/v1'
                     while time.monotonic() < deadline:
                         if j.cancelled.is_set(): raise InterruptedError('Load cancelled.')
@@ -708,7 +737,7 @@ class Lab:
                                     else 'Engine ready; inspect log and live GPU telemetry to verify offload.'))
                             return
                         time.sleep(.5)
-                    raise TimeoutError('Engine did not become ready within 180 seconds.')
+                    raise TimeoutError('Engine did not become ready before its size-based load deadline.')
                 except Exception as e:
                     # Cleanup does not depend on writing a receipt.
                     stopped = self.engine.stop(expected=owned_proc)

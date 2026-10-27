@@ -7,7 +7,7 @@ dropped from the page cache as the download proceeds, so a multi-GB fetch does
 not evict a running model's memory-mapped weights. Nothing is executed or
 loaded; a file is renamed into place only after its digest matches.
 
-  fetch.py --models-dir DIR [--only id,id] [--execute]
+  fetch.py --models-dir DIR [--prereg FILE] [--only id,id] [--execute]
 """
 from __future__ import annotations
 
@@ -115,10 +115,11 @@ def fetch(model, models_dir, opener=None, log=print):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--models-dir", type=pathlib.Path, required=True)
+    ap.add_argument("--prereg", type=pathlib.Path, default=PREREG)
     ap.add_argument("--only", help="comma-separated model ids")
     ap.add_argument("--execute", action="store_true")
     args = ap.parse_args(argv)
-    models = [m for m in load_models() if m.get("source") == "download"]
+    models = [m for m in load_models(args.prereg) if m.get("source") == "download"]
     if args.only:
         wanted = set(args.only.split(","))
         models = [m for m in models if m["id"] in wanted]
@@ -135,7 +136,9 @@ def main(argv=None):
         except Exception as error:  # record and continue; a failed model is simply not run
             receipts.append({"id": m["id"], "status": "FAILED", "error": f"{type(error).__name__}: {error}"[:300]})
         print(json.dumps(receipts[-1]), flush=True)
-    (args.models_dir / "fetch-receipt.json").write_text(json.dumps(receipts, indent=2) + "\n")
+    # Never overwrite round 1's receipt with a later preregistration's fetch.
+    name = "fetch-receipt.json" if args.prereg.resolve() == PREREG else f"fetch-receipt-{args.prereg.stem}.json"
+    (args.models_dir / name).write_text(json.dumps(receipts, indent=2) + "\n")
     return 0 if all(r["status"] != "FAILED" for r in receipts) else 1
 
 

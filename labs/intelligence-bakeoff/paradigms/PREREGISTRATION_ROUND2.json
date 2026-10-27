@@ -1,0 +1,63 @@
+{
+  "schema": "haven-paradigm-bakeoff-preregistration-1",
+  "registered_utc": "2026-10-27",
+  "status": "REGISTERED_BEFORE_ANY_ROUND2_INFERENCE",
+  "amends": "PREREGISTRATION.json (round 1). Benchmark, runtime, server arguments, sampling and max_tokens are unchanged; round 1's condition block applies verbatim.",
+  "question": "Does a RAM-resident mid-size MoE (Qwen3.6-35B-A3B, experts in system RAM) or a larger dense member of the deployed family (Qwen3.5-9B) beat the deployed Qwen3.5-4B on owner hardware, and do round-1 rankings hold on the independent adjudicated suite?",
+  "benchmarks": {
+    "primary": "labs/intelligence-bakeoff/distillation/tool_sft heldout,legacy (verifier v3), identical to round 1",
+    "independent": "labs/intelligence-bakeoff/adjudicated frozen 180 episodes, bench.py eval, max_tokens 1024, temperature 0; the primary metric is its adjudicated pass /180"
+  },
+  "receipts_arm": {
+    "definition": "paradigms/receipts.py with_receipts() applied post hoc to every tool_sft record (Haven-rendered evidence and proposal receipts from successful tool outputs only)",
+    "predictions": "For every round-2 model, with-receipts >= model-only and receipts_lost == 0.",
+    "kill": "Any model loses an episode to receipts, or the mean gain across round-2 models is 0."
+  },
+  "predictions": {
+    "qwen36-35b-a3b": {"source": "ARCHITECTURE_BREAKTHROUGH_THESIS_20261026.md experiments M1/Q1",
+                        "tool_sft_heldout": ">= 76/110", "decode_tok_s_at_1k": "18-30",
+                        "kill": "< 12 tok/s decode at 1K or < 70/110"},
+    "qwen35-9b": {"tool_sft_heldout": ">= 84/110 (round-1 reference 80)", "kill": "<= 80/110"},
+    "lfm25-8b-a1b": {"adjudicated": "ranking vs qwen35-4b matches round 1 (4B ahead)",
+                     "kill": "LFM ahead of the 4B on the adjudicated suite (round-1 ranking does not generalize)"}
+  },
+  "decision_rules": [
+    "A model replaces the deployed default only if it beats qwen35-4b on BOTH suites with a paired sign test p < 0.05 on tool_sft and decode >= 20 tok/s at 1K.",
+    "Otherwise it may be offered in the Lab catalog as an explicit choice with its measured numbers, never as the default.",
+    "Results from one greedy seed are reported as such; no breakthrough is claimed from round 2 alone."
+  ],
+  "models": [
+    {
+      "id": "qwen35-4b", "role": "reference (deployed), re-run in the same session", "family": "Qwen3.5",
+      "repo": "unsloth/Qwen3.5-4B-GGUF", "revision": "e87f176479d0855a907a41277aca2f8ee7a09523",
+      "file": "Qwen3.5-4B-Q4_K_M.gguf", "size_bytes": 2740937888,
+      "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "license": "Apache-2.0", "source": "already on host (Lab catalog)"
+    },
+    {
+      "id": "qwen35-9b", "role": "larger dense member of the deployed family", "family": "Qwen3.5",
+      "repo": "unsloth/Qwen3.5-9B-GGUF", "file": "Qwen3.5-9B-Q4_K_M.gguf",
+      "sha256": "03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8",
+      "license": "Apache-2.0", "source": "already on host (Lab catalog)",
+      "note": "Expected to fall back to -c 8192 on 8 GB; the 32K probe is then DOES_NOT_FIT."
+    },
+    {
+      "id": "lfm25-8b-a1b", "role": "round-1 fast model, adjudicated cross-check", "family": "Liquid LFM2.5",
+      "repo": "LiquidAI/LFM2.5-8B-A1B-GGUF", "revision": "49c14831707011e64d70b2ebd8462ba08d608434",
+      "file": "LFM2.5-8B-A1B-Q4_K_M.gguf", "size_bytes": 5155564768,
+      "sha256": "4923ec14f06b968b74d663e5949867d2d9c3bf13a20b8be1a9f9af39989b2bb0",
+      "license": "LFM Open License v1.0 (license: other, lfm1.0)", "source": "download (fetched in round 1)"
+    },
+    {
+      "id": "qwen36-35b-a3b", "role": "stretch: RAM-resident mid-size MoE, experts offloaded (thesis M1)", "family": "Qwen3.6",
+      "paradigm": "hybrid Gated DeltaNet + gated attention with fine-grained MoE (35B total, ~3B active)",
+      "repo": "unsloth/Qwen3.6-35B-A3B-GGUF", "revision": "a483e9e6cbd595906af30beda3187c2663a1118c",
+      "file": "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf", "size_bytes": 22134528992,
+      "sha256": "ac0e2c1189e055faa36eff361580e79c5bd6f8e76bffb4ce547f167d53e31a61",
+      "license": "Apache-2.0", "base_released": "2026-04 (GGUF modified 2026-04-20)",
+      "source": "download", "offload": "cpu-moe"
+    }
+  ],
+  "budget": "One GPU session, 150 minutes including the Strata restore. The 35B runs last; it is skipped if fewer than 45 minutes remain.",
+  "privacy": "Records, transcripts and keys stay in the private output directory; only sanitized aggregates are published."
+}
