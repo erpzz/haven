@@ -670,6 +670,12 @@ class Lab:
             hw = self.get_hardware()
             if compute == 'gpu':
                 if not hw['gpus']: raise ValueError('NVIDIA GPU was not detected. CPU-only mode must be explicitly selected.')
+                if sys.platform == 'linux':
+                    import gpu_lease
+                    peers = gpu_lease.peer_busy()
+                    if peers:
+                        raise ValueError('The GPU is held by ' + ', '.join(peers) + '. Nothing was loaded or stopped; '
+                                         'wait for it to finish or ask its owner.')
                 first = hw['gpus'][0]; gpu = first['index']
                 if entry.get('offload') == 'cpu-moe' and entry.get('gpu_mib'):
                     profile['cpu_moe'] = True

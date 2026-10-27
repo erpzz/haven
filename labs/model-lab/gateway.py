@@ -21,6 +21,7 @@ before any message leaves the house. Receipts record routing and metrics, never
 prompt or response text.
 """
 from __future__ import annotations
+import base64
 import hashlib
 import hmac
 import json
@@ -31,10 +32,13 @@ import secrets
 import stat
 import threading
 import time
+import urllib.parse
 
 from labcore import estimate_prompt_tokens
 
 KEYS_FILE = 'gateway-keys.json'
+JWT_SECRET_FILE = 'gateway-frontend-jwt.secret'  # Shared with Open WebUI's FORWARD_USER_INFO_HEADER_JWT_SECRET
+JWT_HEADER = 'X-OpenWebUI-User-Jwt'
 RECEIPTS_FILE = 'gateway-receipts.jsonl'
 CONSENT_COMMAND = '/haven consent'
 DEFAULT_OUTPUT_CAP = 16384     # Default reply budget when the client sends none.
@@ -51,6 +55,24 @@ class GatewayError(Exception):
 
     def body(self) -> dict:
         return {'error': {'message': self.message, 'type': self.code, 'code': self.code}}
+
+
+def verify_hs256(token: str, secret: bytes) -> dict:
+    """Minimal HS256 JWT check (signature, alg, exp, issuer). Raises GatewayError on any doubt."""
+    def b64(part):
+        return base64.urlsafe_b64decode(part + '=' * (-len(part) % 4))
+    try:
+        head, body, sig = token.split('.')
+        header, claims = json.loads(b64(head)), json.loads(b64(body))
+        expected = hmac.new(secret, f'{head}.{body}'.encode(), hashlib.sha256).digest()
+        valid = (header.get('alg') == 'HS256' and hmac.compare_digest(expected, b64(sig))
+                 and claims.get('iss') == 'open-webui' and type(claims.get('exp')) in (int, float)
+                 and claims['exp'] > time.time())
+    except (ValueError, TypeError, AttributeError):
+        valid = False
+    if not valid:
+        raise GatewayError(403, 'The frontend identity token is missing, invalid or expired.', 'forbidden')
+    return claims
 
 
 def flatten_content(content) -> str:
@@ -140,12 +162,33 @@ class Gateway:
             raise GatewayError(401, 'Unknown Haven gateway key.', 'unauthorized')
         if entry['role'] != 'frontend':
             return {'id': entry['principal'], 'name': entry['principal'], 'role': entry['role'], 'via': 'direct-key'}
-        uid = headers.get('X-OpenWebUI-User-Id', '')
-        role = OWUI_ROLES.get(headers.get('X-OpenWebUI-User-Role', ''))
-        if not ID_RE.fullmatch(uid) or not role:
+        secret = self._jwt_secret()
+        if secret:
+            # Signed identity: holding the frontend key alone cannot claim another user's role.
+            claims = verify_hs256(headers.get(JWT_HEADER, ''), secret)
+            uid, role_name, name = claims.get('sub', ''), claims.get('role', ''), claims.get('name', '')
+        else:
+            uid, role_name = headers.get('X-OpenWebUI-User-Id', ''), headers.get('X-OpenWebUI-User-Role', '')
+            name = urllib.parse.unquote(headers.get('X-OpenWebUI-User-Name', ''))
+        role = OWUI_ROLES.get(role_name)
+        if not isinstance(uid, str) or not ID_RE.fullmatch(uid) or not role:
             raise GatewayError(403, 'The frontend did not identify an approved user; pending accounts cannot chat.', 'forbidden')
-        name = headers.get('X-OpenWebUI-User-Name', '')[:80]
-        return {'id': f"{entry['principal']}:{uid}", 'name': name, 'role': role, 'via': entry['principal']}
+        return {'id': f"{entry['principal']}:{uid}", 'name': str(name)[:80], 'role': role, 'via': entry['principal']}
+
+    def _jwt_secret(self) -> bytes | None:
+        path = self.data / JWT_SECRET_FILE
+        try:
+            fd = os.open(path, os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0))
+        except FileNotFoundError:
+            return None
+        with os.fdopen(fd, 'rb') as f:
+            info = os.fstat(f.fileno())
+            if not stat.S_ISREG(info.st_mode) or (os.name != 'nt' and (info.st_uid != os.getuid() or info.st_mode & 0o077)):
+                raise GatewayError(503, 'The frontend identity secret must be an owned mode-0600 file.', 'unavailable')
+            secret = f.read(512).strip()
+        if len(secret) < 32:
+            raise GatewayError(503, 'The frontend identity secret is too short.', 'unavailable')
+        return secret
 
     # ---- discovery ---------------------------------------------------------
     def _managed(self) -> tuple[dict, str]:
@@ -155,6 +198,14 @@ class Gateway:
         if conn:
             return conn, 'READY' if conn.get('ownership') == 'EXTERNAL' or engine.get('state') == 'READY' else engine.get('state', 'UNKNOWN')
         return conn, engine.get('state', 'STOPPED') if engine.get('state') not in (None, 'STOPPED') else 'NO_MODEL_LOADED'
+
+    def listing(self, principal: dict) -> list[dict]:
+        """`/v1/models`. Open WebUI caches one base-model list for every account, so a frontend
+        gets the full catalog and hides entries with its own access control; dispatch below is
+        still checked against the requesting user's Haven role."""
+        if principal['via'] != 'direct-key':
+            return self.models({**principal, 'role': 'owner'})
+        return self.models(principal)
 
     def models(self, principal: dict) -> list[dict]:
         conn, state = self._managed()

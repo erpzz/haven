@@ -413,7 +413,7 @@ class Handler(BaseHTTPRequestHandler):
             principal = g.authenticate(self.headers)
             path = self.path.split('?', 1)[0]
             if self.command == 'GET' and path == '/v1/models':
-                self.json(200, {'object': 'list', 'data': g.models(principal)})
+                self.json(200, {'object': 'list', 'data': g.listing(principal)})
             elif self.command == 'GET' and path == '/v1/haven/status':
                 self.json(200, g.status(principal))
             elif self.command == 'POST' and path == '/v1/chat/completions':

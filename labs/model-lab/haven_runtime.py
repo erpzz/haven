@@ -21,7 +21,7 @@ def status():
         if time.monotonic() - _status_at > 3:
             try:
                 peers = gpu_lease.peer_busy()
-                _status_value = {'supported': True, 'peer_busy': bool(peers),
+                _status_value = {'supported': True, 'peer_busy': bool(peers), 'peer_units': peers,
                                  'strata_state': gpu_lease.unit_state(STRATA)}
             except Exception:
                 _status_value = {'supported': True, 'peer_busy': True,

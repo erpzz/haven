@@ -75,10 +75,15 @@ function linkExpiredBanner(){
  b.id='link-expired';b.setAttribute('role','alert');Object.assign(b.style,{borderColor:'var(--warn)',color:'var(--warn)',position:'sticky',top:'0',zIndex:'3',background:'var(--card)'});
  document.querySelector('main')?.prepend(b);$('send').disabled=true;$('chat-hint').textContent='Link expired \u2014 reopen Haven from your Mac.';
 }
+const REQUEST_TIMEOUT_MS=30000;
 async function requestJSON(path,data,sessionAware=true){
  const headers={}; if(token)headers['X-Lab-Token']=token;
  if(data!==undefined){headers['Content-Type']='application/json';if(sessionAware&&auth.csrf)headers['X-CSRF-Token']=auth.csrf;}
- const r=await fetch(path,{method:data===undefined?'GET':'POST',headers,body:data===undefined?undefined:JSON.stringify(data),credentials:'same-origin'});
+ // A stalled tunnel must never leave a caller (and the busy flag it holds) waiting forever.
+ const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),REQUEST_TIMEOUT_MS);let r;
+ try{r=await fetch(path,{method:data===undefined?'GET':'POST',headers,body:data===undefined?undefined:JSON.stringify(data),credentials:'same-origin',signal:ctl.signal});}
+ catch(e){const err=new Error(e.name==='AbortError'?`Haven did not answer within ${REQUEST_TIMEOUT_MS/1000} s. Anything already running continues on the server; nothing was retried.`:'Haven is unreachable: '+e.message);err.status=0;throw err;}
+ finally{clearTimeout(timeout);}
  let d={};try{d=await r.json();}catch(_){}
  if(!r.ok){const e=new Error(d.error||`HTTP ${r.status}`);e.status=r.status;if(r.status===401&&!auth.enabled&&token)linkExpiredBanner();if(sessionAware&&auth.enabled&&r.status===401&&auth.user){auth.user=null;auth.csrf='';showAuth('login','Your session expired. Sign in again.');}throw e;}
  return d;
@@ -95,6 +100,8 @@ function planText(p){const o=p?.observed?.plan||{};const used=o.daily_cap?`${o.d
  const reset=o.resets_text||(o.resets_at?new Date(o.resets_at*1000).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'');
  return [used,o.status==='LIMITED'?`plan limit${reset?' until '+reset:''}`:''].filter(Boolean).join(' · ');}
 const readyCloud=s=>(s?.providers||[]).filter(p=>p.kind==='cloud'&&p.observed.state==='READY'&&p.observed.plan?.status!=='LIMITED');
+// Mirrors labcore.generate: managed runtimes use their loaded context, workers their enrolled cap.
+function outputLimit(c){if(!c?.base)return 4096;if(String(c.base).startsWith('provider:'))return c.kind==='cloud'?4096:1024;const ctx=c.profile?.context;return Number.isInteger(ctx)&&ctx>=512?Math.min(ctx-256,32768):4096;}
 function selectedConnection(s){
  if(providerSelection==='managed')return s.connection;
  if(providerSelection==='auto'&&s.connection?.base&&(!s.prepared_runtime?.peer_busy||s.connection.compute==='cpu')&&s.connection.kind==='llama')return s.connection;
@@ -142,6 +149,8 @@ function applyState(s) {
  const sw=switching?(s.jobs||[]).find(j=>j.id===s.prepared_runtime.switch_job):null;
  const swText=sw?`${(sw.message||'Switching prepared runtimes\u2026').replace(/\u2026$/,'')} \u2014 ${Math.floor((sw.elapsed_seconds??(Date.now()/1000-(sw.created_at||Date.now()/1000)))/60)} min elapsed${sw.target==='strata'?' of about 15 (Strata reads 33 GB of experts over the slow disk)':''}.`:'';
  if(!linkExpired)$('chat-hint').textContent=switching?swText:'Text-only \u00b7 Enter to send \u00b7 Shift+Enter for a new line';
+ const maxOut=outputLimit(c),field=$('max-tokens');field.max=String(maxOut);if(Number(field.value)>maxOut)field.value=String(maxOut);
+ $('max-tokens-note').textContent=c.profile?.context?`Up to ${maxOut.toLocaleString()} tokens: the loaded ${c.profile.context.toLocaleString()}-token context, shared with this conversation. Haven rejects requests that would not fit instead of truncating them.`:`Up to ${maxOut.toLocaleString()} tokens for this backend; its context is not reported. If the model hits the limit, Haven offers Continue instead of pretending it finished.`;
  $('send').disabled=busy||benchRunning||switching||!connected; $('run-bench').disabled=busy||benchRunning||switching||!connected;
  for(const id of ['connect','disconnect','unload','profile','context','threads','confirm-import'])$(id).disabled=benchRunning||switching;
  const linux=h.platform==='linux';
@@ -215,16 +224,24 @@ async function startDiagnostic(){
  if(busy||benchRunning)return;
  try{const question=$('prompt').value.trim();const result=await api('/api/diagnostics',question?{question}:{});sessionStorage.setItem('haven-diagnostic-job',result.job_id);diagnosticResumed=true;$('prompt').value='';await showDiagnostic(result.job_id);}catch(e){toast(e.message,true);}
 }
+// The server deadline is at most 240 s; watching longer than that cannot be a live diagnostic.
+const DIAGNOSTIC_WATCH_MS=300000, DIAGNOSTIC_POLL_MISSES=3;
 async function showDiagnostic(id){
  busy=true;activeJob=id;$('cancel').classList.remove('hidden');const node=messageNode('assistant','Loading the saved diagnostic…');
- try{let job;while(true){job=await api('/api/diagnostics/'+id);node.body.textContent=job.text||job.message||job.state;if(job.state!=='RUNNING')break;await sleep(1500);}
+ const until=Date.now()+DIAGNOSTIC_WATCH_MS;let misses=0;
+ try{let job;while(true){
+   try{job=await api('/api/diagnostics/'+id);misses=0;}
+   catch(e){if([401,403,404].includes(e.status)||++misses>=DIAGNOSTIC_POLL_MISSES)throw e;node.body.textContent=`Reconnecting to the diagnostic (${misses}/${DIAGNOSTIC_POLL_MISSES})…`;await sleep(1500);continue;}
+   node.body.textContent=job.text||job.message||job.state;if(job.state!=='RUNNING')break;
+   if(Date.now()>until)throw new Error('Stopped watching: the diagnostic still reports RUNNING after 5 minutes. Chat is available again; its saved receipt stays in Setup → Jobs.');
+   await sleep(1500);}
   node.n.append(element('div','result-meta',`${job.state} · saved diagnostic ${id} · ${job.trace?.length||0} observed tools`));
   node.n.append(element('p','field-note','Request status describes execution. The diagnosis still needs checking against its evidence.'));
   for(const warning of job.citation_check?.warnings||[])node.n.append(element('p','field-note',warning));
   if(job.error)node.n.append(element('p','field-note',job.error));
   const details=element('details');details.append(element('summary','','Observed evidence and command exit codes'));
   details.append(element('pre','',JSON.stringify(job.trace||[],null,2)));node.n.append(details);
- }catch(e){node.body.textContent=e.message;toast(e.message,true);}finally{busy=false;activeJob=null;$('cancel').classList.add('hidden');await refresh();}
+ }catch(e){node.body.textContent=e.message;toast(e.message,true);}finally{sessionStorage.removeItem('haven-diagnostic-job');busy=false;activeJob=null;$('cancel').classList.add('hidden');await refresh();}
 }
 function clearChat(){if(busy){toast('Stop or finish the current request first.');return;}messages=[];$('messages').replaceChildren(element('p','muted','New conversation. Nothing from the previous chat is sent.'));}
 $('new-chat').onclick=clearChat;

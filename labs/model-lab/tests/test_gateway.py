@@ -15,7 +15,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from labcore import Lab
 from server import Server
-from gateway import Gateway, CONSENT_COMMAND
+import base64
+import hashlib
+import hmac
+from gateway import Gateway, CONSENT_COMMAND, JWT_SECRET_FILE
 from fake_backend import FakeBackend
 
 FAKE_TEXT = 'This is a local TEST DOUBLE response. Unicode: café ✓.'
@@ -80,6 +83,32 @@ class GatewayTests(unittest.TestCase):
         self.assertEqual(self.call('GET', '/v1/models', self.headers(self.frontend))[0], 403)
         self.assertEqual(self.call('GET', '/v1/models', self.owui(role='pending'))[0], 403)
 
+    def jwt(self, secret, **claims):
+        enc = lambda v: base64.urlsafe_b64encode(json.dumps(v).encode()).rstrip(b'=').decode()
+        body = {'sub': 'u-9', 'role': 'admin', 'name': 'Owner', 'iss': 'open-webui', 'exp': time.time() + 60, **claims}
+        head = enc({'alg': 'HS256', 'typ': 'JWT'}) + '.' + enc(body)
+        sig = hmac.new(secret, head.encode(), hashlib.sha256).digest()
+        return head + '.' + base64.urlsafe_b64encode(sig).rstrip(b'=').decode()
+
+    def test_signed_identity_replaces_plain_headers(self):
+        secret = b's' * 48
+        path = Path(self.tmp.name) / JWT_SECRET_FILE
+        path.write_bytes(secret); path.chmod(0o600)
+        signed = self.headers(self.frontend, **{'X-OpenWebUI-User-Jwt': self.jwt(secret, role='user')})
+        self.assertEqual(self.call('GET', '/v1/models', signed)[0], 200)
+        self.assertEqual(self.chat(signed, model='haven-auto')[0], 403)
+        self.assertEqual(self.chat(signed)[0], 200)
+        # Plain role headers no longer grant anything once identity is signed.
+        self.assertEqual(self.call('GET', '/v1/models', self.owui())[0], 403)
+        for bad in (self.jwt(b'x' * 48), self.jwt(secret, exp=time.time() - 1), self.jwt(secret, iss='other'),
+                    self.jwt(secret)[:-3] + 'abc', 'not.a.jwt'):
+            with self.subTest(bad=bad[-12:]):
+                h = self.headers(self.frontend, **{'X-OpenWebUI-User-Jwt': bad})
+                self.assertEqual(self.call('GET', '/v1/models', h)[0], 403)
+        path.chmod(0o644)
+        h = self.headers(self.frontend, **{'X-OpenWebUI-User-Jwt': self.jwt(secret)})
+        self.assertEqual(self.call('GET', '/v1/models', h)[0], 503)
+
     def test_browser_origin_refused(self):
         self.assertEqual(self.call('GET', '/v1/models', self.owui(Origin='http://evil.example'))[0], 403)
 
@@ -94,11 +123,18 @@ class GatewayTests(unittest.TestCase):
 
     # -- discovery and policy --------------------------------------------
     def test_member_sees_only_slink(self):
-        status, raw = self.call('GET', '/v1/models', self.owui(role='user'))
+        status, raw = self.call('GET', '/v1/models', self.headers(self.member))
         self.assertEqual(status, 200)
         self.assertEqual([m['id'] for m in json.loads(raw)['data']], ['haven-slink'])
         status, raw = self.call('GET', '/v1/models', self.owui())
         self.assertEqual([m['id'] for m in json.loads(raw)['data']][:2], ['haven-slink', 'haven-auto'])
+
+    def test_frontend_listing_is_stable_but_dispatch_is_role_checked(self):
+        # Open WebUI caches one list for all accounts; who refreshed it must not change it.
+        member_view = json.loads(self.call('GET', '/v1/models', self.owui(role='user'))[1])['data']
+        owner_view = json.loads(self.call('GET', '/v1/models', self.owui())[1])['data']
+        self.assertEqual(member_view, owner_view)
+        self.assertEqual(self.chat(self.owui(role='user'), model='haven-auto')[0], 403)
 
     def test_model_name_reports_identity_and_context(self):
         rows = json.loads(self.call('GET', '/v1/models', self.headers(self.owner))[1])['data']
@@ -233,8 +269,12 @@ class GatewayTests(unittest.TestCase):
     def test_hosted_lane_needs_per_chat_consent(self):
         snap, conn = self.cloud_lane()
         with snap, conn:
-            members = json.loads(self.call('GET', '/v1/models', self.owui(role='user'))[1])['data']
+            members = json.loads(self.call('GET', '/v1/models', self.headers(self.member))[1])['data']
             self.assertNotIn('haven-cloud-test', [m['id'] for m in members])
+            member_chat = self.owui(role='user', **{'X-OpenWebUI-Chat-Id': 'chat-m'})
+            self.assertEqual(self.chat(member_chat, model='haven-cloud-test')[0], 403)
+            self.assertEqual(self.chat(member_chat, model='haven-cloud-test',
+                                       messages=[{'role': 'user', 'content': CONSENT_COMMAND}])[0], 403)
             chat = self.owui(**{'X-OpenWebUI-Chat-Id': 'chat-1'})
             status, body = self.chat(chat, model='haven-cloud-test')
             self.assertEqual(status, 200); self.assertIn('Nothing was sent', body['choices'][0]['message']['content'])
