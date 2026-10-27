@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slinky Console</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="logo">◎</span> Slinky <span class="sub">Haven engineering console</span></div>
+    <nav class="tabs" role="tablist">
+      <button data-tab="work" class="active">Work</button>
+      <button data-tab="fleet">Fleet</button>
+      <button data-tab="agents">Agents</button>
+      <button data-tab="research">Research</button>
+    </nav>
+    <div class="status" id="status"></div>
+  </header>
+
+  <div id="locked" class="locked hidden">
+    <h2>Private console</h2>
+    <p>Open the private link from <code>~/.local/state/haven-engineer/console-url</code> on this machine.</p>
+  </div>
+
+  <main id="tab-work" class="tab work">
+    <section class="col left">
+      <form id="new-task" class="card">
+        <h3>New task</h3>
+        <label>Workspace
+          <select id="f-ws"></select>
+        </label>
+        <div class="row small">
+          <select id="f-fixture"><option value="">+ disposable copy of fixture…</option></select>
+        </div>
+        <label>Agent
+          <select id="f-agent"></select>
+        </label>
+        <div id="f-agent-where" class="hint"></div>
+        <label>Autonomy
+          <select id="f-mode"></select>
+        </label>
+        <div id="f-mode-help" class="hint"></div>
+        <label id="f-egress-row" class="check hidden"><input type="checkbox" id="f-egress">
+          This task and the files its tools read go to the vendor on my subscription.</label>
+        <label>Task
+          <textarea id="f-prompt" rows="5" placeholder="Describe the engineering task…"></textarea>
+        </label>
+        <button type="submit" class="primary">Start</button>
+        <div id="f-error" class="error"></div>
+      </form>
+      <div class="card">
+        <h3>Approvals <span id="appr-count" class="pill"></span></h3>
+        <div id="approvals" class="approvals"><div class="empty">Nothing waiting.</div></div>
+      </div>
+      <div class="card grow">
+        <h3>Tasks</h3>
+        <div id="tasks" class="tasks"></div>
+      </div>
+    </section>
+
+    <section class="col center">
+      <div id="task-head" class="card task-head"><div class="empty">Select or start a task.</div></div>
+      <div id="timeline" class="timeline"></div>
+    </section>
+
+    <section class="col right">
+      <div class="card">
+        <h3>Workspace <span id="ws-name" class="muted"></span></h3>
+        <div class="seg"><button data-ws="git" class="active">Changes</button><button data-ws="files">Files</button></div>
+        <pre id="ws-status" class="mono small"></pre>
+        <div id="ws-body" class="ws-body"></div>
+      </div>
+    </section>
+  </main>
+
+  <main id="tab-fleet" class="tab hidden">
+    <div class="fleet-head">
+      <h2>Computational body</h2>
+      <span class="muted" id="fleet-time"></span>
+    </div>
+    <div id="nodes" class="nodes"></div>
+    <div class="fleet-lower">
+      <div class="card">
+        <h3>Discovered, not enrolled</h3>
+        <p class="hint">Seen passively on the owner's configured subnets. Being on the network is not proof of ownership; these receive no work.</p>
+        <table id="candidates" class="table"></table>
+      </div>
+      <form id="enroll" class="card">
+        <h3>Enroll a node</h3>
+        <p class="hint">Uses an SSH alias you already trust (pinned host key, key auth). The fingerprint is recorded; a later mismatch marks the node untrusted.</p>
+        <label>Name <input id="e-name" placeholder="thinkpad"></label>
+        <label>SSH alias <input id="e-ssh" placeholder="thinkpad"></label>
+        <label>Roles <input id="e-roles" value="tools,inference-cpu"></label>
+        <button class="primary">Enroll</button>
+        <div id="e-msg" class="hint"></div>
+      </form>
+    </div>
+    <div id="node-detail" class="card hidden"></div>
+  </main>
+
+  <main id="tab-agents" class="tab hidden">
+    <h2>Agents and lineage</h2>
+    <p class="hint">Every agent run is a task with a signed receipt ledger. Children inherit at most their parent's authority and hold leases on the files they may edit.</p>
+    <div id="lineage" class="lineage"></div>
+  </main>
+
+  <main id="tab-research" class="tab hidden">
+    <h2>What Slinky has learned to do</h2>
+    <p class="hint">Measured results come from saved runs. Planned items are hypotheses, not capabilities.</p>
+    <div id="skills" class="card"></div>
+    <div id="research" class="research"></div>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -94,7 +94,6 @@ _DESTRUCTIVE = [
     (re.compile(r"\bchmod\s+-R|\bfind\b.*\s-(delete|exec)\b"), "bulk permission or delete"),
 ]
 _FORCE_PUSH = re.compile(r"\bgit\s+push\b.*(\s--force\b|\s-f\b|\s\+\S+|--force-with-lease)")
-_SEGMENT_SPLIT = re.compile(r"\|\||&&|;|\||\n|&(?!>)")
 
 
 @dataclasses.dataclass(frozen=True)
@@ -123,17 +122,30 @@ class Decision:
         return dataclasses.asdict(self)
 
 
+_OPERATORS = {";", "&&", "||", "|", "&", "|&", ";;", "(", ")", "\n"}
+
+
 def segments(command: str):
-    """Split a shell command into simple-command word lists. None if it cannot be parsed."""
-    words = []
-    for raw in _SEGMENT_SPLIT.split(command):
-        raw = raw.strip().lstrip("(").rstrip(")").strip()
-        if not raw:
-            continue
-        try:
-            parts = shlex.split(raw, comments=True)
-        except ValueError:
-            return None
+    """Split a shell command into simple-command word lists, respecting quotes. None if unparseable."""
+    lex = shlex.shlex(command.replace("\n", " ; "), posix=True, punctuation_chars=";&|()")
+    lex.whitespace_split = True
+    lex.commenters = "#"
+    try:
+        tokens = list(lex)
+    except ValueError:
+        return None
+    words, cur = [], []
+    for tok in tokens:
+        if tok in _OPERATORS or (tok and set(tok) <= set(";&|()")):
+            if cur:
+                words.append(cur)
+            cur = []
+        else:
+            cur.append(tok)
+    if cur:
+        words.append(cur)
+    out = []
+    for parts in words:
         while parts and re.match(r"^[A-Za-z_][A-Za-z0-9_]*=", parts[0]):  # VAR=value prefix
             parts = parts[1:]
         if parts and parts[0] in ("time", "nice", "nohup", "command", "builtin", "exec", "timeout", "env"):
@@ -141,8 +153,8 @@ def segments(command: str):
             while parts and (parts[0].startswith("-") or re.match(r"^\d+[smh]?$", parts[0]) or "=" in parts[0]):
                 parts = parts[1:]
         if parts:
-            words.append(parts)
-    return words
+            out.append(parts)
+    return out
 
 
 def _base(word: str) -> str:
@@ -166,9 +178,12 @@ def classify_command(command: str, scope: Scope):
         first = _base(words[0])
         second = words[1] if len(words) > 1 else ""
         if first in _ADMIN_WORDS and (first, second) not in _ADMIN_READ_FORMS:
-            if not (first == "systemctl" and second == "--user" and len(words) > 2
-                    and words[2] in ("status", "is-active", "list-units", "show")):
-                return "admin", [f"{first} needs separate host authority"]
+            if first == "systemctl" and second == "--user" and len(words) > 2 \
+                    and words[2] in ("status", "is-active", "list-units", "show"):
+                continue
+            return "admin", [f"{first} needs separate host authority"]
+        if first in _ADMIN_WORDS:
+            continue
         if first == "git":
             sub = next((w for w in words[1:] if not w.startswith("-")), "")
             if sub in _READ_ONLY_GIT and not (set(words[2:]) & _GIT_WRITE_FLAGS.get(sub, set())):
@@ -207,7 +222,7 @@ _RANK = {"read_only": 0, "dev": 1, "high_impact": 2, "admin": 3}
 
 
 def decide(tool: str, args: dict, scope: Scope, sandboxed: bool) -> Decision:
-    klass = TOOL_CLASS.get(tool)
+    klass = TOOL_CLASS.get(tool) or ("skill" if tool.startswith("skill_") else None)
     if klass is None:
         return Decision(DENY, f"unknown tool {tool!r}", "unknown")
     mode = scope.mode
@@ -225,6 +240,12 @@ def decide(tool: str, args: dict, scope: Scope, sandboxed: bool) -> Decision:
             return Decision(ASK if mode == "engineer" else DENY,
                             f"commit on protected branch {branch}", klass)
         return Decision(ALLOW, "commit on a working branch", klass)
+    if klass == "skill":
+        if scope.mode == "observe":
+            return Decision(DENY, "observe mode does not run code, including inherited skills", klass)
+        if not sandboxed:
+            return Decision(ASK, "inherited skill; no OS sandbox on this host", klass)
+        return Decision(ALLOW, "admitted skill (verified hash) in the sandbox", klass)
     if klass == "delegate":
         if mode == "observe":
             return Decision(DENY, "observe mode cannot start child agents", klass)
@@ -261,13 +282,13 @@ def decide(tool: str, args: dict, scope: Scope, sandboxed: bool) -> Decision:
             return Decision(ASK, why, klass, network=_needs_network(reasons))
         return Decision(ALLOW, f"development command in the sandbox ({why})", klass, network=scope.network)
     # autonomous
-    if cmd_class == "high_impact" and _needs_network(reasons) and not scope.network:
-        return Decision(ASK, f"{why}; this scope has no network grant", klass, network=True)
     if "publishes to a remote" in reasons:
         remote = _push_remote(command)
         if remote not in scope.push_remotes:
             return Decision(ASK, f"push to remote {remote or '?'} is outside this scope", klass, network=True)
         return Decision(ALLOW, f"push to granted remote {remote}", klass, network=True)
+    if cmd_class == "high_impact" and _needs_network(reasons) and not scope.network:
+        return Decision(ASK, f"{why}; this scope has no network grant", klass, network=True)
     return Decision(ALLOW, f"autonomous scope ({why})", klass, network=scope.network)
 
 

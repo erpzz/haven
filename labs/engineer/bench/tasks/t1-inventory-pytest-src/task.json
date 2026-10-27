@@ -1,0 +1,7 @@
+{
+  "prompt": "The tests in this repository fail. Find and fix the bug in the source (not the tests), run the tests to confirm they pass, and commit the fix.",
+  "framework": "pytest-style",
+  "protected": [
+    "tests/test_inventory.py"
+  ]
+}

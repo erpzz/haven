@@ -1,0 +1,8 @@
+{
+  "prompt": "The unit tests fail. Fix the source (not the tests) so they pass, run them to confirm, and commit.",
+  "framework": "unittest",
+  "protected": [
+    "tests/__init__.py",
+    "tests/test_money.py"
+  ]
+}

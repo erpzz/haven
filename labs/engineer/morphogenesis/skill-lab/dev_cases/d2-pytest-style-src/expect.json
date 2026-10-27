@@ -1,0 +1,7 @@
+{
+  "framework": "pytest-style",
+  "failing": [
+    "test_strutil.test_reverse"
+  ],
+  "passed": 1
+}

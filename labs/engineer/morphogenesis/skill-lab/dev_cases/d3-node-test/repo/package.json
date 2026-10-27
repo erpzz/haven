@@ -1,0 +1,5 @@
+{
+  "name": "mathlib",
+  "type": "module",
+  "scripts": {"test": "node --test"}
+}

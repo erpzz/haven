@@ -76,20 +76,22 @@ def chat(base_url, api_key, body, timeout=600, cancel=None):
 class Agent:
     def __init__(self, executor: ex.Executor, *, base_url, model, api_key="", label=None,
                  max_steps=30, max_seconds=1200, max_tokens=2048, temperature=0.2, thinking=None,
-                 tools=None, verify_nudge=True, answer_check=True, ctx_chars=60_000, on_event=None):
+                 tools=None, verify_nudge=True, answer_check=True, ctx_chars=60_000, on_event=None, recipes=""):
         self.ex = executor
         self.base_url, self.model, self.api_key = base_url, model, api_key
         self.label = label or model
         self.max_steps, self.max_seconds = max_steps, max_seconds
         self.max_tokens, self.temperature, self.thinking = max_tokens, temperature, thinking
-        self.tools = ex.openai_tools(tools)
+        self.tools = [{"type": "function", "function": {"name": n, **t}}
+                      for n, t in executor.tool_schemas(tools).items()]
+        self.recipes = recipes
         self.verify_nudge, self.answer_check = verify_nudge, answer_check
         self.ctx_chars = ctx_chars
         self.on_event = on_event or (lambda e: None)
 
-    def _emit(self, kind, **data):
+    def _emit(self, _type, **data):
         try:
-            self.on_event({"type": kind, "t": round(time.time(), 3), **data})
+            self.on_event({"type": _type, "t": round(time.time(), 3), **data})
         except Exception:
             pass
 
@@ -97,7 +99,10 @@ class Agent:
         started = time.monotonic()
         stats = {"steps": 0, "tool_calls": 0, "invalid_calls": 0, "recovered_text_calls": 0, "model_s": 0.0,
                  "tool_s": 0.0, "prompt_tokens": 0, "completion_tokens": 0, "nudges": [], "refused": 0}
-        msgs = [{"role": "system", "content": SYSTEM.format(mode=self.ex.scope.mode, workspace=self.ex.root.name)},
+        system = SYSTEM.format(mode=self.ex.scope.mode, workspace=self.ex.root.name)
+        if self.recipes:
+            system += "\n\nProcedures from earlier verified work (follow them when they apply):\n" + self.recipes
+        msgs = [{"role": "system", "content": system},
                 {"role": "user", "content": task}]
         status, answer, error = "incomplete", "", None
         consecutive_invalid = 0

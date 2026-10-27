@@ -70,7 +70,8 @@ def make_executor(sess, workspace, scope, agent_id, *, approver=None, write_allo
 
 
 def run_task(workspace, agent_cfg, mode, prompt, *, session=None, network=None, max_steps=30, overrides=None,
-             approver=None, on_event=None, parent=None, write_allow=None, depth=0, extra_meta=None):
+             approver=None, on_event=None, parent=None, write_allow=None, depth=0, extra_meta=None,
+             skill_names=None, recipe_names=None):
     if network is None:
         network = bool(owner_scope().get("network"))
     tool_host = agent_cfg.get("tool_host") or os.uname().nodename.split(".")[0]
@@ -78,7 +79,7 @@ def run_task(workspace, agent_cfg, mode, prompt, *, session=None, network=None, 
                 workspace_name=pathlib.Path(workspace).name, mode=mode, network=network,
                 inference_host=agent_cfg.get("inference_host"), tool_host=tool_host,
                 egress=agent_cfg.get("egress", "LOCAL"), prompt=prompt, max_steps=max_steps, depth=depth,
-                parent_id=parent, **(extra_meta or {}))
+                parent_id=parent, runner_pid=os.getpid(), **(extra_meta or {}))
     sess = session or TaskSession(**meta)
     if on_event:
         orig = sess.emit
@@ -91,8 +92,13 @@ def run_task(workspace, agent_cfg, mode, prompt, *, session=None, network=None, 
     scope = policy.Scope(mode=mode, network=network)
     ex = make_executor(sess, workspace, scope, agent_cfg["id"], approver=approver, write_allow=write_allow,
                        depth=depth, max_steps=max_steps)
+    if skill_names:
+        ex.enable_skills(skill_names)
     opts = {**{k: agent_cfg[k] for k in ("thinking", "max_tokens", "temperature", "ctx_chars") if k in agent_cfg},
             **(overrides or {})}
+    if recipe_names:
+        import skills
+        opts["recipes"] = "\n\n".join(skills.recipe(n) for n in recipe_names)
     tools = opts.pop("tools", None)
     if tools is None and depth >= registry.MAX_DEPTH:
         tools = [t for t in ex_tools() if t != "delegate"]

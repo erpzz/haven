@@ -1,0 +1,7 @@
+{
+  "framework": "node-test",
+  "failing": [
+    "clamp keeps values in range"
+  ],
+  "passed": 1
+}

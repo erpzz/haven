@@ -90,11 +90,11 @@ def openai_tools(names=None):
             for n in (names or TOOLS) if n in TOOLS]
 
 
-def validate_args(tool, args):
+def validate_args(tool, args, extra=None):
     """Return an error string, or None. Unknown keys and wrong types are errors."""
-    spec = TOOLS.get(tool)
+    spec = TOOLS.get(tool) or (extra or {}).get(tool)
     if spec is None:
-        return f"unknown tool {tool!r}; available: {', '.join(TOOLS)}"
+        return f"unknown tool {tool!r}; available: {', '.join([*TOOLS, *(extra or {})])}"
     if not isinstance(args, dict):
         return "arguments must be a JSON object"
     params = spec["parameters"]
@@ -145,12 +145,25 @@ class Executor:
         # Set by runtime.make_executor; defaults keep a bare Executor usable.
         self.task_id, self.leases, self.write_allow, self.depth = None, None, None, 0
         self.delegator, self.budget_steps = None, 30
+        self.skill_tools = {}  # tool name -> (verified dir, admission record, schema)
+
+    def enable_skills(self, names=None):
+        import skills
+        for tool, schema in skills.tool_schemas(names).items():
+            v = skills.verified(tool[len("skill_"):])
+            if v:
+                self.skill_tools[tool] = (v[0], v[1], schema)
+
+    def tool_schemas(self, names=None):
+        base = {n: TOOLS[n] for n in (names or TOOLS) if n in TOOLS}
+        base.update({n: t[2] for n, t in self.skill_tools.items()})
+        return base
 
     # ---- public entry point ----------------------------------------------
 
     def call(self, tool: str, args: dict | None) -> dict:
         args = dict(args or {})
-        error = validate_args(tool, args)
+        error = validate_args(tool, args, {n: t[2] for n, t in self.skill_tools.items()})
         if error:
             # Malformed calls are not receipted actions; the loop reports them back.
             return {"status": "invalid", "text": f"[invalid call] {error}"}
@@ -187,7 +200,10 @@ class Executor:
         self._emit("action", receipt=rid, tool=tool, status="executed")
         started = time.monotonic()
         try:
-            result = getattr(self, "_t_" + tool)(rid=rid, decision=decision, **args)
+            if tool in self.skill_tools:
+                result = self._run_skill(rid, decision, tool, args)
+            else:
+                result = getattr(self, "_t_" + tool)(rid=rid, decision=decision, **args)
         except ToolError as e:
             result = {"ok": False, "output": str(e)}
         except Exception as e:  # executor bug or OS error: the effect is not known
@@ -229,9 +245,9 @@ class Executor:
         finally:
             self._emit("approval_closed", receipt=rid)
 
-    def _emit(self, kind, **data):
+    def _emit(self, _type, **data):
         try:
-            self.on_event({"type": kind, "t": round(time.time(), 3), **data})
+            self.on_event({"type": _type, "t": round(time.time(), 3), **data})
         except Exception:
             pass
 
@@ -468,6 +484,7 @@ class Executor:
             _kill_group(proc)
         t.join(timeout=5)
         code = proc.wait()
+        proc.stdout.close()
         return {"exit_code": code, "output": buf.text(), "truncated": buf.truncated,
                 "timed_out": timed_out, "cancelled": cancelled}
 
@@ -503,6 +520,34 @@ class Executor:
         if p["proc"].poll() is None:
             _kill_group(p["proc"])
         return {"ok": True, "output": f"{process_id} stopped (exit {p['proc'].wait()})"}
+
+    def _run_skill(self, rid, decision, tool, args):
+        import shlex
+        import skills
+        d, rec, _ = self.skill_tools[tool]
+        if skills.content_hash(d) != rec["sha256"]:
+            raise ToolError(f"{tool}: files changed since admission; refusing to run")
+        # The registry is sandbox-denied; run a hash-checked copy from this workspace's scratch area.
+        run_dir = self.scratch / "skills" / rec["sha256"][:12]
+        if not run_dir.exists():
+            run_dir.mkdir(parents=True)
+            for f in skills.FILES:
+                shutil.copy2(d / f, run_dir / f)
+        if skills.content_hash(run_dir) != rec["sha256"]:
+            raise ToolError(f"{tool}: staged copy does not match the admitted hash")
+        cmd = f"python3 -I {shlex.quote(str(run_dir / 'skill.py'))} {shlex.quote(json.dumps(args))}"
+        res = self.run_sandboxed(cmd, self.root, self.scope.max_command_seconds, network=False)
+        out = res["output"].strip()
+        try:
+            parsed = json.loads(out.splitlines()[-1])
+            pretty = json.dumps(parsed, indent=1)
+            if len(pretty) > OUTPUT_HEAD:
+                pretty = pretty[:OUTPUT_HEAD] + "\n…"
+            out = pretty
+        except (ValueError, IndexError):
+            parsed = None
+        return {"ok": parsed is not None, "exit_code": res["exit_code"], "output": out,
+                "indeterminate": res["timed_out"] or res["cancelled"]}
 
     def _t_delegate(self, rid, decision, task, agent=None, paths=None, mode=None, max_steps=None):
         if self.delegator is None:
