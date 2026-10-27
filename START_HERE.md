@@ -42,10 +42,10 @@ Read the tool-SFT numbers with their disclosed limits: the verifier is lexical a
 
 ## Where the work lives
 
-- **Runtime:** [PR #36](https://github.com/erpzz/haven/pull/36) `codex/slink-linux-model-lab-20261025` (stacked on bootstrap [PR #35](https://github.com/erpzz/haven/pull/35)). Model Lab on Linux, pinned CUDA installer, Mac launcher, Strata service. Verified running checkpoint `23408d3`.
+- **Runtime (on `main`):** merged from [PR #36](https://github.com/erpzz/haven/pull/36) `codex/slink-linux-model-lab-20261025` and bootstrap [PR #35](https://github.com/erpzz/haven/pull/35). Model Lab on Linux, pinned CUDA installer, Mac launcher, Strata service. Verified running checkpoint `23408d3`.
 - **Training:** [PR #37](https://github.com/erpzz/haven/pull/37) `codex/slink-distillation-pilot-20261025` (bounded LoRA pilot, HF adapter evaluation) and the tool-SFT lab in [PR #45](https://github.com/erpzz/haven/pull/45) `claude/opus-tool-distill-20261026`, stacked on #37. These paths are not on PR #36's ancestry; use a separate checkout.
 - **Overnight coordination:** [issue #40](https://github.com/erpzz/haven/issues/40) is the task board (one GPU owner at a time, checkpoints, release receipts). Mission packet: [PR #39](https://github.com/erpzz/haven/pull/39).
-- **In flight, stacked on PR #36:** [PR #41](https://github.com/erpzz/haven/pull/41) read-only host diagnostics and prepared runtime switching; [PR #42](https://github.com/erpzz/haven/pull/42) and [PR #43](https://github.com/erpzz/haven/pull/43) two overlapping CPU-only inference lanes (one is to be selected).
+- **In flight, stacked on PR #36:** [PR #41](https://github.com/erpzz/haven/pull/41) read-only host diagnostics and prepared runtime switching; [PR #42](https://github.com/erpzz/haven/pull/42) and [PR #43](https://github.com/erpzz/haven/pull/43) two overlapping CPU-only inference lanes (#42 recommended in [issue #40](https://github.com/erpzz/haven/issues/40)). They target the runtime branch, which now matches `main`.
 - **Architecture reference:** HS-01 v2 in [PR #34](https://github.com/erpzz/haven/pull/34); intelligence/memory intent in [design/H02/R02/v1/INTEGRATION_SUMMARY.md](design/H02/R02/v1/INTEGRATION_SUMMARY.md). Dated recommendations there are not deployment facts.
 - **Rules:** [AGENTS.md](AGENTS.md) and [PRECEDENCE.md](PRECEDENCE.md). Use an owned branch, open a PR, do not merge your own PR, do not push to `main`, do not rewrite preserved baseline/design/review files.
 

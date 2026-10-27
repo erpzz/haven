@@ -19,7 +19,7 @@ For the latest measured federation, diagnostic and discovery outcomes, read the 
 
 The working integration is on `main` through PR48 (merge `41f15d4`). The following PRs record its component provenance; open component PRs are not separate installations:
 
-- Runtime: [PR #36](https://github.com/erpzz/haven/pull/36) (Model Lab on Linux, CUDA installer, Strata service).
+- Runtime, merged: [PR #35](https://github.com/erpzz/haven/pull/35) (Ubuntu bootstrap) and [PR #36](https://github.com/erpzz/haven/pull/36) (Model Lab on Linux, CUDA installer, Strata service).
 - Training: [PR #37](https://github.com/erpzz/haven/pull/37) (bounded LoRA pilot) and [PR #45](https://github.com/erpzz/haven/pull/45) (verified-teacher tool-SFT lab and results).
 - Coordination: [issue #40](https://github.com/erpzz/haven/issues/40). In-flight features: [#41](https://github.com/erpzz/haven/pull/41), [#42](https://github.com/erpzz/haven/pull/42), [#43](https://github.com/erpzz/haven/pull/43).
 
