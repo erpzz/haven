@@ -92,6 +92,25 @@ class WorkerTests(unittest.TestCase):
             with self.subTest(job=job),self.assertRaises(w.WorkerError):
                 w.place_jobs(fleet(), {"laptop":heartbeat()}, [job],NOW)
 
+    def test_plan_jobs_cli_with_private_files(self):
+        with tempfile.TemporaryDirectory() as temp:
+            import json
+            import sys
+            path = Path(temp)
+            fleet_path, job_path, observation_dir = path/"fleet.json",path/"jobs.json",path/"telemetry"
+            observation_dir.mkdir(mode=0o700)
+            fleet_path.write_text(json.dumps(fleet()))
+            job_path.write_text(json.dumps({"jobs":[{"id":"i","role":"engineering", "cpu_cores":1, "memory_mib":128}]}))
+            (observation_dir/"laptop.json").write_text(json.dumps(heartbeat()))
+            for file in (fleet_path, job_path, observation_dir/"laptop.json"):
+                file.chmod(0o600)
+            with patch.object(w.time, "time", return_value=NOW), \
+                 patch.object(sys, "argv", ["worker_runtime", "plan-jobs", "--fleet", str(fleet_path),
+                      "--jobs", str(job_path), "--heartbeats-dir", str(observation_dir)]), \
+                 patch("builtins.print") as output:
+                w.main()
+            self.assertIn("PLANNED_ONLY", output.call_args.args[0])
+
     def test_fairness_of_two_nodes(self):
         other={"candidate_id":"neighbor-"+"b"*24,"roles":["engineering"],"approved_until":NOW+1800}
         fl=fleet({"laptop":fleet()["nodes"]["laptop"],"other":other})
