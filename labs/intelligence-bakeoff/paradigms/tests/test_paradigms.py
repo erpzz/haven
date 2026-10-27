@@ -1,11 +1,14 @@
 """Deterministic, no-model/no-network checks for the paradigm bake-off harness."""
 import hashlib
+import inspect
 import io
 import json
 import pathlib
+import re
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 PARADIGMS = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PARADIGMS))
@@ -217,6 +220,67 @@ class SessionTests(unittest.TestCase):
         self.assertTrue(r["restored"])
         self.assertEqual(r["lab_connection"], "LEFT_AS_FOUND")
         self.assertEqual(calls, [])  # Strata already active; labctl was not invoked
+
+    def test_restore_records_how_strata_exited(self):
+        shown = session.subprocess.CompletedProcess([], 0, "Result=exit-code\nExecMainStatus=130\n", "")
+        with mock.patch.object(session, "strata_active", lambda: False), \
+                mock.patch.object(session, "systemctl", lambda *a, **k: shown):
+            r = session.restore({}, reconnect_lab=False, wait_seconds=5)
+        self.assertEqual(r["error"], "haven-strata exited during startup")
+        self.assertEqual(r["unit_exit"], {"Result": "exit-code", "ExecMainStatus": "130"})
+        self.assertFalse(r["restored"])
+
+    def test_gpu_lease_is_held_until_restore_ends(self):
+        events, strata = [], {"active": True}
+
+        class Lease:
+            def close(self):
+                events.append("lease released")
+
+        class FakeLab:
+            def state(self):
+                return {"jobs": [], "engine": {"state": "STOPPED"}, "connection": {"kind": "strata"}}
+
+            def disconnect(self):
+                return {}
+
+        def systemctl(*args, **kwargs):
+            if args[:1] == ("stop",):
+                strata["active"] = False
+
+        def restore(receipt, reconnect_lab=True):
+            events.append("restore")
+            receipt["restore"] = {"restored": True}
+
+        with tempfile.TemporaryDirectory() as tmp:
+            prereg = pathlib.Path(tmp) / "prereg.json"
+            prereg.write_text(json.dumps({"models": [{"id": "m"}]}))
+            with mock.patch.dict(sys.modules, {"gpu_lease": mock.Mock(acquire=Lease)}), \
+                    mock.patch.object(sys, "path", list(sys.path)), \
+                    mock.patch.object(session.signal, "signal"), \
+                    mock.patch.object(session, "Lab", FakeLab), \
+                    mock.patch.object(session, "strata_active", lambda: strata["active"]), \
+                    mock.patch.object(session, "systemctl", systemctl), \
+                    mock.patch.object(session, "gpu_total_used_mib", lambda: 0), \
+                    mock.patch.object(session, "run_model", lambda m, *a: {"id": m["id"], "status": "OK"}), \
+                    mock.patch.object(session, "restore", restore):
+                rc = session.main(["--out", str(pathlib.Path(tmp) / "out"), "--models-dir", tmp,
+                                   "--prereg", str(prereg), "--execute"])
+            receipt = json.loads((pathlib.Path(tmp) / "out" / "session.json").read_text())
+        self.assertEqual(rc, 0)
+        self.assertEqual(events, ["restore", "lease released"])
+        self.assertIn("lease_released_utc", receipt)
+
+    def test_strata_cold_start_limits_cover_measured_loads(self):
+        # Six starts on the host (2026-10-26/27) waited 743-898 s for READY after the engine began,
+        # 771-926 s after systemd's start: a 33.02 GiB expert arena read at 0.04-0.05 GiB/s over
+        # the USB 2 root link. Strata's own default of 900 s failed one of them.
+        worst_engine_s, wrapper_overhead_s = 898, 60
+        service = (PARADIGMS.parents[2] / "ops/haven-core/strata-service.py").read_text()
+        ready_s = float(re.search(r"setdefault\('STRATA_ENGINE_READY_S', '(\d+)'\)", service).group(1))
+        self.assertGreaterEqual(ready_s, 2 * worst_engine_s)
+        wait_s = inspect.signature(session.restore).parameters["wait_seconds"].default
+        self.assertGreaterEqual(wait_s, ready_s + wrapper_overhead_s)
 
     def test_eval_command_matches_preregistration(self):
         prereg = json.loads(session.PREREG.read_text())["eval_command"]

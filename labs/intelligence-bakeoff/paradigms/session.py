@@ -6,8 +6,8 @@
   2. for each preregistered model: start its own llama-server on a loopback port
      with a private API key, record load time and buffer sizes, run the
      performance and long-context probes, run the frozen tool benchmark, stop;
-  3. always restore: release the lease, start Strata, and reconnect the Lab
-     (`labctl.py strata`) once Strata reports a model, even after a failure.
+  3. always restore: start Strata, reconnect the Lab (`labctl.py strata`) once
+     Strata reports a model, and only then release the lease, even after a failure.
 
 Every record stays in the private output directory. Nothing is installed.
 
@@ -356,6 +356,13 @@ def strata_active():
     return systemctl("is-active", "--quiet", "haven-strata").returncode == 0
 
 
+def strata_exit():
+    """systemd's record of how haven-strata ended: status 1 is the engine's own failure (its READY
+    timeout among them), 130 an interrupt from outside, such as another actor stopping the unit."""
+    shown = systemctl("show", "haven-strata", "--property=Result,ExecMainStatus")
+    return dict(line.split("=", 1) for line in shown.stdout.splitlines() if "=" in line)
+
+
 def restore(receipt, reconnect_lab=True, wait_seconds=2700):
     """Start Strata and, if this session disconnected it, reconnect the Lab. Never raises."""
     r = receipt.setdefault("restore", {"started_utc": now()})
@@ -366,6 +373,7 @@ def restore(receipt, reconnect_lab=True, wait_seconds=2700):
         while time.monotonic() - t0 < wait_seconds:
             if not strata_active():
                 r["error"] = "haven-strata exited during startup"
+                r["unit_exit"] = strata_exit()
                 break
             try:
                 key = STRATA_KEY.read_text().strip()
@@ -498,12 +506,17 @@ def main(argv=None):
         receipt["error"] = f"{type(error).__name__}: {str(error)[:300]}"
     finally:
         signal.signal(signal.SIGTERM, signal.SIG_IGN)  # the restore must not be interrupted
-        if lease is not None:
-            lease.close()
-        receipt["lease_released_utc"] = now()
         save()
-        if stopped_strata or receipt.get("lab_disconnected_utc") or not strata_active():
-            restore(receipt, reconnect_lab=bool(receipt.get("lab_disconnected_utc")))
+        try:
+            # Strata's cold load takes about 15 minutes on the USB 2 root disk. The lease stays held
+            # through it, so no cooperative GPU operation (a Lab runtime switch stops Strata) can
+            # take the GPU mid-load. Round 1's restore was stopped from outside 7 minutes in.
+            if stopped_strata or receipt.get("lab_disconnected_utc") or not strata_active():
+                restore(receipt, reconnect_lab=bool(receipt.get("lab_disconnected_utc")))
+        finally:
+            if lease is not None:
+                lease.close()
+            receipt["lease_released_utc"] = now()
         receipt["total_minutes"] = round((time.monotonic() - began) / 60, 1)
         save()
     return 0 if receipt["status"] == "COMPLETED" and receipt.get("restore", {}).get("restored") else 1

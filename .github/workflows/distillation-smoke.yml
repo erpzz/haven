@@ -5,6 +5,7 @@ on:
       - 'labs/intelligence-bakeoff/distillation/**'
       - 'labs/intelligence-bakeoff/adjudicated/**'
       - 'labs/intelligence-bakeoff/paradigms/**'
+      - 'ops/haven-core/strata-service.py'
       - 'labs/intelligence-bakeoff/RUN-WINDOWS.ps1'
       - '.github/workflows/distillation-smoke.yml'
   workflow_dispatch:
