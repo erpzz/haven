@@ -32,7 +32,14 @@ import zipfile
 VERSION = '0.1.0'
 GIB = 1024 ** 3
 MIB = 1024 ** 2
-MAX_JSON = 1024 ** 2
+MAX_JSON = 4 * 1024 ** 2
+MAX_CONTEXT = 32768           # llama_command's context bound
+UNKNOWN_CONTEXT_OUTPUT = 4096  # external runtimes that do not report a context keep the old ceiling
+
+
+def estimate_prompt_tokens(messages: list[dict]) -> int:
+    """Conservative (over-)estimate: ~3 UTF-8 bytes per token plus per-message framing."""
+    return sum(len(m['content'].encode()) // 3 + 8 for m in messages) + 16
 ROOT = Path(__file__).resolve().parent
 
 # Status meanings fixed by ops/haven-core/cloud-worker.py; its free-text bodies are never shown.
@@ -761,19 +768,20 @@ class Lab:
         return {'state': 'DISCONNECTED', 'external_server_stopped': False}
     def validate_generation(self, req: dict) -> dict:
         messages = req.get('messages')
-        if not isinstance(messages, list) or not 1 <= len(messages) <= 100: raise ValueError('Supply 1–100 messages.')
+        if not isinstance(messages, list) or not 1 <= len(messages) <= 400: raise ValueError('Supply 1–400 messages.')
         clean = []
         for m in messages:
             if not isinstance(m, dict) or m.get('role') not in ('system', 'user', 'assistant') or not isinstance(m.get('content'), str):
                 raise ValueError('This first release supports text messages only.')
             clean.append({'role': m['role'], 'content': m['content']})
-        if sum(len(m['content']) for m in clean) > 100000: raise ValueError('Conversation too large; start a new chat.')
+        if sum(len(m['content']) for m in clean) > 400000: raise ValueError('Conversation too large; start a new chat.')
         effort = req.get('reasoning', 'none')
         if effort not in ('none', 'low', 'medium', 'high'): raise ValueError('Invalid reasoning effort.')
         provider_id = req.get('provider_id', 'managed')
         if not isinstance(provider_id, str) or not re.fullmatch(r'[a-z][a-z0-9-]{2,47}', provider_id):
             raise ValueError('Choose an enrolled provider identifier, never a URL.')
-        return {'messages': clean, 'max_tokens': bounded_int(req.get('max_tokens', 2048), 16, 4096, 'Max output tokens'),
+        # The absolute bound is the largest runtime context; generate() applies the real per-backend limit.
+        return {'messages': clean, 'max_tokens': bounded_int(req.get('max_tokens', 2048), 16, MAX_CONTEXT, 'Max output tokens'),
                 'temperature': finite_float(req.get('temperature', .7), 0, 2, 'Temperature'),
                 'top_p': finite_float(req.get('top_p', .8), .01, 1, 'Top-p'),
                 'seed': bounded_int(req.get('seed', 42), 0, 2**31-1, 'Seed'), 'reasoning': effort,
@@ -809,6 +817,16 @@ class Lab:
             if conn['provider_id'] != 'managed' and (len(args['messages']) > limit.get('max_messages', 8) or
                     sum(len(m['content'].encode()) + 64 for m in args['messages']) + args['max_tokens'] + 128 > limit['context']):
                 raise ValueError('This worker needs a shorter conversation or output limit. No text was truncated or sent.')
+            if conn['provider_id'] == 'managed':
+                context = limit.get('context') if type(limit.get('context')) is int else None
+                if context is None and args['max_tokens'] > UNKNOWN_CONTEXT_OUTPUT:
+                    raise ValueError(f'The attached runtime did not report its context; output is limited to '
+                                     f'{UNKNOWN_CONTEXT_OUTPUT} tokens. Use Continue for longer answers.')
+                prompt = estimate_prompt_tokens(args['messages'])
+                if context is not None and prompt + args['max_tokens'] > context:
+                    raise ValueError(f'This chat (~{prompt} tokens) plus {args["max_tokens"]} output tokens exceeds the loaded '
+                                     f'{context}-token context. Lower max output to {max(0, context - prompt)} or less, '
+                                     'start a new chat, or reload with a larger context. Nothing was sent or truncated.')
             if args['benchmark'] and args['expected_connected_at'] is not None and args['expected_connected_at'] != conn['connected_at']:
                 raise ValueError('Benchmark backend changed. Start a new experiment for this connection.')
             if not self.generation.acquire(False): raise ValueError('One request at a time on this GPU. Cancel or wait for the active request.')
@@ -833,7 +851,8 @@ class Lab:
         if args['benchmark'] and backend['kind'] == 'llama': body['cache_prompt'] = False
         watchdog_done = threading.Event()
         def watchdog():
-            if not watchdog_done.wait(240):
+            # Long replies are legitimate: allow ~15 tok/s plus prefill before declaring a stall.
+            if not watchdog_done.wait(max(240, 120 + args['max_tokens'] / 15)):
                 job.update(deadline_exceeded=True)
                 job.cancel()
         threading.Thread(target=watchdog, daemon=True).start()
