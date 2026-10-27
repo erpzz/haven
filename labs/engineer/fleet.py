@@ -14,6 +14,7 @@ capture time and round-trip; missing values are null, never zero.
   fleet.py observe                 # JSON for every enrolled node + candidates
   fleet.py enroll NAME --ssh ALIAS [--roles inference,tools,build]
   fleet.py remove NAME
+  fleet.py bind NAME --tsz-node ID  # owner binds a node to its TSZ identity (trust.py)
 """
 from __future__ import annotations
 
@@ -116,6 +117,22 @@ def remove(name):
     cfg["nodes"] = [n for n in cfg["nodes"] if n["name"] != name or n["kind"] == "local"]
     save(cfg)
     return before != len(cfg["nodes"])
+
+
+def bind(name, tsz_node_id):
+    """Owner act: tie a Haven node to the identity the external trust model approves."""
+    cfg = load()
+    node = next((n for n in cfg["nodes"] if n["name"] == name), None)
+    if node is None:
+        raise SystemExit(f"{name} is not enrolled")
+    if tsz_node_id and any(n.get("tsz_node_id") == tsz_node_id and n is not node for n in cfg["nodes"]):
+        raise SystemExit(f"{tsz_node_id} is already bound to another node")
+    if tsz_node_id:
+        node["tsz_node_id"] = tsz_node_id
+    else:
+        node.pop("tsz_node_id", None)
+    save(cfg)
+    return node
 
 
 def _parse(text):
@@ -258,6 +275,9 @@ def main(argv=None):
     e.add_argument("--roles", default="inference,tools")
     r = sub.add_parser("remove")
     r.add_argument("name")
+    b = sub.add_parser("bind")
+    b.add_argument("name")
+    b.add_argument("--tsz-node", default="", help="empty string removes the binding")
     s = sub.add_parser("scope")
     s.add_argument("cidr")
     args = ap.parse_args(argv)
@@ -267,6 +287,9 @@ def main(argv=None):
         print(json.dumps(enroll(args.name, args.ssh, args.roles.split(",")), indent=2))
     elif args.cmd == "remove":
         print("removed" if remove(args.name) else "not found")
+    elif args.cmd == "bind":
+        print(json.dumps({k: v for k, v in bind(args.name, args.tsz_node).items() if k != "host_fingerprint"},
+                         indent=2))
     elif args.cmd == "scope":
         cfg = load()
         ipaddress.ip_network(args.cidr, strict=False)

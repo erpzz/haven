@@ -107,6 +107,14 @@ def main(argv=None):
                    help="sandbox network: owner default from scope.json, or force on/off")
     r.add_argument("--max-steps", type=int, default=30)
     r.add_argument("prompt")
+    rr = sub.add_parser("run-remote", help="model here, tools on an enrolled node, commits come back as a branch")
+    rr.add_argument("--node", required=True)
+    rr.add_argument("--repo", required=True, help="local git repo; cloned to the node, never modified here")
+    rr.add_argument("--agent", required=True)
+    rr.add_argument("--mode", choices=policy.MODES, default="engineer")
+    rr.add_argument("--network", choices=("on", "off"), default="off")
+    rr.add_argument("--max-steps", type=int, default=30)
+    rr.add_argument("prompt")
     sub.add_parser("agents")
     sub.add_parser("brief", help="state for a returning supervisor, from records")
     sub.add_parser("sandbox")
@@ -127,6 +135,19 @@ def main(argv=None):
     if args.cmd == "verify":
         led = Ledger(args.ledger)
         print(json.dumps({"verified": led.verify(), "receipts": len(led.receipts())}))
+        return
+    if args.cmd == "run-remote":
+        import remote
+        import trust
+        rec = remote.run_remote_task(args.node, args.repo, args.agent, args.mode, args.prompt,
+                                     max_steps=args.max_steps, network=args.network == "on", on_event=_print_event,
+                                     gate=trust.Gate())
+        print(f"\nstatus: {rec['status']}  tool host: {rec['tool_host']}  receipts: {len(rec['receipts'])}  "
+              f"ledger verified: {rec['ledger_verified']}  wall: {rec.get('wall_s')}s")
+        print("\n" + (rec.get("answer") or "(no answer)"))
+        print("\n" + (rec.get("runtime_footer") or ""))
+        print(f"\nbranch: {rec.get('fetched_branch')} @ {rec.get('fetched_commit')} ({rec.get('new_commits')} new)")
+        print(f"record: {STATE / 'tasks' / rec['task_id'] / 'record.json'}")
         return
     agent = agent_by_id(args.agent)
     print(f"task → {agent['id']} on {agent.get('inference_host', '?')}; tools on this host; mode {args.mode}; "

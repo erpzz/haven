@@ -138,11 +138,17 @@ class CodexStream:
             raise HostedError("Codex reported: " + msg)
 
 
-def run(agent_cfg, sess, workspace, mode, prompt, *, network, max_turns=40, timeout_s=1800):
-    """Run one hosted engineering task inside `sess`. Returns the final record."""
+def run(agent_cfg, sess, workspace, mode, prompt, *, network, max_turns=40, timeout_s=1800, mcp=None, cwd=None,
+        before_finish=None):
+    """Run one hosted engineering task inside `sess`. Returns the final record.
+
+    A remote tool host passes its own `mcp` argv (remote.mcp_command), an empty local `cwd`, and a
+    `before_finish` hook that copies the tool host's ledger into the task before it is checked.
+    """
     from ledger import Ledger
     kind = agent_cfg["id"]
-    mcp = mcp_argv(workspace, mode, kind, sess.tid, network)
+    mcp = mcp or mcp_argv(workspace, mode, kind, sess.tid, network)
+    cwd = cwd or workspace
     started = time.monotonic()
     if kind.startswith("claude"):
         cfg_path = sess.dir / "mcp.json"
@@ -151,10 +157,10 @@ def run(agent_cfg, sess, workspace, mode, prompt, *, network, max_turns=40, time
         argv, parser = claude_argv(agent_cfg, cfg_path, max_turns), ClaudeStream(sess.emit)
         env = child_env(agent_cfg.get("config_dir"))
     else:
-        argv, parser = codex_argv(agent_cfg, workspace, mcp, timeout_s), CodexStream(sess.emit)
+        argv, parser = codex_argv(agent_cfg, cwd, mcp, timeout_s), CodexStream(sess.emit)
         env = child_env()
     sess.emit({"type": "task_started", "model": kind, "mode": mode, "egress": "HOSTED_SUBSCRIPTION"})
-    proc = subprocess.Popen(argv, cwd=workspace, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    proc = subprocess.Popen(argv, cwd=cwd, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE, text=True, start_new_session=True)
     proc.stdin.write(prompt)
     proc.stdin.close()
@@ -192,6 +198,8 @@ def run(agent_cfg, sess, workspace, mode, prompt, *, network, max_turns=40, time
     if status == "completed" and (not res or res.get("is_error")):
         status, error = "error", (res.get("result") or stderr or f"CLI exited {proc.returncode}")[:600]
     answer = res.get("result") or ""
+    if before_finish:
+        before_finish()
     ledger = Ledger(sess.ledger_path, session=sess.tid) if sess.ledger_path.exists() else None
     from runtime import child_ledgers
     check = ledger.check_answer(answer, child_ledgers(sess)) if (ledger and answer) else None

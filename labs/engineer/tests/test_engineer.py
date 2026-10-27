@@ -127,6 +127,14 @@ class LedgerTest(unittest.TestCase):
             led.transition(r2, s)
         led.transition(r2, "succeeded", exit_code=0)
         self.assertTrue(led.check_answer(f"Tests pass ({r2}).")["ok"])
+        # Seen live: a model "confirmed" a fix with a command that ran no tests, then said "now passes".
+        fresh = ledger_mod.Ledger(pathlib.Path(TMP) / "l1b.jsonl")
+        r4 = fresh.propose("run_command", {"command": "python3 test_calc.py"}, agent="a", mode="engineer",
+                           klass="exec", summary="$ python3 test_calc.py")
+        for s in ("authorized", "executed", "succeeded"):
+            fresh.transition(r4, s)
+        for claim in ("The unit test now passes", "the tests are passing", "all tests succeeded"):
+            self.assertIn("test", fresh.check_answer(f"{claim} ({r4}).")["unsupported_claims"], claim)
         lines = p.read_text().splitlines()
         self.assertIn('"class":"exec"', lines[0])
         lines[0] = lines[0].replace('"class":"exec"', '"class":"read"')
