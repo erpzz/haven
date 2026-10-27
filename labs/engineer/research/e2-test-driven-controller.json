@@ -4,5 +4,5 @@
   "hypothesis": "A controller that runs the inherited run_tests skill itself and asks the model only for patches beats the free-form loop at the same model and step budget.",
   "finding": "Runtime runs run_tests before the first turn and after each edit: 6/8 successes vs 3/8 tools-only at the same 20-step budget (Qwen 4/4, median 9 vs 13.5 steps; LFM 2/4 vs 0/4). Rows are in e1-inheritance.json.",
   "id": "e2-test-driven-controller",
-  "limits": "Arm added after the E1 preregistration; one replicate per cell; 4 synthetic tasks. The preregistered rerun (e2-rerun.json) did not support the success claim (3-0, inconclusive); the step and action savings for Qwen held up."
+  "limits": "Arm added after the E1 preregistration; one replicate per cell; 4 synthetic tasks. The preregistered rerun (e2-rerun.json) did not support the success claim (3-0, inconclusive); for Qwen it used fewer steps and actions, an exploratory observation (e2-rerun-efficiency.json) that needs its own preregistered test."
 }

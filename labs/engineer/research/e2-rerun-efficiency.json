@@ -1,0 +1,90 @@
+{
+  "id": "e2-rerun-efficiency",
+  "status": "exploratory",
+  "note": "Written after the preregistered verdicts in e2-rerun.json, which it does not change.",
+  "agent": [
+    "qwen35-4b-mac"
+  ],
+  "units": 12,
+  "guard_fired": 0,
+  "paired": {
+    "controller_vs_none": {
+      "steps": {
+        "fewer": 10,
+        "more": 0,
+        "equal": 2,
+        "median_diff": -6.5
+      },
+      "tool_calls": {
+        "fewer": 11,
+        "more": 1,
+        "equal": 0,
+        "median_diff": -7.0
+      },
+      "wall_s": {
+        "fewer": 8,
+        "more": 4,
+        "equal": 0,
+        "median_diff": -45.3
+      }
+    },
+    "identical_guard_vs_none": {
+      "steps": {
+        "fewer": 2,
+        "more": 0,
+        "equal": 10,
+        "median_diff": 0.0
+      },
+      "tool_calls": {
+        "fewer": 2,
+        "more": 7,
+        "equal": 3,
+        "median_diff": 1.0
+      },
+      "wall_s": {
+        "fewer": 8,
+        "more": 4,
+        "equal": 0,
+        "median_diff": -14.9
+      }
+    },
+    "identical_both_vs_controller": {
+      "steps": {
+        "fewer": 6,
+        "more": 4,
+        "equal": 2,
+        "median_diff": -0.5
+      },
+      "tool_calls": {
+        "fewer": 5,
+        "more": 4,
+        "equal": 3,
+        "median_diff": 0.0
+      },
+      "wall_s": {
+        "fewer": 5,
+        "more": 7,
+        "equal": 0,
+        "median_diff": 7.3
+      }
+    }
+  },
+  "at_step_cap": {
+    "none": 7,
+    "guard": 7,
+    "controller": 1,
+    "both": 0
+  },
+  "runtime_test_runs": {
+    "controller": 25,
+    "both": 24
+  },
+  "source_rows_sha256": "c03d05382846119e78b1a9b192ffe632b417cd2bb51e8dc4f8cb3d5cbf2b3691 (e2-qwen.jsonl, private)",
+  "reading": {
+    "note": "Added by hand after the computed fields above (Opus review, 2026-10-27).",
+    "steps": "Controller used fewer model steps in 10/12 units and more in 0. Between identical treatments (both vs controller) the split was 6/4, so per-unit step counts are noisy, but a 10-0 split in one direction is not explained by that spread. The size of the saving is not measured: 'none' hit the 20-step cap in 7/12 runs, so its median of 20 is the cap. In those runs Qwen had usually fixed the bug and kept going; the controller's main effect looks like letting it stop (committed 12/12 vs 10/12).",
+    "executor_actions": "Model tool calls were lower in 11/12 units (identical-treatment splits 2/7 and 5/4). The 138 vs 193 executor-action total includes the controller's 25 runtime test runs.",
+    "wall_time": "Not established. Controller was faster in 8/12 units, which is the same split as guard vs none, an identical treatment (8/12, median 15 s).",
+    "next": "Treat the step and action saving as a hypothesis for a preregistered test on tasks Qwen does not solve unaided, with a step cap high enough that the unaided arm is not censored."
+  }
+}
