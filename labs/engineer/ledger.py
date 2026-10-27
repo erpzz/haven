@@ -198,7 +198,7 @@ class Ledger:
 
 _FIELDS = {"reason", "decided_by", "exit_code", "duration_s", "output_sha256", "output_bytes", "truncated",
            "error", "changed_paths", "commit", "branch", "approval", "sandbox", "timed_out", "cancelled",
-           "test_command", "network"}
+           "test_command", "network", "node"}
 
 
 def _supports(receipt, kind):
