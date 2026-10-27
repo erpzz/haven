@@ -89,3 +89,18 @@ C1 (free oracle-union analysis) should be run first because it decides whether #
 
 ## 5. Caveats
 Several 2026 facts come from blogs and aggregators (marked 2ndary). The Qwen3.8 specs are NVIDIA docs plus a press article, not a Qwen release page. Older arXiv IDs were not re-fetched. All predicted numbers need a first run before anyone relies on them. Nothing was executed on Haven hardware for this document.
+
+## 6. Addendum, 2026-10-27: C1 oracle-union result (executed)
+
+C1 used the existing private eval records with verifier v3, held-out 110. It needed no inference.
+
+| Perfect per-task selection among | Held-out pass | Over the 4B alone |
+|---|---|---|
+| 4B alone | 76 | — |
+| 4B + Strata | 85 | +9 |
+| 4B + 0.6B oracle-SFT | 86 | +10 |
+| Every local arm (4B, Strata, three 0.6B arms) | **89** (Wilson 72.6–87.2%) | **+13** |
+
+Of the 110 tasks, 21 were solved by **no** model. By family: `execute_refusal` 6, `compare_with_other` 6, `missing_note` 5, `shared_note` 2, `cross_user_deny` 1, `no_tool` 1. The 4B alone solves 9 tasks that no other arm solves.
+
+Reading [I]: the oracle ceiling bounds any router across these local models at +13, and a real router recovers less. The largest gap is shared behavior. Every arm substitutes proposals and over-explores past the budget, which points to contract data or code-level authority rules, not more parameters. Cloud escalation's value is therefore general reasoning and knowledge, which this tool suite does not measure. The cloud lane disables tools, so it cannot be scored here yet.

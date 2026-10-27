@@ -39,6 +39,13 @@ Browser ─▶ Slink Lab ─▶ providers/cloud-<lane>.sock ─(SSH reverse forw
   the model replies to the last user message. Temperature and seed are not
   applied.
 
+## Phase 2 (2026-10-27)
+
+- **Ask instead.** Every local answer, including a failed one, shows *Ask Claude Code instead ☁* when a cloud lane is ready and not at its plan limit. A confirmation names the vendor, the route class, and the number of messages and characters that will leave the house. The cloud answer replaces the local one in the conversation; the selected worker does not change.
+- **Server-enforced acknowledgment.** The Lab refuses any cloud-lane request that lacks `egress_ack: "HOSTED_SUBSCRIPTION"` before contacting the worker. The browser sends it only for a selected cloud lane or a confirmed escalation; `labctl.py chat --provider cloud-*` sends it because naming the lane is explicit.
+- **Plan visibility.** The worker reports each lane's requests today against the cap, plus the last plan state the CLI reported (Claude's `resetsAt`, Codex's "try again at"). The selector shows, for example, "12/50 today · plan limit until 2:31 AM". The registry accepts only bounded fields.
+- **Restart visibility.** A tab whose private link died in a Lab restart shows a pinned banner and disables Send, instead of silently not sending. A runtime switch shows its own progress message and elapsed time against the ~15-minute Strata load.
+
 ## Operate
 
 On the Mac, as the owner:

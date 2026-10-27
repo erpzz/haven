@@ -750,6 +750,8 @@ class Lab:
                 'seed': bounded_int(req.get('seed', 42), 0, 2**31-1, 'Seed'), 'reasoning': effort,
                 'benchmark': req.get('benchmark') is True, 'label': str(req.get('label', 'interactive'))[:80],
                 'provider_id': provider_id,
+                # Cloud lanes leave the house; the client must say so explicitly on every request.
+                'egress_ack': req.get('egress_ack') if req.get('egress_ack') == 'HOSTED_SUBSCRIPTION' else None,
                 'expected_connected_at': None if req.get('expected_connected_at') is None else
                     finite_float(req['expected_connected_at'], 0, 1e12, 'Expected connection identity')}
     def generate(self, request: dict) -> str:
@@ -764,6 +766,9 @@ class Lab:
         with self.lock:
             self.guard_runtime()
             if not conn: raise ValueError('Connect or load a model first.')
+            if conn.get('kind') == 'cloud' and args['egress_ack'] != 'HOSTED_SUBSCRIPTION':
+                raise ValueError('Cloud lanes send this conversation outside the house; the request lacked the explicit '
+                                 'egress acknowledgment. Nothing was sent.')
             if conn['provider_id'] == 'managed' and managed != (self.connection or {}):
                 raise ValueError('Slink runtime changed during routing. No request was sent.')
             if conn['provider_id'] != 'managed' and args['reasoning'] != 'none':
@@ -782,6 +787,7 @@ class Lab:
                 j = self.new_job('generation')
                 j.update(provider_id=conn['provider_id'], worker_label=conn['worker_label'],
                          compute=conn.get('compute', 'gpu'), model_sha256=conn.get('model_sha256'),
+                         egress=conn.get('route_class') if conn.get('kind') == 'cloud' else 'NONE',
                          digest_provenance=conn.get('digest_provenance', 'LOCAL_ARTIFACT'), route_reason=conn['route_reason'])
             except Exception:
                 self.generation.release(); raise

@@ -151,7 +151,7 @@ def codex_argv(lane, cwd, system_file):
 
 class ClaudeParser:
     """Claude Code stream-json. Verifies the no-tool, subscription-only contract as it arrives."""
-    def __init__(self): self.usage, self.done, self.text = {}, False, ''
+    def __init__(self): self.usage, self.done, self.text, self.plan = {}, False, '', {}
     def feed(self, o):
         kind = o.get('type')
         if kind == 'system' and o.get('subtype') == 'init':
@@ -161,7 +161,9 @@ class ClaudeParser:
                 raise LaneError(402, 'Claude Code would use an API key, not the plan; the turn was stopped.')
         elif kind == 'rate_limit_event':
             info = o.get('rate_limit_info') or {}
-            if info.get('isUsingOverage') or info.get('status') not in (None, 'allowed', 'allowed_warning'):
+            limited = bool(info.get('isUsingOverage')) or info.get('status') not in (None, 'allowed', 'allowed_warning')
+            self.plan = {'status': 'LIMITED' if limited else 'ALLOWED', 'resets_at': info.get('resetsAt')}
+            if limited:
                 raise LaneError(429, 'Claude plan limit reached (no paid overage is used); try later or stay local.')
         elif kind == 'stream_event':
             e = o.get('event') or {}
@@ -181,7 +183,7 @@ class ClaudeParser:
 
 class CodexParser:
     """Codex exec --json. Only agent messages, reasoning and CLI notices are acceptable items."""
-    def __init__(self): self.usage, self.done, self.text = {}, False, ''
+    def __init__(self): self.usage, self.done, self.text, self.plan = {}, False, '', {}
     def feed(self, o):
         kind = o.get('type', '')
         item = o.get('item') or {}
@@ -194,11 +196,16 @@ class CodexParser:
                 raise LaneError(502, 'The installed Codex CLI is too old for this model; upgrade it (brew upgrade codex).')
             if 'model_not_found' in text or 'not supported' in text:
                 raise LaneError(502, 'Codex rejected the configured model; rerun configure with --codex-model.')
-            raise LaneError(429 if ('limit' in text or 'quota' in text or 'usage' in text) else 502,
-                            'Codex reported an error or plan limit; nothing was retried.')
+            if 'limit' in text or 'quota' in text or 'usage' in text:
+                import re
+                when = re.search(r'try again at ([0-9]{1,2}:[0-9]{2} ?[ap]m)', text)
+                self.plan = {'status': 'LIMITED', 'resets_text': when[1].upper() if when else None}
+                raise LaneError(429, 'Codex reported a plan limit; nothing was retried.')
+            raise LaneError(502, 'Codex reported an error; nothing was retried.')
         if kind == 'item.completed' and item.get('type') == 'agent_message':
             return item.get('text') or ''
         if kind == 'turn.completed':
+            self.plan = {'status': 'ALLOWED'}
             u = o.get('usage') or {}
             self.usage = {'prompt_tokens': u.get('input_tokens'), 'completion_tokens': u.get('output_tokens')}
             self.done = True
@@ -208,6 +215,9 @@ class CodexParser:
 class Usage:
     def __init__(self, cap):
         self.cap, self.lock, self.path = cap, threading.Lock(), STATE / 'usage.json'
+    def today(self):
+        try: return json.loads(self.path.read_text()).get(time.strftime('%Y-%m-%d', time.gmtime()), 0)
+        except (OSError, ValueError): return 0
     def take(self):
         day = time.strftime('%Y-%m-%d', time.gmtime())
         with self.lock:
@@ -244,6 +254,7 @@ def watch_client(conn, proc, closed):
 
 def make_handler(config, key, usage, busy):
     lanes = {i: {**LANES[i], **v} for i, v in config['lanes'].items() if i in LANES}
+    plans = {i: {'status': 'UNKNOWN'} for i in lanes}  # Last plan state each CLI reported, in memory only.
 
     class Handler(BaseHTTPRequestHandler):
         protocol_version = 'HTTP/1.1'
@@ -262,8 +273,11 @@ def make_handler(config, key, usage, busy):
         def do_GET(self):
             if not self.authorized(): return self.reply(401, {'error': {'message': 'unauthorized'}})
             if self.path != '/v1/models': return self.reply(404, {'error': {'message': 'not found'}})
+            used = usage.today()
             self.reply(200, {'object': 'list', 'data': [{'id': i, 'object': 'model', 'owned_by': l['vendor'],
-                             'route_class': l['route_class']} for i, l in lanes.items() if os.access(l['exe'], os.X_OK)]})
+                             'route_class': l['route_class'],
+                             'haven_plan': {**plans[i], 'daily_used': used, 'daily_cap': usage.cap}}
+                            for i, l in lanes.items() if os.access(l['exe'], os.X_OK)]})
 
         def do_POST(self):
             if not self.authorized(): return self.reply(401, {'error': {'message': 'unauthorized'}})
@@ -354,6 +368,8 @@ def make_handler(config, key, usage, busy):
                 finally:
                     if proc:
                         stop(proc); proc.wait()
+                    if parser.plan:
+                        plans[ident] = {k: v for k, v in parser.plan.items() if v is not None}
                     row.update(outcome=outcome, seconds=round(time.monotonic() - began, 3))
                     receipt(row)
     return Handler
