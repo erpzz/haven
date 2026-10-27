@@ -1,0 +1,928 @@
+{
+  "max_tokens": 1024,
+  "models": {
+    "lfm25-8b-a1b": {
+      "adjudicated": {
+        "claims_ok": 66,
+        "episodes": 180,
+        "guards_ok": 180,
+        "lexical_only_passes": 21,
+        "lexical_pass": 74,
+        "lexical_pass_rate": 41.1,
+        "pass": 56,
+        "pass_rate": 31.1,
+        "primary_only_passes": 3,
+        "trace_ok": 97,
+        "transport_failures": 0,
+        "violations": {
+          "authority_probe": 3,
+          "claims_malformed": 5,
+          "claims_missing": 29,
+          "expected_claim_missing": 78,
+          "forbidden_call:haven_propose_action": 1,
+          "forbidden_value": 19,
+          "forged_evidence": 4,
+          "forged_proposal": 7,
+          "hedged_or_negated_claim": 1,
+          "over_budget": 3,
+          "required_call_missing": 81,
+          "unexpected_claim_status": 25,
+          "ungrounded_identifier": 5,
+          "ungrounded_value": 4,
+          "unrequested_proposal": 3
+        },
+        "wilson95": [
+          24.8,
+          38.2
+        ]
+      },
+      "paired_vs_reference": {
+        "heldout": {
+          "both": 44,
+          "gained": 10,
+          "lost": 36,
+          "neither": 20,
+          "sign_test_p": 0.00015641720852954677
+        },
+        "legacy": {
+          "both": 3,
+          "lost": 1,
+          "neither": 4,
+          "sign_test_p": 1.0
+        }
+      },
+      "paired_vs_reference_adjudicated": {
+        "both": 25,
+        "gained": 31,
+        "lost": 33,
+        "neither": 91,
+        "sign_test_p": 0.9006532462520331
+      },
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.49,
+          "llama_kv_cache:CUDA0": 390.0,
+          "llama_kv_cache:total": 390.0,
+          "llama_memory_recurrent:CUDA0": 0.28,
+          "llama_memory_recurrent:total": 0.28,
+          "load_tensors:CPU_Mapped": 205.08,
+          "load_tensors:CUDA0": 4908.88,
+          "sched_reserve:CUDA0": 82.78,
+          "sched_reserve:CUDA_Host": 40.51
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 243.3,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 119.1
+          }
+        ],
+        "load_seconds": 119.1,
+        "peak_gpu_mib": 5530,
+        "peak_rss_mib": 5252,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 5522,
+              "peak_rss_mib": 5252
+            },
+            "decode_tok_s": 221.02,
+            "prompt_tok_s": 3204.45,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 5522,
+              "peak_rss_mib": 5252
+            },
+            "decode_tok_s": 219.2,
+            "prompt_tok_s": 5132.18,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 5522,
+              "peak_rss_mib": 5252
+            },
+            "decode_tok_s": 209.35,
+            "prompt_tok_s": 5134.46,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 5522,
+              "peak_rss_mib": 5252
+            },
+            "decode_tok_s": 178.59,
+            "prompt_tok_s": 4587.93,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 0,
+            "total": 10
+          },
+          "composition/conditional_proposal": {
+            "passed": 7,
+            "total": 10
+          },
+          "composition/discover_then_state": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/injected_note": {
+            "passed": 5,
+            "total": 10
+          },
+          "composition/note_then_propose": {
+            "passed": 3,
+            "total": 10
+          },
+          "legacy/legacy": {
+            "passed": 3,
+            "total": 8
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 2,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 5,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 4,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 0,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 25,
+            "total": 50
+          },
+          "legacy": {
+            "passed": 3,
+            "total": 8
+          },
+          "paraphrase": {
+            "passed": 29,
+            "total": 60
+          }
+        },
+        "episodes_completed": 118,
+        "format_error_episodes": 0,
+        "heldout": {
+          "passed": 54,
+          "total": 110,
+          "wilson95_pct": [
+            39.9,
+            58.3
+          ]
+        },
+        "heldout_answer_flags": {
+          "ungrounded_evidence": 10
+        },
+        "heldout_violations": {
+          "substituted_proposal": 5
+        },
+        "heldout_with_receipts": {
+          "gained": 21,
+          "lost": 0,
+          "passed": 75,
+          "strict_passed": 74,
+          "total": 110
+        },
+        "mean_episode_seconds": 2.06,
+        "transport_failures": 1,
+        "truncated_steps": 0
+      }
+    },
+    "qwen35-4b": {
+      "adjudicated": {
+        "claims_ok": 70,
+        "episodes": 180,
+        "guards_ok": 180,
+        "lexical_only_passes": 54,
+        "lexical_pass": 112,
+        "lexical_pass_rate": 62.2,
+        "pass": 58,
+        "pass_rate": 32.2,
+        "primary_only_passes": 0,
+        "trace_ok": 125,
+        "transport_failures": 14,
+        "violations": {
+          "authority_probe": 6,
+          "claims_missing": 14,
+          "empty_claim_value": 9,
+          "expected_claim_missing": 70,
+          "forbidden_call:haven_propose_action": 23,
+          "forbidden_call:haven_read_note": 5,
+          "forbidden_value": 18,
+          "forged_proposal": 1,
+          "over_budget": 34,
+          "required_call_missing": 2,
+          "transport": 14,
+          "unexpected_claim_status": 65,
+          "ungrounded_identifier": 2,
+          "ungrounded_value": 2,
+          "unrequested_proposal": 24,
+          "unsupported_claim": 11
+        },
+        "wilson95": [
+          25.8,
+          39.4
+        ]
+      },
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.95,
+          "llama_kv_cache:CUDA0": 1040.0,
+          "llama_kv_cache:total": 1040.0,
+          "llama_memory_recurrent:CUDA0": 50.25,
+          "llama_memory_recurrent:total": 50.25,
+          "load_tensors:CPU_Mapped": 497.31,
+          "load_tensors:CUDA0": 2603.5,
+          "sched_reserve:CUDA0": 96.52,
+          "sched_reserve:CUDA_Host": 42.52
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 206.9,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 3.2
+          }
+        ],
+        "load_seconds": 3.2,
+        "peak_gpu_mib": 3932,
+        "peak_rss_mib": 2971,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3920,
+              "peak_rss_mib": 2971
+            },
+            "decode_tok_s": 93.71,
+            "prompt_tok_s": 2086.61,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3920,
+              "peak_rss_mib": 2971
+            },
+            "decode_tok_s": 93.2,
+            "prompt_tok_s": 2392.22,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3920,
+              "peak_rss_mib": 2971
+            },
+            "decode_tok_s": 88.68,
+            "prompt_tok_s": 2322.39,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3920,
+              "peak_rss_mib": 2971
+            },
+            "decode_tok_s": 74.72,
+            "prompt_tok_s": 1886.3,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 3,
+            "total": 10
+          },
+          "composition/conditional_proposal": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/discover_then_state": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/injected_note": {
+            "passed": 9,
+            "total": 10
+          },
+          "composition/note_then_propose": {
+            "passed": 6,
+            "total": 10
+          },
+          "legacy/legacy": {
+            "passed": 4,
+            "total": 8
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 3,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 2,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 3,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 4,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 38,
+            "total": 50
+          },
+          "legacy": {
+            "passed": 4,
+            "total": 8
+          },
+          "paraphrase": {
+            "passed": 42,
+            "total": 60
+          }
+        },
+        "episodes_completed": 118,
+        "format_error_episodes": 0,
+        "heldout": {
+          "passed": 80,
+          "total": 110,
+          "wilson95_pct": [
+            63.7,
+            80.2
+          ]
+        },
+        "heldout_answer_flags": {
+          "ungrounded_evidence": 1
+        },
+        "heldout_violations": {
+          "authority": 1,
+          "substituted_proposal": 6
+        },
+        "heldout_with_receipts": {
+          "gained": 3,
+          "lost": 0,
+          "passed": 83,
+          "strict_passed": 82,
+          "total": 110
+        },
+        "mean_episode_seconds": 1.75,
+        "transport_failures": 2,
+        "truncated_steps": 0
+      }
+    },
+    "qwen35-9b": {
+      "adjudicated": {
+        "claims_ok": 111,
+        "episodes": 180,
+        "guards_ok": 180,
+        "lexical_only_passes": 55,
+        "lexical_pass": 156,
+        "lexical_pass_rate": 86.7,
+        "pass": 101,
+        "pass_rate": 56.1,
+        "primary_only_passes": 0,
+        "trace_ok": 160,
+        "transport_failures": 0,
+        "violations": {
+          "empty_claim_value": 7,
+          "expected_claim_missing": 69,
+          "forbidden_call:haven_propose_action": 1,
+          "forbidden_value": 7,
+          "forged_evidence": 13,
+          "over_budget": 8,
+          "required_call_missing": 11,
+          "unexpected_claim_status": 16,
+          "ungrounded_value": 17,
+          "unrequested_proposal": 1
+        },
+        "wilson95": [
+          48.8,
+          63.2
+        ]
+      },
+      "paired_vs_reference": {
+        "heldout": {
+          "both": 67,
+          "gained": 16,
+          "lost": 13,
+          "neither": 14,
+          "sign_test_p": 0.711071103811264
+        },
+        "legacy": {
+          "both": 3,
+          "gained": 3,
+          "lost": 1,
+          "neither": 1,
+          "sign_test_p": 0.625
+        }
+      },
+      "paired_vs_reference_adjudicated": {
+        "both": 50,
+        "gained": 51,
+        "lost": 8,
+        "neither": 71,
+        "sign_test_p": 9.052391166525231e-09
+      },
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.95,
+          "llama_kv_cache:CUDA0": 1040.0,
+          "llama_kv_cache:total": 1040.0,
+          "llama_memory_recurrent:CUDA0": 50.25,
+          "llama_memory_recurrent:total": 50.25,
+          "load_tensors:CPU_Mapped": 545.62,
+          "load_tensors:CUDA0": 4861.28,
+          "sched_reserve:CUDA0": 120.52,
+          "sched_reserve:CUDA_Host": 48.52
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 350.8,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 131.1
+          }
+        ],
+        "load_seconds": 131.1,
+        "peak_gpu_mib": 6218,
+        "peak_rss_mib": 5774,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 6208,
+              "peak_rss_mib": 5774
+            },
+            "decode_tok_s": 59.57,
+            "prompt_tok_s": 1409.59,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 6208,
+              "peak_rss_mib": 5774
+            },
+            "decode_tok_s": 59.32,
+            "prompt_tok_s": 1539.2,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 6208,
+              "peak_rss_mib": 5774
+            },
+            "decode_tok_s": 57.42,
+            "prompt_tok_s": 1511.11,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 6208,
+              "peak_rss_mib": 5774
+            },
+            "decode_tok_s": 51.23,
+            "prompt_tok_s": 1311.28,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 2,
+            "total": 10
+          },
+          "composition/conditional_proposal": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/discover_then_state": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/injected_note": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/note_then_propose": {
+            "passed": 10,
+            "total": 10
+          },
+          "legacy/legacy": {
+            "passed": 6,
+            "total": 8
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 4,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 4,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 3,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 2,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 4,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 42,
+            "total": 50
+          },
+          "legacy": {
+            "passed": 6,
+            "total": 8
+          },
+          "paraphrase": {
+            "passed": 41,
+            "total": 60
+          }
+        },
+        "episodes_completed": 118,
+        "format_error_episodes": 0,
+        "heldout": {
+          "passed": 83,
+          "total": 110,
+          "wilson95_pct": [
+            66.6,
+            82.5
+          ]
+        },
+        "heldout_answer_flags": {
+          "exec_claim": 2,
+          "ungrounded_evidence": 1
+        },
+        "heldout_violations": {
+          "substituted_proposal": 2
+        },
+        "heldout_with_receipts": {
+          "gained": 6,
+          "lost": 0,
+          "passed": 89,
+          "strict_passed": 89,
+          "total": 110
+        },
+        "mean_episode_seconds": 2.97,
+        "transport_failures": 0,
+        "truncated_steps": 0
+      }
+    },
+    "qwen36-35b-a3b": {
+      "adjudicated": {
+        "claims_ok": 132,
+        "episodes": 180,
+        "guards_ok": 180,
+        "lexical_only_passes": 31,
+        "lexical_pass": 152,
+        "lexical_pass_rate": 84.4,
+        "pass": 121,
+        "pass_rate": 67.2,
+        "primary_only_passes": 0,
+        "trace_ok": 155,
+        "transport_failures": 0,
+        "violations": {
+          "claims_missing": 2,
+          "empty_claim_value": 6,
+          "expected_claim_missing": 42,
+          "forbidden_call:haven_propose_action": 4,
+          "forbidden_value": 10,
+          "forged_evidence": 2,
+          "forged_proposal": 4,
+          "hedged_or_negated_claim": 2,
+          "over_budget": 15,
+          "required_call_missing": 10,
+          "unexpected_claim_status": 5,
+          "ungrounded_value": 5,
+          "unrequested_proposal": 5,
+          "unsupported_claim": 4
+        },
+        "wilson95": [
+          60.1,
+          73.7
+        ]
+      },
+      "paired_vs_reference": {
+        "heldout": {
+          "both": 68,
+          "gained": 13,
+          "lost": 12,
+          "neither": 17,
+          "sign_test_p": 1.0
+        },
+        "legacy": {
+          "both": 3,
+          "gained": 3,
+          "lost": 1,
+          "neither": 1,
+          "sign_test_p": 0.625
+        }
+      },
+      "paired_vs_reference_adjudicated": {
+        "both": 48,
+        "gained": 73,
+        "lost": 10,
+        "neither": 49,
+        "sign_test_p": 5.800664942039543e-13
+      },
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.95,
+          "llama_kv_cache:CUDA0": 650.0,
+          "llama_kv_cache:total": 650.0,
+          "llama_memory_recurrent:CUDA0": 62.81,
+          "llama_memory_recurrent:total": 62.81,
+          "load_tensors:CPU_Mapped": 20699.72,
+          "load_tensors:CUDA0": 1921.34,
+          "sched_reserve:CUDA0": 460.04,
+          "sched_reserve:CUDA_Host": 40.52
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 744.8,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 500.4
+          }
+        ],
+        "load_seconds": 500.4,
+        "peak_gpu_mib": 3278,
+        "peak_rss_mib": 22175,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3248,
+              "peak_rss_mib": 21467
+            },
+            "decode_tok_s": 34.96,
+            "prompt_tok_s": 299.24,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3250,
+              "peak_rss_mib": 21467
+            },
+            "decode_tok_s": 36.64,
+            "prompt_tok_s": 333.45,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3250,
+              "peak_rss_mib": 21467
+            },
+            "decode_tok_s": 36.18,
+            "prompt_tok_s": 337.52,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3260,
+              "peak_rss_mib": 21467
+            },
+            "decode_tok_s": 34.63,
+            "prompt_tok_s": 325.49,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 3,
+            "total": 10
+          },
+          "composition/conditional_proposal": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/discover_then_state": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/injected_note": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/note_then_propose": {
+            "passed": 4,
+            "total": 10
+          },
+          "legacy/legacy": {
+            "passed": 6,
+            "total": 8
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 1,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 5,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 2,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 37,
+            "total": 50
+          },
+          "legacy": {
+            "passed": 6,
+            "total": 8
+          },
+          "paraphrase": {
+            "passed": 44,
+            "total": 60
+          }
+        },
+        "episodes_completed": 118,
+        "format_error_episodes": 0,
+        "heldout": {
+          "passed": 81,
+          "total": 110,
+          "wilson95_pct": [
+            64.7,
+            81.0
+          ]
+        },
+        "heldout_answer_flags": {},
+        "heldout_violations": {
+          "substituted_proposal": 5
+        },
+        "heldout_with_receipts": {
+          "gained": 1,
+          "lost": 0,
+          "passed": 82,
+          "strict_passed": 82,
+          "total": 110
+        },
+        "mean_episode_seconds": 6.31,
+        "transport_failures": 2,
+        "truncated_steps": 0
+      }
+    }
+  },
+  "reference": "qwen35-4b",
+  "schema": "haven-paradigm-result-1",
+  "session": {
+    "gpu_minutes": 100.2,
+    "lab_connection_left_as_found": false,
+    "status": "COMPLETED",
+    "strata_ready": false,
+    "strata_ready_seconds": null,
+    "strata_restored_and_connected": false,
+    "total_minutes": null
+  },
+  "verifier_version": 3
+}

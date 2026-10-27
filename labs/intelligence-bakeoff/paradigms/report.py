@@ -186,7 +186,7 @@ def markdown(result):
     def cell(v):
         return "—" if v is None else str(v)
     lines = ["| model | held-out /110 | Wilson 95% | + receipts | paraphrase /60 | composition /50 | legacy /8 | "
-             "vs ref (gained/lost, p) | adjudicated /180 |",
+             "vs ref (gained/lost, p) | adjudicated /180 (vs ref) |",
              "|---|---|---|---|---|---|---|---|---|"]
     for mid, m in result["models"].items():
         t = m.get("tool_benchmark")
@@ -201,7 +201,9 @@ def markdown(result):
         rc = t.get("heldout_with_receipts")
         rc_cell = f"{rc['passed']} (+{rc['gained']}/−{rc['lost']}; strict {rc['strict_passed']})" if rc else "—"
         adj = m.get("adjudicated")
-        adj_cell = f"{adj['pass']}/{adj['episodes']}" if adj else "—"
+        pa = m.get("paired_vs_reference_adjudicated")
+        adj_cell = (f"{adj['pass']}/{adj['episodes']}" if adj else "—") + (
+            f" ({pa['gained']}/{pa['lost']}, p={pa['sign_test_p']:.3g})" if adj and pa else "")
         lines.append(f"| {mid} | {t['heldout']['passed']}/{t['heldout']['total']} | {lo}–{hi} | "
                      f"{rc_cell} | "
                      f"{tr.get('paraphrase', {}).get('passed')}/{tr.get('paraphrase', {}).get('total')} | "

@@ -279,8 +279,13 @@ class ReportTests(unittest.TestCase):
                 {"prompt_tokens": 32768, "status": "OK", "decode_tok_s": 40.0}], "buffers_mib": {}},
                 "tool_benchmark": {"heldout": {"passed": 76, "total": 110, "wilson95_pct": [59.9, 77.0]},
                                    "by_track": {"paraphrase": {"passed": 34, "total": 60}}}},
+            "big": {"performance": {}, "adjudicated": {"pass": 121, "episodes": 180},
+                    "paired_vs_reference_adjudicated": {"gained": 73, "lost": 10, "sign_test_p": 5.8e-13},
+                    "tool_benchmark": {"heldout": {"passed": 81, "total": 110, "wilson95_pct": [64.7, 81.0]},
+                                       "by_track": {}}},
             "gone": {"status": "SKIPPED_BUDGET"}}}
         text = report.markdown(result)
+        self.assertIn("| 121/180 (73/10, p=5.8e-13) |", text)
         self.assertIn("| ref | 76/110 | 59.9–77.0 | — | 34/60 |", text)
         self.assertIn("| gone | SKIPPED_BUDGET |", text)
         self.assertIn("40.0 |", text)
