@@ -187,6 +187,12 @@ class ExecutorTest(unittest.TestCase):
         r = ex.call("run_command", {"command": "python3 -c \"import urllib.request;urllib.request.urlopen('https://example.com',timeout=3)\""})
         self.assertEqual(r["status"], "failed")
 
+    def test_pipeline_failure_fails_the_receipt(self):
+        ex = new_executor(self.ws, approver=lambda *a: "approve")
+        r = ex.call("run_command", {"command": "python3 -c 'raise SystemExit(1)' | tail -1"})
+        self.assertEqual(r["status"], "failed")
+        self.assertEqual(r["exit_code"], 1)
+
     @unittest.skipUnless(SANDBOX, "no OS sandbox on this host")
     def test_timeout_and_cancel(self):
         ex = new_executor(self.ws)

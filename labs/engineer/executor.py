@@ -448,7 +448,7 @@ class Executor:
                 "indeterminate": res["timed_out"] or res["cancelled"]}
 
     def run_sandboxed(self, command, workdir, timeout_s, *, network=False, on_chunk=None):
-        argv = ["/bin/bash", "-c", command]
+        argv = ["/bin/bash", "-o", "pipefail", "-c", command]  # a failing stage fails the receipt
         if self.sandbox["available"]:
             writable = [self.scratch]
             if self.git_common and self.root not in self.git_common.parents and self.git_common != self.root / ".git":
@@ -491,7 +491,7 @@ class Executor:
     def _t_start_process(self, rid, decision, command, cwd=".", name=""):
         workdir = self.resolve(cwd)
         log = self.scratch / f"proc-{rid}.log"
-        argv = ["/bin/bash", "-c", command]
+        argv = ["/bin/bash", "-o", "pipefail", "-c", command]  # a failing stage fails the receipt
         if self.sandbox["available"]:
             argv = sandbox.wrap(argv, workspace=self.root, writable=[self.scratch], tmpdir=self.tmp,
                                 network=decision.network)
