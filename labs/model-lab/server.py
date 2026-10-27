@@ -456,7 +456,8 @@ class Handler(BaseHTTPRequestHandler):
                 raise gw.GatewayError(502, snap.get('error') or f"Generation {snap['state']}.", 'backend_error')
             self.json(200, {'id': 'chatcmpl-' + job_id, 'object': 'chat.completion', 'created': int(time.time()), 'model': model,
                             'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': snap.get('text', ''),
-                                         **({'reasoning_content': snap['reasoning']} if snap.get('reasoning') else {})},
+                                         **({'reasoning_content': snap['reasoning']} if snap.get('reasoning') else {}),
+                                         **({'tool_calls': snap['tool_calls']} if snap.get('tool_calls') else {})},
                                          'finish_reason': gw.openai_finish(snap)}],
                             **({'usage': gw.usage(snap)} if gw.usage(snap) else {}),
                             'haven': {k: snap.get(k) for k in ('provider_id', 'worker_label', 'model', 'compute', 'egress', 'route_reason')}})

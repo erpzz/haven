@@ -41,6 +41,7 @@ JWT_SECRET_FILE = 'gateway-frontend-jwt.secret'  # Shared with Open WebUI's FORW
 JWT_HEADER = 'X-OpenWebUI-User-Jwt'
 RECEIPTS_FILE = 'gateway-receipts.jsonl'
 CONSENT_COMMAND = '/haven consent'
+STATUS_COMMAND = '/haven status'
 DEFAULT_OUTPUT_CAP = 16384     # Default reply budget when the client sends none.
 MIN_OUTPUT = 256               # Below this the chat is too long for the loaded context.
 QUEUE_WAIT_S = 180             # One GPU slot; a queued request waits this long, then reports BUSY.
@@ -248,7 +249,7 @@ class Gateway:
                          'context': (conn.get('profile') or {}).get('context'), 'compute': conn.get('compute'),
                          'generation_busy': self.lab.generation.locked()},
                'hardware': {k: state['hardware'].get(k) for k in ('gpus', 'ram_total_gib', 'ram_available_gib')},
-               'gpu_peers': state.get('prepared_runtime', {}).get('peer_busy'),
+               'gpu_peers': state.get('prepared_runtime', {}).get('peer_units') or [],
                'observed_at': time.time()}
         if principal['role'] == 'owner':
             out['workers'] = [{'id': r['id'], 'label': r['label'], 'model': r['display_model'], 'state': r['observed']['state'],
@@ -261,9 +262,8 @@ class Gateway:
         if not isinstance(body, dict):
             raise GatewayError(400, 'JSON object required.')
         provider_id = self.provider_for(principal, str(body.get('model', '')))
-        if body.get('tools') or body.get('functions'):
-            raise GatewayError(400, 'Native tool calls are not enabled on this Haven route; use Open WebUI "Default" '
-                                    'function calling, which keeps tool execution in Haven-permitted tools.')
+        if body.get('functions'):
+            raise GatewayError(400, 'Legacy `functions` are not supported; send OpenAI `tools`.')
         if body.get('n', 1) != 1:
             raise GatewayError(400, 'Only one completion per request.')
         raw = body.get('messages')
@@ -271,11 +271,19 @@ class Gateway:
             raise GatewayError(400, 'Supply messages.')
         messages = []
         for m in raw:
-            if not isinstance(m, dict) or m.get('role') not in ('system', 'user', 'assistant'):
-                raise GatewayError(400, 'Only system, user and assistant text messages are accepted.')
-            messages.append({'role': m['role'], 'content': flatten_content(m.get('content'))})
+            if not isinstance(m, dict) or m.get('role') not in ('system', 'user', 'assistant', 'tool'):
+                raise GatewayError(400, 'Only system, user, assistant and tool messages are accepted.')
+            # Tool calls run in the frontend under its own per-user permissions; Haven relays them
+            # and their results as structured messages and records the count in the receipt.
+            out = {'role': m['role'], 'content': flatten_content(m.get('content'))}
+            for key in ('tool_calls', 'tool_call_id'):
+                if m.get(key) is not None:
+                    out[key] = m[key]
+            messages.append(out)
         chat_id = headers.get('X-OpenWebUI-Chat-Id', '')
         last = messages[-1]['content'].strip() if messages[-1]['role'] == 'user' else ''
+        if last.lower() == STATUS_COMMAND:
+            return {'local_reply': format_status(self.status(principal))}
         provider = None
         if provider_id not in ('managed', 'auto'):
             provider = next((r for r in self.lab.providers.snapshot() if r['id'] == provider_id), None)
@@ -303,7 +311,8 @@ class Gateway:
             egress_ack = 'HOSTED_SUBSCRIPTION'
         conn, _ = self._managed()
         context = (conn.get('profile') or {}).get('context') if provider_id in ('managed', 'auto') else (provider or {}).get('max_context_tokens')
-        prompt = estimate_prompt_tokens(messages)
+        tools = body.get('tools') or None
+        prompt = estimate_prompt_tokens(messages, tools)
         requested = body.get('max_completion_tokens', body.get('max_tokens'))
         if requested is None:
             room = (context - prompt - 64) if context else 2048
@@ -317,7 +326,8 @@ class Gateway:
         return {'request': {'messages': messages, 'max_tokens': requested,
                             'temperature': body.get('temperature', .7), 'top_p': body.get('top_p', .8),
                             'seed': body.get('seed', secrets.randbelow(2**31)), 'reasoning': effort,
-                            'provider_id': provider_id, 'egress_ack': egress_ack, 'label': 'gateway'},
+                            'provider_id': provider_id, 'egress_ack': egress_ack, 'label': 'gateway',
+                            'tools': tools, 'tools_optional': True},
                 'principal': principal, 'chat_id': chat_id, 'prompt_estimate': prompt}
 
     def start(self, prepared: dict, cancelled=lambda: False) -> str:
@@ -345,7 +355,9 @@ class Gateway:
                'model': job.get('model'), 'compute': job.get('compute'), 'egress': job.get('egress'),
                'finish_reason': job.get('finish_reason'), 'max_tokens': prepared['request']['max_tokens'],
                'prompt_estimate': prepared['prompt_estimate'], 'metrics': job.get('metrics'),
-               'error': job.get('error'), 'route_reason': job.get('route_reason')}
+               'error': job.get('error'), 'route_reason': job.get('route_reason'),
+               'tools_offered': job.get('tools_offered'), 'tools_dropped': job.get('tools_dropped'),
+               'tool_calls': [c['function']['name'] for c in job.get('tool_calls') or []]}
         try:
             with self.lock:
                 fd = os.open(self.data / RECEIPTS_FILE, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
@@ -362,6 +374,7 @@ class Gateway:
         """Relay a Lab job as OpenAI SSE. A failed write cancels the job (browser Stop)."""
         cid = 'chatcmpl-' + job.id
         sent_text = sent_reasoning = 0
+        sent_calls = []  # per index: (id/name announced, argument characters sent)
         try:
             while True:
                 snap = job.snapshot()
@@ -371,6 +384,24 @@ class Gateway:
                     delta['reasoning_content'] = reasoning[sent_reasoning:]; sent_reasoning = len(reasoning)
                 if len(text) > sent_text:
                     delta['content'] = text[sent_text:]; sent_text = len(text)
+                calls = []
+                for i, call in enumerate(snap.get('tool_calls') or []):
+                    if i == len(sent_calls):
+                        if not (call['id'] and call['function']['name']):
+                            break  # Announce a call only once its id and name are known.
+                        sent_calls.append(0)
+                        calls.append({'index': i, 'id': call['id'], 'type': 'function',
+                                      'function': {'name': call['function']['name'], 'arguments': ''}})
+                    args = call['function']['arguments']
+                    if len(args) > sent_calls[i]:
+                        part = {'index': i, 'function': {'arguments': args[sent_calls[i]:]}}
+                        sent_calls[i] = len(args)
+                        if calls and calls[-1]['index'] == i:
+                            calls[-1]['function']['arguments'] = part['function']['arguments']
+                        else:
+                            calls.append(part)
+                if calls:
+                    delta['tool_calls'] = calls
                 if delta:
                     write(self.completion_chunk(cid, model, delta))
                 if snap['state'] != 'RUNNING':
@@ -389,7 +420,29 @@ class Gateway:
 
 
 def openai_finish(snap: dict) -> str:
-    return 'length' if snap.get('state') == 'OUTPUT_LIMIT' else 'stop'
+    if snap.get('state') == 'OUTPUT_LIMIT':
+        return 'length'
+    return 'tool_calls' if snap.get('finish_reason') == 'tool_calls' else 'stop'
+
+
+def format_status(st: dict) -> str:
+    """Plain-text runtime report for `/haven status`; observed values only, unknowns say so."""
+    slink, hw = st['slink'], st['hardware']
+    lines = [f"**Slink** · {slink['model'] or 'no model loaded'} · {slink['state']}"
+             + (f" · {slink['context']:,}-token context" if slink.get('context') else '')
+             + (f" · {slink['compute']}" if slink.get('compute') else '')
+             + (' · generating now' if slink['generation_busy'] else '')]
+    for g in hw.get('gpus') or []:
+        lines.append(f"GPU {g.get('name')}: {g.get('memory_used_mib')} / {g.get('memory_total_mib')} MiB, "
+                     f"{g.get('utilization_pct')}% busy, {g.get('temperature_c')} °C")
+    if hw.get('ram_available_gib') is not None:
+        lines.append(f"RAM: {hw['ram_available_gib']:.1f} GiB available of {hw['ram_total_gib']:.1f} GiB")
+    if st.get('gpu_peers'):
+        lines.append('GPU held by: ' + ', '.join(st['gpu_peers']) + ' (no model loads until it finishes)')
+    for w in st.get('workers') or []:
+        lines.append(f"Worker {w['label']} · {w['model']} · {w['state']}" + (' · leaves the house' if w['egress'] == 'HOSTED_SUBSCRIPTION' else ''))
+    lines.append(f"You are signed in as {st['principal']['name'] or 'this account'} ({st['principal']['role']}).")
+    return '\n\n'.join(lines)
 
 
 def usage(snap: dict) -> dict | None:

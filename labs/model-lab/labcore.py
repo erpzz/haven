@@ -37,9 +37,57 @@ MAX_CONTEXT = 32768           # llama_command's context bound
 UNKNOWN_CONTEXT_OUTPUT = 4096  # external runtimes that do not report a context keep the old ceiling
 
 
-def estimate_prompt_tokens(messages: list[dict]) -> int:
+def estimate_prompt_tokens(messages: list[dict], tools=None) -> int:
     """Conservative (over-)estimate: ~3 UTF-8 bytes per token plus per-message framing."""
-    return sum(len(m['content'].encode()) // 3 + 8 for m in messages) + 16
+    calls = sum(len(json.dumps(m.get('tool_calls') or []).encode()) // 3 for m in messages)
+    return (sum(len(m['content'].encode()) // 3 + 8 for m in messages) + calls
+            + (len(json.dumps(tools).encode()) // 3 if tools else 0) + 16)
+
+
+def clean_message(m) -> dict:
+    """Text chat messages plus OpenAI tool-call turns; anything else is refused, never dropped."""
+    role = m.get('role') if isinstance(m, dict) else None
+    content = m.get('content') if isinstance(m, dict) else None
+    if role == 'assistant' and content is None and m.get('tool_calls'):
+        content = ''
+    if role not in ('system', 'user', 'assistant', 'tool') or not isinstance(content, str):
+        raise ValueError('Text messages and tool-call turns only.')
+    out = {'role': role, 'content': content}
+    if role == 'tool':
+        if not isinstance(m.get('tool_call_id'), str) or not 1 <= len(m['tool_call_id']) <= 128:
+            raise ValueError('A tool result needs its tool_call_id.')
+        out['tool_call_id'] = m['tool_call_id']
+    if role == 'assistant' and m.get('tool_calls') is not None:
+        calls = m['tool_calls']
+        if (not isinstance(calls, list) or not 1 <= len(calls) <= 16 or
+                any(not isinstance(c, dict) or not isinstance(c.get('id'), str) or not isinstance(c.get('function'), dict)
+                    or not isinstance(c['function'].get('name'), str) or not isinstance(c['function'].get('arguments', ''), str)
+                    for c in calls)):
+            raise ValueError('Invalid assistant tool_calls.')
+        out['tool_calls'] = [{'id': c['id'], 'type': 'function',
+                              'function': {'name': c['function']['name'], 'arguments': c['function'].get('arguments', '')}}
+                             for c in calls]
+    return out
+
+
+def merge_tool_calls(job, deltas) -> None:
+    """Accumulate streamed OpenAI tool_call fragments by index into job.data['tool_calls']."""
+    if not isinstance(deltas, list):
+        raise ValueError('Unsupported tool_calls delta.')
+    with job.lock:
+        calls = job.data.setdefault('tool_calls', [])
+        for d in deltas:
+            index = d.get('index') if isinstance(d, dict) else None
+            if type(index) is not int or not 0 <= index < 16:
+                raise ValueError('Unsupported tool_calls delta.')
+            while len(calls) <= index:
+                calls.append({'id': '', 'type': 'function', 'function': {'name': '', 'arguments': ''}})
+            fn = d.get('function') or {}
+            if isinstance(d.get('id'), str): calls[index]['id'] = d['id'][:128]
+            if isinstance(fn.get('name'), str): calls[index]['function']['name'] += fn['name']
+            if isinstance(fn.get('arguments'), str): calls[index]['function']['arguments'] += fn['arguments']
+            if len(calls[index]['function']['arguments']) > 65536:
+                raise ValueError('Tool call arguments exceeded their bound.')
 ROOT = Path(__file__).resolve().parent
 
 # Status meanings fixed by ops/haven-core/cloud-worker.py; its free-text bodies are never shown.
@@ -344,7 +392,11 @@ class Job:
     def update(self, **items):
         with self.lock: self.data.update(items)
     def snapshot(self):
-        with self.lock: return dict(self.data)
+        with self.lock:
+            data = dict(self.data)
+            if data.get('tool_calls'):  # Nested and still growing while streaming.
+                data['tool_calls'] = json.loads(json.dumps(data['tool_calls']))
+            return data
     def cancel(self):
         self.cancelled.set()
         with self.lock:
@@ -491,7 +543,7 @@ class Lab:
                     'engine_install_supported': bool(assets),
                     'engine_download_bytes': sum(a['size_bytes'] for a in assets),
                     'jobs': [{k:v for k,v in j.snapshot().items()
-                              if k not in ('text','reasoning','trace','question','turns','citation_check')}
+                              if k not in ('text','reasoning','trace','question','turns','citation_check','tool_calls')}
                              for j in self.jobs.values()], 'data_dir': str(self.data)}
     def runtime_assets(self) -> list[dict]:
         if os.name == 'nt':
@@ -775,12 +827,14 @@ class Lab:
     def validate_generation(self, req: dict) -> dict:
         messages = req.get('messages')
         if not isinstance(messages, list) or not 1 <= len(messages) <= 400: raise ValueError('Supply 1–400 messages.')
-        clean = []
-        for m in messages:
-            if not isinstance(m, dict) or m.get('role') not in ('system', 'user', 'assistant') or not isinstance(m.get('content'), str):
-                raise ValueError('This first release supports text messages only.')
-            clean.append({'role': m['role'], 'content': m['content']})
+        clean = [clean_message(m) for m in messages]
         if sum(len(m['content']) for m in clean) > 400000: raise ValueError('Conversation too large; start a new chat.')
+        tools = req.get('tools')
+        if tools is not None:
+            if (not isinstance(tools, list) or not 1 <= len(tools) <= 64 or len(json.dumps(tools)) > 65536 or
+                    any(not isinstance(t, dict) or t.get('type') != 'function' or not isinstance(t.get('function'), dict)
+                        or not isinstance(t['function'].get('name'), str) for t in tools)):
+                raise ValueError('Tools must be 1–64 bounded OpenAI function definitions.')
         effort = req.get('reasoning', 'none')
         if effort not in ('none', 'low', 'medium', 'high'): raise ValueError('Invalid reasoning effort.')
         provider_id = req.get('provider_id', 'managed')
@@ -792,7 +846,10 @@ class Lab:
                 'top_p': finite_float(req.get('top_p', .8), .01, 1, 'Top-p'),
                 'seed': bounded_int(req.get('seed', 42), 0, 2**31-1, 'Seed'), 'reasoning': effort,
                 'benchmark': req.get('benchmark') is True, 'label': str(req.get('label', 'interactive'))[:80],
-                'provider_id': provider_id,
+                'provider_id': provider_id, 'tools': tools,
+                # A frontend that attaches its tools to every turn may let a lane without verified tool support
+                # answer in text instead; the job records that the tools were not offered.
+                'tools_optional': req.get('tools_optional') is True,
                 # Cloud lanes leave the house; the client must say so explicitly on every request.
                 'egress_ack': req.get('egress_ack') if req.get('egress_ack') == 'HOSTED_SUBSCRIPTION' else None,
                 'expected_connected_at': None if req.get('expected_connected_at') is None else
@@ -816,6 +873,12 @@ class Lab:
                 raise ValueError('Slink runtime changed during routing. No request was sent.')
             if conn['provider_id'] != 'managed' and args['reasoning'] != 'none':
                 raise ValueError('This worker has not verified reasoning controls; select Off / direct answer.')
+            native_tools = conn['provider_id'] == 'managed' and conn.get('kind') == 'llama'
+            tool_history = any(m['role'] == 'tool' or m.get('tool_calls') for m in args['messages'])
+            if (args['tools'] or tool_history) and not native_tools:
+                if tool_history or not args['tools_optional']:
+                    raise ValueError('Tool calls are verified only on the Lab-managed llama.cpp runtime. Nothing was sent.')
+                args['tools'], args['tools_dropped'] = None, True
             limit = conn.get('profile') or {}
             if conn['provider_id'] != 'managed' and args['max_tokens'] > limit.get('max_output_tokens', 1024):
                 raise ValueError(f"This worker permits at most {limit.get('max_output_tokens', 1024)} output tokens; "
@@ -828,7 +891,7 @@ class Lab:
                 if context is None and args['max_tokens'] > UNKNOWN_CONTEXT_OUTPUT:
                     raise ValueError(f'The attached runtime did not report its context; output is limited to '
                                      f'{UNKNOWN_CONTEXT_OUTPUT} tokens. Use Continue for longer answers.')
-                prompt = estimate_prompt_tokens(args['messages'])
+                prompt = estimate_prompt_tokens(args['messages'], args['tools'])
                 if context is not None and prompt + args['max_tokens'] > context:
                     raise ValueError(f'This chat (~{prompt} tokens) plus {args["max_tokens"]} output tokens exceeds the loaded '
                                      f'{context}-token context. Lower max output to {max(0, context - prompt)} or less, '
@@ -841,7 +904,8 @@ class Lab:
                 j.update(provider_id=conn['provider_id'], worker_label=conn['worker_label'],
                          compute=conn.get('compute', 'gpu'), model_sha256=conn.get('model_sha256'),
                          egress=conn.get('route_class') if conn.get('kind') == 'cloud' else 'NONE',
-                         digest_provenance=conn.get('digest_provenance', 'LOCAL_ARTIFACT'), route_reason=conn['route_reason'])
+                         digest_provenance=conn.get('digest_provenance', 'LOCAL_ARTIFACT'), route_reason=conn['route_reason'],
+                         tool_calls=[], tools_offered=len(args['tools'] or []), tools_dropped=args.get('tools_dropped', False))
             except Exception:
                 self.generation.release(); raise
         threading.Thread(target=self._generate_worker, args=(j, conn, args), daemon=True).start()
@@ -852,6 +916,7 @@ class Lab:
         body = {'model': backend['model'], 'messages': args['messages'], 'stream': True,
                 'stream_options': {'include_usage': True}, 'temperature': args['temperature'], 'top_p': args['top_p'],
                 'max_tokens': args['max_tokens'], 'seed': args['seed']}
+        if args['tools']: body['tools'] = args['tools']
         if backend['kind'] == 'strata': body['reasoning_effort'] = args['reasoning']
         elif backend['kind'] == 'llama': body['chat_template_kwargs'] = {'enable_thinking': args['reasoning'] != 'none'}
         if args['benchmark'] and backend['kind'] == 'llama': body['cache_prompt'] = False
@@ -911,6 +976,9 @@ class Lab:
                     text = delta.get('content') or ''
                     reasoning = delta.get('reasoning_content') or delta.get('reasoning') or ''
                     if not isinstance(text, str) or not isinstance(reasoning, str): raise ValueError('Unsupported stream delta.')
+                    if delta.get('tool_calls'):
+                        merge_tool_calls(job, delta['tool_calls'])
+                        now = time.monotonic(); first = first or now; last = now; chunks += 1
                     if text or reasoning:
                         now = time.monotonic(); first = first or now; last = now; chunks += 1
                         with job.lock:

@@ -180,9 +180,58 @@ class GatewayTests(unittest.TestCase):
         self.assertEqual(self.chat(self.owui(), messages=[msg])[0], 400)
         self.assertEqual(self.backend.requests, [])
 
-    def test_native_tools_refused_explicitly(self):
-        status, body = self.chat(self.owui(), tools=[{'type': 'function', 'function': {'name': 'x'}}])
-        self.assertEqual(status, 400); self.assertIn('Default', body['error']['message'])
+    def test_legacy_functions_refused_explicitly(self):
+        status, body = self.chat(self.owui(), functions=[{'name': 'x'}])
+        self.assertEqual(status, 400); self.assertIn('tools', body['error']['message'])
+
+    # -- structured tool calls -------------------------------------------
+    TOOLS = [{'type': 'function', 'function': {'name': 'get_current_timestamp', 'parameters': {'type': 'object'}}}]
+
+    def test_tool_calls_are_relayed_as_structured_deltas(self):
+        self.backend.tool_call = True
+        status, events = self.chat(self.owui(), stream=True, tools=self.TOOLS)
+        self.assertEqual(status, 200)
+        self.assertEqual(self.backend.requests[-1]['tools'], self.TOOLS)
+        parts = [c for e in events if e.get('choices') for c in e['choices'][0]['delta'].get('tool_calls', [])]
+        self.assertEqual(parts[0]['id'], 'call_1'); self.assertEqual(parts[0]['function']['name'], 'get_current_timestamp')
+        self.assertEqual(''.join(c['function'].get('arguments', '') for c in parts), '{"tz": "UTC"}')
+        self.assertEqual(events[-1]['choices'][0]['finish_reason'], 'tool_calls')
+        row = json.loads((Path(self.tmp.name) / 'gateway-receipts.jsonl').read_text().splitlines()[-1])
+        self.assertEqual((row['tool_calls'], row['tools_offered']), (['get_current_timestamp'], 1))
+        self.assertNotIn('UTC', json.dumps(row))
+
+    def test_tool_calls_non_stream(self):
+        self.backend.tool_call = True
+        status, body = self.chat(self.owui(), tools=self.TOOLS)
+        msg = body['choices'][0]['message']
+        self.assertEqual(msg['tool_calls'][0]['function']['arguments'], '{"tz": "UTC"}')
+        self.assertEqual(body['choices'][0]['finish_reason'], 'tool_calls')
+
+    def test_tool_result_turn_reaches_backend(self):
+        msgs = [{'role': 'user', 'content': 'time?'},
+                {'role': 'assistant', 'content': None, 'tool_calls': [{'id': 'call_1', 'type': 'function',
+                 'function': {'name': 'get_current_timestamp', 'arguments': '{}'}}]},
+                {'role': 'tool', 'tool_call_id': 'call_1', 'content': '2026-10-28T00:00:00Z'}]
+        self.assertEqual(self.chat(self.owui(), messages=msgs, tools=self.TOOLS)[0], 200)
+        sent = self.backend.requests[-1]['messages']
+        self.assertEqual(sent[1]['tool_calls'][0]['id'], 'call_1')
+        self.assertEqual((sent[2]['role'], sent[2]['tool_call_id']), ('tool', 'call_1'))
+
+    def test_tools_dropped_not_sent_on_unverified_lane(self):
+        self.lab.connection['kind'] = 'strata'
+        self.assertEqual(self.chat(self.owui(), tools=self.TOOLS)[0], 200)
+        self.assertNotIn('tools', self.backend.requests[-1])
+        row = json.loads((Path(self.tmp.name) / 'gateway-receipts.jsonl').read_text().splitlines()[-1])
+        self.assertTrue(row['tools_dropped'])
+        msgs = [{'role': 'user', 'content': 'x'}, {'role': 'tool', 'tool_call_id': 'c', 'content': 'r'}]
+        status, body = self.chat(self.owui(), messages=msgs, tools=self.TOOLS)
+        self.assertEqual(status, 400); self.assertIn('verified only', body['error']['message'])
+
+    def test_status_command_answers_locally(self):
+        status, body = self.chat(self.owui(), messages=[{'role': 'user', 'content': '/haven status'}])
+        text = body['choices'][0]['message']['content']
+        self.assertIn('TEST_DOUBLE', text); self.assertIn('32,768-token context', text)
+        self.assertEqual(self.backend.requests, [])
 
     # -- context-aware output limits (#72) --------------------------------
     def test_output_above_4096_allowed_when_context_permits(self):
