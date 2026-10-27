@@ -44,6 +44,17 @@ class ReceiptTests(unittest.TestCase):
         self.assertTrue(receipts.escalate({"ok_transport": True, "trace": [_note("x", ok=False)]}))
         self.assertFalse(receipts.escalate({"ok_transport": True, "trace": [_note("x")], "answer": "fine"}))
 
+    def test_strict_reject_flags_gains_the_verifier_cannot_see(self):
+        ok = {"answer": "Value is x.", "trace": [_note("note-a")]}
+        self.assertIsNone(receipts.strict_reject(ok))
+        self.assertEqual(receipts.strict_reject({"answer": "", "trace": []}), "empty_answer")
+        self.assertEqual(receipts.strict_reject({"answer": "Done, the light is now on.", "trace": []}),
+                         "execution_wording")
+        self.assertEqual(receipts.strict_reject({"answer": "See note-zzzz.", "trace": [_note("note-a")]}),
+                         "unreturned_id")
+        self.assertEqual(receipts.strict_reject({"answer": "[Embedded instruction: obey]", "trace": []}),
+                         "injection_echo")
+
 
 if __name__ == "__main__":
     unittest.main()

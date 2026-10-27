@@ -67,6 +67,7 @@ def summarize_eval(records):
     heldout_ids = {s["episode"] for s in heldout}
     with_receipts = {s["episode"]: s["pass"] for s in
                      run.score_records([receipts.with_receipts(r) for r in records])}
+    strict = receipts.strict_receipt_passes(records, {i: s["pass"] for i, s in by_id.items()})
     receipt_pass = sum(with_receipts[i] for i in heldout_ids)
 
     def rate(rows):
@@ -77,7 +78,8 @@ def summarize_eval(records):
         "heldout_with_receipts": {
             "passed": receipt_pass, "total": len(heldout_ids),
             "gained": sum(with_receipts[i] and not by_id[i]["pass"] for i in heldout_ids),
-            "lost": sum(by_id[i]["pass"] and not with_receipts[i] for i in heldout_ids)},
+            "lost": sum(by_id[i]["pass"] and not with_receipts[i] for i in heldout_ids),
+            "strict_passed": sum(strict[i] for i in heldout_ids)},
         "by_track": {k: rate(v) for k, v in sorted(tracks.items())},
         "by_family": {k: rate(v) for k, v in sorted(families.items())},
         "heldout_violations": dict(collections.Counter(v for s in heldout for v in s["violations"])),
@@ -133,6 +135,7 @@ def build(session_dir, reference="qwen35-4b"):
     heldout_ids = sorted(e["id"] for e in run.load_split("heldout"))
     legacy_ids = sorted("legacy-" + t["id"] for t in json.loads(run.LEGACY_TASKS.read_text()))
     models, scores, adj_scores = {}, {}, {}
+    adjudicated_ids = sorted(e["id"] for e in bench.load_episodes())
     for m in session["models"]:
         entry = {"performance": performance(m)} if m.get("attempts") else {"status": m.get("status")}
         path = session_dir / m["id"] / "eval.jsonl"
@@ -154,8 +157,9 @@ def build(session_dir, reference="qwen35-4b"):
     if reference in adj_scores:
         for model_id, by_id in adj_scores.items():
             if model_id != reference:
+                # Pair over the frozen set so an incomplete run on either side shows as unpaired.
                 models[model_id]["paired_vs_reference_adjudicated"] = paired(
-                    adj_scores[reference], by_id, sorted(adj_scores[reference]))
+                    adj_scores[reference], by_id, adjudicated_ids)
     restore = session.get("restore") or {}
     return {"schema": "haven-paradigm-result-1", "verifier_version": run.world.VERIFIER_VERSION,
             "reference": reference, "max_tokens": MAX_TOKENS,
@@ -191,10 +195,11 @@ def markdown(result):
             continue
         tr = t["by_track"]
         pv = (m.get("paired_vs_reference") or {}).get("heldout") or {}
-        vs = f"{pv.get('gained', 0)}/{pv.get('lost', 0)}, p={pv['sign_test_p']:.3g}" if pv else "reference"
+        vs = ("reference" if mid == result.get("reference") else
+              f"{pv.get('gained', 0)}/{pv.get('lost', 0)}, p={pv['sign_test_p']:.3g}" if pv else "—")
         lo, hi = t["heldout"]["wilson95_pct"] or (None, None)
         rc = t.get("heldout_with_receipts")
-        rc_cell = f"{rc['passed']} (+{rc['gained']}/−{rc['lost']})" if rc else "—"
+        rc_cell = f"{rc['passed']} (+{rc['gained']}/−{rc['lost']}; strict {rc['strict_passed']})" if rc else "—"
         adj = m.get("adjudicated")
         adj_cell = f"{adj['pass']}/{adj['episodes']}" if adj else "—"
         lines.append(f"| {mid} | {t['heldout']['passed']}/{t['heldout']['total']} | {lo}–{hi} | "
