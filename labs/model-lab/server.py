@@ -32,7 +32,7 @@ ASSETS = {
 COOKIE_NAME = 'haven_session'
 ADMIN_POSTS = {
     '/api/connect', '/api/connect/haven-strata', '/api/disconnect', '/api/engine/install', '/api/model/download',
-    '/api/model/import', '/api/engine/start', '/api/engine/stop', '/api/shutdown', '/api/runtime/switch', '/api/diagnostics',
+    '/api/model/import', '/api/discovery/search', '/api/discovery/detail', '/api/engine/start', '/api/engine/stop', '/api/shutdown', '/api/runtime/switch', '/api/diagnostics',
 }
 ADMIN_GETS = {'/api/log', '/api/benchmarks', '/api/auth/users'}
 
@@ -469,7 +469,13 @@ class Handler(BaseHTTPRequestHandler):
             data = self._read_json()
             lab = self.server.lab
             job_id = None
-            if self.path == '/api/providers/reload':
+            if self.path == '/api/discovery/search':
+                from model_discovery import search
+                out = search(data)
+            elif self.path == '/api/discovery/detail':
+                from model_discovery import detail
+                out = detail(data)
+            elif self.path == '/api/providers/reload':
                 if data: raise ValueError('Registration comes from private owner enrollment, not request data.')
                 out = lab.providers.reload()
             elif self.path == '/api/providers/probe':
