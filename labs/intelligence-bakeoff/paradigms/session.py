@@ -356,7 +356,7 @@ def strata_active():
     return systemctl("is-active", "--quiet", "haven-strata").returncode == 0
 
 
-def restore(receipt, reconnect_lab=True, wait_seconds=1500):
+def restore(receipt, reconnect_lab=True, wait_seconds=2700):
     """Start Strata and, if this session disconnected it, reconnect the Lab. Never raises."""
     r = receipt.setdefault("restore", {"started_utc": now()})
     try:

@@ -85,6 +85,14 @@ so treat it as one strong signal, not a verdict. No breakthrough is claimed
 from round 2 alone, per the preregistration. Load seconds include cold reads
 over the 480 Mbit/s USB 2 root link (about 40 MiB/s).
 
+**The Strata restore failed again**, as it did after round 1. Strata's engine
+gave up at its 900 s READY limit while it was still reading its 33 GiB expert
+arena. The bake-off had evicted that arena from the page cache, and reading it
+back over the USB 2 link takes about 14 minutes on its own. Haven's Strata
+wrapper now allows 2400 s, and the session's restore waits 2700 s. Strata was
+restarted by hand straight after the session. The fix itself is to put the SSD
+on a USB 3 port.
+
 ## Next (proposed, not preregistered)
 
 1. Preregister round 3 with the disagreement as its question. Score both suites
