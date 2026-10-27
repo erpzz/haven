@@ -14,9 +14,13 @@ import platform
 import re
 import shutil
 import subprocess
-import stat
 import sys
 import time
+
+try:
+    from . import private_io
+except ImportError:  # direct CLI invocation
+    import private_io
 
 ID = re.compile(r"^[A-Za-z0-9._:-]{1,80}$")
 ROLES = frozenset({"inventory", "inference", "engineering", "training"})
@@ -29,46 +33,47 @@ class WorkerError(ValueError):
 
 
 def private_dir(directory: Path) -> Path:
-    directory = directory.expanduser()
-    directory.mkdir(parents=True, exist_ok=True, mode=0o700)
-    info = directory.lstat()
-    if not stat.S_ISDIR(info.st_mode) or info.st_mode & 0o077 or info.st_uid != os.getuid():
-        raise WorkerError("worker directory must be an owner-private directory")
-    return directory
+    try:
+        return private_io.private_dir(directory)
+    except ValueError as exc:
+        raise WorkerError(str(exc)) from exc
 
 
 def read_private_json(path: Path) -> dict:
-    """Limit stale links and world-readable input in an owner-managed runtime."""
-    info = path.lstat()
-    if not stat.S_ISREG(info.st_mode) or info.st_mode & 0o077 or info.st_uid != os.getuid():
-        raise WorkerError("private JSON must be an owner-owned, private regular file")
-    if info.st_size > 1024 * 1024:
-        raise WorkerError("JSON input exceeds the allowed limit")
-    data = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(data, dict):
-        raise WorkerError("expected JSON object")
-    return data
+    try:
+        return private_io.read_json(path)
+    except ValueError as exc:
+        raise WorkerError(str(exc)) from exc
 
 
 def write_private_json(path: Path, document: dict) -> None:
-    """Atomic mode-0600 local file replacement, no network communication."""
-    directory = private_dir(path.parent)
-    if path.exists() and (path.is_symlink() or path.stat().st_uid != os.getuid()):
-        raise WorkerError("refusing to overwrite untrusted file")
-    tmp = directory / (".tsz-" + str(os.getpid()) + "-" + path.name + ".tmp")
-    fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     try:
-        with os.fdopen(fd, "w", encoding="utf-8") as out:
-            json.dump(document, out, indent=2, sort_keys=True)
-            out.write("\n")
-            out.flush()
-            os.fsync(out.fileno())
-        os.replace(tmp, path)
-    finally:
-        tmp.unlink(missing_ok=True)
+        private_io.write_json(path, document)
+    except ValueError as exc:
+        raise WorkerError(str(exc)) from exc
+
+
+def valid_node(node, now):
+    return (isinstance(node, dict) and type(node.get("approved_until")) is int
+            and now < node["approved_until"] <= now + 86400
+            and isinstance(node.get("candidate_id"), str)
+            and re.fullmatch(r"neighbor-[0-9a-f]{24}", node["candidate_id"]) is not None
+            and valid_roles(node.get("roles")))
+
+
+def valid_roles(roles):
+    return (isinstance(roles, list) and bool(roles)
+            and all(isinstance(r, str) and r in ROLES for r in roles)
+            and len(set(roles)) == len(roles))
 
 
 def stage_local_worker(fleet: dict, node_id: str, workdir: Path, now: int) -> dict:
+    workdir = private_dir(workdir)
+    with private_io.lock(workdir):
+        return _stage_local_worker(fleet, node_id, workdir, now)
+
+
+def _stage_local_worker(fleet: dict, node_id: str, workdir: Path, now: int) -> dict:
     """Prepare local worker state only after upstream approval is present.
 
     This is an owner-invoked local operation, not a remote bootstrap or
@@ -76,13 +81,14 @@ def stage_local_worker(fleet: dict, node_id: str, workdir: Path, now: int) -> di
     """
     if not isinstance(node_id, str) or not ID.fullmatch(node_id):
         raise WorkerError("invalid node ID")
-    node = fleet.get("nodes", {}).get(node_id)
-    if not isinstance(node, dict) or node.get("approved_until", 0) <= now:
+    if not isinstance(fleet, dict) or not isinstance(fleet.get("nodes"), dict):
+        raise WorkerError("invalid fleet nodes")
+    node = fleet["nodes"].get(node_id)
+    if not valid_node(node, now):
         raise WorkerError("node is not currently approved")
     roles = node.get("roles", [])
     candidate = node.get("candidate_id")
-    if (not isinstance(roles, list) or not roles or not set(roles) <= ROLES
-            or not isinstance(candidate, str) or not candidate.startswith("neighbor-")):
+    if not valid_roles(roles):
         raise WorkerError("invalid approved-node metadata")
     workdir = private_dir(workdir)
     destination = workdir / "worker.json"
@@ -137,7 +143,9 @@ def available_memory_mib() -> int | None:
 
 
 def create_local_heartbeat(config: dict, workdir: Path, now: int) -> dict:
-    if config.get("schema") != "tsz-local-worker-v1" or config.get("approved_until", 0) <= now:
+    if (not isinstance(config, dict) or config.get("schema") != "tsz-local-worker-v1"
+            or not valid_node(config, now) or not isinstance(config.get("node_id"), str)
+            or not ID.fullmatch(config["node_id"])):
         raise WorkerError("worker is not approved or its approval has expired")
     total, used, free = shutil.disk_usage(workdir)
     return {"schema": SCHEMA, "node_id": config["node_id"],
@@ -153,15 +161,20 @@ def create_local_heartbeat(config: dict, workdir: Path, now: int) -> dict:
 
 def emit_heartbeat(workdir: Path, now: int) -> dict:
     workdir = private_dir(workdir)
-    config = read_private_json(workdir / "worker.json")
-    heartbeat = create_local_heartbeat(config, workdir, now)
-    write_private_json(workdir / "heartbeat.json", heartbeat)
+    with private_io.lock(workdir):
+        config = read_private_json(workdir / "worker.json")
+        heartbeat = create_local_heartbeat(config, workdir, now)
+        write_private_json(workdir / "heartbeat.json", heartbeat)
     return heartbeat
 
 
 def usable_heartbeat(fleet: dict, node_id: str, heartbeat: dict, now: int) -> bool:
-    node = fleet.get("nodes", {}).get(node_id)
-    if not isinstance(node, dict) or node.get("approved_until", 0) <= now:
+    if not isinstance(fleet, dict) or not isinstance(fleet.get("nodes"), dict):
+        raise WorkerError("invalid fleet nodes")
+    node = fleet["nodes"].get(node_id)
+    if not valid_node(node, now):
+        return False
+    if not isinstance(heartbeat, dict):
         return False
     if heartbeat.get("schema") != SCHEMA or heartbeat.get("node_id") != node_id:
         return False
@@ -171,7 +184,7 @@ def usable_heartbeat(fleet: dict, node_id: str, heartbeat: dict, now: int) -> bo
     if type(captured) is not int or captured > now or now - captured > MAX_HEARTBEAT_AGE:
         return False
     reported = heartbeat.get("roles")
-    if not isinstance(reported, list) or not reported or any(not isinstance(r, str) for r in reported):
+    if not valid_roles(reported):
         return False
     return set(reported) <= set(node.get("roles", []))
 
@@ -183,6 +196,8 @@ def place_jobs(fleet: dict, heartbeats: dict, jobs: list[dict], now: int) -> lis
     and explicit work requests. Fairly spreads workload by reserving a slot
     for a node before considering it again. No extrapolated free GPU resources.
     """
+    if not isinstance(heartbeats, dict) or not isinstance(jobs, list):
+        raise WorkerError("heartbeats must be an object and jobs must be a list")
     remaining = {}
     for node_id, telemetry in heartbeats.items():
         if not usable_heartbeat(fleet, node_id, telemetry, now):
@@ -198,6 +213,8 @@ def place_jobs(fleet: dict, heartbeats: dict, jobs: list[dict], now: int) -> lis
     results = []
     seen_jobs = set()
     for job in jobs:
+        if not isinstance(job, dict):
+            raise WorkerError("job must be an object")
         name, role, cpus, mib = (job.get("id"), job.get("role"),
                                  job.get("cpu_cores"), job.get("memory_mib"))
         if not isinstance(name, str) or not ID.fullmatch(name):
@@ -205,7 +222,7 @@ def place_jobs(fleet: dict, heartbeats: dict, jobs: list[dict], now: int) -> lis
         if name in seen_jobs:
             raise WorkerError("duplicate job ID")
         seen_jobs.add(name)
-        if role not in ROLES:
+        if not isinstance(role, str) or role not in ROLES:
             raise WorkerError("job role not recognized")
         if type(cpus) is not int or not (1 <= cpus <= 256):
             raise WorkerError("invalid requested CPU capacity")

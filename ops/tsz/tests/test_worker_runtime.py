@@ -1,15 +1,12 @@
 """Synthetic local-node tests. Never probes any real network or model."""
-import importlib.util
 from pathlib import Path
 import tempfile
 import time
 import unittest
 from unittest.mock import patch
 
-MODULE = Path(__file__).resolve().parents[1] / "worker_runtime.py"
-spec = importlib.util.spec_from_file_location("worker_runtime", MODULE)
-w = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(w)
+from ops.tsz import worker_runtime as w
+
 NOW = 1_800_000_000
 CID = "neighbor-" + "a" * 24
 

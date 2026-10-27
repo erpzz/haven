@@ -1,14 +1,11 @@
 """Offline owner-network-inventory input checks."""
 from pathlib import Path
-import importlib.util
 import json
 import tempfile
 import unittest
 
-MODULE = Path(__file__).resolve().parents[1] / "import_source.py"
-spec = importlib.util.spec_from_file_location("tsz_import_source", MODULE)
-m = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(m)
+from ops.tsz import import_source as m
+
 NOW = 1_800_000_000
 
 

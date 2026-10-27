@@ -10,19 +10,20 @@ or credentials. Output is fleet state and inert enrollment work orders.
 from __future__ import annotations
 
 import argparse
-import fcntl
-from contextlib import contextmanager
 import hashlib
 import ipaddress
 import json
-import os
 from pathlib import Path
 import platform
 import re
-import stat
 import subprocess
 import sys
 import time
+
+try:
+    from . import private_io
+except ImportError:  # direct CLI invocation
+    import private_io
 
 SCHEMA = "tsz-fleet-v1"
 DECISION_SCHEMA = "tsz-approved-nodes-v1"
@@ -45,7 +46,7 @@ def normalize_mac(value: str) -> str:
 
 def candidate_id(interface: str, mac: str) -> str:
     """Opaque discovery handle, not device identity or authorization."""
-    if not INTERFACE.fullmatch(interface):
+    if not isinstance(interface, str) or not INTERFACE.fullmatch(interface):
         raise FleetError("invalid interface")
     payload = interface + "\0" + normalize_mac(mac)
     return "neighbor-" + hashlib.sha256(payload.encode("ascii")).hexdigest()[:24]
@@ -68,9 +69,10 @@ def parse_linux(text: str, interfaces: set[str]) -> list[dict]:
         raise FleetError("Linux neighbor output is not a list")
     result = []
     for entry in raw:
-        if not isinstance(entry, dict) or entry.get("dev") not in interfaces:
+        if (not isinstance(entry, dict) or not isinstance(entry.get("dev"), str)
+                or entry["dev"] not in interfaces):
             continue
-        if str(entry.get("state", "")).upper() in {"FAILED", "INCOMPLETE"}:
+        if any(s in str(entry.get("state", "")).upper() for s in ("FAILED", "INCOMPLETE")):
             continue
         seen = observation(entry.get("dst"), entry.get("lladdr"),
                            entry["dev"], "linux-neighbor-cache")
@@ -111,21 +113,32 @@ def empty_state() -> dict:
 
 
 def update_candidates(state: dict, observations: list[dict], now: int) -> int:
+    if not isinstance(observations, list):
+        raise FleetError("observations must be a list")
+    # Validate the batch before mutating state. Preserve the source capture time.
+    for item in observations:
+        if (not isinstance(item, dict) or observation(item.get("address"), item.get("mac"),
+                item.get("interface"), item.get("origin")) is None):
+            raise FleetError("malformed observation")
+        captured = item.get("observed_at", now)
+        if type(captured) is not int or captured < 0 or captured > now:
+            raise FleetError("invalid observation time")
+        if item.get("candidate_id") != candidate_id(item["interface"], item["mac"]):
+            raise FleetError("inconsistent discovery record")
     created = 0
     for item in observations:
         cid = candidate_id(item["interface"], item["mac"])
-        if cid != item["candidate_id"]:
-            raise FleetError("inconsistent discovery record")
+        captured = item.get("observed_at", now)
         if cid not in state["candidates"]:
             state["candidates"][cid] = {
                 "interface": item["interface"], "mac": item["mac"],
-                "first_seen": now, "last_seen": now,
+                "first_seen": captured, "last_seen": captured,
                 "addresses": [item["address"]], "state": "DISCOVERED_UNVERIFIED",
             }
             created += 1
         else:
             record = state["candidates"][cid]
-            record["last_seen"] = now
+            record["last_seen"] = max(record["last_seen"], captured)
             record["addresses"] = sorted(set(record["addresses"] + [item["address"]]))[-16:]
     state["generation"] += 1
     return created
@@ -137,12 +150,10 @@ def load_approved_file(path: Path) -> dict:
     Its decisions are authoritative to this controller. This module does not
     request proofs, issue approvals, or check attestation receipts.
     """
-    if path.is_symlink():
-        raise FleetError("approved-node export must not be a symbolic link")
-    info = path.stat()
-    if not stat.S_ISREG(info.st_mode) or info.st_mode & 0o077 or info.st_uid != os.getuid():
-        raise FleetError("approved-node export must be owner-owned mode 0600")
-    raw = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        raw = private_io.read_json(path)
+    except ValueError as exc:
+        raise FleetError(str(exc)) from exc
     if not isinstance(raw, dict) or raw.get("schema") != DECISION_SCHEMA:
         raise FleetError("unknown approved-node export schema")
     return raw
@@ -159,6 +170,15 @@ def reconcile_approved(state: dict, export: dict, now: int) -> dict:
     expiry = export.get("expires_at")
     if type(expiry) is not int or expiry <= now or expiry > now + 86400:
         raise FleetError("export expired or TTL exceeds 24 hours")
+    revision = export.get("revision")
+    previous = state.get("approval_revision")
+    digest = hashlib.sha256(json.dumps(export, sort_keys=True, allow_nan=False).encode()).hexdigest()
+    if revision is not None or previous is not None:
+        if type(revision) is not int or revision < 0:
+            raise FleetError("approval revision must be a nonnegative integer; downgrade forbidden")
+        if previous is not None and (revision < previous or (
+                revision == previous and digest != state.get("approval_digest"))):
+            raise FleetError("stale or conflicting approval revision")
     decisions = export.get("nodes")
     if not isinstance(decisions, list) or len(decisions) > 10000:
         raise FleetError("invalid node decisions")
@@ -178,8 +198,8 @@ def reconcile_approved(state: dict, export: dict, now: int) -> dict:
             raise FleetError("unknown or repeated roles")
         if node_id in snapshot or cid in candidate_ids:
             raise FleetError("duplicate node or discovery binding")
-        existing = state["nodes"].get(node_id)
-        if existing is not None and existing["candidate_id"] != cid:
+        existing = state.get("bindings", {}).get(node_id) or state["nodes"].get(node_id, {}).get("candidate_id")
+        if existing is not None and existing != cid:
             raise FleetError("node ID cannot be silently rebound to another device")
         candidate_ids.add(cid)
         snapshot[node_id] = {
@@ -188,6 +208,11 @@ def reconcile_approved(state: dict, export: dict, now: int) -> dict:
             "state": "APPROVED_AWAITING_USERSPACE_WORKER",
         }
     # Snapshot semantics: missing nodes are no longer eligible.
+    state.setdefault("bindings", {}).update({n: v["candidate_id"] for n, v in state["nodes"].items()})
+    state["bindings"].update({n: v["candidate_id"] for n, v in snapshot.items()})
+    if revision is not None:
+        state["approval_revision"] = revision
+        state["approval_digest"] = digest
     state["nodes"] = snapshot
     state["generation"] += 1
     return {"approved_nodes": len(snapshot), "generation": state["generation"]}
@@ -204,52 +229,57 @@ def work_orders(state: dict, now: int) -> list[dict]:
 
 
 def private_dir(directory: Path) -> Path:
-    directory = directory.expanduser()
-    directory.mkdir(mode=0o700, parents=True, exist_ok=True)
-    info = directory.stat()
-    if not stat.S_ISDIR(info.st_mode) or info.st_mode & 0o077:
-        raise FleetError("state directory must be owner-private (0700)")
-    return directory
-
-
-@contextmanager
-def fleet_lock(directory: Path):
-    """Prevent concurrent CLI processes from overwriting the fleet inventory."""
-    fd = os.open(directory / ".fleet.lock", os.O_CREAT | os.O_RDWR, 0o600)
     try:
-        fcntl.flock(fd, fcntl.LOCK_EX)
-        yield
-    finally:
-        fcntl.flock(fd, fcntl.LOCK_UN)
-        os.close(fd)
+        return private_io.private_dir(directory)
+    except ValueError as exc:
+        raise FleetError(str(exc)) from exc
+
+
+fleet_lock = private_io.lock
 
 
 def read_state(directory: Path) -> dict:
-    file = directory / "inventory.json"
-    if not file.exists():
+    try:
+        state = private_io.read_json(directory / "inventory.json")
+    except FileNotFoundError:
         return empty_state()
-    if file.is_symlink() or file.stat().st_mode & 0o077:
-        raise FleetError("inventory file must be owner-private")
-    state = json.loads(file.read_text(encoding="utf-8"))
-    if not isinstance(state, dict) or state.get("schema") != SCHEMA:
+    if (state.get("schema") != SCHEMA or not isinstance(state.get("nodes"), dict)
+            or not isinstance(state.get("candidates"), dict)
+            or type(state.get("generation")) is not int or state["generation"] < 0):
         raise FleetError("invalid TSZ state")
+    if "approval_revision" in state and (type(state["approval_revision"]) is not int
+            or state["approval_revision"] < 0 or not isinstance(state.get("approval_digest"), str)
+            or not re.fullmatch(r"[0-9a-f]{64}", state["approval_digest"])):
+        raise FleetError("invalid approval revision state")
+    bindings = state.get("bindings", {})
+    if not isinstance(bindings, dict):
+        raise FleetError("invalid historical bindings")
+    for node_id, cid in bindings.items():
+        if not ID.fullmatch(node_id) or not isinstance(cid, str) or cid not in state["candidates"]:
+            raise FleetError("invalid historical node binding")
+    for cid, candidate in state["candidates"].items():
+        if (not isinstance(candidate, dict) or not isinstance(candidate.get("interface"), str)
+                or not isinstance(candidate.get("mac"), str)
+                or candidate_id(candidate["interface"], candidate["mac"]) != cid
+                or not isinstance(candidate.get("addresses"), list)
+                or any(not isinstance(a, str) for a in candidate["addresses"])
+                or type(candidate.get("first_seen")) is not int
+                or type(candidate.get("last_seen")) is not int):
+            raise FleetError("invalid candidate state")
+    for node_id, node in state["nodes"].items():
+        if (not ID.fullmatch(node_id) or not isinstance(node, dict)
+                or not isinstance(node.get("candidate_id"), str) or node["candidate_id"] not in state["candidates"]
+                or type(node.get("approved_until")) is not int
+                or not isinstance(node.get("roles"), list) or not node["roles"]
+                or any(not isinstance(r, str) or r not in ROLES for r in node["roles"])
+                or len(set(node["roles"])) != len(node["roles"])
+                or node.get("state") != "APPROVED_AWAITING_USERSPACE_WORKER"):
+            raise FleetError("invalid approved node state")
     return state
 
 
 def write_state(directory: Path, state: dict) -> None:
-    file = directory / "inventory.json"
-    temp = directory / (".inventory." + str(os.getpid()) + ".tmp")
-    fd = os.open(temp, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as output:
-            json.dump(state, output, indent=2, sort_keys=True)
-            output.write("\n")
-            output.flush()
-            os.fsync(output.fileno())
-        os.replace(temp, file)
-    finally:
-        if temp.exists():
-            temp.unlink()
+    private_io.write_json(directory / "inventory.json", state)
 
 
 def main() -> None:
@@ -276,7 +306,10 @@ def main() -> None:
             write_state(state_dir, state)
             result = {"seen": len(observations), "new_candidates": added, "generation": state["generation"]}
         elif args.action == "discover-import":
-            from import_source import read_owner_inventory, parse_network_inventory
+            try:
+                from .import_source import read_owner_inventory, parse_network_inventory
+            except ImportError:
+                from import_source import read_owner_inventory, parse_network_inventory
             observations = parse_network_inventory(read_owner_inventory(args.file.expanduser()),
                                                    set(args.interface), now)
             added = update_candidates(state, observations, now)

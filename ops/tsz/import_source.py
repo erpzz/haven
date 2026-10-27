@@ -7,11 +7,13 @@ from __future__ import annotations
 
 import hashlib
 import ipaddress
-import json
-import os
 from pathlib import Path
 import re
-import stat
+
+try:
+    from . import private_io
+except ImportError:  # direct CLI invocation
+    import private_io
 
 SCHEMA = "tsz-network-inventory-v1"
 MAC = re.compile(r"^(?:[0-9a-fA-F]{1,2}:){5}[0-9a-fA-F]{1,2}$")
@@ -27,12 +29,10 @@ class InventoryError(ValueError):
 
 def read_owner_inventory(path: Path) -> dict:
     """Do not accept world-readable inventories, symlinks or oversized JSON."""
-    info = path.lstat()
-    if not stat.S_ISREG(info.st_mode) or info.st_mode & 0o077 or info.st_uid != os.getuid():
-        raise InventoryError("network inventory must be an owner-private regular file")
-    if info.st_size > MAX_SIZE:
-        raise InventoryError("network inventory exceeds size limit")
-    doc = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        doc = private_io.read_json(path)
+    except ValueError as exc:
+        raise InventoryError(str(exc)) from exc
     if not isinstance(doc, dict) or doc.get("schema") != SCHEMA:
         raise InventoryError("network inventory schema mismatch")
     return doc
@@ -72,5 +72,5 @@ def parse_network_inventory(doc: dict, interfaces: set[str], now: int) -> list[d
         normalized = ":".join(part.zfill(2).lower() for part in mac.split(":"))
         cid = "neighbor-" + hashlib.sha256((iface + "\0" + normalized).encode("ascii")).hexdigest()[:24]
         observations.append({"candidate_id": cid, "interface": iface, "mac": normalized,
-                             "address": address, "origin": "owner-export:" + source})
+                             "address": address, "origin": "owner-export:" + source, "observed_at": captured})
     return observations
