@@ -13,7 +13,7 @@ holds only sanitized outcomes. Every "observed" row was re-checked outside the a
 | 5 | Real child-agent execution with evidence | **met** | Opus delegated `slugify.py` to a Qwen child (lease, depth 1, own ledger); supervisor reviewed the child diff before committing |
 | 6 | Model Lab and active experiments preserved | **met** | No Slink service, model, GPU job or deployment touched; the paradigms session and the later download ran undisturbed; Slink was used only for read-only probes and a 0.2 s CPU skill run |
 | 7 | Opus-led coordination where the plan permits | **met (bounded)** | Claude Code (Opus) on the personal Pro plan, `apiKeySource=none`, only Haven tools; supervised a local child; authored the admitted skill. Codex blocked by its plan limit |
-| 8 | Initial executable Morphogenesis experiment | **met** | `run_tests` authored by Opus, admitted 5/5 on hidden held-out cases, executed on Slink with no model; E1 preregistered and run (results below) |
+| 8 | Initial executable Morphogenesis experiment | **met** | `run_tests` authored by Opus, admitted 5/5 on hidden held-out cases, executed on Slink with no model; E1 preregistered and run: offering the skill as a tool did not help (it was almost never called); the runtime invoking it (E2, exploratory) raised success from 3/8 to 6/8 |
 | 9 | Tests for permissions and non-interference | **met** | 25 unit tests: mode decisions, deploy with health-check rollback, sandbox escape/hooks/network, ledger tampering, forged receipts, approvals, leases, child scope, pipefail, MCP, console auth/Host/paths, skill admission and tampering |
 | 10 | Branch/PR, install, evidence, rollback | **met** | `README.md` (install, run, rollback), this file, PR |
 

@@ -37,10 +37,12 @@ Each item names what done looks like. Nothing here is implemented unless stated.
     briefs; the owner or Opus picks which to commission.
 12. **Second skill family** (e.g. `localize_failure`: map a failing test to the suspect function)
     with its own held-out set, to test whether VEI generalizes beyond test running.
-13. **Replicates.** 3 seeds × more tasks for E1/E2 before any claim.
+13. **Premature-finish guard.** LFM2.5 often ended its turn with a JSON plan and no tool call (counted as a final answer). Test a guard that returns such a turn to the model once, as a preregistered arm.
+14. **Preregistered E2 rerun** with 3 seeds and new tasks, since the controller arm was exploratory.
+15. **Replicates.** 3 seeds × more tasks for E1/E2 before any claim.
 
 ## Inference (Stream D)
 
-14. **E4 task throughput on Slink** once the GPU lease is free: LFM2.5-8B-A1B vs Qwen3.5-4B on
+16. **E4 task throughput on Slink** once the GPU lease is free: LFM2.5-8B-A1B vs Qwen3.5-4B on
     the E1 tasks, end-to-end wall time and success, not tokens/s.
-15. **MLX on the Mac** for LFM/Qwen vs llama.cpp Metal on the same tasks.
+17. **MLX on the Mac** for LFM/Qwen vs llama.cpp Metal on the same tasks.

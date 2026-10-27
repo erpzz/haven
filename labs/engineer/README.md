@@ -34,7 +34,7 @@ Python standard library only (3.9+), like the Model Lab.
 | Opus supervises a local Qwen child (lease on one file), reviews its diff, commits | observed | parent/child ledgers, lineage in console |
 | Owner approval round trip from the browser | observed | receipt `decided_by: owner` |
 | Skill authored by Opus, admitted on hidden held-out cases, run on Slink with no model | observed | `skills/run_tests/ADMISSION.json`, run-remote output |
-| Inheritance benchmark (none / recipe / skill × Qwen, LFM) | see `research/` | preregistered in `morphogenesis/PREREGISTRATION.json` |
+| Inheritance benchmark (none / recipe / skill / controller × Qwen, LFM) | measured | skill-as-tool ignored; runtime-invoked skill 6/8 vs tools-only 3/8 (`research/e1-inheritance.json`) |
 | Codex as an engineering agent | wired, not observed | Codex plan allowance was exhausted earlier |
 | Deploy to a `deploy.json` target with health check and automatic rollback | tested | `test_deploy_health_and_rollback` (local staging); remote targets not wired |
 

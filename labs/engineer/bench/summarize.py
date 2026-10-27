@@ -41,11 +41,13 @@ def main(argv=None):
                           c["skill_calls"], c["auto"], f"{c['committed']}/{c['n']}"])
     tot = lambda arm: sum(cell[(a, arm)]["success"] for a in agents if (a, arm) in cell)
     used = sum(cell[(a, "skill")]["skill_calls"] for a in agents if (a, "skill") in cell)
+    # Credit requires every agent to have actually executed the skill in its skill arm.
+    used_by_all = all(cell[(a, "skill")]["skill_calls"] > 0 for a in agents if (a, "skill") in cell)
 
     def judge(diff, supported):
         # Preregistered: effects smaller than 2 tasks are inconclusive; a skill never executed cannot be credited.
-        if used == 0:
-            return "not attributable: the skill tool was never called"
+        if not used_by_all:
+            return f"not attributable: the skill tool was called {used} time(s) and not by every agent"
         if abs(diff) < 2:
             return "inconclusive (difference under 2 tasks)"
         return "supported" if supported else "rejected"
