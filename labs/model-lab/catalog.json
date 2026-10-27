@@ -141,6 +141,24 @@
       "revision": "49c14831707011e64d70b2ebd8462ba08d608434",
       "url": "https://huggingface.co/LiquidAI/LFM2.5-8B-A1B-GGUF/resolve/49c14831707011e64d70b2ebd8462ba08d608434/LFM2.5-8B-A1B-Q4_K_M.gguf",
       "source": "https://huggingface.co/LiquidAI/LFM2.5-8B-A1B-GGUF"
+    },
+    {
+      "id": "nemotron3-nano-30b-a3b",
+      "name": "Nemotron 3 Nano \u00b7 30B-A3B (experts in RAM)",
+      "repo": "ggml-org/NVIDIA-Nemotron-3-Nano-30B-A3B-GGUF",
+      "filename": "NVIDIA-Nemotron-3-Nano-30B-A3B-Q4_K_M.gguf",
+      "sha256": "0f111a0d49777a2a0178758b1aee14e5365c495987499401ef3ebe87754322a8",
+      "size_bytes": 22421827488,
+      "download_gb": 22.42,
+      "description": "31.6B-total, about 3B-active hybrid Mamba-2/MoE. Runs with all experts in system RAM: measured on Slink about 32 tok/s decode at 1K and 31 at 32K context, 2.9 GB GPU, 22 GB RAM. Cold load about 8.5 minutes over the current USB 2 root link. Tool suite 49/110 (Qwen3.5-4B: 80): broader knowledge, weaker tool contract.",
+      "tag": "BIG \u00b7 EXPERTS IN RAM",
+      "quant": "Q4_K_M",
+      "license": "NVIDIA Nemotron Open Model License",
+      "revision": "fe801509a580ff84a5728d4a9104e3f6f7e9b0dd",
+      "url": "https://huggingface.co/ggml-org/NVIDIA-Nemotron-3-Nano-30B-A3B-GGUF/resolve/fe801509a580ff84a5728d4a9104e3f6f7e9b0dd/NVIDIA-Nemotron-3-Nano-30B-A3B-Q4_K_M.gguf",
+      "source": "https://huggingface.co/ggml-org/NVIDIA-Nemotron-3-Nano-30B-A3B-GGUF",
+      "offload": "cpu-moe",
+      "gpu_mib": 2850
     }
   ],
   "notes": "Model content hashes are pinned. Download URLs use main; changed bytes fail verification rather than silently updating. Approximate catalog sizes are decimal GB, not allocation estimates.",

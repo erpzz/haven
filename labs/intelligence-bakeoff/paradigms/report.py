@@ -4,7 +4,9 @@
 Every eval record is re-verified with the current verifier (stored verdicts are
 never trusted). Only counts, rates, Wilson intervals, paired sign tests,
 timings and buffer sizes are emitted: no prompts, answers, transcripts, keys,
-paths or host details.
+paths or host details. The held-out score is also reported with Haven-rendered
+receipts (receipts.py, a system result) and, when a model directory holds
+adjudicated.jsonl, on the independent adjudicated suite.
 
   report.py --session DIR [--reference qwen35-4b] > results/paradigms-YYYYMMDD.json
 """
@@ -20,6 +22,10 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "distillation" / "tool_sft"))
 import run  # noqa: E402
+sys.path.insert(0, str(HERE))
+import receipts  # noqa: E402
+sys.path.insert(0, str(HERE.parent / "adjudicated"))
+import bench  # noqa: E402
 
 MAX_TOKENS = 1024
 
@@ -58,12 +64,22 @@ def summarize_eval(records):
         families[f"{s['track']}/{s['family']}"].append(s)
     heldout = tracks["paraphrase"] + tracks["composition"]
     passed = sum(s["pass"] for s in heldout)
+    heldout_ids = {s["episode"] for s in heldout}
+    with_receipts = {s["episode"]: s["pass"] for s in
+                     run.score_records([receipts.with_receipts(r) for r in records])}
+    strict = receipts.strict_receipt_passes(records, {i: s["pass"] for i, s in by_id.items()})
+    receipt_pass = sum(with_receipts[i] for i in heldout_ids)
 
     def rate(rows):
         return {"passed": sum(s["pass"] for s in rows), "total": len(rows)}
     seconds = [r.get("elapsed_seconds", 0) for r in records]
     return by_id, {
         "heldout": {**rate(heldout), "wilson95_pct": wilson(passed, len(heldout))},
+        "heldout_with_receipts": {
+            "passed": receipt_pass, "total": len(heldout_ids),
+            "gained": sum(with_receipts[i] and not by_id[i]["pass"] for i in heldout_ids),
+            "lost": sum(by_id[i]["pass"] and not with_receipts[i] for i in heldout_ids),
+            "strict_passed": sum(strict[i] for i in heldout_ids)},
         "by_track": {k: rate(v) for k, v in sorted(tracks.items())},
         "by_family": {k: rate(v) for k, v in sorted(families.items())},
         "heldout_violations": dict(collections.Counter(v for s in heldout for v in s["violations"])),
@@ -118,13 +134,19 @@ def build(session_dir, reference="qwen35-4b"):
     session = json.loads((session_dir / "session.json").read_text())
     heldout_ids = sorted(e["id"] for e in run.load_split("heldout"))
     legacy_ids = sorted("legacy-" + t["id"] for t in json.loads(run.LEGACY_TASKS.read_text()))
-    models, scores = {}, {}
+    models, scores, adj_scores = {}, {}, {}
+    adjudicated_ids = sorted(e["id"] for e in bench.load_episodes())
     for m in session["models"]:
         entry = {"performance": performance(m)} if m.get("attempts") else {"status": m.get("status")}
         path = session_dir / m["id"] / "eval.jsonl"
         if path.exists():
             records = run.read_jsonl(path)
             scores[m["id"]], entry["tool_benchmark"] = summarize_eval(records)
+        adj_path = session_dir / m["id"] / "adjudicated.jsonl"
+        if adj_path.exists():
+            adj = bench.score_records(run.read_jsonl(adj_path))
+            adj_scores[m["id"]] = {s["episode"]: s for s in adj}
+            entry["adjudicated"] = {k: v for k, v in bench.summarize(adj).items() if k != "by_family"}
         models[m["id"]] = entry
     if reference in scores:
         for model_id, by_id in scores.items():
@@ -132,6 +154,12 @@ def build(session_dir, reference="qwen35-4b"):
                 models[model_id]["paired_vs_reference"] = {
                     "heldout": paired(scores[reference], by_id, heldout_ids),
                     "legacy": paired(scores[reference], by_id, legacy_ids)}
+    if reference in adj_scores:
+        for model_id, by_id in adj_scores.items():
+            if model_id != reference:
+                # Pair over the frozen set so an incomplete run on either side shows as unpaired.
+                models[model_id]["paired_vs_reference_adjudicated"] = paired(
+                    adj_scores[reference], by_id, adjudicated_ids)
     restore = session.get("restore") or {}
     return {"schema": "haven-paradigm-result-1", "verifier_version": run.world.VERIFIER_VERSION,
             "reference": reference, "max_tokens": MAX_TOKENS,
@@ -157,21 +185,28 @@ def markdown(result):
     """Two tables: tool benchmark and performance. Missing values print as a dash."""
     def cell(v):
         return "—" if v is None else str(v)
-    lines = ["| model | held-out /110 | Wilson 95% | paraphrase /60 | composition /50 | legacy /8 | vs ref (gained/lost, p) |",
-             "|---|---|---|---|---|---|---|"]
+    lines = ["| model | held-out /110 | Wilson 95% | + receipts | paraphrase /60 | composition /50 | legacy /8 | "
+             "vs ref (gained/lost, p) | adjudicated /180 |",
+             "|---|---|---|---|---|---|---|---|---|"]
     for mid, m in result["models"].items():
         t = m.get("tool_benchmark")
         if not t:
-            lines.append(f"| {mid} | {m.get('status') or m['performance'].get('status')} | | | | | |")
+            lines.append(f"| {mid} | {m.get('status') or m['performance'].get('status')} | | | | | | | |")
             continue
         tr = t["by_track"]
         pv = (m.get("paired_vs_reference") or {}).get("heldout") or {}
-        vs = f"{pv.get('gained', 0)}/{pv.get('lost', 0)}, p={pv['sign_test_p']}" if pv else "reference"
+        vs = ("reference" if mid == result.get("reference") else
+              f"{pv.get('gained', 0)}/{pv.get('lost', 0)}, p={pv['sign_test_p']:.3g}" if pv else "—")
         lo, hi = t["heldout"]["wilson95_pct"] or (None, None)
+        rc = t.get("heldout_with_receipts")
+        rc_cell = f"{rc['passed']} (+{rc['gained']}/−{rc['lost']}; strict {rc['strict_passed']})" if rc else "—"
+        adj = m.get("adjudicated")
+        adj_cell = f"{adj['pass']}/{adj['episodes']}" if adj else "—"
         lines.append(f"| {mid} | {t['heldout']['passed']}/{t['heldout']['total']} | {lo}–{hi} | "
+                     f"{rc_cell} | "
                      f"{tr.get('paraphrase', {}).get('passed')}/{tr.get('paraphrase', {}).get('total')} | "
                      f"{tr.get('composition', {}).get('passed')}/{tr.get('composition', {}).get('total')} | "
-                     f"{tr.get('legacy', {}).get('passed')}/{tr.get('legacy', {}).get('total')} | {vs} |")
+                     f"{tr.get('legacy', {}).get('passed')}/{tr.get('legacy', {}).get('total')} | {vs} | {adj_cell} |")
     lines += ["", "| model | ctx | load s | peak GPU MiB | peak RSS MiB | KV MiB | recurrent MiB | pp 2K tok/s | pp 8K tok/s | "
               "decode @1K | @8K | @32K |", "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for mid, m in result["models"].items():

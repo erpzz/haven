@@ -263,7 +263,7 @@ class ReportTests(unittest.TestCase):
                                    "by_track": {"paraphrase": {"passed": 34, "total": 60}}}},
             "gone": {"status": "SKIPPED_BUDGET"}}}
         text = report.markdown(result)
-        self.assertIn("| ref | 76/110 | 59.9–77.0 | 34/60 |", text)
+        self.assertIn("| ref | 76/110 | 59.9–77.0 | — | 34/60 |", text)
         self.assertIn("| gone | SKIPPED_BUDGET |", text)
         self.assertIn("40.0 |", text)
 

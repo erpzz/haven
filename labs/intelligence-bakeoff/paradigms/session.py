@@ -477,7 +477,9 @@ def main(argv=None):
             used = (time.monotonic() - began) / 60
             left = args.budget_minutes - used - 20  # keep 20 minutes for the Strata restore
             stretch = "stretch" in models[model_id].get("role", "")
-            if left < (args.stretch_min_minutes if stretch else 10):
+            # A stretch model runs two evals when the independent suite is registered.
+            need = args.stretch_min_minutes * (2 if adjudicated else 1) if stretch else 10
+            if left < need:
                 receipt["models"].append({"id": model_id, "status": "SKIPPED_BUDGET",
                                           "minutes_left": round(left, 1)})
                 save()
