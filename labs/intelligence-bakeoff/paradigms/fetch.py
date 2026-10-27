@@ -65,6 +65,21 @@ def verify_file(path, model):
     return size == model["size_bytes"] and digest.hexdigest() == model["sha256"]
 
 
+class TruncatedDownload(OSError):
+    """A short read with the .part file kept; fetch_with_resume() retries it."""
+
+
+def fetch_with_resume(model, models_dir, attempts=30, opener=None, log=print, wait=5):
+    for attempt in range(1, attempts + 1):
+        try:
+            return fetch(model, models_dir, opener=opener, log=log)
+        except (TruncatedDownload, OSError) as error:
+            if isinstance(error, ValueError) or attempt == attempts:
+                raise
+            log(f"{model['id']}: attempt {attempt} interrupted ({type(error).__name__}); resuming")
+            time.sleep(wait)
+
+
 def fetch(model, models_dir, opener=None, log=print):
     models_dir = pathlib.Path(models_dir)
     final = models_dir / model["file"]
@@ -103,6 +118,9 @@ def fetch(model, models_dir, opener=None, log=print):
                 drop_cache(fd)
             finally:
                 os.close(fd)
+    if have + got < model["size_bytes"]:
+        # The server closed the stream early. Keep the verified-so-far prefix for a Range resume.
+        raise TruncatedDownload(f"{model['id']}: stream ended at {(have + got) >> 20} MiB; resumable")
     if have + got != model["size_bytes"] or digest.hexdigest() != model["sha256"]:
         part.rename(part.with_name(part.name + ".bad"))
         raise ValueError(f"{model['id']}: size or SHA-256 mismatch; quarantined as .bad")
@@ -132,7 +150,7 @@ def main(argv=None):
     receipts = []
     for m in models:
         try:
-            receipts.append(fetch(m, args.models_dir))
+            receipts.append(fetch_with_resume(m, args.models_dir))
         except Exception as error:  # record and continue; a failed model is simply not run
             receipts.append({"id": m["id"], "status": "FAILED", "error": f"{type(error).__name__}: {error}"[:300]})
         print(json.dumps(receipts[-1]), flush=True)
