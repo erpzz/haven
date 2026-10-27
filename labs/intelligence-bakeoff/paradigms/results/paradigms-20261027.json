@@ -1,0 +1,1301 @@
+{
+  "max_tokens": 1024,
+  "models": {
+    "lfm25-24b-a2b": {
+      "paired_vs_reference": {
+        "heldout": {
+          "both": 42,
+          "gained": 5,
+          "lost": 27,
+          "neither": 20,
+          "sign_test_p": 0.00011307420209050179,
+          "unpaired": 16
+        },
+        "legacy": {
+          "sign_test_p": 1.0,
+          "unpaired": 8
+        }
+      },
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.49,
+          "llama_kv_cache:CUDA0": 650.0,
+          "llama_kv_cache:total": 650.0,
+          "llama_memory_recurrent:CUDA0": 0.47,
+          "llama_memory_recurrent:total": 0.47,
+          "load_tensors:CPU_Mapped": 13836.43,
+          "load_tensors:CUDA0": 642.45,
+          "sched_reserve:CUDA0": 226.53,
+          "sched_reserve:CUDA_Host": 40.51
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 2111.9,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 329.3
+          }
+        ],
+        "load_seconds": 329.3,
+        "peak_gpu_mib": 1686,
+        "peak_rss_mib": 14414,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 1664,
+              "peak_rss_mib": 14379
+            },
+            "decode_tok_s": 36.3,
+            "prompt_tok_s": 476.85,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 1664,
+              "peak_rss_mib": 14379
+            },
+            "decode_tok_s": 36.29,
+            "prompt_tok_s": 521.93,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 1664,
+              "peak_rss_mib": 14380
+            },
+            "decode_tok_s": 35.8,
+            "prompt_tok_s": 548.73,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 1664,
+              "peak_rss_mib": 14383
+            },
+            "decode_tok_s": 34.1,
+            "prompt_tok_s": 543.1,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 0,
+            "total": 7
+          },
+          "composition/conditional_proposal": {
+            "passed": 4,
+            "total": 6
+          },
+          "composition/discover_then_state": {
+            "passed": 7,
+            "total": 7
+          },
+          "composition/injected_note": {
+            "passed": 5,
+            "total": 7
+          },
+          "composition/note_then_propose": {
+            "passed": 7,
+            "total": 7
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 5,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 1,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 3,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 1,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 5,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 3,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 0,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 23,
+            "total": 34
+          },
+          "paraphrase": {
+            "passed": 24,
+            "total": 60
+          }
+        },
+        "episodes_completed": 94,
+        "format_error_episodes": 0,
+        "heldout": {
+          "passed": 47,
+          "total": 94,
+          "wilson95_pct": [
+            40.1,
+            59.9
+          ]
+        },
+        "heldout_answer_flags": {
+          "contradicting_state": 1,
+          "exec_claim": 2,
+          "ungrounded_evidence": 3
+        },
+        "heldout_violations": {
+          "authority": 1,
+          "substituted_proposal": 4,
+          "unneeded_tool": 5
+        },
+        "mean_episode_seconds": 22.47,
+        "transport_failures": 5,
+        "truncated_steps": 2
+      }
+    },
+    "lfm25-8b-a1b": {
+      "paired_vs_reference": {
+        "heldout": {
+          "both": 44,
+          "gained": 10,
+          "lost": 36,
+          "neither": 20,
+          "sign_test_p": 0.00015641720852954677
+        },
+        "legacy": {
+          "both": 3,
+          "lost": 1,
+          "neither": 4,
+          "sign_test_p": 1.0
+        }
+      },
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.49,
+          "llama_kv_cache:CUDA0": 390.0,
+          "llama_kv_cache:total": 390.0,
+          "llama_memory_recurrent:CUDA0": 0.28,
+          "llama_memory_recurrent:total": 0.28,
+          "load_tensors:CPU_Mapped": 205.08,
+          "load_tensors:CUDA0": 4908.88,
+          "sched_reserve:CUDA0": 82.78,
+          "sched_reserve:CUDA_Host": 40.51
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 244.0,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 21.1
+          }
+        ],
+        "load_seconds": 21.1,
+        "peak_gpu_mib": 5530,
+        "peak_rss_mib": 5251,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 5522,
+              "peak_rss_mib": 5251
+            },
+            "decode_tok_s": 219.9,
+            "prompt_tok_s": 1746.97,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 5522,
+              "peak_rss_mib": 5251
+            },
+            "decode_tok_s": 218.28,
+            "prompt_tok_s": 5125.38,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 5522,
+              "peak_rss_mib": 5251
+            },
+            "decode_tok_s": 207.83,
+            "prompt_tok_s": 5117.87,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 5522,
+              "peak_rss_mib": 5251
+            },
+            "decode_tok_s": 177.48,
+            "prompt_tok_s": 4571.74,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 0,
+            "total": 10
+          },
+          "composition/conditional_proposal": {
+            "passed": 7,
+            "total": 10
+          },
+          "composition/discover_then_state": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/injected_note": {
+            "passed": 5,
+            "total": 10
+          },
+          "composition/note_then_propose": {
+            "passed": 3,
+            "total": 10
+          },
+          "legacy/legacy": {
+            "passed": 3,
+            "total": 8
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 2,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 5,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 4,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 0,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 25,
+            "total": 50
+          },
+          "legacy": {
+            "passed": 3,
+            "total": 8
+          },
+          "paraphrase": {
+            "passed": 29,
+            "total": 60
+          }
+        },
+        "episodes_completed": 118,
+        "format_error_episodes": 0,
+        "heldout": {
+          "passed": 54,
+          "total": 110,
+          "wilson95_pct": [
+            39.9,
+            58.3
+          ]
+        },
+        "heldout_answer_flags": {
+          "ungrounded_evidence": 10
+        },
+        "heldout_violations": {
+          "substituted_proposal": 5
+        },
+        "mean_episode_seconds": 2.07,
+        "transport_failures": 1,
+        "truncated_steps": 0
+      }
+    },
+    "nemotron3-nano-30b-a3b": {
+      "paired_vs_reference": {
+        "heldout": {
+          "both": 45,
+          "gained": 4,
+          "lost": 35,
+          "neither": 26,
+          "sign_test_p": 3.353161446284503e-07
+        },
+        "legacy": {
+          "both": 2,
+          "gained": 1,
+          "lost": 2,
+          "neither": 3,
+          "sign_test_p": 1.0
+        }
+      },
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.5,
+          "llama_kv_cache:CUDA0": 195.0,
+          "llama_kv_cache:total": 195.0,
+          "llama_memory_recurrent:CUDA0": 47.62,
+          "llama_memory_recurrent:total": 47.62,
+          "load_tensors:CPU_Mapped": 21008.47,
+          "load_tensors:CUDA0": 1885.0,
+          "sched_reserve:CUDA0": 537.73,
+          "sched_reserve:CUDA_Host": 43.01
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 1050.7,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 505.4
+          }
+        ],
+        "load_seconds": 505.4,
+        "peak_gpu_mib": 2850,
+        "peak_rss_mib": 22262,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 2828,
+              "peak_rss_mib": 21717
+            },
+            "decode_tok_s": 31.84,
+            "prompt_tok_s": 328.24,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 2828,
+              "peak_rss_mib": 21717
+            },
+            "decode_tok_s": 31.95,
+            "prompt_tok_s": 365.72,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 2830,
+              "peak_rss_mib": 21717
+            },
+            "decode_tok_s": 31.77,
+            "prompt_tok_s": 395.83,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 2830,
+              "peak_rss_mib": 21717
+            },
+            "decode_tok_s": 31.29,
+            "prompt_tok_s": 402.39,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 0,
+            "total": 10
+          },
+          "composition/conditional_proposal": {
+            "passed": 6,
+            "total": 10
+          },
+          "composition/discover_then_state": {
+            "passed": 5,
+            "total": 10
+          },
+          "composition/injected_note": {
+            "passed": 1,
+            "total": 10
+          },
+          "composition/note_then_propose": {
+            "passed": 6,
+            "total": 10
+          },
+          "legacy/legacy": {
+            "passed": 3,
+            "total": 8
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 5,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 5,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 4,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 5,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 18,
+            "total": 50
+          },
+          "legacy": {
+            "passed": 3,
+            "total": 8
+          },
+          "paraphrase": {
+            "passed": 31,
+            "total": 60
+          }
+        },
+        "episodes_completed": 118,
+        "format_error_episodes": 0,
+        "heldout": {
+          "passed": 49,
+          "total": 110,
+          "wilson95_pct": [
+            35.6,
+            53.9
+          ]
+        },
+        "heldout_answer_flags": {
+          "exec_claim": 3,
+          "ungrounded_evidence": 4
+        },
+        "heldout_violations": {
+          "authority": 23,
+          "substituted_proposal": 6,
+          "unneeded_tool": 6
+        },
+        "mean_episode_seconds": 8.9,
+        "transport_failures": 9,
+        "truncated_steps": 0
+      }
+    },
+    "nemotron3-nano-4b": {
+      "paired_vs_reference": {
+        "heldout": {
+          "both": 52,
+          "gained": 10,
+          "lost": 28,
+          "neither": 20,
+          "sign_test_p": 0.0050976432976312935
+        },
+        "legacy": {
+          "both": 2,
+          "gained": 1,
+          "lost": 2,
+          "neither": 3,
+          "sign_test_p": 1.0
+        }
+      },
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.5,
+          "llama_kv_cache:CUDA0": 520.0,
+          "llama_kv_cache:total": 520.0,
+          "llama_memory_recurrent:CUDA0": 81.09,
+          "llama_memory_recurrent:total": 81.09,
+          "load_tensors:CPU_Mapped": 269.5,
+          "load_tensors:CUDA0": 2428.65,
+          "sched_reserve:CUDA0": 138.18,
+          "sched_reserve:CUDA_Host": 44.76
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 184.3,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 64.1
+          }
+        ],
+        "load_seconds": 64.1,
+        "peak_gpu_mib": 3350,
+        "peak_rss_mib": 3039,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3344,
+              "peak_rss_mib": 3039
+            },
+            "decode_tok_s": 14.9,
+            "prompt_tok_s": 68.0,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3344,
+              "peak_rss_mib": 3039
+            },
+            "decode_tok_s": 104.09,
+            "prompt_tok_s": 2844.45,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3344,
+              "peak_rss_mib": 3039
+            },
+            "decode_tok_s": 101.23,
+            "prompt_tok_s": 2876.98,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3344,
+              "peak_rss_mib": 3039
+            },
+            "decode_tok_s": 91.03,
+            "prompt_tok_s": 2491.09,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 0,
+            "total": 10
+          },
+          "composition/conditional_proposal": {
+            "passed": 5,
+            "total": 10
+          },
+          "composition/discover_then_state": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/injected_note": {
+            "passed": 9,
+            "total": 10
+          },
+          "composition/note_then_propose": {
+            "passed": 0,
+            "total": 10
+          },
+          "legacy/legacy": {
+            "passed": 3,
+            "total": 8
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 5,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 3,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 4,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 2,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 24,
+            "total": 50
+          },
+          "legacy": {
+            "passed": 3,
+            "total": 8
+          },
+          "paraphrase": {
+            "passed": 38,
+            "total": 60
+          }
+        },
+        "episodes_completed": 118,
+        "format_error_episodes": 0,
+        "heldout": {
+          "passed": 62,
+          "total": 110,
+          "wilson95_pct": [
+            47.0,
+            65.3
+          ]
+        },
+        "heldout_answer_flags": {
+          "exec_claim": 3,
+          "ungrounded_evidence": 10
+        },
+        "heldout_violations": {
+          "substituted_proposal": 6
+        },
+        "mean_episode_seconds": 1.56,
+        "transport_failures": 4,
+        "truncated_steps": 0
+      }
+    },
+    "qwen3-4b": {
+      "paired_vs_reference": {
+        "heldout": {
+          "both": 36,
+          "gained": 8,
+          "lost": 44,
+          "neither": 22,
+          "sign_test_p": 4.0393217393130953e-07
+        },
+        "legacy": {
+          "both": 3,
+          "gained": 1,
+          "lost": 1,
+          "neither": 3,
+          "sign_test_p": 1.0
+        }
+      },
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.58,
+          "llama_kv_cache:CUDA0": 4680.0,
+          "llama_kv_cache:total": 4680.0,
+          "load_tensors:CPU_Mapped": 304.28,
+          "load_tensors:CUDA0": 2375.91,
+          "sched_reserve:CUDA0": 107.51,
+          "sched_reserve:CUDA_Host": 42.51
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 129.6,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 66.1
+          }
+        ],
+        "load_seconds": 66.1,
+        "peak_gpu_mib": 7296,
+        "peak_rss_mib": 2702,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 7288,
+              "peak_rss_mib": 2702
+            },
+            "decode_tok_s": 104.11,
+            "prompt_tok_s": 2627.89,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 7294,
+              "peak_rss_mib": 2702
+            },
+            "decode_tok_s": 100.3,
+            "prompt_tok_s": 3095.94,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 7294,
+              "peak_rss_mib": 2702
+            },
+            "decode_tok_s": 81.13,
+            "prompt_tok_s": 2625.41,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 7294,
+              "peak_rss_mib": 2702
+            },
+            "decode_tok_s": 46.33,
+            "prompt_tok_s": 1557.89,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 1,
+            "total": 10
+          },
+          "composition/conditional_proposal": {
+            "passed": 9,
+            "total": 10
+          },
+          "composition/discover_then_state": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/injected_note": {
+            "passed": 0,
+            "total": 10
+          },
+          "composition/note_then_propose": {
+            "passed": 0,
+            "total": 10
+          },
+          "legacy/legacy": {
+            "passed": 4,
+            "total": 8
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 1,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 5,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 1,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 1,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 1,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 3,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 20,
+            "total": 50
+          },
+          "legacy": {
+            "passed": 4,
+            "total": 8
+          },
+          "paraphrase": {
+            "passed": 24,
+            "total": 60
+          }
+        },
+        "episodes_completed": 118,
+        "format_error_episodes": 0,
+        "heldout": {
+          "passed": 44,
+          "total": 110,
+          "wilson95_pct": [
+            31.3,
+            49.3
+          ]
+        },
+        "heldout_answer_flags": {
+          "ungrounded_evidence": 39
+        },
+        "heldout_violations": {
+          "authority": 22,
+          "substituted_proposal": 5,
+          "unrequested_proposal": 1
+        },
+        "mean_episode_seconds": 1.1,
+        "transport_failures": 0,
+        "truncated_steps": 0
+      }
+    },
+    "qwen35-4b": {
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.95,
+          "llama_kv_cache:CUDA0": 1040.0,
+          "llama_kv_cache:total": 1040.0,
+          "llama_memory_recurrent:CUDA0": 50.25,
+          "llama_memory_recurrent:total": 50.25,
+          "load_tensors:CPU_Mapped": 497.31,
+          "load_tensors:CUDA0": 2603.5,
+          "sched_reserve:CUDA0": 96.52,
+          "sched_reserve:CUDA_Host": 42.52
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 206.8,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 5.0
+          }
+        ],
+        "load_seconds": 5.0,
+        "peak_gpu_mib": 3924,
+        "peak_rss_mib": 2970,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3920,
+              "peak_rss_mib": 2970
+            },
+            "decode_tok_s": 93.51,
+            "prompt_tok_s": 654.59,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3920,
+              "peak_rss_mib": 2970
+            },
+            "decode_tok_s": 93.21,
+            "prompt_tok_s": 2389.24,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3920,
+              "peak_rss_mib": 2970
+            },
+            "decode_tok_s": 88.68,
+            "prompt_tok_s": 2331.85,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 3920,
+              "peak_rss_mib": 2970
+            },
+            "decode_tok_s": 74.7,
+            "prompt_tok_s": 1889.0,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 3,
+            "total": 10
+          },
+          "composition/conditional_proposal": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/discover_then_state": {
+            "passed": 10,
+            "total": 10
+          },
+          "composition/injected_note": {
+            "passed": 9,
+            "total": 10
+          },
+          "composition/note_then_propose": {
+            "passed": 6,
+            "total": 10
+          },
+          "legacy/legacy": {
+            "passed": 4,
+            "total": 8
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 3,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 2,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 3,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 6,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 4,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 38,
+            "total": 50
+          },
+          "legacy": {
+            "passed": 4,
+            "total": 8
+          },
+          "paraphrase": {
+            "passed": 42,
+            "total": 60
+          }
+        },
+        "episodes_completed": 118,
+        "format_error_episodes": 0,
+        "heldout": {
+          "passed": 80,
+          "total": 110,
+          "wilson95_pct": [
+            63.7,
+            80.2
+          ]
+        },
+        "heldout_answer_flags": {
+          "ungrounded_evidence": 1
+        },
+        "heldout_violations": {
+          "authority": 1,
+          "substituted_proposal": 6
+        },
+        "mean_episode_seconds": 1.75,
+        "transport_failures": 2,
+        "truncated_steps": 0
+      }
+    },
+    "rwkv7-g1k-7b": {
+      "paired_vs_reference": {
+        "heldout": {
+          "lost": 80,
+          "neither": 30,
+          "sign_test_p": 1.6543612251060553e-24
+        },
+        "legacy": {
+          "both": 1,
+          "lost": 3,
+          "neither": 4,
+          "sign_test_p": 0.25
+        }
+      },
+      "performance": {
+        "buffers_mib": {
+          "llama_context:CUDA_Host": 0.25,
+          "llama_memory_recurrent:CUDA0": 33.0,
+          "llama_memory_recurrent:total": 33.0,
+          "load_tensors:CPU_Mapped": 210.0,
+          "load_tensors:CUDA0": 4156.06,
+          "sched_reserve:CUDA0": 146.28,
+          "sched_reserve:CUDA_Host": 16.0
+        },
+        "ctx": 33280,
+        "eval_wall_seconds": 1265.2,
+        "load_attempts": [
+          {
+            "ctx": 33280,
+            "ready": true,
+            "seconds": 4.0
+          }
+        ],
+        "load_seconds": 4.0,
+        "peak_gpu_mib": 4516,
+        "peak_rss_mib": 4661,
+        "probes": [
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 4496,
+              "peak_rss_mib": 4661
+            },
+            "decode_tok_s": 56.89,
+            "prompt_tok_s": 386.45,
+            "prompt_tokens": 1024,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 4496,
+              "peak_rss_mib": 4661
+            },
+            "decode_tok_s": 56.8,
+            "prompt_tok_s": 1354.51,
+            "prompt_tokens": 2048,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 4516,
+              "peak_rss_mib": 4661
+            },
+            "decode_tok_s": 56.83,
+            "prompt_tok_s": 1383.25,
+            "prompt_tokens": 8192,
+            "status": "OK"
+          },
+          {
+            "cumulative_peak_memory_mib": {
+              "peak_gpu_mib": 4516,
+              "peak_rss_mib": 4661
+            },
+            "decode_tok_s": 56.66,
+            "prompt_tok_s": 1391.25,
+            "prompt_tokens": 32768,
+            "status": "OK"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "tool_benchmark": {
+        "by_family": {
+          "composition/compare_with_other": {
+            "passed": 0,
+            "total": 10
+          },
+          "composition/conditional_proposal": {
+            "passed": 0,
+            "total": 10
+          },
+          "composition/discover_then_state": {
+            "passed": 0,
+            "total": 10
+          },
+          "composition/injected_note": {
+            "passed": 0,
+            "total": 10
+          },
+          "composition/note_then_propose": {
+            "passed": 0,
+            "total": 10
+          },
+          "legacy/legacy": {
+            "passed": 1,
+            "total": 8
+          },
+          "paraphrase/cross_user_deny": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/device_state": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/execute_refusal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/list_devices": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/list_then_read": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/missing_note": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/no_tool": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/own_note": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/proposal": {
+            "passed": 0,
+            "total": 6
+          },
+          "paraphrase/shared_note": {
+            "passed": 0,
+            "total": 6
+          }
+        },
+        "by_track": {
+          "composition": {
+            "passed": 0,
+            "total": 50
+          },
+          "legacy": {
+            "passed": 1,
+            "total": 8
+          },
+          "paraphrase": {
+            "passed": 0,
+            "total": 60
+          }
+        },
+        "episodes_completed": 118,
+        "format_error_episodes": 1,
+        "heldout": {
+          "passed": 0,
+          "total": 110,
+          "wilson95_pct": [
+            0.0,
+            3.4
+          ]
+        },
+        "heldout_answer_flags": {
+          "ungrounded_evidence": 92
+        },
+        "heldout_violations": {},
+        "mean_episode_seconds": 10.72,
+        "transport_failures": 57,
+        "truncated_steps": 48
+      }
+    }
+  },
+  "reference": "qwen35-4b",
+  "schema": "haven-paradigm-result-1",
+  "session": {
+    "gpu_minutes": 109.6,
+    "lab_connection_left_as_found": false,
+    "status": "COMPLETED",
+    "strata_ready": false,
+    "strata_ready_seconds": null,
+    "strata_restored_and_connected": false,
+    "total_minutes": 117.1
+  },
+  "verifier_version": 3
+}

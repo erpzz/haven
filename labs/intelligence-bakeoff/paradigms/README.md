@@ -25,7 +25,8 @@ KV or recurrent-state memory.
   2. for each model, start a llama-server on its own loopback port with a
      private key, then run the probes and the benchmark;
   3. always restore: start Strata, then reconnect the Lab with
-     `labctl.py strata`.
+     `labctl.py strata`, but only if this session disconnected it (an idle
+     CPU engine found connected is left as found).
 - `report.py` re-verifies every record with verifier v3 and emits sanitized
   aggregates only: Wilson intervals, paired sign tests against the reference,
   probe timings and buffer sizes.

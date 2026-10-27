@@ -40,7 +40,7 @@ def sign_test(gained, lost):
         return 1.0
     k = min(gained, lost)
     tail = sum(math.comb(n, i) for i in range(k + 1)) / 2 ** n
-    return round(min(1.0, 2 * tail), 6)
+    return min(1.0, 2 * tail)
 
 
 def truncated_steps(records, limit=MAX_TOKENS):
@@ -157,6 +157,8 @@ def markdown(result):
     """Two tables: tool benchmark and performance. Missing values print as a dash."""
     def cell(v):
         return "—" if v is None else str(v)
+    def frac(rate):
+        return f"{rate['passed']}/{rate['total']}" if rate else "—"
     lines = ["| model | held-out /110 | Wilson 95% | paraphrase /60 | composition /50 | legacy /8 | vs ref (gained/lost, p) |",
              "|---|---|---|---|---|---|---|"]
     for mid, m in result["models"].items():
@@ -166,12 +168,10 @@ def markdown(result):
             continue
         tr = t["by_track"]
         pv = (m.get("paired_vs_reference") or {}).get("heldout") or {}
-        vs = f"{pv.get('gained', 0)}/{pv.get('lost', 0)}, p={pv['sign_test_p']}" if pv else "reference"
+        vs = f"{pv.get('gained', 0)}/{pv.get('lost', 0)}, p={pv['sign_test_p']:.2g}" if pv else "reference"
         lo, hi = t["heldout"]["wilson95_pct"] or (None, None)
         lines.append(f"| {mid} | {t['heldout']['passed']}/{t['heldout']['total']} | {lo}–{hi} | "
-                     f"{tr.get('paraphrase', {}).get('passed')}/{tr.get('paraphrase', {}).get('total')} | "
-                     f"{tr.get('composition', {}).get('passed')}/{tr.get('composition', {}).get('total')} | "
-                     f"{tr.get('legacy', {}).get('passed')}/{tr.get('legacy', {}).get('total')} | {vs} |")
+                     f"{frac(tr.get('paraphrase'))} | {frac(tr.get('composition'))} | {frac(tr.get('legacy'))} | {vs} |")
     lines += ["", "| model | ctx | load s | peak GPU MiB | peak RSS MiB | KV MiB | recurrent MiB | pp 2K tok/s | pp 8K tok/s | "
               "decode @1K | @8K | @32K |", "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for mid, m in result["models"].items():
