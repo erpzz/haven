@@ -12,6 +12,7 @@ Arms for the inheritance experiment (morphogenesis/README.md):
   none    tools only
   recipe  the admitted skill's recipe.md in the system prompt (same knowledge, prose)
   skill   the admitted skill offered as an executable tool
+  controller  E2: the runtime runs the skill before the first turn and after every edit (model patches only)
 
   run_bench.py --agents qwen35-4b-mac --arms none,recipe,skill --tasks t1,t2,t3,t4 --out results.jsonl
 """
@@ -104,6 +105,7 @@ def run_one(agent_id, arm, task, *, max_steps, temperature, skill="run_tests"):
                            overrides={"temperature": temperature},
                            skill_names=[skill] if arm == "skill" else None,
                            recipe_names=[skill] if arm == "recipe" else None,
+                           auto_tests=skill if arm == "controller" else None,
                            extra_meta={"bench": {"task": task, "arm": arm}})
     wall = time.monotonic() - t0
     tests_unchanged = all((repo / p).exists() and sha(repo / p) == h for p, h in protected.items())
@@ -121,6 +123,7 @@ def run_one(agent_id, arm, task, *, max_steps, temperature, skill="run_tests"):
         "failed_actions": sum(1 for r in receipts if r["status"] == "failed"),
         "discovery_waste": discovery_waste(receipts),
         "skill_calls": sum(1 for r in receipts if r["tool"].startswith("skill_")),
+        "auto_test_runs": rec.get("auto_test_runs", 0),
         "wall_s": round(wall, 1), "model_s": rec.get("model_s"), "tool_s": rec.get("tool_s"),
         "prompt_tokens": rec.get("prompt_tokens"), "completion_tokens": rec.get("completion_tokens"),
         "nudges": rec.get("nudges"), "verifier_tail": "" if passed else tail[-300:],

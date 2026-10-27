@@ -1,0 +1,30 @@
+{
+  "title": "E1b: inherited skill runs on another machine with no model",
+  "status": "measured",
+  "hypothesis": "An admitted skill is portable: same content address, same sandbox contract, no dependence on the authoring model.",
+  "table": {
+    "columns": [
+      "node",
+      "repo (unseen)",
+      "result",
+      "time"
+    ],
+    "rows": [
+      [
+        "Slink (x86_64 Linux, Landlock ABI 4)",
+        "t1 pytest-style, imports pytest (not installed)",
+        "pytest-style, 2 passed, 1 failed with exact assertion text",
+        "0.22 s on node, 0.45 s round trip"
+      ],
+      [
+        "Slink",
+        "t2 node:test",
+        "reported 'node is not on PATH' (no fabricated result)",
+        "0.10 s"
+      ]
+    ]
+  },
+  "finding": "Remote content hash matched the admitted SHA-256. The capability moved; the model did not.",
+  "limits": "Two repos. node is absent on Slink, so node suites cannot run there.",
+  "id": "e1b-skill-transfer-to-slink"
+}

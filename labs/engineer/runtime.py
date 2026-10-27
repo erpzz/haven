@@ -71,7 +71,7 @@ def make_executor(sess, workspace, scope, agent_id, *, approver=None, write_allo
 
 def run_task(workspace, agent_cfg, mode, prompt, *, session=None, network=None, max_steps=30, overrides=None,
              approver=None, on_event=None, parent=None, write_allow=None, depth=0, extra_meta=None,
-             skill_names=None, recipe_names=None):
+             skill_names=None, recipe_names=None, auto_tests=None):
     if network is None:
         network = bool(owner_scope().get("network"))
     tool_host = agent_cfg.get("tool_host") or os.uname().nodename.split(".")[0]
@@ -99,6 +99,9 @@ def run_task(workspace, agent_cfg, mode, prompt, *, session=None, network=None, 
     if recipe_names:
         import skills
         opts["recipes"] = "\n\n".join(skills.recipe(n) for n in recipe_names)
+    if auto_tests:
+        ex.enable_skills([auto_tests])
+        opts["auto_tests"] = f"skill_{auto_tests}"
     tools = opts.pop("tools", None)
     if tools is None and depth >= registry.MAX_DEPTH:
         tools = [t for t in ex_tools() if t != "delegate"]

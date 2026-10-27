@@ -76,7 +76,8 @@ def chat(base_url, api_key, body, timeout=600, cancel=None):
 class Agent:
     def __init__(self, executor: ex.Executor, *, base_url, model, api_key="", label=None,
                  max_steps=30, max_seconds=1200, max_tokens=2048, temperature=0.2, thinking=None,
-                 tools=None, verify_nudge=True, answer_check=True, ctx_chars=60_000, on_event=None, recipes=""):
+                 tools=None, verify_nudge=True, answer_check=True, ctx_chars=60_000, on_event=None, recipes="",
+                 auto_tests=None):
         self.ex = executor
         self.base_url, self.model, self.api_key = base_url, model, api_key
         self.label = label or model
@@ -85,6 +86,9 @@ class Agent:
         self.tools = [{"type": "function", "function": {"name": n, **t}}
                       for n, t in executor.tool_schemas(tools).items()]
         self.recipes = recipes
+        # E2 controller: the runtime (not the model) runs this skill tool before the first turn and
+        # after every successful edit, and hands the structured result to the model.
+        self.auto_tests = auto_tests
         self.verify_nudge, self.answer_check = verify_nudge, answer_check
         self.ctx_chars = ctx_chars
         self.on_event = on_event or (lambda e: None)
@@ -104,6 +108,11 @@ class Agent:
             system += "\n\nProcedures from earlier verified work (follow them when they apply):\n" + self.recipes
         msgs = [{"role": "system", "content": system},
                 {"role": "user", "content": task}]
+        if self.auto_tests:
+            first = self.ex.call(self.auto_tests, {})
+            stats["auto_test_runs"] = 1
+            msgs[-1]["content"] += ("\n\nHaven ran the test suite before you started (receipt is real):\n"
+                                    + first["text"])
         status, answer, error = "incomplete", "", None
         consecutive_invalid = 0
         last_write_step, last_cmd_step = -1, -1
@@ -221,6 +230,13 @@ class Agent:
                     if name == "run_command" and result["status"] in ("succeeded", "failed"):
                         last_cmd_step = stats["steps"]
                 msgs.append({"role": "tool", "tool_call_id": call_id, "name": name, "content": result["text"]})
+            if self.auto_tests and last_write_step == stats["steps"]:
+                rerun = self.ex.call(self.auto_tests, {})
+                stats["auto_test_runs"] = stats.get("auto_test_runs", 0) + 1
+                last_cmd_step = stats["steps"]
+                msgs.append({"role": "user", "content": "Haven re-ran the tests after your edit:\n" + rerun["text"]
+                             + "\nIf everything passes, commit and finish; otherwise fix the remaining failures."})
+                self._emit("auto_tests", receipt=rerun.get("receipt"), status=rerun["status"])
             consecutive_invalid = consecutive_invalid + 1 if consecutive_invalid_turn else 0
             if consecutive_invalid >= 3:
                 status, error = "error", "three consecutive turns with malformed tool calls"

@@ -1,0 +1,7 @@
+{
+  "title": "E2 (planned): deterministic test-driven controller vs free-form agent",
+  "status": "planned",
+  "hypothesis": "A controller that runs the inherited run_tests skill itself and asks the model only for patches beats the free-form loop at the same model and step budget.",
+  "finding": "Not run yet.",
+  "id": "e2-test-driven-controller"
+}

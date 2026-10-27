@@ -1,0 +1,7 @@
+{
+  "title": "E4 (planned): does expert placement raise task throughput on Slink?",
+  "status": "planned",
+  "hypothesis": "LFM2.5-8B-A1B's 2.4x token rate (round 1) becomes faster end-to-end engineering tasks only if tool time and failed attempts do not dominate.",
+  "finding": "Blocked: the live Model Lab backend owns the GPU. Mac Metal runs of the same tasks are in E1.",
+  "id": "e4-task-throughput-slink"
+}
