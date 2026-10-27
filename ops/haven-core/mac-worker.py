@@ -110,11 +110,13 @@ def enable():
 def enroll():
     prepare()
     import shlex
-    remote_dir = "import os,pathlib; os.umask(0o077); p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700); print(p/'macbook-owner.sock')"
-    remote_socket = run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote_dir)).stdout.strip()
+    check = run(*SSH, '-S', str(SOCKET), '-O', 'check', 'haven', check=False)
+    # sshd neither removes a reverse-forward socket when its tunnel ends nor binds over one. With our own tunnel
+    # down, clear the leftover only if it is a socket owned by this user and nothing answers on it.
+    remote_dir = "import os,pathlib,socket,stat,sys; os.umask(0o077); p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700); s=p/'macbook-owner.sock'\nif sys.argv[1:] == ['clear'] and os.path.lexists(s):\n i=s.lstat()\n if not stat.S_ISSOCK(i.st_mode) or i.st_uid != os.getuid(): sys.exit('REFUSED: macbook-owner.sock is not a socket owned by this user; inspect it.')\n c=socket.socket(socket.AF_UNIX); c.settimeout(1)\n try: c.connect(str(s)); sys.exit('REFUSED: macbook-owner.sock is live; another tunnel is serving it.')\n except (ConnectionRefusedError, FileNotFoundError): s.unlink()\nprint(s)"
+    remote_socket = run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote_dir) + (' clear' if check.returncode else '')).stdout.strip()
     if not remote_socket.startswith('/') or '\n' in remote_socket:
         raise ValueError('Invalid private remote socket path.')
-    check = run(*SSH, '-S', str(SOCKET), '-O', 'check', 'haven', check=False)
     if check.returncode:
         if SOCKET.exists():
             raise ValueError('The dedicated SSH socket exists but is not live; inspect it rather than replacing it.')
