@@ -4,6 +4,14 @@
 
 The owner's external trust/attestation agent is authoritative. TSZ does not duplicate that verifier; the coordinator consumes its private approved-node export. Local network visibility is discovery only, not permission for remote installation.
 
+## Integration (2026-10-27)
+
+TSZ is the input layer for Haven's single fleet controller (`labs/engineer`). Discovery and the external
+approved-node state stay here. Placement, reservations, dispatch, cancellation and receipts belong to
+`labs/engineer/scheduler.py`, and remote transport belongs to `remote.py`. `labs/engineer/trust.py` reads
+`inventory.json` read-only and never writes approvals. `worker_runtime.py heartbeat/plan-jobs` remains a library
+and is not deployed. See `labs/engineer/ACCEPTANCE_TSZ_20261027.md`.
+
 ## Implemented
 
 - fleet.py: scoped passive reads of existing Linux/macOS neighbor caches; records unverified candidates. The discover-import subcommand can also ingest owner-private router/management inventory exports through import_source.py, without network probes or automatic enrollment. Consumes owner-private upstream approved-node snapshots with identity and role validation, expiry and replacement semantics. Emits inert user-space preparation plans. CLI fleet operations serialize under an advisory file lock.

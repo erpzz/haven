@@ -37,6 +37,10 @@ Python standard library only (3.9+), like the Model Lab.
 | Inheritance benchmark (none / recipe / skill / controller × Qwen, LFM) | measured | skill-as-tool ignored; runtime-invoked skill 6/8 vs tools-only 3/8 (`research/e1-inheritance.json`) |
 | Codex as an engineering agent | wired, not observed | Codex plan allowance was exhausted earlier |
 | Deploy to a `deploy.json` target with health check and automatic rollback | tested | `test_deploy_health_and_rollback` (local staging); remote targets not wired |
+| Engineering task with the model on the Mac and every tool on Slink (Landlock), receipts verified on the Mac, commits back as a branch | observed | Opus via Claude Code: 24 receipts, one commit merged after independent re-test (`ACCEPTANCE_TSZ_20261027.md`) |
+| Durable scheduled jobs on enrolled nodes (trust-gated placement, cancel, revocation, crash recovery) | observed + tested | Haven suites run as a Slink job, receipt `R-2bc7d949f8`; 17 scheduler/trust tests |
+| Owner approvals for a remote tool host answered from the Mac console | observed | `rm -r` on Slink rejected from the console, receipt `decided_by: owner` |
+| TSZ external approvals gate placement (no duplicate verifier) | tested | `trust.py` fed by TSZ `reconcile_approved`; no live trust export on this Mac yet |
 
 ## Autonomy modes (enforced in the executor, not in prompts)
 
@@ -78,7 +82,7 @@ no tool can write. Hosted agents need an explicit "this leaves the house" acknow
 
 ```bash
 cd labs/engineer
-python3 -m unittest tests.test_engineer          # 23 tests, no model or network needed
+python3 -m unittest tests.test_engineer tests.test_fleet_sched   # 42 tests, no model or network needed
 cp agents.example.json ~/.config/haven-engineer/agents.json && chmod 600 ~/.config/haven-engineer/agents.json
 python3 cli.py sandbox                            # confirm Seatbelt or Landlock
 python3 console.py serve --port 8895              # private link: ~/.local/state/haven-engineer/console-url
@@ -98,6 +102,46 @@ personal Claude profile). Any MCP client can use the executor directly:
 Fleet: `python3 fleet.py enroll NAME --ssh ALIAS` (alias must already have a pinned host key),
 `python3 fleet.py scope 10.0.0.0/24   (your LAN)` for passive discovery, `python3 fleet.py observe`.
 
+## Trusted Slink Zone: one controller, external trust
+
+```
+ owner's trust-management model ──export──▶ TSZ (ops/tsz): discovery + approved-node state
+                                                     │ read-only
+ fleet.py enrollment (pinned host key) ──▶ trust.py gate ──▶ scheduler.py (jobs, leases, receipts)
+                                                     │                     │
+                                     remote.py (pinned SSH, staged runtime) ▼
+                                   node: executor / mcp_server / worker.py under Landlock or Seatbelt
+```
+
+- **Trust.** Haven does not verify devices. `trust.py` reads the TSZ approved-node state that
+  `ops/tsz/fleet.py sync-approved` writes from the owner's trust model, and combines it with Haven
+  enrollment. A node is eligible only with all of the following:
+  - a pinned host key;
+  - an owner binding (`fleet.py bind NAME --tsz-node ID`);
+  - an unexpired approval that grants the role (`tools`/`build` map to `engineering`, `inference*` to
+    `inference`);
+  - no contradiction between the bound discovery record and the node's address.
+
+  Turn it on with `{"source": "tsz"}` in `~/.config/haven-engineer/trust.json`. If the TSZ state is
+  unreadable, everything is denied. Without that file, every decision reads "Haven enrollment only".
+  Discovery (`fleet.discover`) uses TSZ's neighbor-cache parsers on Linux and macOS, and each record
+  carries the TSZ `candidate_id`.
+- **Remote tool host.** `cli.py run-remote --node slink --repo REPO --agent claude-code "task"`
+  works like this:
+  - The model (local llama.cpp, Claude Code or Codex) runs on the Mac.
+  - The executor on the node decides, sandboxes and receipts every tool call.
+  - Owner approvals are relayed to this console.
+  - The node's ledger is copied back and verified.
+  - The node's commits come back as branch `<node>/<task id>`. The local checkout is never modified.
+- **Scheduled jobs.** Submit with `scheduler.py submit --repo REPO --node slink --command "make test"`,
+  then run `scheduler.py serve` (or `tick`).
+  - Jobs live in `~/.local/state/haven-engineer/sched/`.
+  - Node runners (`worker.py`) are detached, sandboxed and low-priority, and they outlive the connection.
+  - A runner that vanishes is LOST with an `unknown` receipt, never success.
+  - GPU jobs are refused, because the Model Lab lease owns the GPU.
+  - Stop the scheduler with `pkill -f "scheduler.py serve"`. Jobs already on a node keep running and are
+    reconciled on the next start.
+
 Skills: `python3 skills.py admit CANDIDATE --heldout PRIVATE_CASES --author ID`,
 `python3 skills.py run-remote run_tests --node ALIAS --repo DIR`.
 
@@ -108,3 +152,6 @@ Stop the console (`pkill -f "console.py serve"`) and any llama-server you starte
 `~/.config/haven-engineer`, `~/.local/state/haven-engineer`, `~/.cache/haven-engineer` and
 `~/.local/share/haven-workspaces` to erase all engineer state (task history and ledgers included).
 Open WebUI Computer rollback: see `docs/FRONTEND_EVALUATION.md`.
+On an enrolled node, remote work lives only in `~/.local/share/haven-engineer/rt` (staged runtime),
+`~/.local/share/haven-workspaces`, `~/.local/state/haven-engineer` and `~/.cache/haven-engineer`;
+cancel jobs first (`scheduler.py cancel ID`), then remove those directories.
