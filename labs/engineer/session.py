@@ -102,6 +102,7 @@ class TaskSession:
             answer = approvals / f"{rid}.decision.json"
             _write_private(pending, json.dumps({
                 "receipt": rid, "task_id": self.tid, "agent": meta.get("agent"), "workspace": meta.get("workspace"),
+                "pid": os.getpid(), "host": os.uname().nodename.split(".")[0],
                 "mode": meta.get("mode"), "tool": tool, "reason": decision.reason, "created": time.time(),
                 "args": {k: (v if len(str(v)) < 4000 else str(v)[:4000] + "…") for k, v in args.items()}}))
             deadline = time.monotonic() + timeout_s
@@ -127,10 +128,26 @@ def pending_approvals(state=None):
         if p.name.endswith(".decision.json"):
             continue
         try:
-            out.append(json.loads(p.read_text()))
+            rec = json.loads(p.read_text())
         except ValueError:
             continue
+        if rec.get("host") == os.uname().nodename.split(".")[0] and not _alive(rec.get("pid")):
+            p.unlink(missing_ok=True)  # its waiter died; nobody would act on an answer
+            continue
+        out.append(rec)
     return out
+
+
+def _alive(pid):
+    if not isinstance(pid, int):
+        return True  # older records carry no pid
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        pass
+    return True
 
 
 def decide_approval(rid, decision, by, state=None):

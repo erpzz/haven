@@ -19,6 +19,7 @@ import json
 import os
 import pathlib
 import sys
+import time
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -95,11 +96,16 @@ class _RpcError(Exception):
         self.code = code
 
 
-def build(workspace, mode, agent, network, state=None, task_id=None):
+def build(workspace, mode, agent, network, state=None, task_id=None, create_meta=None):
     if task_id:  # attach to a task the runner already created (one ledger per task)
         sess = TaskSession(tid=task_id, state=state)
         if not (sess.dir / "meta.json").exists():
-            raise SystemExit(f"unknown task {task_id}")
+            if create_meta is None:
+                raise SystemExit(f"unknown task {task_id}")
+            # A remote runner (remote.py) opens the same task id on this tool host.
+            sess.write_meta({"task_id": task_id, "created": time.time(), "status": "running",
+                             "workspace": str(os.path.realpath(workspace)), "mode": mode, "network": network,
+                             "agent": agent, "tool_host": os.uname().nodename.split(".")[0], **create_meta})
         ex = runtime.make_executor(sess, workspace, policy.Scope(mode=mode, network=network), agent)
         return Server(ex, sess), sess
     sess = TaskSession(state=state, agent=agent, agent_kind="mcp", workspace=str(os.path.realpath(workspace)),
@@ -118,6 +124,8 @@ def main(argv=None):
     ap.add_argument("--agent", default="mcp-client")
     ap.add_argument("--network", choices=("owner", "on", "off"), default="owner")
     ap.add_argument("--task-id", help="attach to an existing task directory instead of creating one")
+    ap.add_argument("--create-task", metavar="META_JSON",
+                    help="with --task-id: create that task here if absent (remote tool host)")
     args = ap.parse_args(argv)
     if args.network == "owner":
         cfg = pathlib.Path(os.environ.get("HAVEN_ENGINEER_CONFIG", pathlib.Path.home() / ".config/haven-engineer"))
@@ -125,7 +133,8 @@ def main(argv=None):
         network = bool(json.loads(scope_file.read_text()).get("network")) if scope_file.exists() else False
     else:
         network = args.network == "on"
-    server, sess = build(args.workspace, args.mode, args.agent, network, task_id=args.task_id)
+    create = json.loads(args.create_task) if args.create_task else None
+    server, sess = build(args.workspace, args.mode, args.agent, network, task_id=args.task_id, create_meta=create)
     try:
         server.serve()
     finally:

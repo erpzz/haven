@@ -14,6 +14,7 @@ capture time and round-trip; missing values are null, never zero.
   fleet.py observe                 # JSON for every enrolled node + candidates
   fleet.py enroll NAME --ssh ALIAS [--roles inference,tools,build]
   fleet.py remove NAME
+  fleet.py bind NAME --tsz-node ID  # owner binds a node to its TSZ identity (trust.py)
 """
 from __future__ import annotations
 
@@ -28,6 +29,8 @@ import re
 import shutil
 import subprocess
 import time
+
+import trust
 
 CONFIG = pathlib.Path(os.environ.get("HAVEN_ENGINEER_CONFIG", pathlib.Path.home() / ".config/haven-engineer"))
 STATE = pathlib.Path(os.environ.get("HAVEN_ENGINEER_STATE", pathlib.Path.home() / ".local/state/haven-engineer"))
@@ -118,6 +121,22 @@ def remove(name):
     return before != len(cfg["nodes"])
 
 
+def bind(name, tsz_node_id):
+    """Owner act: tie a Haven node to the identity the external trust model approves."""
+    cfg = load()
+    node = next((n for n in cfg["nodes"] if n["name"] == name), None)
+    if node is None:
+        raise SystemExit(f"{name} is not enrolled")
+    if tsz_node_id and any(n.get("tsz_node_id") == tsz_node_id and n is not node for n in cfg["nodes"]):
+        raise SystemExit(f"{tsz_node_id} is already bound to another node")
+    if tsz_node_id:
+        node["tsz_node_id"] = tsz_node_id
+    else:
+        node.pop("tsz_node_id", None)
+    save(cfg)
+    return node
+
+
 def _parse(text):
     obs = {"gpus": [], "gpu_apps": [], "units": [], "models": [], "leases": []}
     for line in text.splitlines():
@@ -206,18 +225,49 @@ def observe_ssh(node):
     return obs
 
 
-def discover(scopes):
-    """Passive: devices in the ARP cache inside owner-configured subnets. No probing."""
+# The neighbor-cache read TSZ (ops/tsz/fleet.py observe) uses on each platform; parsing is TSZ's.
+NEIGHBOR_CACHE = {"Linux": ["ip", "-j", "neigh", "show"], "Darwin": ["arp", "-an"]}
+
+
+def _cache_interfaces(tsz, system, text):
+    """Every interface named in the cache output (used when the owner configured none)."""
+    if system == "Linux":
+        raw = json.loads(text)
+        return {e["dev"] for e in raw if isinstance(e, dict) and isinstance(e.get("dev"), str)} \
+            if isinstance(raw, list) else set()
+    return {m[3] for m in tsz.ARP.finditer(text)}
+
+
+def neighbors(system, text, scopes, interfaces=None):
+    """Pure: candidates in `scopes` from one neighbor-cache dump, parsed by TSZ."""
+    tsz = trust._tsz()
     nets = [ipaddress.ip_network(s, strict=False) for s in scopes]
-    if not nets or not shutil.which("arp"):
+    if not nets or system not in NEIGHBOR_CACHE:
         return []
-    out = []
-    for m in re.finditer(r"\((\d+\.\d+\.\d+\.\d+)\) at ([0-9a-f:]+|\(incomplete\))", _sh(["arp", "-an"])):
-        ip, mac = m[1], m[2]
-        if mac == "(incomplete)" or not any(ipaddress.ip_address(ip) in n for n in nets):
-            continue
-        out.append({"address": ip, "mac_prefix": ":".join(mac.split(":")[:3]), "status": "DISCOVERED_NOT_ENROLLED"})
-    return out
+    try:
+        ifaces = set(interfaces or ()) or _cache_interfaces(tsz, system, text)
+        ifaces = {i for i in ifaces if tsz.INTERFACE.fullmatch(i)}
+        seen = (tsz.parse_linux if system == "Linux" else tsz.parse_macos)(text, ifaces) if ifaces else []
+    except ValueError:  # malformed cache output (json.JSONDecodeError and FleetError are ValueErrors)
+        return []
+    return [{"address": o["address"], "mac_prefix": ":".join(o["mac"].split(":")[:3]),
+             "candidate_id": o["candidate_id"], "status": "DISCOVERED_NOT_ENROLLED"}
+            for o in seen if any(ipaddress.ip_address(o["address"]) in n for n in nets)]
+
+
+def discover(scopes):
+    """Passive: devices in the OS neighbor cache inside owner-configured subnets. No probing."""
+    system = platform.system()
+    cmd = NEIGHBOR_CACHE.get(system)
+    if not scopes or not cmd or not shutil.which(cmd[0]):
+        return []
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=8)
+    except (OSError, subprocess.TimeoutExpired):
+        return []
+    if r.returncode:
+        return []
+    return neighbors(system, r.stdout, scopes, load().get("discovery_interfaces"))
 
 
 def observe(cache_s=10):
@@ -258,6 +308,9 @@ def main(argv=None):
     e.add_argument("--roles", default="inference,tools")
     r = sub.add_parser("remove")
     r.add_argument("name")
+    b = sub.add_parser("bind")
+    b.add_argument("name")
+    b.add_argument("--tsz-node", default="", help="empty string removes the binding")
     s = sub.add_parser("scope")
     s.add_argument("cidr")
     args = ap.parse_args(argv)
@@ -267,6 +320,9 @@ def main(argv=None):
         print(json.dumps(enroll(args.name, args.ssh, args.roles.split(",")), indent=2))
     elif args.cmd == "remove":
         print("removed" if remove(args.name) else "not found")
+    elif args.cmd == "bind":
+        print(json.dumps({k: v for k, v in bind(args.name, args.tsz_node).items() if k != "host_fingerprint"},
+                         indent=2))
     elif args.cmd == "scope":
         cfg = load()
         ipaddress.ip_network(args.cidr, strict=False)

@@ -37,7 +37,8 @@ _NEXT = {
 }
 RECEIPT_ID = re.compile(r"\bR-[0-9a-f]{10}\b")
 _CLAIMS = [
-    (re.compile(r"\b(all )?tests? (now )?(pass|passed|passing|succeed|green)\b|\bpassing tests?\b", re.I), "test"),
+    (re.compile(r"\b(all )?(the )?(unit )?tests? ((now|all|are|is|still) )*(pass|passes|passed|passing|succeed|"
+                r"succeeds|succeeded|green)\b|\bpassing tests?\b", re.I), "test"),
     (re.compile(r"\b(i (have )?)?(committed|created a commit|made a commit)\b", re.I), "commit"),
     (re.compile(r"\bdeployed\b|\bdeployment (succeeded|completed|is live)\b", re.I), "deploy"),
     (re.compile(r"\bpushed\b", re.I), "push"),
@@ -197,7 +198,7 @@ class Ledger:
 
 _FIELDS = {"reason", "decided_by", "exit_code", "duration_s", "output_sha256", "output_bytes", "truncated",
            "error", "changed_paths", "commit", "branch", "approval", "sandbox", "timed_out", "cancelled",
-           "test_command", "network"}
+           "test_command", "network", "node"}
 
 
 def _supports(receipt, kind):

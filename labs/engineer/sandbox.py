@@ -180,11 +180,19 @@ def _landlock_exec(spec, argv):
     os.execvp(argv[0], argv)
 
 
+_STANDARD_TOP = ("bin", "boot", "dev", "etc", "lib", "lib32", "lib64", "libx32", "media", "mnt", "nix", "opt",
+                 "proc", "run", "sbin", "snap", "srv", "sys", "tmp", "usr", "var")
+
+
 def _readable_roots(deny):
     """Every top-level path except HOME, plus HOME's children minus the denied ones (two levels)."""
     home = os.path.realpath(str(HOME))
     roots = []
-    for entry in os.listdir("/"):
+    try:
+        top = os.listdir("/")
+    except PermissionError:  # nested inside another Landlock domain: "/" itself is not listable
+        top = [d for d in _STANDARD_TOP if os.path.lexists(os.path.join("/", d))]
+    for entry in top:
         p = os.path.join("/", entry)
         if p == "/home" or home.startswith(p + "/"):
             continue
