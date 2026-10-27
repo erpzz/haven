@@ -34,6 +34,8 @@ PORT = 8891
 LABEL = 'com.haven.cloud-worker'
 PLIST = Path.home() / 'Library/LaunchAgents/com.haven.cloud-worker.plist'
 SOCKET = Path.home() / '.ssh/haven-cloud.sock'
+TUNNEL_LABEL = 'com.haven.cloud-worker-tunnel'
+TUNNEL_PLIST = Path.home() / 'Library/LaunchAgents/com.haven.cloud-worker-tunnel.plist'
 SSH = ['ssh', '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=8']
 TIMEOUT = 200            # Below the Lab's 240 s watchdog, so the Lab sees our error, not its own.
 MAX_MESSAGES, MAX_CHARS = 40, 120000
@@ -449,27 +451,100 @@ print(p)
 '''
 
 
-def enroll(args):
-    config = prepare()
+def tunnel_alive():
+    return subprocess.run([*SSH, '-S', str(SOCKET), '-O', 'check', 'haven'], capture_output=True).returncode == 0
+
+
+def remote_providers(data_dir, lab_dir, clear_idents):
+    """Run the Slink preflight; it clears only the named lanes' dead sockets and prints the enrollment directory."""
     import shlex
-    run = lambda *a, **k: subprocess.run(a, check=True, capture_output=True, text=True, **k)
-    idents = [ident.replace('haven-', 'cloud-') for ident in config['lanes']]
-    # Close our own tunnel first, so the preflight can clear the sockets it leaves behind.
-    if subprocess.run([*SSH, '-S', str(SOCKET), '-O', 'check', 'haven'], capture_output=True).returncode == 0:
-        run(*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven')
-    elif SOCKET.exists():
-        raise ValueError('The dedicated SSH socket exists but is not live; inspect it rather than replacing it.')
     check = subprocess.run([*SSH, 'haven', 'python3 -c ' + shlex.quote(REMOTE_PREFLIGHT) + ' ' +
-                            ' '.join(shlex.quote(a) for a in (args.data_dir, args.lab_dir, *idents))],
+                            ' '.join(shlex.quote(a) for a in (data_dir, lab_dir, *clear_idents))],
                            capture_output=True, text=True)
     providers = check.stdout.strip()
     if check.returncode or not providers.startswith('/') or '\n' in providers:
         raise ValueError((check.stderr.strip() or 'Invalid private remote enrollment directory.') + ' Nothing was enrolled.')
+    return providers
+
+
+def tunnel_argv(providers, idents, background):
     forwards = [arg for ident in idents for arg in ('-R', f'{providers}/{ident}.sock:127.0.0.1:{PORT}')]
-    if forwards:
-        run(*SSH, '-fNT', '-M', '-S', str(SOCKET), '-o', 'ControlPersist=no', '-o', 'ExitOnForwardFailure=yes',
-            '-o', 'ServerAliveInterval=30', '-o', 'ServerAliveCountMax=3', '-o', 'StreamLocalBindUnlink=yes',
-            *forwards, 'haven')
+    return [*SSH, '-fNT' if background else '-NT', '-M', '-S', str(SOCKET), '-o', 'ControlPersist=no',
+            '-o', 'ExitOnForwardFailure=yes', '-o', 'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=2',
+            *forwards, 'haven']
+
+
+def clear_local_socket():
+    """A control socket left by a dead master blocks a new one; remove only our own dead socket."""
+    if not os.path.lexists(SOCKET):
+        return
+    info = SOCKET.lstat()
+    if not stat.S_ISSOCK(info.st_mode) or info.st_uid != os.getuid():
+        raise ValueError('The dedicated SSH socket path is not our own socket; inspect it.')
+    SOCKET.unlink()
+
+
+def lane_idents(config):
+    return [ident.replace('haven-', 'cloud-') for ident in config['lanes']]
+
+
+def tunnel(args):
+    """Foreground tunnel for the supervising LaunchAgent: launchd restarts it whenever ssh exits."""
+    config = prepare()
+    if tunnel_alive():
+        time.sleep(60)  # a hand-started tunnel still serves the lanes; launchd checks again later
+        return
+    idents = lane_idents(config)
+    if not idents:
+        time.sleep(300)
+        return
+    clear_local_socket()
+    providers = remote_providers(args.data_dir, args.lab_dir, idents)
+    print(time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'tunnel up ->', providers, ' '.join(idents), flush=True)
+    argv = tunnel_argv(providers, idents, background=False)
+    os.execvp(argv[0], argv)
+
+
+def enable_tunnel(args):
+    prepare()
+    library = Path.home() / '.local/lib/haven-cloud-worker'
+    library.mkdir(parents=True, exist_ok=True, mode=0o700)
+    helper = library / 'cloud-worker.py'
+    if helper.resolve() != Path(__file__).resolve():
+        helper.write_bytes(Path(__file__).read_bytes()); helper.chmod(0o700)
+    target = f'gui/{os.getuid()}/{TUNNEL_LABEL}'
+    argv = [sys.executable, str(helper), 'tunnel', '--data-dir', args.data_dir] + (['--lab-dir', args.lab_dir] if args.lab_dir else [])
+    content = plistlib.dumps({'Label': TUNNEL_LABEL, 'ProgramArguments': argv,
+                              'RunAtLoad': True, 'KeepAlive': True, 'ThrottleInterval': 30, 'ProcessType': 'Background',
+                              'StandardOutPath': str(STATE / 'tunnel.log'), 'StandardErrorPath': str(STATE / 'tunnel.log')})
+    if launchctl('print', target, check=False).returncode == 0:
+        launchctl('bootout', target, check=False)
+    if tunnel_alive():  # hand the tunnel over so the agent owns the only master
+        subprocess.run([*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven'], capture_output=True)
+    TUNNEL_PLIST.parent.mkdir(parents=True, exist_ok=True)
+    TUNNEL_PLIST.write_bytes(content); TUNNEL_PLIST.chmod(0o600)
+    launchctl('enable', target)
+    launchctl('bootstrap', f'gui/{os.getuid()}', str(TUNNEL_PLIST))
+    print('Supervised cloud lane tunnel registered; launchd restarts it whenever it drops.')
+
+
+def enroll(args):
+    config = prepare()
+    import shlex
+    run = lambda *a, **k: subprocess.run(a, check=True, capture_output=True, text=True, **k)
+    idents = lane_idents(config)
+    supervised = launchctl('print', f'gui/{os.getuid()}/{TUNNEL_LABEL}', check=False).returncode == 0
+    if supervised:
+        # The supervisor owns the tunnel; restart it so it forwards the lanes configured now.
+        providers = remote_providers(args.data_dir, args.lab_dir, [])
+    else:
+        # Close our own tunnel first, so the preflight can clear the sockets it leaves behind.
+        if tunnel_alive():
+            run(*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven')
+        clear_local_socket()
+        providers = remote_providers(args.data_dir, args.lab_dir, idents)
+        if idents:
+            run(*tunnel_argv(providers, idents, background=True))
     node, key = (STATE / 'node-id').read_text().strip(), (STATE / 'api-key').read_text().strip()
     entries = [{'id': ident.replace('haven-', 'cloud-'), 'label': LANES[ident]['label'], 'node_id': node,
                 'base': f'http://127.0.0.1:{PORT}/v1', 'socket_path': f"{providers}/{ident.replace('haven-', 'cloud-')}.sock",
@@ -489,6 +564,10 @@ def enroll(args):
               "for d in rows:\n"
               "    fd,n=tempfile.mkstemp(prefix='.enroll-',dir=p); f=os.fdopen(fd,'w'); json.dump(d,f); f.close(); os.replace(n,p/(d['id']+'.json'))")
     run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote) + ' ' + shlex.quote(providers), input=json.dumps(entries))
+    if supervised:
+        if tunnel_alive():
+            run(*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven')
+        launchctl('kickstart', '-k', f'gui/{os.getuid()}/{TUNNEL_LABEL}')
     print('Enrolled on Slink:', ', '.join(e['id'] for e in entries) or 'no lanes',
           '- refresh workers in Haven. Nothing was sent to a cloud model.')
 
@@ -496,6 +575,9 @@ def enroll(args):
 def disable():
     target = f'gui/{os.getuid()}/{LABEL}'
     launchctl('disable', target); launchctl('bootout', target, check=False)
+    # The supervisor goes too, or launchd would bring the tunnel straight back.
+    tunnel_target = f'gui/{os.getuid()}/{TUNNEL_LABEL}'
+    launchctl('disable', tunnel_target); launchctl('bootout', tunnel_target, check=False)
     if subprocess.run([*SSH, '-S', str(SOCKET), '-O', 'check', 'haven'], capture_output=True).returncode == 0:
         subprocess.run([*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven'], capture_output=True)
     print('Cloud lane stopped and its reverse tunnel closed. Haven shows it offline; nothing else changed.')
@@ -505,10 +587,12 @@ def status():
     config = prepare()
     try: today = json.loads((STATE / 'usage.json').read_text())
     except (OSError, ValueError): today = {}
-    tunnel = subprocess.run([*SSH, '-S', str(SOCKET), '-O', 'check', 'haven'], capture_output=True).returncode == 0
+    tunnel_up = tunnel_alive()
     print(json.dumps({'lanes': list(config['lanes']), 'daily_cap': config['daily_cap'], 'usage': today,
                       'service': launchctl('print', f'gui/{os.getuid()}/{LABEL}', check=False).returncode == 0,
-                      'tunnel': tunnel}, indent=1))
+                      'tunnel': tunnel_up,
+                      'tunnel_supervised': launchctl('print', f'gui/{os.getuid()}/{TUNNEL_LABEL}', check=False).returncode == 0},
+                     indent=1))
 
 
 def main():
@@ -522,12 +606,19 @@ def main():
     e = sub.add_parser('enroll', help='tunnel and enroll the lanes in a Haven Lab on Slink')
     e.add_argument('--data-dir', default='~/.local/share/haven-model-lab', help='that Lab\'s --data-dir on Slink')
     e.add_argument('--lab-dir', default='', help='that Lab\'s labs/model-lab on Slink; default: the haven-model-lab unit')
+    for name, help_text in (('tunnel', 'foreground reverse tunnel, run by the supervising LaunchAgent'),
+                            ('enable-tunnel', 'install the LaunchAgent that keeps the tunnel up')):
+        t = sub.add_parser(name, help=help_text)
+        t.add_argument('--data-dir', default='~/.local/share/haven-model-lab')
+        t.add_argument('--lab-dir', default='')
     for name in ('serve', 'enable', 'disable', 'status'): sub.add_parser(name)
     args = parser.parse_args()
     if os.getuid() == 0: parser.error('Run as the ordinary owner account.')
     os.umask(0o077)
     if args.action == 'configure': return configure(args)
     if args.action == 'enroll': return enroll(args)
+    if args.action == 'tunnel': return tunnel(args)
+    if args.action == 'enable-tunnel': return enable_tunnel(args)
     {'serve': serve, 'enable': enable, 'disable': disable, 'status': status}[args.action]()
 
 

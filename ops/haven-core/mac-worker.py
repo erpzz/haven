@@ -26,6 +26,11 @@ LABEL = 'com.haven.mac-worker'
 PLIST = Path.home() / 'Library/LaunchAgents/com.haven.mac-worker.plist'
 SOCKET = Path.home() / '.ssh/haven-worker.sock'
 SSH = ['ssh', '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=8']
+TUNNEL_LABEL = 'com.haven.mac-worker-tunnel'
+TUNNEL_PLIST = Path.home() / 'Library/LaunchAgents/com.haven.mac-worker-tunnel.plist'
+# Runs on Slink. sshd neither removes a reverse-forward socket when its tunnel ends nor binds over one. With our own
+# tunnel down ('clear'), remove the leftover only if it is a socket owned by this user and nothing answers on it.
+REMOTE_PREP = "import os,pathlib,socket,stat,sys; os.umask(0o077); p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700); s=p/'macbook-owner.sock'\nif sys.argv[1:] == ['clear'] and os.path.lexists(s):\n i=s.lstat()\n if not stat.S_ISSOCK(i.st_mode) or i.st_uid != os.getuid(): sys.exit('REFUSED: macbook-owner.sock is not a socket owned by this user; inspect it.')\n c=socket.socket(socket.AF_UNIX); c.settimeout(1)\n try: c.connect(str(s)); sys.exit('REFUSED: macbook-owner.sock is live; another tunnel is serving it.')\n except (ConnectionRefusedError, FileNotFoundError): s.unlink()\nprint(s)"
 
 
 def run(*argv, check=True, **kwargs):
@@ -107,22 +112,84 @@ def enable():
     print('Owner-enabled worker LaunchAgent registered on loopback only.')
 
 
+def tunnel_alive():
+    return run(*SSH, '-S', str(SOCKET), '-O', 'check', 'haven', check=False).returncode == 0
+
+
+def remote_socket_path(clear):
+    import shlex
+    path = run(*SSH, 'haven', 'python3 -c ' + shlex.quote(REMOTE_PREP) + (' clear' if clear else '')).stdout.strip()
+    if not path.startswith('/') or '\n' in path:
+        raise ValueError('Invalid private remote socket path.')
+    return path
+
+
+def tunnel_argv(remote_socket, background):
+    return [*SSH, '-fNT' if background else '-NT', '-M', '-S', str(SOCKET), '-o', 'ControlPersist=no',
+            '-o', 'ExitOnForwardFailure=yes', '-o', 'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=2',
+            '-R', remote_socket + ':127.0.0.1:8890', 'haven']
+
+
+def clear_local_socket():
+    """A control socket left by a dead master blocks a new one; remove only our own dead socket."""
+    if not os.path.lexists(SOCKET):
+        return
+    info = SOCKET.lstat()
+    if not stat.S_ISSOCK(info.st_mode) or info.st_uid != os.getuid():
+        raise ValueError('The dedicated SSH socket path is not our own socket; inspect it.')
+    SOCKET.unlink()
+
+
+def tunnel():
+    """Foreground tunnel for the supervising LaunchAgent: launchd restarts it whenever ssh exits."""
+    if tunnel_alive():
+        # A tunnel started by hand still serves the worker. Leave it; launchd checks again after its throttle.
+        time.sleep(60)
+        return
+    clear_local_socket()
+    path = remote_socket_path(clear=True)
+    print(time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'tunnel up ->', path, flush=True)
+    argv = tunnel_argv(path, background=False)
+    os.execvp(argv[0], argv)
+
+
+def agent_loaded(label):
+    return run('launchctl', 'print', 'gui/' + str(os.getuid()) + '/' + label, check=False).returncode == 0
+
+
+def enable_tunnel():
+    prepare()
+    library = Path.home() / '.local/lib/haven-worker'
+    library.mkdir(parents=True, exist_ok=True, mode=0o700)
+    helper = library / 'mac-worker.py'
+    if helper.resolve() != Path(__file__).resolve():
+        helper.write_bytes(Path(__file__).read_bytes()); helper.chmod(0o700)
+    target = 'gui/' + str(os.getuid()) + '/' + TUNNEL_LABEL
+    content = plistlib.dumps({'Label': TUNNEL_LABEL, 'ProgramArguments': [sys.executable, str(helper), 'tunnel'],
+                              'RunAtLoad': True, 'KeepAlive': True, 'ThrottleInterval': 30, 'ProcessType': 'Background',
+                              'StandardOutPath': str(STATE / 'tunnel.log'), 'StandardErrorPath': str(STATE / 'tunnel.log')})
+    if agent_loaded(TUNNEL_LABEL):
+        run('launchctl', 'bootout', target, check=False)
+    # Hand the tunnel over: close a hand-started one so the agent owns the only master.
+    if tunnel_alive():
+        run(*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven')
+    TUNNEL_PLIST.parent.mkdir(parents=True, exist_ok=True)
+    TUNNEL_PLIST.write_bytes(content); TUNNEL_PLIST.chmod(0o600)
+    run('launchctl', 'enable', target)
+    run('launchctl', 'bootstrap', 'gui/' + str(os.getuid()), str(TUNNEL_PLIST))
+    print('Supervised worker tunnel registered; launchd restarts it whenever it drops.')
+
+
 def enroll():
     prepare()
     import shlex
-    check = run(*SSH, '-S', str(SOCKET), '-O', 'check', 'haven', check=False)
-    # sshd neither removes a reverse-forward socket when its tunnel ends nor binds over one. With our own tunnel
-    # down, clear the leftover only if it is a socket owned by this user and nothing answers on it.
-    remote_dir = "import os,pathlib,socket,stat,sys; os.umask(0o077); p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700); s=p/'macbook-owner.sock'\nif sys.argv[1:] == ['clear'] and os.path.lexists(s):\n i=s.lstat()\n if not stat.S_ISSOCK(i.st_mode) or i.st_uid != os.getuid(): sys.exit('REFUSED: macbook-owner.sock is not a socket owned by this user; inspect it.')\n c=socket.socket(socket.AF_UNIX); c.settimeout(1)\n try: c.connect(str(s)); sys.exit('REFUSED: macbook-owner.sock is live; another tunnel is serving it.')\n except (ConnectionRefusedError, FileNotFoundError): s.unlink()\nprint(s)"
-    remote_socket = run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote_dir) + (' clear' if check.returncode else '')).stdout.strip()
-    if not remote_socket.startswith('/') or '\n' in remote_socket:
-        raise ValueError('Invalid private remote socket path.')
-    if check.returncode:
-        if SOCKET.exists():
-            raise ValueError('The dedicated SSH socket exists but is not live; inspect it rather than replacing it.')
-        run(*SSH, '-fNT', '-M', '-S', str(SOCKET), '-o', 'ControlPersist=no',
-            '-o', 'ExitOnForwardFailure=yes', '-o', 'ServerAliveInterval=30', '-o', 'ServerAliveCountMax=3',
-            '-o', 'StreamLocalBindUnlink=yes', '-R', remote_socket + ':127.0.0.1:8890', 'haven')
+    supervised = agent_loaded(TUNNEL_LABEL)
+    live = tunnel_alive()
+    # With the supervisor loaded it owns the tunnel and its own preflight; only learn the socket path here.
+    remote_socket = remote_socket_path(clear=not live and not supervised)
+    if not live and not supervised:
+        clear_local_socket()
+        run(*tunnel_argv(remote_socket, background=True))
     entry = {'id': 'macbook-owner', 'label': 'MacBook worker', 'node_id': (STATE / 'node-id').read_text().strip(),
              'base': 'http://127.0.0.1:8890/v1', 'socket_path': remote_socket, 'key': (STATE / 'api-key').read_text().strip(),
              'model': 'haven-mac-smollm2', 'display_model': 'SmolLM2 1.7B Instruct · Q4_K_M',
@@ -133,7 +200,6 @@ def enroll():
                               'accelerator': 'Apple Metal', 'runtime': 'llama.cpp 0.7.0 / 620d2225c'}}
     # Secret travels over host-verified SSH stdin, never argv or a printed link.
     remote = "import sys,json,os,pathlib,tempfile; os.umask(0o077); d=json.load(sys.stdin); p=pathlib.Path.home()/'.local/share/haven-model-lab/providers'; p.mkdir(parents=True,exist_ok=True,mode=0o700); fd,n=tempfile.mkstemp(prefix='.enroll-',dir=p); f=os.fdopen(fd,'w'); json.dump(d,f); f.close(); os.replace(n,p/'macbook-owner.json')"
-    import shlex
     run(*SSH, 'haven', 'python3 -c ' + shlex.quote(remote), input=json.dumps(entry))
     print('Private Mac worker enrollment saved on Slink; reload/probe the registry from Haven. No inference started.')
 
@@ -146,19 +212,23 @@ def disable():
         if time.monotonic() > deadline:
             raise ValueError('Owned worker unload is not confirmed. No duplicate was started.')
         time.sleep(.1)
-    if run(*SSH, '-S', str(SOCKET), '-O', 'check', 'haven', check=False).returncode == 0:
+    # The supervisor goes first, or launchd would bring the tunnel straight back.
+    run('launchctl', 'disable', 'gui/' + str(os.getuid()) + '/' + TUNNEL_LABEL)
+    run('launchctl', 'bootout', 'gui/' + str(os.getuid()) + '/' + TUNNEL_LABEL, check=False)
+    if tunnel_alive():
         run(*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven')
     print('Owned worker LaunchAgent unloaded and owned reverse tunnel closed. Artifacts and enrollment preserved.')
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=('enable', 'serve', 'enroll', 'disable'))
+    parser.add_argument('action', choices=('enable', 'serve', 'enroll', 'disable', 'tunnel', 'enable-tunnel'))
     args = parser.parse_args()
     if sys.platform != 'darwin' or os.getuid() == 0:
         parser.error('Use the ordinary owner account on the prepared Apple Silicon Mac.')
     os.umask(0o077)
-    {'enable': enable, 'serve': serve, 'enroll': enroll, 'disable': disable}[args.action]()
+    {'enable': enable, 'serve': serve, 'enroll': enroll, 'disable': disable, 'tunnel': tunnel,
+     'enable-tunnel': enable_tunnel}[args.action]()
 
 
 if __name__ == '__main__':
