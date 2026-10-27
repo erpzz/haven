@@ -107,7 +107,7 @@
       "analysis_changed": false
     },
     {
-      "at": "2026-10-27 18:40 EDT, before any Slink run",
+      "at": "2026-10-27 18:34 EDT, before any Slink experimental run",
       "by": "experimenter (Opus, the session running E5), on the owner's instruction: 'Rerun all 72 E5 runs on Slink'",
       "change": "Backend moves to Slink. All 72 experimental runs (6 selected tasks x seeds 44/55/66 x 4 arms) run there from scratch. The 5 Mac rows are excluded from analysis and kept privately, so no backends are mixed in the analysis. The task selection from the Mac calibration stands: it is a design choice, made before any experimental run. Nothing else in the design or analysis changes.",
       "slink_environment": {
