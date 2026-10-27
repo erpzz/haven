@@ -1,0 +1,130 @@
+{
+  "schema": "haven-paradigm-bakeoff-preregistration-1",
+  "registered_utc": "2026-10-26",
+  "status": "REGISTERED_BEFORE_ANY_PARADIGM_INFERENCE",
+  "question": "On owner hardware (RTX 2070 Super 8 GB, 12-core Ryzen, 64 GB RAM), does any non-transformer or hybrid architecture family beat the deployed Qwen3.5-4B on Haven's frozen tool benchmark, or match it at lower long-context cost?",
+  "benchmark": {
+    "suite": "labs/intelligence-bakeoff/distillation/tool_sft",
+    "sets": "heldout,legacy",
+    "episodes": {"heldout_paraphrase": 60, "heldout_composition": 50, "legacy": 8},
+    "verifier_version": 3,
+    "frozen_files_sha256": {
+      "frozen/heldout.jsonl": "3bb0900575699ddb95d99db03e2dc0c81a14777b2c626801c3dd70eff1e42540",
+      "labs/intelligence-bakeoff/tasks.json": "681e3b72c5b88dfd1a99b5af69e17dcbe3395a78d1e2b29d9018fba84e77dbe2"
+    },
+    "limits": "Lexical verifier over one procedural generator, one greedy generation per episode, one seed. A pass measures this tool contract only, not general intelligence."
+  },
+  "condition": {
+    "runtime": "llama.cpp b11146 CUDA (the Lab's pinned build), one llama-server per model on 127.0.0.1 with a private API key, never the Lab's or Strata's port",
+    "server_args": ["--jinja", "-np", "1", "-fa", "auto", "--fit", "off", "-t", "10", "-cram", "0", "--no-webui", "-lv", "4"],
+    "offload": "-ngl 99 for every model; models whose weights exceed 8 GB VRAM additionally use --cpu-moe (all routed experts in system RAM)",
+    "context": "-c 33280 when that loads with all layers on the GPU (the long-context probe runs on the same server); otherwise -c 8192 and the 32K probe is recorded as DOES_NOT_FIT",
+    "kv_cache": "f16 (llama.cpp default)",
+    "sampling": "temperature 0, enable_thinking=false sent via chat_template_kwargs (honoured only by templates that define it)",
+    "max_tokens": 1024,
+    "max_tokens_note": "The PR #45 frozen command used 256. 1024 is used for every model here so that always-reasoning templates (LFM2.5) are not truncated by construction; truncated steps (completion_tokens == max_tokens) are counted. The reference is re-run under this condition and its PR #45 figure (76/110 at 256) is quoted separately.",
+    "reasoning": "llama-server default --reasoning-format; reasoning text is extracted from content and never scored",
+    "tool_call_parsing": "llama-server's own parser for each template (the deployment path), plus the harness's existing Qwen-style <tool_call> fallback. No new per-model parser is added; unparsed tool calls count as failures and are reported as format errors."
+  },
+  "eval_command": "python3 labs/intelligence-bakeoff/distillation/tool_sft/run.py eval --backend openai --base-url http://127.0.0.1:18931/v1 --model <id> --api-key-file <private key> --label paradigm-<id> --sets heldout,legacy --max-tokens 1024 --temperature 0 --out <private dir>/<id>/eval.jsonl",
+  "metrics": {
+    "primary": "held-out pass /110 with Wilson 95% interval (verifier v3)",
+    "secondary": [
+      "per-track (paraphrase /60, composition /50) and per-family pass",
+      "legacy pass /8",
+      "violations, answer flags, format-error and transport-failure episodes, truncated steps",
+      "paired held-out outcomes vs the Qwen3.5-4B reference (exact two-sided sign test)",
+      "prompt processing tok/s at 2K and 8K prompt tokens",
+      "decode tok/s (128 tokens) after a 1K, 8K and 32K prompt (long-context cost)",
+      "peak GPU memory of the server process and peak resident RAM (VmHWM)",
+      "KV-cache and recurrent-state buffer sizes reported by llama.cpp at load",
+      "load time from process start to /health ready (cold or warm page cache recorded)"
+    ],
+    "probe_method": "llama-server /completion with synthetic token-ID prompts of exact length, cache_prompt=false, n_predict=128, ignore_eos=true, temperature 0; timings from the server's own timings block"
+  },
+  "decision_rules": {
+    "better_than_reference": "held-out Wilson lower bound above the reference point estimate AND paired sign test p < 0.05",
+    "worse_than_reference": "held-out Wilson upper bound below the reference point estimate AND paired sign test p < 0.05",
+    "otherwise": "NO_DIFFERENCE_DETECTED at n=110",
+    "long_context_advantage": "decode tok/s at 32K retains >= 80% of its 1K value while the attention reference retains less, or the model fits 32K on the GPU where an attention model of similar weight size does not"
+  },
+  "models": [
+    {
+      "id": "qwen35-4b", "role": "reference (deployed)", "family": "Qwen3.5",
+      "paradigm": "hybrid linear attention: Gated DeltaNet + full attention (24 linear : 8 full of 32 layers, config layer_types)",
+      "repo": "unsloth/Qwen3.5-4B-GGUF", "revision": "e87f176479d0855a907a41277aca2f8ee7a09523",
+      "file": "Qwen3.5-4B-Q4_K_M.gguf", "size_bytes": 2740937888,
+      "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "license": "Apache-2.0", "params": "4.66B (safetensors metadata, per PR #47)", "base_released": "2026-02-27",
+      "source": "already on host (Lab catalog)"
+    },
+    {
+      "id": "qwen3-4b", "role": "pure-attention control", "family": "Qwen3",
+      "paradigm": "dense transformer: 36 full-attention layers, GQA 8 KV heads",
+      "repo": "Qwen/Qwen3-4B-GGUF", "revision": "bc640142c66e1fdd12af0bd68f40445458f3869b",
+      "file": "Qwen3-4B-Q4_K_M.gguf", "size_bytes": 2497280256,
+      "sha256": "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5",
+      "license": "Apache-2.0", "params": "4.0B", "base_released": "2025-04-29",
+      "source": "already on host (Lab catalog)"
+    },
+    {
+      "id": "nemotron3-nano-4b", "role": "hybrid SSM, size-matched", "family": "NVIDIA Nemotron 3",
+      "paradigm": "hybrid Mamba-2 + attention (nemotron_h; 4 attention of 42 layers, hybrid_override_pattern)",
+      "repo": "nvidia/NVIDIA-Nemotron-3-Nano-4B-GGUF", "revision": "ba223d14e45525f7fae81db77ea8cabeb2fc6c25",
+      "file": "NVIDIA-Nemotron3-Nano-4B-Q4_K_M.gguf", "size_bytes": 2837072864,
+      "sha256": "be5d9a656a51922f24f1f09a759cebb694e1f5d9728bf0ef9f8c972c5a0b5ef2",
+      "license": "NVIDIA Nemotron Open Model License (license: other)", "params": "3.97B", "base_released": "2026-03-16",
+      "source": "download"
+    },
+    {
+      "id": "nemotron3-nano-30b-a3b", "role": "strongest hybrid SSM that fits (also MoE with offloaded experts)", "family": "NVIDIA Nemotron 3",
+      "paradigm": "hybrid Mamba-2 + MoE + attention (nemotron_h; 6 attention of 52 layers; 128 routed experts, 6 active)",
+      "repo": "ggml-org/NVIDIA-Nemotron-3-Nano-30B-A3B-GGUF", "revision": "fe801509a580ff84a5728d4a9104e3f6f7e9b0dd",
+      "file": "NVIDIA-Nemotron-3-Nano-30B-A3B-Q4_K_M.gguf", "size_bytes": 22421827488,
+      "sha256": "0f111a0d49777a2a0178758b1aee14e5365c495987499401ef3ebe87754322a8",
+      "license": "NVIDIA Nemotron Open Model License (license: other)", "params": "31.6B total, ~3B active", "base_released": "2025-12-04",
+      "source": "download", "offload": "cpu-moe"
+    },
+    {
+      "id": "lfm25-8b-a1b", "role": "Liquid LFM2 family (largest that fits fully on GPU)", "family": "Liquid LFM2.5",
+      "paradigm": "hybrid gated short convolution + GQA attention (18 conv : 6 attention of 24 layers) with MoE (32 experts, 4 active)",
+      "repo": "LiquidAI/LFM2.5-8B-A1B-GGUF", "revision": "49c14831707011e64d70b2ebd8462ba08d608434",
+      "file": "LFM2.5-8B-A1B-Q4_K_M.gguf", "size_bytes": 5155564768,
+      "sha256": "4923ec14f06b968b74d663e5949867d2d9c3bf13a20b8be1a9f9af39989b2bb0",
+      "license": "LFM Open License v1.0 (license: other, lfm1.0)", "params": "8.3B total, 1.5B active", "base_released": "2026-05-28",
+      "source": "download", "note": "Always-reasoning template (model card); thinking cannot be disabled."
+    },
+    {
+      "id": "rwkv7-g1k-7b", "role": "pure RNN (no attention) — exploratory", "family": "RWKV-7 Goose G1k",
+      "paradigm": "pure recurrent linear attention (RWKV-7, rwkv7 arch), no attention layers",
+      "repo": "shoumenchougou/RWKV7-G1k-7.2B-GGUF", "revision": "ed8edcb5eecfad7902a53238044ffb0f239918cd",
+      "file": "rwkv7-g1k-7.2b-Q4_K_M.gguf", "size_bytes": 4579571648,
+      "sha256": "d477e12df84bfdc2ffc8809ab04ed3a0f272e289011571574a784dc87ef6394f",
+      "license": "Apache-2.0 (base BlinkDL/rwkv7-g1)", "params": "7.2B", "base_released": "2026-09-30 (GGUF)",
+      "source": "download",
+      "note": "Community GGUF of the official BlinkDL weights. Its embedded template has no tool or tool-result rendering; the official card documents only a plain-text JSON function-call prompt. Any score therefore measures llama.cpp's generic tool polyfill, and is labelled exploratory."
+    },
+    {
+      "id": "lfm25-24b-a2b", "role": "stretch: strongest LFM, experts offloaded", "family": "Liquid LFM2.5",
+      "paradigm": "hybrid gated short convolution + GQA attention (30 conv : 10 attention of 40 layers) with MoE (64 experts, 4 active)",
+      "repo": "LiquidAI/LFM2.5-24B-A2B-GGUF", "revision": "0912d33141f77e10705345a6732bfd83f0252fdc",
+      "file": "LFM2.5-24B-A2B-Q4_K_M.gguf", "size_bytes": 14526258464,
+      "sha256": "d3334405b96228eb9908cdebb5c6194908f2da64282bda852afc3a3910c64e7d",
+      "license": "LFM Open License v1.0 (license: other, lfm1.0)", "params": "24.0B total, ~2B active", "base_released": "2026-10-12",
+      "source": "download", "offload": "cpu-moe",
+      "note": "Run only if at least 45 minutes of the GPU budget remain after the primary models."
+    }
+  ],
+  "existing_data_points": {
+    "strata": "Qwen3.8-Flash-Next IQ2_XS MoE with experts in RAM and a GPU expert cache: 55/110 held-out, 6/8 legacy at max_tokens 256 (PR #45). Not re-run: it is the restore target and its 15-minute cold start would consume the budget."
+  },
+  "excluded": [
+    {"candidate": "Granite 4.2 (3B/8B/30B)", "reason": "config architecture is GraniteForCausalLM, a dense transformer, not a hybrid"},
+    {"candidate": "Granite 4.0-H Tiny/Small", "reason": "hybrid, but older (2025-10) than the selected Nemotron 3 hybrids; budget"},
+    {"candidate": "Falcon-H1R-7B, Jamba2-3B", "reason": "hybrid; budget. Falcon-H1R is a reasoning model; Jamba2 has a single KV head"},
+    {"candidate": "LFM2.5-2.6B / 1.2B", "reason": "smaller members of the selected family"},
+    {"candidate": "Mamba / Falcon-Mamba pure SSMs", "reason": "no instruction-tuned tool-calling release found"}
+  ],
+  "budget": {"gpu_session_minutes": 180, "restore": "systemctl --user start haven-strata, then labctl.py strata when ready, always, including on failure"},
+  "privacy": "Raw records, keys and host details stay under ~/.local/state/haven-admin/paradigms-20261026/ (mode 0700). Only aggregates are published."
+}

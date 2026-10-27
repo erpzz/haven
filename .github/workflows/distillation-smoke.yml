@@ -4,6 +4,7 @@ on:
     paths:
       - 'labs/intelligence-bakeoff/distillation/**'
       - 'labs/intelligence-bakeoff/adjudicated/**'
+      - 'labs/intelligence-bakeoff/paradigms/**'
       - 'labs/intelligence-bakeoff/RUN-WINDOWS.ps1'
       - '.github/workflows/distillation-smoke.yml'
   workflow_dispatch:
@@ -22,3 +23,4 @@ jobs:
           python3 -m unittest discover -s tests -v
           python3 -m unittest discover -s distillation/tests -v
           python3 -m unittest discover -s adjudicated/tests -v
+          python3 -m unittest discover -s paradigms/tests -v
