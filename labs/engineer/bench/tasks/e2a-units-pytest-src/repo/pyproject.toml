@@ -1,0 +1,6 @@
+[project]
+name = 'units'
+version = '0.1'
+
+[tool.pytest.ini_options]
+pythonpath = ['src']

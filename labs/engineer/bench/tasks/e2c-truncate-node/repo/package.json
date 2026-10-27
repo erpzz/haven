@@ -1,0 +1,5 @@
+{
+  "name": "textkit",
+  "type": "module",
+  "scripts": {"test": "node --test"}
+}

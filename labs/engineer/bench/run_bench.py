@@ -13,6 +13,8 @@ Arms for the inheritance experiment (morphogenesis/README.md):
   recipe  the admitted skill's recipe.md in the system prompt (same knowledge, prose)
   skill   the admitted skill offered as an executable tool
   controller  E2: the runtime runs the skill before the first turn and after every edit (model patches only)
+  guard   tools only + premature-finish guard (a final answer before any edit or command goes back once)
+  both    controller + guard
 
   run_bench.py --agents qwen35-4b-mac --arms none,recipe,skill --tasks t1,t2,t3,t4 --out results.jsonl
 """
@@ -88,7 +90,7 @@ def discovery_waste(receipts):
     return waste
 
 
-def run_one(agent_id, arm, task, *, max_steps, temperature, skill="run_tests"):
+def run_one(agent_id, arm, task, *, max_steps, temperature, skill="run_tests", seed=None):
     spec = json.loads((TASKS / task / "task.json").read_text())
     src = TASKS / task / "repo"
     root = pathlib.Path(tempfile.mkdtemp(prefix=f"bench-{task}-", dir=pathlib.Path.home() / ".local/share/haven-workspaces"))
@@ -102,11 +104,12 @@ def run_one(agent_id, arm, task, *, max_steps, temperature, skill="run_tests"):
     agent = runtime.agent_by_id(agent_id)
     t0 = time.monotonic()
     rec = runtime.run_task(repo, agent, "engineer", spec["prompt"], max_steps=max_steps,
-                           overrides={"temperature": temperature},
+                           overrides={"temperature": temperature, "seed": seed,
+                                      "finish_guard": arm in ("guard", "both")},
                            skill_names=[skill] if arm == "skill" else None,
                            recipe_names=[skill] if arm == "recipe" else None,
-                           auto_tests=skill if arm == "controller" else None,
-                           extra_meta={"bench": {"task": task, "arm": arm}})
+                           auto_tests=skill if arm in ("controller", "both") else None,
+                           extra_meta={"bench": {"task": task, "arm": arm, "seed": seed}})
     wall = time.monotonic() - t0
     tests_unchanged = all((repo / p).exists() and sha(repo / p) == h for p, h in protected.items())
     passed, tail = verify(repo, spec)
@@ -115,7 +118,8 @@ def run_one(agent_id, arm, task, *, max_steps, temperature, skill="run_tests"):
     clean = git(repo, "status", "--porcelain").stdout.strip() == ""
     receipts = rec.get("receipts", [])
     row = {
-        "task": task, "agent": agent_id, "arm": arm, "task_id": rec.get("task_id"),
+        "task": task, "agent": agent_id, "arm": arm, "seed": seed, "temperature": temperature,
+        "task_id": rec.get("task_id"),
         "success": bool(passed and tests_unchanged), "tests_pass": passed, "tests_unchanged": tests_unchanged,
         "committed": committed, "clean_tree": clean, "agent_status": rec.get("status"),
         "answer_check_ok": (rec.get("answer_check") or {}).get("ok"),
@@ -139,6 +143,7 @@ def main(argv=None):
     ap.add_argument("--tasks", default="t1-inventory-pytest-src,t2-durations-node,t3-ledger-unittest-src,t4-config-unittest-error")
     ap.add_argument("--max-steps", type=int, default=20)
     ap.add_argument("--temperature", type=float, default=0.0)
+    ap.add_argument("--seeds", default="", help="comma-separated sampling seeds (one run per seed)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args(argv)
     out = pathlib.Path(args.out)
@@ -146,18 +151,20 @@ def main(argv=None):
     if out.exists():
         for line in out.read_text().splitlines():
             r = json.loads(line)
-            done.add((r["agent"], r["arm"], r["task"]))
+            done.add((r["agent"], r["arm"], r["task"], r.get("seed")))
+    seeds = [int(x) for x in args.seeds.split(",") if x] or [None]
     for agent in args.agents.split(","):
-        for task in args.tasks.split(","):
-            for arm in args.arms.split(","):
-                if (agent, arm, task) in done:
-                    continue
-                print(f"{agent} {arm} {task} …", flush=True)
-                row = run_one(agent, arm, task, max_steps=args.max_steps, temperature=args.temperature)
-                with open(out, "a") as f:
-                    f.write(json.dumps(row) + "\n")
-                print(f"  success={row['success']} steps={row['steps']} waste={row['discovery_waste']} "
-                      f"wall={row['wall_s']}s skill_calls={row['skill_calls']}", flush=True)
+        for seed in seeds:
+            for task in args.tasks.split(","):
+                for arm in args.arms.split(","):
+                    if (agent, arm, task, seed) in done:
+                        continue
+                    print(f"{agent} {arm} {task} seed={seed} …", flush=True)
+                    row = run_one(agent, arm, task, max_steps=args.max_steps, temperature=args.temperature, seed=seed)
+                    with open(out, "a") as f:
+                        f.write(json.dumps(row) + "\n")
+                    print(f"  success={row['success']} steps={row['steps']} waste={row['discovery_waste']} "
+                          f"wall={row['wall_s']}s skill_calls={row['skill_calls']} nudges={row['nudges']}", flush=True)
 
 
 if __name__ == "__main__":

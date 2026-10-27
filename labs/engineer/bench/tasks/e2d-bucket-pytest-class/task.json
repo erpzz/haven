@@ -1,0 +1,7 @@
+{
+  "prompt": "Some tests fail. Fix the bug in the code (not the tests), confirm the tests pass, and commit.",
+  "framework": "pytest-style",
+  "protected": [
+    "test_bucket.py"
+  ]
+}

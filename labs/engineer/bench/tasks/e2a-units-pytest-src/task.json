@@ -1,0 +1,7 @@
+{
+  "prompt": "The test suite fails. Find the bug in the source (do not edit tests), make the tests pass, confirm by running them, and commit.",
+  "framework": "pytest-style",
+  "protected": [
+    "tests/test_units.py"
+  ]
+}
