@@ -11,7 +11,10 @@
 
 Every record stays in the private output directory. Nothing is installed.
 
-  session.py --out DIR --models-dir DIR [--only id,..] [--budget-minutes 180] --execute
+  session.py --out DIR --models-dir DIR [--prereg FILE] [--only id,..] [--budget-minutes 180] --execute
+
+A preregistration with an "independent" benchmark also runs the adjudicated
+suite (adjudicated/bench.py eval) on the same server after the tool benchmark.
 """
 from __future__ import annotations
 
@@ -33,6 +36,7 @@ import urllib.request
 
 HERE = pathlib.Path(__file__).resolve().parent
 TOOL_SFT = HERE.parent / "distillation" / "tool_sft"
+ADJUDICATED = HERE.parent / "adjudicated"
 PREREG = HERE / "PREREGISTRATION.json"
 HOME = pathlib.Path.home()
 REPO = HOME / "projects/haven"
@@ -253,13 +257,25 @@ def run_eval(model, out_dir, key_file, deadline_minutes):
     return {"exit_code": code, "seconds": round(time.monotonic() - t0, 1)}
 
 
+def run_adjudicated(model, out_dir, key_file, deadline_minutes):
+    cmd = [sys.executable, str(ADJUDICATED / "bench.py"), "eval", "--backend", "openai",
+           "--base-url", f"http://127.0.0.1:{PORT}/v1", "--model", model["id"],
+           "--api-key-file", str(key_file), "--label", "paradigm-adj-" + model["id"],
+           "--max-tokens", "1024", "--temperature", "0",
+           "--deadline-minutes", str(round(deadline_minutes, 1)), "--out", str(out_dir / "adjudicated.jsonl")]
+    t0 = time.monotonic()
+    with open(out_dir / "adjudicated.stdout", "w") as log:
+        code = subprocess.run(cmd, stdout=log, stderr=subprocess.STDOUT, check=False).returncode
+    return {"exit_code": code, "seconds": round(time.monotonic() - t0, 1)}
+
+
 def model_path(model, models_dir):
     if model.get("source", "").startswith("already on host"):
         return LAB_MODELS / model["file"]
     return pathlib.Path(models_dir) / model["file"]
 
 
-def run_model(model, models_dir, out_root, key_file, key, eval_minutes):
+def run_model(model, models_dir, out_root, key_file, key, eval_minutes, adjudicated=False):
     out_dir = out_root / model["id"]
     out_dir.mkdir(mode=0o700, exist_ok=True)
     receipt = {"id": model["id"], "started_utc": now(), "attempts": []}
@@ -280,6 +296,8 @@ def run_model(model, models_dir, out_root, key_file, key, eval_minutes):
             attempt["at_ready"] = server.sampler.snapshot()
             attempt["probes"] = run_probes(server, ctx)
             attempt["eval"] = run_eval(model, out_dir, key_file, eval_minutes)
+            if adjudicated:
+                attempt["adjudicated_eval"] = run_adjudicated(model, out_dir, key_file, eval_minutes)
             attempt["final"] = server.sampler.snapshot()
             receipt["status"] = "COMPLETED"
             receipt["ctx"] = ctx
@@ -382,6 +400,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", type=pathlib.Path, required=True)
     ap.add_argument("--models-dir", type=pathlib.Path, required=True)
+    ap.add_argument("--prereg", type=pathlib.Path, default=PREREG)
     ap.add_argument("--only", help="comma-separated model ids, in run order")
     ap.add_argument("--budget-minutes", type=float, default=180)
     ap.add_argument("--eval-minutes", type=float, default=35)
@@ -389,7 +408,9 @@ def main(argv=None):
     ap.add_argument("--lab-wait-minutes", type=float, default=60)
     ap.add_argument("--execute", action="store_true")
     args = ap.parse_args(argv)
-    models = {m["id"]: m for m in json.loads(PREREG.read_text())["models"]}
+    prereg = json.loads(args.prereg.read_text())
+    models = {m["id"]: m for m in prereg["models"]}
+    adjudicated = bool((prereg.get("benchmarks") or {}).get("independent"))
     order = args.only.split(",") if args.only else list(models)
     unknown = [i for i in order if i not in models]
     if unknown:
@@ -403,7 +424,8 @@ def main(argv=None):
     os.umask(0o077)
     args.out.mkdir(parents=True, exist_ok=True, mode=0o700)
     receipt_path = args.out / "session.json"
-    receipt = {"schema": "haven-paradigm-session-1", "started_utc": now(), "models": []}
+    receipt = {"schema": "haven-paradigm-session-1", "started_utc": now(), "models": [],
+               "prereg": args.prereg.name}
     began = time.monotonic()
 
     def save():
@@ -462,7 +484,7 @@ def main(argv=None):
                 continue
             try:
                 result = run_model(models[model_id], args.models_dir, args.out, key_file, key,
-                                   min(args.eval_minutes, max(left - 8, 5)))
+                                   min(args.eval_minutes, max(left - 8, 5)), adjudicated)
             except Exception as error:
                 result = {"id": model_id, "status": "FAILED", "error": f"{type(error).__name__}: {str(error)[:300]}"}
             receipt["models"].append(result)
