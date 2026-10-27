@@ -1,0 +1,8 @@
+{
+  "prompt": "Tests fail in this package. Fix the implementation without touching the tests, run the tests to confirm, and commit.",
+  "framework": "node-test",
+  "protected": [
+    "test/lru.test.js",
+    "test/memo.test.js"
+  ]
+}

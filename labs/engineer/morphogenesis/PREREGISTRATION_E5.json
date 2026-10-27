@@ -1,0 +1,49 @@
+{
+  "schema": "haven-morphogenesis-prereg-1",
+  "experiment": "E5: reasoning-budget recovery and test controller on harder tasks",
+  "registered_before_any_run": true,
+  "motivation": "In the E2 rerun every errored run (4/96, and all of Qwen's failures) was the same mechanism: the model spent the whole 4096-token completion budget on reasoning and emitted no text or tool call, three turns in a row. The loop answered each such turn with a generic 'Reply with a tool call' and the model re-thought from scratch. E2's tasks were also near ceiling for Qwen (11/12 unaided), which left the controller no room to show a success effect.",
+  "intervention": {
+    "name": "exhaust_recovery (loop.py)",
+    "trigger": "a model turn with no tool call and no visible text that stopped on the token limit (finish_reason 'length' or completion_tokens >= max_tokens)",
+    "action": "the next user message carries the last 1200 characters of that turn's reasoning and asks for the next tool call or the final summary, and the next request is sent with chat_template_kwargs.enable_thinking = false; thinking returns to the agent's setting after that turn",
+    "baseline_behavior": "unchanged loop: 'Reply with a tool call, or with your final summary.' with thinking on; three empty turns in a row end the run as an error (same in every arm)"
+  },
+  "arms": {
+    "none": "Haven tools only",
+    "recover": "tools + exhaust_recovery",
+    "controller": "the runtime runs skill_run_tests (sha256 081dd5aa2763...) before the first turn and after every successful edit",
+    "controller_recover": "controller + exhaust_recovery"
+  },
+  "agent": "qwen35-4b-mac (Qwen3.5-4B Q4_K_M, llama.cpp Metal, thinking at the model default, max_tokens 4096). LFM2.5 is excluded: it succeeded on 3/48 E2 runs and its failures were not budget exhaustion.",
+  "candidate_tasks": ["e5a-invoice-pytest-src", "e5b-lru-node", "e5c-slots-unittest", "e5d-csvline-pytest", "e5e-toposort-pytest-class", "e5f-semver-node", "e5g-layers-unittest", "e5h-ratelimit-pytest-src"],
+  "task_provenance": "Written by the experimenter (Opus) after the E2 rerun and before any model saw them. Each has two or more interacting bugs, a judge that fails on the fixture and passes with the reference fix (fix.json, outside the copied repo), and every reference fix is necessary (bench/validate_tasks.py, plus a leave-one-fix-out check). Disjoint from E1, E2, the skill's dev and held-out cases.",
+  "calibration": {
+    "runs": "Qwen, arm none, seed 7, all 8 candidates (8 runs)",
+    "selection_rule": "bench/select_e5.py: rank failed before succeeded, then more steps, then more wall time, then task name; keep the first 6",
+    "use": "selection only; calibration rows are never analysed; seed 7 is not reused"
+  },
+  "sampling": {"temperature": 0.3, "seeds": [44, 55, 66], "max_steps": 24, "max_seconds_per_run": 1200, "mode": "engineer", "network": "owner grant"},
+  "runs": "6 selected tasks x 3 seeds x 4 arms = 72; arms interleaved within each task and seed",
+  "outcome_judge": "bench/run_bench.py: protected tests byte-identical AND the task verifier passes",
+  "unit_of_analysis": "paired unit = (task, seed); 18 units per arm comparison",
+  "primary_hypotheses": {
+    "H_R": {"claim": "recover beats none on success", "test": "exact one-sided sign test on discordant units", "supported_if": "p < 0.05 and wins - losses >= 4", "rejected_if": "losses >= wins", "otherwise": "inconclusive"},
+    "H_RM": {"claim": "after an exhausted turn, the next turn produces a tool call or visible text more often with recovery than without", "test": "pool turns that follow an exhausted turn; recovery arms (recover, controller_recover) vs baseline arms (none, controller); one-sided Fisher exact test on non-empty vs empty", "supported_if": "recovery rate higher and p < 0.05", "rejected_if": "recovery rate <= baseline rate", "untestable_if": "fewer than 5 such turns in either group", "otherwise": "inconclusive"}
+  },
+  "secondary_hypotheses": {
+    "H_C": "controller beats none on success (same test and thresholds as H_R)",
+    "H_CR": "controller_recover beats controller on success (same test and thresholds)"
+  },
+  "descriptive_only": ["success by arm", "median steps", "median wall seconds", "executor actions including runtime test runs", "exhausted turns", "errored runs", "committed rate"],
+  "known_threats": [
+    "H_R has little power if exhaustion stays rare (E2: 4/96 runs). H_RM is the direct test of the mechanism; H_R is whether it matters for outcomes.",
+    "Turns in H_RM are not independent: several can come from one run. The Fisher test treats them as independent; the per-run counts are reported.",
+    "The recovery turn runs without thinking, so it is much faster; under the 1200 s per-run limit the recover arms can get more turns in. Steps and wall time are reported.",
+    "The recovery message contains the model's own reasoning tail; any success effect could come from that carry-over, from turning thinking off, or both. This experiment does not separate them.",
+    "Controller arms receive runtime test runs that do not count against the 24 steps.",
+    "Tasks and arms were written by the same experimenter; calibration chooses the hardest tasks for the unaided arm at a different seed, so 'none' success at seeds 44/55/66 may regress upward.",
+    "Seeds vary sampling only; llama.cpp Metal is not bit-exact (E2 measured 3/24 discordant pairs between identical treatments)."
+  ],
+  "analysis_code": "bench/summarize_e5.py and bench/select_e5.py (committed with this file)"
+}
