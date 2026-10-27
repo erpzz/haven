@@ -57,6 +57,8 @@ def parse_network_inventory(doc: dict, interfaces: set[str], now: int) -> list[d
         if not isinstance(device, dict):
             raise InventoryError("invalid device entry")
         ip, mac, iface = device.get("address"), device.get("mac"), device.get("interface")
+        if not isinstance(iface, str):
+            raise InventoryError("invalid interface in inventory")
         if iface not in interfaces:
             continue
         if not isinstance(mac, str) or not MAC.fullmatch(mac):
