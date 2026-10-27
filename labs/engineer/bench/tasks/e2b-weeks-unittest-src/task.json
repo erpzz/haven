@@ -1,0 +1,8 @@
+{
+  "prompt": "Unit tests are failing. Fix the code, not the tests, verify the suite passes, and commit the fix.",
+  "framework": "unittest",
+  "protected": [
+    "tests/__init__.py",
+    "tests/test_weeks.py"
+  ]
+}

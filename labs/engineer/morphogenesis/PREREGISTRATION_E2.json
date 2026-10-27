@@ -1,0 +1,39 @@
+{
+  "schema": "haven-morphogenesis-prereg-1",
+  "experiment": "E2 rerun: runtime-invoked inherited skill and premature-finish guard",
+  "registered_before_any_run": true,
+  "motivation": "E1 (one replicate, exploratory arm) found that a skill offered as a tool was almost never called, while the runtime invoking it raised success from 3/8 to 6/8. LFM2.5 mostly failed by ending turns with a plan and no tool call. This rerun tests both effects on new tasks with seeds, with the analysis fixed in advance.",
+  "skill": {"name": "run_tests", "sha256": "081dd5aa2763f8acb30913170d84204a49346b263879f2445667b88387b52b02"},
+  "arms": {
+    "none": "Haven tools only",
+    "guard": "tools + premature-finish guard: a final answer given before any successful edit or command is returned to the model once",
+    "controller": "the runtime runs skill_run_tests before the first turn and after every successful edit and hands the model the structured result",
+    "both": "controller + guard"
+  },
+  "agents": ["qwen35-4b-mac (Qwen3.5-4B Q4_K_M, llama.cpp Metal)", "lfm25-8b-a1b-mac (LFM2.5-8B-A1B Q4_K_M, llama.cpp Metal)"],
+  "tasks": ["e2a-units-pytest-src", "e2b-weeks-unittest-src", "e2c-truncate-node", "e2d-bucket-pytest-class"],
+  "task_provenance": "Written by the experimenter (Opus) after E1 finished and before any E2 run; disjoint from E1 tasks, skill dev cases and held-out admission cases; the skill was not run on them before the experiment.",
+  "sampling": {"temperature": 0.3, "seeds": [11, 22, 33], "max_steps": 20, "mode": "engineer", "network": "owner grant"},
+  "runs": "2 agents x 3 seeds x 4 tasks x 4 arms = 96; one model loaded at a time; arms interleaved within each task",
+  "outcome_judge": "bench/run_bench.py after the agent finishes: protected tests byte-identical AND the task verifier passes (pytest 8.3.5 in a private venv, node --test, or unittest).",
+  "unit_of_analysis": "paired unit = (agent, task, seed); 24 units per arm comparison",
+  "primary_hypothesis": {
+    "H_E2": "controller beats none",
+    "test": "count units where controller succeeds and none fails (wins) and the reverse (losses); exact one-sided sign test on wins vs losses",
+    "supported_if": "p < 0.05 and wins - losses >= 4",
+    "rejected_if": "losses >= wins",
+    "otherwise": "inconclusive"
+  },
+  "secondary_hypotheses": {
+    "H_G": "guard beats none (same test and thresholds)",
+    "H_GC": "both beats controller (same test and thresholds); a rejection means the guard adds nothing on top of the controller"
+  },
+  "descriptive_only": ["per-agent success by arm", "median steps", "median wall seconds", "total executor actions including runtime test runs", "guard firing rate", "committed rate"],
+  "known_threats": [
+    "The controller arms receive runtime test executions that do not count against the model's 20 steps; total actions and wall time are reported so the extra compute is visible.",
+    "Four small synthetic tasks written by the same experimenter who wrote the brief, the skill brief and the arms.",
+    "Seeds vary sampling only; llama.cpp Metal is not bit-exact across runs.",
+    "The skill author (Opus) is far stronger than the receiving models."
+  ],
+  "analysis_code": "bench/summarize_e2.py (committed with this file)"
+}

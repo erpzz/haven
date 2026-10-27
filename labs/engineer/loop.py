@@ -77,7 +77,7 @@ class Agent:
     def __init__(self, executor: ex.Executor, *, base_url, model, api_key="", label=None,
                  max_steps=30, max_seconds=1200, max_tokens=2048, temperature=0.2, thinking=None,
                  tools=None, verify_nudge=True, answer_check=True, ctx_chars=60_000, on_event=None, recipes="",
-                 auto_tests=None):
+                 auto_tests=None, seed=None, finish_guard=False):
         self.ex = executor
         self.base_url, self.model, self.api_key = base_url, model, api_key
         self.label = label or model
@@ -89,6 +89,9 @@ class Agent:
         # E2 controller: the runtime (not the model) runs this skill tool before the first turn and
         # after every successful edit, and hands the structured result to the model.
         self.auto_tests = auto_tests
+        self.seed = seed
+        # Premature-finish guard: a final answer before any successful edit or command goes back once.
+        self.finish_guard = finish_guard
         self.verify_nudge, self.answer_check = verify_nudge, answer_check
         self.ctx_chars = ctx_chars
         self.on_event = on_event or (lambda e: None)
@@ -116,7 +119,8 @@ class Agent:
         status, answer, error = "incomplete", "", None
         consecutive_invalid = 0
         last_write_step, last_cmd_step = -1, -1
-        nudged = checked = False
+        nudged = checked = guarded = False
+        did_act = False
         cancel = self.ex.cancel
         self._emit("task_started", model=self.label, mode=self.ex.scope.mode)
         while True:
@@ -133,6 +137,8 @@ class Agent:
             self._trim(msgs)
             body = {"model": self.model, "messages": msgs, "tools": self.tools, "tool_choice": "auto",
                     "temperature": self.temperature, "max_tokens": self.max_tokens}
+            if self.seed is not None:
+                body["seed"] = int(self.seed)
             if self.thinking is not None:
                 body["chat_template_kwargs"] = {"enable_thinking": bool(self.thinking)}
             t0 = time.monotonic()
@@ -170,6 +176,14 @@ class Agent:
                     consecutive_invalid += 1
                     msgs.append({"role": "assistant", "content": content})
                     msgs.append({"role": "user", "content": "Reply with a tool call, or with your final summary."})
+                    continue
+                if self.finish_guard and not guarded and not did_act:
+                    guarded = True
+                    stats["nudges"].append("finish_guard")
+                    msgs.append({"role": "assistant", "content": content})
+                    msgs.append({"role": "user", "content": "You have not changed any file or run any command yet. "
+                                 "Use the tools to do the task now. Reply without a tool call only when it is done."})
+                    self._emit("nudge", kind="finish_guard")
                     continue
                 if self.verify_nudge and not nudged and last_write_step > last_cmd_step:
                     nudged = True
@@ -227,6 +241,9 @@ class Agent:
                         stats["refused"] += 1
                     if name in ("write_file", "edit_file", "apply_patch") and result["status"] == "succeeded":
                         last_write_step = stats["steps"]
+                        did_act = True
+                    if name == "run_command" and result["status"] in ("succeeded", "failed"):
+                        did_act = True
                     if name == "run_command" and result["status"] in ("succeeded", "failed"):
                         last_cmd_step = stats["steps"]
                 msgs.append({"role": "tool", "tool_call_id": call_id, "name": name, "content": result["text"]})

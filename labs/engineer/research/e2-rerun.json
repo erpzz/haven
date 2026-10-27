@@ -1,0 +1,142 @@
+{
+  "id": "e2-rerun",
+  "title": "E2 rerun: runtime-invoked skill and premature-finish guard (preregistered)",
+  "status": "measured",
+  "units": 24,
+  "runs": 96,
+  "hypotheses": {
+    "H_E2": {
+      "comparison": "controller vs none",
+      "wins": 3,
+      "losses": 0,
+      "ties": 21,
+      "missing": 0,
+      "p_one_sided": 0.125,
+      "verdict": "inconclusive"
+    },
+    "H_G": {
+      "comparison": "guard vs none",
+      "wins": 1,
+      "losses": 0,
+      "ties": 23,
+      "missing": 0,
+      "p_one_sided": 0.5,
+      "verdict": "inconclusive"
+    },
+    "H_GC": {
+      "comparison": "both vs controller",
+      "wins": 1,
+      "losses": 4,
+      "ties": 19,
+      "missing": 0,
+      "p_one_sided": 0.96875,
+      "verdict": "rejected"
+    }
+  },
+  "table": {
+    "columns": [
+      "agent",
+      "arm",
+      "success",
+      "median steps",
+      "median wall s",
+      "executor actions (incl. runtime test runs)",
+      "guard fired",
+      "committed"
+    ],
+    "rows": [
+      [
+        "lfm25-8b-a1b-mac",
+        "none",
+        "0/12",
+        2.0,
+        11.9,
+        35,
+        0,
+        "0/12"
+      ],
+      [
+        "lfm25-8b-a1b-mac",
+        "guard",
+        "0/12",
+        6.0,
+        26.8,
+        67,
+        6,
+        "0/12"
+      ],
+      [
+        "lfm25-8b-a1b-mac",
+        "controller",
+        "2/12",
+        2.0,
+        13.1,
+        39,
+        0,
+        "1/12"
+      ],
+      [
+        "lfm25-8b-a1b-mac",
+        "both",
+        "1/12",
+        3.0,
+        21.1,
+        32,
+        12,
+        "0/12"
+      ],
+      [
+        "qwen35-4b-mac",
+        "none",
+        "11/12",
+        20.0,
+        172.2,
+        193,
+        0,
+        "10/12"
+      ],
+      [
+        "qwen35-4b-mac",
+        "guard",
+        "12/12",
+        20.0,
+        169.2,
+        202,
+        0,
+        "9/12"
+      ],
+      [
+        "qwen35-4b-mac",
+        "controller",
+        "12/12",
+        11.0,
+        114.9,
+        138,
+        0,
+        "12/12"
+      ],
+      [
+        "qwen35-4b-mac",
+        "both",
+        "10/12",
+        10.0,
+        91.8,
+        136,
+        0,
+        "10/12"
+      ]
+    ]
+  },
+  "hypothesis": "Wiring an inherited skill into the controller helps small models more than offering tools alone; a premature-finish guard helps models that stop early.",
+  "finding": "Preregistered verdicts: H_E2 controller vs none inconclusive (3 wins, 0 losses, p=0.125); H_G guard vs none inconclusive (1-0, p=0.5); H_GC both vs controller rejected (1 win, 4 losses): the guard adds nothing on top of the controller. No preregistered hypothesis is supported. Qwen solved these tasks without help (none 11/12), so success had little room to move; LFM2.5 stayed near zero in every arm (best: controller 2/12).",
+  "exploratory": {
+    "note": "Not preregistered. Written after the verdicts above.",
+    "noise_floor": "The guard never fired for Qwen, so for Qwen guard=none and both=controller in treatment. Those identical-treatment pairs still disagreed in 3 of 24 units (llama.cpp Metal sampling is not bit-exact). The H_E2 margin (3-0 over 24 units) is the same size as this noise.",
+    "efficiency": "Qwen controller vs none: fewer model steps in 10/12 paired units and more in 0 (median 11 vs 20); fewer executor actions in 10/12 even counting the runtime's own test runs (138 vs 193 total); faster in 8/12 (median 45 s saved). none hit the 20-step cap in 7/12 runs, controller in 1/12. Committed 12/12 vs 10/12.",
+    "guard": "On LFM2.5 the guard fired in 6/12 guard runs and 12/12 'both' runs and roughly doubled its tool calls (35 to 67), but produced 0 and 1 successes. Stopping early is not what limits LFM2.5 here; it acts and still does not produce a correct patch.",
+    "controller_silence": "With test results already in its first message, LFM2.5 ended without any tool call in 5/12 controller and 4/12 'both' runs (0/12 in none and guard).",
+    "reasoning_exhaustion": "All 4 'error' runs (3 of them Qwen's only failures, all on e2d) are the same mechanism: the model spent the full 4096-token completion budget on reasoning and emitted no text or tool call three turns in a row. The loop has no recovery for this today."
+  },
+  "limits": "Four small synthetic tasks by the same author as the arms; Qwen near ceiling; seeds vary sampling only. Exploratory observations above need their own preregistration before any claim.",
+  "analysis_code": "bench/summarize_e2.py (verdicts and table); finding/exploratory/limits added by hand afterwards"
+}
