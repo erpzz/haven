@@ -26,6 +26,20 @@ def heartbeat(node_id="laptop", *, age=0, roles=None, cores=4, memory=8192, infe
 
 
 class WorkerTests(unittest.TestCase):
+    def test_macos_vm_stat_memory_estimate(self):
+        fixture = ("Mach Virtual Memory Statistics: (page size of 16384 bytes)\n"
+                   "Pages free:                              65536.\n"
+                   "Pages speculative:                        4096.\n"
+                   "Pages inactive:                          300000.\n")
+        self.assertEqual(w.parse_vm_stat(fixture), 1088)
+        self.assertIsNone(w.parse_vm_stat("invalid"))
+        from subprocess import CompletedProcess
+        with patch.object(w.platform, "system", return_value="Darwin"), \
+             patch.object(w.subprocess, "run", return_value=CompletedProcess(
+                 args=["vm_stat"], returncode=0, stdout=fixture, stderr="")) as run:
+            self.assertEqual(w.available_memory_mib(), 1088)
+            self.assertEqual(run.call_args.args[0], ["vm_stat"])
+
     def test_worker_can_be_staged_and_heartbeat(self):
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "worker"
