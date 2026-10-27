@@ -205,11 +205,29 @@ def main() -> None:
     stage.add_argument("--fleet", type=Path, required=True)
     stage.add_argument("--node-id", required=True)
     actions.add_parser("heartbeat")
+    plan = actions.add_parser("plan-jobs", help="Plan jobs from already-collected private telemetry")
+    plan.add_argument("--fleet", type=Path, required=True)
+    plan.add_argument("--heartbeats-dir", type=Path, required=True)
+    plan.add_argument("--jobs", type=Path, required=True)
     args = parser.parse_args()
     now = int(time.time())
     if args.action == "stage-local":
         fleet = read_private_json(args.fleet.expanduser())
         result = stage_local_worker(fleet, args.node_id, args.worker_dir, now)
+    elif args.action == "plan-jobs":
+        fleet = read_private_json(args.fleet.expanduser())
+        job_doc = read_private_json(args.jobs.expanduser())
+        if not isinstance(job_doc.get("jobs"), list):
+            raise WorkerError("job document must contain a list of jobs")
+        telemetry_dir = private_dir(args.heartbeats_dir)
+        heartbeats = {}
+        for node_id in fleet.get("nodes", {}):
+            if not ID.fullmatch(node_id):
+                raise WorkerError("malformed fleet node ID")
+            file = telemetry_dir / (node_id + ".json")
+            if file.exists():
+                heartbeats[node_id] = read_private_json(file)
+        result = place_jobs(fleet, heartbeats, job_doc["jobs"], now)
     else:
         result = emit_heartbeat(args.worker_dir, now)
     print(json.dumps(result, indent=2, sort_keys=True))
