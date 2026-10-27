@@ -62,8 +62,13 @@ class DiscoveryTests(unittest.TestCase):
              "dev": "eth0", "state": "FAILED"},
             {"dst": "192.0.2.4", "lladdr": "00:11:22:33:44:55",
              "dev": "eth1", "state": "STALE"},
+            # Real `ip -j neigh` output lists the state flags.
+            {"dst": "192.0.2.5", "lladdr": "00:11:22:33:44:66",
+             "dev": "eth0", "state": ["FAILED"]},
+            {"dst": "192.0.2.6", "lladdr": "00:11:22:33:44:77",
+             "dev": "eth0", "state": ["STALE"]},
         ]), {"eth0"})
-        self.assertEqual(len(parsed), 1)
+        self.assertEqual([p["address"] for p in parsed], ["192.0.2.2", "192.0.2.6"])
 
     def test_unobserved_devices_do_not_appear(self):
         self.assertEqual(fleet.parse_macos("", {"en0"}), [])

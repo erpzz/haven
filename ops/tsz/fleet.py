@@ -70,7 +70,10 @@ def parse_linux(text: str, interfaces: set[str]) -> list[dict]:
     for entry in raw:
         if not isinstance(entry, dict) or entry.get("dev") not in interfaces:
             continue
-        if str(entry.get("state", "")).upper() in {"FAILED", "INCOMPLETE"}:
+        # iproute2 emits "state" as a list of flags, e.g. ["REACHABLE"]; accept a plain string too.
+        states = entry.get("state", [])
+        states = [states] if isinstance(states, str) else states if isinstance(states, list) else []
+        if {str(s).upper() for s in states} & {"FAILED", "INCOMPLETE"}:
             continue
         seen = observation(entry.get("dst"), entry.get("lladdr"),
                            entry["dev"], "linux-neighbor-cache")
