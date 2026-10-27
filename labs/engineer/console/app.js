@@ -215,8 +215,12 @@ function renderEvent(e) {
 }
 
 // ---------- approvals ----------
+let lastApprovals = '';
 async function loadApprovals() {
   const list = await api('/api/approvals');
+  const sig = JSON.stringify(list.map((a) => a.receipt));
+  if (sig === lastApprovals) return; // re-rendering would move buttons under the owner's cursor
+  lastApprovals = sig;
   $('#appr-count').textContent = list.length || '';
   $('#approvals').innerHTML = list.map((a) => `<div class="ap" data-r="${esc(a.receipt)}"><div><b>${esc(a.tool)}</b> <span class="mono small muted">${esc(a.receipt)}</span></div>
     <div class="hint">${esc(a.agent)} · ${esc(a.workspace && a.workspace.split('/').pop())} · ${esc(a.mode)} — ${esc(a.reason)}</div>

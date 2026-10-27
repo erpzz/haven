@@ -236,9 +236,11 @@ def run_remote(name, node_ssh, repo_dir):
             shutil.copy2(d / f, bundle / "skill" / f)
         shutil.copy2(HERE / "sandbox.py", bundle / "sandbox.py")
         shutil.copytree(repo_dir, bundle / "repo", ignore=shutil.ignore_patterns(".git", "__pycache__"))
-        subprocess.run(["tar", "-C", str(bundle), "-cf", str(tar), "."], check=True)
+        subprocess.run(["tar", "--no-xattrs", "-C", str(bundle), "-cf", str(tar), "."], check=True,
+                       env={**os.environ, "COPYFILE_DISABLE": "1"})
         remote = (f"set -e; rm -rf ~/{stage}; mkdir -p ~/{stage}; tar -C ~/{stage} -xf -; cd ~/{stage}; "
-                  f"echo SHA=$(cat skill/skill.json skill/skill.py skill/recipe.md | sha256sum | cut -c1-12); "
+                  "python3 -c 'import hashlib;h=hashlib.sha256()\nfor n in (\"skill.json\",\"skill.py\",\"recipe.md\"): "
+                  "h.update(n.encode()+b\"\\0\"+open(\"skill/\"+n,\"rb\").read()+b\"\\0\")\nprint(\"SHA=\"+h.hexdigest())'; "
                   f"python3 -c 'import sandbox,json;print(\"SANDBOX=\"+json.dumps(sandbox.describe()))'; "
                   f"cd repo; mkdir -p ../tmp; t0=$(date +%s.%N); "
                   f"python3 -I ../sandbox.py --landlock-exec "
@@ -248,7 +250,7 @@ def run_remote(name, node_ssh, repo_dir):
         t0 = time.monotonic()
         with open(tar, "rb") as fh:
             r = subprocess.run(ssh + [remote], stdin=fh, capture_output=True, text=True, timeout=300)
-    out = {"node": node_ssh, "skill": name, "sha256": rec["sha256"], "round_trip_s": round(time.monotonic() - t0, 2),
+    out = {"node": node_ssh, "skill": name, "sha256": rec["sha256"], "author": rec.get("author"), "round_trip_s": round(time.monotonic() - t0, 2),
            "exit": r.returncode, "stderr": r.stderr[-500:]}
     for line in r.stdout.splitlines():
         if line.startswith("RESULT="):
@@ -260,6 +262,7 @@ def run_remote(name, node_ssh, repo_dir):
             out["remote_sandbox"] = json.loads(line[8:])
         elif "=" in line and line.split("=", 1)[0] in ("SHA", "ELAPSED"):
             out[line.split("=", 1)[0].lower()] = line.split("=", 1)[1]
+    out["remote_hash_matches"] = out.get("sha") == rec["sha256"]
     return out
 
 

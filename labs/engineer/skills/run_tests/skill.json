@@ -1,0 +1,25 @@
+{
+  "name": "run_tests",
+  "description": "Detect the repository's test framework (unittest, pytest-style, node:test), run the tests correctly in this sandbox (python3 3.9 without pytest; node --test), and return structured results: framework, rerunnable command, exit_code, passed/failed counts and a failing list of {id, file, line, message}. Run it from the repository root instead of probing for python/pytest by hand. Test ids: unittest and pytest classes -> Class.test_method; pytest functions -> module_stem.test_name; node:test -> the test's name.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Subdirectory (or single test file) to test, relative to the repository root.",
+        "default": "."
+      },
+      "filter": {
+        "type": "string",
+        "description": "Only run tests whose id contains this substring (e.g. 'CalcTest', 'test_reverse', 'clamp'). For node:test it is passed as --test-name-pattern.",
+        "default": ""
+      },
+      "timeout": {
+        "type": "integer",
+        "description": "Seconds before the run is stopped; the unfinished test is reported as failing.",
+        "default": 600
+      }
+    },
+    "additionalProperties": false
+  }
+}

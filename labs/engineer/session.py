@@ -66,7 +66,7 @@ class TaskSession:
 
     def emit(self, event):
         """Append one event. Several processes (loop, MCP server, CLI runner) may share a task."""
-        line = (json.dumps({"pid": os.getpid(), **event}, default=str) + "\n").encode()
+        line = (json.dumps({"pid": os.getpid(), "t": round(time.time(), 3), **event}, default=str) + "\n").encode()
         with self._lock:
             fd = os.open(self.dir / "events.jsonl", os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
             try:
