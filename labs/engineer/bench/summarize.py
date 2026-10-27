@@ -40,14 +40,29 @@ def main(argv=None):
             table.append([a, arm, f"{c['success']}/{c['n']}", c["steps"], c["waste"], c["wall"],
                           c["skill_calls"], c["auto"], f"{c['committed']}/{c['n']}"])
     tot = lambda arm: sum(cell[(a, arm)]["success"] for a in agents if (a, arm) in cell)
+    used = sum(cell[(a, "skill")]["skill_calls"] for a in agents if (a, "skill") in cell)
+
+    def judge(diff, supported):
+        # Preregistered: effects smaller than 2 tasks are inconclusive; a skill never executed cannot be credited.
+        if used == 0:
+            return "not attributable: the skill tool was never called"
+        if abs(diff) < 2:
+            return "inconclusive (difference under 2 tasks)"
+        return "supported" if supported else "rejected"
+
+    d1 = tot("skill") - tot("none")
+    d2 = tot("skill") - tot("recipe")
     verdicts = {
-        "H1 (skill tool beats tools-only for both agents)":
-            all(cell.get((a, "skill"), {}).get("success", 0) > cell.get((a, "none"), {}).get("success", 0) for a in agents),
-        "H2 (skill tool beats prose recipe)": tot("skill") > tot("recipe"),
-        "H3 (less discovery waste with skill tool)":
-            sum(cell[(a, "skill")]["waste"] for a in agents if (a, "skill") in cell)
-            < sum(cell[(a, "none")]["waste"] for a in agents if (a, "none") in cell),
+        "H1 skill tool vs tools-only": judge(d1, d1 > 0),
+        "H2 skill tool vs prose recipe": judge(d2, d2 > 0),
+        "H3 discovery waste with skill tool": judge(2, sum(cell[(a, "skill")]["waste"] for a in agents if (a, "skill") in cell)
+                                                    < sum(cell[(a, "none")]["waste"] for a in agents if (a, "none") in cell)),
+        "skill tool calls (all agents)": used,
     }
+    if (agents and all((a, "controller") in cell for a in agents)):
+        dc = tot("controller") - tot("none")
+        verdicts["E2 controller vs tools-only (exploratory)"] = (
+            "inconclusive (difference under 2 tasks)" if abs(dc) < 2 else ("better" if dc > 0 else "worse"))
     rec = {"id": "e1-inheritance", "title": "E1: inherited run_tests skill on unseen bug-fix tasks",
            "status": "measured",
            "hypothesis": "Executable inheritance helps small local models more than tools alone and more than the same knowledge as prose.",

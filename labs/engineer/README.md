@@ -96,7 +96,7 @@ personal Claude profile). Any MCP client can use the executor directly:
 ```
 
 Fleet: `python3 fleet.py enroll NAME --ssh ALIAS` (alias must already have a pinned host key),
-`python3 fleet.py scope 192.168.1.0/24` for passive discovery, `python3 fleet.py observe`.
+`python3 fleet.py scope 10.0.0.0/24   (your LAN)` for passive discovery, `python3 fleet.py observe`.
 
 Skills: `python3 skills.py admit CANDIDATE --heldout PRIVATE_CASES --author ID`,
 `python3 skills.py run-remote run_tests --node ALIAS --repo DIR`.
