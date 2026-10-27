@@ -205,6 +205,16 @@ class SchedulerTest(unittest.TestCase):
         self.assertTrue(wait_for(lambda: worker.status("once-1")["state"] == "SUCCEEDED"))
         self.assertEqual((self.ws / "count.txt").read_text(), "once\n")
 
+    def test_two_processes_share_one_ledger(self):
+        # A long-running `serve` and a separate `submit` both append; neither may use a stale chain.
+        other = scheduler.Scheduler(scheduler.Store(self.sch.store.root), nodes=self.sch.nodes,
+                                    observe=self.sch.observe, gate=self.sch.gate)
+        self.sch.tick()
+        job = other.submit({"command": "echo hi", "workspace": str(self.ws), "cpu": 1, "mem_mib": 64,
+                            "timeout_s": 10})
+        self.assertTrue(self.settle(job["id"], {"SUCCEEDED"}))
+        self.assertTrue(self.sch.store.ledger.verify())
+
     def test_rejects_gpu_and_bad_specs(self):
         for bad in ({"gpu": True}, {"cpu": 0}, {"workspace": None}, {"role": "training"}):
             with self.assertRaises(scheduler.SchedError, msg=str(bad)):

@@ -205,6 +205,20 @@ def _alive(pid):
         return False
 
 
+def _scheduler_view():
+    """Scheduled jobs and each node's current trust decision, read from files only."""
+    import scheduler
+    import trust
+    gate = trust.Gate()
+    nodes = {n["name"]: n for n in fleet.load()["nodes"]}
+    jobs = scheduler.Store().jobs()[-40:]
+    keep = ("id", "state", "node", "receipt", "created", "finished_at", "waiting", "revoked", "node_problem")
+    return {"trust": {name: gate.decide(n, "tools") for name, n in nodes.items()},
+            "jobs": [{**{k: j.get(k) for k in keep}, "command": j["spec"]["command"][:160],
+                      "exit_code": (j.get("worker") or {}).get("exit_code"),
+                      "sandbox": (j.get("worker") or {}).get("sandbox")} for j in reversed(jobs)]}
+
+
 class Handler(http.server.BaseHTTPRequestHandler):
     server_version = "HavenConsole/0.1"
     console: Console = None
@@ -277,7 +291,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 obs = fleet.observe()
                 tasks = session.list_tasks(limit=300)
                 running = [t for t in tasks if t.get("status") == "running"]
-                return self._send(200, {**obs, "running_tasks": running})
+                return self._send(200, {**obs, "running_tasks": running, **_scheduler_view()})
             if method == "POST" and path == "/api/fleet/enroll":
                 return self._send(200, fleet.enroll(body["name"], body["ssh"], body.get("roles") or ["tools"]))
             if method == "POST" and path == "/api/fleet/remove":

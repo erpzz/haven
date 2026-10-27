@@ -86,6 +86,11 @@
         <p class="hint">Seen passively on the owner's configured subnets. Being on the network is not proof of ownership; these receive no work.</p>
         <table id="candidates" class="table"></table>
       </div>
+      <div class="card">
+        <h3>Scheduled jobs</h3>
+        <p class="hint">Durable user-space jobs (scheduler.py). Placement needs the trust gate, a fresh observation and headroom; each job has one signed receipt.</p>
+        <table id="jobs" class="table"></table>
+      </div>
       <form id="enroll" class="card">
         <h3>Enroll a node</h3>
         <p class="hint">Uses an SSH alias you already trust (pinned host key, key auth). The fingerprint is recorded; a later mismatch marks the node untrusted.</p>

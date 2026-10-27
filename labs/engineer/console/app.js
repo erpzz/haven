@@ -284,10 +284,12 @@ async function loadFleet() {
         <span class="k">models serving</span><span>${models}</span>
         <span class="k">services</span><span>${esc((o.units || []).join(', ') || '—')}</span>
         <span class="k">roles</span><span>${esc((n.roles || []).join(', '))}</span>
+        <span class="k">trust (tools)</span><span>${(() => { const t = (FLEET.trust || {})[n.name]; return t ? `<span class="badge ${t.ok ? 'ok' : 'bad'}">${t.ok ? 'eligible' : 'held'}</span> ${esc(t.reason)}` : '—'; })()}</span>
         <span class="k">Slinky work</span><span>${tk.length ? tk.map((t) => `${esc(t.agent)} (${esc(t.mode)})`).join(', ') : 'idle'}</span></div>
       ${o.error ? `<div class="error">${esc(o.error)}</div>` : ''}</div>`;
   }).join('');
   $('#nodes').querySelectorAll('.node').forEach((el) => el.addEventListener('click', () => nodeDetail(el.dataset.n)));
+  $('#jobs').innerHTML = '<tr><th>job</th><th>state</th><th>node</th><th>receipt</th><th>command</th></tr>' + ((FLEET.jobs || []).map((j) => `<tr><td class="mono">${esc(j.id)}</td><td>${esc(j.state)}${j.exit_code != null ? ` · exit ${esc(j.exit_code)}` : ''}${j.revoked ? ` · ${esc(j.revoked)}` : ''}${j.waiting ? ` · waiting: ${esc(Object.values(j.waiting).join('; '))}` : ''}</td><td>${esc(j.node || '—')}</td><td class="mono">${esc(j.receipt)}</td><td class="mono small">${esc(j.command)}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">none</td></tr>');
   $('#candidates').innerHTML = '<tr><th>address</th><th>MAC prefix</th><th>status</th></tr>' + (FLEET.candidates.map((c) => `<tr><td class="mono">${esc(c.address)}</td><td class="mono">${esc(c.mac_prefix)}</td><td>${esc(c.status)}</td></tr>`).join('') || '<tr><td colspan="3" class="muted">none</td></tr>');
 }
 function nodeDetail(name) {

@@ -102,15 +102,23 @@ class Store:
         self.root = pathlib.Path(root or STATE / "sched")
         (self.root / "jobs").mkdir(parents=True, exist_ok=True, mode=0o700)
         os.chmod(self.root, 0o700)
-        self.ledger = Ledger(self.root / "ledger.jsonl", session="scheduler")
+        self._ledger = None
+
+    @property
+    def ledger(self):
+        """The ledger as of now. Several processes (serve, submit, cancel) append to it, so it is
+        re-read on every locked operation; a stale copy would chain from an old hash."""
+        return self._ledger or Ledger(self.root / "ledger.jsonl", session="scheduler")
 
     @contextlib.contextmanager
     def lock(self):
         fd = os.open(self.root / ".lock", os.O_CREAT | os.O_RDWR, 0o600)
         try:
             fcntl.flock(fd, fcntl.LOCK_EX)
+            self._ledger = Ledger(self.root / "ledger.jsonl", session="scheduler")
             yield
         finally:
+            self._ledger = None
             fcntl.flock(fd, fcntl.LOCK_UN)
             os.close(fd)
 
