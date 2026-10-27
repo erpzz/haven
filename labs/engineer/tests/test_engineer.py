@@ -210,6 +210,32 @@ class ExecutorTest(unittest.TestCase):
         (self.ws / "n2.txt").write_text("n\n")
         self.assertEqual(ex.call("git_commit", {"message": "x"})["status"], "refused")
 
+    @unittest.skipUnless(SANDBOX, "no OS sandbox on this host")
+    def test_deploy_health_and_rollback(self):
+        import socket
+        sock = socket.socket(); sock.bind(("127.0.0.1", 0)); port = sock.getsockname()[1]; sock.close()
+        ws = make_repo({"health.txt": "v1 ok\n", "deploy.json": json.dumps({"targets": {"staging": {
+            "start": f"exec python3 -m http.server {port} --bind 127.0.0.1", "port": port,
+            "health": f"curl -sf http://127.0.0.1:{port}/health.txt", "health_timeout_s": 8}}})})
+        ex = new_executor(ws, mode="autonomous", deploy_targets=("staging",))
+        ex.state_dir = pathlib.Path(tempfile.mkdtemp(dir=TMP))
+        try:
+            r1 = ex.call("deploy", {"target": "staging"})
+            self.assertEqual(r1["status"], "succeeded", r1["text"])
+            (ws / "health.txt").unlink()
+            subprocess.run(["git", "commit", "-qam", "break health"], cwd=ws, check=True,
+                           env={**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@x.invalid",
+                                "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@x.invalid"})
+            r2 = ex.call("deploy", {"target": "staging"})
+            self.assertEqual(r2["status"], "failed")
+            self.assertIn("rolled back", r2["text"])
+            body = urllib.request.urlopen(f"http://127.0.0.1:{port}/health.txt", timeout=5).read().decode()
+            self.assertEqual(body.strip(), "v1 ok")
+            self.assertTrue(ex.ledger.check_answer(f"Deployed ({r1['receipt']}).")["ok"])
+        finally:
+            for h in (ex.state_dir / "deployments.jsonl").read_text().splitlines():
+                executor._kill_pid(json.loads(h)["pid"])
+
     def test_leases_and_write_allow(self):
         state = pathlib.Path(TMP) / "lease-state"
         leases = registry.Leases(state)

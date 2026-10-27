@@ -76,6 +76,9 @@ TOOLS = {
     "process_status": _schema("Show whether a started process is running and the tail of its log.", {
         "process_id": S}, ["process_id"]),
     "stop_process": _schema("Stop a process started with start_process.", {"process_id": S}, ["process_id"]),
+    "deploy": _schema("Deploy this workspace to a target defined in deploy.json (build, start, health check). "
+                      "The previous version is kept and restored automatically if the health check fails.", {
+        "target": S}, ["target"]),
     "delegate": _schema("Start a child agent on a bounded sub-task in this workspace and wait for its result. "
                         "Give it a self-contained task. Optional paths lease files only the child may edit.", {
         "task": S, "agent": {**S, "description": "Configured local agent id (default: the owner's choice)"},
@@ -447,7 +450,7 @@ class Executor:
                 "truncated": res["truncated"], "timed_out": res["timed_out"], "cancelled": res["cancelled"],
                 "indeterminate": res["timed_out"] or res["cancelled"]}
 
-    def run_sandboxed(self, command, workdir, timeout_s, *, network=False, on_chunk=None):
+    def run_sandboxed(self, command, workdir, timeout_s, *, network=False, on_chunk=None, local_ports=()):
         argv = ["/bin/bash", "-o", "pipefail", "-c", command]  # a failing stage fails the receipt
         if self.sandbox["available"]:
             writable = [self.scratch]
@@ -455,7 +458,7 @@ class Executor:
                 writable.append(self.git_common)
             argv = sandbox.wrap(argv, workspace=self.root, writable=writable, tmpdir=self.tmp,
                                 network=network, read_only=self.scope.mode == "observe",
-                                protect=self._guard_paths())
+                                protect=self._guard_paths(), local_ports=local_ports)
         proc = subprocess.Popen(argv, cwd=workdir, env=self._env(), stdin=subprocess.DEVNULL,
                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT, start_new_session=True)
         buf = _Bounded()
@@ -568,6 +571,89 @@ class Executor:
             out.append(f"receipt check on the child's summary failed: {json.dumps(check)[:300]}")
         changed = sorted({p for r in rec.get("receipts", []) for p in (r.get("changed_paths") or [])})
         return {"ok": rec.get("status") == "completed", "output": "\n".join(out), "changed_paths": changed}
+
+    def _t_deploy(self, rid, decision, target):
+        """Build, start, health-check; on failure stop the new version and restart the previous one."""
+        manifest = self.root / "deploy.json"
+        if not manifest.exists():
+            raise ToolError("no deploy.json in the workspace root")
+        spec = (json.loads(manifest.read_text()).get("targets") or {}).get(target)
+        if not spec:
+            raise ToolError(f"deploy.json has no target {target!r}")
+        commit = self._git(["rev-parse", "HEAD"]).stdout.strip() if self.git_common else ""
+        if self.git_common and self._git(["status", "--porcelain"]).stdout.strip():
+            raise ToolError("uncommitted changes; commit before deploying so the deployment has a version")
+        log = [f"deploy {target} @ {commit[:12] or 'no-git'}"]
+        hist_path = self.state_dir / "deployments.jsonl"
+        hist = [json.loads(l) for l in hist_path.read_text().splitlines()] if hist_path.exists() else []
+        prev = next((h for h in reversed(hist) if h["target"] == target and h["workspace"] == str(self.root)
+                     and h["status"] == "live"), None)
+        if spec.get("build"):
+            b = self.run_sandboxed(spec["build"], self.root, 600, network=decision.network)
+            log.append(f"build exit {b['exit_code']}: {b['output'][-800:]}")
+            if b["exit_code"] != 0:
+                return {"ok": False, "exit_code": b["exit_code"], "output": "\n".join(log + ["build failed; nothing changed"])}
+        if prev:
+            _kill_pid(prev.get("pid"))
+            log.append(f"stopped previous {prev['commit'][:12]} (pid {prev.get('pid')})")
+        ports = [int(spec["port"])] if spec.get("port") else []
+        new = self._start_detached(spec["start"], f"deploy-{target}-{rid}", ports=ports)
+        healthy, detail = self._health(spec, new)
+        entry = {"t": time.time(), "target": target, "workspace": str(self.root), "commit": commit,
+                 "pid": new.pid, "receipt": rid, "agent": self.agent, "start_cmd": spec["start"]}
+        if healthy:
+            entry["status"] = "live"
+            if prev:
+                prev["status"] = "superseded"
+            log.append(f"health ok: {detail}; live as pid {new.pid}")
+        else:
+            _kill_pid(new.pid)
+            entry["status"] = "failed"
+            log.append(f"health FAILED: {detail}")
+            if prev:
+                back = self._start_detached(prev.get("start_cmd") or spec["start"], f"rollback-{target}-{rid}",
+                                            commit=prev["commit"], ports=ports)
+                ok_back, d2 = self._health(spec, back)
+                rb = {**prev, "t": time.time(), "pid": back.pid, "status": "live" if ok_back else "failed",
+                      "rollback_of": rid}
+                hist.append(rb)
+                log.append(f"rolled back to {prev['commit'][:12]}: {'healthy' if ok_back else 'UNHEALTHY'} ({d2})")
+        hist.append(entry)
+        self.state_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+        hist_path.write_text("".join(json.dumps(h) + "\n" for h in hist))
+        os.chmod(hist_path, 0o600)
+        return {"ok": healthy, "output": "\n".join(log)}
+
+    def _start_detached(self, command, name, commit=None, ports=()):
+        cwd = self.root
+        if commit and self.git_common:
+            # Roll back from an exported copy of the previous commit, leaving the working tree alone.
+            cwd = self.scratch / f"release-{commit[:12]}"
+            if not cwd.exists():
+                cwd.mkdir(parents=True)
+                arch = subprocess.run(["git", "-C", str(self.root), "archive", commit], capture_output=True)
+                subprocess.run(["tar", "-x", "-C", str(cwd)], input=arch.stdout, check=True)
+        argv = ["/bin/bash", "-c", command]
+        if self.sandbox["available"]:
+            argv = sandbox.wrap(argv, workspace=cwd, writable=[self.scratch], tmpdir=self.tmp, network=False,
+                                local_ports=ports)
+        with open(self.scratch / f"{name}.log", "ab") as lf:  # the child keeps its own copy of the fd
+            return subprocess.Popen(argv, cwd=cwd, env=self._env(), stdin=subprocess.DEVNULL, stdout=lf,
+                                    stderr=subprocess.STDOUT, start_new_session=True)
+
+    def _health(self, spec, proc):
+        deadline = time.monotonic() + float(spec.get("health_timeout_s", 20))
+        last = ""
+        while time.monotonic() < deadline:
+            if proc.poll() is not None:
+                return False, f"process exited {proc.returncode}"
+            r = self.run_sandboxed(spec["health"], self.root, 10,
+                                   local_ports=[int(spec["port"])] if spec.get("port") else ())
+            last = r["output"].strip()[-200:]
+            if r["exit_code"] == 0:
+                return True, last or "exit 0"
+            time.sleep(0.5)
+        return False, f"no healthy response in time; last: {last}"
 
     def stop_all(self):
         for p in self.processes.values():
@@ -733,6 +819,25 @@ def _kill_group(proc):
             return
         except subprocess.TimeoutExpired:
             continue
+
+
+def _kill_pid(pid):
+    if not pid:
+        return
+    try:
+        os.killpg(int(pid), signal.SIGTERM)
+    except (ProcessLookupError, PermissionError, ValueError):
+        return
+    for _ in range(30):
+        try:
+            os.killpg(int(pid), 0)
+        except (ProcessLookupError, PermissionError):
+            return
+        time.sleep(0.1)
+    try:
+        os.killpg(int(pid), signal.SIGKILL)
+    except (ProcessLookupError, PermissionError):
+        pass
 
 
 def _tail(path, n=40):

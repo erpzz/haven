@@ -36,7 +36,7 @@ Python standard library only (3.9+), like the Model Lab.
 | Skill authored by Opus, admitted on hidden held-out cases, run on Slink with no model | observed | `skills/run_tests/ADMISSION.json`, run-remote output |
 | Inheritance benchmark (none / recipe / skill × Qwen, LFM) | see `research/` | preregistered in `morphogenesis/PREREGISTRATION.json` |
 | Codex as an engineering agent | wired, not observed | Codex plan allowance was exhausted earlier |
-| Deployments | not implemented | `deploy` class exists in policy only |
+| Deploy to a `deploy.json` target with health check and automatic rollback | tested | `test_deploy_health_and_rollback` (local staging); remote targets not wired |
 
 ## Autonomy modes (enforced in the executor, not in prompts)
 

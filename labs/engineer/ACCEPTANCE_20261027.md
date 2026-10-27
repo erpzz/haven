@@ -14,12 +14,12 @@ holds only sanitized outcomes. Every "observed" row was re-checked outside the a
 | 6 | Model Lab and active experiments preserved | **met** | No Slink service, model, GPU job or deployment touched; the paradigms session and the later download ran undisturbed; Slink was used only for read-only probes and a 0.2 s CPU skill run |
 | 7 | Opus-led coordination where the plan permits | **met (bounded)** | Claude Code (Opus) on the personal Pro plan, `apiKeySource=none`, only Haven tools; supervised a local child; authored the admitted skill. Codex blocked by its plan limit |
 | 8 | Initial executable Morphogenesis experiment | **met** | `run_tests` authored by Opus, admitted 5/5 on hidden held-out cases, executed on Slink with no model; E1 preregistered and run (results below) |
-| 9 | Tests for permissions and non-interference | **met** | 24 unit tests: mode decisions, sandbox escape/hooks/network, ledger tampering, forged receipts, approvals, leases, child scope, pipefail, MCP, console auth/Host/paths, skill admission and tampering |
+| 9 | Tests for permissions and non-interference | **met** | 25 unit tests: mode decisions, deploy with health-check rollback, sandbox escape/hooks/network, ledger tampering, forged receipts, approvals, leases, child scope, pipefail, MCP, console auth/Host/paths, skill admission and tampering |
 | 10 | Branch/PR, install, evidence, rollback | **met** | `README.md` (install, run, rollback), this file, PR |
 
 ## Not done (honest list)
 
-- Deployments: policy class only; no deploy tool or staged deployment ran.
+- Deployments: local staging deploy with health check and automatic rollback is implemented and tested; no remote (Slink) or production target is wired.
 - Remote tool execution on Slink by an agent (only a no-model skill ran there).
 - Two-person isolation: single-owner state; cptr has no per-user isolation.
 - Codex engineering run: plan usage limit.
