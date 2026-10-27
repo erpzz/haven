@@ -105,6 +105,24 @@
       "by": "experimenter (Opus, the session running E5)",
       "change": "Calibration finished (8/8). select_e5.py chose e5d, e5f, e5a, e5e, e5h, e5g. At about 18:24 EDT the Mac model server stopped because the owner shut down Mac compute to let the laptop cool. The 67 runs after that ended in connection errors. Only rows whose run ended with a model-server connection error (URLError or RemoteDisconnected) are set aside, chosen without looking at outcomes, and they will be rerun with the same settings. The 5 completed rows stand. The experiment is paused until the owner allows Mac compute again. Running on another machine would need its own amendment, because the backend would change.",
       "analysis_changed": false
+    },
+    {
+      "at": "2026-10-27 18:40 EDT, before any Slink run",
+      "by": "experimenter (Opus, the session running E5), on the owner's instruction: 'Rerun all 72 E5 runs on Slink'",
+      "change": "Backend moves to Slink. All 72 experimental runs (6 selected tasks x seeds 44/55/66 x 4 arms) run there from scratch. The 5 Mac rows are excluded from analysis and kept privately, so no backends are mixed in the analysis. The task selection from the Mac calibration stands: it is a design choice, made before any experimental run. Nothing else in the design or analysis changes.",
+      "slink_environment": {
+        "agent_id": "qwen35-4b-slink",
+        "weights": "Qwen3.5-4B-Q4_K_M.gguf, sha256 00fe7986ff5f6b46..., byte-identical to the Mac file",
+        "engine": "llama.cpp b11146 CUDA 12.8 (Mac: build 11669 Metal), same server flags: ctx 32768, parallel 1, jinja, flash-attn auto, n-gpu-layers 999",
+        "gpu": "RTX 2070 SUPER 8 GB, driver 580.178.04; held under Model Lab's cooperative GPU lease (gpu_lease.acquire) for the whole run",
+        "agent_shell": "python3 3.12 without pytest (Mac: 3.9 without pytest), no `python`, no `pytest`; node 26.4.0 (same as Mac) from nodejs.org, checksum-verified, with libatomic1 from the Ubuntu archive; Landlock ABI4 sandbox (Mac: Seatbelt)",
+        "judge": "pytest 8.3.5 in a private venv; all 8 candidate judges re-validated on Slink (fixture fails, reference fix passes)",
+        "skill": "run_tests re-admitted on Slink under Slink's own registry key: same sha256 081dd5aa2763..., held-out 5/5, dev 3/3",
+        "checks": "Probe: thinking on with max_tokens 60 gives finish_reason 'length' with empty content; thinking off gives a direct answer, as on the Mac. Smoke run on the E2 task e2c-truncate-node (not an E5 task) succeeded end to end.",
+        "speed": "About 3x faster per token than the Mac, so the 1200 s per-run limit binds less than it would have there.",
+        "launcher": "morphogenesis/e5_slink.py (copy of the script that ran)"
+      },
+      "analysis_changed": false
     }
   ]
 }
