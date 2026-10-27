@@ -7,10 +7,12 @@ import os
 import pathlib
 import shutil
 import signal
+import subprocess
 import sys
 import tempfile
 import time
 import unittest
+from unittest import mock
 
 HERE = pathlib.Path(__file__).resolve().parents[1]
 TMP = tempfile.mkdtemp(prefix="haven-sched-test-")
@@ -20,6 +22,7 @@ os.environ["HAVEN_WORKER_STATE"] = os.path.join(TMP, "worker")
 os.environ["HAVEN_WORKER_CACHE"] = os.path.join(TMP, "wcache")
 sys.path.insert(0, str(HERE))
 
+import fleet  # noqa: E402
 import scheduler  # noqa: E402
 import trust  # noqa: E402
 import worker  # noqa: E402
@@ -87,6 +90,66 @@ class TrustGateTest(unittest.TestCase):
         d = trust.Gate({"source": "enrollment"}).decide(SLINK, "tools")
         self.assertTrue(d["ok"])
         self.assertEqual(d["source"], "enrollment")
+
+
+LINUX_NEIGH = json.dumps([
+    {"dst": "192.168.1.20", "dev": "eth0", "lladdr": "aa:bb:cc:dd:ee:01", "state": ["REACHABLE"]},
+    {"dst": "192.168.1.21", "dev": "eth0", "lladdr": "aa:bb:cc:dd:ee:02", "state": ["STALE"]},
+    {"dst": "192.168.1.22", "dev": "eth0", "state": ["FAILED"]},
+    {"dst": "192.168.1.25", "dev": "eth0", "lladdr": "aa:bb:cc:dd:ee:05", "state": ["FAILED"]},
+    {"dst": "192.168.1.23", "dev": "eth0", "lladdr": "aa:bb:cc:dd:ee:03", "state": "FAILED"},
+    {"dst": "192.168.1.24", "dev": "eth0", "state": "INCOMPLETE"},
+    {"dst": "10.0.0.5", "dev": "eth0", "lladdr": "aa:bb:cc:dd:ee:04", "state": ["REACHABLE"]},
+    {"dst": "192.168.1.30", "dev": "wlan0", "lladdr": "11:22:33:44:55:66", "state": ["DELAY"]},
+])
+MACOS_ARP = """\
+? (192.168.1.1) at 0:11:22:33:44:55 on en0 ifscope [ethernet]
+? (192.168.1.40) at (incomplete) on en0 ifscope [ethernet]
+? (10.0.0.9) at aa:bb:cc:0:0:9 on en0 ifscope [ethernet]
+? (192.168.1.41) at de:ad:be:ef:0:1 on en1 ifscope [ethernet]
+"""
+
+
+class DiscoveryTest(unittest.TestCase):
+    """fleet.discover reuses the TSZ neighbor-cache parsers; fed sample output, no real command."""
+
+    def test_linux_scope_failed_and_fallback(self):
+        got = fleet.neighbors("Linux", LINUX_NEIGH, ["192.168.1.0/24"])
+        self.assertEqual([c["address"] for c in got], ["192.168.1.20", "192.168.1.21", "192.168.1.30"])
+        first = got[0]
+        self.assertEqual(first, {"address": "192.168.1.20", "mac_prefix": "aa:bb:cc", "status": "DISCOVERED_NOT_ENROLLED",
+                                 "candidate_id": tsz.candidate_id("eth0", "aa:bb:cc:dd:ee:01")})
+        only = fleet.neighbors("Linux", LINUX_NEIGH, ["192.168.1.0/24"], ["wlan0"])
+        self.assertEqual([c["address"] for c in only], ["192.168.1.30"])
+        self.assertEqual([c["address"] for c in fleet.neighbors("Linux", LINUX_NEIGH, ["10.0.0.0/8"])], ["10.0.0.5"])
+
+    def test_macos_scope_incomplete_and_fallback(self):
+        got = fleet.neighbors("Darwin", MACOS_ARP, ["192.168.1.0/24"])
+        self.assertEqual([c["address"] for c in got], ["192.168.1.1", "192.168.1.41"])
+        self.assertEqual(got[0]["mac_prefix"], "00:11:22")
+        self.assertEqual(got[0]["candidate_id"], tsz.candidate_id("en0", "00:11:22:33:44:55"))
+        only = fleet.neighbors("Darwin", MACOS_ARP, ["192.168.1.0/24"], ["en1"])
+        self.assertEqual([c["address"] for c in only], ["192.168.1.41"])
+
+    def test_no_scope_bad_output_or_failed_command_is_empty(self):
+        self.assertEqual(fleet.neighbors("Linux", LINUX_NEIGH, []), [])
+        self.assertEqual(fleet.neighbors("Linux", "not json", ["192.168.1.0/24"]), [])
+        self.assertEqual(fleet.neighbors("Windows", MACOS_ARP, ["192.168.1.0/24"]), [])
+        with mock.patch.object(fleet.platform, "system", return_value="Linux"), \
+                mock.patch.object(fleet.shutil, "which", return_value=None):
+            self.assertEqual(fleet.discover(["192.168.1.0/24"]), [])
+        failed = subprocess.CompletedProcess(["ip"], 1, stdout=LINUX_NEIGH, stderr="boom")
+        with mock.patch.object(fleet.platform, "system", return_value="Linux"), \
+                mock.patch.object(fleet.shutil, "which", return_value="/sbin/ip"):
+            with mock.patch.object(fleet.subprocess, "run", return_value=failed):
+                self.assertEqual(fleet.discover(["192.168.1.0/24"]), [])
+            with mock.patch.object(fleet.subprocess, "run", side_effect=OSError("gone")):
+                self.assertEqual(fleet.discover(["192.168.1.0/24"]), [])
+            ok = subprocess.CompletedProcess(["ip"], 0, stdout=LINUX_NEIGH, stderr="")
+            with mock.patch.object(fleet.subprocess, "run", return_value=ok) as run, \
+                    mock.patch.object(fleet, "load", return_value={"discovery_interfaces": ["wlan0"]}):
+                self.assertEqual([c["address"] for c in fleet.discover(["192.168.1.0/24"])], ["192.168.1.30"])
+                self.assertEqual(run.call_args[0][0], ["ip", "-j", "neigh", "show"])
 
 
 class FixedGate:
