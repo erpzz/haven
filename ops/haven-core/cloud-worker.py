@@ -428,6 +428,23 @@ if not code.is_file() or 'HOSTED_SUBSCRIPTION' not in code.read_text():
     sys.exit('REFUSED: the Lab at %s predates cloud lanes; deploy this branch first.' % (lab or 'unknown'))
 p = pathlib.Path(data).expanduser() / 'providers'
 p.mkdir(parents=True, exist_ok=True, mode=0o700)
+# sshd does not remove a reverse-forward socket when its tunnel ends, and will not bind over it.
+# Remove only this worker's own lane sockets, and only when they are dead.
+import socket, stat
+for ident in sys.argv[3:]:
+    path = p / (ident + '.sock')
+    try: info = path.lstat()
+    except FileNotFoundError: continue
+    if not stat.S_ISSOCK(info.st_mode) or info.st_uid != os.getuid():
+        sys.exit('REFUSED: %s is not a socket owned by this user; inspect it.' % path.name)
+    probe = socket.socket(socket.AF_UNIX); probe.settimeout(1)
+    try:
+        probe.connect(str(path))
+        sys.exit('REFUSED: %s is live; another tunnel is serving it.' % path.name)
+    except (ConnectionRefusedError, FileNotFoundError):
+        path.unlink()
+    finally:
+        probe.close()
 print(p)
 '''
 
@@ -437,16 +454,17 @@ def enroll(args):
     import shlex
     run = lambda *a, **k: subprocess.run(a, check=True, capture_output=True, text=True, **k)
     idents = [ident.replace('haven-', 'cloud-') for ident in config['lanes']]
-    check = subprocess.run([*SSH, 'haven', 'python3 -c ' + shlex.quote(REMOTE_PREFLIGHT) + ' ' +
-                            shlex.quote(args.data_dir) + ' ' + shlex.quote(args.lab_dir)], capture_output=True, text=True)
-    providers = check.stdout.strip()
-    if check.returncode or not providers.startswith('/') or '\n' in providers:
-        raise ValueError((check.stderr.strip() or 'Invalid private remote enrollment directory.') + ' Nothing was enrolled.')
-    # Replace only our own tunnel so its forwards always match the configured lanes.
+    # Close our own tunnel first, so the preflight can clear the sockets it leaves behind.
     if subprocess.run([*SSH, '-S', str(SOCKET), '-O', 'check', 'haven'], capture_output=True).returncode == 0:
         run(*SSH, '-S', str(SOCKET), '-O', 'exit', 'haven')
     elif SOCKET.exists():
         raise ValueError('The dedicated SSH socket exists but is not live; inspect it rather than replacing it.')
+    check = subprocess.run([*SSH, 'haven', 'python3 -c ' + shlex.quote(REMOTE_PREFLIGHT) + ' ' +
+                            ' '.join(shlex.quote(a) for a in (args.data_dir, args.lab_dir, *idents))],
+                           capture_output=True, text=True)
+    providers = check.stdout.strip()
+    if check.returncode or not providers.startswith('/') or '\n' in providers:
+        raise ValueError((check.stderr.strip() or 'Invalid private remote enrollment directory.') + ' Nothing was enrolled.')
     forwards = [arg for ident in idents for arg in ('-R', f'{providers}/{ident}.sock:127.0.0.1:{PORT}')]
     if forwards:
         run(*SSH, '-fNT', '-M', '-S', str(SOCKET), '-o', 'ControlPersist=no', '-o', 'ExitOnForwardFailure=yes',

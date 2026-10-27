@@ -46,6 +46,10 @@ Browser ─▶ Slink Lab ─▶ providers/cloud-<lane>.sock ─(SSH reverse forw
 - **Plan visibility.** The worker reports each lane's requests today against the cap, plus the last plan state the CLI reported (Claude's `resetsAt`, Codex's "try again at"). The selector shows, for example, "12/50 today · plan limit until 2:31 AM". The registry accepts only bounded fields.
 - **Restart visibility.** A tab whose private link died in a Lab restart shows a pinned banner and disables Send, instead of silently not sending. A runtime switch shows its own progress message and elapsed time against the ~15-minute Strata load.
 
+**Codex, live 2026-10-27 ~01:20 UTC:** first successful answer through the live Lab (CLI 0.164.0, the account's configured model). First output in 13.7 s, 14.2 s total. The turn used **10,082 prompt tokens**, against ~660 for a Claude turn: the Codex CLI still sends its agent instructions with every tool disabled, so each Codex turn costs about 15× more plan allowance. Replacing its base instructions is a follow-up.
+
+**Tunnel restart fix:** sshd leaves a reverse-forward socket behind when its tunnel ends and will not bind over it. Re-enrolling after `disable` therefore failed (lanes OFFLINE; Haven correctly refused with no fallback). `enroll` now closes its own tunnel first, then removes only this worker's lane sockets, and only if they are owned by this user and refuse connections. Codex's `mac-worker.py` has the same latent issue.
+
 ## Operate
 
 On the Mac, as the owner:
