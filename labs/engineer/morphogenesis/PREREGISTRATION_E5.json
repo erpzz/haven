@@ -16,26 +16,67 @@
     "controller_recover": "controller + exhaust_recovery"
   },
   "agent": "qwen35-4b-mac (Qwen3.5-4B Q4_K_M, llama.cpp Metal, thinking at the model default, max_tokens 4096). LFM2.5 is excluded: it succeeded on 3/48 E2 runs and its failures were not budget exhaustion.",
-  "candidate_tasks": ["e5a-invoice-pytest-src", "e5b-lru-node", "e5c-slots-unittest", "e5d-csvline-pytest", "e5e-toposort-pytest-class", "e5f-semver-node", "e5g-layers-unittest", "e5h-ratelimit-pytest-src"],
+  "candidate_tasks": [
+    "e5a-invoice-pytest-src",
+    "e5b-lru-node",
+    "e5c-slots-unittest",
+    "e5d-csvline-pytest",
+    "e5e-toposort-pytest-class",
+    "e5f-semver-node",
+    "e5g-layers-unittest",
+    "e5h-ratelimit-pytest-src"
+  ],
   "task_provenance": "Written by the experimenter (Opus) after the E2 rerun and before any model saw them. Each has two or more interacting bugs, a judge that fails on the fixture and passes with the reference fix (fix.json, outside the copied repo), and every reference fix is necessary (bench/validate_tasks.py, plus a leave-one-fix-out check). Disjoint from E1, E2, the skill's dev and held-out cases.",
   "calibration": {
     "runs": "Qwen, arm none, seed 7, all 8 candidates (8 runs)",
     "selection_rule": "bench/select_e5.py: rank failed before succeeded, then more steps, then more wall time, then task name; keep the first 6",
     "use": "selection only; calibration rows are never analysed; seed 7 is not reused"
   },
-  "sampling": {"temperature": 0.3, "seeds": [44, 55, 66], "max_steps": 24, "max_seconds_per_run": 1200, "mode": "engineer", "network": "owner grant"},
+  "sampling": {
+    "temperature": 0.3,
+    "seeds": [
+      44,
+      55,
+      66
+    ],
+    "max_steps": 24,
+    "max_seconds_per_run": 1200,
+    "mode": "engineer",
+    "network": "owner grant"
+  },
   "runs": "6 selected tasks x 3 seeds x 4 arms = 72; arms interleaved within each task and seed",
   "outcome_judge": "bench/run_bench.py: protected tests byte-identical AND the task verifier passes",
   "unit_of_analysis": "paired unit = (task, seed); 18 units per arm comparison",
   "primary_hypotheses": {
-    "H_R": {"claim": "recover beats none on success", "test": "exact one-sided sign test on discordant units", "supported_if": "p < 0.05 and wins - losses >= 4", "rejected_if": "losses >= wins", "otherwise": "inconclusive"},
-    "H_RM": {"claim": "after an exhausted turn, the next turn produces a tool call or visible text more often with recovery than without", "test": "pool turns that follow an exhausted turn; recovery arms (recover, controller_recover) vs baseline arms (none, controller); one-sided Fisher exact test on non-empty vs empty", "supported_if": "recovery rate higher and p < 0.05", "rejected_if": "recovery rate <= baseline rate", "untestable_if": "fewer than 5 such turns in either group", "otherwise": "inconclusive"}
+    "H_R": {
+      "claim": "recover beats none on success",
+      "test": "exact one-sided sign test on discordant units",
+      "supported_if": "p < 0.05 and wins - losses >= 4",
+      "rejected_if": "losses >= wins",
+      "otherwise": "inconclusive"
+    },
+    "H_RM": {
+      "claim": "after an exhausted turn, the next turn produces a tool call or visible text more often with recovery than without",
+      "test": "pool turns that follow an exhausted turn; recovery arms (recover, controller_recover) vs baseline arms (none, controller); one-sided Fisher exact test on non-empty vs empty",
+      "supported_if": "recovery rate higher and p < 0.05",
+      "rejected_if": "recovery rate <= baseline rate",
+      "untestable_if": "fewer than 5 such turns in either group",
+      "otherwise": "inconclusive"
+    }
   },
   "secondary_hypotheses": {
     "H_C": "controller beats none on success (same test and thresholds as H_R)",
     "H_CR": "controller_recover beats controller on success (same test and thresholds)"
   },
-  "descriptive_only": ["success by arm", "median steps", "median wall seconds", "executor actions including runtime test runs", "exhausted turns", "errored runs", "committed rate"],
+  "descriptive_only": [
+    "success by arm",
+    "median steps",
+    "median wall seconds",
+    "executor actions including runtime test runs",
+    "exhausted turns",
+    "errored runs",
+    "committed rate"
+  ],
   "known_threats": [
     "H_R has little power if exhaustion stays rare (E2: 4/96 runs). H_RM is the direct test of the mechanism; H_R is whether it matters for outcomes.",
     "Turns in H_RM are not independent: several can come from one run. The Fisher test treats them as independent; the per-run counts are reported.",
@@ -45,5 +86,13 @@
     "Tasks and arms were written by the same experimenter; calibration chooses the hardest tasks for the unaided arm at a different seed, so 'none' success at seeds 44/55/66 may regress upward.",
     "Seeds vary sampling only; llama.cpp Metal is not bit-exact (E2 measured 3/24 discordant pairs between identical treatments)."
   ],
-  "analysis_code": "bench/summarize_e5.py and bench/select_e5.py (committed with this file)"
+  "analysis_code": "bench/summarize_e5.py and bench/select_e5.py (committed with this file)",
+  "amendments": [
+    {
+      "at": "2026-10-27, before any experimental (seed 44/55/66) run; 3 of 8 calibration runs (seed 7) existed",
+      "by": "Opus merge review",
+      "change": "Clarifies baseline_behavior: the same commit makes an unclosed <think> block count as empty in every arm (previously it was visible text and could end a run as an answer). E5 compares arms within E5, so this is fair inside the experiment, but E5's 'none' arm is not the E2 'none' arm and E5 results must not be pooled with E2.",
+      "analysis_changed": false
+    }
+  ]
 }
