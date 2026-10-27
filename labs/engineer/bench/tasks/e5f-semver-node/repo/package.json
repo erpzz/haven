@@ -1,5 +1,0 @@
-{
-  "name": "verkit",
-  "type": "module",
-  "scripts": {"test": "node --test"}
-}

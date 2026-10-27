@@ -1,7 +1,0 @@
-{
-  "prompt": "The test suite fails. Find the bugs in the source (do not edit tests), make all tests pass, confirm by running them, and commit.",
-  "framework": "pytest-style",
-  "protected": [
-    "tests/test_invoice.py"
-  ]
-}

@@ -105,11 +105,10 @@ def run_one(agent_id, arm, task, *, max_steps, temperature, skill="run_tests", s
     t0 = time.monotonic()
     rec = runtime.run_task(repo, agent, "engineer", spec["prompt"], max_steps=max_steps,
                            overrides={"temperature": temperature, "seed": seed,
-                                      "finish_guard": arm in ("guard", "both"),
-                                      "exhaust_recovery": arm in ("recover", "controller_recover")},
+                                      "finish_guard": arm in ("guard", "both")},
                            skill_names=[skill] if arm == "skill" else None,
                            recipe_names=[skill] if arm == "recipe" else None,
-                           auto_tests=skill if arm in ("controller", "both", "controller_recover") else None,
+                           auto_tests=skill if arm in ("controller", "both") else None,
                            extra_meta={"bench": {"task": task, "arm": arm, "seed": seed}})
     wall = time.monotonic() - t0
     tests_unchanged = all((repo / p).exists() and sha(repo / p) == h for p, h in protected.items())
@@ -131,9 +130,7 @@ def run_one(agent_id, arm, task, *, max_steps, temperature, skill="run_tests", s
         "auto_test_runs": rec.get("auto_test_runs", 0),
         "wall_s": round(wall, 1), "model_s": rec.get("model_s"), "tool_s": rec.get("tool_s"),
         "prompt_tokens": rec.get("prompt_tokens"), "completion_tokens": rec.get("completion_tokens"),
-        "nudges": rec.get("nudges"), "exhausted_turns": rec.get("exhausted_turns", 0),
-        "exhaust_followups": rec.get("exhaust_followups", 0), "exhaust_recovered": rec.get("exhaust_recovered", 0),
-        "verifier_tail": "" if passed else tail[-300:],
+        "nudges": rec.get("nudges"), "verifier_tail": "" if passed else tail[-300:],
     }
     shutil.rmtree(root, ignore_errors=True)
     return row

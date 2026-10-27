@@ -1,5 +1,0 @@
-{
-  "name": "cachekit",
-  "type": "module",
-  "scripts": {"test": "node --test"}
-}
