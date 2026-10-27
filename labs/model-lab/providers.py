@@ -42,6 +42,24 @@ class PrivateWorkerConnection(http.client.HTTPConnection):
         self.sock = sock
 
 
+def plan_status(value):
+    """Accept only the cloud worker's bounded plan fields; anything else is unknown."""
+    plan = {'status': 'UNKNOWN'}
+    if not isinstance(value, dict):
+        return plan
+    for key in ('daily_used', 'daily_cap'):
+        if type(value.get(key)) is int and 0 <= value[key] <= 100000:
+            plan[key] = value[key]
+    if value.get('status') in ('ALLOWED', 'LIMITED', 'UNKNOWN'):
+        plan['status'] = value['status']
+    if type(value.get('resets_at')) in (int, float) and 0 < value['resets_at'] < 1e11:
+        plan['resets_at'] = value['resets_at']
+    text = value.get('resets_text')
+    if isinstance(text, str) and re.fullmatch(r'[0-9: ]{1,8}[APMapm.]{0,4}', text.strip()):
+        plan['resets_text'] = text.strip()
+    return plan
+
+
 class Registry:
     def __init__(self, data):
         self.path = Path(data) / 'providers'
@@ -113,7 +131,11 @@ class Registry:
                 raw = response.read(65537)
                 if len(raw) > 65536:
                     raise ValueError('Worker metadata exceeded its bound.')
-                ids = [v.get('id') for v in json.loads(raw).get('data', []) if isinstance(v, dict)]
+                data = [v for v in json.loads(raw).get('data', []) if isinstance(v, dict)]
+                ids = [v.get('id') for v in data]
+                if row['kind'] == 'cloud':
+                    mine = next((v for v in data if v.get('id') == row['model']), {})
+                    observed['plan'] = plan_status(mine.get('haven_plan'))
                 observed.update(state='READY' if row['model'] in ids else 'MODEL_MISMATCH',
                                 readiness='READY' if row['model'] in ids else 'NOT_READY',
                                 model_ids=[i for i in ids if isinstance(i, str) and len(i) <= 160][:16])

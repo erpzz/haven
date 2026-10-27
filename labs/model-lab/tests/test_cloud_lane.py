@@ -103,7 +103,7 @@ class CloudWorker:
 
 
 def run_job(lab, provider, content='Synthetic fixture only.', **extra):
-    jid = lab.generate({'provider_id': provider, 'max_tokens': 2048,
+    jid = lab.generate({'provider_id': provider, 'max_tokens': 2048, 'egress_ack': 'HOSTED_SUBSCRIPTION',
                         'messages': [{'role': 'user', 'content': content}], **extra})
     end = time.monotonic() + 10
     while lab.jobs[jid].snapshot()['state'] == 'RUNNING' and time.monotonic() < end: time.sleep(.02)
@@ -179,7 +179,7 @@ class LaneTests(unittest.TestCase):
 
     def test_history_is_quoted_and_system_text_goes_to_a_file(self):
         ident = self.lab_with(CLAUDE_OK)
-        jid = self.lab.generate({'provider_id': ident, 'max_tokens': 256, 'messages': [
+        jid = self.lab.generate({'provider_id': ident, 'max_tokens': 256, 'egress_ack': 'HOSTED_SUBSCRIPTION', 'messages': [
             {'role': 'system', 'content': 'SYSTEM_MARKER'}, {'role': 'user', 'content': 'first'},
             {'role': 'assistant', 'content': 'reply'}, {'role': 'user', 'content': 'second'}]})
         end = time.monotonic() + 10
@@ -256,7 +256,7 @@ class LaneTests(unittest.TestCase):
 
     def test_lab_cancel_kills_the_cli(self):
         ident = self.lab_with(CLAUDE_OK[:3], sleep=30)
-        jid = self.lab.generate({'provider_id': ident, 'max_tokens': 256, 'messages': [{'role': 'user', 'content': 'x'}]})
+        jid = self.lab.generate({'provider_id': ident, 'max_tokens': 256, 'egress_ack': 'HOSTED_SUBSCRIPTION', 'messages': [{'role': 'user', 'content': 'x'}]})
         end = time.monotonic() + 10
         while not self.lab.jobs[jid].snapshot().get('text') and time.monotonic() < end: time.sleep(.02)
         pid = self.seen()['pid']
@@ -267,6 +267,35 @@ class LaneTests(unittest.TestCase):
             except ProcessLookupError: break
         else: self.fail('The fake CLI survived a Lab cancellation.')
         self.assertEqual(self.worker.receipts()[-1]['outcome'], 'CLIENT_CLOSED')
+
+    def test_cloud_turn_without_egress_ack_is_refused_before_sending(self):
+        ident = self.lab_with(CLAUDE_OK)
+        for ack in (None, 'yes', 'hosted_subscription'):
+            with self.subTest(ack=ack), self.assertRaisesRegex(ValueError, 'egress acknowledgment'):
+                self.lab.generate({'provider_id': ident, 'max_tokens': 64, 'egress_ack': ack,
+                                   'messages': [{'role': 'user', 'content': 'x'}]})
+        self.assertFalse((Path(self.folder) / 'claude.seen').exists(), 'No CLI may run without acknowledgment.')
+
+    def test_plan_status_reaches_the_registry(self):
+        ident = self.lab_with(CLAUDE_OK, cap=7)
+        self.assertEqual(self.lab.providers.probe(ident)['plan'], {'status': 'UNKNOWN', 'daily_used': 0, 'daily_cap': 7})
+        self.assertEqual(run_job(self.lab, ident)['state'], 'COMPLETED')
+        self.worker.receipts()
+        plan = self.lab.providers.probe(ident)['plan']
+        self.assertEqual((plan['status'], plan['daily_used'], plan['daily_cap']), ('ALLOWED', 1, 7))
+
+    def test_codex_limit_reports_reset_time(self):
+        ident = self.lab_with([CODEX_OK[0], {'type': 'turn.failed', 'error': {'message':
+            "You\u2019ve hit your usage limit. Visit settings or try again at 2:31 AM."}}], cli='codex')
+        run_job(self.lab, ident); self.worker.receipts()
+        plan = self.lab.providers.probe(ident)['plan']
+        self.assertEqual((plan['status'], plan.get('resets_text')), ('LIMITED', '2:31 AM'))
+
+    def test_plan_fields_are_bounded(self):
+        from providers import plan_status
+        self.assertEqual(plan_status({'status': 'LIMITED', 'resets_text': '<script>', 'daily_used': -1,
+                                      'daily_cap': 'x', 'extra': 'dropped'}), {'status': 'LIMITED'})
+        self.assertEqual(plan_status('nope'), {'status': 'UNKNOWN'})
 
     def test_shim_rejects_bad_auth_and_non_streaming(self):
         self.lab_with(CLAUDE_OK)

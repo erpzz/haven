@@ -63,7 +63,9 @@ def main():
         'download': ('/api/model/download', {'id': args.value, 'confirmed': True}),
         'load': ('/api/engine/start', {'id': args.value, 'preset': 'balanced', 'overrides': {'context': args.context, 'threads': args.threads}}),
         'chat': ('/api/generate', {'messages': [{'role': 'user', 'content': args.value}], 'max_tokens': args.max_tokens,
-                                 'temperature': 0, 'top_p': .8, 'seed': 42, 'reasoning': 'none', 'provider_id': args.provider}),
+                                 'temperature': 0, 'top_p': .8, 'seed': 42, 'reasoning': 'none', 'provider_id': args.provider,
+                                 # Naming a cloud lane on the command line is the explicit egress acknowledgment.
+                                 **({'egress_ack': 'HOSTED_SUBSCRIPTION'} if args.provider.startswith('cloud-') else {})}),
         'job': ('/api/jobs/' + urllib.parse.quote(args.value or '', safe=''), None),
         'cancel': ('/api/cancel', {'id': args.value}),
         'unload': ('/api/engine/stop', {}),

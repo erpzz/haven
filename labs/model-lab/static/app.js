@@ -68,12 +68,19 @@ $('account-close').onclick=()=>$('account-dialog').close();
 $('logout').onclick=async()=>{try{await api('/api/auth/logout',{});}catch(e){toast(e.message,true);return;}auth.user=null;auth.csrf='';messages=[];state=null;$('messages').replaceChildren();$('provider-controls')?.remove();providerSelection='managed';sessionStorage.removeItem('haven-provider');sessionStorage.removeItem('haven-diagnostic-job');diagnosticResumed=false;$('account-dialog').close();showAuth('login','Signed out.');};
 $('create-invite').onclick=async()=>{try{const d=await api('/api/auth/invites',{role:$('invite-role').value});let origin=location.origin;if(['127.0.0.1','localhost'].includes(location.hostname)&&auth.lanUrls.length){try{origin=new URL(auth.lanUrls[0]).origin;}catch(_){}}const link=origin+'/#invite='+encodeURIComponent(d.token);$('invite-link').value=link;$('invite-result').classList.remove('hidden');toast('Invite created. It expires in 24 hours and works once.');}catch(e){toast(e.message,true)}};
 $('copy-invite').onclick=async()=>{const input=$('invite-link');try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(input.value);}else{input.focus();input.select();if(!document.execCommand('copy'))throw new Error('copy unavailable');}toast('Invite link copied.');}catch(_){input.focus();input.select();toast('Select and copy the invite link manually.');}};
+let linkExpired=false;
+function linkExpiredBanner(){
+ if(linkExpired)return;linkExpired=true;
+ const b=element('div','callout','This tab\u2019s private link no longer works: the Haven Lab restarted and issued a new one. Nothing you type here will be sent. Reopen Haven from your Mac (Open Haven.command).');
+ b.id='link-expired';b.setAttribute('role','alert');Object.assign(b.style,{borderColor:'var(--warn)',color:'var(--warn)',position:'sticky',top:'0',zIndex:'3',background:'var(--card)'});
+ document.querySelector('main')?.prepend(b);$('send').disabled=true;$('chat-hint').textContent='Link expired \u2014 reopen Haven from your Mac.';
+}
 async function requestJSON(path,data,sessionAware=true){
  const headers={}; if(token)headers['X-Lab-Token']=token;
  if(data!==undefined){headers['Content-Type']='application/json';if(sessionAware&&auth.csrf)headers['X-CSRF-Token']=auth.csrf;}
  const r=await fetch(path,{method:data===undefined?'GET':'POST',headers,body:data===undefined?undefined:JSON.stringify(data),credentials:'same-origin'});
  let d={};try{d=await r.json();}catch(_){}
- if(!r.ok){const e=new Error(d.error||`HTTP ${r.status}`);e.status=r.status;if(sessionAware&&auth.enabled&&r.status===401&&auth.user){auth.user=null;auth.csrf='';showAuth('login','Your session expired. Sign in again.');}throw e;}
+ if(!r.ok){const e=new Error(d.error||`HTTP ${r.status}`);e.status=r.status;if(r.status===401&&!auth.enabled&&token)linkExpiredBanner();if(sessionAware&&auth.enabled&&r.status===401&&auth.user){auth.user=null;auth.csrf='';showAuth('login','Your session expired. Sign in again.');}throw e;}
  return d;
 }
 const api=(path,data)=>requestJSON(path,data,true);
@@ -84,6 +91,10 @@ function metric(id,value,unit) { const n=$(id); n.replaceChildren(document.creat
 function rate(value) { return typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'—'; }
 let providerSelection=sessionStorage.getItem('haven-provider')||'managed', providerProbeBusy=false, providerProbeAt=0;
 const cloudProvider=(s,id)=>(s?.providers||[]).find(p=>p.id===id&&p.kind==='cloud');
+function planText(p){const o=p?.observed?.plan||{};const used=o.daily_cap?`${o.daily_used??'?'}/${o.daily_cap} today`:'';
+ const reset=o.resets_text||(o.resets_at?new Date(o.resets_at*1000).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'');
+ return [used,o.status==='LIMITED'?`plan limit${reset?' until '+reset:''}`:''].filter(Boolean).join(' · ');}
+const readyCloud=s=>(s?.providers||[]).filter(p=>p.kind==='cloud'&&p.observed.state==='READY'&&p.observed.plan?.status!=='LIMITED');
 function selectedConnection(s){
  if(providerSelection==='managed')return s.connection;
  if(providerSelection==='auto'&&s.connection?.base&&(!s.prepared_runtime?.peer_busy||s.connection.compute==='cpu')&&s.connection.kind==='llama')return s.connection;
@@ -107,11 +118,11 @@ function providerControls(s){
   const button=element('button','secondary','Refresh workers');button.id='provider-refresh';button.onclick=async()=>{try{await api('/api/providers/reload',{});await api('/api/providers/probe',{});await refresh();}catch(e){toast(e.message,true);}};box.append(button);
   document.querySelector('.card-heading').after(box);select.onchange=()=>setProvider(select.value);
  }
- const select=$('provider-select');const rows=[{id:'managed',label:`Slink · ${s.connection?.compute==='cpu'?'CPU':s.connection?.kind==='strata'?'Strata':'GPU'} · current runtime`},{id:'auto',label:'Automatic · ready private worker'},...(s.providers||[]).map(p=>({id:p.id,label:p.kind==='cloud'?`☁ ${p.label} · leaves this house · ${p.observed.state}`:`${p.label} · ${p.compute.toUpperCase()} · ${p.display_model} · ${p.observed.state}`}))];
+ const select=$('provider-select');const rows=[{id:'managed',label:`Slink · ${s.connection?.compute==='cpu'?'CPU':s.connection?.kind==='strata'?'Strata':'GPU'} · current runtime`},{id:'auto',label:'Automatic · ready private worker'},...(s.providers||[]).map(p=>({id:p.id,label:p.kind==='cloud'?`☁ ${p.label} · leaves this house · ${p.observed.state}${planText(p)?' · '+planText(p):''}`:`${p.label} · ${p.compute.toUpperCase()} · ${p.display_model} · ${p.observed.state}`}))];
  const signature=JSON.stringify(rows);if(select.dataset.signature!==signature){select.replaceChildren(...rows.map(p=>{const o=element('option','',p.label);o.value=p.id;return o;}));select.dataset.signature=signature;}
  select.value=providerSelection;select.disabled=busy||benchRunning;
  const cloud=cloudProvider(s,providerSelection);$('provider-note').style.color=cloud?'var(--warn)':'';
- $('provider-note').textContent=cloud?`Leaves this house: every turn of this conversation is sent to ${cloud.vendor} through your own plan (${cloud.route_class}). No tools, files or Haven memory; never chosen by Automatic; no paid API fallback.`:providerSelection==='managed'?'Using the current Slink runtime. CPU/GPU loading is available in Model library.':providerSelection==='auto'?'Uses an already-ready private worker. No model starts, downloads, paid calls or cloud fallback. The actual worker is shown with each result.':'Inference runs on the selected machine. The cards above measure Slink, the control host. New worker selections start a fresh conversation.';
+ $('provider-note').textContent=cloud?`Leaves this house: every turn of this conversation is sent to ${cloud.vendor} through your own plan (${cloud.route_class}). No tools, files or Haven memory; never chosen by Automatic; no paid API fallback.${planText(cloud)?' Plan: '+planText(cloud)+'.':''}`:providerSelection==='managed'?'Using the current Slink runtime. CPU/GPU loading is available in Model library.':providerSelection==='auto'?'Uses an already-ready private worker. No model starts, downloads, paid calls or cloud fallback. The actual worker is shown with each result.':'Inference runs on the selected machine. The cards above measure Slink, the control host. New worker selections start a fresh conversation.';
  $('provider-refresh').disabled=providerProbeBusy||busy;
  if((s.providers||[]).length&&!providerProbeBusy&&Date.now()>providerProbeAt){providerProbeBusy=true;providerProbeAt=Date.now()+30000;api('/api/providers/probe',{}).then(()=>refresh()).catch(()=>{}).finally(()=>{providerProbeBusy=false;});}
 }
@@ -128,6 +139,9 @@ function applyState(s) {
  $('gpu-name').textContent=g?g.name:`GPU telemetry: ${h.gpu_status.toLowerCase().replaceAll('_',' ')}`; $('vram-total').textContent=g?`of ${(g.memory_total_mib/1024).toFixed(1)} GiB · ${g.temperature_c??'—'} °C`:'No NVIDIA reading; never shown as zero';
  metric('ram-free',h.ram_available_gib==null?null:h.ram_available_gib.toFixed(1),'GiB'); $('ram-total').textContent=h.ram_total_gib?`of ${h.ram_total_gib.toFixed(1)} GiB · ${h.cpu_logical_threads} logical CPU threads`:'RAM measurement unavailable';
  const switching=!!s.prepared_runtime?.switch_job;
+ const sw=switching?(s.jobs||[]).find(j=>j.id===s.prepared_runtime.switch_job):null;
+ const swText=sw?`${(sw.message||'Switching prepared runtimes\u2026').replace(/\u2026$/,'')} \u2014 ${Math.floor((sw.elapsed_seconds??(Date.now()/1000-(sw.created_at||Date.now()/1000)))/60)} min elapsed${sw.target==='strata'?' of about 15 (Strata reads 33 GB of experts over the slow disk)':''}.`:'';
+ if(!linkExpired)$('chat-hint').textContent=switching?swText:'Text-only \u00b7 Enter to send \u00b7 Shift+Enter for a new line';
  $('send').disabled=busy||benchRunning||switching||!connected; $('run-bench').disabled=busy||benchRunning||switching||!connected;
  for(const id of ['connect','disconnect','unload','profile','context','threads','confirm-import'])$(id).disabled=benchRunning||switching;
  const linux=h.platform==='linux';
@@ -153,7 +167,7 @@ function applyState(s) {
   const runtime=s.prepared_runtime||{};
   for(const target of ['strata','fast4b'])$('runtime-'+target).disabled=busy||benchRunning||!!runtime.switch_job||runtime.peer_busy===true||s.connection?.compute==='cpu';
   $('diagnose-host').disabled=busy||benchRunning||switching||runtime.peer_busy===true||providerSelection!=='managed'||c.kind!=='llama'||c.ownership!=='OWNED';
-  $('runtime-note').textContent=runtime.peer_busy?'An engineering experiment has reserved the GPU. Your current job will be preserved.':runtime.switch_job?'Switching prepared runtimes. See Setup for progress or cancellation.':s.connection?.compute==='cpu'?'CPU inference is active. Unload it explicitly before starting a prepared GPU runtime.':'Prepared models · no downloads · Strata cold startup can take about 15 minutes.';
+  $('runtime-note').textContent=runtime.peer_busy?'An engineering experiment has reserved the GPU. Your current job will be preserved.':runtime.switch_job?swText+' Cancel from Setup.':s.connection?.compute==='cpu'?'CPU inference is active. Unload it explicitly before starting a prepared GPU runtime.':'Prepared models · no downloads · Strata cold startup can take about 15 minutes.';
   $('install-note').textContent='Pinned Ubuntu CUDA runtime. SHA-256 verified; installed only in this lab. The NVIDIA driver is managed separately.';
   document.querySelector('footer span:last-child').textContent='Haven Core · Linux';
   document.querySelector('.strata-panel ol').classList.add('hidden');
@@ -195,7 +209,7 @@ $('import-model').onclick=()=>$('import-dialog').showModal();
 $('confirm-import').onclick=async e=>{e.preventDefault();try{await api('/api/model/import',{path:$('import-path').value});$('import-dialog').close();await refresh();toast('Registered your local model without copying it.');}catch(err){toast(err.message,true);}};
 async function loadLog(){try{$('engine-log').textContent=(await api('/api/log')).text;}catch(e){toast(e.message,true)}}$('refresh-log').onclick=loadLog;
 async function loadResearch(){try{$('research-text').textContent=(await api('/api/research')).text;}catch(e){toast(e.message,true)}}
-function messageNode(role,text){$('welcome')?.remove();const n=element('div','message '+role);n.append(element('div','role',role==='user'?'YOU':'LOCAL MODEL'));const body=element('div','body',text);n.append(body);$('messages').append(n);return{n,body};}
+function messageNode(role,text,who){$('welcome')?.remove();const n=element('div','message '+role);n.append(element('div','role',role==='user'?'YOU':who||'LOCAL MODEL'));const body=element('div','body',text);n.append(body);$('messages').append(n);return{n,body};}
 let diagnosticResumed=false;
 async function startDiagnostic(){
  if(busy||benchRunning)return;
@@ -214,14 +228,31 @@ async function showDiagnostic(id){
 }
 function clearChat(){if(busy){toast('Stop or finish the current request first.');return;}messages=[];$('messages').replaceChildren(element('p','muted','New conversation. Nothing from the previous chat is sent.'));}
 $('new-chat').onclick=clearChat;
-function genSettings(){return{max_tokens:Number($('max-tokens').value),temperature:Number($('temperature').value),top_p:.8,seed:Number($('seed').value),reasoning:$('reasoning').value,provider_id:providerSelection};}
+function genSettings(){return{...(cloudProvider(state,providerSelection)?{egress_ack:'HOSTED_SUBSCRIPTION'}:{}),max_tokens:Number($('max-tokens').value),temperature:Number($('temperature').value),top_p:.8,seed:Number($('seed').value),reasoning:$('reasoning').value,provider_id:providerSelection};}
+function offerEscalation(node){
+ const admin=!auth.enabled||auth.user?.role==='admin',lanes=readyCloud(state);if(!admin||!lanes.length)return;
+ const row=element('div','button-row');
+ for(const p of lanes){const b=element('button','secondary escalate',`Ask ${p.label.replace('Cloud · ','')} instead ☁`);b.title=`Re-asks the same question in the ${p.vendor} cloud lane after you confirm.`;b.onclick=()=>escalate(p);row.append(b);}
+ node.n.append(row);
+}
+async function escalate(p){
+ if(busy||benchRunning){toast('Finish or stop the current request first.');return;}
+ const i=messages.map(m=>m.role).lastIndexOf('user');if(i<0)return;
+ const prior=messages.slice(0,i),question=messages[i].content,sending=[...prior,messages[i]];
+ const chars=sending.reduce((n,m)=>n+m.content.length,0);
+ if(!confirm(`Send this conversation to ${p.vendor} through your own plan (${p.route_class})?\n\n${sending.length} message${sending.length>1?'s':''}, ${chars.toLocaleString()} characters will leave this house. No tools, files or Haven memory are shared.${planText(p)?'\n\nPlan: '+planText(p)+'.':''}`))return;
+ // The cloud answer replaces the local one in the conversation; later turns go back to the selected worker.
+ messages=prior;
+ await sendMessage(question,false,'escalation',{...genSettings(),provider_id:p.id,egress_ack:'HOSTED_SUBSCRIPTION',reasoning:'none',max_tokens:Math.min(Number($('max-tokens').value)||1024,4096)},true);
+}
 async function sendMessage(override,benchmark=false,label='interactive',settings=null,silentUser=false){
  if(busy||(!benchmark&&benchRunning))return null; const text=override||$('prompt').value.trim();if(!text)return null;
  busy=true;$('send').disabled=true;$('run-bench').disabled=true;$('cancel').classList.remove('hidden');
  const history=benchmark?[]:messages.slice();history.push({role:'user',content:text});if(!benchmark)messages=history;
- if(!silentUser)messageNode('user',text);const node=messageNode('assistant','Connecting…');let details=null,pre=null;
- try{const r=await api('/api/generate',{...(settings||genSettings()),messages:history,benchmark,label});activeJob=r.job_id;if(!benchmark)$('prompt').value='';
- const done=await waitJob(activeJob,j=>{node.body.textContent=j.text||(!j.reasoning?'Waiting for local inference…':'');if(j.reasoning){if(!details){details=element('details');details.append(element('summary','','Reasoning output'));pre=element('pre');details.append(pre);node.n.insertBefore(details,node.body);}pre.textContent=j.reasoning;}if(j.ttft_seconds!=null)metric('ttft',j.ttft_seconds.toFixed(2),'s');const box=$('messages');if(box.scrollHeight-box.scrollTop-box.clientHeight<180)box.scrollTop=box.scrollHeight;});
+ const sent=settings||genSettings(),cloud=cloudProvider(state,sent.provider_id),waiting=cloud?`Waiting for ${cloud.vendor} (cloud lane)…`:'Waiting for local inference…';
+ if(!silentUser)messageNode('user',text);const node=messageNode('assistant','Connecting…',cloud?'CLOUD · '+cloud.vendor.toUpperCase():null);let details=null,pre=null;
+ try{const r=await api('/api/generate',{...sent,messages:history,benchmark,label});activeJob=r.job_id;if(!benchmark)$('prompt').value='';
+ const done=await waitJob(activeJob,j=>{node.body.textContent=j.text||(!j.reasoning?waiting:'');if(j.reasoning){if(!details){details=element('details');details.append(element('summary','','Reasoning output'));pre=element('pre');details.append(pre);node.n.insertBefore(details,node.body);}pre.textContent=j.reasoning;}if(j.ttft_seconds!=null)metric('ttft',j.ttft_seconds.toFixed(2),'s');const box=$('messages');if(box.scrollHeight-box.scrollTop-box.clientHeight<180)box.scrollTop=box.scrollHeight;});
  const outputLimited=done.state==='OUTPUT_LIMIT'||done.finish_reason==='length';
  if(done.text&&!benchmark&&(done.state==='COMPLETED'||outputLimited))messages.push({role:'assistant',content:done.text});
  const outcome=outputLimited?'OUTPUT LIMIT REACHED':done.state==='CANCELLED'?'STOPPED':done.state;
@@ -230,9 +261,10 @@ async function sendMessage(override,benchmark=false,label='interactive',settings
  if(done.digest_provenance==='WORKER_DECLARED')node.n.append(element('p','field-note','Model digest: verified on worker; declared to Haven.'));
  if(done.route_reason)node.n.append(element('p','field-note',done.route_reason));
  if(outputLimited&&!benchmark){const actions=element('div','button-row');const cont=element('button','secondary continue-generation','Continue ↗');cont.onclick=async()=>{cont.disabled=true;cont.textContent='Continuing…';await sendMessage(CONTINUE_PROMPT,false,'continue',null,true);};actions.append(cont);node.n.append(actions);}
+ if(!benchmark&&!cloud)offerEscalation(node);
  if(done.state==='CANCELLED')node.n.append(element('p','field-note','HTTP cancellation requested. The backend may still compute; unload an owned engine or stop Strata in its own console for process termination.'));
  return done;
- }catch(e){if(!node.body.textContent||node.body.textContent==='Connecting…'||node.body.textContent==='Waiting for local inference…')node.body.textContent=e.message;else node.n.append(element('p','field-note',e.message));node.n.append(element('div','result-meta','FAILED · no hidden retry'));toast(e.message,true);return null;}finally{busy=false;activeJob=null;$('cancel').classList.add('hidden');await refresh();}}
+ }catch(e){if(!node.body.textContent||node.body.textContent==='Connecting…'||node.body.textContent===waiting)node.body.textContent=e.message;else node.n.append(element('p','field-note',e.message));node.n.append(element('div','result-meta','FAILED · no hidden retry'));if(!benchmark&&!cloud&&!linkExpired)offerEscalation(node);toast(e.message,true);return null;}finally{busy=false;activeJob=null;$('cancel').classList.add('hidden');await refresh();}}
 $('send').onclick=()=>sendMessage();$('prompt').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}};
 $('cancel').onclick=async()=>{try{if(activeJob)await api('/api/cancel',{id:activeJob});toast('Stop requested; partial output will be retained.');}catch(e){toast(e.message,true)}};
 document.querySelectorAll('[data-prompt]').forEach(n=>n.onclick=()=>{$('prompt').value=n.dataset.prompt;$('prompt').focus();});
