@@ -90,6 +90,24 @@ class FetchTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 fetch.fetch(model_for(data), tmp, opener=FakeOpener(data, status=200), log=lambda *_: None)
 
+    def test_truncated_stream_keeps_part_and_resumes(self):
+        data = bytes(range(256)) * 64
+
+        class Flaky(FakeOpener):
+            def open(self, request, timeout=None):
+                response = super().open(request, timeout)
+                if len(self.requests) == 1:  # the first stream ends early without an error
+                    return FakeResponse(response.read()[:3000], self.status)
+                return response
+
+        with tempfile.TemporaryDirectory() as tmp:
+            opener = Flaky(data, status=206)
+            r = fetch.fetch_with_resume(model_for(data), tmp, opener=opener, log=lambda *_: None, wait=0)
+            self.assertEqual(r["status"], "DOWNLOADED_VERIFIED")
+            self.assertEqual(opener.requests[1].get_header("Range"), "bytes=3000-")
+            self.assertEqual((pathlib.Path(tmp) / "m.gguf").read_bytes(), data)
+            self.assertFalse((pathlib.Path(tmp) / "m.gguf.part.bad").exists())
+
     def test_oversized_download_is_refused(self):
         data = b"y" * 100
         with tempfile.TemporaryDirectory() as tmp:
