@@ -40,7 +40,7 @@ def sign_test(gained, lost):
         return 1.0
     k = min(gained, lost)
     tail = sum(math.comb(n, i) for i in range(k + 1)) / 2 ** n
-    return round(min(1.0, 2 * tail), 6)
+    return min(1.0, 2 * tail)
 
 
 def truncated_steps(records, limit=MAX_TOKENS):

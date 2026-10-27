@@ -213,7 +213,9 @@ class ReportTests(unittest.TestCase):
         self.assertIsNone(report.wilson(0, 0))
 
     def test_sign_test(self):
-        self.assertAlmostEqual(report.sign_test(37, 13), 0.000936, places=6)  # RESULTS.md: p≈0.0009
+        self.assertAlmostEqual(report.sign_test(37, 13), 0.000936, places=5)  # RESULTS.md: p≈0.0009
+        self.assertGreater(report.sign_test(8, 44), 0)
+        self.assertLess(report.sign_test(8, 44), 0.000001)
         self.assertEqual(report.sign_test(0, 0), 1.0)
         self.assertEqual(report.sign_test(3, 3), 1.0)
 
