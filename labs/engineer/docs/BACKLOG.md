@@ -37,9 +37,9 @@ Each item names what done looks like. Nothing here is implemented unless stated.
     briefs; the owner or Opus picks which to commission.
 12. **Second skill family** (e.g. `localize_failure`: map a failing test to the suspect function)
     with its own held-out set, to test whether VEI generalizes beyond test running.
-13. **Premature-finish guard.** LFM2.5 often ended its turn with a JSON plan and no tool call (counted as a final answer). Test a guard that returns such a turn to the model once, as a preregistered arm.
-14. **Preregistered E2 rerun** with 3 seeds and new tasks, since the controller arm was exploratory.
-15. **Replicates.** 3 seeds × more tasks for E1/E2 before any claim.
+13. **Premature-finish guard.** Tested in the E2 rerun: not supported. It made LFM2.5 act more, not succeed more.
+14. **Reasoning-budget exhaustion.** All 4 errored E2 runs spent the full 4096-token budget thinking and emitted nothing, three turns running. Test a recovery (lower the thinking budget or ask for the tool call directly after one empty turn) as a preregistered arm.
+15. **Harder tasks for Qwen.** E2 tasks were near ceiling for Qwen (11/12 unaided). The controller's step savings need a preregistered test on tasks Qwen fails unaided.
 
 ## Inference (Stream D)
 
