@@ -11,7 +11,7 @@ import urllib.request
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=('state', 'install', 'download', 'load', 'strata', 'chat', 'job', 'cancel', 'unload', 'workers'))
+    parser.add_argument('action', choices=('state', 'install', 'download', 'load', 'strata', 'disconnect', 'chat', 'job', 'cancel', 'unload', 'workers'))
     parser.add_argument('value', nargs='?')
     parser.add_argument('--wait', action='store_true')
     parser.add_argument('--timeout', type=float, default=180)
@@ -69,6 +69,8 @@ def main():
         'job': ('/api/jobs/' + urllib.parse.quote(args.value or '', safe=''), None),
         'cancel': ('/api/cancel', {'id': args.value}),
         'unload': ('/api/engine/stop', {}),
+        # Leaves an external backend such as Strata running; stop its service separately.
+        'disconnect': ('/api/disconnect', {}),
     }
     if args.action == 'workers':
         request('/api/providers/reload', {}); request('/api/providers/probe', {})
