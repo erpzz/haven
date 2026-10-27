@@ -78,6 +78,12 @@ class WorkerTests(unittest.TestCase):
     def test_unauthorized_roles_denied(self):
         self.assertFalse(w.usable_heartbeat(fleet(), "laptop", heartbeat(roles=["training"]), NOW))
 
+    def test_worker_cannot_claim_more_roles_than_reported(self):
+        jobs = [{"id": "j", "role": "engineering", "cpu_cores": 1, "memory_mib": 128}]
+        observed = heartbeat(roles=["inventory"])
+        result = w.place_jobs(fleet(), {"laptop": observed}, jobs, NOW)
+        self.assertEqual(result[0]["status"], "NO_ELIGIBLE_CAPACITY")
+
     def test_place_job_is_plan_not_execution(self):
         jobs=[{"id":"job1","role":"engineering","cpu_cores":1,"memory_mib":128}]
         result = w.place_jobs(fleet(), {"laptop":heartbeat()}, jobs, NOW)
