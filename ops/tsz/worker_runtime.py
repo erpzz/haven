@@ -13,6 +13,7 @@ from pathlib import Path
 import platform
 import re
 import shutil
+import subprocess
 import stat
 import sys
 import time
@@ -96,9 +97,36 @@ def stage_local_worker(fleet: dict, node_id: str, workdir: Path, now: int) -> di
     return state
 
 
+def parse_vm_stat(text: str) -> int | None:
+    """Conservative approximation from macOS page counters, not a free-memory guarantee."""
+    import re
+    page = re.search(r"page size of (\d+) bytes", text)
+    if not page:
+        return None
+    counters = {}
+    for line in text.splitlines():
+        match = re.match(r"Pages (free|speculative|inactive):\s*(\d+)\.", line.strip())
+        if match:
+            counters[match.group(1)] = int(match.group(2))
+    if "free" not in counters:
+        return None
+    # Inactive memory may be reclaimable, but isn't necessarily instantly free.
+    # Use only free + speculative pages for conservative planning.
+    pages = counters["free"] + counters.get("speculative", 0)
+    return (pages * int(page.group(1))) // (1024 * 1024)
+
+
 def available_memory_mib() -> int | None:
-    if platform.system() != "Linux":
-        return None  # Do not fabricate free macOS memory or GPU capability.
+    system = platform.system()
+    if system == "Darwin":
+        try:
+            report = subprocess.run(["vm_stat"], capture_output=True, text=True,
+                                    timeout=5, check=True)
+            return parse_vm_stat(report.stdout)
+        except (OSError, subprocess.SubprocessError):
+            return None
+    if system != "Linux":
+        return None
     try:
         for line in Path("/proc/meminfo").read_text().splitlines():
             if line.startswith("MemAvailable:"):
@@ -119,6 +147,7 @@ def create_local_heartbeat(config: dict, workdir: Path, now: int) -> dict:
             "disk_free_mib": free // (1024 * 1024),
             "architecture": platform.machine(),
             "gpu_free_mib": None, "inference_runtime_ready": False,
+            "memory_estimate": "macos-free-and-speculative-pages" if platform.system() == "Darwin" else "linux-memavailable" if platform.system() == "Linux" else "unknown",
             "source": "owner-invoked-local-probe"}
 
 
