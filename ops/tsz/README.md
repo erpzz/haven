@@ -44,7 +44,7 @@ Output is a plan only; nothing is executed on a remote system.
 
 ## Verification and next gates
 
-Twenty-three worker-runtime and network-import tests passed locally on the committed source (byte-for-byte check performed). The earlier 17 tests for fleet.py are committed but have not yet been executed on this pushed branch. No live Slink/Mac deployment or true network sharding was attempted.
+Twenty-five worker-runtime and network-import tests passed locally on the committed source (byte-for-byte check performed). The earlier 17 tests for fleet.py are committed but have not yet been executed on this pushed branch. No live Slink/Mac deployment or true network sharding was attempted.
 
 Next: run the whole suite on PR #58; add race and malformed-snapshot tests; integrate with Haven's existing enrolled SSH/Unix-domain worker registry; collect signed or otherwise authenticated heartbeats using that transport; run an owner-initiated bounded diagnostic job and verify expiry/rollback; then test Qwen/Liquid job routing and compare throughput. Preserve active GPU/model experiments.
 
