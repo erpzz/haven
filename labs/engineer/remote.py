@@ -6,8 +6,8 @@ enrollment, re-checked before every connection. No new listener, daemon,
 port or credential is added on either side.
 
   stage(node)                 ship this runtime (content-hashed, verified on arrival)
-  push_workspace(node, repo)  clone a local git repo onto the node (git bundle over SSH)
-  fetch_back(node, ws, repo)  bring the node's commits back as a local branch
+  push_workspace(node, repo)  snapshot a local git commit onto the node, on a task branch
+  fetch_back(...)             replay the node's commits onto that commit here, as a new branch
   RemoteExecutor(...)         Executor-shaped MCP client: the model runs here, every
                               tool call is decided, sandboxed and receipted *there*
   mcp_command(...)            the same executor as an MCP server command for Claude Code / Codex
@@ -97,43 +97,58 @@ def stage(node):
 
 
 def push_workspace(node, repo, name, ref="HEAD"):
-    """Clone `repo` at `ref` onto the node as ~/.local/share/haven-workspaces/<name>; returns that path."""
+    """Snapshot `repo` at `ref` onto the node as ~/.local/share/haven-workspaces/<name> on branch haven/<name>.
+
+    A `git archive` snapshot, not the history: large repos move in seconds. The node's first commit is
+    the snapshot (`base`); fetch_back replays everything after it onto `head` here.
+    """
     if not NAME.fullmatch(name):
         raise RemoteError(f"bad workspace name {name!r}")
-    with tempfile.TemporaryDirectory() as t:
-        bundle = pathlib.Path(t) / "ws.bundle"
-        branch = subprocess.run(["git", "-C", str(repo), "rev-parse", "--abbrev-ref", ref], capture_output=True,
-                                text=True, check=True).stdout.strip()
-        refs = [ref] if branch == "HEAD" else ["HEAD", branch]  # HEAD lets the clone check out
-        subprocess.run(["git", "-C", str(repo), "bundle", "create", str(bundle), *refs], check=True, capture_output=True)
-        ws = f"{REMOTE_WS}/{name}"
-        cmd = (f"set -e; umask 077; mkdir -p ~/{REMOTE_WS} ~/.cache/haven-engineer; test ! -e ~/{ws}; "
-               f"b=$(mktemp ~/.cache/haven-engineer/ws.XXXXXX.bundle); cat > $b; "
-               f"git clone -q $b ~/{ws}; rm -f $b; cd ~/{ws}; git remote remove origin; "
-               f"git checkout -q -b haven/{name}; "  # task branch: commits never land on main unasked
-               f"git config user.name 'Haven engineer'; git config user.email 'haven-engineer@localhost'; "
-               f"echo $(pwd) $(git rev-parse HEAD)")
-        r = subprocess.run(ssh_argv(node) + [cmd], input=bundle.read_bytes(), capture_output=True, timeout=120)
+    head = subprocess.run(["git", "-C", str(repo), "rev-parse", ref], capture_output=True, text=True,
+                          check=True).stdout.strip()
+    archive = subprocess.run(["git", "-C", str(repo), "archive", "--format=tar", head], capture_output=True,
+                             check=True).stdout
+    ws = f"{REMOTE_WS}/{name}"
+    cmd = (f"set -e; umask 077; mkdir -p ~/{REMOTE_WS}; test ! -e ~/{ws}; mkdir ~/{ws}; cd ~/{ws}; tar -xf -; "
+           f"git init -q -b haven/{name}; "  # task branch: commits never land on main unasked
+           f"git config user.name 'Haven engineer'; git config user.email 'haven-engineer@localhost'; "
+           f"git add -A; git commit -qm 'snapshot of {head[:12]}' --no-verify; echo $(pwd) $(git rev-parse HEAD)")
+    r = subprocess.run(ssh_argv(node) + [cmd], input=archive, capture_output=True, timeout=300)
     if r.returncode:
         raise RemoteError(f"workspace push failed: {r.stderr.decode()[-300:]}")
-    path, head = r.stdout.decode().split()
-    return {"path": path, "head": head}
+    path, base = r.stdout.decode().split()
+    return {"path": path, "head": head, "base": base}
 
 
-def fetch_back(node, remote_ws, repo, local_branch):
-    """Fetch the node workspace's current branch into `repo` as `local_branch`. Returns its commit."""
-    cmd = (f"set -e; cd {shlex.quote(remote_ws)}; b=$(mktemp ~/.cache/haven-engineer/out.XXXXXX); "
-           f"git bundle create -q $b HEAD >/dev/null 2>&1; cat $b; rm -f $b")
+def fetch_back(node, remote_ws, repo, local_branch, source_head, base):
+    """Replay the node's commits after `base` onto `source_head` as local branch `local_branch`.
+
+    Returns the branch commit and how many commits came back. The caller's checkout is not touched:
+    patches are applied in a throwaway worktree.
+    """
+    cmd = f"cd {shlex.quote(remote_ws)} && git format-patch --stdout --binary {base}..HEAD"
     r = subprocess.run(ssh_argv(node) + [cmd], capture_output=True, timeout=120)
-    if r.returncode or not r.stdout:
+    if r.returncode:
         raise RemoteError(f"fetch failed: {r.stderr.decode()[-300:]}")
     with tempfile.TemporaryDirectory() as t:
-        bundle = pathlib.Path(t) / "out.bundle"
-        bundle.write_bytes(r.stdout)
-        subprocess.run(["git", "-C", str(repo), "fetch", "-q", str(bundle), f"HEAD:refs/heads/{local_branch}"],
+        wt = pathlib.Path(t) / "wt"
+        subprocess.run(["git", "-C", str(repo), "worktree", "add", "-q", "--detach", str(wt), source_head],
                        check=True, capture_output=True)
-    return subprocess.run(["git", "-C", str(repo), "rev-parse", local_branch], capture_output=True, text=True,
-                          check=True).stdout.strip()
+        try:
+            if r.stdout.strip():
+                am = subprocess.run(["git", "-C", str(wt), "-c", "core.hooksPath=/dev/null", "am", "-q",
+                                     "--committer-date-is-author-date"], input=r.stdout, capture_output=True)
+                if am.returncode:
+                    raise RemoteError(f"patches did not apply: {am.stderr.decode()[-300:]}")
+            commit = subprocess.run(["git", "-C", str(wt), "rev-parse", "HEAD"], capture_output=True, text=True,
+                                    check=True).stdout.strip()
+            subprocess.run(["git", "-C", str(repo), "branch", "-f", local_branch, commit], check=True,
+                           capture_output=True)
+        finally:
+            subprocess.run(["git", "-C", str(repo), "worktree", "remove", "--force", str(wt)], capture_output=True)
+    count = subprocess.run(["git", "-C", str(repo), "rev-list", "--count", f"{source_head}..{commit}"],
+                           capture_output=True, text=True).stdout.strip()
+    return {"commit": commit, "new_commits": int(count or 0)}
 
 
 def mcp_command(node, rt, workspace, mode, agent, task_id, network, meta=None):
@@ -386,11 +401,8 @@ def run_remote_task(node_name, repo, agent_id, mode, prompt, *, max_steps=30, ne
                                 for r in led.receipts()]})
     try:
         branch = f"{node['name']}/{tid}"
-        commit = fetch_back(node, ws["path"], repo, branch)
-        record.update({"fetched_branch": branch, "fetched_commit": commit,
-                       "new_commits": int(subprocess.run(["git", "-C", str(repo), "rev-list", "--count",
-                                                          f"{ws['head']}..{commit}"], capture_output=True,
-                                                         text=True).stdout.strip() or 0)})
+        back = fetch_back(node, ws["path"], repo, branch, ws["head"], ws["base"])
+        record.update({"fetched_branch": branch, "fetched_commit": back["commit"], "new_commits": back["new_commits"]})
     except (RemoteError, subprocess.CalledProcessError) as e:
         record["fetch_error"] = str(e)[:300]
     sess.finish(record)
