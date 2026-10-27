@@ -258,6 +258,9 @@ def main() -> None:
     sub = parser.add_subparsers(dest="action", required=True)
     discovery = sub.add_parser("discover")
     discovery.add_argument("--interface", action="append", required=True)
+    imported = sub.add_parser("discover-import", help="Import owner-controlled network inventory; do not probe")
+    imported.add_argument("--file", type=Path, required=True)
+    imported.add_argument("--interface", action="append", required=True)
     approvals = sub.add_parser("sync-approved")
     approvals.add_argument("--file", type=Path, required=True)
     sub.add_parser("inventory")
@@ -272,6 +275,14 @@ def main() -> None:
             added = update_candidates(state, observations, now)
             write_state(state_dir, state)
             result = {"seen": len(observations), "new_candidates": added, "generation": state["generation"]}
+        elif args.action == "discover-import":
+            from import_source import read_owner_inventory, parse_network_inventory
+            observations = parse_network_inventory(read_owner_inventory(args.file.expanduser()),
+                                                   set(args.interface), now)
+            added = update_candidates(state, observations, now)
+            write_state(state_dir, state)
+            result = {"source": "owner-network-inventory", "seen": len(observations),
+                      "new_candidates": added, "generation": state["generation"]}
         elif args.action == "sync-approved":
             result = reconcile_approved(state, load_approved_file(args.file), now)
             write_state(state_dir, state)
