@@ -24,8 +24,8 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 import policy  # noqa: E402
-from executor import TOOLS, Executor  # noqa: E402
-from ledger import Ledger  # noqa: E402
+import runtime  # noqa: E402
+from executor import TOOLS  # noqa: E402
 from session import TaskSession  # noqa: E402
 
 PROTOCOL = "2025-06-18"
@@ -100,18 +100,14 @@ def build(workspace, mode, agent, network, state=None, task_id=None):
         sess = TaskSession(tid=task_id, state=state)
         if not (sess.dir / "meta.json").exists():
             raise SystemExit(f"unknown task {task_id}")
-        ledger = Ledger(sess.ledger_path, session=sess.tid)
-        ex = Executor(workspace, policy.Scope(mode=mode, network=network), ledger, agent=agent,
-                      approver=sess.approver(), on_event=sess.emit, cancel=sess.cancel)
+        ex = runtime.make_executor(sess, workspace, policy.Scope(mode=mode, network=network), agent)
         return Server(ex, sess), sess
     sess = TaskSession(state=state, agent=agent, agent_kind="mcp", workspace=str(os.path.realpath(workspace)),
                        workspace_name=pathlib.Path(workspace).name, mode=mode, network=network,
                        inference_host=agent, tool_host=os.uname().nodename.split(".")[0],
                        egress="HOSTED_SUBSCRIPTION" if agent in ("claude-code", "codex") else "LOCAL",
                        prompt="(driven by an MCP client)")
-    ledger = Ledger(sess.ledger_path, session=sess.tid)
-    ex = Executor(workspace, policy.Scope(mode=mode, network=network), ledger, agent=agent,
-                  approver=sess.approver(), on_event=sess.emit, cancel=sess.cancel)
+    ex = runtime.make_executor(sess, workspace, policy.Scope(mode=mode, network=network), agent)
     return Server(ex, sess), sess
 
 

@@ -76,6 +76,12 @@ TOOLS = {
     "process_status": _schema("Show whether a started process is running and the tail of its log.", {
         "process_id": S}, ["process_id"]),
     "stop_process": _schema("Stop a process started with start_process.", {"process_id": S}, ["process_id"]),
+    "delegate": _schema("Start a child agent on a bounded sub-task in this workspace and wait for its result. "
+                        "Give it a self-contained task. Optional paths lease files only the child may edit.", {
+        "task": S, "agent": {**S, "description": "Configured local agent id (default: the owner's choice)"},
+        "paths": {"type": "array", "items": S, "description": "Files the child may edit (leased while it runs)"},
+        "mode": {**S, "description": "observe or engineer; never more than this agent's mode"},
+        "max_steps": I}, ["task"]),
 }
 
 
@@ -136,6 +142,9 @@ class Executor:
         self.state_dir = pathlib.Path(state_dir or (pathlib.Path.home() / ".local/state/haven-engineer"))
         self.git_common = self._git_common_dir()
         self.processes = {}
+        # Set by runtime.make_executor; defaults keep a bare Executor usable.
+        self.task_id, self.leases, self.write_allow, self.depth = None, None, None, 0
+        self.delegator, self.budget_steps = None, 30
 
     # ---- public entry point ----------------------------------------------
 
@@ -237,6 +246,13 @@ class Executor:
             parts = p.relative_to(self.root).parts
             if parts and parts[0] == ".git":
                 raise ToolError("writing inside .git is not allowed; use git tools")
+            if self.write_allow is not None and str(p) not in self.write_allow:
+                raise ToolError(f"{rel} is outside the files leased to this agent: "
+                                + ", ".join(self._rel(w) for w in self.write_allow))
+            if self.leases is not None:
+                holder = self.leases.holder(p)
+                if holder and holder != self.task_id:
+                    raise ToolError(f"{rel} is leased by running task {holder}; wait for it or pick other files")
         if must_exist and not p.exists():
             raise ToolError(f"{rel} does not exist")
         return p
@@ -487,6 +503,26 @@ class Executor:
         if p["proc"].poll() is None:
             _kill_group(p["proc"])
         return {"ok": True, "output": f"{process_id} stopped (exit {p['proc'].wait()})"}
+
+    def _t_delegate(self, rid, decision, task, agent=None, paths=None, mode=None, max_steps=None):
+        if self.delegator is None:
+            raise ToolError("delegation is not available in this session")
+        try:
+            rec = self.delegator(task=task, agent=agent, paths=paths, mode=mode, max_steps=max_steps)
+        except (ValueError, KeyError) as e:
+            raise ToolError(str(e))
+        rows = [f"  {r['receipt']} {r['tool']}: {r['status']}" + (f" exit {r['exit_code']}" if r.get("exit_code") is not None else "")
+                for r in rec.get("receipts", []) if r.get("class") != "read"]
+        check = rec.get("answer_check") or {}
+        out = [f"child task {rec.get('task_id')} ({rec.get('model')}) status: {rec.get('status')}"
+               + (f" — {rec['error']}" if rec.get("error") else ""),
+               f"steps {rec.get('steps')}, tool calls {rec.get('tool_calls')}, {rec.get('wall_s')}s",
+               "child actions observed by its executor:", *(rows or ["  (no changes or commands)"]),
+               "child's own summary (unverified text):", (rec.get("answer") or "(none)")[:1500]]
+        if check and not check.get("ok", True):
+            out.append(f"receipt check on the child's summary failed: {json.dumps(check)[:300]}")
+        changed = sorted({p for r in rec.get("receipts", []) for p in (r.get("changed_paths") or [])})
+        return {"ok": rec.get("status") == "completed", "output": "\n".join(out), "changed_paths": changed}
 
     def stop_all(self):
         for p in self.processes.values():

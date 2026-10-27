@@ -38,6 +38,7 @@ TOOL_CLASS = {
     "run_command": "exec", "start_process": "exec", "stop_process": "exec",
     "git_commit": "git_write", "git_branch": "git_write",
     "deploy": "deploy",
+    "delegate": "delegate",
 }
 
 PROTECTED_BRANCHES = ("main", "master", "production", "release")
@@ -224,6 +225,10 @@ def decide(tool: str, args: dict, scope: Scope, sandboxed: bool) -> Decision:
             return Decision(ASK if mode == "engineer" else DENY,
                             f"commit on protected branch {branch}", klass)
         return Decision(ALLOW, "commit on a working branch", klass)
+    if klass == "delegate":
+        if mode == "observe":
+            return Decision(DENY, "observe mode cannot start child agents", klass)
+        return Decision(ALLOW, "child agent with no more authority than this one", klass)
     if klass == "deploy":
         target = str(args.get("target") or "")
         if target in scope.deploy_targets and mode == "autonomous":

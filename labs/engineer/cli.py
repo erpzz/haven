@@ -22,85 +22,16 @@ sys.path.insert(0, str(HERE))
 
 import policy  # noqa: E402
 import sandbox  # noqa: E402
-from executor import Executor  # noqa: E402
 from ledger import Ledger  # noqa: E402
-from loop import Agent  # noqa: E402
-from session import TaskSession  # noqa: E402
 
-CONFIG = pathlib.Path(os.environ.get("HAVEN_ENGINEER_CONFIG", pathlib.Path.home() / ".config/haven-engineer"))
-STATE = pathlib.Path(os.environ.get("HAVEN_ENGINEER_STATE", pathlib.Path.home() / ".local/state/haven-engineer"))
-
-
-def load_agents():
-    path = CONFIG / "agents.json"
-    if not path.exists():
-        path = HERE / "agents.example.json"
-    return json.loads(path.read_text())["agents"]
-
-
-def owner_scope():
-    """Owner-held defaults (network grant etc.). Models have no tool that writes this file."""
-    path = CONFIG / "scope.json"
-    return json.loads(path.read_text()) if path.exists() else {}
+from runtime import STATE, agent_by_id as _agent_by_id, load_agents, owner_scope, run_task  # noqa: E402,F401
 
 
 def agent_by_id(agent_id):
-    for a in load_agents():
-        if a["id"] == agent_id:
-            return a
-    raise SystemExit(f"unknown agent {agent_id}; see `cli.py agents`")
-
-
-def read_key(agent):
-    kf = agent.get("key_file")
-    return pathlib.Path(os.path.expanduser(kf)).read_text().strip() if kf else ""
-
-
-def run_task(workspace, agent_cfg, mode, prompt, *, approver=None, on_event=None, session=None,
-             network=None, max_steps=30, overrides=None):
-    """Run one local-model task. Every event also goes to the session's events.jsonl."""
-    if network is None:
-        network = bool(owner_scope().get("network"))
-    tool_host = agent_cfg.get("tool_host") or os.uname().nodename.split(".")[0]
-    sess = session or TaskSession(agent=agent_cfg["id"], agent_kind=agent_cfg.get("kind", "local"), workspace=str(workspace),
-                                  workspace_name=pathlib.Path(workspace).name, mode=mode, network=network,
-                                  inference_host=agent_cfg.get("inference_host"), tool_host=tool_host,
-                                  egress=agent_cfg.get("egress", "LOCAL"), prompt=prompt)
-
-    if agent_cfg.get("kind") == "cli":
-        import hosted
-        if on_event:
-            orig = sess.emit
-            sess.emit = lambda e: (orig(e), on_event(e))
-        return hosted.run(agent_cfg, sess, os.path.realpath(workspace), mode, prompt, network=network,
-                          max_turns=max_steps + 10)
-
-    def emit(e):
-        sess.emit(e)
-        if on_event:
-            on_event(e)
-
-    ledger = Ledger(sess.ledger_path, session=sess.tid)
-    scope = policy.Scope(mode=mode, network=network)
-    executor = Executor(workspace, scope, ledger, agent=agent_cfg["id"], approver=approver or sess.approver(),
-                        on_event=emit, cancel=sess.cancel)
-    opts = {**{k: agent_cfg[k] for k in ("thinking", "max_tokens", "temperature", "ctx_chars") if k in agent_cfg},
-            **(overrides or {})}
-    agent = Agent(executor, base_url=agent_cfg["base_url"], model=agent_cfg["model"], api_key=read_key(agent_cfg),
-                  label=agent_cfg["id"], max_steps=max_steps, on_event=emit, **opts)
     try:
-        record = agent.run(prompt)
-    except Exception as e:  # keep a record of crashes too
-        record = {"status": "error", "error": f"{type(e).__name__}: {e}", "answer": "", "runtime_footer": ledger.footer()}
-        emit({"type": "task_finished", "status": "error", "error": record["error"]})
-    finally:
-        executor.stop_all()
-    record.update({"task_id": sess.tid, "workspace": executor.root.name, "inference_host": agent_cfg.get("inference_host"),
-                   "tool_host": tool_host, "sandbox": executor.sandbox["backend"], "network": network,
-                   "receipts": [{k: r.get(k) for k in ("receipt", "tool", "status", "summary", "exit_code", "class",
-                                                       "decided_by", "duration_s")} for r in ledger.receipts()]})
-    sess.finish(record)
-    return record
+        return _agent_by_id(agent_id)
+    except KeyError as e:
+        raise SystemExit(f"{e}; see `cli.py agents`")
 
 
 def _print_event(e):

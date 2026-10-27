@@ -193,7 +193,8 @@ def run(agent_cfg, sess, workspace, mode, prompt, *, network, max_turns=40, time
         status, error = "error", (res.get("result") or stderr or f"CLI exited {proc.returncode}")[:600]
     answer = res.get("result") or ""
     ledger = Ledger(sess.ledger_path, session=sess.tid) if sess.ledger_path.exists() else None
-    check = ledger.check_answer(answer) if (ledger and answer) else None
+    from runtime import child_ledgers
+    check = ledger.check_answer(answer, child_ledgers(sess)) if (ledger and answer) else None
     record = {"task_id": sess.tid, "status": status, "error": error, "model": kind, "reported_model": parser.model, "mode": mode,
               "answer": answer, "answer_check": check, "runtime_footer": ledger.footer() if ledger else "",
               "wall_s": round(time.monotonic() - started, 2), "steps": parser.turns,

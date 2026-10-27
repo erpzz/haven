@@ -165,7 +165,7 @@ class Agent:
                                  "Run the relevant test or check now, or explain why it cannot be run."})
                     self._emit("nudge", kind="verify")
                     continue
-                check = self.ex.ledger.check_answer(visible)
+                check = self.ex.ledger.check_answer(visible, self._linked())
                 if self.answer_check and not checked and not check["ok"]:
                     checked = True
                     stats["nudges"].append("answer_check")
@@ -220,7 +220,7 @@ class Agent:
             if consecutive_invalid >= 3:
                 status, error = "error", "three consecutive turns with malformed tool calls"
                 break
-        check = self.ex.ledger.check_answer(answer) if answer else None
+        check = self.ex.ledger.check_answer(answer, self._linked()) if answer else None
         record = {
             "status": status, "error": error, "model": self.label, "mode": self.ex.scope.mode,
             "answer": answer, "answer_check": check, "runtime_footer": self.ex.ledger.footer(),
@@ -231,6 +231,10 @@ class Agent:
         self._emit("task_finished", status=status, error=error, answer=answer[:4000], check=check,
                    footer=record["runtime_footer"], wall_s=record["wall_s"])
         return record
+
+    def _linked(self):
+        finder = getattr(self.ex, "linked_ledgers", None)
+        return finder() if finder else ()
 
     def _trim(self, msgs):
         """Elide old tool outputs (keeping receipt headers) when the conversation outgrows the budget."""
