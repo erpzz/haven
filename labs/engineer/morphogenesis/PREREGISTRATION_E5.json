@@ -95,7 +95,7 @@
       "analysis_changed": false
     },
     {
-      "at": "2026-10-27 ~17:00 EDT, before any experimental (seed 44/55/66) run",
+      "at": "2026-10-27 16:48 EDT, before any experimental (seed 44/55/66) run",
       "by": "experimenter (Opus, the session running E5)",
       "change": "Corrects the count in the previous amendment: 4 of 8 calibration runs (e5a-e5d, seed 7) completed. The 5th (e5e) crashed at start because another session checked out the shared clone to origin/main while calibration was running, which removed the task files. Calibration resumes from a dedicated worktree on this branch. run_bench.py skips the 4 completed rows. loop.py, runtime.py, executor.py, the skill, the bench scripts and the tasks are byte-identical to edef00a, where those rows were produced.",
       "analysis_changed": false
