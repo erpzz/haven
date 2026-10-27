@@ -196,11 +196,15 @@ def place_jobs(fleet: dict, heartbeats: dict, jobs: list[dict], now: int) -> lis
         remaining[node_id] = {"cores": cores, "memory": memory, "used": 0}
 
     results = []
+    seen_jobs = set()
     for job in jobs:
         name, role, cpus, mib = (job.get("id"), job.get("role"),
                                  job.get("cpu_cores"), job.get("memory_mib"))
         if not isinstance(name, str) or not ID.fullmatch(name):
             raise WorkerError("job ID is invalid")
+        if name in seen_jobs:
+            raise WorkerError("duplicate job ID")
+        seen_jobs.add(name)
         if role not in ROLES:
             raise WorkerError("job role not recognized")
         if type(cpus) is not int or not (1 <= cpus <= 256):
