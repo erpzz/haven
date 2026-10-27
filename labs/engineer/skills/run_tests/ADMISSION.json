@@ -1,0 +1,42 @@
+{
+  "name": "run_tests",
+  "sha256": "081dd5aa2763f8acb30913170d84204a49346b263879f2445667b88387b52b02",
+  "author": "claude-code (opus) via haven executor",
+  "status": "admitted",
+  "validation_summary": {
+    "heldout_pass": 5,
+    "heldout_total": 5,
+    "dev_pass": 3,
+    "dev_total": 3
+  },
+  "evidence_tasks": [
+    "20261026T230219-f2904f"
+  ],
+  "heldout_cases": [
+    {
+      "case": "h1-unittest-src-package",
+      "ok": true,
+      "seconds": 0.13
+    },
+    {
+      "case": "h2-pytest-style-all-pass",
+      "ok": true,
+      "seconds": 0.14
+    },
+    {
+      "case": "h3-node-nested",
+      "ok": true,
+      "seconds": 0.13
+    },
+    {
+      "case": "h4-unittest-error",
+      "ok": true,
+      "seconds": 0.14
+    },
+    {
+      "case": "h5-pytest-style-class",
+      "ok": true,
+      "seconds": 0.13
+    }
+  ]
+}

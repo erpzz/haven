@@ -1,0 +1,36 @@
+{
+  "schema": "haven-morphogenesis-prereg-1",
+  "experiment": "E1 verified executable inheritance (run_tests)",
+  "registered_before_any_transfer_run": true,
+  "skill": {"name": "run_tests", "sha256": "081dd5aa2763f8acb30913170d84204a49346b263879f2445667b88387b52b02",
+            "author": "Claude Code (Opus) through the Haven MCP executor, task 20261026T230219-f2904f",
+            "admission": "5/5 hidden held-out cases, 3/3 dev cases, judged by skills.py (not by the author)"},
+  "hypotheses": {
+    "H1": "Local models that never saw the skill written succeed on more unseen bug-fix tasks with the executable skill than with tools alone.",
+    "H2": "The executable skill beats the same procedure given as prose (recipe.md) in the system prompt. If prose matches code, executability adds nothing and H2 is rejected.",
+    "H3": "With the skill, agents waste fewer commands discovering how to run tests (discovery_waste) and need fewer steps."
+  },
+  "design": {
+    "agents": ["qwen35-4b-mac (Qwen3.5-4B Q4_K_M, llama.cpp Metal)", "lfm25-8b-a1b-mac (LFM2.5-8B-A1B Q4_K_M, llama.cpp Metal)"],
+    "arms": {"none": "Haven tools only", "recipe": "tools + recipe.md in the system prompt", "skill": "tools + skill_run_tests tool"},
+    "tasks": ["t1-inventory-pytest-src", "t2-durations-node", "t3-ledger-unittest-src", "t4-config-unittest-error"],
+    "task_provenance": "Written by the experimenter (Opus, this session) after the brief and before the skill existed; never shown to the skill author; disjoint from dev and held-out admission cases.",
+    "budget": {"max_steps": 20, "temperature": 0.0, "mode": "engineer", "network": "owner grant (on)"},
+    "replicates": 1,
+    "one_model_loaded_at_a_time": true
+  },
+  "outcome_judge": "bench/run_bench.py, after the agent finishes: protected test files byte-identical AND the task verifier passes (real pytest 8.3.5 in a private venv, node --test, or unittest). Commit reported separately. The agent's own claims are not used.",
+  "metrics": ["success", "steps", "tool_calls", "discovery_waste", "failed_actions", "wall_s", "model_s", "prompt_tokens", "completion_tokens", "committed", "answer_check_ok"],
+  "decision_rules": {
+    "H1_supported": "skill-arm successes exceed none-arm successes for both agents, summed over tasks",
+    "H2_supported": "skill-arm successes exceed recipe-arm successes summed over both agents, or tie on success with lower median steps",
+    "H3_supported": "median discovery_waste and median steps lower in the skill arm than in the none arm",
+    "caveat": "n=4 tasks x 1 replicate per cell is a pilot. Any effect smaller than 2 tasks is reported as inconclusive, not as support."
+  },
+  "known_threats": [
+    "Tasks are small and synthetic; the experimenter also wrote the brief and the transfer tasks.",
+    "t1 imports pytest, which is not installed; the none and recipe arms must build their own runner or install pytest (network is granted, but the sandbox forbids writes outside the repo).",
+    "The skill author (Opus) is a far stronger model than the receiving agents; this tests transfer of an artifact, not whether small models can discover skills.",
+    "Single replicate at temperature 0; llama.cpp is near-deterministic but not bit-exact across runs."
+  ]
+}

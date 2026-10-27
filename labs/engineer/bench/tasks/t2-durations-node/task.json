@@ -1,0 +1,7 @@
+{
+  "prompt": "The test suite fails. Fix the bug in the source code without changing the tests, run the tests to confirm, and commit the fix.",
+  "framework": "node-test",
+  "protected": [
+    "test/durations.test.js"
+  ]
+}

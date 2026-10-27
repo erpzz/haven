@@ -1,0 +1,8 @@
+{
+  "title": "Frontend choice: Open WebUI Computer as the workspace shell",
+  "status": "measured",
+  "hypothesis": "An existing workspace product plus Haven's executor beats building a new IDE.",
+  "finding": "cptr 0.9.21: workspace, file edit, persistent terminal, git diff/commit, chats that resume after reload, local Qwen calling Haven tools over MCP with receipts. Problems found: rich Markdown editor rewrites unrelated lines; auto-edits .gitignore; no per-user isolation; ELv2-based licence. See docs/FRONTEND_EVALUATION.md.",
+  "limits": "OpenCode end-to-end with the 4B model, Open WebUI + Open Terminal and Hermes Agent were not run.",
+  "id": "f1-frontends"
+}

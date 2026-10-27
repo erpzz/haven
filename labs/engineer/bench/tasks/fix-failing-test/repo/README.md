@@ -1,0 +1,3 @@
+# sample-shop
+
+Run the tests with `python3 -m unittest -v`.

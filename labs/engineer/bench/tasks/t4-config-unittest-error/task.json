@@ -1,0 +1,7 @@
+{
+  "prompt": "Some tests fail. Fix the code (not the tests) so the whole suite passes, confirm by running the tests, and commit the fix.",
+  "framework": "unittest",
+  "protected": [
+    "test_settings.py"
+  ]
+}

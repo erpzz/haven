@@ -1,0 +1,54 @@
+{
+  "title": "First engineering slice: real tools, real receipts",
+  "status": "measured",
+  "hypothesis": "A local 4B model can complete a read-edit-test-commit cycle through a scoped executor, and hosted agents can be confined to the same executor.",
+  "table": {
+    "columns": [
+      "run",
+      "agent",
+      "outcome",
+      "actions",
+      "wall"
+    ],
+    "rows": [
+      [
+        "fix-failing-test",
+        "Qwen3.5-4B (Mac Metal)",
+        "fixed, tests pass, committed; 3 of 10 calls spent finding the test command",
+        "10",
+        "146 s"
+      ],
+      [
+        "fix-failing-test",
+        "Claude Code / Opus (plan, Haven tools only)",
+        "fixed, tests pass, committed",
+        "8",
+        "13 s"
+      ],
+      [
+        "two-module-bugs",
+        "Opus supervising a Qwen child (leased slugify.py)",
+        "both fixed; supervisor reviewed child diff before commit",
+        "9 + child",
+        "82 s"
+      ],
+      [
+        "two-module-bugs",
+        "Qwen3.5-4B solo (started from browser)",
+        "incomplete: 2 of 3 failures fixed at 20-min limit",
+        "23",
+        "1221 s"
+      ],
+      [
+        "fix-failing-test",
+        "Codex (plan)",
+        "blocked: plan usage limit; nothing retried",
+        "0",
+        "5 s"
+      ]
+    ]
+  },
+  "finding": "Every outcome above was re-checked outside the agent (tests re-run, commits inspected, ledgers verified). An owner approval from the browser is recorded in the signed receipt as decided_by owner.",
+  "limits": "Single runs. The solo-Qwen run spent ~700 s waiting for approvals triggered by a classifier bug (quoted ';' and newlines), since fixed.",
+  "id": "a0-first-vertical-slice"
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "enabled_providers": [
+    "haven-local"
+  ],
+  "share": "disabled",
+  "autoupdate": false,
+  "provider": {
+    "haven-local": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Haven local (Mac Metal)",
+      "options": {
+        "baseURL": "http://127.0.0.1:8892/v1",
+        "apiKey": "{file:~/.local/state/haven-engineer/llm-key}"
+      },
+      "models": {
+        "qwen35-4b": {
+          "name": "Qwen3.5 4B",
+          "tool_call": true,
+          "limit": {
+            "context": 32768,
+            "output": 4096
+          }
+        }
+      }
+    }
+  },
+  "model": "haven-local/qwen35-4b",
+  "permission": {
+    "edit": "allow",
+    "webfetch": "deny",
+    "websearch": "deny",
+    "external_directory": "deny",
+    "bash": {
+      "*": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "ls*": "allow",
+      "python3 -m unittest*": "allow",
+      "python3 -m pytest*": "allow",
+      "node --test*": "allow",
+      "sudo *": "deny",
+      "rm -rf *": "ask",
+      "git push*": "ask"
+    }
+  },
+  "mcp": {
+    "haven": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "python3",
+        "-I",
+        "labs/engineer/mcp_server.py",
+        "--workspace",
+        "PATH/TO/WORKSPACE",
+        "--mode",
+        "engineer",
+        "--agent",
+        "opencode"
+      ]
+    }
+  }
+}

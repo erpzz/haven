@@ -1,0 +1,125 @@
+{
+  "id": "e1-inheritance",
+  "title": "E1: inherited run_tests skill on unseen bug-fix tasks",
+  "status": "measured",
+  "hypothesis": "Executable inheritance helps small local models more than tools alone and more than the same knowledge as prose.",
+  "table": {
+    "columns": [
+      "agent",
+      "arm",
+      "success",
+      "median steps",
+      "discovery waste (sum)",
+      "median wall s",
+      "skill tool calls",
+      "runtime test runs",
+      "committed"
+    ],
+    "rows": [
+      [
+        "lfm25-8b-a1b-mac",
+        "none",
+        "0/4",
+        9.5,
+        1,
+        100.5,
+        0,
+        0,
+        "0/4"
+      ],
+      [
+        "lfm25-8b-a1b-mac",
+        "recipe",
+        "0/4",
+        2.0,
+        0,
+        24.5,
+        0,
+        0,
+        "0/4"
+      ],
+      [
+        "lfm25-8b-a1b-mac",
+        "skill",
+        "0/4",
+        3.0,
+        0,
+        26.7,
+        1,
+        0,
+        "0/4"
+      ],
+      [
+        "lfm25-8b-a1b-mac",
+        "controller",
+        "2/4",
+        5.0,
+        0,
+        49.2,
+        6,
+        6,
+        "2/4"
+      ],
+      [
+        "qwen35-4b-mac",
+        "none",
+        "3/4",
+        13.5,
+        9,
+        116.1,
+        0,
+        0,
+        "3/4"
+      ],
+      [
+        "qwen35-4b-mac",
+        "recipe",
+        "4/4",
+        11.0,
+        1,
+        119.7,
+        0,
+        0,
+        "4/4"
+      ],
+      [
+        "qwen35-4b-mac",
+        "skill",
+        "4/4",
+        13.0,
+        1,
+        109.5,
+        0,
+        0,
+        "3/4"
+      ],
+      [
+        "qwen35-4b-mac",
+        "controller",
+        "4/4",
+        9.0,
+        0,
+        107.5,
+        8,
+        8,
+        "4/4"
+      ]
+    ]
+  },
+  "preregistered_verdicts": {
+    "H1 skill tool vs tools-only": "not attributable: the skill tool was called 1 time(s) and not by every agent",
+    "H2 skill tool vs prose recipe": "not attributable: the skill tool was called 1 time(s) and not by every agent",
+    "H3 discovery waste with skill tool": "not attributable: the skill tool was called 1 time(s) and not by every agent",
+    "skill tool calls (all agents)": 1,
+    "E2 controller vs tools-only (exploratory)": "better"
+  },
+  "totals": {
+    "none": 3,
+    "recipe": 4,
+    "skill": 4,
+    "controller": 6
+  },
+  "limits": "4 tasks x 1 replicate per cell, temperature 0; effects under 2 tasks are inconclusive by preregistration. The controller arm was added after the first 12 Qwen runs (not preregistered) and is reported as exploratory.",
+  "finding": "Offering the inherited skill as a tool did nothing measurable: Qwen never called it (0/4) and LFM called it once. The prose recipe was read (Qwen's test-discovery waste fell from 9 to 1) but did not change success beyond one task. What worked was having the runtime invoke the skill itself (E2 controller, added after preregistration, exploratory): 6/8 successes vs 3/8 tools-only; Qwen 4/4 with median 9 steps vs 13.5; LFM 2/4 vs 0/4 in every other arm, including the t1 pytest-without-pytest task both models otherwise failed. LFM2.5's dominant failure here was ending its turn with a JSON plan instead of tool calls; its 2.4x token speed did not become engineering success.",
+  "interpretation": "Capability inheritance worked when the capability was wired into the controller, not when it was left to a small model's tool choice. That points the next experiments at controllers and routing, not at bigger tool menus."
+}
