@@ -664,6 +664,7 @@ class Lab:
                 # CUDA-linked llama.cpp still supports CPU GGUF execution; hide all CUDA devices
                 # from this *child process only*. Independent GPU agents are not modified.
                 env['CUDA_VISIBLE_DEVICES'] = '-1'
+                env['HIP_VISIBLE_DEVICES'] = '-1'
             # Avoid loading unrequested user overrides or inherited cloud credentials into the engine.
             for k in list(env):
                 if k.startswith(('LLAMA_ARG_', 'OPENAI_', 'ANTHROPIC_', 'TYPESAFE_')) or k in ('HF_TOKEN', 'HUGGING_FACE_HUB_TOKEN'):

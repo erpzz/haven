@@ -246,3 +246,23 @@ async function loadBenchmarks(){try{const d=await api('/api/benchmarks');$('benc
 $('export-bench').onclick=async()=>{try{saveJSON('haven-benchmarks.json',await api('/api/benchmarks'));}catch(e){toast(e.message,true)}};
 $('exit').onclick=async()=>{if(!confirm('Exit this lab and stop its OWNED engine? External Strata remains in its own console.'))return;try{await api('/api/shutdown',{});$('connection-pill').textContent='Lab closed';$('send').disabled=true;clearInterval(timer);toast('Lab closed. You can close this tab.');}catch(e){toast(e.message,true)}};
 boot();
+
+// Public metadata is rendered only as text, never HTML or executable model cards.
+$('discovery-form').onsubmit=async event=>{
+ event.preventDefault();const button=$('discovery-search');button.disabled=true;
+ $('discovery-status').textContent='Searching public metadata…';$('discovery-results').replaceChildren();$('discovery-detail').replaceChildren();
+ try{const result=await api('/api/discovery/search',{query:$('discovery-query').value,author:$('discovery-author').value,format:$('discovery-format').value,task:$('discovery-task').value});
+  $('discovery-status').textContent=`${result.models.length} results · Discoverable only · compatibility and qualification unverified.`;
+  for(const m of result.models){const card=element('article','model-card');card.append(element('h3','',m.repo),element('p','',`${m.task||'Task unknown'} · ${m.license} · gated: ${String(m.gated)}`));
+   const inspect=element('button','secondary','Inspect files & revision');inspect.onclick=()=>inspectDiscovery(m.repo);card.append(inspect);$('discovery-results').append(card);}
+ }catch(error){$('discovery-status').textContent=error.message;}finally{button.disabled=false;}
+};
+async function inspectDiscovery(repo){
+ const root=$('discovery-detail');root.replaceChildren(element('p','','Reading public artifact metadata…'));
+ try{const d=await api('/api/discovery/detail',{repo});root.replaceChildren(element('h3','',d.model.repo),element('p','',`Revision: ${d.model.revision||'unknown'} · License: ${d.model.license}`),element('p','field-note',d.notice));
+  const link=element('a','text-btn','Review publisher model card ↗');link.href=d.model.source;link.target='_blank';link.rel='noopener noreferrer';root.append(link);
+  for(const file of d.files){const row=element('div','soft-note');row.append(element('strong','',file.filename),element('p','',`${file.format} · ${file.quantization} · ${file.size_bytes?(file.size_bytes/1e9).toFixed(2)+' GB':'size unknown'} · ${file.integrity}`));
+   if(file.sha256)row.append(element('p','field-note','SHA-256: '+file.sha256));root.append(row);}
+  if(!d.files.length)root.append(element('p','','No GGUF or safetensors artifacts reported within this bounded metadata response.'));
+ }catch(error){root.replaceChildren(element('p','',error.message));}
+}
