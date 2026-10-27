@@ -1,0 +1,172 @@
+#!/usr/bin/env python3
+"""Run one Haven engineering task from the command line.
+
+  cli.py run --workspace DIR --agent qwen35-4b --mode engineer "Fix the failing test"
+  cli.py agents                       # configured agents and where they run
+  cli.py sandbox                      # what OS enforcement this host has
+  cli.py verify LEDGER.jsonl          # check a receipt ledger's chain and signatures
+
+Agents come from the private ~/.config/haven-engineer/agents.json (see
+agents.example.json). Records and ledgers go to ~/.local/state/haven-engineer/tasks/.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import pathlib
+import sys
+
+HERE = pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+
+import policy  # noqa: E402
+import sandbox  # noqa: E402
+from executor import Executor  # noqa: E402
+from ledger import Ledger  # noqa: E402
+from loop import Agent  # noqa: E402
+from session import TaskSession  # noqa: E402
+
+CONFIG = pathlib.Path(os.environ.get("HAVEN_ENGINEER_CONFIG", pathlib.Path.home() / ".config/haven-engineer"))
+STATE = pathlib.Path(os.environ.get("HAVEN_ENGINEER_STATE", pathlib.Path.home() / ".local/state/haven-engineer"))
+
+
+def load_agents():
+    path = CONFIG / "agents.json"
+    if not path.exists():
+        path = HERE / "agents.example.json"
+    return json.loads(path.read_text())["agents"]
+
+
+def owner_scope():
+    """Owner-held defaults (network grant etc.). Models have no tool that writes this file."""
+    path = CONFIG / "scope.json"
+    return json.loads(path.read_text()) if path.exists() else {}
+
+
+def agent_by_id(agent_id):
+    for a in load_agents():
+        if a["id"] == agent_id:
+            return a
+    raise SystemExit(f"unknown agent {agent_id}; see `cli.py agents`")
+
+
+def read_key(agent):
+    kf = agent.get("key_file")
+    return pathlib.Path(os.path.expanduser(kf)).read_text().strip() if kf else ""
+
+
+def run_task(workspace, agent_cfg, mode, prompt, *, approver=None, on_event=None, session=None,
+             network=None, max_steps=30, overrides=None):
+    """Run one local-model task. Every event also goes to the session's events.jsonl."""
+    if network is None:
+        network = bool(owner_scope().get("network"))
+    tool_host = agent_cfg.get("tool_host") or os.uname().nodename.split(".")[0]
+    sess = session or TaskSession(agent=agent_cfg["id"], agent_kind=agent_cfg.get("kind", "local"), workspace=str(workspace),
+                                  workspace_name=pathlib.Path(workspace).name, mode=mode, network=network,
+                                  inference_host=agent_cfg.get("inference_host"), tool_host=tool_host,
+                                  egress=agent_cfg.get("egress", "LOCAL"), prompt=prompt)
+
+    if agent_cfg.get("kind") == "cli":
+        import hosted
+        if on_event:
+            orig = sess.emit
+            sess.emit = lambda e: (orig(e), on_event(e))
+        return hosted.run(agent_cfg, sess, os.path.realpath(workspace), mode, prompt, network=network,
+                          max_turns=max_steps + 10)
+
+    def emit(e):
+        sess.emit(e)
+        if on_event:
+            on_event(e)
+
+    ledger = Ledger(sess.ledger_path, session=sess.tid)
+    scope = policy.Scope(mode=mode, network=network)
+    executor = Executor(workspace, scope, ledger, agent=agent_cfg["id"], approver=approver or sess.approver(),
+                        on_event=emit, cancel=sess.cancel)
+    opts = {**{k: agent_cfg[k] for k in ("thinking", "max_tokens", "temperature", "ctx_chars") if k in agent_cfg},
+            **(overrides or {})}
+    agent = Agent(executor, base_url=agent_cfg["base_url"], model=agent_cfg["model"], api_key=read_key(agent_cfg),
+                  label=agent_cfg["id"], max_steps=max_steps, on_event=emit, **opts)
+    try:
+        record = agent.run(prompt)
+    except Exception as e:  # keep a record of crashes too
+        record = {"status": "error", "error": f"{type(e).__name__}: {e}", "answer": "", "runtime_footer": ledger.footer()}
+        emit({"type": "task_finished", "status": "error", "error": record["error"]})
+    finally:
+        executor.stop_all()
+    record.update({"task_id": sess.tid, "workspace": executor.root.name, "inference_host": agent_cfg.get("inference_host"),
+                   "tool_host": tool_host, "sandbox": executor.sandbox["backend"], "network": network,
+                   "receipts": [{k: r.get(k) for k in ("receipt", "tool", "status", "summary", "exit_code", "class",
+                                                       "decided_by", "duration_s")} for r in ledger.receipts()]})
+    sess.finish(record)
+    return record
+
+
+def _print_event(e):
+    k = e["type"]
+    if k == "model_turn":
+        calls = ", ".join(c for c in e["calls"] if c) or "answer"
+        print(f"  · model step {e.get('step')} {e.get('seconds', '')}{'s' if e.get('seconds') is not None else ''} → {calls}", flush=True)
+    elif k == "action" and e.get("status") in ("refused", "succeeded", "failed", "unknown"):
+        extra = f" exit {e['exit_code']}" if e.get("exit_code") is not None else ""
+        print(f"    {e['receipt']} {e['tool']}: {e['status']}{extra} {e.get('reason', '') or ''}", flush=True)
+    elif k == "approval":
+        print(f"    ? approval needed for {e['receipt']}: {e['summary']} ({e['reason']})", flush=True)
+    elif k == "nudge":
+        print(f"  ! runtime nudge: {e['kind']}", flush=True)
+
+
+def tty_approver(rid, tool, args, decision):
+    if not sys.stdin.isatty():
+        return "no interactive owner"
+    ans = input(f"Approve {rid} {tool} {json.dumps(args)[:200]}? ({decision.reason}) [y/N] ")
+    return "approve" if ans.strip().lower() in ("y", "yes") else "reject"
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    r = sub.add_parser("run")
+    r.add_argument("--workspace", required=True)
+    r.add_argument("--agent", required=True)
+    r.add_argument("--mode", choices=policy.MODES, default="engineer")
+    r.add_argument("--network", choices=("owner", "on", "off"), default="owner",
+                   help="sandbox network: owner default from scope.json, or force on/off")
+    r.add_argument("--max-steps", type=int, default=30)
+    r.add_argument("prompt")
+    sub.add_parser("agents")
+    sub.add_parser("sandbox")
+    v = sub.add_parser("verify")
+    v.add_argument("ledger")
+    args = ap.parse_args(argv)
+    if args.cmd == "agents":
+        for a in load_agents():
+            print(f"{a['id']:<22} {a.get('kind', 'local'):<8} inference={a.get('inference_host', '?'):<10} "
+                  f"{a.get('label', '')}")
+        return
+    if args.cmd == "sandbox":
+        print(json.dumps(sandbox.describe(), indent=2))
+        return
+    if args.cmd == "verify":
+        led = Ledger(args.ledger)
+        print(json.dumps({"verified": led.verify(), "receipts": len(led.receipts())}))
+        return
+    agent = agent_by_id(args.agent)
+    print(f"task → {agent['id']} on {agent.get('inference_host', '?')}; tools on this host; mode {args.mode}; "
+          f"network {'granted' if (owner_scope().get('network') if args.network == 'owner' else args.network == 'on') else 'off'}")
+    rec = run_task(args.workspace, agent, args.mode, args.prompt,
+                   approver=tty_approver if sys.stdin.isatty() else None, on_event=_print_event,
+                   network={"owner": None, "on": True, "off": False}[args.network], max_steps=args.max_steps)
+    print(f"\nstatus: {rec['status']}  steps: {rec['steps']}  tool calls: {rec['tool_calls']}  wall: {rec['wall_s']}s")
+    if rec.get("error"):
+        print("error:", rec["error"])
+    print("\n" + (rec["answer"] or "(no answer)"))
+    print("\n" + rec["runtime_footer"])
+    if rec.get("answer_check") and not rec["answer_check"]["ok"]:
+        print("answer check:", json.dumps(rec["answer_check"]))
+    print(f"\nrecord: {STATE / 'tasks' / rec['task_id'] / 'record.json'}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,41 @@
+{
+  "_comment": "Copy to ~/.config/haven-engineer/agents.json (mode 0600). Endpoints must be loopback or an owned SSH tunnel; keys stay in 0600 files and never in this file.",
+  "agents": [
+    {
+      "id": "qwen35-4b-mac",
+      "kind": "local",
+      "label": "Qwen3.5 4B \u00b7 Mac Metal",
+      "model": "qwen35-4b",
+      "base_url": "http://127.0.0.1:8892/v1",
+      "key_file": "~/.local/state/haven-engineer/llm-key",
+      "inference_host": "mac-metal",
+      "max_tokens": 4096
+    },
+    {
+      "id": "lfm25-8b-a1b-mac",
+      "kind": "local",
+      "label": "Liquid LFM2.5 8B-A1B \u00b7 Mac Metal",
+      "model": "lfm25-8b-a1b",
+      "base_url": "http://127.0.0.1:8893/v1",
+      "key_file": "~/.local/state/haven-engineer/llm-key",
+      "inference_host": "mac-metal",
+      "max_tokens": 4096
+    },
+    {
+      "id": "claude-code",
+      "kind": "cli",
+      "label": "Claude Code (Opus) \u00b7 subscription",
+      "inference_host": "anthropic-cloud",
+      "egress": "HOSTED_SUBSCRIPTION",
+      "model": "opus",
+      "config_dir": "~/.config/claude-haven-personal"
+    },
+    {
+      "id": "codex",
+      "kind": "cli",
+      "label": "Codex \u00b7 subscription",
+      "inference_host": "openai-cloud",
+      "egress": "HOSTED_SUBSCRIPTION"
+    }
+  ]
+}
