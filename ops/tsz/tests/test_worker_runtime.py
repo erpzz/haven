@@ -104,6 +104,11 @@ class WorkerTests(unittest.TestCase):
                  [{"id":"j","role":"engineering","cpu_cores":1,"memory_mib":128}], NOW)
         self.assertEqual(result[0]["status"],"NO_ELIGIBLE_CAPACITY")
 
+    def test_duplicate_job_id_denied(self):
+        jobs = [{"id": "same", "role": "inventory", "cpu_cores": 1, "memory_mib": 0}] * 2
+        with self.assertRaises(w.WorkerError):
+            w.place_jobs(fleet(), {"laptop": heartbeat()}, jobs, NOW)
+
     def test_reject_invalid_job(self):
         for job in ({"id":"\t","role":"inventory","cpu_cores":1,"memory_mib":1},
                     {"id":"ok","role":"root","cpu_cores":1,"memory_mib":1},
