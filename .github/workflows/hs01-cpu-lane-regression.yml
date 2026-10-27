@@ -1,0 +1,46 @@
+name: HS-01 CPU lane Linux regression
+
+on:
+  push:
+    branches:
+      - feature/hs01-cpu-lane-browser-20261026
+  pull_request:
+    paths:
+      - 'labs/model-lab/**'
+      - 'ops/haven-core/**'
+      - '.github/workflows/hs01-cpu-lane-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  linux-regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout candidate tree
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Python version
+        run: python3 --version
+      - name: CPU lane regression (static and mocked only)
+        run: python3 -m unittest discover -s labs/model-lab/tests -p 'test_cpu_lane.py' -v
+      - name: Existing Linux runtime regressions
+        if: success() || failure()
+        run: python3 -m unittest discover -s labs/model-lab/tests -p 'test_linux_runtime.py' -v
+      - name: Headless service regressions
+        if: success() || failure()
+        run: python3 -m unittest discover -s labs/model-lab/tests -p 'test_headless.py' -v
+      - name: LAN/auth regressions
+        if: success() || failure()
+        run: python3 -m unittest discover -s labs/model-lab/tests -p 'test_lan_auth.py' -v
+      - name: Strata connection regressions
+        if: success() || failure()
+        run: python3 -m unittest discover -s labs/model-lab/tests -p 'test_strata_connection.py' -v
+      - name: Haven core operations regressions
+        if: success() || failure()
+        run: python3 -m unittest discover -s ops/haven-core/tests -v
+      - name: Check browser JS syntax
+        if: success() || failure()
+        run: node --check labs/model-lab/static/app.js

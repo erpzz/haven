@@ -148,7 +148,7 @@ class Server(ThreadingHTTPServer):
         if user['role'] != 'admin':
             state.pop('data_dir', None)
             engine = state.get('engine') or {}
-            state['engine'] = {k: engine.get(k) for k in ('state', 'ownership', 'label', 'started_at', 'stopped_at') if k in engine}
+            state['engine'] = {k: engine.get(k) for k in ('state', 'ownership', 'label', 'compute', 'started_at', 'stopped_at') if k in engine}
         return state
 
     def login_allowed(self, peer: str) -> bool:
@@ -478,7 +478,7 @@ class Handler(BaseHTTPRequestHandler):
             elif self.path == '/api/model/import':
                 out = lab.import_model(data.get('path', ''))
             elif self.path == '/api/engine/start':
-                job_id = lab.start_llama(data.get('id', ''), data.get('preset', 'balanced'), data.get('overrides'), data.get('allow_tight') is True)
+                job_id = lab.start_llama(data.get('id', ''), data.get('preset', 'balanced'), data.get('overrides'), data.get('allow_tight') is True, data.get('compute', 'gpu'))
                 out = {'job_id': job_id}
             elif self.path == '/api/engine/stop':
                 out = lab.stop_engine()
