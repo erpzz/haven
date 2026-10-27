@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'labs/intelligence-bakeoff/distillation/**'
+      - 'labs/intelligence-bakeoff/adjudicated/**'
       - 'labs/intelligence-bakeoff/RUN-WINDOWS.ps1'
       - '.github/workflows/distillation-smoke.yml'
   workflow_dispatch:
@@ -20,3 +21,4 @@ jobs:
           python3 --version
           python3 -m unittest discover -s tests -v
           python3 -m unittest discover -s distillation/tests -v
+          python3 -m unittest discover -s adjudicated/tests -v
