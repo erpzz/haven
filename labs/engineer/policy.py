@@ -63,15 +63,14 @@ _GIT_WRITE_FLAGS = {"branch": {"-d", "-D", "-m", "-M", "--delete", "--move", "-c
                     "remote": {"add", "remove", "rm", "rename", "set-url", "set-head", "prune"}}
 
 # Never granted by a mode. Matched on any command segment's first word.
-_ADMIN_WORDS = {
-    "sudo", "su", "doas", "pkexec", "login", "passwd", "chsh", "visudo", "dd", "mkfs", "fdisk", "gdisk",
-    "sfdisk", "parted", "wipefs", "diskutil", "hdiutil", "asr", "bless", "nvram", "efibootmgr",
-    "grub-install", "update-grub", "mount", "umount", "losetup", "cryptsetup", "csrutil", "spctl",
-    "launchctl", "systemctl", "service", "shutdown", "reboot", "halt", "poweroff", "init", "kextload",
-    "insmod", "rmmod", "modprobe", "ufw", "iptables", "nft", "pfctl", "security", "networksetup",
-    "scutil", "dscl", "useradd", "userdel", "usermod", "groupadd", "chown", "fdesetup", "tmutil",
-    "softwareupdate", "apt", "apt-get", "dpkg", "snap", "port", "mullvad", "tailscale",
-}
+_ADMIN_WORDS = set("""
+    sudo su doas pkexec login passwd chsh visudo dd mkfs fdisk gdisk
+    sfdisk parted wipefs diskutil hdiutil asr bless nvram efibootmgr grub-install update-grub mount
+    umount losetup cryptsetup csrutil spctl launchctl systemctl service shutdown reboot halt poweroff
+    init kextload insmod rmmod modprobe ufw iptables nft pfctl security networksetup scutil
+    dscl useradd userdel usermod groupadd chown fdesetup tmutil softwareupdate apt apt-get dpkg
+    snap port mullvad tailscale
+""".split())
 # systemctl --user status style inspection is still useful; allow read-only verbs explicitly.
 _ADMIN_READ_FORMS = {("systemctl", "status"), ("systemctl", "is-active"), ("systemctl", "list-units"),
                      ("launchctl", "list"), ("launchctl", "print"), ("tailscale", "status"),
