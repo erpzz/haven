@@ -170,7 +170,10 @@ def usable_heartbeat(fleet: dict, node_id: str, heartbeat: dict, now: int) -> bo
     captured = heartbeat.get("recorded_at")
     if type(captured) is not int or captured > now or now - captured > MAX_HEARTBEAT_AGE:
         return False
-    return set(heartbeat.get("roles", [])) <= set(node.get("roles", []))
+    reported = heartbeat.get("roles")
+    if not isinstance(reported, list) or not reported or any(not isinstance(r, str) for r in reported):
+        return False
+    return set(reported) <= set(node.get("roles", []))
 
 
 def place_jobs(fleet: dict, heartbeats: dict, jobs: list[dict], now: int) -> list[dict]:
@@ -207,7 +210,7 @@ def place_jobs(fleet: dict, heartbeats: dict, jobs: list[dict], now: int) -> lis
         choices = []
         for node_id, capacity in remaining.items():
             telemetry = heartbeats[node_id]
-            if role not in fleet["nodes"][node_id]["roles"]:
+            if role not in fleet["nodes"][node_id]["roles"] or role not in telemetry["roles"]:
                 continue
             if (capacity["cores"] < cpus or capacity["memory"] is None
                     or capacity["memory"] < mib):
