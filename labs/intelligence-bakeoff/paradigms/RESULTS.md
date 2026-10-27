@@ -129,4 +129,5 @@ A cheaper follow-up comes out of the complementarity numbers. Test whether any s
   - At 02:53:44 something else stopped Strata, seven minutes into its roughly 15-minute load. A Model Lab GPU engine then started.
   - Strata was not restarted afterwards, so as not to contend with the new GPU owner.
   - The Lab's CPU engine that was connected at the start was not touched by this session.
+  - Afterwards: a later round-2 session's restore at 16:37 UTC also failed. Strata's engine missed its 900-second ready limit, probably because the bake-offs had evicted its expert pages from the page cache and the root disk is USB-2. A manual start at 16:54 succeeded. Strata answered at 17:08 UTC, with the Lab connected to it.
 - **Session time.** GPU time was 109.6 minutes (00:56:49–02:46:25 UTC), and the whole session took 117.1 minutes. Downloads came to 49,520,295,232 bytes in five files, all SHA-256 verified at pinned revisions.
