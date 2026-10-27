@@ -16,6 +16,7 @@ import json
 import os
 import pathlib
 import sys
+import time
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -48,6 +49,46 @@ def _print_event(e):
         print(f"  ! runtime nudge: {e['kind']}", flush=True)
 
 
+def brief(limit=12):
+    """State recovered from records (task dirs, ledgers, approvals, leases, fleet, skills), not transcripts."""
+    import fleet
+    import registry
+    import session
+    import skills
+    from ledger import Ledger
+    out = [f"# Haven engineer brief — {time.strftime('%Y-%m-%d %H:%M %Z')}"]
+    tasks = session.list_tasks(limit=400)
+    running = [t for t in tasks if t.get("status") == "running"]
+    out.append(f"\n## Running tasks ({len(running)})")
+    out += [f"- {t['task_id']} {t['agent']} [{t['mode']}] {t.get('workspace_name')}: {t['prompt'][:90]}" for t in running]
+    out.append("\n## Recent outcomes (ledger-verified)")
+    for t in [t for t in tasks if t.get("status") != "running"][:limit]:
+        p = session.STATE / "tasks" / t["task_id"] / "ledger.jsonl"
+        ok = Ledger(p, session=t["task_id"]).verify() if p.exists() else None
+        kids = sum(1 for x in tasks if x.get("parent_id") == t["task_id"])
+        out.append(f"- {t['task_id']} {t['agent']} {t['status']}{' +%d children' % kids if kids else ''}"
+                   f" ledger={'ok' if ok else 'none' if ok is None else 'TAMPERED'}: {t['prompt'][:80]}")
+    appr = session.pending_approvals()
+    out.append(f"\n## Pending approvals ({len(appr)})")
+    out += [f"- {a['receipt']} {a['agent']} {a['tool']}: {a['reason']}" for a in appr]
+    leases = registry.Leases(session.STATE).all()
+    out.append(f"\n## File leases ({len(leases)})")
+    out += [f"- {p} held by {l['task_id']}" for p, l in leases.items()]
+    obs = fleet.observe()
+    out.append("\n## Fleet")
+    for n in obs["nodes"]:
+        o = n["observation"]
+        gpu = (o.get("gpus") or [{}])[0]
+        out.append(f"- {n['name']} {o.get('status')} trust={n['trust']} mem_free={round((o.get('mem_avail') or 0) / 1e9, 1)}GB "
+                   f"gpu={gpu.get('name')} {gpu.get('mem_used_mb')}/{gpu.get('mem_total_mb')}MiB "
+                   f"models={[m.get('alias') or m.get('file') for m in o.get('models', [])]} units={o.get('units')}")
+    out.append(f"- {len(obs['candidates'])} discovered, unenrolled candidates")
+    out.append("\n## Inherited skills")
+    out += [f"- {s['name']} {s['status']} {str(s.get('sha256'))[:12]} {s.get('validation_summary')}"
+            for s in skills.list_skills()["skills"]]
+    return "\n".join(out)
+
+
 def tty_approver(rid, tool, args, decision):
     if not sys.stdin.isatty():
         return "no interactive owner"
@@ -67,6 +108,7 @@ def main(argv=None):
     r.add_argument("--max-steps", type=int, default=30)
     r.add_argument("prompt")
     sub.add_parser("agents")
+    sub.add_parser("brief", help="state for a returning supervisor, from records")
     sub.add_parser("sandbox")
     v = sub.add_parser("verify")
     v.add_argument("ledger")
@@ -75,6 +117,9 @@ def main(argv=None):
         for a in load_agents():
             print(f"{a['id']:<22} {a.get('kind', 'local'):<8} inference={a.get('inference_host', '?'):<10} "
                   f"{a.get('label', '')}")
+        return
+    if args.cmd == "brief":
+        print(brief())
         return
     if args.cmd == "sandbox":
         print(json.dumps(sandbox.describe(), indent=2))
