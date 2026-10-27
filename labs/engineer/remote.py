@@ -353,6 +353,7 @@ def run_remote_task(node_name, repo, agent_id, mode, prompt, *, max_steps=30, ne
     else:
         decision = None
     agent_cfg = runtime.agent_by_id(agent_id)
+    repo = os.path.realpath(repo)
     rt = stage(node)
     tid = time.strftime("%Y%m%dT%H%M%S") + "-" + uuid.uuid4().hex[:6]
     ws = push_workspace(node, repo, f"{pathlib.Path(repo).name[:40]}-{tid}", ref)

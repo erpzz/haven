@@ -108,9 +108,11 @@ def wait_for(pred, timeout=10):
 
 class SchedulerTest(unittest.TestCase):
     def setUp(self):
-        # Worker workspaces must sit inside $HOME (a sandboxed CI job may point HOME at its temp dir).
-        self.ws = pathlib.Path.home() / ".cache" / "haven-engineer" / f"sched-test-{os.getpid()}-{id(self)}"
-        self.ws.mkdir(parents=True)
+        # Worker workspaces must sit inside $HOME. Inside a sandbox, only its temp dir is writable.
+        home, tmp = pathlib.Path.home().resolve(), pathlib.Path(tempfile.gettempdir()).resolve()
+        base = tmp if home in tmp.parents else home / ".cache" / "haven-engineer"
+        base.mkdir(parents=True, exist_ok=True)
+        self.ws = pathlib.Path(tempfile.mkdtemp(prefix="sched-test-", dir=base))
         self.addCleanup(shutil.rmtree, self.ws, True)
         self.gate = FixedGate()
         self.obs = {"local": {"status": "ONLINE", "observed_at": time.time(), "cores": 8, "load": [1.0],
