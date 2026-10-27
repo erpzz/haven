@@ -51,6 +51,9 @@ def main():
                STRATA_UPDATE_FEED='https://github.com/Niko1221/Strata/releases/download/v0.2.6',
                STRATA_ENGINE_BACKEND='cuda', HF_HUB_OFFLINE='1',
                HF_HUB_DISABLE_TELEMETRY='1', DO_NOT_TRACK='1')
+    # A cold start reads a 33 GiB expert arena; over a USB 2 root link (about 40 MiB/s) that alone
+    # takes about 14 minutes, so Strata's 900 s default fails after anything evicts the page cache.
+    env.setdefault('STRATA_ENGINE_READY_S', '2400')
     command = [str(cli), 'serve', '--profile', str(profile), '--engine', 'strata',
                '--host', '127.0.0.1', '--port', '8880', '--max-queue', '1',
                '--queue-timeout', '30', '--offline', '--shutdown-timeout', '15']
