@@ -62,7 +62,7 @@ def parse_linux_neighbors(text: str, allowed_interfaces: set[str]) -> list[dict]
     for item in items:
         if not isinstance(item, dict) or item.get("dev") not in allowed_interfaces:
             continue
-        if item.get("state", "").upper() in {"FAILED", "INCOMPLETE"}:
+        if str(item.get("state", "")).upper() in {"FAILED", "INCOMPLETE"}:
             continue
         observation = _observation(item.get("dst"), item.get("lladdr"),
                                    item["dev"], "linux-neighbor-cache")
@@ -162,16 +162,19 @@ def approve(state: dict, envelope: dict, approval_key: bytes, now: int) -> dict:
     cid, node_id = receipt.get("candidate_id"), receipt.get("node_id")
     fingerprint = receipt.get("device_key_sha256")
     scopes = receipt.get("scopes")
-    if cid not in state["candidates"]:
+    if not isinstance(cid, str) or cid not in state["candidates"]:
         raise EnrollmentError("candidate has not been observed")
     if not isinstance(node_id, str) or not re.fullmatch("[a-zA-Z0-9._-]{1,80}", node_id):
         raise EnrollmentError("invalid node ID")
     if not isinstance(fingerprint, str) or not re.fullmatch("[0-9a-f]{64}", fingerprint):
         raise EnrollmentError("missing device public-key fingerprint")
-    if not isinstance(scopes, list) or not scopes or len(scopes) != len(set(scopes)) or not set(scopes) <= ALLOWED_SCOPES:
+    if (not isinstance(scopes, list) or not scopes or not all(isinstance(s, str) for s in scopes)
+        or len(scopes) != len(set(scopes)) or not set(scopes) <= ALLOWED_SCOPES):
         raise EnrollmentError("invalid worker scope")
     if node_id in state["nodes"]:
         raise EnrollmentError("node already registered; never overwrite its trust record")
+    if any(n["device_key_sha256"] == fingerprint for n in state["nodes"].values()):
+        raise EnrollmentError("device key is already bound to another node")
     if any(n["candidate_id"] == cid and n["status"] != "REVOKED" for n in state["nodes"].values()):
         raise EnrollmentError("candidate already approved as a different node")
     _consume_nonce(state, receipt)
@@ -191,7 +194,7 @@ def attest(state: dict, envelope: dict, attestor_key: bytes, now: int) -> dict:
     """
     receipt = verify_receipt(envelope, attestor_key, "tsz-attestation-v1", now)
     node_id = receipt.get("node_id")
-    node = state["nodes"].get(node_id)
+    node = state["nodes"].get(node_id) if isinstance(node_id, str) else None
     if node is None or node["status"] != "AWAITING_EXTERNAL_ATTESTATION":
         raise EnrollmentError("node is not awaiting attestation")
     if receipt.get("device_key_sha256") != node["device_key_sha256"]:
@@ -209,7 +212,8 @@ def attest(state: dict, envelope: dict, attestor_key: bytes, now: int) -> dict:
 
 def revoke(state: dict, envelope: dict, approval_key: bytes, now: int) -> dict:
     receipt = verify_receipt(envelope, approval_key, "tsz-revocation-v1", now)
-    node = state["nodes"].get(receipt.get("node_id"))
+    node_id = receipt.get("node_id")
+    node = state["nodes"].get(node_id) if isinstance(node_id, str) else None
     if node is None or node["status"] == "REVOKED":
         raise EnrollmentError("no active matching node")
     if receipt.get("device_key_sha256") != node["device_key_sha256"]:
