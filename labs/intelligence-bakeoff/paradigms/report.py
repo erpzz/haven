@@ -104,7 +104,9 @@ def performance(model_receipt):
         "buffers_mib": a.get("buffers_mib"),
         "peak_gpu_mib": (a.get("final") or a.get("at_ready") or {}).get("peak_gpu_mib"),
         "peak_rss_mib": (a.get("final") or a.get("at_ready") or {}).get("peak_rss_mib"),
-        "probes": [{k: p.get(k) for k in ("prompt_tokens", "status", "prompt_tok_s", "decode_tok_s")}
+        "probes": [{**{k: p.get(k) for k in ("prompt_tokens", "status", "prompt_tok_s", "decode_tok_s")},
+                    "cumulative_peak_memory_mib": {k: (p.get("after") or {}).get(k)
+                        for k in ("peak_gpu_mib", "peak_rss_mib")}}
                    for p in a.get("probes") or []],
         "eval_wall_seconds": (a.get("eval") or {}).get("seconds"),
     })
@@ -135,7 +137,11 @@ def build(session_dir, reference="qwen35-4b"):
             "reference": reference, "max_tokens": MAX_TOKENS,
             "session": {"status": session.get("status"), "gpu_minutes": session.get("gpu_minutes"),
                         "total_minutes": session.get("total_minutes"),
-                        "strata_restored_and_connected": restore.get("restored"),
+                        "strata_ready": "strata_ready_seconds" in restore,
+                        "strata_restored_and_connected": bool(restore.get("restored") and
+                            isinstance(restore.get("lab_connection"), dict) and
+                            restore["lab_connection"].get("kind") == "strata"),
+                        "lab_connection_left_as_found": restore.get("lab_connection") == "LEFT_AS_FOUND",
                         "strata_ready_seconds": restore.get("strata_ready_seconds")},
             "models": models}
 

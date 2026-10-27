@@ -240,7 +240,18 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(out["ctx"], 8192)
         self.assertEqual(out["peak_gpu_mib"], 7000)
         self.assertNotIn("after", out["probes"][0])
+        self.assertEqual(out["probes"][0]["cumulative_peak_memory_mib"]["peak_gpu_mib"], 1)
         self.assertEqual([a["ready"] for a in out["load_attempts"]], [False, True])
+
+    def test_ready_without_reconnection_is_not_reported_as_connected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp)
+            (path / "session.json").write_text(json.dumps({"models": [], "restore": {
+                "restored": True, "strata_ready_seconds": 12, "lab_connection": "LEFT_AS_FOUND"}}))
+            result = report.build(path)["session"]
+        self.assertTrue(result["strata_ready"])
+        self.assertTrue(result["lab_connection_left_as_found"])
+        self.assertFalse(result["strata_restored_and_connected"])
 
     def test_markdown_handles_missing_and_complete_models(self):
         result = {"models": {
