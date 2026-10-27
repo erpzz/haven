@@ -99,6 +99,12 @@
       "by": "experimenter (Opus, the session running E5)",
       "change": "Corrects the count in the previous amendment: 4 of 8 calibration runs (e5a-e5d, seed 7) completed. The 5th (e5e) crashed at start because another session checked out the shared clone to origin/main while calibration was running, which removed the task files. Calibration resumes from a dedicated worktree on this branch. run_bench.py skips the 4 completed rows. loop.py, runtime.py, executor.py, the skill, the bench scripts and the tasks are byte-identical to edef00a, where those rows were produced.",
       "analysis_changed": false
+    },
+    {
+      "at": "2026-10-27 18:40 EDT, after 5 of 72 experimental runs",
+      "by": "experimenter (Opus, the session running E5)",
+      "change": "Calibration finished (8/8). select_e5.py chose e5d, e5f, e5a, e5e, e5h, e5g. At about 18:24 EDT the Mac model server stopped because the owner shut down Mac compute to let the laptop cool. The 67 runs after that ended in connection errors. Only rows whose run ended with a model-server connection error (URLError or RemoteDisconnected) are set aside, chosen without looking at outcomes, and they will be rerun with the same settings. The 5 completed rows stand. The experiment is paused until the owner allows Mac compute again. Running on another machine would need its own amendment, because the backend would change.",
+      "analysis_changed": false
     }
   ]
 }
