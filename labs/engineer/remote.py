@@ -192,9 +192,9 @@ class ApprovalRelay(threading.Thread):
     Mac console, which writes the same file name locally. Only the owner (console) writes decisions.
     """
 
-    def __init__(self, node, state, interval=2.5):
+    def __init__(self, node, state, rt, interval=2.5):
         super().__init__(daemon=True)
-        self.node, self.dir, self.interval = node, pathlib.Path(state) / "approvals", interval
+        self.node, self.dir, self.rt, self.interval = node, pathlib.Path(state) / "approvals", rt, interval
         self.stop = threading.Event()
         self.mirrored = set()
 
@@ -207,9 +207,10 @@ class ApprovalRelay(threading.Thread):
                 pass
 
     def tick(self):
-        r = run(self.node, "cd ~/.local/state/haven-engineer/approvals 2>/dev/null && "
-                           "for f in R-*.json; do case $f in *.decision.json) ;; *) [ -e \"$f\" ] && cat \"$f\" "
-                           "&& echo; esac; done", timeout=20)
+        # The node's own pending_approvals() drops asks whose waiting process has died.
+        code = "import sys,json; sys.path.insert(0, '.'); import session\n" \
+               "for a in session.pending_approvals(): print(json.dumps(a))"
+        r = run(self.node, f"cd {self.rt} && python3 -I -c {shlex.quote(code)}", timeout=20)
         pending = {}
         for line in r.stdout.splitlines():
             try:
@@ -366,7 +367,7 @@ def run_remote_task(node_name, repo, agent_id, mode, prompt, *, max_steps=30, ne
     if on_event:
         orig = sess.emit
         sess.emit = lambda e: (orig(e), on_event(e))
-    relay = ApprovalRelay(node, sess.state)
+    relay = ApprovalRelay(node, sess.state, rt)
     relay.start()
     remote_meta = {"controller_task": tid, "source_head": ws["head"], "inference_host": agent_cfg.get("inference_host")}
     try:

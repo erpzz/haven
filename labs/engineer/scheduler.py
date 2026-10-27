@@ -209,13 +209,13 @@ class Scheduler:
         with self.store.lock():
             nodes = {n["name"]: n for n in self.nodes()}
             gate = self.gate()
-            try:
-                obs = self.observe()
-            except Exception as e:  # noqa: BLE001 - no telemetry means no new placements this tick
-                obs, obs_error = {}, f"{type(e).__name__}: {e}"
-            else:
-                obs_error = None
             jobs = self.store.jobs()
+            obs, obs_error = {}, None
+            if any(j["state"] == "QUEUED" for j in jobs):  # probe the fleet only when something needs placing
+                try:
+                    obs = self.observe()
+                except Exception as e:  # noqa: BLE001 - no telemetry means no new placements this tick
+                    obs_error = f"{type(e).__name__}: {e}"
             for job in jobs:
                 if job["state"] in ACTIVE:
                     self._poll(job, nodes, gate)
