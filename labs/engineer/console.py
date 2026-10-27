@@ -98,10 +98,22 @@ class Console:
         self._mark_interrupted()
 
     def _mark_interrupted(self):
+        """A task whose runner is gone is not running, whatever its meta says."""
         for m in session.list_tasks(limit=500):
-            if m.get("status") == "running" and m.get("runner_pid") and not _alive(m["runner_pid"]):
-                s = session.TaskSession(tid=m["task_id"])
-                s.update_meta(status="interrupted", note="runner process ended before the task finished")
+            if m.get("status") != "running":
+                continue
+            pid = m.get("runner_pid")
+            if pid is None:  # MCP sessions and early tasks: use the last process that wrote an event
+                evs, _ = session.read_events(m["task_id"])
+                pids = {e.get("pid") for e in evs[-20:] if e.get("pid")}
+                alive = any(_alive(p) for p in pids)
+                stale = time.time() - (evs[-1].get("t", m.get("created", 0)) if evs else m.get("created", 0)) > 1800
+                if alive or not stale:
+                    continue
+            elif _alive(pid):
+                continue
+            session.TaskSession(tid=m["task_id"]).update_meta(
+                status="interrupted", note="runner process ended before the task finished")
 
     # -- tasks -------------------------------------------------------------------
 
@@ -271,6 +283,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             if method == "POST" and path == "/api/fleet/remove":
                 return self._send(200, {"removed": fleet.remove(body["name"])})
             if method == "GET" and path == "/api/tasks":
+                c._mark_interrupted()
                 return self._send(200, session.list_tasks(limit=int(q.get("limit", 200))))
             if method == "POST" and path == "/api/tasks":
                 return self._send(200, c.start_task(body))
