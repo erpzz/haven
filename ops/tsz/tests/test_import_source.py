@@ -41,6 +41,11 @@ class ImportTests(unittest.TestCase):
                 m.parse_network_inventory(sample(devices=[{
                     "address": ip,"mac":mac,"interface":"home-lan"}]), {"home-lan"}, NOW)
 
+    def test_malformed_interface_is_rejected(self):
+        doc = sample(devices=[{"address": "192.0.2.5", "mac": "aa:bb:cc:dd:ee:ff", "interface": []}])
+        with self.assertRaises(m.InventoryError):
+            m.parse_network_inventory(doc, {"home-lan"}, NOW)
+
     def test_mixed_interfaces_only_selected(self):
         doc = sample(devices=sample()["devices"] + [{"address":"198.51.100.1",
             "mac":"00:11:22:33:44:55","interface":"guest-lan"}])
