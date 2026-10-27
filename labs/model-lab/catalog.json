@@ -125,6 +125,22 @@
       "revision": "1f03464768bfcc0319fc50da8ff5fb20b6417ba2",
       "url": "https://huggingface.co/bartowski/SmolLM2-1.7B-Instruct-GGUF/resolve/1f03464768bfcc0319fc50da8ff5fb20b6417ba2/SmolLM2-1.7B-Instruct-Q4_K_M.gguf",
       "source": "https://huggingface.co/bartowski/SmolLM2-1.7B-Instruct-GGUF"
+    },
+    {
+      "id": "lfm25-8b-a1b",
+      "name": "LFM2.5 \u00b7 8B-A1B (Liquid)",
+      "repo": "LiquidAI/LFM2.5-8B-A1B-GGUF",
+      "filename": "LFM2.5-8B-A1B-Q4_K_M.gguf",
+      "sha256": "4923ec14f06b968b74d663e5949867d2d9c3bf13a20b8be1a9f9af39989b2bb0",
+      "size_bytes": 5155564768,
+      "download_gb": 5.16,
+      "description": "Liquid hybrid convolution/attention MoE, about 1.5B active. Measured on Slink: about 220 tok/s decode at 1K context and 177 at 32K, 2.4x Qwen3.5-4B. Tool suite 54/110 alone (Qwen3.5-4B: 80); it often omits evidence ids. Always reasons before answering.",
+      "tag": "FASTEST \u00b7 MEASURED",
+      "quant": "Q4_K_M",
+      "license": "LFM Open License v1.0",
+      "revision": "49c14831707011e64d70b2ebd8462ba08d608434",
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-8B-A1B-GGUF/resolve/49c14831707011e64d70b2ebd8462ba08d608434/LFM2.5-8B-A1B-Q4_K_M.gguf",
+      "source": "https://huggingface.co/LiquidAI/LFM2.5-8B-A1B-GGUF"
     }
   ],
   "notes": "Model content hashes are pinned. Download URLs use main; changed bytes fail verification rather than silently updating. Approximate catalog sizes are decimal GB, not allocation estimates.",
