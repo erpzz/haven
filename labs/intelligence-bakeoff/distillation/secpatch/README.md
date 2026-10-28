@@ -80,6 +80,45 @@ HF_HOME=~/.local/share/haven-training-cache HF_HUB_OFFLINE=1 \
 
 Repeat with `--seed 7` and `--seed 13` for the multiple-seed comparison.
 
+### Single-command real GPU campaign
+
+Use \`gpu_campaign.py\` when the goal is **real** small-model training and
+independent evaluation, not a synthetic diagnostic. It refuses an empty or
+unsourced dataset, fewer than 25 distinct historical train fixes or 8 held-out
+fixes, license/verification gaps, repository leakage, unavailable CUDA and
+less than 4 GiB of free GPU memory. It never unloads or restarts Haven's 35B.
+The model revision below is the published immutable Qwen3-0.6B commit
+(\`c1899de289a04d12100db370d81485cdf75e47ca\`).
+
+First harvest and build the **real** dataset described above; keep it and
+the pretrained model's pinned cache private. Then:
+
+\`\`\`bash
+S="$HOME/.local/state/haven-secpatch"
+C="$HOME/projects/haven/labs/intelligence-bakeoff/distillation/secpatch"
+PY="$HOME/.local/share/haven-training-venv/bin/python"
+export HF_HOME="$HOME/.local/share/haven-training-cache" HF_HUB_OFFLINE=1
+"$PY" "$C/gpu_campaign.py" --data "$S/data" \
+  --output "$S/runs/real-cuda-$(date +%Y%m%dT%H%M%S)" \
+  --model Qwen/Qwen3-0.6B \
+  --revision c1899de289a04d12100db370d81485cdf75e47ca \
+  --execute
+\`\`\`
+
+The run writes \`qualification.json\`, live subprocess logs, CUDA-observed
+\`training/receipt.json\`, actual hashed PEFT adapter bytes, an unchanged-base
+held-out summary, an adapter held-out summary, and \`campaign-result.json\`.
+It evaluates the same first 12 held-out fixes in each arm (detection,
+root-cause and finding-support tasks), and **does not** auto-promote a
+model. A winning adapter is a candidate for further independent validation,
+not a production deployment. A failed run retains its partial output and
+fails visibly; use a fresh run directory rather than inventing a receipt.
+
+The GPU-memory check is conservative but not a GPU lease. Coordinate with
+Haven's existing Model Lab scheduling before starting, particularly if the 35B
+is in active use. Offline CI exercises only admission logic and never claims
+to have run a CUDA optimizer.
+
 ## Evaluation
 
 `evaluate.py` grades deterministically against recorded ground truth and re-runs Bandit on generated patches.
