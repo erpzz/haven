@@ -74,6 +74,29 @@ def peak_rss_gib() -> float:
     return round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * scale / 2**30, 3)
 
 
+def adapter_weight_digests(adapter_dir: pathlib.Path) -> dict[str, str]:
+    """Hash actual nonempty adapter weights, never a config-only placeholder."""
+    cfg = adapter_dir / 'adapter_config.json'
+    if not cfg.is_file() or cfg.is_symlink():
+        raise ValueError('Adapter config is missing or unsafe.')
+    names = ('adapter_model.safetensors', 'adapter_model.bin')
+    hashes = {}
+    for name in names:
+        path = adapter_dir / name
+        if not path.exists():
+            continue
+        if path.is_symlink() or not path.is_file() or path.stat().st_size <= 0:
+            raise ValueError(f'Invalid adapter weight file: {name}')
+        h = hashlib.sha256()
+        with path.open('rb') as stream:
+            for block in iter(lambda: stream.read(1024 * 1024), b''):
+                h.update(block)
+        hashes[name] = h.hexdigest()
+    if len(hashes) != 1:
+        raise ValueError('Expected exactly one nonempty PEFT adapter weight file.')
+    return hashes
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--data', type=pathlib.Path, required=True)
@@ -152,12 +175,32 @@ def main(argv=None):
     resume = args.resume and any((args.output / 'checkpoints').glob('checkpoint-*'))
     result = trainer.train(resume_from_checkpoint=True if resume else None)
     elapsed = time.monotonic() - started
-    model.save_pretrained(str(args.output / 'adapter'))
+
+    # CUDA selection is not evidence of CUDA training. Verify optimizer
+    # progress, trainable adapter placement and observed CUDA memory usage.
+    gpu_evidence = None
+    if args.device == 'cuda':
+        steps_done = int(trainer.state.global_step)
+        trainable_cuda = sum(p.numel() for p in model.parameters() if p.requires_grad and p.device.type == 'cuda')
+        peak_bytes = int(torch.cuda.max_memory_allocated())
+        if (trainer.args.device.type != 'cuda' or steps_done <= 0 or
+                trainable_cuda <= 0 or peak_bytes <= 0 or not math.isfinite(float(result.training_loss))):
+            raise SystemExit('No verified CUDA optimizer steps and CUDA adapter activity; refusing GPU training receipt.')
+        gpu = torch.cuda.get_device_properties(torch.cuda.current_device())
+        gpu_evidence = {'device_name': gpu.name, 'device_index': int(torch.cuda.current_device()),
+                        'total_memory_bytes': int(gpu.total_memory), 'peak_allocated_bytes': peak_bytes,
+                        'trainable_cuda_parameters': int(trainable_cuda), 'optimizer_steps': steps_done,
+                        'source': 'torch_cuda_runtime_observation_not_hardware_attestation'}
+    adapter_dir = args.output / 'adapter'
+    model.save_pretrained(str(adapter_dir))
+    weight_hashes = adapter_weight_digests(adapter_dir)
     receipt = {**plan, 'classification': 'CPU_PIPELINE_CHECK' if args.device == 'cpu' else 'GPU_TRAINING_RUN',
                'base_model': args.model, 'base_revision': args.revision, 'rows_encoded': len(encoded),
                'rows_skipped_too_long': skipped, 'max_length': args.max_length, 'learning_rate': args.learning_rate,
                'rank': args.rank, 'seed': args.seed, 'train_loss': result.training_loss,
                'loss_log': [x for x in trainer.state.log_history if 'loss' in x],
+               'optimizer_steps': int(trainer.state.global_step),
+               'cuda_evidence': gpu_evidence, 'adapter_weights_sha256': weight_hashes,
                'wall_seconds': round(elapsed, 1), 'peak_rss_gib': peak_rss_gib(),
                'peak_cuda_gib': round(torch.cuda.max_memory_allocated() / 2**30, 3) if args.device == 'cuda' else None,
                'versions': {'torch': torch.__version__, 'python': platform.python_version()},
