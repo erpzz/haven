@@ -28,6 +28,10 @@ class GatewayTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         data = Path(self.tmp.name)
+        self.jwt_secret = b's' * 48  # TEST ONLY: not a production secret
+        secret_path = data / JWT_SECRET_FILE
+        secret_path.write_bytes(self.jwt_secret)
+        secret_path.chmod(0o600)
         self.frontend = Gateway.issue_key(data, 'open-webui', 'frontend')
         self.owner = Gateway.issue_key(data, 'owner-cli', 'owner')
         self.member = Gateway.issue_key(data, 'kid-cli', 'member')
@@ -48,8 +52,8 @@ class GatewayTests(unittest.TestCase):
         return h
 
     def owui(self, role='admin', uid='u-1', **extra):
-        return self.headers(self.frontend, **{'X-OpenWebUI-User-Id': uid, 'X-OpenWebUI-User-Role': role,
-                                              'X-OpenWebUI-User-Name': 'Test', **extra})
+        return self.headers(self.frontend, **{'X-OpenWebUI-User-Jwt': self.jwt(self.jwt_secret, sub=uid, role=role),
+                                              **extra})
 
     def call(self, method, path, headers, body=None):
         c = http.client.HTTPConnection('127.0.0.1', self.server.server_port, timeout=15)
@@ -99,7 +103,9 @@ class GatewayTests(unittest.TestCase):
         self.assertEqual(self.chat(signed, model='haven-auto')[0], 403)
         self.assertEqual(self.chat(signed)[0], 200)
         # Plain role headers no longer grant anything once identity is signed.
-        self.assertEqual(self.call('GET', '/v1/models', self.owui())[0], 403)
+        unsigned = self.headers(self.frontend, **{'X-OpenWebUI-User-Role': 'admin',
+                                                   'X-OpenWebUI-User-Id': 'u-1'})
+        self.assertEqual(self.call('GET', '/v1/models', unsigned)[0], 403)
         for bad in (self.jwt(b'x' * 48), self.jwt(secret, exp=time.time() - 1), self.jwt(secret, iss='other'),
                     self.jwt(secret)[:-3] + 'abc', 'not.a.jwt'):
             with self.subTest(bad=bad[-12:]):
@@ -108,6 +114,14 @@ class GatewayTests(unittest.TestCase):
         path.chmod(0o644)
         h = self.headers(self.frontend, **{'X-OpenWebUI-User-Jwt': self.jwt(secret)})
         self.assertEqual(self.call('GET', '/v1/models', h)[0], 503)
+
+    def test_missing_signed_identity_secret_fails_closed(self):
+        (Path(self.tmp.name) / JWT_SECRET_FILE).unlink()
+        status, body = self.call('GET', '/v1/models', self.owui())
+        self.assertEqual(status, 503)
+        self.assertIn('Signed frontend identity', json.loads(body)['error']['message'])
+        # Existing direct-key owner CLI access must not depend on Open WebUI.
+        self.assertEqual(self.call('GET', '/v1/models', self.headers(self.owner))[0], 200)
 
     def test_browser_origin_refused(self):
         self.assertEqual(self.call('GET', '/v1/models', self.owui(Origin='http://evil.example'))[0], 403)
@@ -140,6 +154,8 @@ class GatewayTests(unittest.TestCase):
         rows = json.loads(self.call('GET', '/v1/models', self.headers(self.owner))[1])['data']
         self.assertEqual(rows[0]['haven']['context'], 32768)
         self.assertIn('TEST_DOUBLE', rows[0]['name'])
+        self.assertEqual(rows[0]['haven']['route_type'], 'managed_alias')
+        self.assertEqual(rows[1]['haven']['route_type'], 'automatic_alias')
 
     def test_member_cannot_route_to_auto(self):
         status, body = self.chat(self.owui(role='user'), model='haven-auto')
@@ -159,16 +175,25 @@ class GatewayTests(unittest.TestCase):
         self.assertEqual(text, FAKE_TEXT)
         self.assertEqual(events[-1]['choices'][0]['finish_reason'], 'stop')
         self.assertEqual(events[-1]['usage']['completion_tokens'], 12)
+        trace = events[-1]['haven']['routing']
+        self.assertEqual(trace['requested']['selector'], 'haven-slink')
+        self.assertEqual(trace['resolved']['provider_id'], 'managed')
+        self.assertEqual(trace['identity_attestation'], 'NOT_VERIFIED')
 
     def test_non_stream_and_receipt_without_content(self):
         status, body = self.chat(self.owui(), messages=[{'role': 'user', 'content': 'secret-prompt-text'}])
         self.assertEqual(status, 200)
         self.assertEqual(body['choices'][0]['message']['content'], FAKE_TEXT)
         self.assertEqual(body['haven']['provider_id'], 'managed')
+        route = body['haven']['routing']
+        self.assertEqual(route['requested'], {'selector': 'haven-slink', 'provider_id': 'managed'})
+        self.assertEqual(route['resolved']['provider_id'], 'managed')
+        self.assertEqual(route['fallback'], 'UNDETERMINED')
         receipts = (Path(self.tmp.name) / 'gateway-receipts.jsonl').read_text()
         self.assertNotIn('secret-prompt-text', receipts); self.assertNotIn(FAKE_TEXT, receipts)
         row = json.loads(receipts.splitlines()[-1])
         self.assertEqual((row['state'], row['role'], row['egress']), ('COMPLETED', 'owner', 'NONE'))
+        self.assertEqual(row['requested_model_id'], 'haven-slink')
 
     def test_open_webui_multipart_text_is_flattened(self):
         msg = {'role': 'user', 'content': [{'type': 'text', 'text': 'a'}, {'type': 'text', 'text': 'b'}]}
