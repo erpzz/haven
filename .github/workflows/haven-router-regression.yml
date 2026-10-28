@@ -1,0 +1,28 @@
+name: Haven routing experiment regression
+on:
+  pull_request:
+    paths:
+      - 'labs/engineer/router_lab/**'
+      - 'labs/engineer/test_router.py'
+      - '.github/workflows/haven-router-regression.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'labs/engineer/router_lab/**'
+      - 'labs/engineer/test_router.py'
+      - '.github/workflows/haven-router-regression.yml'
+permissions:
+  contents: read
+jobs:
+  stdlib-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check routing source syntax
+        run: python -m py_compile labs/engineer/router_lab/train_router.py labs/engineer/test_router.py
+      - name: Verify real PR source split, provenance and safe abstention (no GPU)
+        run: python -m unittest discover -s labs/engineer -p 'test_router.py' -v
