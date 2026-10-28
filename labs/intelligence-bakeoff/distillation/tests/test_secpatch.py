@@ -262,6 +262,23 @@ class GraderTests(unittest.TestCase):
         self.assertEqual(evaluate.wilson(0, 0), [0.0, 0.0])
 
 
+class ReportTests(unittest.TestCase):
+    def test_resummarize_uses_only_shared_items(self):
+        import report
+        def row(i, task, score):
+            return {'id': i, 'key': i, 'task': task, 'label': 'vulnerable', 'seed': 0, 'score': score, 'false_positive': False,
+                    'unsupported': False, 'invalid_json': False, 'latency_s': 1.0, 'completion_tokens': 3}
+        with tempfile.TemporaryDirectory() as t:
+            a, b = pathlib.Path(t) / 'a', pathlib.Path(t) / 'b'
+            a.mkdir(); b.mkdir()
+            (a / 'items.jsonl').write_text('\n'.join(json.dumps(r) for r in [row('1', 'detect', 1), row('2', 'remediate', 1)]))
+            (b / 'items.jsonl').write_text(json.dumps(row('1', 'detect', 0)))
+            sa, sb = report.resummarize([a / 'items.jsonl', b / 'items.jsonl'], None)
+        self.assertEqual((sa['n'], sb['n']), (1, 1))
+        self.assertEqual(sa['eval_sha256'], sb['eval_sha256'])
+        self.assertEqual((sa['score'], sb['score']), (1.0, 0.0))
+
+
 class RegistryAndTrainTests(unittest.TestCase):
     def run_dir(self, t, classification):
         d = pathlib.Path(t) / 'run'

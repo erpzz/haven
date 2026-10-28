@@ -48,12 +48,42 @@ def repo_table(path: pathlib.Path) -> str:
     return '\n'.join(lines)
 
 
+def resummarize(item_files: list[pathlib.Path], tasks: set | None) -> list[dict]:
+    """Re-score arms from their per-item files over the ids every arm answered (optionally a task subset),
+    so arms run on different task subsets still compare on identical items."""
+    import hashlib
+    import sys
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+    from evaluate import summarize
+    arms = []
+    for path in item_files:
+        rows = [json.loads(x) for x in path.read_text().splitlines() if x.strip()]
+        meta = json.loads((path.parent / 'summary.json').read_text()) if (path.parent / 'summary.json').exists() else {}
+        arms.append((path, rows, meta))
+    common = set.intersection(*({(r['id'], r['seed']) for r in rows if tasks is None or r['task'] in tasks}
+                                for _, rows, _ in arms))
+    ids = sorted({i for i, _ in common})
+    digest = hashlib.sha256(json.dumps(ids).encode()).hexdigest()
+    out = []
+    for path, rows, meta in arms:
+        s = summarize([r for r in rows if (r['id'], r['seed']) in common], digest, meta.get('model', path.parent.name))
+        s['arm'] = meta.get('arm', path.parent.name)
+        s['peak_rss_gib'] = meta.get('peak_rss_gib', s['peak_rss_gib'])  # the evaluator process's, not report.py's
+        out.append(s)
+    return out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--summaries', type=pathlib.Path, nargs='+', required=True)
+    ap.add_argument('--summaries', type=pathlib.Path, nargs='*', default=[])
+    ap.add_argument('--items', type=pathlib.Path, nargs='*', default=[], help='items.jsonl files to re-score on shared ids')
+    ap.add_argument('--tasks', help='with --items: comma-separated task subset')
     ap.add_argument('--repo-eval', type=pathlib.Path)
     args = ap.parse_args(argv)
-    print(arm_table([json.loads(p.read_text()) for p in args.summaries]))
+    if args.items:
+        print(arm_table(resummarize(args.items, set(args.tasks.split(',')) if args.tasks else None)))
+    if args.summaries:
+        print(arm_table([json.loads(p.read_text()) for p in args.summaries]))
     if args.repo_eval:
         print('\n' + repo_table(args.repo_eval))
 
