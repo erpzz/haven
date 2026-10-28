@@ -352,7 +352,57 @@ const workloads={explain:'Explain the difference between DNS failure, TCP connec
 $('cancel-bench').onclick=async()=>{benchStop=true;if(activeJob)await api('/api/cancel',{id:activeJob});toast('Experiment stopping. No further repetitions will be sent.');};
 $('run-bench').onclick=async()=>{if(benchRunning)return;const n=Number($('bench-repeats').value);if(!confirm(`Run ${n} real inference request(s) on the connected LOCAL model? No hidden warm-up. This consumes local compute, not a hosted API.`))return;
  const prompt=workloads[$('bench-workload').value],label=$('bench-label').value,settings={...genSettings(),...(providerSelection==='managed'?{expected_connected_at:state.connection.connected_at}:{})};benchRunning=true;benchStop=false;applyState(state);$('cancel-bench').classList.remove('hidden');$('run-bench').disabled=true;try{for(let i=0;i<n&&!benchStop;i++){$('bench-status').textContent=`Running ${i+1} of ${n}…`;const j=await sendMessage(prompt,true,`${label} / ${i+1}`,settings);if(!j||j.state!=='COMPLETED'){toast('Benchmark stopped after an incomplete request; failure remains recorded.',true);break;}}$('bench-status').textContent='Finished. Inspect individual outcomes and answer quality.';await loadBenchmarks();}finally{benchRunning=false;$('cancel-bench').classList.add('hidden');await refresh();}};
-async function loadBenchmarks(){try{const d=await api('/api/benchmarks');$('bench-table').replaceChildren();for(const r of d.rows.slice(-30).reverse()){const tr=element('tr');for(const v of [r.label,r.model,r.metrics.ttft_seconds==null?'—':r.metrics.ttft_seconds.toFixed(2)+' s',r.metrics.end_to_end_tps==null?'—':r.metrics.end_to_end_tps+' t/s',r.metrics.backend_decode_tps==null?'—':r.metrics.backend_decode_tps+' t/s',r.state])tr.append(element('td','',String(v)));$('bench-table').append(tr);}if(!d.rows.length){const tr=element('tr');const td=element('td','muted','No benchmarks yet. Real measurements appear here after you run a model.');td.colSpan=6;tr.append(td);$('bench-table').append(tr);}}catch(e){toast(e.message,true)}}
+async function loadBenchmarks(){try{const d=await api('/api/benchmarks');$('bench-table').replaceChildren();for(const r of d.rows.slice(-30).reverse()){const tr=element('tr');for(const v of [r.label,r.model,r.metrics.ttft_seconds==null?'—':r.metrics.ttft_seconds.toFixed(2)+' s',r.metrics.end_to_end_tps==null?'—':r.metrics.end_to_end_tps+' t/s',r.metrics.backend_decode_tps==null?'—':r.metrics.backend_decode_tps+' t/s',r.state])tr.append(element('td','',String(v)));$('bench-table').append(tr);}if(!d.rows.length){const tr=element('tr');const td=element('td','muted','No benchmarks yet. Real measurements appear here after you run a model.');td.colSpan=6;tr.append(td);$('bench-table').append(tr);}}catch(e){toast(e.message,true)}finally{loadExperimentSummary();}}
+// Read-only summary of historical, measured runs. It never starts a model.
+let savedExperimentSummary=null;
+const comparisonNumber=(n,unit)=>typeof n==='number'&&Number.isFinite(n)?n.toFixed(2)+' '+unit:'—';
+function renderExperimentSummary(){
+ const root=$('compare-groups');root.replaceChildren();
+ const data=savedExperimentSummary;
+ if(!data){root.append(element('p','muted','No saved comparison data loaded.'));return;}
+ const rows=(data.groups||[]).filter(g=>!$('compare-multi-only').checked||g.eligible_for_cross_model_comparison);
+ if(!rows.length){root.append(element('p','muted','No matching cross-model measurements yet. Benchmark the same workload and generation settings on two different models; use the same seed and cache policy. This view does not run them for you.'));return;}
+ for(const group of rows.slice(0,15)){
+  const card=element('article','compare-suite');
+  const head=element('div','compare-suite-head');
+  head.append(element('strong','',group.prompt_sha256.slice(0,12)+'… · config '+group.config_fingerprint),
+              element('span','field-note',group.total_runs+' measured run(s) · '+group.models.length+' variant(s)'));
+  card.append(head);
+  const scroll=element('div','table-wrap'),table=element('table');
+  const thead=element('thead'),tr=element('tr');
+  for(const label of ['Reported model / source','Runs','First output (median)','Decode (median)','End-to-end (median)'])tr.append(element('th','',label));
+  thead.append(tr);table.append(thead);
+  const body=element('tbody');
+  for(const variant of group.models){
+   const row=element('tr');
+   const desc=element('td');
+   desc.append(element('strong','',variant.model));
+   const origin=[variant.worker||variant.provider_id||'Unreported worker',variant.compute||'compute unknown',
+    variant.model_sha256?'digest '+variant.model_sha256.slice(0,12)+'…':'artifact digest unavailable'].join(' · ');
+   desc.append(element('div','field-note',origin));row.append(desc);
+   for(const val of [variant.completed+'/'+variant.runs+' completed',
+    comparisonNumber(variant.median_ttft_s,'s'),comparisonNumber(variant.median_decode_tps,'tok/s'),
+    comparisonNumber(variant.median_end_to_end_tps,'tok/s')])row.append(element('td','',val));
+   body.append(row);
+  }table.append(body);scroll.append(table);card.append(scroll);root.append(card);
+ }
+ if(rows.length>15)root.append(element('p','field-note','Showing the 15 newest relevant cases. Export full raw receipts for deeper offline analysis.'));
+}
+async function loadExperimentSummary(){
+ const btn=$('compare-refresh');btn.disabled=true;$('compare-status').textContent='Inspecting saved benchmark receipts…';
+ try{
+  const d=await api('/api/experiment-summary');
+  if(d.schema!=='haven-experiment-summary-1')throw new Error('Unexpected experiment-summary schema.');
+  savedExperimentSummary=d;
+  $('compare-status').textContent=d.records_examined+' receipt(s) inspected · '+d.total_groups+' case(s) · '+d.records_excluded+' excluded'+(d.history_truncated?' · oldest history omitted to bound memory':'')+'. No quality grading or hardware equivalence claim.';
+  renderExperimentSummary();
+ }catch(e){
+  $('compare-status').textContent='Could not retrieve experiment summaries: '+e.message;
+  $('compare-groups').replaceChildren();
+ }finally{btn.disabled=false;}
+}
+$('compare-refresh').onclick=loadExperimentSummary;
+$('compare-multi-only').onchange=renderExperimentSummary;
 $('export-bench').onclick=async()=>{try{saveJSON('haven-benchmarks.json',await api('/api/benchmarks'));}catch(e){toast(e.message,true)}};
 $('exit').onclick=async()=>{if(!confirm('Exit this lab and stop its OWNED engine? External Strata remains in its own console.'))return;try{await api('/api/shutdown',{});$('connection-pill').textContent='Lab closed';$('send').disabled=true;clearInterval(timer);toast('Lab closed. You can close this tab.');}catch(e){toast(e.message,true)}};
 boot();
