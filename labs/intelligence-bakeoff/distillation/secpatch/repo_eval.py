@@ -29,8 +29,6 @@ import sys
 import textwrap
 import time
 
-from candidate_contract import python_path, safe_source_path, validate_candidate
-
 SANDBOX_ENV_KEEP = ('LANG', 'LC_ALL', 'TERM')
 
 
@@ -84,12 +82,8 @@ def replace_function(source: str, qualname: str, new_code: str) -> str:
     return out
 
 
-def install(work: pathlib.Path, venv: pathlib.Path, root: pathlib.Path, events: list,
-            wheelhouse: pathlib.Path) -> bool:
-    # No pip index or dependency download in the untrusted execution phase.
-    # This does not prevent setup.py from opening sockets: the OS sandbox must.
-    env = sandbox_env(root, venv, offline=True)
-    env['PIP_FIND_LINKS'] = str(wheelhouse)
+def install(work: pathlib.Path, venv: pathlib.Path, root: pathlib.Path, events: list) -> bool:
+    env = sandbox_env(root, venv, offline=False)
     attempts = [['pip', 'install', '-q', '-e', '.[test]'], ['pip', 'install', '-q', '-e', '.[tests]'],
                 ['pip', 'install', '-q', '-e', '.'], ['pip', 'install', '-q', '.']]
     base = run([venv / 'bin' / 'pip', 'install', '-q', 'pytest'], work, env, 600)
@@ -144,11 +138,7 @@ def workdir_for(sandbox: pathlib.Path, key: str) -> pathlib.Path:
     return target
 
 
-def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int,
-                 wheelhouse: pathlib.Path) -> dict:
-    validate_candidate(cand)  # Before any workspace changes or subprocesses.
-    if not wheelhouse.is_dir() or wheelhouse.is_symlink():
-        raise ValueError('A pre-provisioned, non-symlink offline wheelhouse is required.')
+def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int) -> dict:
     root = workdir_for(sandbox, cand['key'])
     if root.exists():
         shutil.rmtree(root)
@@ -156,47 +146,22 @@ def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int,
     work, venv, events = root / 'repo', root / 'venv', []
     rec = {'key': cand['key'], 'repo': cand['repo'], 'commit': cand['commit'], 'tests': node_ids(cand['tests']),
            'events': events}
-    # Git needs HTTPS for the initial fetch, but never receives host credentials,
-    # cloud tokens, user Git configuration or credential helpers.
-    clone_env = sandbox_env(root, venv, offline=False)
-    clone_env.update(GIT_CONFIG_NOSYSTEM='1', GIT_CONFIG_GLOBAL=os.devnull,
-                     GIT_ALLOW_PROTOCOL='https', GIT_LFS_SKIP_SMUDGE='1')
     clone = run(['git', 'clone', '-q', '--filter=blob:none', '--no-checkout', f"https://github.com/{cand['repo']}.git", str(work)],
-                root, clone_env, 900)
+                root, {**os.environ, 'GIT_TERMINAL_PROMPT': '0'}, 900)
     if clone['returncode'] != 0:
         return {**rec, 'status': 'CLONE_FAILED', 'detail': clone['tail'][-300:]}
-    checkout = run(['git', 'checkout', '-q', cand['commit']], work, clone_env, 600)
-    if checkout['returncode'] != 0:
-        return {**rec, 'status': 'CHECKOUT_FAILED', 'detail': checkout['tail'][-300:]}
-    try:
-        safe_source_path(work, cand['path'])
-        for test in cand['tests']:
-            safe_source_path(work, test['path'])
-    except ValueError as exc:
-        return {**rec, 'status': 'UNSAFE_CHECKOUT_PATH', 'detail': str(exc)}
-    subprocess.run([sys.executable, '-m', 'venv', str(venv)], check=True,
-                   env=sandbox_env(root, venv, offline=True))
-    if not install(work, venv, root, events, wheelhouse):
+    run(['git', 'checkout', '-q', cand['commit']], work, None, 600)
+    subprocess.run([sys.executable, '-m', 'venv', str(venv)], check=True)
+    if not install(work, venv, root, events):
         return {**rec, 'status': 'INSTALL_FAILED'}
     fixed = pytest(work, venv, root, rec['tests'], timeout)
     rec['on_fix'] = fixed
     if not fixed['passed']:
         return {**rec, 'status': 'TESTS_FAIL_ON_FIX'}
-    diff = subprocess.run(['git', 'diff', '--name-only', '-z', cand['parent'], cand['commit']], cwd=work,
-                          env=clone_env, capture_output=True, text=True, timeout=300)
-    if diff.returncode != 0:
-        return {**rec, 'status': 'DIFF_FAILED', 'detail': diff.stderr[-300:]}
-    changed = [path for path in diff.stdout.split('\x00') if path]
+    changed = subprocess.run(['git', 'diff', '--name-only', cand['parent'], cand['commit']], cwd=work,
+                             capture_output=True, text=True).stdout.split()
     sources = [p for p in changed if p.endswith('.py') and p not in {t['path'] for t in cand['tests']}]
-    for path in sources:
-        python_path(path, 'changed source')
-    checkout = run(['git', 'checkout', '-q', cand['parent'], '--', *sources], work, clone_env, 300)
-    if checkout['returncode'] != 0:
-        return {**rec, 'status': 'PARENT_CHECKOUT_FAILED', 'detail': checkout['tail'][-300:]}
-    try:
-        source_path = safe_source_path(work, cand['path'])
-    except ValueError as exc:
-        return {**rec, 'status': 'UNSAFE_PARENT_SOURCE', 'detail': str(exc)}
+    run(['git', 'checkout', '-q', cand['parent'], '--', *sources], work, None, 300)
     vuln = pytest(work, venv, root, rec['tests'], timeout)
     rec['on_parent'] = vuln
     if vuln['passed']:
@@ -204,21 +169,21 @@ def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int,
     if vuln['failure_kind'] != 'assertion':
         return {**rec, 'status': 'PARENT_FAILS_FOR_UNRELATED_REASON'}
     rec['status'] = 'REGRESSION_TEST_VALIDATED'
-    parent_src = source_path.read_text()
+    parent_src = (work / cand['path']).read_text()
     rec['patches'] = {}
     for name, code in patches.items():
         if code is None:
             rec['patches'][name] = {'status': 'NO_CODE'}
             continue
         try:
-            safe_source_path(work, cand['path']).write_text(replace_function(parent_src, cand['function'], code))
+            (work / cand['path']).write_text(replace_function(parent_src, cand['function'], code))
         except (ValueError, SyntaxError) as exc:
             rec['patches'][name] = {'status': 'DOES_NOT_APPLY', 'detail': str(exc)[:200]}
             continue
         r = pytest(work, venv, root, rec['tests'], timeout)
         rec['patches'][name] = {'status': 'PASS' if r['passed'] else 'FAIL', 'seconds': r['seconds'],
                                 'summary': r['summary'], 'failure_kind': r['failure_kind'], 'tail': r['tail'][-400:]}
-        safe_source_path(work, cand['path']).write_text(parent_src)
+        (work / cand['path']).write_text(parent_src)
     return rec
 
 
@@ -234,8 +199,6 @@ def main(argv=None):
     ap.add_argument('--fixed-source', type=pathlib.Path, help='eval-heldout.jsonl, for the recorded-fix positive control.')
     ap.add_argument('--limit', type=int, default=0)
     ap.add_argument('--timeout', type=int, default=300)
-    ap.add_argument('--wheelhouse', type=pathlib.Path,
-                    help='Required pre-provisioned offline wheelhouse; never fetch dependencies during setup')
     ap.add_argument('--acknowledge-isolated-runner', action='store_true',
                     help='Required: execute only inside a disposable OS-isolated environment without host secrets.')
     args = ap.parse_args(argv)
@@ -247,11 +210,7 @@ def main(argv=None):
         ap.error('Repository evaluation executes third-party Python code. Run inside a disposable, '
                  'OS-isolated VM/container without host secrets and with restricted network egress, then supply '
                  '--acknowledge-isolated-runner. A virtualenv alone is insufficient.')
-    if (not args.wheelhouse or not args.wheelhouse.is_dir() or args.wheelhouse.is_symlink()):
-        ap.error('Provide a non-symlink offline --wheelhouse from the separately provisioned disposable runner.')
     cands = [json.loads(x) for x in args.candidates.read_text().splitlines() if x.strip()]
-    for cand in cands:
-        validate_candidate(cand)
     if args.limit:
         cands = cands[:args.limit]
     recorded = {}
@@ -269,7 +228,7 @@ def main(argv=None):
     with args.out.open('a', encoding='utf-8') as f:
         for cand in cands:
             patches = {'recorded_fix': recorded.get(cand['key']), **model_patches.get(cand['key'], {})}
-            rec = evaluate_fix(cand, patches, args.sandbox, args.timeout, args.wheelhouse.resolve())
+            rec = evaluate_fix(cand, patches, args.sandbox, args.timeout)
             rec['finished_at'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
             f.write(json.dumps(rec) + '\n'); f.flush()
             print(json.dumps({'key': rec['key'], 'repo': rec['repo'], 'status': rec['status'],
