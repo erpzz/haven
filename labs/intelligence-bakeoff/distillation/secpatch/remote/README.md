@@ -1,10 +1,12 @@
 # R02 external GPU execution package
 
-Status on 2026-10-28: **BLOCKED / NOT_EXECUTED**. No adapter or model-quality
-result is claimed. This package wraps the merged #75/#82/#84 pipeline without
-changing its architecture, tasks, training recipe, graders or promotion rules.
+The original cloud session reported **BLOCKED / NOT_EXECUTED**. That historical
+authentication observation is environment-specific and must be rechecked; no
+adapter or model-quality result is claimed. This package wraps the merged
+#75/#82/#84 pipeline without changing its architecture, tasks, training recipe,
+graders or promotion rules.
 
-## Connection blocker
+## Original cloud connection blocker
 
 Kaggle CLI **2.2.5**, installed in a separate environment, was actually invoked:
 `kaggle quota --format json` exited **1**, reporting
@@ -23,10 +25,10 @@ caps could be established. Do not launch there without those observations; do
 not enable payment, purchase credits, auto-reload or another account. Provider
 priority remains Kaggle → existing Lightning credits → Modal included credits.
 
-The real secpatch dataset and original OSV/harvest provenance are also absent.
-The checked-out repository has unrelated synthetic fixtures, which are **not**
-substitutes. Supply the original private data and provenance files to `prepare.py`.
-Dataset size, qualification and scientific validity remain unknown until then.
+The original cloud environment also lacked the real secpatch dataset and its
+OSV/harvest provenance. The repository has unrelated synthetic fixtures, which
+are **not** substitutes. Supply and independently check the original private
+data and provenance files before running `prepare.py`.
 
 ## Existing gates and qualification limits
 
@@ -39,18 +41,30 @@ grader. Fix-key counts are not proof of statistical independence.
 Before creating a payload, `prepare.py` additionally hashes the original OSV
 archive and replays **the existing `build.py`**, with original candidates,
 harvest order, Bandit 1.9.4, cutoff 2025-07-01 and near-duplicate threshold 0.8.
-All seven data files and the manifest (except `built_at`) must reproduce.
+All seven original output files must reproduce, including the manifest apart from
+its `built_at` field.
 This exercises the actual repository hash partition, time split, normalized-AST
 deduplication and training-to-dev/held-out vulnerable-function similarity filter.
-Original per-fix license filenames, commit identities and advisory attribution
-are retained in the private payload. No data is harvested, fabricated or relabeled
-by this wrapper. No original training/evaluator file is edited.
+The replay covers all original outputs, but the private payload contains only the
+train, held-out evaluation and manifest files, campaign execution code, and the
+attribution and provenance needed for those inputs. Original license and notice
+bytes are retained per fix, alongside commit and advisory attribution. No data is
+harvested, fabricated or relabeled by this wrapper. No original training/evaluator
+file is edited.
 
 This reproduces pipeline provenance; it does not independently authenticate a
 maliciously forged source collection or constitute legal review. The existing
 license classifier is heuristic. Check license text **at each fix commit** and
 OSV advisory licensing/attribution if upstream provenance is incomplete; stop if
-unresolved. The deduplication policy concerns vulnerable functions, not all
+unresolved. Provide `--source-check` with the independently collected private
+audit (`haven-secpatch-fix-source-check-v1`): it must cover each exported fix,
+the commit/parent and vulnerable/fixed blobs, and all license and notice files
+at the root and along the affected source path at that commit. Each original
+notice is included as base64 in `notice_texts`, keyed by its SHA-256, and linked
+from the fix's `notices` entries. The wrapper verifies those bytes and rejects
+non-permissive or unclassified source-path licenses. A consistent audit file
+is not, alone, independent proof that its collector checked the upstream Git
+objects. The deduplication policy concerns vulnerable functions, not all
 possible semantic or fixed-code leakage. The cutoff does not prove absence from
 the pretrained model's undisclosed training corpus.
 
@@ -75,7 +89,9 @@ python "$REMOTE/prepare.py" --data /private/original/data \
   --candidates /private/original/candidates.jsonl \
   --harvest /private/original/harvest-0.jsonl /private/original/harvest-1.jsonl \
             /private/original/harvest-2.jsonl /private/original/harvest-3.jsonl \
+            /private/original/harvest.jsonl \
   --osv-archive /private/original/raw/pypi-all.zip \
+  --source-check /private/original/fix-source-check.json \
   --owner "$OWNER" --output "$PRIVATE/package"
 
 # Login only if the existing account is not already connected.
