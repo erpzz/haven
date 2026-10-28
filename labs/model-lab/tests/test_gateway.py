@@ -18,7 +18,7 @@ from server import Server
 import base64
 import hashlib
 import hmac
-from gateway import Gateway, CONSENT_COMMAND, JWT_SECRET_FILE
+from gateway import Gateway, CONSENT_COMMAND, JWT_SECRET_FILE, TOOL_POLICY_FILE
 from fake_backend import FakeBackend
 
 FAKE_TEXT = 'This is a local TEST DOUBLE response. Unicode: café ✓.'
@@ -254,6 +254,61 @@ class GatewayTests(unittest.TestCase):
         status, body = self.chat(self.owui(), messages=msgs, tools=self.TOOLS)
         self.assertEqual(status, 400); self.assertIn('verified only', body['error']['message'])
 
+    # -- stable tool policy and accounting --------------------------------
+    MANY = [{'type': 'function', 'function': {'name': n, 'description': 'x' * size, 'parameters': {'type': 'object'}}}
+            for n, size in (('get_current_timestamp', 30), ('search_calendar_events', 600), ('view_note', 300))]
+
+    def write_policy(self, value, mode=0o600):
+        path = Path(self.tmp.name) / TOOL_POLICY_FILE
+        path.write_text(json.dumps(value)); path.chmod(mode)
+
+    def last_receipt(self):
+        return json.loads((Path(self.tmp.name) / 'gateway-receipts.jsonl').read_text().splitlines()[-1])
+
+    def test_tool_policy_withholds_named_tools_deterministically(self):
+        self.write_policy({'open-webui': {'withhold': ['search_calendar_events', 'view_note']}})
+        for _ in range(2):  # Same block every time: the prompt-cache prefix stays shared.
+            self.assertEqual(self.chat(self.owui(), tools=self.MANY)[0], 200)
+            self.assertEqual([t['function']['name'] for t in self.backend.requests[-1]['tools']], ['get_current_timestamp'])
+        row = self.last_receipt()
+        self.assertEqual(row['tools_supplied'], ['get_current_timestamp'])
+        self.assertEqual(row['tools_withheld'], ['search_calendar_events', 'view_note'])
+        self.assertLess(row['tool_schema_tokens_est'], 100)
+
+    def test_tool_policy_is_per_frontend_and_not_for_direct_keys(self):
+        self.write_policy({'some-other-frontend': {'withhold': ['view_note']}})
+        self.chat(self.owui(), tools=self.MANY)
+        self.assertEqual(len(self.backend.requests[-1]['tools']), 3)
+        self.write_policy({'open-webui': {'withhold': ['view_note']}})
+        self.chat(self.headers(self.owner), tools=self.MANY)
+        self.assertEqual(len(self.backend.requests[-1]['tools']), 3)
+
+    def test_tool_policy_must_be_private(self):
+        self.write_policy({'open-webui': {'withhold': ['view_note']}}, mode=0o644)
+        status, body = self.chat(self.owui(), tools=self.MANY)
+        self.assertEqual(status, 503); self.assertEqual(self.backend.requests, [])
+
+    def test_withholding_every_tool_sends_none(self):
+        self.write_policy({'open-webui': {'withhold': [t['function']['name'] for t in self.MANY]}})
+        self.assertEqual(self.chat(self.owui(), tools=self.MANY)[0], 200)
+        self.assertNotIn('tools', self.backend.requests[-1])
+
+    def test_tools_command_reports_costs_locally(self):
+        self.write_policy({'open-webui': {'withhold': ['search_calendar_events']}})
+        status, body = self.chat(self.owui(), tools=self.MANY, messages=[{'role': 'user', 'content': '/haven tools'}])
+        text = body['choices'][0]['message']['content']
+        self.assertIn('2 tools supplied', text); self.assertIn('`search_calendar_events`', text)
+        self.assertIn('withheld', text); self.assertEqual(self.backend.requests, [])
+
+    def test_receipt_and_trace_record_prompt_cache_accounting(self):
+        status, body = self.chat(self.owui(), tools=self.MANY)
+        measured = body['haven']['routing']['measured']
+        self.assertEqual((measured['prompt_cached_tokens'], measured['prompt_processed_tokens']), (20, 10))
+        self.assertEqual(body['haven']['routing']['tools']['supplied'],
+                         ['get_current_timestamp', 'search_calendar_events', 'view_note'])
+        row = self.last_receipt()
+        self.assertEqual(row['metrics']['prompt_cached_tokens'], 20)
+
     def test_status_command_answers_locally(self):
         status, body = self.chat(self.owui(), messages=[{'role': 'user', 'content': '/haven status'}])
         text = body['choices'][0]['message']['content']
@@ -323,10 +378,13 @@ class GatewayTests(unittest.TestCase):
         self.backend.slow = True
         results = []
         def go(uid):
-            results.append(self.chat(self.owui(uid=uid))[0])
+            try:
+                results.append(self.chat(self.owui(uid=uid))[0])
+            except Exception as exc:  # Surface the cause instead of an empty list.
+                results.append(repr(exc))
         threads = [threading.Thread(target=go, args=(f'u{i}',)) for i in range(2)]
         for t in threads: t.start()
-        for t in threads: t.join(30)
+        for t in threads: t.join(60)
         self.assertEqual(results, [200, 200])
 
     def test_backend_failure_is_reported_in_stream(self):

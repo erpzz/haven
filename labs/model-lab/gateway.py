@@ -42,6 +42,8 @@ JWT_HEADER = 'X-OpenWebUI-User-Jwt'
 RECEIPTS_FILE = 'gateway-receipts.jsonl'
 CONSENT_COMMAND = '/haven consent'
 STATUS_COMMAND = '/haven status'
+TOOLS_COMMAND = '/haven tools'
+TOOL_POLICY_FILE = 'gateway-tools.json'  # {"<frontend principal>": {"withhold": ["tool_name", ...]}}
 DEFAULT_OUTPUT_CAP = 16384     # Default reply budget when the client sends none.
 MIN_OUTPUT = 256               # Below this the chat is too long for the loaded context.
 QUEUE_WAIT_S = 180             # One GPU slot; a queued request waits this long, then reports BUSY.
@@ -281,6 +283,9 @@ class Gateway:
             messages.append(out)
         chat_id = headers.get('X-OpenWebUI-Chat-Id', '')
         last = messages[-1]['content'].strip() if messages[-1]['role'] == 'user' else ''
+        tools, selection = self.select_tools(principal, body.get('tools') or None)
+        if last.lower() == TOOLS_COMMAND:
+            return {'local_reply': format_tools(selection)}
         if last.lower() == STATUS_COMMAND:
             return {'local_reply': format_status(self.status(principal))}
         provider = None
@@ -310,7 +315,6 @@ class Gateway:
             egress_ack = 'HOSTED_SUBSCRIPTION'
         conn, _ = self._managed()
         context = (conn.get('profile') or {}).get('context') if provider_id in ('managed', 'auto') else (provider or {}).get('max_context_tokens')
-        tools = body.get('tools') or None
         prompt = estimate_prompt_tokens(messages, tools)
         requested = body.get('max_completion_tokens', body.get('max_tokens'))
         if requested is None:
@@ -327,8 +331,40 @@ class Gateway:
                             'seed': body.get('seed', secrets.randbelow(2**31)), 'reasoning': effort,
                             'provider_id': provider_id, 'egress_ack': egress_ack, 'label': 'gateway',
                             'tools': tools, 'tools_optional': True},
-                'principal': principal, 'chat_id': chat_id, 'prompt_estimate': prompt,
+                'principal': principal, 'chat_id': chat_id, 'prompt_estimate': prompt, 'tool_selection': selection,
                 'requested_model_id': str(body.get('model', ''))}
+
+    def tool_policy(self, principal: dict) -> dict:
+        """Owner-written, per-frontend withhold list. Deterministic, so every request from that frontend
+        carries the same tool block and llama.cpp keeps reusing the cached prompt prefix."""
+        path = self.data / TOOL_POLICY_FILE
+        try:
+            fd = os.open(path, os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0))
+        except FileNotFoundError:
+            return {}
+        with os.fdopen(fd) as f:
+            info = os.fstat(f.fileno())
+            if not stat.S_ISREG(info.st_mode) or (os.name != 'nt' and (info.st_uid != os.getuid() or info.st_mode & 0o077)):
+                raise GatewayError(503, 'gateway-tools.json must be an owned mode-0600 file.', 'unavailable')
+            policy = json.load(f).get(principal['via'], {})
+        withhold = policy.get('withhold', [])
+        if not isinstance(withhold, list) or not all(isinstance(n, str) for n in withhold):
+            raise GatewayError(503, 'gateway-tools.json withhold lists must be tool names.', 'unavailable')
+        return {'withhold': set(withhold)}
+
+    def select_tools(self, principal: dict, tools):
+        """Apply the frontend's stable tool policy and account for what the model will be shown."""
+        if not tools:
+            return None, {'policy': None, 'supplied': [], 'withheld': [], 'schema_tokens_est': 0}
+        withhold = self.tool_policy(principal).get('withhold', set()) if principal['via'] != 'direct-key' else set()
+        name = lambda t: (t.get('function') or {}).get('name', '') if isinstance(t, dict) else ''
+        kept = [t for t in tools if name(t) not in withhold]
+        cost = lambda ts: len(json.dumps(ts).encode()) // 3 if ts else 0
+        return kept or None, {
+            'policy': principal['via'] if withhold else None,
+            'supplied': [name(t) for t in kept], 'withheld': [name(t) for t in tools if name(t) in withhold],
+            'schema_tokens_est': cost(kept), 'withheld_tokens_est': cost([t for t in tools if name(t) in withhold]),
+            'per_tool_tokens_est': {name(t): cost([t]) for t in tools}}
 
     def start(self, prepared: dict, cancelled=lambda: False) -> str:
         """Dispatch through the Lab, waiting for the single generation slot."""
@@ -364,6 +400,10 @@ class Gateway:
             'execution': {'job_id': job.get('id'), 'state': job.get('state'),
                           'finish_reason': job.get('finish_reason'),
                           'tools_dropped': job.get('tools_dropped')},
+            'tools': {k: v for k, v in (prepared.get('tool_selection') or {}).items() if k != 'per_tool_tokens_est'},
+            'measured': {k: (job.get('metrics') or {}).get(k) for k in (
+                'prompt_tokens', 'prompt_cached_tokens', 'prompt_processed_tokens', 'backend_prompt_seconds',
+                'ttft_seconds', 'completion_tokens', 'backend_decode_tps', 'elapsed_seconds')},
             'selection_reason': job.get('route_reason'),
             'fallback': 'UNDETERMINED',  # no recorded event chain exists yet
             'identity_attestation': 'NOT_VERIFIED',
@@ -381,6 +421,9 @@ class Gateway:
                'prompt_estimate': prepared['prompt_estimate'], 'metrics': job.get('metrics'),
                'error': job.get('error'), 'route_reason': job.get('route_reason'),
                'tools_offered': job.get('tools_offered'), 'tools_dropped': job.get('tools_dropped'),
+               'tools_supplied': (prepared.get('tool_selection') or {}).get('supplied'),
+               'tools_withheld': (prepared.get('tool_selection') or {}).get('withheld'),
+               'tool_schema_tokens_est': (prepared.get('tool_selection') or {}).get('schema_tokens_est'),
                'tool_calls': [c['function']['name'] for c in job.get('tool_calls') or []]}
         try:
             with self.lock:
@@ -454,6 +497,20 @@ def openai_finish(snap: dict) -> str:
     if snap.get('state') == 'OUTPUT_LIMIT':
         return 'length'
     return 'tool_calls' if snap.get('finish_reason') == 'tool_calls' else 'stop'
+
+
+def format_tools(sel: dict) -> str:
+    """`/haven tools`: what the frontend attached, what the policy withholds, and their estimated prompt cost."""
+    per = sel.get('per_tool_tokens_est') or {}
+    if not per:
+        return 'This frontend attached no tools to this request.'
+    lines = [f"**{len(sel['supplied'])} tools supplied** to the model (~{sel['schema_tokens_est']:,} prompt tokens of schemas)"
+             + (f", {len(sel['withheld'])} withheld by the `{sel['policy']}` policy (~{sel['withheld_tokens_est']:,} tokens)"
+                if sel['withheld'] else '') + '.',
+             'The tool list is identical on every request, so after the first request it is served from the prompt cache.']
+    for name, cost in sorted(per.items(), key=lambda kv: -kv[1]):
+        lines.append(f"- `{name}` ~{cost:,} tokens" + (' · withheld' if name in sel['withheld'] else ''))
+    return '\n'.join(lines)
 
 
 def format_status(st: dict) -> str:
