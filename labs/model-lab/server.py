@@ -468,7 +468,8 @@ class Handler(BaseHTTPRequestHandler):
         try:
             snap = g.stream(job, self._sse, model)
         finally:
-            g.receipt(prepared, job.snapshot())
+            # On a client Stop the job is still unwinding; record its terminal state, not RUNNING.
+            g.receipt(prepared, g.settle(job))
         if snap['state'] in ('COMPLETED', 'OUTPUT_LIMIT'):
             last = g.completion_chunk('chatcmpl-' + job_id, model, {}, gw.openai_finish(snap))
             if gw.usage(snap):

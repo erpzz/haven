@@ -311,6 +311,13 @@ class GatewayTests(unittest.TestCase):
         job = [j.snapshot() for j in self.lab.jobs.values() if j.kind == 'generation'][-1]
         self.assertEqual(job['state'], 'CANCELLED')
         self.assertLess(len(job['text']), len(FAKE_TEXT))
+        end = time.monotonic() + 12
+        path = Path(self.tmp.name) / 'gateway-receipts.jsonl'
+        while not path.exists() and time.monotonic() < end:
+            time.sleep(.05)
+        row = json.loads(path.read_text().splitlines()[-1])
+        self.assertEqual(row['state'], 'CANCELLED')  # not the transient RUNNING seen before the fix
+        self.assertIsNotNone(row['metrics'])
 
     def test_concurrent_requests_queue_for_the_gpu_slot(self):
         self.backend.slow = True
