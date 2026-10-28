@@ -24,13 +24,21 @@ curl -o $S/raw/pypi-all.zip https://osv-vulnerabilities.storage.googleapis.com/P
 python3 $C/osv.py --archive $S/raw/pypi-all.zip --out $S/candidates.jsonl
 python3 $C/harvest.py --candidates $S/candidates.jsonl --out $S/harvest-0.jsonl --work $S/git-0 \
   --per-repo 12 --exclude-repo tensorflow/tensorflow --shard 0/4   # run shards 0..3 in parallel; resumable
-python3 $C/build.py --candidates $S/candidates.jsonl --harvest $S/harvest*.jsonl --out $S/data --bandit $B
+python3 $C/harvest.py --rescan $S/harvest*.jsonl --work-dirs $S/git $S/git-[0-3] --out $S/scope.jsonl   # records from before scope analysis
+python3 $C/build.py --candidates $S/candidates.jsonl --harvest $S/harvest*.jsonl --scope $S/scope.jsonl --out $S/data-v2 --bandit $B
 ```
 
 The harvester fetches only the fix commit and its parent (shallow, blobless) and runs nothing from the repository.
 A record becomes training data only when all of these hold: one parent; a permissive license
 (MIT, BSD-2/3, Apache-2.0, ISC, PSF-2.0, 0BSD, Unlicense) found in the tree at the fix; exactly one non-test
 function changed in a non-cosmetic way (AST-compared); and both versions parse.
+
+**Self-contained fixes (v2).** A fix that changes one function may still add a helper, an import or a constant, or
+edit another source file. Then the fixed function alone is not a working patch: the repository-level positive
+control failed for exactly those fixes (`name '_resolved_path_is_within' is not defined`, `name 'os' is not
+defined`). The harvester records this scope, and v2 emits `remediate` and `regression_test` rows only from
+self-contained fixes (`--allow-non-self-contained-targets` restores v1). Every row's `verification` carries
+`self_contained` and `fix_scope`. Detection, finding-support and root-cause rows use every verified fix.
 
 ### Splits and leakage controls
 
@@ -57,7 +65,7 @@ Every row carries `source` (repo, commit, parent, path, function, code license, 
 | `regression_test` | both versions + issue | a test function the fix commit added |
 | `tool_select` | vulnerable function | the Bandit rule that actually fired on it and not on the fix |
 | `finding_support` | a finding + vulnerable / fixed / decoy-name code | supported, stale (already fixed) or unsupported (cites absent code) |
-| recovery events | — | logged by `repo_eval.py` when an install or test step fails and a later step recovers |
+| recovery events | — | logged by `repo_eval.py` when an install or test step fails and a later step recovers (none in v2: the only runs were on held-out repositories) |
 
 ## Training
 
@@ -71,14 +79,13 @@ CUDA_VISIBLE_DEVICES= HF_HOME=~/.local/share/haven-training-cache HF_HUB_OFFLINE
   ~/.local/share/haven-training-venv/bin/python $C/train.py --data $S/data/train.jsonl \
   --revision c1899de289a04d12100db370d81485cdf75e47ca --output $S/runs/cpu-check --device cpu --max-steps 2 --batch 2 --execute
 
-# GPU training run: needs an approved GPU window (nothing else on the GPU)
-HF_HOME=~/.local/share/haven-training-cache HF_HUB_OFFLINE=1 \
-  ~/.local/share/haven-training-venv/bin/python $C/train.py --data $S/data/train.jsonl \
-  --revision c1899de289a04d12100db370d81485cdf75e47ca --output $S/runs/qwen3-0.6b-secpatch-s42 \
-  --device cuda --epochs 2 --batch 8 --seed 42 --execute
+# Approved GPU window: 3 seeds, held-out eval of each adapter (plain and with tools), same-device base arm, registry
+$C/gpu_window.sh --approved "<who approved, when>"
 ```
 
-Repeat with `--seed 7` and `--seed 13` for the multiple-seed comparison.
+`gpu_window.sh` refuses to start without an approval note, while any process holds the GPU, or while Strata is
+active, and it never stops anything. Measured on Slink's CPU (8 threads), one optimizer step at batch 2 took about
+100 s, so CPU training is a pipeline check only.
 
 ## Evaluation
 
@@ -93,6 +100,9 @@ $E --backend hf ... --adapter $S/runs/<run>/adapter --out $S/eval/<run>         
 $E --backend hf ... --adapter $S/runs/<run>/adapter --with-tools --out $S/eval/<run>-tools
 $E --backend openai --base-url http://127.0.0.1:8877/v1 --key-file <gateway key> --model haven-slink --out $S/eval/35b
 ```
+
+To compare arms run on different task subsets, re-score from the per-item files over shared ids:
+`report.py --items $S/eval/a/items.jsonl $S/eval/b/items.jsonl --tasks detect,finding_support`.
 
 Reported per arm: per-task accuracy with Wilson intervals, detection recall, false-positive rate on fixed code,
 paired detection (both versions of a fix right), CWE match, unsupported-assertion rate (cites a function or line
@@ -121,7 +131,7 @@ $R attach-eval base $S/eval/base/summary.json
 $R attach-eval secpatch-0.6b-v1 $S/eval/qwen3-0.6b-secpatch-s42/summary.json
 $R promote secpatch-0.6b-v1 <eval_sha256>   # refused unless it beats base and FPR does not rise
 $R rollback                                 # previous promoted adapter (or none)
-$R card --manifest $S/data/manifest.json --out $S/specialist-card.json   # what the Haven gateway reads
+$R card --manifest $S/data-v2/manifest.json --out $S/specialist-card.json   # what the Haven gateway reads
 ```
 
 Nothing is deployed by promotion. Serving needs the adapter converted to GGUF and loaded with `llama-server --lora`,
@@ -132,6 +142,9 @@ then routed through the Haven gateway (issue #70), which keeps user identity, sc
 * Bandit flags only a small share of real vulnerabilities, so `tool_select` rows are few. A Bandit miss is not proof
   of safety.
 * The fixed version is labeled `not_vulnerable` *for the reported issue*; it may contain other weaknesses.
-* Repository tests run without kernel network isolation: this host forbids unprivileged user namespaces
-  (`kernel.apparmor_restrict_unprivileged_userns=1`). Enabling bubblewrap is an owner security decision.
+* `repo_eval.py` needs a disposable OS-isolated runner and refuses to run without `--acknowledge-isolated-runner`.
+  Slink has none today: unprivileged user namespaces are blocked (`kernel.apparmor_restrict_unprivileged_userns=1`),
+  `slinky` is not in the `docker` group, and LXD is not initialized. One validation pass ran on the host before the
+  gate existed (see RESULTS.md). Choosing and provisioning the runner is an owner decision.
+* Training data has 125 remediation targets (self-contained fixes only) and no recovery rows yet.
 * Python only. C/C++ fixes (most of TensorFlow, Pillow's C code) need a different extractor.
