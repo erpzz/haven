@@ -460,7 +460,8 @@ class Handler(BaseHTTPRequestHandler):
                                          **({'tool_calls': snap['tool_calls']} if snap.get('tool_calls') else {})},
                                          'finish_reason': gw.openai_finish(snap)}],
                             **({'usage': gw.usage(snap)} if gw.usage(snap) else {}),
-                            'haven': {k: snap.get(k) for k in ('provider_id', 'worker_label', 'model', 'compute', 'egress', 'route_reason')}})
+                            'haven': {**{k: snap.get(k) for k in ('provider_id', 'worker_label', 'model', 'compute', 'egress', 'route_reason')},
+                                      'routing': g.routing_trace(prepared, snap)}})
             return
         job = g.lab.jobs[job_id]
         self._sse_open()
@@ -472,6 +473,7 @@ class Handler(BaseHTTPRequestHandler):
             last = g.completion_chunk('chatcmpl-' + job_id, model, {}, gw.openai_finish(snap))
             if gw.usage(snap):
                 last['usage'] = gw.usage(snap)
+            last['haven'] = {'routing': g.routing_trace(prepared, snap)}
             self._sse(last)
         else:
             # Headers are already sent: report the failure in-band, keeping any partial text the user saw.

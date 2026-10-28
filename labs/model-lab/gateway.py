@@ -214,10 +214,10 @@ class Gateway:
             {'id': 'haven-slink', 'object': 'model', 'owned_by': 'haven', 'created': 0,
              'name': f'Slink · {label}' + ('' if state == 'READY' else f' · {state}'),
              'haven': {'provider_id': 'managed', 'state': state, 'context': context, 'compute': conn.get('compute'),
-                       'egress': 'NONE', 'model_sha256': conn.get('model_sha256')}},
+                       'egress': 'NONE', 'model_sha256': conn.get('model_sha256'), 'route_type': 'managed_alias'}},
             {'id': 'haven-auto', 'object': 'model', 'owned_by': 'haven', 'created': 0,
              'name': 'Haven · Automatic (private machines only)',
-             'haven': {'provider_id': 'auto', 'egress': 'NONE'}},
+             'haven': {'provider_id': 'auto', 'egress': 'NONE', 'route_type': 'automatic_alias'}},
         ]
         if principal['role'] != 'owner':
             return rows[:1]
@@ -229,7 +229,8 @@ class Gateway:
                                   f"{row['label']} · {row['display_model']}") + (f' · {seen}' if seen not in ('READY',) else ''),
                          'haven': {'provider_id': row['id'], 'state': seen, 'context': row['max_context_tokens'],
                                    'compute': row['compute'], 'egress': row.get('locality'),
-                                   'vendor': row.get('vendor'), 'model_sha256': row.get('model_sha256')}})
+                                   'vendor': row.get('vendor'), 'model_sha256': row.get('model_sha256'),
+                                   'route_type': 'provider'}})
         return rows
 
     def provider_for(self, principal: dict, requested: str) -> str:
@@ -326,7 +327,8 @@ class Gateway:
                             'seed': body.get('seed', secrets.randbelow(2**31)), 'reasoning': effort,
                             'provider_id': provider_id, 'egress_ack': egress_ack, 'label': 'gateway',
                             'tools': tools, 'tools_optional': True},
-                'principal': principal, 'chat_id': chat_id, 'prompt_estimate': prompt}
+                'principal': principal, 'chat_id': chat_id, 'prompt_estimate': prompt,
+                'requested_model_id': str(body.get('model', ''))}
 
     def start(self, prepared: dict, cancelled=lambda: False) -> str:
         """Dispatch through the Lab, waiting for the single generation slot."""
@@ -345,12 +347,36 @@ class Gateway:
                                             'Try again shortly.', 'busy') from None
             time.sleep(.25)
 
+    def routing_trace(self, prepared: dict, job: dict) -> dict:
+        """Observable decision facts only; never claim a model switch or verified weights without evidence.
+
+        The selected OpenAI model id is a route selector, often *not* an artifact.
+        The Lab job records the resolved provider and reported model after admission.
+        Backend weight identity cannot be independently attested by this gateway.
+        """
+        return {
+            'requested': {'selector': prepared.get('requested_model_id'),
+                          'provider_id': prepared['request'].get('provider_id')},
+            'resolved': {'provider_id': job.get('provider_id'), 'worker': job.get('worker_label'),
+                         'reported_model': job.get('model'), 'model_sha256': job.get('model_sha256'),
+                         'digest_provenance': job.get('digest_provenance'), 'compute': job.get('compute'),
+                         'egress': job.get('egress')},
+            'execution': {'job_id': job.get('id'), 'state': job.get('state'),
+                          'finish_reason': job.get('finish_reason'),
+                          'tools_dropped': job.get('tools_dropped')},
+            'selection_reason': job.get('route_reason'),
+            'fallback': 'UNDETERMINED',  # no recorded event chain exists yet
+            'identity_attestation': 'NOT_VERIFIED',
+        }
+
     def receipt(self, prepared: dict, job: dict):
         principal = prepared['principal']
         row = {'at': time.time(), 'job': job.get('id'), 'state': job.get('state'),
                'principal': hashlib.sha256(principal['id'].encode()).hexdigest()[:16], 'role': principal['role'],
-               'via': principal['via'], 'provider_id': job.get('provider_id'), 'worker': job.get('worker_label'),
-               'model': job.get('model'), 'compute': job.get('compute'), 'egress': job.get('egress'),
+               'via': principal['via'], 'requested_model_id': prepared.get('requested_model_id'),
+               'provider_id': job.get('provider_id'), 'worker': job.get('worker_label'),
+               'model': job.get('model'), 'model_sha256': job.get('model_sha256'),
+               'compute': job.get('compute'), 'egress': job.get('egress'),
                'finish_reason': job.get('finish_reason'), 'max_tokens': prepared['request']['max_tokens'],
                'prompt_estimate': prepared['prompt_estimate'], 'metrics': job.get('metrics'),
                'error': job.get('error'), 'route_reason': job.get('route_reason'),

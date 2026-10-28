@@ -156,6 +156,8 @@ class GatewayTests(unittest.TestCase):
         rows = json.loads(self.call('GET', '/v1/models', self.headers(self.owner))[1])['data']
         self.assertEqual(rows[0]['haven']['context'], 32768)
         self.assertIn('TEST_DOUBLE', rows[0]['name'])
+        self.assertEqual(rows[0]['haven']['route_type'], 'managed_alias')
+        self.assertEqual(rows[1]['haven']['route_type'], 'automatic_alias')
 
     def test_member_cannot_route_to_auto(self):
         status, body = self.chat(self.owui(role='user'), model='haven-auto')
@@ -175,16 +177,25 @@ class GatewayTests(unittest.TestCase):
         self.assertEqual(text, FAKE_TEXT)
         self.assertEqual(events[-1]['choices'][0]['finish_reason'], 'stop')
         self.assertEqual(events[-1]['usage']['completion_tokens'], 12)
+        trace = events[-1]['haven']['routing']
+        self.assertEqual(trace['requested']['selector'], 'haven-slink')
+        self.assertEqual(trace['resolved']['provider_id'], 'managed')
+        self.assertEqual(trace['identity_attestation'], 'NOT_VERIFIED')
 
     def test_non_stream_and_receipt_without_content(self):
         status, body = self.chat(self.owui(), messages=[{'role': 'user', 'content': 'secret-prompt-text'}])
         self.assertEqual(status, 200)
         self.assertEqual(body['choices'][0]['message']['content'], FAKE_TEXT)
         self.assertEqual(body['haven']['provider_id'], 'managed')
+        route = body['haven']['routing']
+        self.assertEqual(route['requested'], {'selector': 'haven-slink', 'provider_id': 'managed'})
+        self.assertEqual(route['resolved']['provider_id'], 'managed')
+        self.assertEqual(route['fallback'], 'UNDETERMINED')
         receipts = (Path(self.tmp.name) / 'gateway-receipts.jsonl').read_text()
         self.assertNotIn('secret-prompt-text', receipts); self.assertNotIn(FAKE_TEXT, receipts)
         row = json.loads(receipts.splitlines()[-1])
         self.assertEqual((row['state'], row['role'], row['egress']), ('COMPLETED', 'owner', 'NONE'))
+        self.assertEqual(row['requested_model_id'], 'haven-slink')
 
     def test_open_webui_multipart_text_is_flattened(self):
         msg = {'role': 'user', 'content': [{'type': 'text', 'text': 'a'}, {'type': 'text', 'text': 'b'}]}
