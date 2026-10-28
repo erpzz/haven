@@ -40,7 +40,7 @@ def run(cmd, cwd, env, timeout):
     except subprocess.TimeoutExpired as exc:
         code, out = 'TIMEOUT', str(exc.stdout or '')[-2000:]
     return {'cmd': ' '.join(map(str, cmd))[:300], 'returncode': code, 'seconds': round(time.monotonic() - started, 1),
-            'tail': out[-1500:]}
+            'tail': out[-4000:]}
 
 
 def sandbox_env(root: pathlib.Path, venv: pathlib.Path, offline: bool) -> dict:
@@ -104,10 +104,23 @@ def install(work: pathlib.Path, venv: pathlib.Path, root: pathlib.Path, events: 
     return False
 
 
+def failure_kind(output: str) -> str | None:
+    """Why a pytest run failed. Only an assertion-style failure shows the test detects the vulnerability."""
+    if re.search(r'^E\s+(assert\b|AssertionError|Failed: DID NOT RAISE|.*AssertionError)', output, re.M) or \
+            re.search(r'^FAILED .* - (assert|AssertionError|Failed: DID NOT RAISE)', output, re.M):
+        return 'assertion'
+    if re.search(r'ERROR collecting|ImportError|ModuleNotFoundError|^E\s+NameError', output, re.M):
+        return 'collection_or_import'
+    return 'other_error'
+
+
 def pytest(work, venv, root, ids, timeout):
-    r = run([venv / 'bin' / 'python', '-m', 'pytest', '-q', '-x', '-p', 'no:cacheprovider', *ids], work,
-            sandbox_env(root, venv, offline=True), timeout)
-    return {**r, 'passed': r['returncode'] == 0, 'collected_error': 'ERROR collecting' in r['tail'] or 'not found' in r['tail']}
+    r = run([venv / 'bin' / 'python', '-m', 'pytest', '-q', '-x', '--tb=short', '-rf', '-p', 'no:cacheprovider',
+             '-p', 'no:warnings', *ids], work, sandbox_env(root, venv, offline=True), timeout)
+    summary = re.findall(r'^.*\b\d+ (?:passed|failed|error)[^\n]*$', r['tail'], re.M)
+    passed = r['returncode'] == 0
+    return {**r, 'passed': passed, 'summary': summary[-1].strip('= ') if summary else None,
+            'failure_kind': None if passed else failure_kind(r['tail'])}
 
 
 def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int) -> dict:
@@ -138,6 +151,8 @@ def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int)
     rec['on_parent'] = vuln
     if vuln['passed']:
         return {**rec, 'status': 'TEST_DOES_NOT_DETECT_VULNERABILITY'}
+    if vuln['failure_kind'] != 'assertion':
+        return {**rec, 'status': 'PARENT_FAILS_FOR_UNRELATED_REASON'}
     rec['status'] = 'REGRESSION_TEST_VALIDATED'
     parent_src = (work / cand['path']).read_text()
     rec['patches'] = {}
@@ -151,7 +166,8 @@ def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int)
             rec['patches'][name] = {'status': 'DOES_NOT_APPLY', 'detail': str(exc)[:200]}
             continue
         r = pytest(work, venv, root, rec['tests'], timeout)
-        rec['patches'][name] = {'status': 'PASS' if r['passed'] else 'FAIL', 'seconds': r['seconds'], 'tail': r['tail'][-400:]}
+        rec['patches'][name] = {'status': 'PASS' if r['passed'] else 'FAIL', 'seconds': r['seconds'],
+                                'summary': r['summary'], 'failure_kind': r['failure_kind'], 'tail': r['tail'][-400:]}
         (work / cand['path']).write_text(parent_src)
     return rec
 

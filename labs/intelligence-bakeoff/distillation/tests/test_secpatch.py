@@ -305,6 +305,12 @@ class RepoEvalTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             repo_eval.replace_function(src, 'A.h', 'def h(self): pass')
 
+    def test_failure_kind_separates_detection_from_breakage(self):
+        self.assertEqual(repo_eval.failure_kind('E   assert 302 == 404\nFAILED t.py::x'), 'assertion')
+        self.assertEqual(repo_eval.failure_kind('FAILED t.py::x - AssertionError: open redirect'), 'assertion')
+        self.assertEqual(repo_eval.failure_kind('ERROR collecting tests/t.py\nImportError: cannot import name'), 'collection_or_import')
+        self.assertEqual(repo_eval.failure_kind('E   TypeError: bad'), 'other_error')
+
     def test_node_ids(self):
         self.assertEqual(repo_eval.node_ids([{'path': 'tests/t.py', 'name': 'TestX.test_y'}]), ['tests/t.py::TestX::test_y'])
 

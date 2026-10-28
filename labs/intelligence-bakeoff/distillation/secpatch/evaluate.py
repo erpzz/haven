@@ -31,7 +31,8 @@ import time
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from harvest import normalize  # noqa: E402
 
-MAX_NEW = {'detect': 256, 'root_cause': 384, 'remediate': 1536, 'tool_select': 160, 'finding_support': 160}
+# Budgets leave room for the requested JSON plus a short reason; a smoke run truncated 160-token answers mid-JSON.
+MAX_NEW = {'detect': 400, 'root_cause': 512, 'remediate': 1536, 'tool_select': 256, 'finding_support': 400}
 
 
 def wilson(k: int, n: int, z: float = 1.96) -> list[float]:
