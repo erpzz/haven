@@ -48,12 +48,22 @@ VENDORS = {
         'allowance': 'daily Neuron allocation; over-limit requests fail on the Workers Free plan',
         'url': lambda cfg: (f"https://api.cloudflare.com/client/v4/accounts/{cfg['account']}"
                             f"/ai/run/{cfg['model']}"),
+        # Workers AI has no free listing endpoint, so verification runs the configured
+        # model once with a minimal output bound. That consumes a few Neurons of the
+        # daily allocation; `verify` says so before it sends.
+        'probe': lambda cfg: ('POST', f"https://api.cloudflare.com/client/v4/accounts/{cfg['account']}"
+                                      f"/ai/run/{cfg['model']}",
+                              {'messages': [{'role': 'user', 'content': 'ping'}], 'max_tokens': 1}),
+        'probe_cost': 'consumes a few Neurons of today\'s allocation',
     },
     'groq': {
         'route_class': 'GROQ_FREE',
         'vendor': 'Groq',
         'allowance': 'per-organisation rate limits; exhaustion returns 429',
         'url': lambda cfg: 'https://api.groq.com/openai/v1/chat/completions',
+        # Groq lists models for free, so verification spends nothing.
+        'probe': lambda cfg: ('GET', 'https://api.groq.com/openai/v1/models', None),
+        'probe_cost': 'spends nothing; the model listing is not metered',
     },
 }
 
@@ -296,6 +306,57 @@ def configure(args):
                       'note': 'Configuration is not enrollment. Write the Lab enrollment file yourself.'}, indent=2))
 
 
+def verify(args):
+    """One deliberate, owner-run authenticated call. Produces a real receipt.
+
+    This is the step a model cannot do for you: it needs your provider credential.
+    It is explicitly not part of serve() and never runs unattended -- its whole
+    purpose is that a human chose to spend one request to confirm the lane works.
+    """
+    cfg = lane_config(args.lane)
+    spec = VENDORS[cfg['vendor']]
+    method, url, body = spec['probe'](cfg)
+    if not args.yes:
+        print(f"About to make one authenticated {method} to {spec['vendor']} for lane "
+              f"{cfg['lane']!r}. This {spec['probe_cost']}.", file=sys.stderr)
+        if input('Proceed? [y/N] ').strip().lower() not in ('y', 'yes'):
+            sys.exit('Nothing was sent.')
+    key = private_read(STATE / 'keys' / cfg['key_ref'])
+    request = urllib.request.Request(
+        url, data=json.dumps(body).encode() if body is not None else None,
+        headers={'authorization': 'Bearer ' + key,
+                 **({'content-type': 'application/json'} if body is not None else {})},
+        method=method)
+    began = time.monotonic()
+    result = {'at': time.time(), 'lane': cfg['lane'], 'route_class': spec['route_class'],
+              'cost_boundary': cfg.get('cost_boundary'), 'vendor': spec['vendor'],
+              'authenticated': True, 'simulated': False}
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            payload = response.read(65536).decode('utf-8', 'replace')
+            result.update(outcome='VERIFIED', http_status=response.status,
+                          allowance_headers={k.lower(): v for k, v in response.headers.items()
+                                             if k.lower().startswith(('x-ratelimit', 'cf-'))},
+                          # Bounded excerpt proving a real response arrived; never the key.
+                          response_bytes=len(payload))
+    except urllib.error.HTTPError as exc:
+        detail = exc.read(512).decode('utf-8', 'replace')
+        result.update(outcome=f'REFUSED_{exc.code}', http_status=exc.code,
+                      reason={429: 'rate-limited or allowance exhausted',
+                              402: 'outside the free allowance',
+                              403: 'not permitted on this plan',
+                              401: 'credential rejected'}.get(exc.code, 'provider error'),
+                      detail=detail[:200])
+    except urllib.error.URLError as exc:
+        result.update(outcome='UNREACHABLE', reason=str(exc.reason))
+    result['elapsed_ms'] = round((time.monotonic() - began) * 1000, 3)
+    if key in json.dumps(result):  # Defensive: a receipt must never carry the credential.
+        sys.exit('Refusing to write a receipt that contains the credential.')
+    receipt(result)
+    print(json.dumps(result, indent=2))
+    return 0 if result['outcome'] == 'VERIFIED' else 1
+
+
 def serve(args):
     cfg = lane_config(args.lane)
     key = private_read(STATE / 'keys' / (cfg['lane'] + '.lab'))
@@ -339,6 +400,11 @@ def main(argv=None):
                    choices=['NOT_CHARGEABLE', 'PROVIDER_HARD_LIMIT', 'PROVIDER_SOFT_ALERT', 'CLIENT_SIDE_ONLY'])
     c.set_defaults(func=configure)
 
+    v = sub.add_parser('verify', help='Make one authenticated call and write a real receipt.')
+    v.add_argument('--lane', required=True)
+    v.add_argument('--yes', action='store_true', help='Skip the spend confirmation prompt.')
+    v.set_defaults(func=verify)
+
     s = sub.add_parser('serve', help='Serve a configured lane on its private socket.')
     s.add_argument('--lane', required=True)
     s.add_argument('--socket')
@@ -346,10 +412,9 @@ def main(argv=None):
 
     args = parser.parse_args(argv)
     try:
-        args.func(args)
+        return args.func(args) or 0
     except RelayError as exc:
         sys.exit(str(exc))
-    return 0
 
 
 if __name__ == '__main__':

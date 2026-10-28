@@ -41,13 +41,15 @@ GROQ_STREAM = [
 
 class FakeUpstream:
     """Stands in for urlopen. Records calls so a test can prove no retry happened."""
-    def __init__(self, lines=None, error=None, headers=None):
+    def __init__(self, lines=None, error=None, headers=None, status=200):
         self.lines, self.error, self.headers = lines or [], error, headers or {}
+        self.status = status
         self.calls = []
 
     def __call__(self, request, timeout=None):
         self.calls.append({'url': request.full_url, 'auth': request.headers.get('Authorization'),
-                           'body': json.loads(request.data)})
+                           'method': request.method,
+                           'body': None if request.data is None else json.loads(request.data)})
         if self.error:
             raise self.error
         return self
@@ -56,6 +58,7 @@ class FakeUpstream:
     def __enter__(self): return self
     def __exit__(self, *a): return False
     def __iter__(self): return iter(self.lines)
+    def read(self, n=None): return b''
 
 
 def http_error(code):
@@ -283,6 +286,60 @@ class EgressAckTests(unittest.TestCase):
             finally:
                 if lab: lab.shutdown()
                 r.close()
+
+
+class VerifyTests(unittest.TestCase):
+    """`verify` is the one authenticated call a model cannot make for the owner."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(); self.folder = self.tmp.name
+        self.r = Relay(self.folder); self.addCleanup(self.r.close)
+        self.addCleanup(self.tmp.cleanup)
+        relay.private_write(self.r.state / 'lanes' / 'metered-test.json', json.dumps(self.r.cfg))
+
+    def run_verify(self, upstream, lane='metered-test'):
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            code = relay.main(['verify', '--lane', lane, '--yes'])
+        return code, self.r.receipts()[-1]
+
+    def test_successful_verification_writes_a_real_authenticated_receipt(self):
+        upstream = FakeUpstream(headers={'x-ratelimit-remaining': '9000'})
+        upstream.read = lambda n=None: b'{"result":{"response":"ok"}}'
+        code, rec = self.run_verify(upstream)
+        self.assertEqual(code, 0)
+        self.assertEqual(rec['outcome'], 'VERIFIED')
+        self.assertTrue(rec['authenticated'])
+        self.assertFalse(rec['simulated'], 'A verification receipt must never be marked simulated.')
+        self.assertEqual(rec['route_class'], 'CLOUDFLARE_WORKERS_AI_FREE')
+        self.assertEqual(rec['allowance_headers']['x-ratelimit-remaining'], '9000')
+
+    def test_refusals_are_classified_not_crashed(self):
+        for code, outcome, reason in ((429, 'REFUSED_429', 'rate-limited or allowance exhausted'),
+                                      (402, 'REFUSED_402', 'outside the free allowance'),
+                                      (401, 'REFUSED_401', 'credential rejected')):
+            with self.subTest(code=code):
+                self.tearDown(); self.setUp()
+                upstream = FakeUpstream(error=http_error(code))
+                exit_code, rec = self.run_verify(upstream)
+                self.assertEqual(exit_code, 1)
+                self.assertEqual((rec['outcome'], rec['reason']), (outcome, reason))
+
+    def test_verification_receipt_never_carries_the_credential(self):
+        upstream = FakeUpstream(headers={'x-ratelimit-remaining': '1'})
+        upstream.read = lambda n=None: b'{}'
+        _, rec = self.run_verify(upstream)
+        self.assertIn(PROVIDER_KEY, upstream.calls[0]['auth'])
+        self.assertNotIn(PROVIDER_KEY, json.dumps(rec))
+        self.assertNotIn(PROVIDER_KEY, json.dumps(self.r.receipts()))
+
+    def test_groq_verification_spends_nothing(self):
+        cfg = {**self.r.cfg, 'vendor': 'groq', 'model': 'llama-test', 'lane': 'groq-test'}
+        relay.private_write(self.r.state / 'lanes' / 'groq-test.json', json.dumps(cfg))
+        upstream = FakeUpstream()
+        upstream.read = lambda n=None: b'{"data":[]}'
+        self.run_verify(upstream, lane='groq-test')
+        call = upstream.calls[0]
+        self.assertIn('api.groq.com', call['url'])
+        self.assertIsNone(call['body'], 'A model listing must not POST a billable turn.')
 
 
 if __name__ == '__main__':
