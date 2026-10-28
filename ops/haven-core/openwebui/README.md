@@ -97,6 +97,15 @@ withheld; time, memory, chat search and ask-user kept):
 | Cold, 13 tools | 2,242 | 0 | 46.7 s |
 | New chat after that | 2,246 | 2,222 | 1.29 s |
 
+**Withheld isn't removed.** The tools stay installed and enabled in Open WebUI. To bring them back:
+- in one chat: `/haven tools all`, or `/haven tools default` to undo. This is per user and per chat, held in Lab memory, and cleared by a Lab restart.
+- for one model: add `"models": {"<model id>": {"withhold": []}}` under the frontend entry.
+- everywhere: remove the frontend's entry, or delete the file. This takes effect on the next request.
+
+The production frontend (`open-webui`) has used this list since 2026-10-28 03:13 UTC.
+The previous file is kept as `gateway-tools.json.bak-20261028T031333Z`. To roll back, restore
+that copy, or delete the `open-webui` entry.
+
 `/haven tools` lists what was supplied and withheld and each schema's estimated cost.
 Receipts and the routing trace record the supplied and withheld names, and llama.cpp's
 `prompt_cached_tokens` / `prompt_processed_tokens` for every request.

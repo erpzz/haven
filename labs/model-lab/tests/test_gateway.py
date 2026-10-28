@@ -293,12 +293,46 @@ class GatewayTests(unittest.TestCase):
         self.assertEqual(self.chat(self.owui(), tools=self.MANY)[0], 200)
         self.assertNotIn('tools', self.backend.requests[-1])
 
+    def test_withheld_tools_can_be_restored_for_one_chat(self):
+        self.write_policy({'open-webui': {'withhold': ['search_calendar_events', 'view_note']}})
+        chat_a = self.owui(**{'X-OpenWebUI-Chat-Id': 'chat-a'})
+        chat_b = self.owui(**{'X-OpenWebUI-Chat-Id': 'chat-b'})
+        status, body = self.chat(chat_a, tools=self.MANY, messages=[{'role': 'user', 'content': '/haven tools all'}])
+        self.assertIn('Every tool', body['choices'][0]['message']['content']); self.assertEqual(self.backend.requests, [])
+        history = [{'role': 'user', 'content': '/haven tools all'}, {'role': 'assistant', 'content': 'ok'},
+                   {'role': 'user', 'content': 'plan my week'}]
+        self.chat(chat_a, tools=self.MANY, messages=history)
+        self.assertEqual(len(self.backend.requests[-1]['tools']), 3)
+        self.assertNotIn('/haven tools all', json.dumps(self.backend.requests[-1]['messages']))
+        self.chat(chat_b, tools=self.MANY)  # Other chats keep the default.
+        self.assertEqual(len(self.backend.requests[-1]['tools']), 1)
+        other_user = self.owui(uid='u-2', **{'X-OpenWebUI-Chat-Id': 'chat-a'})
+        self.chat(other_user, tools=self.MANY)  # Overrides are bound to the principal too.
+        self.assertEqual(len(self.backend.requests[-1]['tools']), 1)
+        self.chat(chat_a, tools=self.MANY, messages=[{'role': 'user', 'content': '/haven tools default'}])
+        self.chat(chat_a, tools=self.MANY)
+        self.assertEqual(len(self.backend.requests[-1]['tools']), 1)
+
+    def test_tool_override_needs_a_chat_identity(self):
+        status, body = self.chat(self.owui(), tools=self.MANY, messages=[{'role': 'user', 'content': '/haven tools all'}])
+        self.assertEqual(status, 400)
+
+    def test_per_model_policy_replaces_the_frontend_default(self):
+        default = ['search_calendar_events', 'view_note']
+        self.write_policy({'open-webui': {'withhold': default, 'models': {'haven-slink': {'withhold': []}}}})
+        self.assertEqual(self.chat(self.owui(), model='haven-slink', tools=self.MANY)[0], 200)
+        self.assertEqual(len(self.backend.requests[-1]['tools']), 3)
+        self.write_policy({'open-webui': {'withhold': default, 'models': {'haven-auto': {'withhold': []}}}})
+        self.assertEqual(self.chat(self.owui(), model='haven-slink', tools=self.MANY)[0], 200)
+        self.assertEqual(len(self.backend.requests[-1]['tools']), 1)
+
     def test_tools_command_reports_costs_locally(self):
         self.write_policy({'open-webui': {'withhold': ['search_calendar_events']}})
         status, body = self.chat(self.owui(), tools=self.MANY, messages=[{'role': 'user', 'content': '/haven tools'}])
         text = body['choices'][0]['message']['content']
         self.assertIn('2 tools supplied', text); self.assertIn('`search_calendar_events`', text)
-        self.assertIn('withheld', text); self.assertEqual(self.backend.requests, [])
+        self.assertIn('withheld', text); self.assertIn('/haven tools all', text)
+        self.assertEqual(self.backend.requests, [])
 
     def test_receipt_and_trace_record_prompt_cache_accounting(self):
         status, body = self.chat(self.owui(), tools=self.MANY)
