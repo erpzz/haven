@@ -119,6 +119,10 @@ a 2-hour job on a T4×2 allocation plus startup; it is **not** a claim that Kagg
 always charges both GPUs or that 5 hours will be consumed. Verify that GPU
 eligibility, private datasets/notebooks and internet access are enabled on this
 account. Stop at phone/account verification or exhausted quota; no workaround.
+An authenticated quota response does not prove accelerator eligibility. An
+unverified account can accept GPU notebook metadata and still execute without
+CUDA. Check the account's Phone verification status and enabled GPU choices
+before submission; keep phone numbers and SMS codes on Kaggle, outside chat.
 Run no other GPU sessions during the experiment if quota attribution is needed.
 
 `prepare.py` generates a private notebook, exact input lock and allowlisted
@@ -139,6 +143,9 @@ publish the input dataset, notebook or outputs. Avoid unrelated broad source
 archives; the ZIP contains only pipeline Python files, frozen dataset and source
 provenance. The public Qwen snapshot needs no Hugging Face token. CLI credentials
 stay on the controller; do not attach Kaggle Secrets to this notebook.
+Use the actual notebook URL returned by `kernels push` for later commands. For
+new notebooks Kaggle derives the slug from the title; the generator keeps them
+aligned. Requested `enable_gpu`/`machine_shape` metadata is not CUDA evidence.
 
 ## Runtime, retrieval and acceptance
 
