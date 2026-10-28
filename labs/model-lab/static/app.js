@@ -121,6 +121,18 @@ function providerControls(s){
   const label=element('label','','Run this conversation on');const select=element('select');select.id='provider-select';select.setAttribute('aria-label','Inference worker');label.append(select);box.append(label);
   const note=element('p','field-note');note.id='provider-note';box.append(note);
   const button=element('button','secondary','Refresh workers');button.id='provider-refresh';button.onclick=async()=>{try{await api('/api/providers/reload',{});await api('/api/providers/probe',{});await refresh();}catch(e){toast(e.message,true);}};box.append(button);
+  // First-party artifact picker: never confuse the provider route with a real GGUF.
+  const quick=element('div','model-quick-select');quick.id='model-quick-select';
+  const modelLabel=element('label','','Installed Slink artifact');
+  const modelSelect=element('select');modelSelect.id='artifact-select';
+  modelSelect.setAttribute('aria-label','Select installed Slink artifact');modelLabel.append(modelSelect);quick.append(modelLabel);
+  const load=element('button','secondary','Load selected artifact');load.id='artifact-load';
+  load.onclick=()=>{
+   const m=(state?.models||[]).find(x=>x.id===modelSelect.value&&x.downloaded);
+   if(!m){toast('Model is not installed; open the Models page to review and download.',true);return;}
+   if(!confirm('Load '+m.name+' on Slink? This uses the selected CPU/GPU profile. Haven will enforce active job and resource guards.'))return;
+   modelAction(m);
+  };quick.append(load);box.append(quick);
   document.querySelector('.card-heading').after(box);select.onchange=()=>setProvider(select.value);
  }
  const select=$('provider-select');const rows=[{id:'managed',label:`Slink · ${s.connection?.compute==='cpu'?'CPU':s.connection?.kind==='strata'?'Strata':'GPU'} · current runtime`},{id:'auto',label:'Automatic · ready private worker'},...(s.providers||[]).map(p=>({id:p.id,label:p.kind==='cloud'?`☁ ${p.label} · leaves this house · ${p.observed.state}${planText(p)?' · '+planText(p):''}`:`${p.label} · ${p.compute.toUpperCase()} · ${p.display_model} · ${p.observed.state}`}))];
@@ -128,7 +140,19 @@ function providerControls(s){
  select.value=providerSelection;select.disabled=busy||benchRunning;
  const cloud=cloudProvider(s,providerSelection);$('provider-note').style.color=cloud?'var(--warn)':'';
  $('provider-note').textContent=cloud?`Leaves this house: every turn of this conversation is sent to ${cloud.vendor} through your own plan (${cloud.route_class}). No tools, files or Haven memory; never chosen by Automatic; no paid API fallback.${planText(cloud)?' Plan: '+planText(cloud)+'.':''}`:providerSelection==='managed'?'Using the current Slink runtime. CPU/GPU loading is available in Model library.':providerSelection==='auto'?'Uses an already-ready private worker. No model starts, downloads, paid calls or cloud fallback. The actual worker is shown with each result.':'Inference runs on the selected machine. The cards above measure Slink, the control host. New worker selections start a fresh conversation.';
- $('provider-refresh').disabled=providerProbeBusy||busy;
+ const quick=$('model-quick-select'),artifact=$('artifact-select'),load=$('artifact-load');
+  const installed=(s.models||[]).filter(m=>m.downloaded);
+  const artifactSignature=JSON.stringify(installed.map(m=>[m.id,m.name,m.quant]));
+  if(artifact.dataset.signature!==artifactSignature){
+   const before=artifact.value;
+   artifact.replaceChildren(...installed.map(m=>{const o=element('option','',m.name+' · '+(m.quant||'GGUF'));o.value=m.id;return o;}));
+   artifact.dataset.signature=artifactSignature;
+   if(installed.some(m=>m.id===before))artifact.value=before;
+  }
+  quick.classList.toggle('hidden',providerSelection!=='managed');
+  load.disabled=busy||benchRunning||!installed.length;
+  load.textContent=installed.length?'Load selected artifact on Slink':'No installed artifacts — open Models';
+  $('provider-refresh').disabled=providerProbeBusy||busy;
  if((s.providers||[]).length&&!providerProbeBusy&&Date.now()>providerProbeAt){providerProbeBusy=true;providerProbeAt=Date.now()+30000;api('/api/providers/probe',{}).then(()=>refresh()).catch(()=>{}).finally(()=>{providerProbeBusy=false;});}
 }
 function applyState(s) {
