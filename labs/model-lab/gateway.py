@@ -103,7 +103,6 @@ class Gateway:
         self.lock = threading.RLock()
         self.consent = {}      # (principal_id, chat_id, provider_id) -> granted_at
         self.keys = self._load_keys()
-        self.keys_at = time.monotonic()
 
     # ---- credentials -------------------------------------------------------
     def _load_keys(self) -> dict:
@@ -153,11 +152,11 @@ class Gateway:
         if not auth.startswith('Bearer '):
             raise GatewayError(401, 'Haven gateway key required.', 'unauthorized')
         digest = hashlib.sha256(auth[7:].strip().encode()).hexdigest()
-        entry = self._lookup(digest)
-        if not entry and time.monotonic() - self.keys_at > 5:
-            # Keys issued after startup take effect without restarting the Lab.
-            with self.lock:
-                self.keys, self.keys_at = self._load_keys(), time.monotonic()
+        # Always consult the current digest registry, even for a previously valid key.
+        # Refresh-on-miss alone leaves revoked/rotated keys valid indefinitely.
+        # The registry is tiny, private and atomically replaced by issue_key().
+        with self.lock:
+            self.keys = self._load_keys()
             entry = self._lookup(digest)
         if not entry:
             raise GatewayError(401, 'Unknown Haven gateway key.', 'unauthorized')
