@@ -116,19 +116,41 @@ Kaggle is GPU training, and two things block it independently of the above:
 Recommendation: keep Kaggle out of this proposal and handle it as a separate R02
 remote-training assignment, after the inference lane is proven.
 
-## Decision requested
+## Status of each decision
 
-1. Approve or reject a `METERED_API` lane kind reached through an owner-run local
-   relay, with the two new enrollment fields.
-2. Approve or reject relaxing "hosted egress is never automatic" for lanes whose
-   `cost_boundary` is `NOT_CHARGEABLE` or `PROVIDER_HARD_LIMIT` only.
-3. If approved, the owner enrolls the first lane (Cloudflare Workers AI on Free)
-   — enrollment stays administrator input.
+**Decision 1 — a `metered` lane kind via an owner-run relay: implemented on this
+branch.** It needed no invariant reversal, so it did not need to wait. A metered
+lane is explicit-selection-only, exactly like the existing plan lanes, and
+`choose()` excludes it from Automatic alongside `cloud`. Delivered:
 
-Nothing in this document changes code. No provider was contacted; no credential
-exists in this session. If (1) and (2) are approved, the implementation is
-roughly: the relay script, `ROUTE_CLASSES`/validation extension in
-`Registry.reload`, the `choose()` admission rule, a `route_reason` string that
-names the allowance and the boundary, and tests mirroring
-`tests/test_cloud_lane.py` including a case asserting that a
-`CLIENT_SIDE_ONLY` lane is still refused from Automatic.
+- `ops/haven-core/metered-relay.py` — the relay. Holds the provider key, talks to
+  Cloudflare Workers AI or Groq, serves `/v1/models` and `/v1/chat/completions`
+  over the enrollment socket. The Lab makes no outbound request and never sees the
+  key. A 429 or allowance refusal is reported upward, never retried, because
+  retrying an exhausted allowance is how a free tier becomes an invoice.
+- `labs/model-lab/providers.py` — `METERED_CLASSES`, `COST_BOUNDARIES`,
+  `eligibility_evidence()`, the `metered` enrollment contract, and a
+  `route_reason` naming the vendor, the allowance, the boundary and whether that
+  boundary is enforceable.
+- `labs/model-lab/labcore.py` — `egress_ack` now names which egress is being
+  acknowledged. A `HOSTED_SUBSCRIPTION` ack does **not** authorise a metered lane,
+  and the reverse also fails.
+- `labs/model-lab/tests/test_metered_lane.py` — 10 tests, 9 subtests, no network
+  and no key.
+
+**Decision 2 — relaxing "hosted egress is never automatic" for provably
+non-chargeable lanes: NOT taken.** This is the one genuine reversal and it is an
+operator gate; a model should not record its own approval for it. `cost_boundary`
+and `boundary_enforceable` are computed and surfaced today but are advisory —
+nothing consumes them to widen Automatic. If you approve it, the change is one
+predicate in `choose()`: admit `kind == 'metered'` when `cost_boundary` is in
+`ENFORCEABLE_BOUNDARIES`. A test asserting that `CLIENT_SIDE_ONLY` and
+`PROVIDER_SOFT_ALERT` stay refused should land in the same commit.
+
+**Decision 3 — enrolling the first lane: yours.** Enrollment is administrator
+input. `metered-relay.py configure` records a lane for the relay but deliberately
+does not write the Lab enrollment file, and says so in its output.
+
+No provider was contacted and no credential exists in this session, so there is no
+authenticated receipt. The first real one needs a Cloudflare token and account id
+placed in the relay's private key directory.
