@@ -211,7 +211,8 @@ class IntegrationTests(unittest.TestCase):
                 patch.object(self.lab, 'llama_exe', return_value=Path('benign-unused.exe')), \
                 patch.object(self.lab, 'get_hardware', return_value={
                     'gpus':[{'index':0,'memory_free_mib':8192}]}), \
-                patch('labcore.local_json', return_value={'data':[{'id':'haven-local'}]}):
+                patch('labcore.local_json', return_value={'data':[{'id':'haven-local'}]}), \
+                patch('gpu_lease.peer_busy', return_value=[]):
             try:
                 threads[0].start(); self.assertTrue(stopped.wait(3))
                 # Deterministic regression: the old implementation leaves this

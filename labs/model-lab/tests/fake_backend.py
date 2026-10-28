@@ -12,6 +12,7 @@ class FakeBackend(ThreadingHTTPServer):
         self.slow = False
         self.drop = False
         self.finish_reason = 'stop'
+        self.tool_call = False
         super().__init__(('127.0.0.1', 0), Handler)
         self.thread = threading.Thread(target=self.serve_forever, daemon=True); self.thread.start()
     @property
@@ -32,6 +33,13 @@ class Handler(BaseHTTPRequestHandler):
         def emit(v):
             self.wfile.write(('data: '+json.dumps(v,ensure_ascii=False)+'\n\n').encode());self.wfile.flush()
         try:
+            if self.server.tool_call:
+                # OpenAI-style fragmented tool call, as llama.cpp streams it.
+                for d in [{'index':0,'id':'call_1','type':'function','function':{'name':'get_current_timestamp','arguments':''}},
+                          {'index':0,'function':{'arguments':'{"tz": '}}, {'index':0,'function':{'arguments':'"UTC"}'}}]:
+                    time.sleep(.02); emit({'choices':[{'delta':{'tool_calls':[d]},'finish_reason':None}]})
+                emit({'choices':[{'delta':{},'finish_reason':'tool_calls'}],'usage':{'prompt_tokens':40,'completion_tokens':9}})
+                self.wfile.write(b'data: [DONE]\n\n');self.wfile.flush();return
             for i,t in enumerate(['This is ', 'a local ', 'TEST DOUBLE ', 'response. ', 'Unicode: café ✓.']):
                 time.sleep(.5 if self.server.slow else .02)
                 emit({'choices':[{'delta':{'content':t},'finish_reason':None}]})

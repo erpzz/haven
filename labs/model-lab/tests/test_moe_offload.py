@@ -7,7 +7,7 @@ import sys
 import tempfile
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from labcore import GIB, Lab, MIB, estimate_moe_fit, llama_command, ready_deadline_seconds
@@ -69,7 +69,8 @@ class MoeLaneTests(unittest.TestCase):
         with patch.object(self.lab, 'llama_exe', return_value=Path('/fake/engine/llama-server')), \
              patch.object(self.lab, 'get_hardware', return_value={'gpus': [GPU], 'ram_available_gib': 60}), \
              patch.object(self.lab.engine, 'launch', side_effect=fake_launch), \
-             patch('labcore.local_json', return_value={'data': [{'id': 'haven-local'}]}):
+             patch('labcore.local_json', return_value={'data': [{'id': 'haven-local'}]}), \
+             patch('gpu_lease.peer_busy', return_value=[]):
             jid = self.lab.start_llama(model_id, 'gpu', overrides)
             until = time.monotonic() + 3
             while self.lab.jobs[jid].snapshot()['state'] == 'RUNNING' and time.monotonic() < until:
@@ -84,10 +85,26 @@ class MoeLaneTests(unittest.TestCase):
 
     def test_dense_model_of_same_size_is_refused(self):
         with patch.object(self.lab, 'llama_exe', return_value=Path('/fake/llama-server')), \
-             patch.object(self.lab, 'get_hardware', return_value={'gpus': [GPU], 'ram_available_gib': 60}):
+             patch.object(self.lab, 'get_hardware', return_value={'gpus': [GPU], 'ram_available_gib': 60}), \
+             patch('gpu_lease.peer_busy', return_value=[]):
             with self.assertRaisesRegex(ValueError, 'tight'):
                 self.lab.start_llama('dense', 'gpu')
         self.assertIsNone(self.lab.engine.proc)
+
+    def test_gpu_load_refused_while_research_campaign_holds_gpu(self):
+        launch = MagicMock()
+        with patch.object(self.lab, 'llama_exe', return_value=Path('/fake/llama-server')), \
+             patch.object(self.lab, 'get_hardware', return_value={'gpus': [GPU], 'ram_available_gib': 60}), \
+             patch.object(self.lab.engine, 'launch', launch), patch('labcore.sys.platform', 'linux'), \
+             patch('gpu_lease.peer_busy', return_value=['haven-e5.service']):
+            with self.assertRaisesRegex(ValueError, 'haven-e5.service'):
+                self.lab.start_llama('moe', 'gpu')
+        launch.assert_not_called()
+        self.assertIsNone(self.lab.engine.proc)
+
+    def test_e5_campaign_is_a_known_gpu_peer(self):
+        import gpu_lease
+        self.assertIn('haven-e5.service', gpu_lease.PEER_UNITS)
 
     def test_override_cannot_request_offload(self):
         self.lab.settings['models']['dense']['size_bytes'] = 2 * MIB

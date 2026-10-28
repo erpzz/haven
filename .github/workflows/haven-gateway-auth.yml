@@ -1,0 +1,28 @@
+name: Haven gateway auth regression
+on:
+  pull_request:
+    paths:
+      - 'labs/model-lab/**'
+      - '.github/workflows/haven-gateway-auth.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'labs/model-lab/**'
+      - '.github/workflows/haven-gateway-auth.yml'
+permissions:
+  contents: read
+jobs:
+  auth-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run gateway tests (no models or network providers)
+        run: |
+          python -m unittest discover -s labs/model-lab/tests -p 'test_gateway.py' -v
+          python -m unittest discover -s labs/model-lab/tests -p 'test_gateway_key_rotation.py' -v
+      - name: Run full offline Model Lab regression suite
+        run: python -m unittest discover -s labs/model-lab/tests -p 'test_*.py' -v
