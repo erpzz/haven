@@ -123,8 +123,23 @@ def pytest(work, venv, root, ids, timeout):
             'failure_kind': None if passed else failure_kind(r['tail'])}
 
 
+def workdir_for(sandbox: pathlib.Path, key: str) -> pathlib.Path:
+    """Keep external advisory IDs inside the selected evaluation workspace.
+
+    Keys are OSV grouping IDs (such as GHSA-*), not hashes. Refuse traversal,
+    nested paths and pre-existing symlinks before cleaning an old workspace.
+    """
+    if not isinstance(key, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,127}', key):
+        raise ValueError('Invalid advisory ID for workspace path.')
+    base = sandbox.resolve()
+    target = base / key
+    if target.is_symlink() or target.resolve().parent != base:
+        raise ValueError('Evaluation workspace must stay inside the sandbox.')
+    return target
+
+
 def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int) -> dict:
-    root = sandbox / cand['key']
+    root = workdir_for(sandbox, cand['key'])
     if root.exists():
         shutil.rmtree(root)
     root.mkdir(parents=True)
