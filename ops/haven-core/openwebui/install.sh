@@ -29,9 +29,18 @@ if ! "$BASE/venv/bin/open-webui" --help >/dev/null 2>&1 || \
 fi
 
 # The Lab gateway stores only digests; the plaintext key goes straight into the 0600 env file.
-KEY=$(cd "$REPO/labs/model-lab" && python3 -c "
+# Reuse a key that is still registered; issue a new one only when it was revoked or never existed
+# (HAVEN_OWUI_ROTATE=1 forces rotation).
+KEY=$(sed -n 's/^OPENAI_API_KEY=//p' "$CONF/env" 2>/dev/null || true)
+if [ -z "$KEY" ] || [ "${HAVEN_OWUI_ROTATE:-0}" = 1 ] || ! python3 -c "
+import hashlib, json, sys
+rows = json.load(open(sys.argv[1])).get('keys', [])
+sys.exit(0 if hashlib.sha256(sys.argv[2].encode()).hexdigest() in {r['sha256'] for r in rows} else 1)
+" "$LAB_DATA/gateway-keys.json" "$KEY" 2>/dev/null; then
+  KEY=$(cd "$REPO/labs/model-lab" && python3 -c "
 import sys; from pathlib import Path; from gateway import Gateway
 print(Gateway.issue_key(Path(sys.argv[1]), sys.argv[2], 'frontend'))" "$LAB_DATA" "$PRINCIPAL")
+fi
 JWT_FILE=$LAB_DATA/gateway-frontend-jwt.secret
 [ -s "$JWT_FILE" ] || python3 -c "import secrets; print(secrets.token_urlsafe(48))" > "$JWT_FILE"
 chmod 600 "$JWT_FILE" "$LAB_DATA/gateway-keys.json"
@@ -40,6 +49,8 @@ SESSION=$(sed -n 's/^WEBUI_SECRET_KEY=//p' "$CONF/env" 2>/dev/null || true)
 
 cat > "$CONF/env.new" <<EOF
 DATA_DIR=$DATA
+# Configuration as code: these settings, not values saved in the admin UI, apply at every start.
+ENABLE_PERSISTENT_CONFIG=false
 WEBUI_SECRET_KEY=$SESSION
 WEBUI_NAME=Haven
 OPENAI_API_BASE_URL=http://127.0.0.1:8877/v1
