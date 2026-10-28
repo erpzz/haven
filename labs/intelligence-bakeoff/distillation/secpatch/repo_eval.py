@@ -208,7 +208,7 @@ def main(argv=None):
     # container. This flag is an explicit acknowledgment, not proof of isolation.
     if not args.acknowledge_isolated_runner:
         ap.error('Repository evaluation executes third-party Python code. Run inside a disposable, '
-                 'OS-isolated VM/container without host secrets or network access, then supply '
+                 'OS-isolated VM/container without host secrets and with restricted network egress, then supply '
                  '--acknowledge-isolated-runner. A virtualenv alone is insufficient.')
     cands = [json.loads(x) for x in args.candidates.read_text().splitlines() if x.strip()]
     if args.limit:
