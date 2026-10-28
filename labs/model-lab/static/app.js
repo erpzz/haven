@@ -90,6 +90,11 @@ document.querySelectorAll('[data-view]').forEach(n=>n.onclick=()=>go(n.dataset.v
 function metric(id,value,unit) { const n=$(id); n.replaceChildren(document.createTextNode(value==null?'—':value)); n.append(element('small','',unit)); }
 function rate(value) { return typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'—'; }
 let providerSelection=sessionStorage.getItem('haven-provider')||'managed', providerProbeBusy=false, providerProbeAt=0;
+let modelSearch='', favoritesOnly=false;
+let favorites=new Set();
+try{favorites=new Set(JSON.parse(localStorage.getItem('haven-model-favorites')||'[]'));}catch(_){}
+$('model-search').oninput=()=>{modelSearch=$('model-search').value.trim().toLowerCase();if(state)renderModels();};
+$('model-favorites-only').onchange=()=>{favoritesOnly=$('model-favorites-only').checked;if(state)renderModels();};
 const cloudProvider=(s,id)=>(s?.providers||[]).find(p=>p.id===id&&p.kind==='cloud');
 function planText(p){const o=p?.observed?.plan||{};const used=o.daily_cap?`${o.daily_used??'?'}/${o.daily_cap} today`:'';
  const reset=o.resets_text||(o.resets_at?new Date(o.resets_at*1000).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'');
@@ -184,7 +189,29 @@ function applyState(s) {
  if(!diagnosticResumed&&sessionStorage.getItem('haven-diagnostic-job')&&(!auth.enabled||auth.user?.role==='admin')){diagnosticResumed=true;showDiagnostic(sessionStorage.getItem('haven-diagnostic-job'));}
 }
 async function refresh(){ if(refreshBusy)return; refreshBusy=true; try{applyState(await api('/api/state'));}catch(e){if(!state)toast(e.message,true);}finally{refreshBusy=false;} }
-function renderModels(){ const grid=$('model-grid'); grid.replaceChildren(); for(const m of state.models){ const n=element('article','model-card'); n.append(element('span','tag',m.tag||'LOCAL IMPORT'),element('h2','',m.name),element('p','',m.description)); const meta=element('div','model-meta'); meta.append(element('span','',m.quant||'GGUF'),element('span','',m.download_gb?`${m.download_gb.toFixed(2)} GB download`:`${((m.size_bytes||0)/1e9).toFixed(2)} GB file`),element('span','',m.license||'Review model license')); n.append(meta); const buttons=element('div','button-row'); const action=element('button',m.downloaded?'primary':'secondary',m.downloaded?`Load on ${$('compute-lane').value==='cpu'?'CPU':'GPU'} ↗`:'Download model ↓'); action.disabled=busy||benchRunning; action.onclick=()=>modelAction(m); buttons.append(action); if(m.source){const link=element('a','text-btn','Model card ↗');link.href=m.source;link.target='_blank';link.rel='noreferrer noopener';buttons.append(link);} n.append(buttons);grid.append(n); } }
+function renderModels(){
+ const grid=$('model-grid');grid.replaceChildren();
+ const all=state?.models||[];
+ const rows=all.filter(m=>(!favoritesOnly||favorites.has(m.id))&&(!modelSearch||[m.name,m.description,m.id,m.quant,m.tag,m.license].filter(Boolean).join(' ').toLowerCase().includes(modelSearch)));
+ $('model-count').textContent=rows.length+' of '+all.length+' prepared models';
+ if(!rows.length)grid.append(element('p','muted','No matching models in the prepared catalog. Search public model metadata above.'));
+ for(const m of rows){
+  const n=element('article','model-card'),top=element('div','model-card-top');
+  top.append(element('span','tag',m.downloaded?'INSTALLED · NOT NECESSARILY RUNNING':'CATALOG · NOT INSTALLED'));
+  const fav=element('button','secondary model-favorite',favorites.has(m.id)?'★ Saved':'☆ Favorite');
+  fav.setAttribute('aria-label',(favorites.has(m.id)?'Remove favorite ':'Add favorite ')+m.name);
+  fav.onclick=()=>{if(favorites.has(m.id))favorites.delete(m.id);else favorites.add(m.id);
+   try{localStorage.setItem('haven-model-favorites',JSON.stringify([...favorites]));}catch(_){}renderModels();};
+  top.append(fav);n.append(top,element('h2','',m.name),element('p','',m.description));
+  const meta=element('div','model-meta');
+  meta.append(element('span','',m.quant||'GGUF'),element('span','',m.download_gb?m.download_gb.toFixed(2)+' GB download':((m.size_bytes||0)/1e9).toFixed(2)+' GB file'),element('span','',m.license||'Review model license'));n.append(meta);
+  const buttons=element('div','button-row');
+  const action=element('button',m.downloaded?'primary':'secondary',m.downloaded?'Load on '+($('compute-lane').value==='cpu'?'CPU':'GPU')+' ↗':'Download model ↓');
+  action.disabled=busy||benchRunning;action.onclick=()=>modelAction(m);buttons.append(action);
+  if(m.source){const link=element('a','text-btn','Model card ↗');link.href=m.source;link.target='_blank';link.rel='noreferrer noopener';buttons.append(link);}
+  n.append(buttons);grid.append(n);
+ }
+}
 function renderJobs(){ const root=$('jobs');root.replaceChildren(); for(const j of state.jobs.filter(x=>x.kind!=='generation').slice(-5)){const n=element('div','job');n.append(element('strong','',`${j.kind.replaceAll('-',' ')} · ${j.state}`),element('p','',j.error||j.message||'Working…'));if(j.state==='RUNNING'){const pr=element('progress');pr.max=1;if(j.progress!=null)pr.value=j.progress;n.append(pr);const c=element('button','text-btn','Cancel / pause');c.onclick=async()=>{try{await api('/api/cancel',{id:j.id});toast('Cancellation requested. Downloads retain their partial file.');}catch(e){toast(e.message,true)}};n.append(c);}root.append(n);} }
 async function modelAction(m){try{if(!m.downloaded){if(!confirm(`Download ${m.name} (${m.download_gb} GB) from Hugging Face? The file will be checksum-verified before use.`))return;await api('/api/model/download',{id:m.id,confirmed:true});go('setup');toast('Download started. Progress appears below the engine log.');}else{const compute=$('compute-lane').value;const out=await api('/api/engine/start',{id:m.id,preset:$('profile').value,compute,overrides:{context:Number($('context').value),threads:Number($('threads').value)},allow_tight:$('allow-tight').checked});go('setup');toast(`Loading the ${compute==='cpu'?'CPU-only':'CUDA'} engine. Watch the engine log for real startup status.`);const job=await waitJob(out.job_id);if(job.state!=='COMPLETED')throw new Error(job.error||`Engine start ${job.state.toLowerCase()}.`);await refresh();go('playground');toast(`Model ready on ${compute==='cpu'?'CPU':'GPU'}.`);}await refresh();}catch(e){toast(e.message,true);}}
 async function waitJob(id, render,interval=350){while(true){const j=await api('/api/jobs/'+id);if(render)render(j);if(j.state!=='RUNNING'){if(j.state==='FAILED')throw new Error(j.error||'Job failed.');return j;}await sleep(interval);}}
@@ -258,6 +285,16 @@ async function sendMessage(override,benchmark=false,label='interactive',settings
  const outcome=outputLimited?'OUTPUT LIMIT REACHED':done.state==='CANCELLED'?'STOPPED':done.state;
  const m=done.metrics||{},reason=done.finish_reason?` · finish ${done.finish_reason}`:'';const meta=`${outcome}${reason} · first output ${m.ttft_seconds==null?'—':m.ttft_seconds.toFixed(2)+' s'} · end-to-end ${rate(m.end_to_end_tps)} tok/s · decode ${rate(m.backend_decode_tps)} tok/s`;
  node.n.append(element('div','result-meta',`${done.worker_label||'Slink'} · ${done.compute||'GPU'} · ${meta}`));
+// Report observed, not assumed, routing. A provider selector isn't an artifact.
+  const route=element('details','route-inspector');
+  route.append(element('summary','','Routing & model identity · inspect this response'));
+  const trace={requested:{selector:sent.provider_id,mode:sent.provider_id==='auto'?'automatic':'manual'},
+    observed:{provider_id:done.provider_id??null,worker:done.worker_label??null,reported_model:done.model??null,
+      model_sha256:done.model_sha256??null,digest_provenance:done.digest_provenance??null,
+      compute:done.compute??null,egress:done.egress??null,route_reason:done.route_reason??null},
+    execution:{job_id:done.id??null,state:done.state,finish_reason:done.finish_reason??null},
+    fallback:'UNDETERMINED',identity_attestation:'NOT_VERIFIED'};
+  route.append(element('pre','',JSON.stringify(trace,null,2)));node.n.append(route);
  if(done.digest_provenance==='WORKER_DECLARED')node.n.append(element('p','field-note','Model digest: verified on worker; declared to Haven.'));
  if(done.route_reason)node.n.append(element('p','field-note',done.route_reason));
  if(outputLimited&&!benchmark){const actions=element('div','button-row');const cont=element('button','secondary continue-generation','Continue ↗');cont.onclick=async()=>{cont.disabled=true;cont.textContent='Continuing…';await sendMessage(CONTINUE_PROMPT,false,'continue',null,true);};actions.append(cont);node.n.append(actions);}
