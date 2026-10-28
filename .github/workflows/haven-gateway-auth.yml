@@ -24,3 +24,5 @@ jobs:
         run: |
           python -m unittest discover -s labs/model-lab/tests -p 'test_gateway.py' -v
           python -m unittest discover -s labs/model-lab/tests -p 'test_gateway_key_rotation.py' -v
+      - name: Run full offline Model Lab regression suite
+        run: python -m unittest discover -s labs/model-lab/tests -p 'test_*.py' -v

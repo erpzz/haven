@@ -32,6 +32,7 @@ import secrets
 import stat
 import threading
 import time
+import urllib.parse
 
 from labcore import estimate_prompt_tokens
 
@@ -163,9 +164,9 @@ class Gateway:
             return {'id': entry['principal'], 'name': entry['principal'], 'role': entry['role'], 'via': 'direct-key'}
         secret = self._jwt_secret()
         if not secret:
-            # A configured frontend key is never authority to assert an owner's
-            # role. Missing JWT configuration must not enable unsigned headers.
-            raise GatewayError(503, 'Signed frontend identity is not configured; no request was accepted.', 'unavailable')
+            # Never turn loss of the signing secret into authorization by unsigned role headers.
+            raise GatewayError(503, 'Frontend identity verification is not configured.', 'unavailable')
+        # Signed identity: holding the frontend key alone cannot claim another user's role.
         claims = verify_hs256(headers.get(JWT_HEADER, ''), secret)
         uid, role_name, name = claims.get('sub', ''), claims.get('role', ''), claims.get('name', '')
         role = OWUI_ROLES.get(role_name)
