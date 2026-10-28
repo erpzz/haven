@@ -59,10 +59,21 @@ def parse_json(text: str):
     return None
 
 
+GUTTER = re.compile(r'^\s*\d+ \| ?')
+
+
 def code_block(text: str) -> str | None:
     text = re.sub(r'<think>.*?</think>', '', text, flags=re.S)
     m = re.search(r'```(?:python|py)?\s*\n(.*?)```', text, re.S)
-    return m.group(1) if m else None
+    return strip_gutter(m.group(1))[0] if m else None
+
+
+def strip_gutter(code: str) -> tuple[str, bool]:
+    """Remove the `  123 | ` line-number gutter the prompt shows, when the model copied it onto every line."""
+    lines = [l for l in code.splitlines() if l.strip()]
+    if lines and all(GUTTER.match(l) for l in lines):
+        return '\n'.join(GUTTER.sub('', l, count=1) for l in code.splitlines()), True
+    return code, False
 
 
 def signature(code: str):
@@ -131,7 +142,8 @@ def grade(item: dict, output: str, bandit: str) -> dict:
     task, label = g['task'], g['label']
     res = {'score': 0, 'invalid_json': False, 'false_positive': False, 'unsupported': False}
     if task == 'remediate':
-        code = code_block(output) or ''
+        m = re.search(r'```(?:python|py)?\s*\n(.*?)```', re.sub(r'<think>.*?</think>', '', output, flags=re.S), re.S)
+        code, res['gutter_stripped'] = strip_gutter(m.group(1)) if m else ('', False)
         sig_ok = signature(code) is not None and signature(code) == signature(g['vulnerable'])
         changed = bool(code) and normalize(textwrap.dedent(code)) != normalize(textwrap.dedent(g['vulnerable']))
         res.update(parses=signature(code) is not None, same_signature=sig_ok, changed=changed,
@@ -287,7 +299,7 @@ def main(argv=None):
                     text, ntok, error = '', 0, f'{type(exc).__name__}: {str(exc)[:200]}'
                 row = {'id': item['id'], 'key': item['key'], 'task': item['task'], 'label': item['label'], 'seed': seed,
                        'latency_s': round(time.monotonic() - started, 3), 'completion_tokens': ntok, 'error': error,
-                       **grade(item, text, args.bandit), 'output': text[:4000]}
+                       **grade(item, text, args.bandit), 'output': text[:16000], 'output_chars': len(text)}
                 rows.append(row)
                 f.write(json.dumps(row, ensure_ascii=False) + '\n'); f.flush()
     summary = summarize(rows, eval_sha, gen.name)

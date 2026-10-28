@@ -48,6 +48,41 @@ def repo_table(path: pathlib.Path) -> str:
     return '\n'.join(lines)
 
 
+def majority_baseline(eval_path: pathlib.Path, keep: set | None = None) -> dict:
+    """What always answering each task's most common label would score: the floor every arm must beat."""
+    rows = [json.loads(x) for x in eval_path.read_text().splitlines() if x.strip()]
+    if keep is not None:
+        rows = [r for r in rows if r['id'] in keep]
+    out = {}
+    for task in sorted({r['task'] for r in rows}):
+        # finding_support is a yes/no answer: stale and nonexistent findings are both "unsupported".
+        answer = (lambda r: 'supported' if r['label'] == 'supported' else 'unsupported') if task == 'finding_support' \
+            else (lambda r: r['label'])
+        labels = collections.Counter(answer(r) for r in rows if r['task'] == task)
+        if task in ('detect', 'finding_support'):
+            label, n = labels.most_common(1)[0]
+            out[task] = {'label': label, 'correct': n, 'n': sum(labels.values())}
+    return out
+
+
+def regrade(item_files: list[pathlib.Path], eval_path: pathlib.Path, bandit: str) -> None:
+    """Re-run the current graders on stored outputs (in place, with a .orig backup)."""
+    import shutil
+    import sys
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+    from evaluate import grade
+    items = {r['id']: r for r in map(json.loads, eval_path.read_text().splitlines())}
+    for path in item_files:
+        if not path.with_suffix('.jsonl.orig').exists():
+            shutil.copy(path, path.with_suffix('.jsonl.orig'))
+        rows = [json.loads(x) for x in path.with_suffix('.jsonl.orig').read_text().splitlines() if x.strip()]
+        for r in rows:
+            r.update(grade(items[r['id']], r['output'], bandit))
+            # Outputs stored before 2026-10-28 were cut at 4000 characters; flag rather than guess.
+            r['output_maybe_truncated'] = 'output_chars' not in r and len(r['output']) >= 4000
+        path.write_text(''.join(json.dumps(r, ensure_ascii=False) + '\n' for r in rows))
+
+
 def resummarize(item_files: list[pathlib.Path], tasks: set | None) -> list[dict]:
     """Re-score arms from their per-item files over the ids every arm answered (optionally a task subset),
     so arms run on different task subsets still compare on identical items."""
@@ -79,9 +114,21 @@ def main(argv=None):
     ap.add_argument('--items', type=pathlib.Path, nargs='*', default=[], help='items.jsonl files to re-score on shared ids')
     ap.add_argument('--tasks', help='with --items: comma-separated task subset')
     ap.add_argument('--repo-eval', type=pathlib.Path)
+    ap.add_argument('--eval', type=pathlib.Path, help='eval file: majority baseline, and --regrade input')
+    ap.add_argument('--regrade', action='store_true', help='re-grade --items outputs with current graders first')
+    ap.add_argument('--bandit', default='bandit')
     args = ap.parse_args(argv)
+    if args.regrade:
+        regrade(args.items, args.eval, args.bandit)
     if args.items:
-        print(arm_table(resummarize(args.items, set(args.tasks.split(',')) if args.tasks else None)))
+        arms = resummarize(args.items, set(args.tasks.split(',')) if args.tasks else None)
+        print(arm_table(arms))
+        if args.eval:
+            keep = {r['id'] for r in map(json.loads, args.items[0].read_text().splitlines())
+                    if not args.tasks or r['task'] in args.tasks.split(',')}
+            base = majority_baseline(args.eval, keep)
+            print('\nMajority-label floor on the same items: ' + '; '.join(
+                f"{t}: always '{b['label']}' = {b['correct']}/{b['n']}" for t, b in base.items()))
     if args.summaries:
         print(arm_table([json.loads(p.read_text()) for p in args.summaries]))
     if args.repo_eval:

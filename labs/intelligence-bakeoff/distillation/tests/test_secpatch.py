@@ -252,6 +252,15 @@ class GraderTests(unittest.TestCase):
         self.assertIn('B602 subprocess_popen_with_shell_equals_true at line 11', msgs[-1]['content'])
         self.assertNotIn('Tool evidence', item['messages'][-1]['content'])
 
+    def test_copied_line_number_gutter_is_stripped_and_counted(self):
+        fixed = FIXED.split('\n\n\n')[-1]
+        gutter = '```python\n' + '\n'.join(f'{10 + i:>5} | {l}' for i, l in enumerate(fixed.splitlines())) + '\n```'
+        with unittest.mock.patch.object(evaluate, 'bandit_rules', return_value=set()):
+            g = evaluate.grade(self.item('remediate', 'fix'), gutter, 'bandit')
+        self.assertEqual((g['score'], g['gutter_stripped'], g['matches_recorded_fix']), (1, True, True))
+        mixed = '```python\n   10 | def run_tool(name):\nreturn 1\n```'
+        self.assertFalse(evaluate.strip_gutter(mixed.split('\n', 1)[1].rsplit('```', 1)[0])[1])
+
     def test_summary_paired_and_wilson(self):
         rows = [{'key': 'a', 'task': 'detect', 'label': 'vulnerable', 'score': 1, 'false_positive': False, 'unsupported': False,
                  'invalid_json': False, 'latency_s': 1, 'completion_tokens': 5, 'seed': 0},
