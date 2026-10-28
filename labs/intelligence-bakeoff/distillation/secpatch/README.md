@@ -141,13 +141,18 @@ not shown), invalid JSON, Bandit-cleared remediations, latency, tokens and peak 
 regression test (passes on the fix, fails on the vulnerable parent), then runs it against the recorded fix
 (positive control) and each model's remediation.
 
-**Isolation gate:** This component clones, installs, and executes third-party Python
+**Isolation gate:** See [RUNNER_CONTRACT.md](RUNNER_CONTRACT.md) for the independent
+disposable guest requirements, required real confinement probes and the offline
+wheelhouse preflight (`--wheelhouse`). This component clones, installs, and executes third-party Python
 projects. A virtual environment, scrubbed HOME, and proxy settings are not an
 OS sandbox. The CLI now refuses execution by default. Only invoke it from a
 disposable VM or equivalently isolated container with no mounted host secrets,
 restricted network access, and independent resource limits. There, supply
 `--acknowledge-isolated-runner` explicitly after checking the runner. The flag
 records an operator acknowledgment; it does **not** create isolation itself.
+The evaluator now rejects malformed repository/revision/source/test identifiers,
+symlinked source/test paths, and missing offline wheels before untrusted install.
+It still requires a separately verified OS-enforced network and filesystem boundary.
 Normal dataset harvesting, static checks, trainer dry runs, and evaluator unit
 tests do not require this flag.
 
