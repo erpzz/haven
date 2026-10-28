@@ -141,7 +141,7 @@ not shown), invalid JSON, Bandit-cleared remediations, latency, tokens and peak 
 regression test (passes on the fix, fails on the vulnerable parent), then runs it against the recorded fix
 (positive control) and each model's remediation.
 
-**Isolation gate:** See [RUNNER_CONTRACT.md](RUNNER_CONTRACT.md) for the independent
+**Isolation gate:** Use `repo_eval_guarded.py` for future untrusted repository evaluations; the original `repo_eval.py` remains byte-for-byte pinned by `remote/SOURCE_BASE.json`. See [RUNNER_CONTRACT.md](RUNNER_CONTRACT.md) for the independent
 disposable guest requirements, required real confinement probes and the offline
 wheelhouse preflight (`--wheelhouse`). This component clones, installs, and executes third-party Python
 projects. A virtual environment, scrubbed HOME, and proxy settings are not an
