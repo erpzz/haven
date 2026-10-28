@@ -10,15 +10,13 @@ import unittest
 import zipfile
 
 HERE = pathlib.Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent / 'secpatch'))
 sys.path.insert(0, str(HERE.parent))
-import build  # noqa: E402
-from secpatch import evaluate  # noqa: E402 (avoid legacy distillation/evaluate.py)
-import harvest  # noqa: E402
-import osv  # noqa: E402
-import registry  # noqa: E402
-import repo_eval  # noqa: E402
-import train  # noqa: E402
+# Always import the security-patch package explicitly. The sibling distillation
+# directory has legacy evaluate.py/train.py modules; path ordering and unittest
+# discovery can otherwise silently select the wrong module from sys.modules.
+from secpatch import build, evaluate, harvest, osv, registry, repo_eval, train  # noqa: E402
+
+assert evaluate.__name__ == 'secpatch.evaluate', 'wrong security-patch evaluator imported'
 
 MIT = 'Permission is hereby granted, free of charge, to any person obtaining a copy ... The above copyright notice and this permission notice shall be included'
 VULN = '''import subprocess
