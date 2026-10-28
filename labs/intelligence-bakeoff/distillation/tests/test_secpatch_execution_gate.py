@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 HERE = pathlib.Path(__file__).resolve().parent
-EVALUATOR = HERE.parent / 'secpatch' / 'repo_eval.py'
+EVALUATOR = HERE.parent / 'secpatch' / 'repo_eval_guarded.py'
 
 
 class RepoEvalExecutionGateTests(unittest.TestCase):
