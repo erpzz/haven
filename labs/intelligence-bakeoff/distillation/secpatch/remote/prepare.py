@@ -1,11 +1,13 @@
 """Prepare a private Kaggle payload. No login, upload, model load or training.
 
-Replays the existing dataset builder on the ORIGINAL sources; accepts no
-replacement rows and never lowers gpu_campaign's admission thresholds.
+Replays the existing builder on recorded sources, including disclosed admission
+corrections; accepts no replacement rows or lowered campaign thresholds.
 """
 from __future__ import annotations
 
 import argparse
+import base64
+import hashlib
 import json
 import pathlib
 import re
@@ -18,12 +20,107 @@ import zipfile
 HERE = pathlib.Path(__file__).resolve().parent
 SECPATCH = HERE.parent
 sys.path.insert(0, str(SECPATCH))
+sys.path.insert(0, str(HERE))
 from gpu_campaign import digest, qualify_data  # noqa: E402
+from harvest import PERMISSIVE, classify_license  # noqa: E402
+from license_metadata import validate_metadata  # noqa: E402
 
 MODEL = "Qwen/Qwen3-0.6B"
 REVISION = "c1899de289a04d12100db370d81485cdf75e47ca"
 DATA_FILES = ("manifest.json", "train.jsonl", "dev.jsonl", "heldout.jsonl",
               "eval-dev.jsonl", "eval-heldout.jsonl", "repo-eval-candidates.jsonl")
+# Replay every original output, but ship only inputs used by this campaign.
+EXPORT_DATA_FILES = ("manifest.json", "train.jsonl", "eval-heldout.jsonl")
+EXECUTION_FILES = ("gpu_campaign.py", "train.py", "evaluate.py", "harvest.py", "registry.py")
+
+
+def write_source_notices(root, source_check, used_rows, harvest):
+    """Retain checked fix-commit notices, rejecting incomplete or altered evidence.
+
+    This checks internal consistency of an externally collected source audit;
+    it does not, by itself, authenticate the upstream repositories.
+    """
+    report = json.loads(source_check.read_text(encoding="utf-8"))
+    if (report.get("schema") != "haven-secpatch-fix-source-check-v1" or
+            report.get("failures") or report.get("requested") != len(used_rows) or
+            report.get("checked") != len(used_rows)):
+        raise ValueError("Incomplete fix-commit source and license checks")
+    items = report.get("items") or []
+    by_key = {item["key"]: item for item in items}
+    if len(items) != len(by_key) or set(by_key) != set(used_rows):
+        raise ValueError("Fix-commit source check does not cover exactly the exported fixes")
+    texts = report.get("notice_texts") or {}
+    metadata_texts = report.get("metadata_texts") or {}
+    if set(report.get("input_correction", {}).get("excluded_keys", [])) & set(used_rows):
+        raise ValueError("Excluded fix remains in the exported data")
+    written = set()
+    metadata_written = set()
+    notices_dir = root / "notices"
+    notices_dir.mkdir(parents=True)
+    required_checks = {"commit_parent", "vulnerable_and_fixed_function_blobs",
+                       "license_and_notice_files_at_commit", "package_metadata_at_commit"}
+    for key, row in used_rows.items():
+        item, src, h = by_key[key], row["source"], harvest[key]
+        expected = {"repo": src["repo"], "commit": src["commit"], "parent": src["parent"],
+                    "source_path": src["path"], "license": src["code_license"],
+                    "license_file": h["license_file"], "advisory_ids": src["advisory_ids"]}
+        if any(item.get(k) != v for k, v in expected.items()) or not required_checks.issubset(item.get("checked", [])):
+            raise ValueError("Fix-commit source check disagrees with exported data: " + key)
+        notices = item.get("notices") or []
+        matches = [n for n in notices if n.get("path") == h["license_file"] and
+                   n.get("classified_as") == src["code_license"]]
+        if len(matches) != 1:
+            raise ValueError("Missing original fix-commit license notice: " + key)
+        for notice in notices:
+            sha = notice.get("sha256", "")
+            if not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha):
+                raise ValueError("Incomplete notice digest: " + key)
+            try:
+                content = base64.b64decode(texts[sha], validate=True)
+            except (KeyError, ValueError) as exc:
+                raise ValueError("Missing original notice bytes: " + key) from exc
+            if not content or hashlib.sha256(content).hexdigest() != sha:
+                raise ValueError("Original notice bytes do not match digest: " + key)
+            if re.search(r"(?:^|/)(?:LICEN[CS]E|COPYING)(?:\.(?:md|txt|rst))?$",
+                         notice.get("path", ""), re.I):
+                actual = classify_license(content.decode("utf-8", "replace"))
+                if actual not in PERMISSIVE or actual != notice.get("classified_as"):
+                    raise ValueError("Non-permissive or unclassified license at the source path: " + key)
+            if sha not in written:
+                (notices_dir / (sha + ".txt")).write_bytes(content)
+                written.add(sha)
+        metadata_contents = {}
+        for entry in item.get("metadata", []):
+            sha = entry.get("sha256", "")
+            if not re.fullmatch(r"[0-9a-f]{64}", sha):
+                raise ValueError("Missing package metadata digest: " + key)
+            content = base64.b64decode(metadata_texts[sha], validate=True)
+            if hashlib.sha256(content).hexdigest() != sha:
+                raise ValueError("Package metadata digest mismatch: " + key)
+            metadata_contents[sha] = content
+            if sha not in metadata_written:
+                dest = root / "package-metadata" / (sha + ".txt")
+                dest.parent.mkdir(exist_ok=True)
+                dest.write_bytes(content)
+                metadata_written.add(sha)
+        validate_metadata(item, metadata_contents)
+    (root / "source-check.json").write_text(json.dumps(
+        {k: v for k, v in report.items() if k not in ("notice_texts", "metadata_texts")}, indent=2) + "\n")
+    (root / "ATTRIBUTION.md").write_text(
+        "# Attribution and license notices\n\n"
+        "This input contains transformed excerpts from the repositories and commits recorded "
+        "for each fix in `source-check.json` and the data rows. Original license and notice "
+        "bytes are in `notices/`, named by SHA-256, and their paths and hashes are recorded "
+        "per fix. Different files retain their individual upstream licenses.\n\n"
+        "Advisory text and metadata come from the GitHub Advisory Database and the Python "
+        "Packaging Advisory Database through OSV; both are CC-BY-4.0. The data were selected, "
+        "deduplicated and transformed into prompts, targets and grading records. Advisory IDs "
+        "are recorded per fix; source records can be located at "
+        "https://osv.dev/vulnerability/ followed by the advisory ID. Sources: "
+        "https://github.com/github/advisory-database and "
+        "https://github.com/pypa/advisory-database. License: "
+        "https://creativecommons.org/licenses/by/4.0/.\n\n"
+        "This is a composite dataset; it is not licensed as CC0.\n", encoding="utf-8")
 
 
 def notebook(payload_sha: str) -> dict:
@@ -91,6 +188,8 @@ def main(argv=None):
     p.add_argument("--candidates", type=pathlib.Path, required=True)
     p.add_argument("--harvest", type=pathlib.Path, nargs="+", required=True)
     p.add_argument("--osv-archive", type=pathlib.Path, required=True)
+    p.add_argument("--source-check", type=pathlib.Path,
+                   help="Private fix-commit and license-notice audit for exported fixes")
     p.add_argument("--bandit", default="bandit", help="Use original Bandit 1.9.4")
     p.add_argument("--owner", required=True, help="Authorized existing Kaggle username; private output only")
     p.add_argument("--slug", default="haven-r02-secpatch")
@@ -102,6 +201,11 @@ def main(argv=None):
     if any((parent / ".git").exists() for parent in (a.output.resolve(), *a.output.resolve().parents)):
         p.error("--output must be outside Git")
     q = qualify_data(a.data)
+    if not a.source_check or a.source_check.is_symlink() or not a.source_check.is_file():
+        p.error("A complete fix-commit source and license-notice audit is required")
+    correction = json.loads(a.source_check.read_text()).get("input_correction")
+    if correction and [r["corrected_sha256"] for r in correction["files"]] != [digest(h) for h in a.harvest]:
+        p.error("Admission correction does not match the supplied harvest files in order")
     manifest = json.loads((a.data / "manifest.json").read_text())
     if manifest.get("cutoff") != "2025-07-01":
         p.error("Keep the campaign's original 2025-07-01 cutoff")
@@ -125,8 +229,15 @@ def main(argv=None):
             p.error("Rebuilt manifest differs beyond its build timestamp")
     # Existing harvester records the license filename and fix commit. Retain
     # them, rather than accepting row flags as independent license proof.
-    used = {json.loads(line)["key"] for name in ("train.jsonl", "eval-dev.jsonl", "eval-heldout.jsonl")
-            for line in (a.data / name).read_text().splitlines() if line.strip()}
+    used_rows = {}
+    for name in ("train.jsonl", "eval-heldout.jsonl"):
+        for line in (a.data / name).read_text().splitlines():
+            if line.strip():
+                row = json.loads(line)
+                previous = used_rows.setdefault(row["key"], row)
+                if previous["source"] != row["source"]:
+                    p.error("Inconsistent source records for fix " + row["key"])
+    used = set(used_rows)
     harvest = {}
     for path in a.harvest:
         for line in path.read_text().splitlines():
@@ -136,16 +247,13 @@ def main(argv=None):
                     harvest[row["key"]] = row
     if set(harvest) != used or any(not r.get("license_file") for r in harvest.values()):
         p.error("Missing original per-fix license-file provenance")
-    a.output.mkdir(mode=0o700, parents=True, exist_ok=False)
-    dataset, kernel = a.output / "dataset", a.output / "kernel"
-    dataset.mkdir(mode=0o700); kernel.mkdir(mode=0o700)
     with tempfile.TemporaryDirectory() as tmp:
         root = pathlib.Path(tmp)
-        for name in DATA_FILES:
+        for name in EXPORT_DATA_FILES:
             dest = root / "data" / name
             dest.parent.mkdir(exist_ok=True)
             shutil.copyfile(a.data / name, dest)
-        for source in sorted(SECPATCH.glob("*.py")) + [SECPATCH.parent / "train_sft.py"]:
+        for source in [SECPATCH / name for name in EXECUTION_FILES] + [SECPATCH.parent / "train_sft.py"]:
             rel = pathlib.Path("distillation") / ("secpatch" if source.parent == SECPATCH else "") / source.name
             dest = root / rel
             dest.parent.mkdir(parents=True, exist_ok=True)
@@ -156,9 +264,16 @@ def main(argv=None):
             shutil.copyfile(HERE / name, dest)
         prov = root / "provenance"
         prov.mkdir()
+        try:
+            write_source_notices(prov, a.source_check, used_rows, harvest)
+        except (ValueError, OSError) as exc:
+            p.error(str(exc))
         (prov / "harvest.jsonl").write_text("".join(json.dumps(r) + "\n" for r in harvest.values()))
         candidates = [json.loads(x) for x in a.candidates.read_text().splitlines() if x.strip()]
         (prov / "candidates.jsonl").write_text("".join(json.dumps(r) + "\n" for r in candidates if r["key"] in used))
+        a.output.mkdir(mode=0o700, parents=True, exist_ok=False)
+        dataset, kernel = a.output / "dataset", a.output / "kernel"
+        dataset.mkdir(mode=0o700); kernel.mkdir(mode=0o700)
         files = {str(f.relative_to(root)):digest(f) for f in sorted(root.rglob("*")) if f.is_file()}
         try:
             source_commit = subprocess.check_output(
