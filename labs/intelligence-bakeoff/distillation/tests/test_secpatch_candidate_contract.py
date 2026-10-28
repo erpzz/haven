@@ -8,7 +8,7 @@ from unittest.mock import patch
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'secpatch'))
 from candidate_contract import validate_candidate, safe_source_path
-import repo_eval
+import repo_eval_guarded as repo_eval
 
 SHA = 'a' * 40
 BASE = {'key': 'GHSA-aaaa-bbbb-cccc', 'repo': 'owner/repo', 'commit': SHA,
