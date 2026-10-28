@@ -1,0 +1,24 @@
+name: TSZ placement regression
+on:
+  pull_request:
+    paths:
+      - 'labs/tsz/**'
+      - '.github/workflows/tsz-placement-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'labs/tsz/**'
+      - '.github/workflows/tsz-placement-tests.yml'
+permissions:
+  contents: read
+jobs:
+  placement-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline TSZ placement unit tests
+        run: python -m unittest discover -s labs/tsz/tests -p 'test_placement.py' -v

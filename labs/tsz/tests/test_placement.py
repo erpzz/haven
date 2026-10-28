@@ -59,6 +59,24 @@ class PlacementTests(unittest.TestCase):
         self.assertEqual(len(outcome["assignments"]), 20)
         self.assertEqual(outcome["assignments"][-1]["end_layer_exclusive"], 20)
 
+    def test_malformed_manifest_and_node_rejected(self):
+        for manifest in (None, [], {}, {"model": None}, case([None]), case([{}])):
+            with self.subTest(manifest=manifest), self.assertRaises(ValueError):
+                plan(manifest)
+
+    def test_nonfinite_capacity_and_overflow_rejected(self):
+        for value in (float('nan'), float('inf'), True, -1):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                plan(case([node('a', value)]))
+        manifest = case([node('a', 1e308)])
+        manifest['model'].update(weights_mib=1e308, kv_mib=1e308)
+        with self.assertRaises(ValueError):
+            plan(manifest)
+
+    def test_tiny_memory_shortfall_does_not_round_up_capacity(self):
+        manifest = case([node('a', 2000 - 1e-8), node('b', 2000 - 1e-8)])
+        self.assertEqual(plan(manifest)['status'], 'INSUFFICIENT_AGGREGATE_ACCELERATOR_MEMORY')
+
     def test_empty_fleet(self):
         self.assertEqual(plan(case([]))["status"], "NO_ENROLLED_READY_INFERENCE_NODES")
 
