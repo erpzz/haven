@@ -1,6 +1,6 @@
 # Secpatch repository evaluator: disposable runner contract
 
-Status: **not an approved production sandbox**. The evaluator executes third-party
+Status: **not an approved production sandbox**. The original `repo_eval.py` is a pinned, unchanged research artifact; use the separate `repo_eval_guarded.py` entrypoint for new evaluations. The evaluator executes third-party
 `pip install` build hooks and `pytest` code. Neither a virtual environment,
 scrubbed environment variables, a dead proxy, a Docker command, nor
 `--acknowledge-isolated-runner` proves kernel-level confinement.
@@ -47,7 +47,7 @@ Requirements files and build hooks may still contain direct network requests:
 Example invocation *inside a verified disposable guest only*:
 
 ```sh
-python3 secpatch/repo_eval.py \
+python3 secpatch/repo_eval_guarded.py \
   --candidates /input/candidates.jsonl \
   --sandbox /scratch/secpatch \
   --out /output/repo-eval.jsonl \
