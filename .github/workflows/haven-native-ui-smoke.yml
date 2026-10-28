@@ -18,15 +18,17 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check first-party JavaScript syntax
         run: node --check labs/model-lab/static/app.js
+      - name: Validate experiment receipt aggregation without inference
+        run: python3 -m unittest discover -s labs/model-lab/tests -p 'test_experiment_analysis.py' -v
       - name: Verify native UI selector and route-inspector integration
         run: |
           python3 - <<'PY'
           from pathlib import Path
           html = Path('labs/model-lab/static/index.html').read_text()
           js = Path('labs/model-lab/static/app.js').read_text()
-          for selector in ['model-search', 'model-favorites-only', 'model-count', 'model-grid', 'artifact-select', 'artifact-load']:
+          for selector in ['model-search', 'model-favorites-only', 'model-count', 'model-grid', 'artifact-select', 'artifact-load', 'compare-status', 'compare-groups', 'compare-multi-only']:
               assert selector in html or selector in js, selector
-          for token in ['route-inspector', 'identity_attestation', 'UNDETERMINED', 'model_sha256', 'modelAction(m)', 'haven-model-favorites']:
+          for token in ['route-inspector', 'identity_attestation', 'UNDETERMINED', 'model_sha256', 'modelAction(m)', 'haven-model-favorites', '/api/experiment-summary', 'median_decode_tps']:
               assert token in js, token
           assert 'oninput=()=>{modelSearch=' in js
           print('First-party model-picker and route-inspector static contract verified')
