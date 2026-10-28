@@ -48,7 +48,10 @@ def mechanism(rows):
         rs = [r for r in rows if r["arm"] in arms]
         groups[name] = {"exhausted_turns": sum(r.get("exhausted_turns", 0) for r in rs),
                         "followups": sum(r.get("exhaust_followups", 0) for r in rs),
-                        "recovered": sum(r.get("exhaust_recovered", 0) for r in rs)}
+                        "recovered": sum(r.get("exhaust_recovered", 0) for r in rs),
+                        "runs_with_exhaustion": sum(r.get("exhausted_turns", 0) > 0 for r in rs),
+                        "runs_ended_by_empty_replies": sum(r["agent_status"] == "error" and r.get("exhausted_turns", 0) >= 3
+                                                           for r in rs)}
     rec, base = groups["recovery"], groups["baseline"]
     out = {"comparison": "turn after an exhausted turn is non-empty: recovery arms vs baseline arms", **groups}
     if rec["followups"] < MIN_EVENTS or base["followups"] < MIN_EVENTS:
@@ -57,7 +60,7 @@ def mechanism(rows):
     p = fisher_greater(rec["recovered"], rec["followups"] - rec["recovered"],
                        base["recovered"], base["followups"] - base["recovered"])
     better = rec["recovered"] / rec["followups"] > base["recovered"] / base["followups"]
-    out.update(p_one_sided=round(p, 5),
+    out.update(p_one_sided=float(f"{p:.3g}"),
                verdict="supported" if better and p < 0.05 else "inconclusive" if better else "rejected")
     return out
 

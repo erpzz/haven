@@ -1,0 +1,123 @@
+{
+  "id": "e5-exhaustion-recovery",
+  "title": "E5: reasoning-budget recovery and test controller on harder tasks (preregistered)",
+  "status": "measured",
+  "units": 18,
+  "runs": 72,
+  "hypotheses": {
+    "H_R": {
+      "comparison": "recover vs none",
+      "wins": 4,
+      "losses": 0,
+      "ties": 14,
+      "missing": 0,
+      "p_one_sided": 0.0625,
+      "verdict": "inconclusive"
+    },
+    "H_C": {
+      "comparison": "controller vs none",
+      "wins": 9,
+      "losses": 0,
+      "ties": 9,
+      "missing": 0,
+      "p_one_sided": 0.00195,
+      "verdict": "supported"
+    },
+    "H_CR": {
+      "comparison": "controller_recover vs controller",
+      "wins": 3,
+      "losses": 1,
+      "ties": 14,
+      "missing": 0,
+      "p_one_sided": 0.3125,
+      "verdict": "inconclusive"
+    },
+    "H_RM": {
+      "comparison": "turn after an exhausted turn is non-empty: recovery arms vs baseline arms",
+      "recovery": {
+        "exhausted_turns": 40,
+        "followups": 39,
+        "recovered": 39,
+        "runs_with_exhaustion": 13,
+        "runs_ended_by_empty_replies": 0
+      },
+      "baseline": {
+        "exhausted_turns": 49,
+        "followups": 39,
+        "recovered": 23,
+        "runs_with_exhaustion": 16,
+        "runs_ended_by_empty_replies": 6
+      },
+      "p_one_sided": 2.19e-06,
+      "verdict": "supported"
+    }
+  },
+  "table": {
+    "columns": [
+      "arm",
+      "success",
+      "median steps",
+      "median wall s",
+      "executor actions (incl. runtime test runs)",
+      "exhausted turns",
+      "errored runs",
+      "committed"
+    ],
+    "rows": [
+      [
+        "none",
+        "3/18",
+        24.0,
+        97.2,
+        408,
+        17,
+        3,
+        "2/18"
+      ],
+      [
+        "recover",
+        "7/18",
+        24.0,
+        50.0,
+        414,
+        6,
+        1,
+        "6/18"
+      ],
+      [
+        "controller",
+        "12/18",
+        14.0,
+        86.9,
+        325,
+        32,
+        3,
+        "12/18"
+      ],
+      [
+        "controller_recover",
+        "14/18",
+        16.0,
+        63.8,
+        350,
+        34,
+        0,
+        "13/18"
+      ]
+    ]
+  },
+  "hypothesis": "Handing a model the tail of reasoning that ran out of budget, with thinking off for one turn, turns empty replies into actions and raises success on tasks a 4B model finds hard.",
+  "finding": "Preregistered verdicts. Primary: H_R recover vs none inconclusive (4 wins, 0 losses, p=0.0625: the margin rule wins-losses>=4 is met, p<0.05 is not); H_RM mechanism supported (the turn after an exhausted turn was non-empty in 39/39 recovery-arm followups vs 23/39 baseline, one-sided Fisher p=2.2e-6). Secondary: H_C controller vs none supported (9 wins, 0 losses, p=0.002); H_CR controller_recover vs controller inconclusive (3-1, p=0.31). Success: none 3/18, recover 7/18, controller 12/18, controller_recover 14/18. The recovery does what it was built to do; whether it raises success was not shown at this sample size. The test-driven controller, not supported on E2's near-ceiling tasks, is supported on tasks Qwen fails unaided.",
+  "exploratory": {
+    "note": "Not preregistered. Written after the verdicts above.",
+    "mechanism_is_partly_by_construction": "The recovery turn runs with thinking off, so it cannot spend its budget thinking; a non-empty reply is close to guaranteed. H_RM confirms the intervention fires and is honoured by the server, not that it helps. Per run: recovery arms had exhaustion in 13 runs and 0 ended on three empty replies; baseline arms had exhaustion in 16 runs and 6 ended that way (all 6 'empty replies' errors in the experiment).",
+    "fewer_exhausted_turns": "recover had 6 exhausted turns vs 17 in none (controller_recover 34 vs controller 32). Without a controller, exhaustion clustered: baseline exhausted turns often followed one another.",
+    "where_recover_won": "The 4 H_R wins are on e5d (2), e5e (1) and e5f (1). e5g was solved by every arm in every seed (ceiling); excluding it, none 0/15, recover 4/15, controller 9/15, controller_recover 11/15.",
+    "speed": "Median wall time: none 97 s, recover 50 s, controller 87 s, controller_recover 64 s. Median completion tokens per run: none 9179, recover 3855.",
+    "runs_that_exhausted_still_fail": "Among runs with at least one exhausted turn, success was none 0/7, recover 1/5, controller 4/9, controller_recover 4/8. Recovery keeps the run alive; it does not by itself make the model right.",
+    "malformed_tool_call": "One recover run (e5f, seed 44) ended on HTTP 500: llama.cpp rejected the model's tool-call arguments as invalid JSON. Model behaviour, counted as a failure as the judge prescribes."
+  },
+  "limits": "Six tasks by the same author as the arms, 18 paired units, one 4B model, one engine (llama.cpp b11146 CUDA on Slink; not pooled with the Mac or with E2). Seeds vary sampling only and CUDA sampling is not bit-exact; E5 has no identical-treatment pair to measure that noise. The recovery bundles two changes (reasoning tail carried over, thinking off for one turn) and does not separate them. One controller_recover run overran the 1200 s limit by waiting 1800 s on an unattended approval (see the amendment); it ties in H_CR whatever its outcome would have been.",
+  "analysis_code": "bench/summarize_e5.py",
+  "preregistration": "morphogenesis/PREREGISTRATION_E5.json"
+}

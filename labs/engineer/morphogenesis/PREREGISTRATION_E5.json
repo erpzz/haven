@@ -123,6 +123,11 @@
         "launcher": "morphogenesis/e5_slink.py (copy of the script that ran)"
       },
       "analysis_changed": false
+    },
+    {
+      "at": "2026-10-28, after all 72 Slink runs, outcomes known",
+      "by": "experimenter (Opus, the session running E5)",
+      "change": "Two post-hoc notes, no change to verdict rules or to any row. (1) One run (controller_recover, e5f-semver-node, seed 66, wall 2047 s) exceeded max_seconds_per_run=1200: its last command (`rm -rf node_modules/.cache ...`) escalated to an owner approval, nobody attends approvals during a bench run, and the run waited the 1800 s approval timeout before refusal; the loop checks the time limit only between steps. It is the only one of 72 runs with a non-policy decision. Its row is kept as judged (failure). The paired controller run also failed, so the unit is a tie in H_CR; had it succeeded H_CR would be 4-1, p=0.19, still inconclusive. No verdict depends on it. (2) summarize_e5.py now prints p to 3 significant figures (rounding to 5 decimals printed 2.2e-6 as 0.0) and reports the per-run H_RM counts promised under known_threats; the test and thresholds are unchanged."
     }
   ]
 }
