@@ -1,0 +1,221 @@
+{
+  "artifact_kind": "R02_DOCUMENTATION_INPUT_AUDIT",
+  "checked_local_date": "2026-09-27",
+  "timezone": "America/New_York",
+  "generated_at_utc": "2026-09-28T03:24:38.192680+00:00",
+  "execution_environment": "Chat working container; not the user PC",
+  "archives": [
+    {
+      "name": "HAVEN_Research_Thread_Prompts_v1(1).zip",
+      "size_bytes": 31068,
+      "sha256": "78794dc12f03c905811a8dddb7cf51de700dcb72a221196c4375458b52ae79df"
+    },
+    {
+      "name": "HAVEN_ASTRA_Cumulative_Starter_v1.0.zip",
+      "size_bytes": 738827,
+      "sha256": "55f693f64c56a9d8f13a6cd5725ab4c427af6ade2e127fe8e71829eca1f1d412"
+    },
+    {
+      "name": "HAVEN_Tonight.zip",
+      "size_bytes": 772938,
+      "sha256": "0e3c76550e63f65669fa0b6f6bc76516f89c43835377b16dc60a1088e7ffddfe"
+    }
+  ],
+  "supplied_attachment_contains_starter": false,
+  "starter_recovered_from_accessible_library": true,
+  "starter_entries": 146,
+  "starter_regular_files": 146,
+  "tonight_preserves_all_starter_entries_byte_for_byte": true,
+  "reviewed_members": [
+    {
+      "path": "START_HERE.md",
+      "sha256": "98781de20ed2389841e4ba857f609388ffd79b1dd6a5dd933a5a10997635843a",
+      "size_bytes": 3065,
+      "required_input": true,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "sha256": "2492e7ae7992dc66fc15c30f0f864429b097a1a63dc1c285dfb523d80140dffa",
+      "size_bytes": 2486,
+      "required_input": true,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "sha256": "555515587b0f7ed1c0e6de5c7c55647b93d172f9e6f97633543d41f1d24e6a74",
+      "size_bytes": 2638,
+      "required_input": true,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "scope/COVERAGE.md",
+      "sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "size_bytes": 21724,
+      "required_input": true,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "docs/04_INTELLIGENCE_AND_COST.md",
+      "sha256": "4fde71fc268c36086ec85016260a941a974429b6f9b254f8bafebcd03bca2a7e",
+      "size_bytes": 6578,
+      "required_input": true,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "docs/13_RUNTIME_AGENTS.md",
+      "sha256": "f23346c29f09b89091379ea5b63953c14cd02582c70c45c1e169907f6652bddf",
+      "size_bytes": 6433,
+      "required_input": true,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/README.md",
+      "sha256": "84e46ea3a07c3dfb9ca4d8bc95453171d9e51b4e72b8c8dc5113561962a40615",
+      "size_bytes": 3604,
+      "required_input": true,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "agents/HANDOFF_TEMPLATE.md",
+      "sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+      "size_bytes": 1329,
+      "required_input": true,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "scope/requirements.json",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "size_bytes": 54675,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/agent_job.schema.json",
+      "sha256": "fbc33699cebf0f095a5e6da2c5ab3c64554bcb499be2442aa6f62ba1c8047b93",
+      "size_bytes": 2066,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/context_packet.schema.json",
+      "sha256": "9ebbf9c8fe0b620db89d3348c31f38580f11b7244b24897a6f200e82e9aba925",
+      "size_bytes": 1781,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/evidence.schema.json",
+      "sha256": "241d0f2bb00cbbb1e59472a92b66b53b893135f410e4c88bd2712d061e1a1c29",
+      "size_bytes": 2422,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/consent_proposal.schema.json",
+      "sha256": "d48d26aac261eb77c9d9f4ecb9d93c6b0a0efdb2358f83c3e613f6419005defb",
+      "size_bytes": 1623,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/daily_action_proposal.schema.json",
+      "sha256": "da7b74e6349fd30df796aa6adc149d81c269aa4bc0b504e17eb47f95dcdc6d00",
+      "size_bytes": 1525,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/physical_action_proposal.schema.json",
+      "sha256": "6e72a18ed05eb120dd02cc4787f52e0ae5d153539ec89f4dcb3602bbfe478d5c",
+      "size_bytes": 1668,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/capability_qualification.schema.json",
+      "sha256": "5a202cc524f0a5b4d38f526ef7bc8ea12a4b703fc9f1e6d8e554c816eee3cfd3",
+      "size_bytes": 1658,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/delivery_receipt.schema.json",
+      "sha256": "06e49970f99d8bb4a37c2c8343c8e81e40e580aafbcb166f9f6c6f1050245779",
+      "size_bytes": 1367,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/design_artifact.schema.json",
+      "sha256": "b872628654d13e32ac1571c33790f68ecfc103c7d4fe9e9185f4ccaae7d6847b",
+      "size_bytes": 1730,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "contracts/experiment.schema.json",
+      "sha256": "14d7893c6728edcbdad7690373a72ea08ab2b1ef32e8285695f3f625afd0402b",
+      "size_bytes": 1844,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "research/experiments.json",
+      "sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "size_bytes": 37277,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "research/sources.json",
+      "sha256": "8dfdb7f74b44d4595605533cb4dfc57a14b19569369008ff7047e7a1631889a0",
+      "size_bytes": 24362,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "agents/H02_STARTER.md",
+      "sha256": "d74ae0a9cbef1f4f5fce76eb0a07ccee5905595d9e0629ba1cdb2740438775dc",
+      "size_bytes": 3256,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "agents/THREAD_MAP.md",
+      "sha256": "dd75660375d2d1ff66c9f79117573188dc56392268ac25ae73318474bb997500",
+      "size_bytes": 3099,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    },
+    {
+      "path": "policies/model_budget.example.json",
+      "sha256": "fa7cccec0b4f9b8bf9ba19b0b18884f672b46025124a67fa1168cf6ba9c753ca",
+      "size_bytes": 547,
+      "required_input": false,
+      "review": "source text or structured fields inspected; not executed"
+    }
+  ],
+  "reviewed_wrapper_members": [
+    {
+      "path": "haven-tonight/FOUNDATION.md",
+      "sha256": "51dff9e9d18c4cda1c23b42c5c105a60e4e68f7415c9a7dc8f86edc63acc79e1",
+      "size_bytes": 4184
+    },
+    {
+      "path": "haven-tonight/OVERNIGHT_GOAL.md",
+      "sha256": "84ea6776e382ca9cd04ea8a4d110b42d3de1c73f5c441c5e35524f0cf7449b01",
+      "size_bytes": 15689
+    },
+    {
+      "path": "haven-tonight/PHONE_TO_PC_PROMPT.txt",
+      "sha256": "334a01980f1b6369e46094a2ba127b39944f4bcb1f506388f8dfb0d4cdcc5697",
+      "size_bytes": 2191
+    }
+  ],
+  "source_zip_writes_performed": false,
+  "current_m0_code_commit_inspected": false,
+  "actual_night01_outputs_inspected": false,
+  "runtime_model_or_framework_tests_executed": false,
+  "research_prompt_template_distinction": "Uploaded root HANDOFF_TEMPLATE has eleven research sections; exact starter agents/HANDOFF_TEMPLATE has Specialist handback headings. Main report follows exact starter; integration mapping covers both."
+}
