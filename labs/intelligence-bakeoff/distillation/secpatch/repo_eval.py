@@ -182,8 +182,11 @@ def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int,
     rec['on_fix'] = fixed
     if not fixed['passed']:
         return {**rec, 'status': 'TESTS_FAIL_ON_FIX'}
-    changed = subprocess.run(['git', 'diff', '--name-only', cand['parent'], cand['commit']], cwd=work,
-                             capture_output=True, text=True).stdout.split()
+    diff = subprocess.run(['git', 'diff', '--name-only', '-z', cand['parent'], cand['commit']], cwd=work,
+                          env=clone_env, capture_output=True, text=True, timeout=300)
+    if diff.returncode != 0:
+        return {**rec, 'status': 'DIFF_FAILED', 'detail': diff.stderr[-300:]}
+    changed = [path for path in diff.stdout.split('\x00') if path]
     sources = [p for p in changed if p.endswith('.py') and p not in {t['path'] for t in cand['tests']}]
     for path in sources:
         python_path(path, 'changed source')
