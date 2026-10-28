@@ -33,7 +33,8 @@ class RemoteWrapperTests(unittest.TestCase):
                     "parent": source["parent"], "source_path": source["path"], "license": "MIT",
                     "license_file": "LICENSE", "advisory_ids": source["advisory_ids"],
                     "checked": ["commit_parent", "vulnerable_and_fixed_function_blobs",
-                                "license_and_notice_files_at_commit"],
+                                "license_and_notice_files_at_commit", "package_metadata_at_commit"],
+                    "metadata": [],
                     "notices": [{"path": "LICENSE", "sha256": license_sha, "classified_as": "MIT"}]}
             report = {"schema": "haven-secpatch-fix-source-check-v1", "requested": 1, "checked": 1,
                       "failures": [], "items": [item],
@@ -51,6 +52,23 @@ class RemoteWrapperTests(unittest.TestCase):
             check.write_text(json.dumps(report))
             with self.assertRaisesRegex(ValueError, "Non-permissive"):
                 prepare.write_source_notices(root / "bad", check, used, harvest)
+
+    def test_package_metadata_rejects_restrictive_license_despite_root_notice(self):
+        metadata = module("license_metadata")
+        for value in ("GPL-3.0-or-later", "FSL-1.0-Apache-2.0", "ZPL 2.1", "AGPL"):
+            raw = ('[project]\nlicense = "' + value + '"\n').encode()
+            item = {"key": "example", "notices": [{"path": "LICENSE"}],
+                    "metadata": [{"path": "package/pyproject.toml", "sha256": "content"}]}
+            with self.assertRaisesRegex(ValueError, "outside campaign allowlist"):
+                metadata.validate_metadata(item, {"content": raw})
+        self.assertTrue(metadata.allowed_declaration("MIT OR Apache-2.0"))
+
+    def test_deeper_source_license_overrides_broader_package_metadata(self):
+        metadata = module("license_metadata")
+        item = {"key": "example", "notices": [{"path": "LICENSE"}, {"path": "applications/admin/LICENSE"}],
+                "metadata": [{"path": "pyproject.toml", "sha256": "content"}]}
+        result = metadata.validate_metadata(item, {"content": b'[project]\nlicense="GPL-3.0-or-later"\n'})
+        self.assertEqual(result["precedence"], "deeper_source_license")
 
     def test_original_pipeline_files_match_recorded_base(self):
         base = json.loads((REMOTE / "SOURCE_BASE.json").read_text())

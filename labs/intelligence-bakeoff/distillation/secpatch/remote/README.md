@@ -61,12 +61,26 @@ audit (`haven-secpatch-fix-source-check-v1`): it must cover each exported fix,
 the commit/parent and vulnerable/fixed blobs, and all license and notice files
 at the root and along the affected source path at that commit. Each original
 notice is included as base64 in `notice_texts`, keyed by its SHA-256, and linked
-from the fix's `notices` entries. The wrapper verifies those bytes and rejects
-non-permissive or unclassified source-path licenses. A consistent audit file
+from the fix's `notices` entries. Package manifests are similarly retained in
+`metadata_texts` and per-fix `metadata` entries, with Git blob and SHA-256 identities.
+The audit records `package_metadata_at_commit`. The wrapper reads these files as
+data, checks the nearest package declarations and deeper source-license precedence,
+and rejects declarations outside the existing campaign allowlist. It verifies
+original notice bytes and rejects non-permissive or unclassified source-path licenses. A consistent audit file
 is not, alone, independent proof that its collector checked the upstream Git
 objects. The deduplication policy concerns vulnerable functions, not all
 possible semantic or fixed-code leakage. The cutoff does not prove absence from
 the pretrained model's undisclosed training corpus.
+
+An admission correction preserves the original artifacts. In copied harvest
+records, set `checks.permissive_license` to false for independently established
+source-path license conflicts; retain the original license field and add the
+exclusion evidence. Rebuild with the unchanged builder. The source-check receipt's
+`input_correction` records original/corrected file hashes, exact changed records,
+excluded keys and reasons. Its ordered corrected hashes must match `--harvest`.
+Do not delete rows from a built dataset, rewrite a restrictive license as MIT,
+or expand the campaign allowlist. Report all rebuilt differences: the builder's
+seeded decoy choices may change other SFT rows when a fix is excluded.
 
 ## Prepare, authenticate and submit once
 

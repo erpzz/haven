@@ -1,7 +1,7 @@
 """Prepare a private Kaggle payload. No login, upload, model load or training.
 
-Replays the existing dataset builder on the ORIGINAL sources; accepts no
-replacement rows and never lowers gpu_campaign's admission thresholds.
+Replays the existing builder on recorded sources, including disclosed admission
+corrections; accepts no replacement rows or lowered campaign thresholds.
 """
 from __future__ import annotations
 
@@ -20,8 +20,10 @@ import zipfile
 HERE = pathlib.Path(__file__).resolve().parent
 SECPATCH = HERE.parent
 sys.path.insert(0, str(SECPATCH))
+sys.path.insert(0, str(HERE))
 from gpu_campaign import digest, qualify_data  # noqa: E402
 from harvest import PERMISSIVE, classify_license  # noqa: E402
+from license_metadata import validate_metadata  # noqa: E402
 
 MODEL = "Qwen/Qwen3-0.6B"
 REVISION = "c1899de289a04d12100db370d81485cdf75e47ca"
@@ -48,11 +50,15 @@ def write_source_notices(root, source_check, used_rows, harvest):
     if len(items) != len(by_key) or set(by_key) != set(used_rows):
         raise ValueError("Fix-commit source check does not cover exactly the exported fixes")
     texts = report.get("notice_texts") or {}
+    metadata_texts = report.get("metadata_texts") or {}
+    if set(report.get("input_correction", {}).get("excluded_keys", [])) & set(used_rows):
+        raise ValueError("Excluded fix remains in the exported data")
     written = set()
+    metadata_written = set()
     notices_dir = root / "notices"
     notices_dir.mkdir(parents=True)
     required_checks = {"commit_parent", "vulnerable_and_fixed_function_blobs",
-                       "license_and_notice_files_at_commit"}
+                       "license_and_notice_files_at_commit", "package_metadata_at_commit"}
     for key, row in used_rows.items():
         item, src, h = by_key[key], row["source"], harvest[key]
         expected = {"repo": src["repo"], "commit": src["commit"], "parent": src["parent"],
@@ -83,8 +89,23 @@ def write_source_notices(root, source_check, used_rows, harvest):
             if sha not in written:
                 (notices_dir / (sha + ".txt")).write_bytes(content)
                 written.add(sha)
+        metadata_contents = {}
+        for entry in item.get("metadata", []):
+            sha = entry.get("sha256", "")
+            if not re.fullmatch(r"[0-9a-f]{64}", sha):
+                raise ValueError("Missing package metadata digest: " + key)
+            content = base64.b64decode(metadata_texts[sha], validate=True)
+            if hashlib.sha256(content).hexdigest() != sha:
+                raise ValueError("Package metadata digest mismatch: " + key)
+            metadata_contents[sha] = content
+            if sha not in metadata_written:
+                dest = root / "package-metadata" / (sha + ".txt")
+                dest.parent.mkdir(exist_ok=True)
+                dest.write_bytes(content)
+                metadata_written.add(sha)
+        validate_metadata(item, metadata_contents)
     (root / "source-check.json").write_text(json.dumps(
-        {k: v for k, v in report.items() if k != "notice_texts"}, indent=2) + "\n")
+        {k: v for k, v in report.items() if k not in ("notice_texts", "metadata_texts")}, indent=2) + "\n")
     (root / "ATTRIBUTION.md").write_text(
         "# Attribution and license notices\n\n"
         "This input contains transformed excerpts from the repositories and commits recorded "
@@ -182,6 +203,9 @@ def main(argv=None):
     q = qualify_data(a.data)
     if not a.source_check or a.source_check.is_symlink() or not a.source_check.is_file():
         p.error("A complete fix-commit source and license-notice audit is required")
+    correction = json.loads(a.source_check.read_text()).get("input_correction")
+    if correction and [r["corrected_sha256"] for r in correction["files"]] != [digest(h) for h in a.harvest]:
+        p.error("Admission correction does not match the supplied harvest files in order")
     manifest = json.loads((a.data / "manifest.json").read_text())
     if manifest.get("cutoff") != "2025-07-01":
         p.error("Keep the campaign's original 2025-07-01 cutoff")
