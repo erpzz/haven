@@ -163,13 +163,12 @@ class Gateway:
         if entry['role'] != 'frontend':
             return {'id': entry['principal'], 'name': entry['principal'], 'role': entry['role'], 'via': 'direct-key'}
         secret = self._jwt_secret()
-        if secret:
-            # Signed identity: holding the frontend key alone cannot claim another user's role.
-            claims = verify_hs256(headers.get(JWT_HEADER, ''), secret)
-            uid, role_name, name = claims.get('sub', ''), claims.get('role', ''), claims.get('name', '')
-        else:
-            uid, role_name = headers.get('X-OpenWebUI-User-Id', ''), headers.get('X-OpenWebUI-User-Role', '')
-            name = urllib.parse.unquote(headers.get('X-OpenWebUI-User-Name', ''))
+        if not secret:
+            # Never turn loss of the signing secret into authorization by unsigned role headers.
+            raise GatewayError(503, 'Frontend identity verification is not configured.', 'unavailable')
+        # Signed identity: holding the frontend key alone cannot claim another user's role.
+        claims = verify_hs256(headers.get(JWT_HEADER, ''), secret)
+        uid, role_name, name = claims.get('sub', ''), claims.get('role', ''), claims.get('name', '')
         role = OWUI_ROLES.get(role_name)
         if not isinstance(uid, str) or not ID_RE.fullmatch(uid) or not role:
             raise GatewayError(403, 'The frontend did not identify an approved user; pending accounts cannot chat.', 'forbidden')
