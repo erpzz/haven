@@ -71,6 +71,11 @@ ENABLE_FOLLOW_UP_GENERATION=false
 ENABLE_AUTOCOMPLETE_GENERATION=false
 ENABLE_SEARCH_QUERY_GENERATION=false
 ENABLE_RETRIEVAL_QUERY_GENERATION=false
+ENABLE_EVALUATION_ARENA_MODELS=false
+# Scheduled prompts would start unattended inference on the one GPU slot; opt in deliberately.
+ENABLE_AUTOMATIONS=false
+# No embedding model is downloaded (offline): attached files go to the model as full text.
+BYPASS_EMBEDDING_AND_RETRIEVAL=true
 AIOHTTP_CLIENT_TIMEOUT=1800
 OFFLINE_MODE=true
 HF_HUB_OFFLINE=1
