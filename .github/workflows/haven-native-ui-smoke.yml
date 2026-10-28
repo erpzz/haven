@@ -1,0 +1,33 @@
+name: Haven native interface static regression
+
+on:
+  pull_request:
+    paths:
+      - 'labs/model-lab/static/**'
+      - '.github/workflows/haven-native-ui-smoke.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'labs/model-lab/static/**'
+      - '.github/workflows/haven-native-ui-smoke.yml'
+
+jobs:
+  syntax-and-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check first-party JavaScript syntax
+        run: node --check labs/model-lab/static/app.js
+      - name: Verify native UI selector and route-inspector integration
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          html = Path('labs/model-lab/static/index.html').read_text()
+          js = Path('labs/model-lab/static/app.js').read_text()
+          for selector in ['model-search', 'model-favorites-only', 'model-count', 'model-grid', 'artifact-select', 'artifact-load']:
+              assert selector in html or selector in js, selector
+          for token in ['route-inspector', 'identity_attestation', 'UNDETERMINED', 'model_sha256', 'modelAction(m)', 'haven-model-favorites']:
+              assert token in js, token
+          assert 'oninput=()=>{modelSearch=' in js
+          print('First-party model-picker and route-inspector static contract verified')
+          PY
