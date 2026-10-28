@@ -119,6 +119,24 @@ class HarvestTests(unittest.TestCase):
     def test_cosmetic_change_is_not_a_pair(self):
         self.assertEqual(self.harvest(cosmetic=True)['pairs'], [])
 
+    def test_scope_flags_helpers_and_imports_outside_the_function(self):
+        before = 'def f(p):\n    return open(p)\n'
+        helper = 'def _inside(p):\n    return True\n\n\ndef f(p):\n    assert _inside(p)\n    return open(p)\n'
+        imported = 'import os\n\n\ndef f(p):\n    return open(os.path.basename(p))\n'
+        local = 'def f(p):\n    if ".." in p:\n        raise ValueError(p)\n    return open(p)\n'
+        fn = harvest.functions
+        self.assertEqual(harvest.fix_scope(before, helper, fn(before), fn(helper))['added_functions'], ['_inside'])
+        self.assertTrue(harvest.fix_scope(before, imported, fn(before), fn(imported))['module_level_changed'])
+        scope = harvest.fix_scope(before, local, fn(before), fn(local))
+        self.assertEqual((scope['added_functions'], scope['module_level_changed']), ([], False))
+        rec = {'changed_files': ['pkg/a.py', 'tests/test_a.py', 'CHANGES.md'], 'pairs': [{'path': 'pkg/a.py'}]}
+        self.assertTrue(harvest.scope_checks(rec, scope)['self_contained'])
+        rec['changed_files'].append('pkg/b.py')
+        self.assertFalse(harvest.scope_checks(rec, scope)['self_contained'])
+
+    def test_harvest_records_scope(self):
+        self.assertTrue(self.harvest()['scope']['self_contained'])
+
     def test_non_permissive_repo_excluded(self):
         rec = self.harvest(license_text='GNU General Public License v3')
         self.assertFalse(rec['checks']['permissive_license']); self.assertEqual(rec['pairs'], [])
@@ -310,6 +328,16 @@ class RepoEvalTests(unittest.TestCase):
         self.assertEqual(repo_eval.failure_kind('FAILED t.py::x - AssertionError: open redirect'), 'assertion')
         self.assertEqual(repo_eval.failure_kind('ERROR collecting tests/t.py\nImportError: cannot import name'), 'collection_or_import')
         self.assertEqual(repo_eval.failure_kind('E   TypeError: bad'), 'other_error')
+
+    def test_recovery_uses_only_declared_test_dependencies(self):
+        with tempfile.TemporaryDirectory() as t:
+            w = pathlib.Path(t)
+            self.assertEqual(repo_eval.declared_test_installs(w), [])
+            (w / 'pyproject.toml').write_text('[dependency-groups]\ndev = ["opentelemetry-sdk"]\n'
+                                              '[project]\nname = "x"\n[project.optional-dependencies]\ntest = ["rich"]\n')
+            self.assertEqual(repo_eval.declared_test_installs(w), [['pip', 'install', '-q', '--group', 'dev'],
+                                                                   ['pip', 'install', '-q', '-e', '.[test]']])
+        self.assertEqual(repo_eval.missing_module("E   ModuleNotFoundError: No module named 'opentelemetry.sdk'"), 'opentelemetry.sdk')
 
     def test_node_ids(self):
         self.assertEqual(repo_eval.node_ids([{'path': 'tests/t.py', 'name': 'TestX.test_y'}]), ['tests/t.py::TestX::test_y'])
