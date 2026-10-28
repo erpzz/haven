@@ -68,6 +68,39 @@ In any chat:
 - **Settings are code.** `ENABLE_PERSISTENT_CONFIG=false`, so `install.sh` decides
   connections, signup role and tasks on every start. Admin-UI changes to those revert at restart.
 
+## Tool schemas and the prompt cache
+
+Open WebUI attaches its built-in tool schemas to every request. With all 30 of them, the
+first request after a model load measured **116.9 s** to first token on the 35B
+(5,437 prompt tokens, CPU-bound prefill while other CPU jobs ran). Every later request,
+**including a brand-new chat**, reuses that prefix from llama.cpp's prompt cache
+(0.74 s to first token). So the cost is per model load, not per chat.
+
+**Don't vary tools per message.** It would change the tool block at the start of the prompt
+and invalidate the shared cache on every turn. Instead, the gateway applies a
+**deterministic per-frontend withhold list**: `~/.local/share/haven-model-lab/gateway-tools.json`
+(mode 0600). Edits take effect on the next request.
+
+```json
+{"open-webui": {"withhold": ["list_knowledge_bases", "search_knowledge_bases", "query_knowledge_bases",
+  "grep_knowledge_files", "search_knowledge_files", "query_knowledge_files", "view_knowledge_file",
+  "create_calendar_event", "update_calendar_event", "delete_calendar_event", "search_calendar_events",
+  "search_notes", "view_note", "write_note", "replace_note_content", "create_tasks", "update_task"]}}
+```
+
+Measured on the test frontend with this list (knowledge, calendar, notes and tasks
+withheld; time, memory, chat search and ask-user kept):
+
+| | Prompt tokens | Cached | First token |
+|---|---|---|---|
+| Cold, all 30 tools | 5,437 | 0 | 116.9 s |
+| Cold, 13 tools | 2,242 | 0 | 46.7 s |
+| New chat after that | 2,246 | 2,222 | 1.29 s |
+
+`/haven tools` lists what was supplied and withheld and each schema's estimated cost.
+Receipts and the routing trace record the supplied and withheld names, and llama.cpp's
+`prompt_cached_tokens` / `prompt_processed_tokens` for every request.
+
 ## Install, update, roll back (on Slink)
 
 ```bash
