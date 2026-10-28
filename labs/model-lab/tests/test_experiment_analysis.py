@@ -81,6 +81,20 @@ class ExperimentAnalysisTests(unittest.TestCase):
         self.assertFalse(result['groups'][0]['eligible_for_cross_model_comparison'])
         self.assertIsNone(_number(float('nan')))
 
+    def test_malformed_metric_objects_and_timestamps_are_ignored(self):
+        malformed = row('A', at=1)
+        malformed['metrics'] = 'not-a-dict'
+        malformed['at'] = float('nan')
+        bad_field = row('B', at=2)
+        bad_field['metrics']['backend_decode_tps'] = 'not-a-number'
+        self.write(malformed, bad_field)
+        result = summarize(self.path)
+        self.assertEqual(result['total_groups'], 1)
+        models = {v['model']: v for v in result['groups'][0]['models']}
+        self.assertIsNone(models['A']['median_decode_tps'])
+        self.assertIsNone(models['B']['median_decode_tps'])
+        self.assertEqual(result['groups'][0]['latest_at'], 2)
+
     def test_partial_tail_is_not_processed(self):
         self.path.write_bytes((json.dumps(row('A')) + '\n' + json.dumps(row('B'))[:21]).encode())
         result = summarize(self.path)
