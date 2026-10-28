@@ -1,7 +1,9 @@
 # Haven chat (Open WebUI) on Slink
 
-Open WebUI is Haven's everyday chat. Haven Model Lab stays the operator console for
-loading models, GPU/RAM, diagnostics and workers.
+Open WebUI is an **interim, optional chat frontend**, not Haven's product UI.
+Haven Model Lab remains the operator console for model loading, GPU/RAM,
+diagnostics, workers and experiment capabilities. The first-party Haven UI must
+own model selection, orchestration and transparent routing.
 
 ```
 browser ──ssh tunnel──▶ Open WebUI 127.0.0.1:8878 ──gateway key + signed user JWT──▶
@@ -11,6 +13,8 @@ browser ──ssh tunnel──▶ Open WebUI 127.0.0.1:8878 ──gateway key + 
 Open WebUI never talks to llama.cpp, Strata or a worker directly. The Lab's `/v1`
 gateway (`labs/model-lab/gateway.py`) only accepts loopback clients holding a gateway key,
 and verifies each user's identity from Open WebUI's HS256-signed `X-OpenWebUI-User-Jwt`.
+Missing or invalid shared JWT-secret configuration refuses all frontend requests
+(HTTP 503); direct owner CLI keys remain independent.
 Open WebUI `admin` users become Haven owners and `user` accounts become members. Pending
 accounts can't chat.
 
@@ -52,7 +56,13 @@ In any chat:
   results through on the Lab-managed llama.cpp runtime. Other lanes answer in text, and
   the receipt records `tools_dropped`.
 - **Receipts.** Each request appends to `~/.local/share/haven-model-lab/gateway-receipts.jsonl`:
-  route, model, metrics and tool names. Prompts and replies are not recorded.
+  requested selector, resolved Lab provider, reported model, metrics and tool names.
+  Prompts and replies are not recorded. Non-stream replies include `haven.routing`;
+  streaming replies include the same object in the final SSE chunk. This metadata
+  is for Haven-native clients; Open WebUI may not render vendor extension fields.
+  Route aliases (`haven-slink` / `haven-auto`) are **not installed model IDs**.
+  Fallback is marked `UNDETERMINED` until the Lab records actual fallback events;
+  digest provenance is declared evidence, not independent weight attestation.
 - **Files** go to the model as full text, because no embedding model is downloaded.
   Images are refused by text models.
 - **Settings are code.** `ENABLE_PERSISTENT_CONFIG=false`, so `install.sh` decides
