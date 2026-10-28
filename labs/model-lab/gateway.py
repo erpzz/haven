@@ -42,6 +42,12 @@ JWT_HEADER = 'X-OpenWebUI-User-Jwt'
 RECEIPTS_FILE = 'gateway-receipts.jsonl'
 CONSENT_COMMAND = '/haven consent'
 STATUS_COMMAND = '/haven status'
+TOOLS_COMMAND = '/haven tools'
+TOOLS_ALL_COMMAND = '/haven tools all'          # this chat: supply every tool the frontend offers
+TOOLS_DEFAULT_COMMAND = '/haven tools default'  # this chat: back to the frontend policy
+CONTROL_COMMANDS = {CONSENT_COMMAND, STATUS_COMMAND, TOOLS_COMMAND, TOOLS_ALL_COMMAND, TOOLS_DEFAULT_COMMAND}
+# {"<frontend principal>": {"withhold": ["tool_name", ...], "models": {"<model id>": {"withhold": [...]}}}}
+TOOL_POLICY_FILE = 'gateway-tools.json'
 DEFAULT_OUTPUT_CAP = 16384     # Default reply budget when the client sends none.
 MIN_OUTPUT = 256               # Below this the chat is too long for the loaded context.
 QUEUE_WAIT_S = 180             # One GPU slot; a queued request waits this long, then reports BUSY.
@@ -102,6 +108,7 @@ class Gateway:
         self.data = Path(data)
         self.lock = threading.RLock()
         self.consent = {}      # (principal_id, chat_id, provider_id) -> granted_at
+        self.tool_overrides = set()  # (principal_id, chat_id) that asked for every tool; in memory only
         self.keys = self._load_keys()
 
     # ---- credentials -------------------------------------------------------
@@ -281,6 +288,22 @@ class Gateway:
             messages.append(out)
         chat_id = headers.get('X-OpenWebUI-Chat-Id', '')
         last = messages[-1]['content'].strip() if messages[-1]['role'] == 'user' else ''
+        command = last.lower()
+        if command in (TOOLS_ALL_COMMAND, TOOLS_DEFAULT_COMMAND):
+            if not ID_RE.fullmatch(chat_id):
+                raise GatewayError(400, 'Tool overrides are per chat, and this request carried no chat identity.')
+            with self.lock:
+                if command == TOOLS_ALL_COMMAND:
+                    self.tool_overrides.add((principal['id'], chat_id))
+                else:
+                    self.tool_overrides.discard((principal['id'], chat_id))
+            return {'local_reply': ('Every tool the frontend offers is now supplied in this chat. Its next message '
+                                    're-reads the larger tool list, so expect a slower first reply.'
+                                    if command == TOOLS_ALL_COMMAND else
+                                    "This chat is back to the frontend's default tool list.")}
+        tools, selection = self.select_tools(principal, body.get('tools') or None, str(body.get('model', '')), chat_id)
+        if command == TOOLS_COMMAND:
+            return {'local_reply': format_tools(selection)}
         if last.lower() == STATUS_COMMAND:
             return {'local_reply': format_status(self.status(principal))}
         provider = None
@@ -298,7 +321,7 @@ class Gateway:
                                     f"{provider.get('vendor')} through your {provider.get('route_class')} lane. "
                                     "Nothing has been sent yet. Ask your question again.")}
         # The consent command itself is a control message, not conversation content.
-        messages = [m for m in messages if not (m['role'] == 'user' and m['content'].strip().lower() == CONSENT_COMMAND)]
+        messages = [m for m in messages if not (m['role'] == 'user' and m['content'].strip().lower() in CONTROL_COMMANDS)]
         egress_ack = None
         if cloud:
             with self.lock:
@@ -310,7 +333,6 @@ class Gateway:
             egress_ack = 'HOSTED_SUBSCRIPTION'
         conn, _ = self._managed()
         context = (conn.get('profile') or {}).get('context') if provider_id in ('managed', 'auto') else (provider or {}).get('max_context_tokens')
-        tools = body.get('tools') or None
         prompt = estimate_prompt_tokens(messages, tools)
         requested = body.get('max_completion_tokens', body.get('max_tokens'))
         if requested is None:
@@ -327,8 +349,46 @@ class Gateway:
                             'seed': body.get('seed', secrets.randbelow(2**31)), 'reasoning': effort,
                             'provider_id': provider_id, 'egress_ack': egress_ack, 'label': 'gateway',
                             'tools': tools, 'tools_optional': True},
-                'principal': principal, 'chat_id': chat_id, 'prompt_estimate': prompt,
+                'principal': principal, 'chat_id': chat_id, 'prompt_estimate': prompt, 'tool_selection': selection,
                 'requested_model_id': str(body.get('model', ''))}
+
+    def tool_policy(self, principal: dict, model: str = '') -> dict:
+        """Owner-written, per-frontend withhold list. Deterministic, so every request from that frontend
+        carries the same tool block and llama.cpp keeps reusing the cached prompt prefix."""
+        path = self.data / TOOL_POLICY_FILE
+        try:
+            fd = os.open(path, os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0))
+        except FileNotFoundError:
+            return {}
+        with os.fdopen(fd) as f:
+            info = os.fstat(f.fileno())
+            if not stat.S_ISREG(info.st_mode) or (os.name != 'nt' and (info.st_uid != os.getuid() or info.st_mode & 0o077)):
+                raise GatewayError(503, 'gateway-tools.json must be an owned mode-0600 file.', 'unavailable')
+            policy = json.load(f).get(principal['via'], {})
+        # A per-model entry replaces the frontend default for that model only.
+        policy = ((policy.get('models') or {}).get(model)) or policy
+        withhold = policy.get('withhold', [])
+        if not isinstance(withhold, list) or not all(isinstance(n, str) for n in withhold):
+            raise GatewayError(503, 'gateway-tools.json withhold lists must be tool names.', 'unavailable')
+        return {'withhold': set(withhold)}
+
+    def select_tools(self, principal: dict, tools, model: str = '', chat_id: str = ''):
+        """Apply the frontend's stable tool policy and account for what the model will be shown.
+        Withholding never removes a tool from the frontend; `/haven tools all` restores it for one chat."""
+        with self.lock:
+            override = (principal['id'], chat_id) in self.tool_overrides
+        if not tools:
+            return None, {'policy': None, 'supplied': [], 'withheld': [], 'schema_tokens_est': 0, 'chat_override': override}
+        withhold = (self.tool_policy(principal, model).get('withhold', set())
+                    if principal['via'] != 'direct-key' and not override else set())
+        name = lambda t: (t.get('function') or {}).get('name', '') if isinstance(t, dict) else ''
+        kept = [t for t in tools if name(t) not in withhold]
+        cost = lambda ts: len(json.dumps(ts).encode()) // 3 if ts else 0
+        return kept or None, {
+            'policy': principal['via'] if withhold else None,
+            'supplied': [name(t) for t in kept], 'withheld': [name(t) for t in tools if name(t) in withhold],
+            'schema_tokens_est': cost(kept), 'withheld_tokens_est': cost([t for t in tools if name(t) in withhold]),
+            'per_tool_tokens_est': {name(t): cost([t]) for t in tools}, 'chat_override': override}
 
     def start(self, prepared: dict, cancelled=lambda: False) -> str:
         """Dispatch through the Lab, waiting for the single generation slot."""
@@ -364,6 +424,10 @@ class Gateway:
             'execution': {'job_id': job.get('id'), 'state': job.get('state'),
                           'finish_reason': job.get('finish_reason'),
                           'tools_dropped': job.get('tools_dropped')},
+            'tools': {k: v for k, v in (prepared.get('tool_selection') or {}).items() if k != 'per_tool_tokens_est'},
+            'measured': {k: (job.get('metrics') or {}).get(k) for k in (
+                'prompt_tokens', 'prompt_cached_tokens', 'prompt_processed_tokens', 'backend_prompt_seconds',
+                'ttft_seconds', 'completion_tokens', 'backend_decode_tps', 'elapsed_seconds')},
             'selection_reason': job.get('route_reason'),
             'fallback': 'UNDETERMINED',  # no recorded event chain exists yet
             'identity_attestation': 'NOT_VERIFIED',
@@ -381,6 +445,9 @@ class Gateway:
                'prompt_estimate': prepared['prompt_estimate'], 'metrics': job.get('metrics'),
                'error': job.get('error'), 'route_reason': job.get('route_reason'),
                'tools_offered': job.get('tools_offered'), 'tools_dropped': job.get('tools_dropped'),
+               'tools_supplied': (prepared.get('tool_selection') or {}).get('supplied'),
+               'tools_withheld': (prepared.get('tool_selection') or {}).get('withheld'),
+               'tool_schema_tokens_est': (prepared.get('tool_selection') or {}).get('schema_tokens_est'),
                'tool_calls': [c['function']['name'] for c in job.get('tool_calls') or []]}
         try:
             with self.lock:
@@ -454,6 +521,22 @@ def openai_finish(snap: dict) -> str:
     if snap.get('state') == 'OUTPUT_LIMIT':
         return 'length'
     return 'tool_calls' if snap.get('finish_reason') == 'tool_calls' else 'stop'
+
+
+def format_tools(sel: dict) -> str:
+    """`/haven tools`: what the frontend attached, what the policy withholds, and their estimated prompt cost."""
+    per = sel.get('per_tool_tokens_est') or {}
+    if not per:
+        return 'This frontend attached no tools to this request.'
+    lines = [f"**{len(sel['supplied'])} tools supplied** to the model (~{sel['schema_tokens_est']:,} prompt tokens of schemas)"
+             + (f", {len(sel['withheld'])} withheld by the `{sel['policy']}` policy (~{sel['withheld_tokens_est']:,} tokens)"
+                if sel['withheld'] else '') + '.',
+             'The tool list is identical on every request, so after the first request it is served from the prompt cache.',
+             ('This chat has every tool (`/haven tools default` returns to the default list).' if sel.get('chat_override') else
+              'Withheld tools are still installed: send `/haven tools all` to use every tool in this chat.')]
+    for name, cost in sorted(per.items(), key=lambda kv: -kv[1]):
+        lines.append(f"- `{name}` ~{cost:,} tokens" + (' · withheld' if name in sel['withheld'] else ''))
+    return '\n'.join(lines)
 
 
 def format_status(st: dict) -> str:

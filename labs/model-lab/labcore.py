@@ -1016,6 +1016,9 @@ class Lab:
             metric = {'elapsed_seconds': round(elapsed, 4), 'ttft_seconds': round(first-start, 4) if first else None,
                 'completion_tokens': n, 'prompt_tokens': usage.get('prompt_tokens'), 'backend_decode_tps': speed,
                 'backend_prompt_seconds': timing_seconds('prompt_ms'),
+                # llama.cpp prompt-cache accounting: prefix tokens reused vs tokens actually prefilled.
+                'prompt_cached_tokens': timings.get('cache_n') if type(timings.get('cache_n')) is int else None,
+                'prompt_processed_tokens': timings.get('prompt_n') if type(timings.get('prompt_n')) is int else None,
                 'backend_decode_seconds': timing_seconds('predicted_ms'),
                 'end_to_end_tps': round(n / elapsed, 3) if n is not None and elapsed > 0 else None,
                 'stream_chunks': chunks, 'usage_source': 'BACKEND_REPORTED' if usage else 'UNAVAILABLE',
