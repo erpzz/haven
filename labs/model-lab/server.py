@@ -35,7 +35,7 @@ ADMIN_POSTS = {
     '/api/connect', '/api/connect/haven-strata', '/api/disconnect', '/api/engine/install', '/api/model/download',
     '/api/model/import', '/api/discovery/search', '/api/discovery/detail', '/api/engine/start', '/api/engine/stop', '/api/shutdown', '/api/runtime/switch', '/api/diagnostics',
 }
-ADMIN_GETS = {'/api/log', '/api/benchmarks', '/api/auth/users'}
+ADMIN_GETS = {'/api/log', '/api/benchmarks', '/api/experiment-summary', '/api/auth/users'}
 
 
 def save_launch_url(path: Path, url: str):
@@ -547,6 +547,9 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     text = 'No managed engine has run in this lab yet.'
                 self.json(200, {'text': text})
+            elif self.path == '/api/experiment-summary':
+                from experiment_analysis import summarize
+                self.json(200, summarize(self.server.lab.data / 'benchmarks.jsonl'))
             elif self.path == '/api/benchmarks':
                 p = self.server.lab.data / 'benchmarks.jsonl'
                 rows = []
