@@ -92,7 +92,7 @@ class RemoteWrapperTests(unittest.TestCase):
                 "notices": [{"path": "LICENSE"}],
                 "metadata": [{"path": "package/pyproject.toml", "sha256": "content"}]}
         with self.assertRaisesRegex(ValueError, "Malformed package metadata"):
-            metadata.validate_metadata(item, {"content": b'[project\\nlicense="MIT"\\n'})
+            metadata.validate_metadata(item, {"content": b'[project\nlicense="MIT"\n'})
 
     def test_unrelated_deep_license_cannot_override_restrictive_package(self):
         metadata = module("license_metadata")
@@ -100,7 +100,7 @@ class RemoteWrapperTests(unittest.TestCase):
                 "notices": [{"path": "LICENSE"}, {"path": "unrelated/deep/LICENSE"}],
                 "metadata": [{"path": "package/pyproject.toml", "sha256": "content"}]}
         with self.assertRaisesRegex(ValueError, "outside campaign allowlist"):
-            metadata.validate_metadata(item, {"content": b'[project]\\nlicense="GPL-3.0-or-later"\\n'})
+            metadata.validate_metadata(item, {"content": b'[project]\nlicense="GPL-3.0-or-later"\n'})
 
     def test_unrelated_metadata_cannot_shadow_restrictive_package(self):
         metadata = module("license_metadata")
@@ -110,8 +110,8 @@ class RemoteWrapperTests(unittest.TestCase):
                              {"path": "unrelated/deep/pyproject.toml", "sha256": "permissive"}]}
         with self.assertRaisesRegex(ValueError, "not on the source path"):
             metadata.validate_metadata(item, {
-                "restrictive": b'[project]\\nlicense="GPL-3.0-or-later"\\n',
-                "permissive": b'[project]\\nlicense="MIT"\\n'})
+                "restrictive": b'[project]\nlicense="GPL-3.0-or-later"\n',
+                "permissive": b'[project]\nlicense="MIT"\n'})
 
     def test_unresolved_or_invalid_source_license_paths_are_refused(self):
         metadata = module("license_metadata")
