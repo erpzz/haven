@@ -147,8 +147,23 @@ def pytest(work, venv, root, ids, timeout):
             'failure_kind': None if passed else failure_kind(r['tail'])}
 
 
+def workdir_for(sandbox: pathlib.Path, key: str) -> pathlib.Path:
+    """Keep external advisory IDs inside the selected evaluation workspace.
+
+    Keys are OSV grouping IDs (such as GHSA-*), not hashes. Refuse traversal,
+    nested paths and pre-existing symlinks before cleaning an old workspace.
+    """
+    if not isinstance(key, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,127}', key):
+        raise ValueError('Invalid advisory ID for workspace path.')
+    base = sandbox.resolve()
+    target = base / key
+    if target.is_symlink() or target.resolve().parent != base:
+        raise ValueError('Evaluation workspace must stay inside the sandbox.')
+    return target
+
+
 def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int) -> dict:
-    root = sandbox / cand['key']
+    root = workdir_for(sandbox, cand['key'])
     if root.exists():
         shutil.rmtree(root)
     root.mkdir(parents=True)
@@ -219,7 +234,17 @@ def main(argv=None):
     ap.add_argument('--fixed-source', type=pathlib.Path, help='eval-heldout.jsonl, for the recorded-fix positive control.')
     ap.add_argument('--limit', type=int, default=0)
     ap.add_argument('--timeout', type=int, default=300)
+    ap.add_argument('--acknowledge-isolated-runner', action='store_true',
+                    help='Required: execute only inside a disposable OS-isolated environment without host secrets.')
     args = ap.parse_args(argv)
+    # The evaluator installs and executes third-party package code. A virtualenv,
+    # private HOME and dead HTTP proxy are NOT kernel isolation. Refuse accidental
+    # host execution; the operator must affirm an independently provisioned VM or
+    # container. This flag is an explicit acknowledgment, not proof of isolation.
+    if not args.acknowledge_isolated_runner:
+        ap.error('Repository evaluation executes third-party Python code. Run inside a disposable, '
+                 'OS-isolated VM/container without host secrets and with restricted network egress, then supply '
+                 '--acknowledge-isolated-runner. A virtualenv alone is insufficient.')
     cands = [json.loads(x) for x in args.candidates.read_text().splitlines() if x.strip()]
     if args.limit:
         cands = cands[:args.limit]

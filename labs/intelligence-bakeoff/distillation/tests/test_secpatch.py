@@ -13,7 +13,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'secpatch'))
 sys.path.insert(0, str(HERE.parent))
 import build  # noqa: E402
-import evaluate  # noqa: E402
+from secpatch import evaluate  # noqa: E402 (avoid legacy distillation/evaluate.py)
 import harvest  # noqa: E402
 import osv  # noqa: E402
 import registry  # noqa: E402
