@@ -31,6 +31,10 @@ class GatewayTests(unittest.TestCase):
         self.frontend = Gateway.issue_key(data, 'open-webui', 'frontend')
         self.owner = Gateway.issue_key(data, 'owner-cli', 'owner')
         self.member = Gateway.issue_key(data, 'kid-cli', 'member')
+        # Production frontends always have an identity-signing secret.
+        self.jwt_secret = b't' * 48
+        (data / JWT_SECRET_FILE).write_bytes(self.jwt_secret)
+        (data / JWT_SECRET_FILE).chmod(0o600)
         self.lab = Lab(data)
         self.backend = FakeBackend()
         self.lab.connect(self.backend.base, kind='llama')
@@ -48,8 +52,8 @@ class GatewayTests(unittest.TestCase):
         return h
 
     def owui(self, role='admin', uid='u-1', **extra):
-        return self.headers(self.frontend, **{'X-OpenWebUI-User-Id': uid, 'X-OpenWebUI-User-Role': role,
-                                              'X-OpenWebUI-User-Name': 'Test', **extra})
+        return self.headers(self.frontend, **{
+            'X-OpenWebUI-User-Jwt': self.jwt(self.jwt_secret, sub=uid, role=role, name='Test'), **extra})
 
     def call(self, method, path, headers, body=None):
         c = http.client.HTTPConnection('127.0.0.1', self.server.server_port, timeout=15)
@@ -98,8 +102,9 @@ class GatewayTests(unittest.TestCase):
         self.assertEqual(self.call('GET', '/v1/models', signed)[0], 200)
         self.assertEqual(self.chat(signed, model='haven-auto')[0], 403)
         self.assertEqual(self.chat(signed)[0], 200)
-        # Plain role headers no longer grant anything once identity is signed.
-        self.assertEqual(self.call('GET', '/v1/models', self.owui())[0], 403)
+        # Plain role headers never grant anything, even if the key is otherwise valid.
+        plain = self.headers(self.frontend, **{'X-OpenWebUI-User-Role': 'admin', 'X-OpenWebUI-User-Id': 'u-1'})
+        self.assertEqual(self.call('GET', '/v1/models', plain)[0], 403)
         for bad in (self.jwt(b'x' * 48), self.jwt(secret, exp=time.time() - 1), self.jwt(secret, iss='other'),
                     self.jwt(secret)[:-3] + 'abc', 'not.a.jwt'):
             with self.subTest(bad=bad[-12:]):
@@ -108,6 +113,17 @@ class GatewayTests(unittest.TestCase):
         path.chmod(0o644)
         h = self.headers(self.frontend, **{'X-OpenWebUI-User-Jwt': self.jwt(secret)})
         self.assertEqual(self.call('GET', '/v1/models', h)[0], 503)
+
+    def test_missing_identity_secret_fails_closed(self):
+        self.assertEqual(self.call('GET', '/v1/models', self.owui())[0], 200)
+        (Path(self.tmp.name) / JWT_SECRET_FILE).unlink()
+        # Frontend must not silently fall back to spoofable X-OpenWebUI-User-Role.
+        self.assertEqual(self.call('GET', '/v1/models', self.owui())[0], 503)
+        plain = self.headers(self.frontend, **{'X-OpenWebUI-User-Id': 'u-1',
+                                               'X-OpenWebUI-User-Role': 'admin'})
+        self.assertEqual(self.call('GET', '/v1/models', plain)[0], 503)
+        # Direct owner keys are independently bound and do not need frontend JWTs.
+        self.assertEqual(self.call('GET', '/v1/models', self.headers(self.owner))[0], 200)
 
     def test_browser_origin_refused(self):
         self.assertEqual(self.call('GET', '/v1/models', self.owui(Origin='http://evil.example'))[0], 403)
