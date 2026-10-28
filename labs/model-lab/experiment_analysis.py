@@ -22,12 +22,16 @@ COMPARABLE_SETTINGS = ('max_tokens', 'temperature', 'top_p', 'seed', 'reasoning'
 def _number(value):
     if type(value) not in (float, int):
         return None
-    result = float(value)
+    try:
+        result = float(value)
+    except (ValueError, OverflowError):
+        return None
     return round(result, 3) if math.isfinite(result) and result >= 0 else None
 
 
 def _median(rows, field):
-    values = [_number((r.get('metrics') or {}).get(field)) for r in rows]
+    values = [_number(r['metrics'].get(field)) for r in rows
+              if isinstance(r.get('metrics'), dict)]
     good = [x for x in values if x is not None]
     return round(statistics.median(good), 3) if good else None
 
@@ -92,8 +96,9 @@ def summarize(path: Path) -> dict:
     for (prompt, config_id), suite in by_suite.items():
         by_variant = defaultdict(list)
         for row in suite:
-            key = (row.get('model'), row.get('model_sha256'),
-                   row.get('provider_id'), row.get('compute'), row.get('worker_label'))
+            # A damaged historical receipt must not poison the entire summary.
+            key = tuple(str(row.get(field) or '')[:160] for field in
+                        ('model', 'model_sha256', 'provider_id', 'compute', 'worker_label'))
             by_variant[key].append(row)
         variants = []
         for (model, sha, provider, compute, worker), rows in by_variant.items():
@@ -107,7 +112,8 @@ def summarize(path: Path) -> dict:
                 'median_end_to_end_tps': _median(completed, 'end_to_end_tps'),
             })
         variants.sort(key=lambda v: (-v['completed'], v['model'], str(v['provider_id'])))
-        newest = max(float(r.get('at') or 0) for r in suite if type(r.get('at')) in (int, float)) if any(type(r.get('at')) in (int, float) for r in suite) else 0
+        timestamps = [_number(r.get('at')) for r in suite]
+        newest = max((t for t in timestamps if t is not None), default=0)
         groups.append({'prompt_sha256': prompt, 'config_fingerprint': config_id,
                        'latest_at': newest, 'total_runs': len(suite), 'models': variants,
                        'eligible_for_cross_model_comparison': sum(v['completed'] > 0 for v in variants) >= 2})
