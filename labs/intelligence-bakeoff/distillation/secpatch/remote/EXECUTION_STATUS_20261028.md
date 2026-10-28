@@ -24,6 +24,9 @@ Owned paths: `secpatch/remote/` and `tests/test_secpatch_remote.py` only, beneat
 Publication classification: public-safe source/docs; account snapshots, datasets,
 weights and runtime logs remain outside Git. No raw private account evidence
 is included in this handback. Review requested; no self-approval or promotion.
+Reviewable implementation: [PR #86](https://github.com/erpzz/haven/pull/86),
+initial source commit `9e93295` on `codex/r02-external-gpu-20261028`.
+No notebook, dataset or runtime evidence was uploaded to Kaggle.
 
 ## Decisions
 
