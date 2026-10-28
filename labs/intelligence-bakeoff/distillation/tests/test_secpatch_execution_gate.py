@@ -23,6 +23,21 @@ class RepoEvalExecutionGateTests(unittest.TestCase):
             self.assertFalse(out.exists())
             self.assertFalse((root / 'sandbox').exists())
 
+    def test_acknowledgment_alone_cannot_enable_untrusted_install(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            out = root / 'results.jsonl'
+            cmd = [sys.executable, str(EVALUATOR),
+                   '--candidates', str(root / 'does-not-exist.jsonl'),
+                   '--sandbox', str(root / 'sandbox'), '--out', str(out),
+                   '--acknowledge-isolated-runner']
+            done = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
+            self.assertNotEqual(done.returncode, 0)
+            self.assertIn('--wheelhouse', done.stderr)
+            self.assertFalse(out.exists())
+            self.assertFalse((root / 'sandbox').exists())
+
+
 
 if __name__ == '__main__':
     unittest.main()
