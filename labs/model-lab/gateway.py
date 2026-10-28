@@ -436,6 +436,13 @@ class Gateway:
             raise
         return job.snapshot()
 
+    @staticmethod
+    def settle(job, timeout: float = 10) -> dict:
+        end = time.monotonic() + timeout
+        while job.snapshot()['state'] == 'RUNNING' and time.monotonic() < end:
+            time.sleep(.05)
+        return job.snapshot()
+
     def finish_blocking(self, job_id: str) -> dict:
         job = self.lab.jobs[job_id]
         while job.snapshot()['state'] == 'RUNNING':  # The Lab watchdog bounds this wait.
