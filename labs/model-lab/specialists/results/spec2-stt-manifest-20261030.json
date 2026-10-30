@@ -1,0 +1,10 @@
+{
+  "schema": "haven-spec2-stt-manifest-1",
+  "source": "hf-audio/open-asr-leaderboard",
+  "revision": "de79e57adf9983993bcc72586d7313460825f5eb",
+  "licence": "CC-BY-4.0 (LibriSpeech)",
+  "per_split": 300,
+  "items": 600,
+  "audio_seconds": 4478.6,
+  "items_sha256": "d55018068d595816a5c7479a731ebb58448d8c0f8d6874f8fcda3f941dd0c44a"
+}
