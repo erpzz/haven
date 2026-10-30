@@ -246,6 +246,9 @@ def llama_command(exe: Path, model: Path, port: int, key_file: Path, profile: di
         if profile.get('cpu_moe') is True:
             # MoE expert tensors stay in system RAM; attention/shared layers and KV stay on the GPU.
             argv += ['--cpu-moe']
+    if profile.get('checkpoint_min_step') is not None:
+        # Hybrid (recurrent) models resume only from context checkpoints; closer checkpoints allow prefix reuse.
+        argv += ['--checkpoint-min-step', str(bounded_int(profile['checkpoint_min_step'], 0, 32768, 'Checkpoint step'))]
     return argv + ['--ctx-size', str(context), '--parallel', '1', '--threads', str(threads),
             '--threads-batch', str(threads), '--batch-size', str(batch), '--ubatch-size', str(ubatch),
             '--flash-attn', flash, '--cache-type-k', kv, '--cache-type-v', kv, '--jinja', '--metrics',
@@ -716,6 +719,7 @@ class Lab:
                 raise ValueError('The CPU-only lane is currently supported on Linux.')
             profile = dict(PRESETS[preset]); profile.update(overrides or {})
             profile.pop('cpu_moe', None)  # Only the pinned catalog may request expert offload.
+            profile.pop('checkpoint_min_step', None)
             entry = next((m for m in self.catalog.get('models', []) if m.get('id') == model_id), {})
             gpu = None
             self.hw_at = 0  # A just-unloaded model must not leave the fit gate using stale resource data.
@@ -731,6 +735,12 @@ class Lab:
                 first = hw['gpus'][0]; gpu = first['index']
                 if entry.get('offload') == 'cpu-moe' and entry.get('gpu_mib'):
                     profile['cpu_moe'] = True
+                    # Large prompt batches let llama.cpp stream RAM-resident experts to the GPU for prefill
+                    # (PREFILL-1 on Slink: 7.3x faster prompt reading at 2048 than the preset's 128).
+                    if entry.get('prefill_batch') and not {'batch', 'ubatch'} & set(overrides or {}):
+                        profile['batch'] = profile['ubatch'] = int(entry['prefill_batch'])
+                    if entry.get('checkpoint_min_step') is not None:
+                        profile['checkpoint_min_step'] = int(entry['checkpoint_min_step'])
                     fit = estimate_moe_fit(item['size_bytes'], int(entry['gpu_mib']), first['memory_free_mib'],
                                            hw.get('ram_available_gib'), profile['context'])
                 else:

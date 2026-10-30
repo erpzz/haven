@@ -12,7 +12,8 @@ from unittest.mock import MagicMock, patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from labcore import GIB, Lab, MIB, estimate_moe_fit, llama_command, ready_deadline_seconds
 
-CATALOG = {'models': [{'id': 'moe', 'name': 'MOE FIXTURE', 'offload': 'cpu-moe', 'gpu_mib': 3000},
+CATALOG = {'models': [{'id': 'moe', 'name': 'MOE FIXTURE', 'offload': 'cpu-moe', 'gpu_mib': 3000, 'prefill_batch': 2048,
+                       'checkpoint_min_step': 1024},
                       {'id': 'dense', 'name': 'DENSE FIXTURE'}]}
 GPU = {'index': 0, 'memory_free_mib': 7800}
 
@@ -82,6 +83,20 @@ class MoeLaneTests(unittest.TestCase):
         args = self._start('moe')
         self.assertIn('--cpu-moe', args)
         self.assertTrue(self.lab.public_state()['connection']['profile']['cpu_moe'])
+
+    def test_catalog_prefill_batch_and_checkpoint_step_apply_to_offload_model_only(self):
+        args = self._start('moe')
+        self.assertEqual((args[args.index('--batch-size') + 1], args[args.index('--ubatch-size') + 1]), ('2048', '2048'))
+        self.assertEqual(args[args.index('--checkpoint-min-step') + 1], '1024')
+        self.lab.settings['models']['dense']['size_bytes'] = 2 * MIB
+        self.lab.engine.proc = None
+        dense = self._start('dense', {'checkpoint_min_step': 0})
+        self.assertNotEqual(dense[dense.index('--ubatch-size') + 1], '2048')
+        self.assertNotIn('--checkpoint-min-step', dense)
+
+    def test_explicit_batch_override_wins_over_catalog(self):
+        args = self._start('moe', {'batch': 512, 'ubatch': 256})
+        self.assertEqual((args[args.index('--batch-size') + 1], args[args.index('--ubatch-size') + 1]), ('512', '256'))
 
     def test_dense_model_of_same_size_is_refused(self):
         with patch.object(self.lab, 'llama_exe', return_value=Path('/fake/llama-server')), \
