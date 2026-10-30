@@ -211,4 +211,6 @@ operator; no third-party provisioning or paid account was used.
 - **Promotion (`registry.py`).** A candidate must also beat the base on detection discrimination (recall − FPR). The first real GPU adapter (seed 42, 2026-10-30) collapsed to a constant answer. Its score rose and its FPR fell to 0, which the old gate would have accepted.
 - **Repository evaluation (`repo_eval.py`).** It refuses to run without `--acknowledge-isolated-runner`.
 
+- **CWE matching (`evaluate.py`, amended after the re-pin in `10243e3`).** `root_cause` scoring and the detect `cwe_match` compare CWE identifiers (`CWE-<n>`) extracted from each answer rather than exact strings, so "CWE-22: Improper Limitation of a Pathname…" now matches `CWE-22`. The new hash and the replaced one are recorded under `amendments` in `SOURCE_BASE.json`.
+
 The tasks and the dataset schema are unchanged.

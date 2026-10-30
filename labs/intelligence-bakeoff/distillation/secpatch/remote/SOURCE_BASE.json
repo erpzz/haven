@@ -2,7 +2,7 @@
   "base_commit": "670117a",
   "core_sha256": {
     "secpatch/build.py": "efa9e28c0c24e98243e06e2c2d2fb6dd91e119150f59de8c592fce535dc9bcb7",
-    "secpatch/evaluate.py": "7e7e002bb90aa4cc93dac8349751dcaa0995ec79e3982d625d925c29913d3a6e",
+    "secpatch/evaluate.py": "91d6519c584142df3602ce3ecbb8a2aee5042486f84ecff78fad7f6665bff356",
     "secpatch/gpu_campaign.py": "64a439256f6bfe4b209dd844d7a98c1dcfaa083bd20c8dbb250382a557053843",
     "secpatch/harvest.py": "7ab49e2f6e26ab427fbef5afae8548d4e78f240c1902cbf3d3f74b32986d2772",
     "secpatch/osv.py": "7029202a04f5e407611891234dbcf6b4393f9a6448150118aafe91748dcaa40c",
@@ -45,5 +45,14 @@
       "secpatch/train.py"
     ],
     "why": "The R02 branch advanced the pipeline after #75 was squash-merged; see remote/README.md \"Pipeline changes since the original base\"."
-  }
+  },
+  "amendments": [
+    {
+      "at": "2026-10-30",
+      "commit": "10243e3",
+      "file": "secpatch/evaluate.py",
+      "from_sha256": "7e7e002bb90aa4cc93dac8349751dcaa0995ec79e3982d625d925c29913d3a6e",
+      "why": "CWE answers are matched by identifier (CWE-<n>), not exact string, for root_cause scoring and detect cwe_match. See remote/README.md \"Pipeline changes since the original base\"."
+    }
+  ]
 }
