@@ -146,6 +146,24 @@ class MixTests(unittest.TestCase):
             self.assertEqual(m['traces_rejected_on_reverify'], {'future_leak': 1})
 
 
+    def test_miscalibrated_critic_file_is_ignored(self):
+        with tempfile.TemporaryDirectory() as d:
+            data, _ = self.build(d)
+            rid, t = self.trace(data, 'The function load concatenates the caller supplied p onto base on line 11 and '
+                                      'opens it directly, so dot dot segments escape the base directory.')
+            key = mix.trace_key(json.loads(t.read_text()))
+            c = data / 'critic.jsonl'
+            c.write_text(json.dumps({'key': key, 'sound': False, 'problem': 'x'}) + '\n')  # 100% rejected
+            m = mix.main(['--data', str(data), '--out', str(data / 'out'), '--traces', str(t), '--critic', str(c)])
+            rows = {json.loads(x)['id']: json.loads(x) for x in (data / 'out/sft.jsonl').read_text().splitlines()}
+            self.assertEqual(rows[rid]['origin'], 'teacher_verified')
+            self.assertEqual(m['critic_files_ignored_as_miscalibrated'], {'critic.jsonl': 1.0})
+            m = mix.main(['--data', str(data), '--out', str(data / 'out'), '--traces', str(t), '--critic', str(c),
+                          '--critic-max-reject', '1.0'])
+            rows = {json.loads(x)['id']: json.loads(x) for x in (data / 'out/sft.jsonl').read_text().splitlines()}
+            self.assertEqual(rows[rid]['origin'], 'recorded')
+
+
 class SelfPlayGraderTests(unittest.TestCase):
     def test_gold_grader_matches_recorded_target(self):
         v, f = detect_pair()

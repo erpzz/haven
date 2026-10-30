@@ -49,6 +49,7 @@ def main(argv=None):
     ap.add_argument('--no-reverify', dest='reverify', action='store_false')
     ap.add_argument('--reviews', type=pathlib.Path, nargs='*', default=[], help='review-teach.json decisions')
     ap.add_argument('--critic', type=pathlib.Path, nargs='*', default=[], help='critic.py verdicts')
+    ap.add_argument('--critic-max-reject', type=float, default=0.35)
     ap.add_argument('--pairs', type=pathlib.Path, nargs='*', default=[], help='self-play chosen/rejected pairs')
     args = ap.parse_args(argv)
     train, dev = jl(args.data / 'train.jsonl'), jl(args.data / 'dev.jsonl')
@@ -69,9 +70,16 @@ def main(argv=None):
     dropped = set()
     for path in args.reviews:  # traces (id:hash) a reviewer rejected never train
         dropped |= set(json.loads(path.read_text()).get('drop_ids', []))
+    critic_ignored = {}
     for path in args.critic:  # the automated critic's rejections count like a reviewer's drops
-        dropped |= {json.loads(x)['key'] for x in path.read_text().splitlines()
-                    if x.strip() and json.loads(x).get('sound') is False}
+        verdicts = [json.loads(x) for x in path.read_text().splitlines() if x.strip()]
+        unsound = {v['key'] for v in verdicts if v.get('sound') is False}
+        # Circuit breaker: a critic that rejects a large share is miscalibrated (its first version rejected 65%
+        # of traces, mostly by disputing correct labels); ignore the whole file rather than gut the data.
+        if verdicts and len(unsound) / len(verdicts) > args.critic_max_reject:
+            critic_ignored[path.name] = round(len(unsound) / len(verdicts), 3)
+            continue
+        dropped |= unsound
     for path in args.traces:
         for rec in jl(path):
             if rec.get('sft') and rec['id'] in pool_ids and trace_key(rec) in dropped:
@@ -119,6 +127,7 @@ def main(argv=None):
         'pool_rows': len(rows), 'pool_fixes': len({r['key'] for r in pool}), 'pool_repos': len(pool_repos),
         'by_task': collections.Counter(r['task'] for r in rows), 'by_origin': origin,
         'traces_rejected_on_reverify': rejected,
+        'critic_files_ignored_as_miscalibrated': critic_ignored,
         'preference_pairs': len(pairs),
         'gate_rows': len(gate), 'gate_fixes': len({r['key'] for r in gate}),
         'heldout_rows': len(heldout), 'heldout_fixes': len({r['key'] for r in heldout}),

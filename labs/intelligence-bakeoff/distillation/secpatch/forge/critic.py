@@ -6,6 +6,9 @@ script makes it routine. The critic gets exactly the student's view (the task pr
 reference, label or other version) plus the trace's analysis. It judges whether every claim is supported by
 the code and the security reasoning is sound. A trace it rejects is dropped by mix.py like a reviewer drop.
 
+The critic is told the established verdict and never re-decides it (a blind critic disputed correct labels on
+subtle bugs and rejected 65% of traces in its first calibration); it only checks the explanation.
+
 Output: one JSON line per trace, {"key": "<id>:<hash12>", "sound": bool, "problem": str}; resumable.
 """
 from __future__ import annotations
@@ -22,18 +25,39 @@ sys.path.insert(0, str(HERE))
 import teach  # noqa: E402
 from mix import trace_key  # noqa: E402
 
-SYSTEM = ('You are a strict senior application-security reviewer. You check a junior reviewer\'s analysis of the '
-          'code in the task below. You see exactly what the junior saw. Judge only against the code shown.')
-ASK = ('\n\n---\nJunior\'s analysis:\n{analysis}\n\nCheck it. (1) Is every factual claim supported by the code '
-       'shown: identifiers, line numbers, data flow and control flow? (2) Is the security reasoning sound: the '
-       'mechanism named really is how this code fails, or the guard named really prevents the stated weakness? '
-       'Minor wording issues are fine; unsupported claims, wrong mechanisms or guards that do not actually protect '
-       'are not. Respond with only JSON: {{"sound": true|false, "problem": "<empty if sound, else one sentence>"}}')
+SYSTEM = ('You are a strict senior application-security reviewer checking a junior reviewer\'s written explanation. '
+          'The verdict is already established from the project\'s security history and is correct; never dispute it. '
+          'Your only job is to judge whether the explanation is supported by the code shown.')
+ASK = ('\n\n---\nEstablished verdict: {verdict}\n{extra}Junior\'s explanation:\n{analysis}\n\n'
+       'Answer sound=false ONLY for a clear error: the explanation states something the code shown contradicts '
+       '(a wrong identifier, line or control flow), or names a mechanism or guard that plainly does not apply to '
+       'this code. Imperfect wording, missing detail or a different emphasis are sound. If unsure, answer sound=true. '
+       'Respond with only JSON: {{"sound": true|false, "problem": "<empty if sound, else one sentence>"}}')
 
 
-def critic_messages(row: dict, analysis: str) -> list[dict]:
-    return [{'role': 'system', 'content': SYSTEM},
-            {'role': 'user', 'content': row['messages'][-2]['content'] + ASK.format(analysis=analysis)}]
+def verdict_of(row: dict) -> str:
+    task, label = row['task'], row['label']
+    gold = teach.target_json(row) or {}
+    cwe = ', '.join(gold.get('cwe') or []) or 'unclassified'
+    if task == 'detect':
+        return (f'the function is VULNERABLE ({cwe}).' if label == 'vulnerable' else
+                'the function is NOT vulnerable to the weakness it is reviewed for (it contains the protection).')
+    if task == 'finding_support':
+        return {'supported': 'the finding IS supported by the code shown.',
+                'stale': 'the finding is NOT supported: the code shown already contains the protection.'}.get(
+                    label, 'the finding is NOT supported: it cites code that is not shown.')
+    if task == 'root_cause':
+        return f'the weakness class is {cwe}; both versions are shown above.'
+    return 'the original function is vulnerable; the corrected function is shown below.'
+
+
+def critic_messages(row: dict, analysis: str, target: str = '') -> list[dict]:
+    extra = ''
+    if row['task'] == 'remediate':  # the explanation describes the fix, so the critic must see the fix
+        code = target.split('```python', 1)[-1] if '```python' in target else ''
+        extra = 'Corrected function (recorded):\n```python' + code + '\n'
+    ask = ASK.format(verdict=verdict_of(row), extra=extra, analysis=analysis)
+    return [{'role': 'system', 'content': SYSTEM}, {'role': 'user', 'content': row['messages'][-2]['content'] + ask}]
 
 
 def main(argv=None):
@@ -46,6 +70,7 @@ def main(argv=None):
     ap.add_argument('--workers', type=int, default=4)
     ap.add_argument('--think', action='store_true', help='critic reasons before judging (slower, stronger)')
     ap.add_argument('--deadline', type=float, default=0)
+    ap.add_argument('--keys', nargs='*', default=[], help='only these id:hash12 traces (calibration)')
     args = ap.parse_args(argv)
     import time
     started = time.monotonic()
@@ -64,7 +89,7 @@ def main(argv=None):
                 continue
             key = trace_key(rec)
             text = rec['sft']['messages'][-1]['content']
-            if key in seen or not teach.verify(pool[rec['id']], text)[0]:
+            if (args.keys and key not in args.keys) or key in seen or not teach.verify(pool[rec['id']], text)[0]:
                 continue  # judged already, or already failing the rule checks
             seen.add(key)
             todo.append((key, pool[rec['id']], text))
@@ -78,7 +103,7 @@ def main(argv=None):
         key, row, text = item
         analysis = text.split('```')[0] if row['task'] == 'remediate' else teach.split_answer(text)[0]
         try:
-            out, _ = ep(critic_messages(row, analysis.strip()), 4000 if args.think else 300, 0.0, 0, args.think)
+            out, _ = ep(critic_messages(row, analysis.strip(), text), 4000 if args.think else 300, 0.0, 0, args.think)
             _, obj = teach.split_answer(out)
             if obj is None or not isinstance(obj.get('sound'), bool):
                 raise ValueError('critic gave no verdict')
