@@ -111,6 +111,35 @@
     "seed": 42
    },
    "sampling_note": "Liquid's published LFM2 generation settings, so the fast arm is not handicapped by Qwen's sampling"
+  },
+  {
+   "id": "L2",
+   "model": "lfm8b",
+   "server": "lfm",
+   "thinking": true,
+   "lever": "Liquid LFM2.5-8B-A1B with room to think (8192 thinking + answer tokens), its reasoning kept for arm D",
+   "sampling": {
+    "temperature": 0.1,
+    "top_p": 0.1,
+    "top_k": 50,
+    "repeat_penalty": 1.05,
+    "seed": 42
+   },
+   "sampling_note": "Liquid's published LFM2 generation settings, so the fast arm is not handicapped by Qwen's sampling",
+   "keep_reasoning": true,
+   "amendment": 1
+  },
+  {
+   "id": "D",
+   "model": "q35",
+   "server": "moe",
+   "thinking": false,
+   "draft_from": "L2",
+   "kinds": [
+    "secpatch"
+   ],
+   "amendment": 1,
+   "lever": "owner's idea: the fast model thinks, the 35B reads L2's reasoning (marked unverified) and answers with thinking off; cost = L2 wall + D wall"
   }
  ],
  "policies": {
@@ -171,13 +200,72 @@
     "B"
    ],
    "escalate": "T"
+  },
+  "L2": {
+   "kind": "single",
+   "arm": "L2"
+  },
+  "valid_L2_T": {
+   "kind": "valid",
+   "arm": "L2",
+   "escalate": "T"
+  },
+  "agree_L2N_T": {
+   "kind": "agree",
+   "first": [
+    "L2",
+    "N"
+   ],
+   "escalate": "T"
+  },
+  "agree_L2N_B": {
+   "kind": "agree",
+   "first": [
+    "L2",
+    "N"
+   ],
+   "escalate": "B"
+  },
+  "D": {
+   "kind": "single",
+   "arm": "D"
+  },
+  "agree_DN_T": {
+   "kind": "agree",
+   "first": [
+    "D",
+    "N"
+   ],
+   "escalate": "T"
+  },
+  "route_D_N": {
+   "kind": "route",
+   "route": {
+    "secpatch": "D",
+    "adjudicated": "N"
+   }
+  },
+  "route_B_N": {
+   "kind": "route",
+   "route": {
+    "secpatch": "B",
+    "adjudicated": "N"
+   }
+  },
+  "route_DNT_N": {
+   "kind": "route",
+   "route": {
+    "secpatch": "agree_DN_T",
+    "adjudicated": "N"
+   }
   }
  },
  "policy_semantics": {
   "single": "one arm answers everything",
   "valid": "the fast arm answers; if its answer cannot be read (no parseable verdict/claims, transport error, or remediation which has no comparable key) the item goes to the escalation arm; cost = fast + escalation",
   "agree": "the first arms answer in turn; if their answer keys match, the first arm's answer is kept; otherwise the escalation arm answers; cost = all first arms + escalation when used. Keys come only from model output (secpatch verdict / supported / CWE set; adjudicated final claims (value, status) plus the set of tools called), never from the grader",
-  "execution": "sequential on one machine, model resident; load time excluded and reported separately"
+  "execution": "sequential on one machine, model resident; load time excluded and reported separately",
+  "route": "the item kind (secpatch analysis vs agentic tool use) is known when the request arrives; each kind is answered by its own named sub-policy"
  },
  "sets": {
   "calibration": "secpatch dev split (8 detect, 8 finding_support, 6 root_cause, 6 remediate; never the 12 COT-EFF-1 screen prompts) + adjudicated fresh episodes from new seed cal-20261030 (2 per family, oracle-validated)",
@@ -200,5 +288,21 @@
   "confirmation_sha256": "dae9cdcceb9f7961b05cdca59651add70d7f70ccb7b615d511d591a294a8cf1b",
   "confirmation_n": 130,
   "note": "confirmation has 86 secpatch items (72 held-out + 14 fresh from advisories published 2026-10-28 or later) and 44 adjudicated episodes (45 generated, oracle-validated)"
- }
+ },
+ "amendments": [
+  {
+   "n": 1,
+   "written_at": "2026-10-30T14:13:52Z",
+   "written_before": "any L2 or D row and any confirmation row existed; confirmation set untouched",
+   "calibration_result_of_original_policies": "n=58. T 35/58 in 4966 s. No original policy met the adoption bar on calibration: N 31/58 at 6.46x, B 31/58 at 3.45x, agree_LN_T 35/58 at 0.77x. By kind: adjudicated N 19/30 vs T 18/30 at 3.29x; secpatch N 12/28 vs T 17/28. Calibration T items between about 12:03 and 12:25 UTC overlapped venv maintenance, so T may be slightly slow there.",
+   "defect": "Arm L is not a valid measurement of Liquid. LFM2.5-8B-A1B reasons even when enable_thinking is false; its reasoning went to reasoning_content and used the whole answer budget, so 27/28 secpatch and at least 8/30 adjudicated rows ended at finish=length with an empty answer. Its rows are kept and reported as run, not re-scored.",
+   "changes": [
+    "Arm L2: Liquid with the same thinking budget as T; reasoning text kept in the private rows.",
+    "Arm D (owner's suggestion 2026-10-30): the 35B with thinking off answers secpatch items with L2's reasoning appended to the prompt as an unverified draft. Secpatch only: the adjudicated benchmark is multi-turn tool use with no single reasoning block to hand over.",
+    "Policy kind route, so a kind can use the policy that suits it.",
+    "New policies: L2, valid_L2_T, agree_L2N_T, agree_L2N_B, D, agree_DN_T, route_D_N, route_B_N, route_DNT_N."
+   ],
+   "choice_rule": "After L2 and D run on calibration, the policy carried to confirmation is the fastest one that is non-inferior to T on calibration in both kinds; if none is, the one with the fewest losses to T among those at >= 2x, and the result is reported as not meeting the bar. The adoption rule is unchanged."
+  }
+ ]
 }

@@ -149,20 +149,41 @@ def answer_key_adjudicated(record: dict):
     return json.dumps([norm, sorted({t['name'] for t in record.get('trace') or []})])
 
 
-def run_secpatch(srv, row, arm, bandit):
+DRAFT_NOTE = ('\n\nA faster assistant wrote the draft analysis below. It may be wrong. Check every claim against the '
+              'code above and give your own answer in the required format.\n<draft>\n{draft}\n</draft>')
+
+
+def with_draft(messages: list[dict], draft: str) -> list[dict]:
+    """Append another model's reasoning to the last user turn, marked as unverified."""
+    out = [dict(m) for m in messages]
+    last = max(i for i, m in enumerate(out) if m['role'] == 'user')
+    out[last]['content'] = out[last]['content'] + DRAFT_NOTE.format(draft=draft.strip())
+    return out
+
+
+def run_secpatch(srv, row, arm, bandit, draft=None):
+    """draft: the upstream arm's row for this item when the arm answers from another model's reasoning;
+    its wall time is charged to this row, so policy cost stays end-to-end."""
     item = row['item']
     budget = evaluate.MAX_NEW[item['task']] + (arm.get('think_tokens', 0) if arm['thinking'] else 0)
+    messages = with_draft(item['messages'], draft.get('reasoning') or '') if draft else item['messages']
     started = time.monotonic()
     try:
-        r = chat(srv, item['messages'], budget, arm['thinking'], arm['sampling'])
+        r = chat(srv, messages, budget, arm['thinking'], arm['sampling'])
         err = None
     except Exception as exc:  # recorded, scored wrong, never retried
         r, err = {'content': '', 'reasoning': '', 'finish': None, 'tokens': 0}, f'{type(exc).__name__}: {str(exc)[:200]}'
     wall = time.monotonic() - started
     g = evaluate.grade(item, r['content'], bandit)
-    return {'correct': int(g['score']), 'wall_s': round(wall, 3), 'tokens': r['tokens'], 'finish': r['finish'],
-            'reasoning_chars': len(r['reasoning']), 'error': err, 'key': answer_key_secpatch(item['task'], r['content']),
-            'output': r['content'][:16000], 'grade': {k: v for k, v in g.items() if k != 'score'}}
+    res = {'correct': int(g['score']), 'wall_s': round(wall + (draft['wall_s'] if draft else 0), 3), 'tokens': r['tokens'],
+           'finish': r['finish'], 'reasoning_chars': len(r['reasoning']), 'error': err,
+           'key': answer_key_secpatch(item['task'], r['content']),
+           'output': r['content'][:16000], 'grade': {k: v for k, v in g.items() if k != 'score'}}
+    if draft:
+        res.update(own_wall_s=round(wall, 3), draft_chars=len(draft.get('reasoning') or ''))
+    if arm.get('keep_reasoning'):
+        res['reasoning'] = r['reasoning'][:64000]
+    return res
 
 
 def run_adjudicated(srv, row, arm, adj):
@@ -201,23 +222,32 @@ def cmd_run(args):
         model = os.path.expanduser(prereg['models'][arm['model']])
         work = out / arm['id']
         work.mkdir(parents=True, exist_ok=True)
+        eligible = {n: [r for r in rows if r['kind'] in arm.get('kinds', [r['kind']])] for n, rows in sets.items()}
+        drafts = {}
+        if arm.get('draft_from'):  # the upstream arm must already have run on the same set
+            for name in sets:
+                p = out / arm['draft_from'] / f'{name}.jsonl'
+                if not p.exists():
+                    raise SystemExit(f"Arm {arm['id']} needs {arm['draft_from']} rows for {name} first.")
+                drafts[name] = {r['id']: r for r in read_jsonl(p)}
         done = collections.defaultdict(set)
         for name in sets:
             p = work / f'{name}.jsonl'
             if p.exists():
                 done[name] = {r['id'] for r in read_jsonl(p)}
-        if all(len(done[n]) >= len(sets[n]) for n in sets):
+        if all(len(done[n]) >= len(eligible[n]) for n in sets):
             continue
         srv = bench.Server(model, prereg['server_args'][arm['server']] + arm.get('extra_args', []), work)
         try:
             load_s = srv.wait_ready(prereg['ready_deadline_s'])
             print(json.dumps({'arm': arm['id'], 'load_s': round(load_s, 1)}), flush=True)
-            for name, rows in sets.items():
+            for name, rows in eligible.items():
                 for row in rows:
                     if row['id'] in done[name]:
                         continue
                     if row['kind'] == 'secpatch':
-                        res = run_secpatch(srv, row, arm, args.bandit)
+                        draft = drafts[name][row['id']] if drafts else None
+                        res = run_secpatch(srv, row, arm, args.bandit, draft)
                     else:
                         res = run_adjudicated(srv, row, arm, adj)
                     res.update(arm=arm['id'], set=name, id=row['id'], kind=row['kind'], task=row['task'])
@@ -265,9 +295,26 @@ def simulate(policy: dict, rows: dict, ids: list[str]) -> dict:
             else:
                 esc = rows[policy['escalate']][i]
                 out[i] = (esc['correct'], r['wall_s'] + esc['wall_s'], True)
+        elif kind == 'route':  # the item kind is known when the request arrives; each kind has its own sub-policy
+            item_kind = next(r[i]['kind'] for r in rows.values() if i in r)
+            out[i] = simulate(policy['route'][item_kind], rows, [i])[i]
         else:
             raise ValueError(kind)
     return out
+
+
+def resolve(policy: dict, policies: dict) -> dict:
+    """Replace route targets given by policy name with the policy itself."""
+    if policy['kind'] != 'route':
+        return policy
+    return {**policy, 'route': {k: resolve(policies[v], policies) if isinstance(v, str) else v
+                                for k, v in policy['route'].items()}}
+
+
+def arms_of(policy: dict) -> set:
+    if policy['kind'] == 'route':
+        return set().union(*(arms_of(p) for p in policy['route'].values()))
+    return {a for a in [policy.get('arm'), policy.get('escalate'), *policy.get('first', [])] if a}
 
 
 def score_policy(name, policy, rows, ids, baseline):
@@ -301,11 +348,15 @@ def cmd_policy(args):
     for group in ('all', 'secpatch', 'adjudicated'):
         tables = []
         for name, pol in prereg['policies'].items():
-            need = [pol.get('arm'), pol.get('escalate'), *pol.get('first', [])]
-            if any(a and a not in rows for a in need + [prereg['baseline']]):
-                continue
-            arms_needed = [a for a in need + [prereg['baseline']] if a]
-            ids = set.intersection(*(set(rows[a]) for a in arms_needed))
+            pol = resolve(pol, prereg['policies'])
+            if pol['kind'] == 'route':  # each item only needs the arms of its own kind's sub-policy
+                ids = [i for i, r in rows.get(prereg['baseline'], {}).items()
+                       if r['kind'] in pol['route'] and all(i in rows.get(a, {}) for a in arms_of(pol['route'][r['kind']]))]
+            else:
+                needed = arms_of(pol) | {prereg['baseline']}
+                if any(a not in rows for a in needed):
+                    continue
+                ids = set.intersection(*(set(rows[a]) for a in needed))
             ids = sorted(i for i in ids if group == 'all' or rows[prereg['baseline']][i]['kind'] == group)
             if ids:
                 tables.append(score_policy(name, pol, rows, ids, prereg['baseline']))

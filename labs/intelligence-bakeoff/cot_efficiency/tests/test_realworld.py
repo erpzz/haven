@@ -45,3 +45,23 @@ def test_answer_keys_come_from_output_only():
 def test_exact_mcnemar():
     assert rw.exact_mcnemar(0, 0) == 1.0
     assert round(rw.exact_mcnemar(0, 6), 4) == 0.0312
+
+
+def test_route_uses_each_kinds_own_policy():
+    r = rows(T={'s': (1, 100, 'v'), 'a': (1, 50, 'v')}, D={'s': (1, 30, 'v')}, N={'s': (0, 5, 'n'), 'a': (1, 5, 'v')})
+    for arm in r.values():
+        for i, row in arm.items():
+            row['kind'] = 'secpatch' if i == 's' else 'adjudicated'
+    policies = {'D': {'kind': 'single', 'arm': 'D'}, 'N': {'kind': 'single', 'arm': 'N'},
+                'route_D_N': {'kind': 'route', 'route': {'secpatch': 'D', 'adjudicated': 'N'}}}
+    pol = rw.resolve(policies['route_D_N'], policies)
+    assert rw.arms_of(pol) == {'D', 'N'}
+    sim = rw.simulate(pol, r, ['s', 'a'])
+    assert sim == {'s': (1, 30, False), 'a': (1, 5, False)}
+
+
+def test_draft_is_appended_to_the_last_user_turn_and_marked_unverified():
+    msgs = [{'role': 'system', 'content': 'sys'}, {'role': 'user', 'content': 'code'}]
+    out = rw.with_draft(msgs, '  thoughts  ')
+    assert msgs[1]['content'] == 'code'
+    assert out[1]['content'].startswith('code\n\nA faster assistant') and '<draft>\nthoughts\n</draft>' in out[1]['content']
