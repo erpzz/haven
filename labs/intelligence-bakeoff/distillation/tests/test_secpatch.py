@@ -367,7 +367,7 @@ class RegistryAndTrainTests(unittest.TestCase):
             registry.attach_eval(root, 'v1', self.summary(t, 'v1', 0.40, 0.3))
             with self.assertRaises(ValueError):  # better score, worse false positives
                 registry.promote(root, 'v1', 'E')
-            registry.attach_eval(root, 'v1', self.summary(t, 'v1', 0.40, 0.2))
+            registry.attach_eval(root, 'v1', self.summary(t, 'v1', 0.40, 0.2, recall=0.95))
             self.assertEqual(registry.promote(root, 'v1', 'E'), {'promoted': 'v1'})
             self.assertEqual(registry.card(root)['base_revision'], 'c1899de')
             self.assertEqual(registry.rollback(root), {'promoted': None})
