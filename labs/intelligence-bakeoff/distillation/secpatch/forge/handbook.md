@@ -19,6 +19,9 @@ Hard rules:
 - Mention only identifiers and line numbers that appear in the code shown.
 - Never write "patch", "fix", "fixed version", "later", "reference", "advisory", "hint" or similar: the reader
   has no other version and no notes. Describe the weakness or the guard directly.
+- Never describe history ("previously", "no longer", "now uses", "was missing"): the reader sees one version.
+- Never guess ("likely", "probably", "appears to"). State what the code shown does; if a guard lives in a helper
+  that is not shown, say only what the call site guarantees.
 - Plain prose, no curly braces, no code blocks inside the analysis. Stay within the word limit.
 
 Worked examples (synthetic code, showing the style):

@@ -29,6 +29,12 @@ def repo_half(repo: str) -> int:
     return int(hashlib.sha256(repo.encode()).hexdigest()[:8], 16) % 2
 
 
+def trace_key(rec: dict) -> str:
+    """Identity of one trace: row id + content hash, so a dropped trace does not block a later good one."""
+    text = rec['sft']['messages'][-1]['content']
+    return rec['id'] + ':' + hashlib.sha256(text.encode()).hexdigest()[:12]
+
+
 def digest(path: pathlib.Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -41,6 +47,7 @@ def main(argv=None):
     ap.add_argument('--out', type=pathlib.Path, required=True)
     ap.add_argument('--selfplay-per-row', type=int, default=1)
     ap.add_argument('--no-reverify', dest='reverify', action='store_false')
+    ap.add_argument('--reviews', type=pathlib.Path, nargs='*', default=[], help='review-teach.json decisions')
     ap.add_argument('--pairs', type=pathlib.Path, nargs='*', default=[], help='self-play chosen/rejected pairs')
     args = ap.parse_args(argv)
     train, dev = jl(args.data / 'train.jsonl'), jl(args.data / 'dev.jsonl')
@@ -58,9 +65,14 @@ def main(argv=None):
     teach.VERSIONS.clear()
     teach.index_versions(train + dev)
     taught, rejected = {}, collections.Counter()
+    dropped = set()
+    for path in args.reviews:  # traces (id:hash) a reviewer rejected never train
+        dropped |= set(json.loads(path.read_text()).get('drop_ids', []))
     for path in args.traces:
         for rec in jl(path):
-            if rec.get('sft') and rec['id'] in pool_ids:
+            if rec.get('sft') and rec['id'] in pool_ids and trace_key(rec) in dropped:
+                rejected['reviewer_dropped'] += 1
+            elif rec.get('sft') and rec['id'] in pool_ids:
                 # Re-check every stored trace against the CURRENT rules, so tightening the teacher's checks
                 # also removes traces accepted under older, looser ones.
                 kept, why = teach.verify(by_id[rec['id']], rec['sft']['messages'][-1]['content'])

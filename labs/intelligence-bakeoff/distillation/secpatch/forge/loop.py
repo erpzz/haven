@@ -135,9 +135,10 @@ def step_mix(s, cfg, data: pathlib.Path | None = None):
     traces = prior_files(s, 'c*/teach/traces*.jsonl')
     selfplay = prior_files(s, 'c*/train/selfplay/selfplay-sft.jsonl')
     pairs = prior_files(s, 'c*/train/selfplay/selfplay-pairs.jsonl')
+    drops = prior_files(s, 'c*/review-teach.json') + prior_files(s, 'c*/review-drops*.json')
     r = subprocess.run([sys.executable, str(HERE / 'mix.py'), '--data', str(data), '--out', str(out), '--traces',
-                        *map(str, traces), '--selfplay', *map(str, selfplay), '--pairs', *map(str, pairs)],
-                       capture_output=True, text=True)
+                        *map(str, traces), '--selfplay', *map(str, selfplay), '--pairs', *map(str, pairs),
+                        '--reviews', *map(str, drops)], capture_output=True, text=True)
     if r.returncode:
         raise RuntimeError(r.stderr[-2000:])
     s['data'] = str(data)
@@ -272,6 +273,7 @@ def step_teach(s, cfg):
         return [f'haven-forge-c{s["cycle"]:03d}', ENGINE_DATASET]
     nxt = kernel_step(s, cfg, 'teach', 'teach_kernel.py', 'train_mix', sources)
     if nxt == 'train_mix':
+        nxt = 'review_teach'
         k = cdir(s) / 'teach'
         n = s.get('teach_pass', 0)
         if (k / 'traces.jsonl').exists():
@@ -289,6 +291,36 @@ def step_first_mix(s, cfg):
     nxt = step_mix(s, cfg)
     start_slink_teacher(s, cfg)
     return nxt
+
+
+def step_review_teach(s, cfg):
+    """Hold for a reviewer's sign-off on this cycle's traces; proceed on our own after the timeout.
+
+    The reviewer writes cycles/cNNN/review-teach.json: {"approved": true, "reviewer": "...", "drop_ids": [...],
+    "notes": "..."}. drop_ids are excluded from training. Without a reviewer the loop never stalls.
+    """
+    req = cdir(s) / 'review-request.json'
+    if not req.exists():
+        r = subprocess.run([sys.executable, str(HERE / 'review.py'), '--cycle', str(cdir(s)), '--samples', '3'],
+                           capture_output=True, text=True)
+        (cdir(s) / 'review-summary.txt').write_text(r.stdout + r.stderr[-2000:])
+        req.write_text(json.dumps({'requested': now(), 'cycle': s['cycle'], 'summary': 'review-summary.txt',
+                                   'timeout_hours': cfg.get('review_timeout_hours', 6)}, indent=1))
+        log('review_requested', cycle=s['cycle'], summary=str(cdir(s) / 'review-summary.txt'))
+    decision = cdir(s) / 'review-teach.json'
+    if decision.exists():
+        d = json.loads(decision.read_text())
+        log('review_decision', cycle=s['cycle'], approved=d.get('approved'), dropped=len(d.get('drop_ids', [])),
+            reviewer=d.get('reviewer'))
+        return 'train_mix' if d.get('approved', True) else 'teach'
+    age_h = (time.time() - dt.datetime.fromisoformat(
+        json.loads(req.read_text())['requested'].replace('Z', '+00:00')).timestamp()) / 3600
+    if age_h >= cfg.get('review_timeout_hours', 6):
+        decision.write_text(json.dumps({'approved': True, 'reviewer': 'timeout', 'drop_ids': [],
+                                        'notes': f'no reviewer within {age_h:.1f} h; automatic checks only'}, indent=1))
+        log('review_timeout', cycle=s['cycle'])
+        return 'train_mix'
+    return 'review_teach'
 
 
 def step_train_mix(s, cfg):
@@ -398,7 +430,8 @@ def step_next(s, cfg):
     return 'refresh'
 
 
-STEPS = {'refresh': step_refresh, 'mix': step_first_mix, 'teach': step_teach, 'train_mix': step_train_mix,
+STEPS = {'refresh': step_refresh, 'mix': step_first_mix, 'teach': step_teach, 'review_teach': step_review_teach,
+         'train_mix': step_train_mix,
          'train': step_train, 'gate': step_gate, 'promote': step_promote, 'next': step_next}
 
 

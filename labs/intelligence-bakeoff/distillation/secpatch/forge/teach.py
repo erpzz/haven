@@ -26,12 +26,17 @@ import time
 import urllib.request
 
 TASKS = ('detect', 'root_cause', 'finding_support', 'remediate')
-RULES = 3  # bump when prompts or checks change: rows taught under older rules are taught again
+RULES = 4  # bump when prompts or checks change: rows taught under older rules are taught again
 HANDBOOK = (pathlib.Path(__file__).resolve().parent / 'handbook.md').read_text(encoding='utf-8')
 WORD_LIMIT = {'detect': 90, 'root_cause': 110, 'finding_support': 80, 'remediate': 60}
 LEAK = re.compile(r'\b(reference|ground truth|hint|we are told|i was told|the answer|advisory|hidden|provided label|'
                   r'recorded fix|gold)\b', re.I)
 GUTTER = re.compile(r'^\s*(\d+) \|', re.M)
+# Single-version rows: the student sees one version and cannot know its history.
+HISTORY = re.compile(r'\b(previous(ly)?|no longer|used to|originally|formerly|was (previously )?missing|'
+                     r'replac(es|ed|ing) (the )?(previous|old|earlier)|now (delegates|uses|checks|calls|validates|rejects|passes))\b', re.I)
+# Training targets state what the code does; guesses about unseen code are not evidence.
+SPECULATION = re.compile(r'\b(likely|presumably|probably|appears to|seems to)\b', re.I)
 # When the code shown is the vulnerable version, the student cannot know about any later patch.
 FUTURE = re.compile(r'\b(patch(ed|es)?|the fix|fixed version|earlier (version|form)|previous (version|code)|later '
                     r'(changed|fixed|version)|updated (version|code)|correct (attribute|name|spelling) is|vulnerable version)\b', re.I)
@@ -202,6 +207,10 @@ def verify(row: dict, text: str) -> tuple[dict | None, str]:
         return None, 'leak'
     if task in ('detect', 'finding_support') and FUTURE.search(analysis):
         return None, 'future_leak'
+    if task in ('detect', 'finding_support') and HISTORY.search(analysis):
+        return None, 'history_leak'
+    if SPECULATION.search(analysis):
+        return None, 'speculation'
     if task != 'remediate':
         for tick in re.findall(r'`([^`]+)`', analysis):
             for w in re.findall(r'[A-Za-z_][A-Za-z0-9_]{2,}', tick):
