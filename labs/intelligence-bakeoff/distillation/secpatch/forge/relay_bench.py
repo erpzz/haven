@@ -115,17 +115,23 @@ def main(argv=None):
     args = ap.parse_args(argv)
     args.out.mkdir(parents=True, exist_ok=True)
     wanted = set(args.arms.split(','))
-    # Free the GPU of this session's own teacher only; wait for anyone else's job to finish.
-    if subprocess.run(['systemctl', '--user', 'is-active', 'forge-teacher-server'], capture_output=True,
-                      text=True).stdout.strip() == 'active':
-        subprocess.run(['systemctl', '--user', 'stop', 'forge-teacher-server'])
-        log(args.out, 'stopped_own_teacher', unit='forge-teacher-server', note='restarted when the bench ends')
+    # Wait until this session's own GLM teacher is the only GPU process (other sessions' jobs finish first),
+    # then stop it: the 35B and Liquid servers need the VRAM. It is restarted when the bench ends.
+    def teacher_pid() -> str:
+        r = subprocess.run(['systemctl', '--user', 'show', '-p', 'MainPID', '--value', 'forge-teacher-server'],
+                           capture_output=True, text=True)
+        return r.stdout.strip()
     deadline = time.time() + args.wait_gpu_hours * 3600
-    while gpu_pids():
+    while gpu_pids() - {teacher_pid(), '0', ''}:
         if time.time() > deadline:
             log(args.out, 'gpu_busy_gave_up', pids=sorted(gpu_pids()))
             return 1
         time.sleep(60)
+    if subprocess.run(['systemctl', '--user', 'is-active', 'forge-teacher-server'], capture_output=True,
+                      text=True).stdout.strip() == 'active':
+        subprocess.run(['systemctl', '--user', 'stop', 'forge-teacher-server'])
+        log(args.out, 'stopped_own_teacher', unit='forge-teacher-server', note='restarted when the bench ends')
+    time.sleep(5)
     server = Server(args.out)
     try:
         for name, which, flags in ARMS:
