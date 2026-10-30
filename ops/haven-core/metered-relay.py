@@ -68,10 +68,61 @@ VENDORS = {
 }
 
 
+# Cloudflare signals daily-allocation exhaustion with its own error code inside a 429
+# ("You have used up your daily free allocation of 10,000 neurons"). Distinguishing it from
+# ordinary throttling matters operationally: plain throttling clears in a minute, an
+# exhausted allocation not until 00:00 UTC. Neither is retried here, and on the Workers
+# Free plan neither bills -- the documented overage path for Free is "upgrade", not a charge.
+CF_ACCOUNT_LIMITED = 3036
+
+# Header prefixes that carry allowance consumption. Observed against live Workers AI
+# 2026-10-30: Cloudflare returns the actual cost of each request as `cf-ai-neurons`,
+# which the pricing docs do not mention. That makes consumption provider-reported
+# rather than locally estimated, so it belongs in every receipt.
+ALLOWANCE_PREFIXES = ('x-ratelimit', 'cf-ai-')
+
+
+def allowance_of(headers):
+    """Pull the allowance-bearing headers, plus the neuron cost as a number if present."""
+    seen = {k.lower(): v for k, v in (headers or {}).items()
+            if k.lower().startswith(ALLOWANCE_PREFIXES)}
+    neurons = None
+    try:
+        if 'cf-ai-neurons' in seen:
+            neurons = float(seen['cf-ai-neurons'])
+    except (TypeError, ValueError):
+        neurons = None
+    return seen, neurons
+
+
 class RelayError(Exception):
     def __init__(self, status, message, outcome):
         super().__init__(message)
         self.status, self.message, self.outcome = status, message, outcome
+
+
+def classify(vendor, status, detail):
+    """Map an upstream HTTP failure to (status, operator-facing message, receipt outcome)."""
+    codes = set()
+    try:
+        body = json.loads(detail)
+        if isinstance(body, dict):
+            codes = {e.get('code') for e in (body.get('errors') or []) if isinstance(e, dict)}
+    except (json.JSONDecodeError, TypeError):
+        pass
+    if status == 429 and vendor == 'cloudflare' and CF_ACCOUNT_LIMITED in codes:
+        return (429, "Cloudflare reports this account's daily free Neuron allocation is used up "
+                     '(error 3036). It resets at 00:00 UTC. Nothing was retried and, on the Workers '
+                     'Free plan, nothing was billed.', 'REFUSED_ALLOWANCE_EXHAUSTED')
+    if status == 429:
+        return (429, 'The provider rate-limited this lane; its free allowance may be exhausted. '
+                     'Nothing was retried.', 'REFUSED_429')
+    if status in (402, 403):
+        return (402, 'The provider refused this request as outside the free allowance or not '
+                     'permitted on this plan. Nothing was retried.', 'REFUSED_402')
+    if status == 401:
+        return (401, 'The provider rejected the lane credential.', 'REFUSED_401')
+    return (502, f'The provider returned {status}. Detail withheld from the stream.', 'REFUSED_502')
 
 
 def private_read(path):
@@ -146,8 +197,7 @@ def dispatch(cfg, messages, max_tokens, write, closed):
     sent = 0
     try:
         with urllib.request.urlopen(request, timeout=120) as response:
-            allowance = {k.lower(): v for k, v in response.headers.items()
-                         if k.lower().startswith('x-ratelimit')}
+            allowance, neurons = allowance_of(response.headers)
             for raw in response:
                 if closed():
                     raise RelayError(499, 'Client closed the stream.', 'CLIENT_CLOSED')
@@ -167,22 +217,13 @@ def dispatch(cfg, messages, max_tokens, write, closed):
                     write(delta)
     except urllib.error.HTTPError as exc:
         detail = exc.read(2048).decode('utf-8', 'replace')
-        if exc.code == 429:
-            raise RelayError(429, 'The provider rate-limited this lane; its free allowance may be '
-                                  'exhausted. Nothing was retried.', 'REFUSED_429') from exc
-        if exc.code in (402, 403):
-            raise RelayError(402, 'The provider refused this request as outside the free allowance '
-                                  'or not permitted on this plan. Nothing was retried.', 'REFUSED_402') from exc
-        if exc.code in (401,):
-            raise RelayError(401, 'The provider rejected the lane credential.', 'REFUSED_401') from exc
-        raise RelayError(502, f'The provider returned {exc.code}. Detail withheld from the stream.',
-                         'REFUSED_502') from exc
+        raise RelayError(*classify(cfg['vendor'], exc.code, detail)) from exc
     except urllib.error.URLError as exc:
         raise RelayError(504, f'The provider was unreachable: {exc.reason}', 'REFUSED_504') from exc
     receipt({'at': time.time(), 'lane': cfg['lane'], 'route_class': spec['route_class'],
              'cost_boundary': cfg.get('cost_boundary'), 'outcome': 'COMPLETED',
              'characters': sent, 'elapsed_ms': round((time.monotonic() - began) * 1000, 3),
-             'allowance_headers': allowance})
+             'allowance_headers': allowance, 'allowance_units_consumed': neurons})
 
 
 def make_handler(cfg, key):
@@ -334,19 +375,15 @@ def verify(args):
     try:
         with urllib.request.urlopen(request, timeout=60) as response:
             payload = response.read(65536).decode('utf-8', 'replace')
+            allowance, neurons = allowance_of(response.headers)
             result.update(outcome='VERIFIED', http_status=response.status,
-                          allowance_headers={k.lower(): v for k, v in response.headers.items()
-                                             if k.lower().startswith(('x-ratelimit', 'cf-'))},
-                          # Bounded excerpt proving a real response arrived; never the key.
+                          allowance_headers=allowance, allowance_units_consumed=neurons,
+                          # Size only: proves a real response arrived without logging its content.
                           response_bytes=len(payload))
     except urllib.error.HTTPError as exc:
         detail = exc.read(512).decode('utf-8', 'replace')
-        result.update(outcome=f'REFUSED_{exc.code}', http_status=exc.code,
-                      reason={429: 'rate-limited or allowance exhausted',
-                              402: 'outside the free allowance',
-                              403: 'not permitted on this plan',
-                              401: 'credential rejected'}.get(exc.code, 'provider error'),
-                      detail=detail[:200])
+        _, reason, outcome = classify(cfg['vendor'], exc.code, detail)
+        result.update(outcome=outcome, http_status=exc.code, reason=reason, detail=detail[:200])
     except urllib.error.URLError as exc:
         result.update(outcome='UNREACHABLE', reason=str(exc.reason))
     result['elapsed_ms'] = round((time.monotonic() - began) * 1000, 3)

@@ -30,10 +30,12 @@ Cloudflare dashboard → My Profile → API Tokens → Create Token → Custom t
 - Note the **Account ID** from the dashboard sidebar (it is not secret, but the relay
   reads it from the same private directory to keep one source of truth).
 
-Confirm on the live pricing page that the Workers **Free** plan still has no overage
-path — that requests fail rather than bill past the daily allocation. The evidence
-block below records that clause, but I read it through a documentation mirror rather
-than the live page, so treat it as unconfirmed until you have looked. If Cloudflare
+**Confirmed live 2026-10-30** against this account: the free-plan no-overage behaviour
+is documented in Cloudflare's own error reference — exhausting the daily allocation
+returns error `3036` with HTTP 429 and a message to upgrade, not a charge. The relay
+classifies that distinctly from ordinary throttling. Model availability was also read
+from the live catalog: 39 text-generation models, none requiring a paid billing method
+on this account. If Cloudflare
 has since introduced metered overage on Free, the correct `cost_boundary` becomes
 `PROVIDER_SOFT_ALERT` or `CLIENT_SIDE_ONLY`, not `NOT_CHARGEABLE`, and the lane should
 stay explicit-only regardless.
@@ -72,7 +74,7 @@ echo "$LAB_KEY"   # paste into the enrollment file below, then clear your scroll
 python3 ops/haven-core/metered-relay.py configure \
   --lane cf-workers-ai \
   --vendor cloudflare \
-  --model '@cf/meta/llama-3.1-8b-instruct' \
+  --model '@cf/meta/llama-3.1-8b-instruct-fp8' \
   --key-ref cf-workers-ai \
   --account-ref cf-account \
   --cost-boundary NOT_CHARGEABLE
@@ -118,8 +120,8 @@ Fill **only** `key` (step 3's value) and `socket_path` (step 7's socket).
   "base": "http://127.0.0.1:8893/v1",
   "socket_path": "<LAB_PROVIDERS_DIR>/cf-workers-ai.sock",
   "key": "<LAB_KEY from step 3>",
-  "model": "@cf/meta/llama-3.1-8b-instruct",
-  "display_model": "Llama 3.1 8B · Workers AI",
+  "model": "@cf/meta/llama-3.1-8b-instruct-fp8",
+  "display_model": "Llama 3.1 8B fp8 · Workers AI",
   "kind": "metered",
   "compute": "hosted",
   "route_class": "CLOUDFLARE_WORKERS_AI_FREE",
@@ -130,7 +132,7 @@ Fill **only** `key` (step 3's value) and `socket_path` (step 7's socket).
     "clause": "free daily Neuron allocation; on Workers Free, over-limit operations fail rather than bill",
     "retrieved": "2026-10-28"
   },
-  "max_context_tokens": 8192,
+  "max_context_tokens": 32000,
   "trust": "OWNER_ENROLLED_SSH",
   "allowed_roles": ["admin"],
   "enrolled_at": 0

@@ -13,6 +13,7 @@ import sys
 import tempfile
 import threading
 import time
+import io
 import unittest
 import urllib.error
 from unittest.mock import patch
@@ -61,8 +62,14 @@ class FakeUpstream:
     def read(self, n=None): return b''
 
 
-def http_error(code):
-    return urllib.error.HTTPError('https://upstream.example', code, 'refused', {}, None)
+def http_error(code, body=None):
+    fp = io.BytesIO(json.dumps(body).encode() if body is not None else b'')
+    return urllib.error.HTTPError('https://upstream.example', code, 'refused', {}, fp)
+
+
+#: Cloudflare's documented daily-allocation exhaustion signal: error 3036 inside a 429.
+CF_EXHAUSTED = {'success': False, 'errors': [{'code': 3036, 'message':
+                'You have used up your daily free allocation of 10,000 neurons.'}]}
 
 
 class Relay:
@@ -243,6 +250,49 @@ class RelayTests(unittest.TestCase):
                 self.assertEqual(len(upstream.calls), 1)
                 self.assertEqual(r.receipts()[-1]['outcome'], outcome)
 
+    def test_allowance_exhaustion_is_distinguished_from_plain_throttling(self):
+        """Cloudflare error 3036 inside a 429 means the daily allocation is gone until
+        00:00 UTC, which is operationally different from "slow down"."""
+        r = Relay(self.folder); self.addCleanup(r.close)
+        upstream = FakeUpstream(error=http_error(429, CF_EXHAUSTED))
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            _, text = post(r.socket('metered-cf'), TURN)
+        self.assertIn('daily free Neuron allocation is used up', text)
+        self.assertIn('00:00 UTC', text)
+        self.assertIn('nothing was billed', text)
+        self.assertEqual(r.receipts()[-1]['outcome'], 'REFUSED_ALLOWANCE_EXHAUSTED')
+        self.assertEqual(len(upstream.calls), 1, 'An exhausted allocation must not be retried.')
+
+    def test_plain_429_without_the_code_stays_an_ordinary_rate_limit(self):
+        r = Relay(self.folder); self.addCleanup(r.close)
+        upstream = FakeUpstream(error=http_error(429, {'errors': [{'code': 10000}]}))
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            _, text = post(r.socket('metered-cf'), TURN)
+        self.assertIn('rate-limited this lane', text)
+        self.assertNotIn('00:00 UTC', text)
+        self.assertEqual(r.receipts()[-1]['outcome'], 'REFUSED_429')
+
+    def test_provider_reported_allowance_cost_is_recorded(self):
+        """Observed live 2026-10-30: Workers AI returns the request's cost as
+        cf-ai-neurons. Consumption is provider-reported, never locally estimated."""
+        r = Relay(self.folder); self.addCleanup(r.close)
+        upstream = FakeUpstream(CF_STREAM, headers={'cf-ai-neurons': '0.19', 'cf-ray': 'abc'})
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            post(r.socket('metered-cf'), TURN)
+        rec = r.receipts()[-1]
+        self.assertEqual(rec['allowance_units_consumed'], 0.19)
+        self.assertEqual(rec['allowance_headers']['cf-ai-neurons'], '0.19')
+        self.assertNotIn('cf-ray', rec['allowance_headers'], 'Only allowance headers are kept.')
+
+    def test_malformed_allowance_header_does_not_break_the_turn(self):
+        r = Relay(self.folder); self.addCleanup(r.close)
+        upstream = FakeUpstream(CF_STREAM, headers={'cf-ai-neurons': 'not-a-number'})
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            status, text = post(r.socket('metered-cf'), TURN)
+        self.assertEqual(status, 200)
+        self.assertIn('metered answer', text)
+        self.assertIsNone(r.receipts()[-1]['allowance_units_consumed'])
+
     def test_provider_key_never_leaves_the_relay(self):
         r = Relay(self.folder); self.addCleanup(r.close)
         upstream = FakeUpstream(CF_STREAM)
@@ -313,15 +363,16 @@ class VerifyTests(unittest.TestCase):
         self.assertEqual(rec['allowance_headers']['x-ratelimit-remaining'], '9000')
 
     def test_refusals_are_classified_not_crashed(self):
-        for code, outcome, reason in ((429, 'REFUSED_429', 'rate-limited or allowance exhausted'),
+        for code, outcome, reason in ((429, 'REFUSED_429', 'rate-limited this lane'),
                                       (402, 'REFUSED_402', 'outside the free allowance'),
-                                      (401, 'REFUSED_401', 'credential rejected')):
+                                      (401, 'REFUSED_401', 'rejected the lane credential')):
             with self.subTest(code=code):
                 self.tearDown(); self.setUp()
                 upstream = FakeUpstream(error=http_error(code))
                 exit_code, rec = self.run_verify(upstream)
                 self.assertEqual(exit_code, 1)
-                self.assertEqual((rec['outcome'], rec['reason']), (outcome, reason))
+                self.assertEqual(rec['outcome'], outcome)
+                self.assertIn(reason, rec['reason'])
 
     def test_verification_receipt_never_carries_the_credential(self):
         upstream = FakeUpstream(headers={'x-ratelimit-remaining': '1'})
