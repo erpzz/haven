@@ -4,7 +4,8 @@ registry.json (private, next to the adapters) records every adapter with its
 training receipt digest and evaluation summaries. Promotion requires a
 held-out evaluation of the adapter *and* of its base on the same eval file
 digest, with the adapter ahead on the primary metric and not worse on false
-positives. `rollback` restores the previously promoted adapter (or none).
+positives or detection recall. `rollback` restores the previously promoted
+adapter (or none).
 Nothing here loads a model or deploys a runtime; the gateway reads `promoted`.
 """
 from __future__ import annotations
@@ -19,6 +20,29 @@ import time
 
 PRIMARY = 'score'           # evaluate.py summary: mean task score over held-out items
 GUARD = 'false_positive_rate'
+RECALL = 'detection_recall'
+DETECTION_COUNTS = ('detection_positive_n', 'detection_negative_n')
+
+
+def passes_quality_gate(mine: dict, base: dict) -> bool:
+    """Compare complete paired detection evidence; refuse missing or invalid metrics."""
+    for label, summary in (('adapter', mine), ('base', base)):
+        for metric in (PRIMARY, GUARD, RECALL):
+            value = summary.get(metric)
+            if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value <= 1:
+                raise ValueError(f'{label} evaluation lacks a valid {metric}; re-evaluate before promotion.')
+        n = summary.get('n')
+        counts = [summary.get(k) for k in DETECTION_COUNTS]
+        by_task = summary.get('by_task')
+        detect = by_task.get('detect') if isinstance(by_task, dict) else None
+        detect_n = detect.get('n') if isinstance(detect, dict) else None
+        if (type(n) is not int or n <= 0 or any(type(x) is not int or x <= 0 for x in counts)
+                or type(detect_n) is not int or sum(counts) != detect_n or detect_n > n):
+            raise ValueError(f'{label} evaluation needs positive and negative detection examples; '
+                             're-evaluate before promotion.')
+    if mine['n'] != base['n'] or any(mine[k] != base[k] for k in DETECTION_COUNTS):
+        raise ValueError('Adapter and base evaluation counts do not match.')
+    return mine[PRIMARY] > base[PRIMARY] and mine[GUARD] <= base[GUARD] and mine[RECALL] >= base[RECALL]
 
 
 def load(root: pathlib.Path) -> dict:
@@ -110,7 +134,9 @@ def attach_eval(root: pathlib.Path, name: str, summary_path: pathlib.Path) -> di
     if target is None:
         raise ValueError('Unknown adapter.')
     evals = target if name == 'base' else target['evals']
-    evals[summary['eval_sha256']] = {k: summary[k] for k in (PRIMARY, GUARD, 'n', 'model', 'by_task') if k in summary}
+    evals[summary['eval_sha256']] = {k: summary[k] for k in
+                                    (PRIMARY, GUARD, RECALL, *DETECTION_COUNTS, 'n', 'model', 'by_task')
+                                    if k in summary}
     save(root, reg)
     return evals[summary['eval_sha256']]
 
@@ -124,9 +150,10 @@ def promote(root: pathlib.Path, name: str, eval_sha256: str, force: bool = False
     if not force:
         if not mine or not base:
             raise ValueError('Promotion needs adapter and base evaluations on the same held-out file.')
-        if mine[PRIMARY] <= base[PRIMARY] or mine.get(GUARD, 0) > base.get(GUARD, 0):
+        if not passes_quality_gate(mine, base):
             raise ValueError(f"Gate failed: score {mine[PRIMARY]} vs base {base[PRIMARY]}, "
-                             f"FPR {mine.get(GUARD)} vs {base.get(GUARD)}. Not promoted.")
+                             f"FPR {mine[GUARD]} vs {base[GUARD]}, "
+                             f"recall {mine[RECALL]} vs {base[RECALL]}. Not promoted.")
     reg['history'].append({'at': time.time(), 'from': reg['promoted'], 'to': name, 'eval_sha256': eval_sha256, 'forced': force})
     reg['promoted'] = name
     save(root, reg)

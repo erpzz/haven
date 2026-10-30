@@ -114,6 +114,13 @@ model. A winning adapter is a candidate for further independent validation,
 not a production deployment. A failed run retains its partial output and
 fails visibly; use a fresh run directory rather than inventing a receipt.
 
+The improvement and promotion gates require a better overall score, no increase
+in detection false-positive rate, and no decrease in vulnerability recall on
+the same held-out examples. Both evaluations must contain positive and negative
+detection examples with matching counts. Older summaries without these counts
+cannot pass the gate; re-evaluate both arms before promotion. The registry's
+explicit manual `--force` option still overrides the gate.
+
 The GPU-memory check is conservative but not a GPU lease. Coordinate with
 Haven's existing Model Lab scheduling before starting, particularly if the 35B
 is in active use. Offline CI exercises only admission logic and never claims

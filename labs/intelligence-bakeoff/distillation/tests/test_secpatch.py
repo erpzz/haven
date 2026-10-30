@@ -241,6 +241,7 @@ class GraderTests(unittest.TestCase):
                  'invalid_json': False, 'latency_s': 1, 'completion_tokens': 5, 'seed': 0}]
         s = evaluate.summarize(rows, 'x', 'm')
         self.assertEqual((s['paired_detection'], s['false_positive_rate'], s['detection_recall']), (0.0, 1.0, 1.0))
+        self.assertEqual((s['detection_positive_n'], s['detection_negative_n']), (1, 1))
         self.assertEqual(evaluate.wilson(0, 0), [0.0, 0.0])
 
 
@@ -263,9 +264,11 @@ class RegistryAndTrainTests(unittest.TestCase):
             'base_model': 'Qwen/Qwen3-0.6B', 'base_revision': 'c1899de', 'data_sha256': '0' * 64}))
         return d
 
-    def summary(self, t, name, score, fpr):
+    def summary(self, t, name, score, fpr, recall=0.5):
         p = pathlib.Path(t) / f'{name}.json'
-        p.write_text(json.dumps({'eval_sha256': 'E', 'score': score, 'false_positive_rate': fpr, 'n': 10, 'model': name}))
+        p.write_text(json.dumps({'eval_sha256': 'E', 'score': score, 'false_positive_rate': fpr,
+                                 'detection_recall': recall, 'detection_positive_n': 3, 'detection_negative_n': 3,
+                                 'by_task': {'detect': {'n': 6}}, 'n': 10, 'model': name}))
         return p
 
     def test_cpu_check_cannot_be_registered(self):
@@ -311,6 +314,38 @@ class RegistryAndTrainTests(unittest.TestCase):
             self.assertIsNone(registry.card(root)['promoted'])
             with self.assertRaises(ValueError):
                 registry.register(root, self.run_dir(t + '/x', 'GPU_TRAINING_RUN'), 'v1')
+
+    def test_promotion_rejects_recall_collapse_and_unusable_evaluations(self):
+        with tempfile.TemporaryDirectory() as t:
+            root = pathlib.Path(t) / 'reg'
+            registry.register(root, self.run_dir(t, 'GPU_TRAINING_RUN'), 'v1')
+            registry.attach_eval(root, 'base', self.summary(t, 'base', 33 / 72, 1.0, 10 / 12))
+            registry.attach_eval(root, 'v1', self.summary(t, 'v1', 35 / 72, 2 / 12, 1 / 12))
+            with self.assertRaisesRegex(ValueError, 'recall'):
+                registry.promote(root, 'v1', 'E')
+            self.assertIsNone(registry.load(root)['promoted'])
+
+            valid = json.loads(self.summary(t, 'v1', 0.5, 0.1, 0.9).read_text())
+            invalid_cases = [
+                {k: v for k, v in valid.items() if k != 'detection_recall'},
+                {k: v for k, v in valid.items() if k != 'detection_positive_n'},
+                {**valid, 'detection_positive_n': 0},
+                {**valid, 'detection_recall': float('nan')},
+                {**valid, 'detection_negative_n': 2},
+                {**valid, 'detection_positive_n': 2, 'detection_negative_n': 4},
+                {**valid, 'by_task': None},
+            ]
+            for summary in invalid_cases:
+                with self.subTest(summary=summary):
+                    path = pathlib.Path(t) / 'invalid.json'
+                    path.write_text(json.dumps(summary))
+                    registry.attach_eval(root, 'v1', path)
+                    with self.assertRaises(ValueError):
+                        registry.promote(root, 'v1', 'E')
+                    self.assertIsNone(registry.load(root)['promoted'])
+
+            registry.attach_eval(root, 'v1', self.summary(t, 'v1', 0.5, 0.1, 10 / 12))
+            self.assertEqual(registry.promote(root, 'v1', 'E'), {'promoted': 'v1'})
 
     def test_train_refuses_eval_rows_and_dry_runs(self):
         with tempfile.TemporaryDirectory() as t:
