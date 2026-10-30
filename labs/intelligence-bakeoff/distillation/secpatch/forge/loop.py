@@ -31,6 +31,8 @@ import subprocess
 import sys
 import time
 
+from evidence_gate import EvidenceError, verify_complete
+
 HERE = pathlib.Path(__file__).resolve().parent
 HOME = pathlib.Path.home()
 STATE_DIR = pathlib.Path(os.environ.get('FORGE_STATE', HOME / '.local/state/haven-forge'))
@@ -363,12 +365,14 @@ def items(path: pathlib.Path) -> dict:
 
 def step_gate(s, cfg):
     ev = cdir(s) / 'train' / 'eval'
-    rival = 'champion' if (ev / 'champion').exists() else 'base'
-    stu, riv = {}, {}
-    for name in ('gate', 'eval-heldout'):
-        stu.update(items(ev / 'student' / name / 'items.jsonl'))
-        riv.update(items(ev / rival / name / 'items.jsonl'))
-    shared = sorted(set(stu) & set(riv))
+    # A registered champion must be evaluated: never silently fall back to the base.
+    rival = 'champion' if s.get('champion') else 'base'
+    try:
+        stu, riv = verify_complete(cdir(s), rival, cycle=s['cycle'])
+    except EvidenceError as exc:
+        log('gate_evidence_rejected', cycle=s['cycle'], error=str(exc))
+        return 'next'  # fail closed; keep the previous champion untouched
+    shared = sorted(stu)
     if not shared:
         log('gate_no_results', cycle=s['cycle'])
         return 'next'
