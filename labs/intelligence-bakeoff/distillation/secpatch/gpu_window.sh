@@ -35,7 +35,7 @@ export HF_HOME=${HF_HOME:-$HOME/.local/share/haven-training-cache} HF_HUB_OFFLIN
 allowed=""
 for unit in ${PEERS[@]+"${PEERS[@]}"}; do
   pid=$(systemctl --user show -p MainPID --value "$unit" 2>/dev/null || true)
-  [ -n "$pid" ] && [ "$pid" != 0 ] && allowed="$allowed $pid $(pgrep -P "$pid" | tr '\n' ' ')"
+  [ -n "$pid" ] && [ "$pid" != 0 ] && allowed="$allowed $pid $(pgrep -P "$pid" | tr '\n' ' ' || true)"
 done
 busy=""
 for pid in $(nvidia-smi --query-compute-apps=pid --format=csv,noheader | tr -d ' '); do
