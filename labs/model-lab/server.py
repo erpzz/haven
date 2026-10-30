@@ -13,6 +13,7 @@ import ipaddress
 import json
 import os
 from pathlib import Path
+import secrets
 import signal
 import socket
 import tempfile
@@ -34,7 +35,7 @@ ADMIN_POSTS = {
     '/api/connect', '/api/connect/haven-strata', '/api/disconnect', '/api/engine/install', '/api/model/download',
     '/api/model/import', '/api/discovery/search', '/api/discovery/detail', '/api/engine/start', '/api/engine/stop', '/api/shutdown', '/api/runtime/switch', '/api/diagnostics',
 }
-ADMIN_GETS = {'/api/log', '/api/benchmarks', '/api/auth/users'}
+ADMIN_GETS = {'/api/log', '/api/benchmarks', '/api/experiment-summary', '/api/auth/users'}
 
 
 def save_launch_url(path: Path, url: str):
@@ -123,6 +124,12 @@ class Server(ThreadingHTTPServer):
         self.login_lock = threading.RLock()
         self.auth = None
         self.bootstrap_token = None
+        from gateway import Gateway
+        try:
+            self.gateway = Gateway(lab, lab.data)
+        except (ValueError, OSError) as exc:  # A bad key file disables the gateway, never the Lab.
+            print('Haven gateway disabled:', str(exc)[:200], flush=True)
+            self.gateway = None
         if self.lan_mode:
             from lan_auth import AuthStore
             self.auth = AuthStore(lab.data)
@@ -390,7 +397,113 @@ class Handler(BaseHTTPRequestHandler):
         threading.Thread(target=self.server.shutdown, daemon=True).start()
         return True
 
+    def _gateway(self) -> bool:
+        """OpenAI-compatible `/v1` for co-located chat frontends. Loopback peers and gateway keys only."""
+        if not self.path.startswith('/v1/'):
+            return False
+        import gateway as gw
+        try:
+            if not ipaddress.ip_address(self.client_address[0].split('%', 1)[0]).is_loopback:
+                raise gw.GatewayError(403, 'The Haven gateway accepts loopback clients only.', 'forbidden')
+            if self.headers.get('Origin'):
+                raise gw.GatewayError(403, 'Browsers cannot call the gateway directly.', 'forbidden')
+            g = self.server.gateway
+            if g is None:
+                raise gw.GatewayError(503, 'The Haven gateway is not configured on this Lab.', 'unavailable')
+            principal = g.authenticate(self.headers)
+            path = self.path.split('?', 1)[0]
+            if self.command == 'GET' and path == '/v1/models':
+                self.json(200, {'object': 'list', 'data': g.listing(principal)})
+            elif self.command == 'GET' and path == '/v1/haven/status':
+                self.json(200, g.status(principal))
+            elif self.command == 'POST' and path == '/v1/chat/completions':
+                self._gateway_chat(g, principal)
+            else:
+                raise gw.GatewayError(404, 'Not found.', 'not_found')
+        except gw.GatewayError as exc:
+            self.json(exc.status, exc.body())
+        except (ValueError, TypeError, KeyError) as exc:
+            self.json(400, {'error': {'message': str(exc)[:400], 'type': 'invalid_request_error'}})
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+            pass
+        except Exception as exc:
+            self.json(500, {'error': {'message': f'{type(exc).__name__}: {str(exc)[:300]}', 'type': 'server_error'}})
+        return True
+
+    def _gateway_chat(self, g, principal):
+        import gateway as gw
+        body = self._read_json()
+        prepared = g.prepare(principal, body, self.headers)
+        model = str(body.get('model'))
+        stream = body.get('stream') is True
+        cid = 'chatcmpl-' + secrets.token_hex(8)
+        if 'local_reply' in prepared:
+            text = prepared['local_reply']
+            if not stream:
+                self.json(200, {'id': cid, 'object': 'chat.completion', 'created': int(time.time()), 'model': model,
+                                'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': text}, 'finish_reason': 'stop'}]})
+                return
+            self._sse_open()
+            self._sse(g.completion_chunk(cid, model, {'role': 'assistant', 'content': text}))
+            self._sse(g.completion_chunk(cid, model, {}, 'stop'))
+            self._sse_done()
+            return
+        job_id = g.start(prepared)
+        if not stream:
+            snap = g.finish_blocking(job_id)
+            g.receipt(prepared, snap)
+            if snap['state'] not in ('COMPLETED', 'OUTPUT_LIMIT'):
+                raise gw.GatewayError(502, snap.get('error') or f"Generation {snap['state']}.", 'backend_error')
+            self.json(200, {'id': 'chatcmpl-' + job_id, 'object': 'chat.completion', 'created': int(time.time()), 'model': model,
+                            'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': snap.get('text', ''),
+                                         **({'reasoning_content': snap['reasoning']} if snap.get('reasoning') else {}),
+                                         **({'tool_calls': snap['tool_calls']} if snap.get('tool_calls') else {})},
+                                         'finish_reason': gw.openai_finish(snap)}],
+                            **({'usage': gw.usage(snap)} if gw.usage(snap) else {}),
+                            'haven': {**{k: snap.get(k) for k in ('provider_id', 'worker_label', 'model', 'compute', 'egress', 'route_reason')},
+                                      'routing': g.routing_trace(prepared, snap)}})
+            return
+        job = g.lab.jobs[job_id]
+        self._sse_open()
+        try:
+            snap = g.stream(job, self._sse, model)
+        finally:
+            # On a client Stop the job is still unwinding; record its terminal state, not RUNNING.
+            g.receipt(prepared, g.settle(job))
+        if snap['state'] in ('COMPLETED', 'OUTPUT_LIMIT'):
+            last = g.completion_chunk('chatcmpl-' + job_id, model, {}, gw.openai_finish(snap))
+            if gw.usage(snap):
+                last['usage'] = gw.usage(snap)
+            last['haven'] = {'routing': g.routing_trace(prepared, snap)}
+            self._sse(last)
+        else:
+            # Headers are already sent: report the failure in-band, keeping any partial text the user saw.
+            self._sse({'error': {'message': snap.get('error') or f"Generation {snap['state']}.", 'type': 'backend_error'}})
+        self._sse_done()
+
+    def _sse_open(self):
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/event-stream; charset=utf-8')
+        self.send_header('Cache-Control', 'no-store')
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('Connection', 'close')
+        self.end_headers()
+        self.close_connection = True
+
+    def _sse(self, value):
+        self.wfile.write(('data: ' + json.dumps(value, ensure_ascii=False) + '\n\n').encode())
+        self.wfile.flush()
+
+    def _sse_done(self):
+        try:
+            self.wfile.write(b'data: [DONE]\n\n')
+            self.wfile.flush()
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+            pass
+
     def do_GET(self):
+        if self._gateway():
+            return
         if self._handle_auth_get():
             return
         if not self._host_origin_guard():
@@ -437,6 +550,9 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     text = 'No managed engine has run in this lab yet.'
                 self.json(200, {'text': text})
+            elif self.path == '/api/experiment-summary':
+                from experiment_analysis import summarize
+                self.json(200, summarize(self.server.lab.data / 'benchmarks.jsonl'))
             elif self.path == '/api/benchmarks':
                 p = self.server.lab.data / 'benchmarks.jsonl'
                 rows = []
@@ -458,6 +574,8 @@ class Handler(BaseHTTPRequestHandler):
             self.json(500, {'error': str(exc)[:300]})
 
     def do_POST(self):
+        if self._gateway():
+            return
         if self._private_shutdown():
             return
         if self._handle_auth_post():

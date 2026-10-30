@@ -1,0 +1,26 @@
+[Unit]
+Description=Haven everyday chat (Open WebUI, loopback) via the Haven gateway
+After=haven-model-lab.service
+Wants=haven-model-lab.service
+StartLimitIntervalSec=120
+StartLimitBurst=3
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.local/share/haven-openwebui
+# Secrets (gateway key, identity-signing secret, session key) live only in this 0600 file.
+EnvironmentFile=%h/.config/haven-openwebui/env
+ExecStart=%h/.local/share/haven-openwebui/venv/bin/open-webui serve --host 127.0.0.1 --port 8878
+UMask=0077
+NoNewPrivileges=yes
+# Chat UI only; inference runs in the Lab. Keep it from competing with the 35B for CPU/RAM.
+Nice=5
+MemoryHigh=3G
+MemoryMax=5G
+CPUQuota=400%
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=20
+
+[Install]
+WantedBy=default.target

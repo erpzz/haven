@@ -75,10 +75,15 @@ function linkExpiredBanner(){
  b.id='link-expired';b.setAttribute('role','alert');Object.assign(b.style,{borderColor:'var(--warn)',color:'var(--warn)',position:'sticky',top:'0',zIndex:'3',background:'var(--card)'});
  document.querySelector('main')?.prepend(b);$('send').disabled=true;$('chat-hint').textContent='Link expired \u2014 reopen Haven from your Mac.';
 }
+const REQUEST_TIMEOUT_MS=30000;
 async function requestJSON(path,data,sessionAware=true){
  const headers={}; if(token)headers['X-Lab-Token']=token;
  if(data!==undefined){headers['Content-Type']='application/json';if(sessionAware&&auth.csrf)headers['X-CSRF-Token']=auth.csrf;}
- const r=await fetch(path,{method:data===undefined?'GET':'POST',headers,body:data===undefined?undefined:JSON.stringify(data),credentials:'same-origin'});
+ // A stalled tunnel must never leave a caller (and the busy flag it holds) waiting forever.
+ const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),REQUEST_TIMEOUT_MS);let r;
+ try{r=await fetch(path,{method:data===undefined?'GET':'POST',headers,body:data===undefined?undefined:JSON.stringify(data),credentials:'same-origin',signal:ctl.signal});}
+ catch(e){const err=new Error(e.name==='AbortError'?`Haven did not answer within ${REQUEST_TIMEOUT_MS/1000} s. Anything already running continues on the server; nothing was retried.`:'Haven is unreachable: '+e.message);err.status=0;throw err;}
+ finally{clearTimeout(timeout);}
  let d={};try{d=await r.json();}catch(_){}
  if(!r.ok){const e=new Error(d.error||`HTTP ${r.status}`);e.status=r.status;if(r.status===401&&!auth.enabled&&token)linkExpiredBanner();if(sessionAware&&auth.enabled&&r.status===401&&auth.user){auth.user=null;auth.csrf='';showAuth('login','Your session expired. Sign in again.');}throw e;}
  return d;
@@ -90,11 +95,18 @@ document.querySelectorAll('[data-view]').forEach(n=>n.onclick=()=>go(n.dataset.v
 function metric(id,value,unit) { const n=$(id); n.replaceChildren(document.createTextNode(value==null?'—':value)); n.append(element('small','',unit)); }
 function rate(value) { return typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'—'; }
 let providerSelection=sessionStorage.getItem('haven-provider')||'managed', providerProbeBusy=false, providerProbeAt=0;
+let modelSearch='', favoritesOnly=false;
+let favorites=new Set();
+try{favorites=new Set(JSON.parse(localStorage.getItem('haven-model-favorites')||'[]'));}catch(_){}
+$('model-search').oninput=()=>{modelSearch=$('model-search').value.trim().toLowerCase();if(state)renderModels();};
+$('model-favorites-only').onchange=()=>{favoritesOnly=$('model-favorites-only').checked;if(state)renderModels();};
 const cloudProvider=(s,id)=>(s?.providers||[]).find(p=>p.id===id&&p.kind==='cloud');
 function planText(p){const o=p?.observed?.plan||{};const used=o.daily_cap?`${o.daily_used??'?'}/${o.daily_cap} today`:'';
  const reset=o.resets_text||(o.resets_at?new Date(o.resets_at*1000).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'');
  return [used,o.status==='LIMITED'?`plan limit${reset?' until '+reset:''}`:''].filter(Boolean).join(' · ');}
 const readyCloud=s=>(s?.providers||[]).filter(p=>p.kind==='cloud'&&p.observed.state==='READY'&&p.observed.plan?.status!=='LIMITED');
+// Mirrors labcore.generate: managed runtimes use their loaded context, workers their enrolled cap.
+function outputLimit(c){if(!c?.base)return 4096;if(String(c.base).startsWith('provider:'))return c.kind==='cloud'?4096:1024;const ctx=c.profile?.context;return Number.isInteger(ctx)&&ctx>=512?Math.min(ctx-256,32768):4096;}
 function selectedConnection(s){
  if(providerSelection==='managed')return s.connection;
  if(providerSelection==='auto'&&s.connection?.base&&(!s.prepared_runtime?.peer_busy||s.connection.compute==='cpu')&&s.connection.kind==='llama')return s.connection;
@@ -116,6 +128,18 @@ function providerControls(s){
   const label=element('label','','Run this conversation on');const select=element('select');select.id='provider-select';select.setAttribute('aria-label','Inference worker');label.append(select);box.append(label);
   const note=element('p','field-note');note.id='provider-note';box.append(note);
   const button=element('button','secondary','Refresh workers');button.id='provider-refresh';button.onclick=async()=>{try{await api('/api/providers/reload',{});await api('/api/providers/probe',{});await refresh();}catch(e){toast(e.message,true);}};box.append(button);
+  // First-party artifact picker: never confuse the provider route with a real GGUF.
+  const quick=element('div','model-quick-select');quick.id='model-quick-select';
+  const modelLabel=element('label','','Installed Slink artifact');
+  const modelSelect=element('select');modelSelect.id='artifact-select';
+  modelSelect.setAttribute('aria-label','Select installed Slink artifact');modelLabel.append(modelSelect);quick.append(modelLabel);
+  const load=element('button','secondary','Load selected artifact');load.id='artifact-load';
+  load.onclick=()=>{
+   const m=(state?.models||[]).find(x=>x.id===modelSelect.value&&x.downloaded);
+   if(!m){toast('Model is not installed; open the Models page to review and download.',true);return;}
+   if(!confirm('Load '+m.name+' on Slink? This uses the selected CPU/GPU profile. Haven will enforce active job and resource guards.'))return;
+   modelAction(m);
+  };quick.append(load);box.append(quick);
   document.querySelector('.card-heading').after(box);select.onchange=()=>setProvider(select.value);
  }
  const select=$('provider-select');const rows=[{id:'managed',label:`Slink · ${s.connection?.compute==='cpu'?'CPU':s.connection?.kind==='strata'?'Strata':'GPU'} · current runtime`},{id:'auto',label:'Automatic · ready private worker'},...(s.providers||[]).map(p=>({id:p.id,label:p.kind==='cloud'?`☁ ${p.label} · leaves this house · ${p.observed.state}${planText(p)?' · '+planText(p):''}`:`${p.label} · ${p.compute.toUpperCase()} · ${p.display_model} · ${p.observed.state}`}))];
@@ -123,7 +147,19 @@ function providerControls(s){
  select.value=providerSelection;select.disabled=busy||benchRunning;
  const cloud=cloudProvider(s,providerSelection);$('provider-note').style.color=cloud?'var(--warn)':'';
  $('provider-note').textContent=cloud?`Leaves this house: every turn of this conversation is sent to ${cloud.vendor} through your own plan (${cloud.route_class}). No tools, files or Haven memory; never chosen by Automatic; no paid API fallback.${planText(cloud)?' Plan: '+planText(cloud)+'.':''}`:providerSelection==='managed'?'Using the current Slink runtime. CPU/GPU loading is available in Model library.':providerSelection==='auto'?'Uses an already-ready private worker. No model starts, downloads, paid calls or cloud fallback. The actual worker is shown with each result.':'Inference runs on the selected machine. The cards above measure Slink, the control host. New worker selections start a fresh conversation.';
- $('provider-refresh').disabled=providerProbeBusy||busy;
+ const quick=$('model-quick-select'),artifact=$('artifact-select'),load=$('artifact-load');
+  const installed=(s.models||[]).filter(m=>m.downloaded);
+  const artifactSignature=JSON.stringify(installed.map(m=>[m.id,m.name,m.quant]));
+  if(artifact.dataset.signature!==artifactSignature){
+   const before=artifact.value;
+   artifact.replaceChildren(...installed.map(m=>{const o=element('option','',m.name+' · '+(m.quant||'GGUF'));o.value=m.id;return o;}));
+   artifact.dataset.signature=artifactSignature;
+   if(installed.some(m=>m.id===before))artifact.value=before;
+  }
+  quick.classList.toggle('hidden',providerSelection!=='managed');
+  load.disabled=busy||benchRunning||!installed.length;
+  load.textContent=installed.length?'Load selected artifact on Slink':'No installed artifacts — open Models';
+  $('provider-refresh').disabled=providerProbeBusy||busy;
  if((s.providers||[]).length&&!providerProbeBusy&&Date.now()>providerProbeAt){providerProbeBusy=true;providerProbeAt=Date.now()+30000;api('/api/providers/probe',{}).then(()=>refresh()).catch(()=>{}).finally(()=>{providerProbeBusy=false;});}
 }
 function applyState(s) {
@@ -142,6 +178,8 @@ function applyState(s) {
  const sw=switching?(s.jobs||[]).find(j=>j.id===s.prepared_runtime.switch_job):null;
  const swText=sw?`${(sw.message||'Switching prepared runtimes\u2026').replace(/\u2026$/,'')} \u2014 ${Math.floor((sw.elapsed_seconds??(Date.now()/1000-(sw.created_at||Date.now()/1000)))/60)} min elapsed${sw.target==='strata'?' of about 15 (Strata reads 33 GB of experts over the slow disk)':''}.`:'';
  if(!linkExpired)$('chat-hint').textContent=switching?swText:'Text-only \u00b7 Enter to send \u00b7 Shift+Enter for a new line';
+ const maxOut=outputLimit(c),field=$('max-tokens');field.max=String(maxOut);if(Number(field.value)>maxOut)field.value=String(maxOut);
+ $('max-tokens-note').textContent=c.profile?.context?`Up to ${maxOut.toLocaleString()} tokens: the loaded ${c.profile.context.toLocaleString()}-token context, shared with this conversation. Haven rejects requests that would not fit instead of truncating them.`:`Up to ${maxOut.toLocaleString()} tokens for this backend; its context is not reported. If the model hits the limit, Haven offers Continue instead of pretending it finished.`;
  $('send').disabled=busy||benchRunning||switching||!connected; $('run-bench').disabled=busy||benchRunning||switching||!connected;
  for(const id of ['connect','disconnect','unload','profile','context','threads','confirm-import'])$(id).disabled=benchRunning||switching;
  const linux=h.platform==='linux';
@@ -184,7 +222,29 @@ function applyState(s) {
  if(!diagnosticResumed&&sessionStorage.getItem('haven-diagnostic-job')&&(!auth.enabled||auth.user?.role==='admin')){diagnosticResumed=true;showDiagnostic(sessionStorage.getItem('haven-diagnostic-job'));}
 }
 async function refresh(){ if(refreshBusy)return; refreshBusy=true; try{applyState(await api('/api/state'));}catch(e){if(!state)toast(e.message,true);}finally{refreshBusy=false;} }
-function renderModels(){ const grid=$('model-grid'); grid.replaceChildren(); for(const m of state.models){ const n=element('article','model-card'); n.append(element('span','tag',m.tag||'LOCAL IMPORT'),element('h2','',m.name),element('p','',m.description)); const meta=element('div','model-meta'); meta.append(element('span','',m.quant||'GGUF'),element('span','',m.download_gb?`${m.download_gb.toFixed(2)} GB download`:`${((m.size_bytes||0)/1e9).toFixed(2)} GB file`),element('span','',m.license||'Review model license')); n.append(meta); const buttons=element('div','button-row'); const action=element('button',m.downloaded?'primary':'secondary',m.downloaded?`Load on ${$('compute-lane').value==='cpu'?'CPU':'GPU'} ↗`:'Download model ↓'); action.disabled=busy||benchRunning; action.onclick=()=>modelAction(m); buttons.append(action); if(m.source){const link=element('a','text-btn','Model card ↗');link.href=m.source;link.target='_blank';link.rel='noreferrer noopener';buttons.append(link);} n.append(buttons);grid.append(n); } }
+function renderModels(){
+ const grid=$('model-grid');grid.replaceChildren();
+ const all=state?.models||[];
+ const rows=all.filter(m=>(!favoritesOnly||favorites.has(m.id))&&(!modelSearch||[m.name,m.description,m.id,m.quant,m.tag,m.license].filter(Boolean).join(' ').toLowerCase().includes(modelSearch)));
+ $('model-count').textContent=rows.length+' of '+all.length+' prepared models';
+ if(!rows.length)grid.append(element('p','muted','No matching models in the prepared catalog. Search public model metadata above.'));
+ for(const m of rows){
+  const n=element('article','model-card'),top=element('div','model-card-top');
+  top.append(element('span','tag',m.downloaded?'INSTALLED · NOT NECESSARILY RUNNING':'CATALOG · NOT INSTALLED'));
+  const fav=element('button','secondary model-favorite',favorites.has(m.id)?'★ Saved':'☆ Favorite');
+  fav.setAttribute('aria-label',(favorites.has(m.id)?'Remove favorite ':'Add favorite ')+m.name);
+  fav.onclick=()=>{if(favorites.has(m.id))favorites.delete(m.id);else favorites.add(m.id);
+   try{localStorage.setItem('haven-model-favorites',JSON.stringify([...favorites]));}catch(_){}renderModels();};
+  top.append(fav);n.append(top,element('h2','',m.name),element('p','',m.description));
+  const meta=element('div','model-meta');
+  meta.append(element('span','',m.quant||'GGUF'),element('span','',m.download_gb?m.download_gb.toFixed(2)+' GB download':((m.size_bytes||0)/1e9).toFixed(2)+' GB file'),element('span','',m.license||'Review model license'));n.append(meta);
+  const buttons=element('div','button-row');
+  const action=element('button',m.downloaded?'primary':'secondary',m.downloaded?'Load on '+($('compute-lane').value==='cpu'?'CPU':'GPU')+' ↗':'Download model ↓');
+  action.disabled=busy||benchRunning;action.onclick=()=>modelAction(m);buttons.append(action);
+  if(m.source){const link=element('a','text-btn','Model card ↗');link.href=m.source;link.target='_blank';link.rel='noreferrer noopener';buttons.append(link);}
+  n.append(buttons);grid.append(n);
+ }
+}
 function renderJobs(){ const root=$('jobs');root.replaceChildren(); for(const j of state.jobs.filter(x=>x.kind!=='generation').slice(-5)){const n=element('div','job');n.append(element('strong','',`${j.kind.replaceAll('-',' ')} · ${j.state}`),element('p','',j.error||j.message||'Working…'));if(j.state==='RUNNING'){const pr=element('progress');pr.max=1;if(j.progress!=null)pr.value=j.progress;n.append(pr);const c=element('button','text-btn','Cancel / pause');c.onclick=async()=>{try{await api('/api/cancel',{id:j.id});toast('Cancellation requested. Downloads retain their partial file.');}catch(e){toast(e.message,true)}};n.append(c);}root.append(n);} }
 async function modelAction(m){try{if(!m.downloaded){if(!confirm(`Download ${m.name} (${m.download_gb} GB) from Hugging Face? The file will be checksum-verified before use.`))return;await api('/api/model/download',{id:m.id,confirmed:true});go('setup');toast('Download started. Progress appears below the engine log.');}else{const compute=$('compute-lane').value;const out=await api('/api/engine/start',{id:m.id,preset:$('profile').value,compute,overrides:{context:Number($('context').value),threads:Number($('threads').value)},allow_tight:$('allow-tight').checked});go('setup');toast(`Loading the ${compute==='cpu'?'CPU-only':'CUDA'} engine. Watch the engine log for real startup status.`);const job=await waitJob(out.job_id);if(job.state!=='COMPLETED')throw new Error(job.error||`Engine start ${job.state.toLowerCase()}.`);await refresh();go('playground');toast(`Model ready on ${compute==='cpu'?'CPU':'GPU'}.`);}await refresh();}catch(e){toast(e.message,true);}}
 async function waitJob(id, render,interval=350){while(true){const j=await api('/api/jobs/'+id);if(render)render(j);if(j.state!=='RUNNING'){if(j.state==='FAILED')throw new Error(j.error||'Job failed.');return j;}await sleep(interval);}}
@@ -215,16 +275,24 @@ async function startDiagnostic(){
  if(busy||benchRunning)return;
  try{const question=$('prompt').value.trim();const result=await api('/api/diagnostics',question?{question}:{});sessionStorage.setItem('haven-diagnostic-job',result.job_id);diagnosticResumed=true;$('prompt').value='';await showDiagnostic(result.job_id);}catch(e){toast(e.message,true);}
 }
+// The server deadline is at most 240 s; watching longer than that cannot be a live diagnostic.
+const DIAGNOSTIC_WATCH_MS=300000, DIAGNOSTIC_POLL_MISSES=3;
 async function showDiagnostic(id){
  busy=true;activeJob=id;$('cancel').classList.remove('hidden');const node=messageNode('assistant','Loading the saved diagnostic…');
- try{let job;while(true){job=await api('/api/diagnostics/'+id);node.body.textContent=job.text||job.message||job.state;if(job.state!=='RUNNING')break;await sleep(1500);}
+ const until=Date.now()+DIAGNOSTIC_WATCH_MS;let misses=0;
+ try{let job;while(true){
+   try{job=await api('/api/diagnostics/'+id);misses=0;}
+   catch(e){if([401,403,404].includes(e.status)||++misses>=DIAGNOSTIC_POLL_MISSES)throw e;node.body.textContent=`Reconnecting to the diagnostic (${misses}/${DIAGNOSTIC_POLL_MISSES})…`;await sleep(1500);continue;}
+   node.body.textContent=job.text||job.message||job.state;if(job.state!=='RUNNING')break;
+   if(Date.now()>until)throw new Error('Stopped watching: the diagnostic still reports RUNNING after 5 minutes. Chat is available again; its saved receipt stays in Setup → Jobs.');
+   await sleep(1500);}
   node.n.append(element('div','result-meta',`${job.state} · saved diagnostic ${id} · ${job.trace?.length||0} observed tools`));
   node.n.append(element('p','field-note','Request status describes execution. The diagnosis still needs checking against its evidence.'));
   for(const warning of job.citation_check?.warnings||[])node.n.append(element('p','field-note',warning));
   if(job.error)node.n.append(element('p','field-note',job.error));
   const details=element('details');details.append(element('summary','','Observed evidence and command exit codes'));
   details.append(element('pre','',JSON.stringify(job.trace||[],null,2)));node.n.append(details);
- }catch(e){node.body.textContent=e.message;toast(e.message,true);}finally{busy=false;activeJob=null;$('cancel').classList.add('hidden');await refresh();}
+ }catch(e){node.body.textContent=e.message;toast(e.message,true);}finally{sessionStorage.removeItem('haven-diagnostic-job');busy=false;activeJob=null;$('cancel').classList.add('hidden');await refresh();}
 }
 function clearChat(){if(busy){toast('Stop or finish the current request first.');return;}messages=[];$('messages').replaceChildren(element('p','muted','New conversation. Nothing from the previous chat is sent.'));}
 $('new-chat').onclick=clearChat;
@@ -258,6 +326,16 @@ async function sendMessage(override,benchmark=false,label='interactive',settings
  const outcome=outputLimited?'OUTPUT LIMIT REACHED':done.state==='CANCELLED'?'STOPPED':done.state;
  const m=done.metrics||{},reason=done.finish_reason?` · finish ${done.finish_reason}`:'';const meta=`${outcome}${reason} · first output ${m.ttft_seconds==null?'—':m.ttft_seconds.toFixed(2)+' s'} · end-to-end ${rate(m.end_to_end_tps)} tok/s · decode ${rate(m.backend_decode_tps)} tok/s`;
  node.n.append(element('div','result-meta',`${done.worker_label||'Slink'} · ${done.compute||'GPU'} · ${meta}`));
+// Report observed, not assumed, routing. A provider selector isn't an artifact.
+  const route=element('details','route-inspector');
+  route.append(element('summary','','Routing & model identity · inspect this response'));
+  const trace={requested:{selector:sent.provider_id,mode:sent.provider_id==='auto'?'automatic':'manual'},
+    observed:{provider_id:done.provider_id??null,worker:done.worker_label??null,reported_model:done.model??null,
+      model_sha256:done.model_sha256??null,digest_provenance:done.digest_provenance??null,
+      compute:done.compute??null,egress:done.egress??null,route_reason:done.route_reason??null},
+    execution:{job_id:done.id??null,state:done.state,finish_reason:done.finish_reason??null},
+    fallback:'UNDETERMINED',identity_attestation:'NOT_VERIFIED'};
+  route.append(element('pre','',JSON.stringify(trace,null,2)));node.n.append(route);
  if(done.digest_provenance==='WORKER_DECLARED')node.n.append(element('p','field-note','Model digest: verified on worker; declared to Haven.'));
  if(done.route_reason)node.n.append(element('p','field-note',done.route_reason));
  if(outputLimited&&!benchmark){const actions=element('div','button-row');const cont=element('button','secondary continue-generation','Continue ↗');cont.onclick=async()=>{cont.disabled=true;cont.textContent='Continuing…';await sendMessage(CONTINUE_PROMPT,false,'continue',null,true);};actions.append(cont);node.n.append(actions);}
@@ -274,7 +352,57 @@ const workloads={explain:'Explain the difference between DNS failure, TCP connec
 $('cancel-bench').onclick=async()=>{benchStop=true;if(activeJob)await api('/api/cancel',{id:activeJob});toast('Experiment stopping. No further repetitions will be sent.');};
 $('run-bench').onclick=async()=>{if(benchRunning)return;const n=Number($('bench-repeats').value);if(!confirm(`Run ${n} real inference request(s) on the connected LOCAL model? No hidden warm-up. This consumes local compute, not a hosted API.`))return;
  const prompt=workloads[$('bench-workload').value],label=$('bench-label').value,settings={...genSettings(),...(providerSelection==='managed'?{expected_connected_at:state.connection.connected_at}:{})};benchRunning=true;benchStop=false;applyState(state);$('cancel-bench').classList.remove('hidden');$('run-bench').disabled=true;try{for(let i=0;i<n&&!benchStop;i++){$('bench-status').textContent=`Running ${i+1} of ${n}…`;const j=await sendMessage(prompt,true,`${label} / ${i+1}`,settings);if(!j||j.state!=='COMPLETED'){toast('Benchmark stopped after an incomplete request; failure remains recorded.',true);break;}}$('bench-status').textContent='Finished. Inspect individual outcomes and answer quality.';await loadBenchmarks();}finally{benchRunning=false;$('cancel-bench').classList.add('hidden');await refresh();}};
-async function loadBenchmarks(){try{const d=await api('/api/benchmarks');$('bench-table').replaceChildren();for(const r of d.rows.slice(-30).reverse()){const tr=element('tr');for(const v of [r.label,r.model,r.metrics.ttft_seconds==null?'—':r.metrics.ttft_seconds.toFixed(2)+' s',r.metrics.end_to_end_tps==null?'—':r.metrics.end_to_end_tps+' t/s',r.metrics.backend_decode_tps==null?'—':r.metrics.backend_decode_tps+' t/s',r.state])tr.append(element('td','',String(v)));$('bench-table').append(tr);}if(!d.rows.length){const tr=element('tr');const td=element('td','muted','No benchmarks yet. Real measurements appear here after you run a model.');td.colSpan=6;tr.append(td);$('bench-table').append(tr);}}catch(e){toast(e.message,true)}}
+async function loadBenchmarks(){try{const d=await api('/api/benchmarks');$('bench-table').replaceChildren();for(const r of d.rows.slice(-30).reverse()){const tr=element('tr');for(const v of [r.label,r.model,r.metrics.ttft_seconds==null?'—':r.metrics.ttft_seconds.toFixed(2)+' s',r.metrics.end_to_end_tps==null?'—':r.metrics.end_to_end_tps+' t/s',r.metrics.backend_decode_tps==null?'—':r.metrics.backend_decode_tps+' t/s',r.state])tr.append(element('td','',String(v)));$('bench-table').append(tr);}if(!d.rows.length){const tr=element('tr');const td=element('td','muted','No benchmarks yet. Real measurements appear here after you run a model.');td.colSpan=6;tr.append(td);$('bench-table').append(tr);}}catch(e){toast(e.message,true)}finally{loadExperimentSummary();}}
+// Read-only summary of historical, measured runs. It never starts a model.
+let savedExperimentSummary=null;
+const comparisonNumber=(n,unit)=>typeof n==='number'&&Number.isFinite(n)?n.toFixed(2)+' '+unit:'—';
+function renderExperimentSummary(){
+ const root=$('compare-groups');root.replaceChildren();
+ const data=savedExperimentSummary;
+ if(!data){root.append(element('p','muted','No saved comparison data loaded.'));return;}
+ const rows=(data.groups||[]).filter(g=>!$('compare-multi-only').checked||g.eligible_for_cross_model_comparison);
+ if(!rows.length){root.append(element('p','muted','No matching cross-model measurements yet. Benchmark the same workload and generation settings on two different models; use the same seed and cache policy. This view does not run them for you.'));return;}
+ for(const group of rows.slice(0,15)){
+  const card=element('article','compare-suite');
+  const head=element('div','compare-suite-head');
+  head.append(element('strong','',group.prompt_sha256.slice(0,12)+'… · config '+group.config_fingerprint),
+              element('span','field-note',group.total_runs+' measured run(s) · '+group.models.length+' variant(s)'));
+  card.append(head);
+  const scroll=element('div','table-wrap'),table=element('table');
+  const thead=element('thead'),tr=element('tr');
+  for(const label of ['Reported model / source','Runs','First output (median)','Decode (median)','End-to-end (median)'])tr.append(element('th','',label));
+  thead.append(tr);table.append(thead);
+  const body=element('tbody');
+  for(const variant of group.models){
+   const row=element('tr');
+   const desc=element('td');
+   desc.append(element('strong','',variant.model));
+   const origin=[variant.worker||variant.provider_id||'Unreported worker',variant.compute||'compute unknown',
+    variant.model_sha256?'digest '+variant.model_sha256.slice(0,12)+'…':'artifact digest unavailable'].join(' · ');
+   desc.append(element('div','field-note',origin));row.append(desc);
+   for(const val of [variant.completed+'/'+variant.runs+' completed',
+    comparisonNumber(variant.median_ttft_s,'s'),comparisonNumber(variant.median_decode_tps,'tok/s'),
+    comparisonNumber(variant.median_end_to_end_tps,'tok/s')])row.append(element('td','',val));
+   body.append(row);
+  }table.append(body);scroll.append(table);card.append(scroll);root.append(card);
+ }
+ if(rows.length>15)root.append(element('p','field-note','Showing the 15 newest relevant cases. Export full raw receipts for deeper offline analysis.'));
+}
+async function loadExperimentSummary(){
+ const btn=$('compare-refresh');btn.disabled=true;$('compare-status').textContent='Inspecting saved benchmark receipts…';
+ try{
+  const d=await api('/api/experiment-summary');
+  if(d.schema!=='haven-experiment-summary-1')throw new Error('Unexpected experiment-summary schema.');
+  savedExperimentSummary=d;
+  $('compare-status').textContent=d.records_examined+' receipt(s) inspected · '+d.total_groups+' case(s) · '+d.records_excluded+' excluded'+(d.history_truncated?' · oldest history omitted to bound memory':'')+'. No quality grading or hardware equivalence claim.';
+  renderExperimentSummary();
+ }catch(e){
+  $('compare-status').textContent='Could not retrieve experiment summaries: '+e.message;
+  $('compare-groups').replaceChildren();
+ }finally{btn.disabled=false;}
+}
+$('compare-refresh').onclick=loadExperimentSummary;
+$('compare-multi-only').onchange=renderExperimentSummary;
 $('export-bench').onclick=async()=>{try{saveJSON('haven-benchmarks.json',await api('/api/benchmarks'));}catch(e){toast(e.message,true)}};
 $('exit').onclick=async()=>{if(!confirm('Exit this lab and stop its OWNED engine? External Strata remains in its own console.'))return;try{await api('/api/shutdown',{});$('connection-pill').textContent='Lab closed';$('send').disabled=true;clearInterval(timer);toast('Lab closed. You can close this tab.');}catch(e){toast(e.message,true)}};
 boot();

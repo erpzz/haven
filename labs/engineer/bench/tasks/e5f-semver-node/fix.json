@@ -1,0 +1,17 @@
+[
+  {
+    "path": "lib/semver.js",
+    "old": "return { parts: core.split('.'), pre:",
+    "new": "return { parts: core.split('.').map(Number), pre:"
+  },
+  {
+    "path": "lib/semver.js",
+    "old": "  const n = Math.max(x.pre.length, y.pre.length);\n",
+    "new": "  if (!x.pre.length || !y.pre.length) return x.pre.length ? -1 : y.pre.length ? 1 : 0;\n  const n = Math.max(x.pre.length, y.pre.length);\n"
+  },
+  {
+    "path": "lib/semver.js",
+    "old": "    if (x.pre[i] !== y.pre[i]) return x.pre[i] < y.pre[i] ? -1 : 1;\n",
+    "new": "    const p = /^\\d+$/.test(x.pre[i]) ? Number(x.pre[i]) : x.pre[i];\n    const q = /^\\d+$/.test(y.pre[i]) ? Number(y.pre[i]) : y.pre[i];\n    if (p !== q) return p < q ? -1 : 1;\n"
+  }
+]

@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import pathlib
 import time
@@ -34,20 +35,70 @@ def save(root: pathlib.Path, reg: dict):
     os.replace(tmp, root / 'registry.json')
 
 
+def verify_training_artifacts(run_dir: pathlib.Path, receipt: dict) -> dict:
+    """Verify CUDA receipt consistency and exact adapter bytes before registration.
+
+    This is a provenance check, NOT an independent hardware attestation: a
+    maliciously fabricated receipt remains possible. Verified model quality
+    still requires the independent held-out evaluation gate.
+    """
+    if receipt.get('classification') != 'GPU_TRAINING_RUN' or receipt.get('device') != 'cuda':
+        raise ValueError('Only actual CUDA-training receipts are registrable.')
+    if receipt.get('execute') is not True:
+        raise ValueError('Dry runs cannot be registered.')
+    gpu = receipt.get('cuda_evidence')
+    if not isinstance(gpu, dict):
+        raise ValueError('Missing CUDA runtime evidence.')
+    steps = receipt.get('optimizer_steps')
+    if type(steps) is not int or steps < 1 or gpu.get('optimizer_steps') != steps:
+        raise ValueError('CUDA training must complete verifiable optimizer steps.')
+    for field in ('total_memory_bytes', 'peak_allocated_bytes', 'trainable_cuda_parameters'):
+        value = gpu.get(field)
+        if type(value) is not int or value <= 0:
+            raise ValueError(f'Invalid CUDA {field} in receipt.')
+    if not isinstance(gpu.get('device_name'), str) or not gpu['device_name'].strip():
+        raise ValueError('CUDA device name is missing.')
+    try:
+        loss = float(receipt['train_loss'])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError('Training loss missing or invalid.') from exc
+    if not math.isfinite(loss):
+        raise ValueError('Training loss must be finite.')
+    adapter = run_dir / 'adapter'
+    if adapter.is_symlink() or not (adapter / 'adapter_config.json').is_file():
+        raise ValueError('Adapter config is missing or unsafe.')
+    expected = receipt.get('adapter_weights_sha256')
+    if not isinstance(expected, dict) or len(expected) != 1:
+        raise ValueError('Exactly one hashed adapter weights file is required.')
+    name, checksum = next(iter(expected.items()))
+    if name not in ('adapter_model.safetensors', 'adapter_model.bin'):
+        raise ValueError('Unexpected adapter weight format.')
+    path = adapter / name
+    if path.is_symlink() or not path.is_file() or path.stat().st_size <= 0:
+        raise ValueError('Adapter weights are absent, empty, or symlinked.')
+    if not isinstance(checksum, str) or len(checksum) != 64 or any(x not in '0123456789abcdef' for x in checksum):
+        raise ValueError('Invalid adapter weights checksum.')
+    digest = hashlib.sha256()
+    with path.open('rb') as reader:
+        for block in iter(lambda: reader.read(1024 * 1024), b''):
+            digest.update(block)
+    if digest.hexdigest() != checksum:
+        raise ValueError('Adapter weights do not match the recorded SHA-256.')
+    return {'weight_file': name, 'weight_sha256': checksum, 'weight_bytes': path.stat().st_size,
+            'cuda_device': gpu['device_name'], 'optimizer_steps': steps}
+
+
 def register(root: pathlib.Path, run_dir: pathlib.Path, name: str) -> dict:
     receipt_path = run_dir / 'receipt.json'
     receipt = json.loads(receipt_path.read_text())
-    if receipt.get('classification') != 'GPU_TRAINING_RUN':
-        raise ValueError('Only completed GPU training runs can be registered; CPU pipeline checks are not models.')
-    if not (run_dir / 'adapter' / 'adapter_config.json').exists():
-        raise ValueError('Adapter weights are missing.')
+    evidence = verify_training_artifacts(run_dir, receipt)
     reg = load(root)
     if name in reg['adapters']:
         raise ValueError('Adapter names are immutable; choose a new version name.')
     reg['adapters'][name] = {'path': str(run_dir / 'adapter'), 'base_model': receipt['base_model'],
                              'base_revision': receipt['base_revision'], 'data_sha256': receipt['data_sha256'],
                              'receipt_sha256': hashlib.sha256(receipt_path.read_bytes()).hexdigest(),
-                             'registered_at': time.time(), 'evals': {}}
+                             'registered_at': time.time(), 'evals': {}, 'gpu_receipt': evidence}
     save(root, reg)
     return reg['adapters'][name]
 

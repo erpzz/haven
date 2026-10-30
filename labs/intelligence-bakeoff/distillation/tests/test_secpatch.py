@@ -311,7 +311,7 @@ class FreshTests(unittest.TestCase):
 
 class ReportTests(unittest.TestCase):
     def test_resummarize_uses_only_shared_items(self):
-        import report
+        from secpatch import report  # tool_sft/report.py has the same module name
         def row(i, task, score):
             return {'id': i, 'key': i, 'task': task, 'label': 'vulnerable', 'seed': 0, 'score': score, 'false_positive': False,
                     'unsupported': False, 'invalid_json': False, 'latency_s': 1.0, 'completion_tokens': 3}
@@ -331,8 +331,18 @@ class RegistryAndTrainTests(unittest.TestCase):
         d = pathlib.Path(t) / 'run'
         (d / 'adapter').mkdir(parents=True)
         (d / 'adapter' / 'adapter_config.json').write_text('{}')
-        (d / 'receipt.json').write_text(json.dumps({'classification': classification, 'base_model': 'Qwen/Qwen3-0.6B',
-                                                     'base_revision': 'c1899de', 'data_sha256': '0' * 64}))
+        # Unit fixture only: this does not execute or claim actual GPU training.
+        weights = b'unit-fixture-not-a-trained-model'
+        (d / 'adapter' / 'adapter_model.safetensors').write_bytes(weights)
+        import hashlib
+        (d / 'receipt.json').write_text(json.dumps({
+            'classification': classification, 'device': 'cuda' if classification == 'GPU_TRAINING_RUN' else 'cpu',
+            'execute': True, 'optimizer_steps': 2, 'train_loss': 1.25,
+            'cuda_evidence': {'optimizer_steps': 2, 'device_name': 'UNIT_TEST_ONLY',
+                              'total_memory_bytes': 1024, 'peak_allocated_bytes': 64,
+                              'trainable_cuda_parameters': 2},
+            'adapter_weights_sha256': {'adapter_model.safetensors': hashlib.sha256(weights).hexdigest()},
+            'base_model': 'Qwen/Qwen3-0.6B', 'base_revision': 'c1899de', 'data_sha256': '0' * 64}))
         return d
 
     def summary(self, t, name, score, fpr, recall=0.9):
@@ -355,6 +365,26 @@ class RegistryAndTrainTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             with self.assertRaises(ValueError):
                 registry.register(pathlib.Path(t) / 'reg', self.run_dir(t, 'CPU_PIPELINE_CHECK'), 'v1')
+
+    def test_registration_rejects_missing_gpu_evidence_and_tampered_weights(self):
+        with tempfile.TemporaryDirectory() as t:
+            root = pathlib.Path(t) / 'registry'
+            run = self.run_dir(t, 'GPU_TRAINING_RUN')
+            receipt_path = run / 'receipt.json'
+            original = json.loads(receipt_path.read_text())
+            for altered in ({**original, 'execute': False},
+                            {**original, 'device': 'cpu'},
+                            {**original, 'optimizer_steps': 0},
+                            {**original, 'cuda_evidence': {}},
+                            {**original, 'adapter_weights_sha256': {}}):
+                with self.subTest(changed=list(altered)), self.assertRaises(ValueError):
+                    receipt_path.write_text(json.dumps(altered))
+                    registry.register(root, run, 'not-a-run')
+            receipt_path.write_text(json.dumps(original))
+            (run / 'adapter' / 'adapter_model.safetensors').write_bytes(b'tampered')
+            with self.assertRaises(ValueError):
+                registry.register(root, run, 'not-a-run')
+            self.assertFalse((root / 'registry.json').exists())
 
     def test_gated_promotion_and_rollback(self):
         with tempfile.TemporaryDirectory() as t:

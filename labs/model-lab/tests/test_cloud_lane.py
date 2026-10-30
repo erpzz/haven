@@ -301,8 +301,20 @@ class LaneTests(unittest.TestCase):
         self.lab_with(CLAUDE_OK)
         def post(headers, body):
             c = PrivateWorkerConnection(self.worker.socket('cloud-claude-code'), timeout=5)
-            c.request('POST', '/v1/chat/completions', json.dumps(body), headers); r = c.getresponse(); r.read(); c.close()
-            return r.status
+            try:
+                # Unauthorized clients are rejected before the server reads a body.
+                # Sending a body races the immediate 401/close on a Unix socket and
+                # intermittently raises BrokenPipeError client-side instead of
+                # exposing the actual 401. Check authentication with no body.
+                unauthorized = headers.get('Authorization') != 'Bearer ' + KEY
+                payload = None if unauthorized else json.dumps(body)
+                c.request('POST', '/v1/chat/completions', payload, headers)
+                r = c.getresponse()
+                status = r.status
+                r.read()
+                return status
+            finally:
+                c.close()
         body = {'model': 'haven-claude-code', 'stream': True, 'messages': [{'role': 'user', 'content': 'x'}]}
         self.assertEqual(post({'Authorization': 'Bearer wrong'}, body), 401)
         self.assertEqual(post({'Authorization': 'Bearer ' + KEY}, {**body, 'stream': False}), 400)
