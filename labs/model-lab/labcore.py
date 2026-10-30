@@ -706,8 +706,16 @@ class Lab:
                 raise ValueError('Unload the current Lab-owned engine before selecting another compute lane.')
             exe = self.llama_exe()
             if not exe: raise ValueError('Install the CUDA engine first.')
+            # Decision specialists and models newer than the pinned engine are refused here,
+            # before any port, key file, GPU lease or engine process is touched.
+            from model_admission import file_refusal, load_refusal
+            refusal = load_refusal(next((m for m in self.catalog.get('models', []) if m.get('id') == model_id), {}),
+                                   self.catalog.get('llama_tag'))
+            if refusal: raise ValueError(refusal)
             item = self.settings['models'].get(model_id)
             if not item or not Path(item['path']).is_file(): raise ValueError('Download or import the model first.')
+            refusal = file_refusal(item['path'])  # also covers imported GGUFs with no catalog entry
+            if refusal: raise ValueError(refusal)
             if compute not in ('gpu', 'cpu'): raise ValueError('Unknown compute lane.')
             if preset not in PRESETS: raise ValueError('Unknown preset.')
             if (preset == 'cpu') != (compute == 'cpu'):
@@ -809,6 +817,32 @@ class Lab:
                     j.update(state='CANCELLED' if j.cancelled.is_set() else 'FAILED', error=str(e), cleanup=stopped)
             threading.Thread(target=wait_ready, daemon=True).start()
             return j.id
+    def model_admission(self) -> dict:
+        """Read-only admission ladder for every catalog model (contract haven.model-capability/v1).
+
+        Never downloads, loads or probes an engine. Reads at most a bounded GGUF header per
+        downloaded file and the tail of this Lab's own benchmarks.jsonl.
+        """
+        from experiment_analysis import _receipt_tail
+        from model_admission import CONTRACT, assess, router_view, validate_entry
+        with self.lock:
+            tag = self.catalog.get('llama_tag')
+            installed = self.llama_exe() is not None
+            conn = dict(self.connection or {})
+            serving = conn.get('ownership') == 'OWNED' and self.engine.status().get('state') == 'READY'
+            loaded = conn.get('model_sha256') if serving else None
+            entries = [dict(m) for m in self.catalog.get('models', [])]
+            paths = {k: v.get('path') for k, v in self.settings['models'].items()}
+        records, truncated = _receipt_tail(self.data / 'benchmarks.jsonl')
+        models = []
+        for entry in entries:  # header reads happen outside the Lab lock
+            admission = assess(entry, artifact_path=paths.get(entry.get('id')), engine_tag=tag,
+                               engine_installed=installed, loaded_sha256=loaded, receipts=records)
+            admission['contract_problems'] = validate_entry(entry)
+            models.append({'id': entry.get('id'), 'admission': admission,
+                           'router_view': router_view(entry, admission)})
+        return {'contract': CONTRACT, 'engine': {'tag': tag, 'installed': installed},
+                'receipts_scanned': len(records), 'receipts_truncated': truncated, 'models': models}
     def stop_engine(self, *, _switch_job=None):
         with self.lock:
             self.guard_runtime(_switch_job)

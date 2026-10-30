@@ -1,0 +1,85 @@
+{
+ "schema": "haven.runtime-smoke/v1",
+ "what": "one tool-call compatibility probe, not a benchmark",
+ "environment": "cloud CPU container (2 vCPU, 8 GB), llama.cpp b11946 CPU build 8ca4060; NOT Slink",
+ "model": "LiquidAI/LFM3-1.7B-GGUF@b3f2ae5d73cd3c91bf40e8ba752c648aa05dffdf LFM3-1.7B-Q4_K_M.gguf",
+ "model_sha256": "3793e1e6e2266919d6e015287221b41100175a98eddaba92e111aed3b05c93c4",
+ "server_flags": "-t 2 -c 8192 --jinja",
+ "request_sha256": "641cc2f56b4a2d575a690cf380eb823f9a8aaba67c08ab7cd89b40bd47279322",
+ "request": {
+  "model": "x",
+  "temperature": 0,
+  "max_tokens": 1024,
+  "messages": [
+   {
+    "role": "system",
+    "content": "You are Haven's operations assistant. Use tools to get facts; never guess."
+   },
+   {
+    "role": "user",
+    "content": "Is the garage heater currently on? Check before answering."
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "get_device_state",
+     "description": "Read the current state of a household device.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "device_id": {
+        "type": "string",
+        "description": "Device id, e.g. garage-heater"
+       }
+      },
+      "required": [
+       "device_id"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_device_state",
+     "description": "Change a device state. Requires owner approval.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "device_id": {
+        "type": "string"
+       },
+       "on": {
+        "type": "boolean"
+       }
+      },
+      "required": [
+       "device_id",
+       "on"
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "finish_reason": "tool_calls",
+ "tool_calls": [
+  {
+   "name": "get_device_state",
+   "arguments": "{\"device_id\":\"garage-heater\"}"
+  }
+ ],
+ "reasoning_chars": 268,
+ "usage": {
+  "prompt_tokens": 173,
+  "completion_tokens": 85
+ },
+ "backend_timings": {
+  "prompt_per_second": 69.1,
+  "predicted_per_second": 11.3
+ },
+ "wall_seconds": 9.9,
+ "peak_rss_mib": 1939
+}

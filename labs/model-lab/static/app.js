@@ -90,7 +90,7 @@ async function requestJSON(path,data,sessionAware=true){
 }
 const api=(path,data)=>requestJSON(path,data,true);
 const publicApi=(path,data)=>requestJSON(path,data,false);
-function go(view) { if(auth.enabled&&auth.user?.role!=='admin'&&['models','experiments','setup'].includes(view))view='playground'; currentView=view; document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===view)); document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.view===view)); if(view==='research') loadResearch(); if(view==='experiments') loadBenchmarks(); if(view==='setup') loadLog(); }
+function go(view) { if(auth.enabled&&auth.user?.role!=='admin'&&['models','experiments','setup'].includes(view))view='playground'; currentView=view; document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===view)); document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.view===view)); if(view==='research') loadResearch(); if(view==='experiments') loadBenchmarks(); if(view==='setup') loadLog(); if(view==='models') loadAdmission(); }
 document.querySelectorAll('[data-view]').forEach(n=>n.onclick=()=>go(n.dataset.view)); document.querySelectorAll('[data-go]').forEach(n=>n.onclick=()=>go(n.dataset.go));
 function metric(id,value,unit) { const n=$(id); n.replaceChildren(document.createTextNode(value==null?'—':value)); n.append(element('small','',unit)); }
 function rate(value) { return typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'—'; }
@@ -135,7 +135,7 @@ function providerControls(s){
   modelSelect.setAttribute('aria-label','Select installed Slink artifact');modelLabel.append(modelSelect);quick.append(modelLabel);
   const load=element('button','secondary','Load selected artifact');load.id='artifact-load';
   load.onclick=()=>{
-   const m=(state?.models||[]).find(x=>x.id===modelSelect.value&&x.downloaded);
+   const m=(state?.models||[]).find(x=>x.id===modelSelect.value&&x.downloaded&&(x.interface||'chat')==='chat');
    if(!m){toast('Model is not installed; open the Models page to review and download.',true);return;}
    if(!confirm('Load '+m.name+' on Slink? This uses the selected CPU/GPU profile. Haven will enforce active job and resource guards.'))return;
    modelAction(m);
@@ -148,7 +148,7 @@ function providerControls(s){
  const cloud=cloudProvider(s,providerSelection);$('provider-note').style.color=cloud?'var(--warn)':'';
  $('provider-note').textContent=cloud?`Leaves this house: every turn of this conversation is sent to ${cloud.vendor} through your own plan (${cloud.route_class}). No tools, files or Haven memory; never chosen by Automatic; no paid API fallback.${planText(cloud)?' Plan: '+planText(cloud)+'.':''}`:providerSelection==='managed'?'Using the current Slink runtime. CPU/GPU loading is available in Model library.':providerSelection==='auto'?'Uses an already-ready private worker. No model starts, downloads, paid calls or cloud fallback. The actual worker is shown with each result.':'Inference runs on the selected machine. The cards above measure Slink, the control host. New worker selections start a fresh conversation.';
  const quick=$('model-quick-select'),artifact=$('artifact-select'),load=$('artifact-load');
-  const installed=(s.models||[]).filter(m=>m.downloaded);
+  const installed=(s.models||[]).filter(m=>m.downloaded&&(m.interface||'chat')==='chat');
   const artifactSignature=JSON.stringify(installed.map(m=>[m.id,m.name,m.quant]));
   if(artifact.dataset.signature!==artifactSignature){
    const before=artifact.value;
@@ -222,6 +222,9 @@ function applyState(s) {
  if(!diagnosticResumed&&sessionStorage.getItem('haven-diagnostic-job')&&(!auth.enabled||auth.user?.role==='admin')){diagnosticResumed=true;showDiagnostic(sessionStorage.getItem('haven-diagnostic-job'));}
 }
 async function refresh(){ if(refreshBusy)return; refreshBusy=true; try{applyState(await api('/api/state'));}catch(e){if(!state)toast(e.message,true);}finally{refreshBusy=false;} }
+let admission={};const openExplanations=new Set(); // survives the 4 s grid rebuild
+const STAGE_TEXT={CATALOGED:'Cataloged only',ARTIFACT_PRESENT:'File present, header checked',RUNTIME_COMPATIBLE:'Runtime compatible',LOADABLE:'Loadable (memory checked at load)',LOADED:'Loaded by this Lab',VERIFIED_BY_INFERENCE:'Loaded and verified by a local receipt'};
+async function loadAdmission(){try{const out=await api('/api/model-admission');admission=Object.fromEntries((out.models||[]).map(x=>[x.id,x.admission]));renderModels();}catch(e){admission={};}}
 function renderModels(){
  const grid=$('model-grid');grid.replaceChildren();
  const all=state?.models||[];
@@ -230,23 +233,33 @@ function renderModels(){
  if(!rows.length)grid.append(element('p','muted','No matching models in the prepared catalog. Search public model metadata above.'));
  for(const m of rows){
   const n=element('article','model-card'),top=element('div','model-card-top');
+  const decision=(m.interface||'chat')!=='chat',adm=admission[m.id];
   top.append(element('span','tag',m.downloaded?'INSTALLED · NOT NECESSARILY RUNNING':'CATALOG · NOT INSTALLED'));
+  if(decision)top.append(element('span','tag','DECISION SPECIALIST · NOT A CHAT MODEL'));
   const fav=element('button','secondary model-favorite',favorites.has(m.id)?'★ Saved':'☆ Favorite');
   fav.setAttribute('aria-label',(favorites.has(m.id)?'Remove favorite ':'Add favorite ')+m.name);
   fav.onclick=()=>{if(favorites.has(m.id))favorites.delete(m.id);else favorites.add(m.id);
    try{localStorage.setItem('haven-model-favorites',JSON.stringify([...favorites]));}catch(_){}renderModels();};
   top.append(fav);n.append(top,element('h2','',m.name),element('p','',m.description));
+  if(adm){const line=element('p','admission',`Admission: ${STAGE_TEXT[adm.stage]||adm.stage}${adm.blocked?' · stopped at '+adm.blocked:''}`);line.title=(adm.checks||[]).map(c=>`${c.ok?'✓':'✗'} ${c.stage}: ${c.detail}`).join('\n');n.append(line);if(adm.reason)n.append(element('p','muted',adm.reason));}
+  if(m.explanation){const d=element('details','model-explanation');d.open=openExplanations.has(m.id);d.ontoggle=()=>{if(d.open)openExplanations.add(m.id);else openExplanations.delete(m.id);};d.append(element('summary','','Why this model exists, and its limits'),element('p','',m.explanation.why),element('p','','Can: '+m.explanation.can),element('p','','Cannot: '+m.explanation.cannot));if((m.verification||[]).length)d.append(element('p','muted','Recorded off-Slink evidence: '+m.verification.map(v=>`${v.date} · ${v.where} · ${v.runtime_build} · ${v.result}`).join(' | ')));n.append(d);}
   const meta=element('div','model-meta');
   meta.append(element('span','',m.quant||'GGUF'),element('span','',m.download_gb?m.download_gb.toFixed(2)+' GB download':((m.size_bytes||0)/1e9).toFixed(2)+' GB file'),element('span','',m.license||'Review model license'));n.append(meta);
   const buttons=element('div','button-row');
-  const action=element('button',m.downloaded?'primary':'secondary',m.downloaded?'Load on '+($('compute-lane').value==='cpu'?'CPU':'GPU')+' ↗':'Download model ↓');
-  action.disabled=busy||benchRunning;action.onclick=()=>modelAction(m);buttons.append(action);
+  const runtimeBlocked=adm&&adm.blocked==='UNVERIFIED_MODEL_RUNTIME';
+  if(m.downloaded&&(decision||runtimeBlocked)){
+   // No button that implies a load the Lab will refuse.
+   buttons.append(element('span','tag',decision?'Not loadable in chat':'Needs llama.cpp b'+(m.runtime?.min_build||'?')+'+'));
+  }else{
+   const action=element('button',m.downloaded?'primary':'secondary',m.downloaded?'Load on '+($('compute-lane').value==='cpu'?'CPU':'GPU')+' ↗':'Download model ↓');
+   action.disabled=busy||benchRunning;action.onclick=()=>modelAction(m);buttons.append(action);
+  }
   if(m.source){const link=element('a','text-btn','Model card ↗');link.href=m.source;link.target='_blank';link.rel='noreferrer noopener';buttons.append(link);}
   n.append(buttons);grid.append(n);
  }
 }
 function renderJobs(){ const root=$('jobs');root.replaceChildren(); for(const j of state.jobs.filter(x=>x.kind!=='generation').slice(-5)){const n=element('div','job');n.append(element('strong','',`${j.kind.replaceAll('-',' ')} · ${j.state}`),element('p','',j.error||j.message||'Working…'));if(j.state==='RUNNING'){const pr=element('progress');pr.max=1;if(j.progress!=null)pr.value=j.progress;n.append(pr);const c=element('button','text-btn','Cancel / pause');c.onclick=async()=>{try{await api('/api/cancel',{id:j.id});toast('Cancellation requested. Downloads retain their partial file.');}catch(e){toast(e.message,true)}};n.append(c);}root.append(n);} }
-async function modelAction(m){try{if(!m.downloaded){if(!confirm(`Download ${m.name} (${m.download_gb} GB) from Hugging Face? The file will be checksum-verified before use.`))return;await api('/api/model/download',{id:m.id,confirmed:true});go('setup');toast('Download started. Progress appears below the engine log.');}else{const compute=$('compute-lane').value;const out=await api('/api/engine/start',{id:m.id,preset:$('profile').value,compute,overrides:{context:Number($('context').value),threads:Number($('threads').value)},allow_tight:$('allow-tight').checked});go('setup');toast(`Loading the ${compute==='cpu'?'CPU-only':'CUDA'} engine. Watch the engine log for real startup status.`);const job=await waitJob(out.job_id);if(job.state!=='COMPLETED')throw new Error(job.error||`Engine start ${job.state.toLowerCase()}.`);await refresh();go('playground');toast(`Model ready on ${compute==='cpu'?'CPU':'GPU'}.`);}await refresh();}catch(e){toast(e.message,true);}}
+async function modelAction(m){try{if(!m.downloaded){if(!confirm(`Download ${m.name} (${m.download_gb} GB) from Hugging Face? The file will be checksum-verified before use.${(m.interface||'chat')!=='chat'?' This is a decision specialist: it cannot be loaded as a chat model, and it needs llama.cpp b'+(m.runtime?.min_build||'?')+' or newer.':''}`))return;await api('/api/model/download',{id:m.id,confirmed:true});go('setup');toast('Download started. Progress appears below the engine log.');}else{const compute=$('compute-lane').value;const out=await api('/api/engine/start',{id:m.id,preset:$('profile').value,compute,overrides:{context:Number($('context').value),threads:Number($('threads').value)},allow_tight:$('allow-tight').checked});go('setup');toast(`Loading the ${compute==='cpu'?'CPU-only':'CUDA'} engine. Watch the engine log for real startup status.`);const job=await waitJob(out.job_id);if(job.state!=='COMPLETED')throw new Error(job.error||`Engine start ${job.state.toLowerCase()}.`);await refresh();go('playground');toast(`Model ready on ${compute==='cpu'?'CPU':'GPU'}.`);}await refresh();}catch(e){toast(e.message,true);}}
 async function waitJob(id, render,interval=350){while(true){const j=await api('/api/jobs/'+id);if(render)render(j);if(j.state!=='RUNNING'){if(j.state==='FAILED')throw new Error(j.error||'Job failed.');return j;}await sleep(interval);}}
 $('connect').onclick=async()=>{try{await api('/api/connect',{base:$('endpoint').value,key:$('backend-key').value,kind:$('backend-kind').value});$('backend-key').value='';await refresh();go('playground');toast('Connected locally. This lab will not stop the external server.');}catch(e){toast(e.message,true);}};
 $('disconnect').onclick=async()=>{try{await api('/api/disconnect',{});await refresh();toast('Disconnected. The external server is still running.');}catch(e){toast(e.message,true);}};
