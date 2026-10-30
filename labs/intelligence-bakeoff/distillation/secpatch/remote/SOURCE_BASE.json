@@ -1,5 +1,5 @@
 {
-  "base_commit": "4c1417a6646bc068bb3106c8fd60fed522ddf2ae",
+  "base_commit": "076cb18e5b6210e1936281b88c95b264b9048f19",
   "core_sha256": {
     "secpatch/build.py": "f32a80c5464e339571654c08b91529a8b304ac83efe1cb4db2b19c28a26cb407",
     "secpatch/evaluate.py": "1162999fe7fd7f8b0bb289a21783f8b9dcee2efc4ca31868e49ef26dca220c1e",
@@ -18,7 +18,8 @@
     "PR84": "632fe9d1be1ae844ba742c5d1cbb2c4903a60138",
     "R02-branch-merge": "670117a",
     "R02-grader-cwe-ids": "10243e302d60245ddcb014a75f43857af861b7d1",
-    "R02-build-multi-function": "4c1417a6646bc068bb3106c8fd60fed522ddf2ae"
+    "R02-build-multi-function": "4c1417a6646bc068bb3106c8fd60fed522ddf2ae",
+    "PR99-recall-guard": "076cb18e5b6210e1936281b88c95b264b9048f19"
   },
   "previous_base": {
     "base_commit": "eaa76f834bc9f64fe9aada542fdf3c00ba9a6f55",
@@ -74,7 +75,7 @@
       "at": "2026-10-30",
       "pr": 99,
       "base_commit_from": "4c1417a",
-      "base_commit_to": "(next commit)",
+      "base_commit_to": "076cb18",
       "changed": {
         "secpatch/evaluate.py": {
           "from_sha256": "91d6519c584142df3602ce3ecbb8a2aee5042486f84ecff78fad7f6665bff356",
