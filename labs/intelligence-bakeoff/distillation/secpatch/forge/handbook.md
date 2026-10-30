@@ -44,6 +44,13 @@ Analysis: check_token compares the caller's token with settings.API_TOKEN using 
 the first differing byte. Timing many requests lets an attacker recover the secret byte by byte. The comparison
 should be constant-time; this is an observable timing discrepancy (CWE-208).
 
+Code shown (vulnerable): `  12 |     m = re.match(r"^(\w+\s?)+$", title)`
+Analysis: parse_title matches the caller's title against the pattern on line 12, whose group (\w+\s?) is repeated
+by an outer + so the same characters can be split between iterations in exponentially many ways. A long run of word
+characters ending in a character that cannot match, such as many a characters followed by an exclamation mark,
+forces catastrophic backtracking and pins the CPU: regular-expression denial of service (CWE-1333, CWE-400). The
+issue is the nested quantifier, not the characters the pattern allows.
+
 Weakness playbook (what to look for, and what guard is actually sufficient):
 - CWE-22/23/36 path traversal: user path joined to a base. Sufficient: resolve (realpath/resolve) then check
   containment against the resolved base plus separator; rejecting only ".." strings or using os.path.join alone
