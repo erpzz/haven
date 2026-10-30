@@ -1,0 +1,60 @@
+{
+  "schema": "haven-tool-sft-preregistration-1",
+  "experiment": "TS-2 Claude-teacher tool SFT on the CPU lane",
+  "registered_utc": "2026-10-30",
+  "status": "REGISTERED_BEFORE_CLAUDE_TEACHER_DATA_OR_ANY_TS2_TRAINING",
+  "follows": "PREREGISTRATION.json (TS-1, Strata teacher). TS-1 is unchanged; its frozen files, verifier v3 and recipe are reused.",
+  "motivation": "In TS-1 the Strata teacher had 0% verified coverage of execute_refusal and missing_note and 7/40 of cross_user_deny, and its students learned none of them; the matched oracle control tied the teacher arm at 38/110. RESULTS.md recommended a teacher that covers those families. TS-2 tests whether a stronger teacher whose verified trajectories cover every training family yields a better student than scripted trajectories for the same episodes.",
+  "hypothesis": "A Qwen3-0.6B student fine-tuned on Claude tool trajectories that pass verifier v3 improves on held-out episodes over the same-device base, without more authority, leak or execution-claim flags, and scores higher than the matched oracle control.",
+  "frozen_files_sha256": {
+    "frozen/train.jsonl": "122c0c911239d97f1420324131cf89bc424829804a77a6ff9a3d17da4e465e9c",
+    "frozen/dev.jsonl": "d0ea4e7135a8bee870a8e841e78a0c356e21d2afaa6f1e34c5e5811a682110bd",
+    "frozen/heldout.jsonl": "3bb0900575699ddb95d99db03e2dc0c81a14777b2c626801c3dd70eff1e42540",
+    "labs/intelligence-bakeoff/tasks.json": "681e3b72c5b88dfd1a99b5af69e17dcbe3395a78d1e2b29d9018fba84e77dbe2"
+  },
+  "verifier_version": 3,
+  "teacher": {
+    "model": "Claude Opus, run as Claude Code subagents (Agent tool, model=opus) from a cloud session",
+    "harness": "claude_teacher.py: batched turn-by-turn harness. The agent sees the verbatim bakeoff system prompt, the four tool schemas, the authenticated user message and real synthetic tool outputs. It does not see check contracts, oracle plans or verdicts. Tool execution, principal binding (read_note and list_resources) and the 6-round limit are those of agent.py; replaying every oracle plan through the harness reproduces run_world_episode records exactly for all 510 train and held-out episodes.",
+    "protocol": "One attempt per training episode, no retries, no verdict feedback. 400 training episodes in 8 shards of 50 (episode index mod 8), one subagent per shard. Held-out ceiling: 110 held-out episodes in 2 shards, collected the same way and never used for training.",
+    "isolation_limit": "The subagents can technically read the repository, including the frozen files that contain contracts and oracle plans. They are instructed not to; this is an instruction, not an enforced boundary, and is disclosed with every result."
+  },
+  "arms": {
+    "base_cpu": "Qwen/Qwen3-0.6B @ c1899de289a04d12100db370d81485cdf75e47ca, no adapter, CPU lane evaluation",
+    "claude_sft": "LoRA on per-turn rows of every Claude training trajectory that passes verifier v3 (run.py build)",
+    "oracle_sft_matched": "control: identical settings and the same optimizer step count on scripted oracle trajectories for exactly the episode instances Claude solved (run.py build)",
+    "references": "Claude held-out ceiling (same harness); TS-1 GPU numbers as context only: base 14, Strata-teacher-SFT 38, oracle-SFT 38, Strata 55, deployed 4B 76 of 110"
+  },
+  "fixed_settings": {
+    "recipe": "TS-1 recipe: per-turn completion-masked LoRA r16 alpha 32 dropout 0.05 on all attention and MLP projections; AdamW lr 1e-4 weight decay 0; cosine with 5% warmup; effective batch 8; 2 epochs over claude_sft rows; grad-norm clip 1.0; token-weighted loss per 8-row step; seed 42; max length 2048; no target truncation",
+    "decoding": "greedy, non-thinking chat template, max 256 new tokens per turn, max 6 rounds (unchanged)",
+    "sets": "heldout (110) and legacy (8) for every student arm; evaluated once per final arm"
+  },
+  "deviations_from_ts1": [
+    "Device: 4-vCPU cloud container (Intel Xeon with AMX, 15 GB RAM), not Slink's GPU. Training and evaluation run in fp32 instead of fp32 with fp16 autocast.",
+    "Training loop: cpu_lane.py replaces HF Trainer. Optimizer, schedule, clipping and token-weighted loss match Trainer defaults used by train.py. The shared system/tool prefix of each 8-row step is computed once; gradients equal per-row computation up to float rounding (tests/test_cpu_lane.py), but one LoRA dropout mask covers the prefix positions of a step. Shuffling uses Python's seeded random, so example order differs from TS-1.",
+    "Evaluation backend: greedy HF generation with the shared prefix cached; on 10 held-out first turns cached and uncached generation were identical.",
+    "Base is re-run on this device (base_cpu) so every TS-2 comparison is same-device. TS-1 numbers are not paired with TS-2 numbers."
+  ],
+  "primary_metric": "pooled held-out pass rate (paraphrase + composition, n=110), verifier v3",
+  "success_criteria": [
+    "claude_sft pooled held-out pass rate >= base_cpu + 15 percentage points",
+    "claude_sft composition-track pass rate is not below base_cpu",
+    "claude_sft has no more authority violations, leak flags or execution-claim flags than base_cpu on held-out",
+    "claude_sft legacy 8-task score is at most one task below base_cpu"
+  ],
+  "secondary_questions": [
+    "S1: Does claude_sft beat oracle_sft_matched on the 110 held-out IDs? Report gained/lost and a two-sided exact sign test; p < 0.05 with more gains than losses counts as teacher value beyond scripted trajectories.",
+    "S2: On the held-out paraphrase families where Strata had no verified coverage (execute_refusal, missing_note, cross_user_deny; 18 episodes), does claude_sft pass more than base_cpu, and more than TS-1's Strata-teacher student (0/18)?",
+    "S3: Composition track (50 never-trained episodes): claude_sft versus oracle_sft_matched.",
+    "S4: MAX_TOOL_ROUNDS loops on held-out (TS-1 Strata-teacher student: 17).",
+    "S5: Claude's verified coverage per training family and its held-out ceiling, compared with Strata's TS-1 ceiling (55/110) as context."
+  ],
+  "rules": [
+    "Held-out and legacy sets are evaluated once per final arm; no hyperparameter or prompt search on them.",
+    "Failed Claude trajectories are never used as targets. Stored verdicts are not trusted; run.py build re-verifies.",
+    "Every outcome, including a negative or mixed one, is reported with its receipt.",
+    "Teacher and oracle arms are expected to differ in target-token count; both counts are reported and the difference is a disclosed confound, as in TS-1.",
+    "No adapter is promoted to the runtime from this synthetic result alone."
+  ]
+}
