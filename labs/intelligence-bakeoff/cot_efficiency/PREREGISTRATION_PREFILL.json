@@ -100,5 +100,11 @@
  },
  "accuracy_check": "N2K runs once on the COT-EFF-2 confirmation set (130 items) into the same run directory, so it is paired item by item with arm N (74/130 at batch 256 / microbatch 128). Grading is unchanged.",
  "adoption_rule": "Production Model Lab uses batch/microbatch 2048 for the 35B if N2K correct >= N - 2 of 130 with an exact McNemar p > 0.05 (microbatch changes no weights, so any difference is greedy-path noise), AND N2K has no more server crashes than one in 130. Otherwise production stays at 256/128 and the result is reported.",
- "production_change": "labcore.py profile change for the 35B, applied at its next load (it is not loaded now; nothing is restarted). Rollback: restore batch 256 / microbatch 128 in the same profile."
+ "production_change": "labcore.py profile change for the 35B, applied at its next load (it is not loaded now; nothing is restarted). Rollback: restore batch 256 / microbatch 128 in the same profile.",
+ "result": {
+  "written_at": "2026-10-30T23:53:38Z",
+  "graded_check": "N2K 80/130 vs N 74/130 on the COT-EFF-2 confirmation set, paired: 12 wins / 6 losses, exact McNemar p=0.24 (secpatch 47 vs 46, adjudicated 33 vs 28). 0 errors, 0 CUDA errors in 130 requests. Wall time 1.61x lower overall on these short benchmark prompts.",
+  "verdict": "ADOPTED: correct >= N - 2 and no crash.",
+  "deployed": "2026-10-30 ~23:53Z on Slink: labs/model-lab labcore.py + catalog.json from commit bb097bb applied to the production checkout (detached 970e503), haven-model-lab restarted, health 200. The 35B was not loaded; the setting applies at its next load. Backup: ~/.local/state/haven-model-lab/deploy-bak-20261030T235312Z. Rollback: copy both files back (or `git checkout -- labs/model-lab` in ~/projects/haven) and restart haven-model-lab."
+ }
 }

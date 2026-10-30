@@ -224,5 +224,11 @@
    ],
    "observation": "Thinking adds little to root cause here (T 18 vs N 17, 4 wins / 5 losses), consistent with COT-EFF-2 confirmation (7 vs 6 of 18) and forge's Kaggle eval (35B 15 -> 18 of 36 with thinking)."
   }
- ]
+ ],
+ "result": {
+  "written_at": "2026-10-30T23:53:38Z",
+  "confirmation": "rc-confirmation, 20 unseen root_cause items: BC 8/20 vs T 6/20, 2.14x faster, 2 wins / 0 losses, p=0.5. 0 errors.",
+  "verdict": "Non-inferior but below the 3.2x bar: NOT the path to 5x end to end. Partial result: budget 512 + 3 labelled cases kept root-cause accuracy at about half the time.",
+  "what_we_learned": "Across COT-EFF-2 confirmation (T 7 vs N 6 of 18), COT-EFF-3 calibration (T 18, N 17 of 40) and forge's Kaggle eval (35B 15 -> 18 of 36 with thinking), full thinking adds 0-3 root-cause items per 20-40 at 2-4x the time. The larger real-world lever turned out to be prompt reading (PREFILL-1), not reasoning."
+ }
 }
