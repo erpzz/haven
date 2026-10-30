@@ -87,12 +87,17 @@ def main(argv=None):
     ap.add_argument('--temperature', type=float, default=0.0)
     ap.add_argument('--tasks', default='detect,root_cause,finding_support,remediate,tool_select')
     ap.add_argument('--label', default='', help='arm name recorded in the summary')
+    ap.add_argument('--limit', type=int, default=0, help='selfplay: rows to sample (deterministic shuffle)')
+    ap.add_argument('--deadline', type=float, default=0, help='stop starting new rows after this many seconds')
     args = ap.parse_args(argv)
+    started = time.monotonic()
     tasks = set(args.tasks.split(','))
     rows = [json.loads(x) for x in args.rows.read_text(encoding='utf-8').splitlines() if x.strip()]
     if args.mode == 'selfplay' and any(r.get('split') not in ('train', 'dev') for r in rows):
         raise SystemExit('Self-play samples only training rows.')
     items = [i for i in (as_item(r) for r in rows if r['task'] in tasks) if i is not None]
+    if args.limit:  # rotate through the pool across cycles: the order depends on the row ids only
+        items = sorted(items, key=lambda i: hashlib.sha256((i['id'] + args.label).encode()).hexdigest())[:args.limit]
     eval_sha = hashlib.sha256(json.dumps([i['id'] for i in items]).encode()).hexdigest()
     gen = ev.OpenAI(args.base_url, args.model, None)
     args.out.mkdir(parents=True, exist_ok=True)
@@ -103,6 +108,8 @@ def main(argv=None):
     raw = {r['id']: r for r in rows}
 
     def work(item):
+        if args.deadline and time.monotonic() - started > args.deadline:
+            return
         outs = []
         for seed in range(args.samples):
             t0 = time.monotonic()

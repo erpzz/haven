@@ -5,11 +5,12 @@
  "llama_tag": "b11146",
  "train": {"rank": 64, "alpha": 128, "lr": 0.0001, "epochs": 2, "grad_accum": 8, "max_length": 3072, "seed": 42},
  "session_seconds": 42000,
- "eval_reserve_seconds": 7200,
+ "eval_reserve_seconds": 10800,
  "serve_parallel": 8,
  "serve_ctx_per_slot": 6144,
  "eval_base": true,
  "selfplay_samples": 4,
+ "selfplay_rows": 800,
  "teacher": {
   "repo": "unsloth/GLM-4.7-Flash-GGUF",
   "file": "GLM-4.7-Flash-Q4_K_M.gguf",
@@ -25,6 +26,7 @@
   "bootstrap_samples": 2000,
   "max_p_value": 0.1
  },
+ "slink_teacher": {"enabled": true, "port": 8093, "workers": 2, "shard": "6-7/8"},
  "kaggle_owner": "yahboyomni",
  "hf_repo": "jankycoder/haven-secpatch-student"
 }

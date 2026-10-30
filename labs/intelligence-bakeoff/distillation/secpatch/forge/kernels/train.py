@@ -203,15 +203,26 @@ def evaluate(gguf, arm):
             res[name] = {k: s[k] for k in ('n', 'score', 'by_task', 'false_positive_rate', 'detection_recall',
                                            'paired_detection', 'cwe_match_when_detected', 'unsupported_rate',
                                            'remediation_bandit_cleared')}
-        if arm == 'student' and CFG.get('selfplay_samples', 0):
-            out = OUT / 'selfplay'
-            sh(f'{sys.executable} {CYCLE}/code/forge/evalrun.py selfplay --rows {CYCLE}/pool.jsonl --out {out} '
-               f'--base-url http://127.0.0.1:8091/v1 --workers {CFG["serve_parallel"]} --label selfplay '
-               f'--samples {CFG["selfplay_samples"]} --temperature 0.8 --bandit {shutil.which("bandit") or "bandit"}',
-               'selfplay.log', check=False)
     finally:
         p.terminate(); p.wait(timeout=60)
     return res
+
+
+@stage('selfplay')
+def selfplay():
+    """Student answers training rows; answers the recorded ground truth accepts become next cycle's data."""
+    p = serve(OUT / f'student-{CFG["quant"]}.gguf', 8092)
+    try:
+        out = OUT / 'selfplay'
+        sh(f'{sys.executable} {CYCLE}/code/forge/evalrun.py selfplay --rows {CYCLE}/pool.jsonl --out {out} '
+           f'--base-url http://127.0.0.1:8092/v1 --workers {CFG["serve_parallel"]} --label selfplay-c{CFG.get("cycle", 0)} '
+           f'--samples {CFG["selfplay_samples"]} --temperature 0.8 --bandit {shutil.which("bandit") or "bandit"} '
+           f'--limit {CFG.get("selfplay_rows", 800)} --deadline {max(60, int(CFG["session_seconds"] - 1800 - (time.monotonic() - T0)))}',
+           'selfplay.log')
+    finally:
+        p.terminate(); p.wait(timeout=60)
+    n = lambda f: sum(1 for _ in (out / f).open()) if (out / f).exists() else 0
+    return {'accepted_rows': n('selfplay-sft.jsonl'), 'pairs': n('selfplay-pairs.jsonl')}
 
 
 @stage('eval_student')
@@ -242,6 +253,8 @@ if setup()['ok']:
             champ = list(pathlib.Path('/kaggle/input').rglob('champion-*.gguf'))
             if champ:
                 eval_champion(champ[0])
+            if CFG.get('selfplay_samples', 0):
+                selfplay()
 for f in OUT.glob('base-*.gguf'):
     f.unlink()  # reproducible from the pinned base; keep the output small
 R['finished'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())

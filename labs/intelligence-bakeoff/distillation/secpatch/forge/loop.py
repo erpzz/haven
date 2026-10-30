@@ -129,9 +129,9 @@ def prior_files(s, pattern: str) -> list[pathlib.Path]:
     return sorted((STATE_DIR / 'cycles').glob(pattern))
 
 
-def step_mix(s, cfg):
+def step_mix(s, cfg, data: pathlib.Path | None = None):
     out = cdir(s) / 'data'
-    data = latest_data()
+    data = data or latest_data()
     traces = prior_files(s, 'c*/teach/traces*.jsonl')
     selfplay = prior_files(s, 'c*/train/selfplay/selfplay-sft.jsonl')
     r = subprocess.run([sys.executable, str(HERE / 'mix.py'), '--data', str(data), '--out', str(out), '--traces',
@@ -141,6 +141,27 @@ def step_mix(s, cfg):
     s['data'] = str(data)
     log('mixed', cycle=s['cycle'], data=str(data), traces=len(traces), selfplay=len(selfplay))
     return 'teach'
+
+
+def start_slink_teacher(s, cfg):
+    """Slink's own GPU teaches its shard of this cycle's pool (lowest CPU priority; chat keeps the machine)."""
+    lane = cfg.get('slink_teacher') or {}
+    if not lane.get('enabled', True):
+        return
+    active = subprocess.run(['systemctl', '--user', 'is-active', 'forge-teach-slink'], capture_output=True, text=True)
+    server = subprocess.run(['systemctl', '--user', 'is-active', 'forge-teacher-server'], capture_output=True, text=True)
+    if active.stdout.strip() == 'active' or server.stdout.strip() != 'active':
+        return
+    subprocess.run(['systemctl', '--user', 'reset-failed', 'forge-teach-slink'], capture_output=True)
+    out = cdir(s) / 'teach' / 'traces-slink.jsonl'
+    out.parent.mkdir(parents=True, exist_ok=True)
+    r = subprocess.run(['systemd-run', '--user', '--unit', 'forge-teach-slink', '-p', 'CPUWeight=1', '-p', 'Nice=19',
+                        sys.executable, str(HERE / 'teach.py'), '--rows', str(cdir(s) / 'data' / 'pool.jsonl'),
+                        '--out', str(out), '--base-url', f'http://127.0.0.1:{lane.get("port", 8093)}/v1',
+                        '--model', 'teacher', '--workers', str(lane.get('workers', 2)), '--attempts', '3',
+                        '--shard', lane.get('shard', '6-7/8')], capture_output=True, text=True)
+    log('slink_teacher_started' if r.returncode == 0 else 'slink_teacher_failed', cycle=s['cycle'],
+        detail=(r.stdout + r.stderr)[-300:])
 
 
 def package(s, cfg, kind: str) -> str:
@@ -254,8 +275,14 @@ def step_teach(s, cfg):
     return nxt
 
 
+def step_first_mix(s, cfg):
+    nxt = step_mix(s, cfg)
+    start_slink_teacher(s, cfg)
+    return nxt
+
+
 def step_train_mix(s, cfg):
-    step_mix(s, cfg)  # rebuild sft.jsonl with this cycle's new traces (Kaggle + Slink lanes)
+    step_mix(s, cfg, pathlib.Path(s['data']))  # same dataset as this cycle's teacher; adds the new traces
     return 'train'
 
 
@@ -360,7 +387,7 @@ def step_next(s, cfg):
     return 'refresh'
 
 
-STEPS = {'refresh': step_refresh, 'mix': step_mix, 'teach': step_teach, 'train_mix': step_train_mix,
+STEPS = {'refresh': step_refresh, 'mix': step_first_mix, 'teach': step_teach, 'train_mix': step_train_mix,
          'train': step_train, 'gate': step_gate, 'promote': step_promote, 'next': step_next}
 
 

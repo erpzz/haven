@@ -285,7 +285,12 @@ def main(argv=None):
     index_versions(rows)
     done = set()
     if args.out.exists():
-        done = {json.loads(x)['id'] for x in args.out.read_text().splitlines() if x.strip()}
+        for x in args.out.read_text().splitlines():
+            if x.strip():
+                rec = json.loads(x)
+                # rows that only hit transport errors (server restart, timeout) are retried
+                if rec.get('sft') or not all(v.startswith('error:') for v in rec.get('verdicts', [])):
+                    done.add(rec['id'])
     todo = [r for r in rows if r['id'] not in done and in_shard(r['id']) and teacher_messages(r) is not None]
     if args.limit:
         todo = todo[:args.limit]
