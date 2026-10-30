@@ -232,6 +232,10 @@ class GraderTests(unittest.TestCase):
         self.assertTrue(evaluate.grade(self.item('finding_support', 'nonexistent'), '{"supported": true}', 'b')['false_positive'])
         self.assertEqual(evaluate.grade(self.item('tool_select', 'B602'), '{"tool":"Bandit","rule":"B602"}', 'b')['score'], 1)
         self.assertEqual(evaluate.grade(self.item('root_cause', 'CWE-78'), '{"cwe":["CWE-79"]}', 'b')['score'], 0)
+        named = '{"cwe":["CWE-78: Improper Neutralization of Special Elements used in an OS Command"]}'
+        self.assertEqual(evaluate.grade(self.item('root_cause', 'CWE-78'), named, 'b')['score'], 1)
+        self.assertFalse(evaluate.cwe_ids(['CWE-78: OS command injection']) & evaluate.cwe_ids(['CWE-7']))
+        self.assertEqual(evaluate.cwe_ids(['cwe-79', 'CWE 20', 'none']), {'CWE-79', 'CWE-20'})
 
     def test_remediation_requires_signature_and_change(self):
         fixed = '```python\n' + FIXED.split('\n\n\n')[-1] + '\n```'

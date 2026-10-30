@@ -258,6 +258,66 @@
     "secpatch": "agree_DN_T",
     "adjudicated": "N"
    }
+  },
+  "task_N_B_T_N": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "T",
+    "remediate": "N",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_T_T": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "T",
+    "remediate": "T",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_B_N": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "B",
+    "remediate": "N",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_D_N": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "D",
+    "remediate": "N",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_D_D": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "D",
+    "remediate": "D",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_DNT_N": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "agree_DN_T",
+    "remediate": "N",
+    "adjudicated": "N"
+   }
   }
  },
  "policy_semantics": {
@@ -265,7 +325,7 @@
   "valid": "the fast arm answers; if its answer cannot be read (no parseable verdict/claims, transport error, or remediation which has no comparable key) the item goes to the escalation arm; cost = fast + escalation",
   "agree": "the first arms answer in turn; if their answer keys match, the first arm's answer is kept; otherwise the escalation arm answers; cost = all first arms + escalation when used. Keys come only from model output (secpatch verdict / supported / CWE set; adjudicated final claims (value, status) plus the set of tools called), never from the grader",
   "execution": "sequential on one machine, model resident; load time excluded and reported separately",
-  "route": "the item kind (secpatch analysis vs agentic tool use) is known when the request arrives; each kind is answered by its own named sub-policy"
+  "route": "the item kind (secpatch analysis vs agentic tool use) is known when the request arrives; each kind is answered by its own named sub-policy; a route may name secpatch tasks (detect, finding_support, root_cause, remediate), which take precedence over the kind"
  },
  "sets": {
   "calibration": "secpatch dev split (8 detect, 8 finding_support, 6 root_cause, 6 remediate; never the 12 COT-EFF-1 screen prompts) + adjudicated fresh episodes from new seed cal-20261030 (2 per family, oracle-validated)",
@@ -303,6 +363,19 @@
     "New policies: L2, valid_L2_T, agree_L2N_T, agree_L2N_B, D, agree_DN_T, route_D_N, route_B_N, route_DNT_N."
    ],
    "choice_rule": "After L2 and D run on calibration, the policy carried to confirmation is the fastest one that is non-inferior to T on calibration in both kinds; if none is, the one with the fewest losses to T among those at >= 2x, and the result is reported as not meeting the bar. The adoption rule is unchanged."
+  },
+  {
+   "n": 2,
+   "written_at": "2026-10-30T14:38:06Z",
+   "written_before": "any L2 or D row was looked at beyond the first 4 L2 log lines (2/4 correct); confirmation set untouched",
+   "grader_fix": "secpatch evaluate.grade compared CWE strings exactly. The prompt asks for \"cwe\": [str], and arms N and B often answer \"CWE-22: Improper Limitation of a Pathname...\" which named the right weakness but scored 0. evaluate.cwe_ids now extracts CWE-<n> identifiers for root_cause scoring, detect cwe_match and the agreement key. Every arm's stored calibration answers are re-graded alike with realworld.py regrade (remediation untouched); the first grade stays in each changed row as correct_v1 and a .bak-v1 copy is kept. Dry run before writing: N 1 score change, B 2, T 0, L 0.",
+   "observation_motivating_task_routes": "Per secpatch task on calibration (pre-fix grades): detect T 3/8 N 4/8; finding_support T 5/8 N 4/8 B 5/8; root_cause T 4/6 N 0/6 B 0/6; remediate T 5/6 (254 s/item) N 4/6. Thinking only pays on root_cause and possibly remediate. These routes are chosen on 6-8 items per task, so overfitting is likely; only the confirmation set can show whether they hold.",
+   "changes": [
+    "realworld.py regrade subcommand",
+    "route policies may key on secpatch task",
+    "policies task_N_B_T_N, task_N_B_T_T, task_N_B_B_N, task_N_B_D_N, task_N_B_D_D, task_N_B_DNT_N (order: detect, finding_support, root_cause, remediate; adjudicated -> N)"
+   ],
+   "choice_rule": "unchanged from amendment 1, applied to all policies after re-grading"
   }
  ]
 }

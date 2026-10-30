@@ -125,7 +125,7 @@ def answer_key_secpatch(task: str, text: str):
     if task == 'finding_support':
         return obj.get('supported')
     if task == 'root_cause':
-        return tuple(sorted(str(c) for c in obj.get('cwe') or [])) or None
+        return tuple(sorted(evaluate.cwe_ids(obj.get('cwe')))) or None
     return None
 
 
@@ -296,11 +296,15 @@ def simulate(policy: dict, rows: dict, ids: list[str]) -> dict:
                 esc = rows[policy['escalate']][i]
                 out[i] = (esc['correct'], r['wall_s'] + esc['wall_s'], True)
         elif kind == 'route':  # the item kind is known when the request arrives; each kind has its own sub-policy
-            item_kind = next(r[i]['kind'] for r in rows.values() if i in r)
-            out[i] = simulate(policy['route'][item_kind], rows, [i])[i]
+            out[i] = simulate(route_for(policy, next(r[i] for r in rows.values() if i in r)), rows, [i])[i]
         else:
             raise ValueError(kind)
     return out
+
+
+def route_for(policy: dict, row: dict):
+    """The sub-policy for an item: by task when the route names it (secpatch tasks are known from the request), else by kind."""
+    return policy['route'].get(row.get('task')) or policy['route'].get(row['kind'])
 
 
 def resolve(policy: dict, policies: dict) -> dict:
@@ -351,7 +355,7 @@ def cmd_policy(args):
             pol = resolve(pol, prereg['policies'])
             if pol['kind'] == 'route':  # each item only needs the arms of its own kind's sub-policy
                 ids = [i for i, r in rows.get(prereg['baseline'], {}).items()
-                       if r['kind'] in pol['route'] and all(i in rows.get(a, {}) for a in arms_of(pol['route'][r['kind']]))]
+                       if route_for(pol, r) and all(i in rows.get(a, {}) for a in arms_of(route_for(pol, r)))]
             else:
                 needed = arms_of(pol) | {prereg['baseline']}
                 if any(a not in rows for a in needed):
@@ -364,6 +368,32 @@ def cmd_policy(args):
     print(json.dumps(report, indent=1))
     if args.out:
         pathlib.Path(args.out).write_text(json.dumps(report, indent=1) + '\n')
+
+
+def cmd_regrade(args):
+    """Re-grade stored secpatch answers with the current grader (every arm alike). Remediation is skipped:
+    its grade runs Bandit and did not change. The first grade is kept as correct_v1 on rows that change."""
+    items = {r['id']: r for r in read_jsonl(pathlib.Path(args.sets) / f'{args.set}.jsonl')}
+    for p in sorted(pathlib.Path(args.run).glob(f'*/{args.set}.jsonl')):
+        rows, changed = read_jsonl(p), 0
+        for r in rows:
+            if r['kind'] != 'secpatch' or r['task'] == 'remediate':
+                continue
+            item = items[r['id']]['item']
+            g = evaluate.grade(item, r['output'], 'unused')
+            key = answer_key_secpatch(r['task'], r['output'])
+            key = list(key) if isinstance(key, tuple) else key  # as stored in JSON
+            if int(g['score']) != r['correct'] or key != r['key']:
+                changed += int(g['score']) != r['correct']
+                r.setdefault('correct_v1', r['correct'])
+                r.update(correct=int(g['score']), key=key, grade={k: v for k, v in g.items() if k != 'score'})
+        if changed or not args.dry_run:
+            print(json.dumps({'arm': p.parent.name, 'score_changes': changed}))
+        if not args.dry_run:
+            backup = p.with_suffix('.jsonl.bak-v1')
+            if not backup.exists():
+                backup.write_bytes(p.read_bytes())
+            write_jsonl(p, rows)
 
 
 def main(argv=None):
@@ -395,8 +425,13 @@ def main(argv=None):
     p.add_argument('--run', required=True)
     p.add_argument('--set', default='calibration')
     p.add_argument('--out')
+    p = sub.add_parser('regrade')
+    p.add_argument('--sets', required=True)
+    p.add_argument('--run', required=True)
+    p.add_argument('--set', default='calibration')
+    p.add_argument('--dry-run', action='store_true')
     args = ap.parse_args(argv)
-    {'sets': cmd_sets, 'run': cmd_run, 'policy': cmd_policy}[args.cmd](args)
+    {'sets': cmd_sets, 'run': cmd_run, 'policy': cmd_policy, 'regrade': cmd_regrade}[args.cmd](args)
 
 
 if __name__ == '__main__':

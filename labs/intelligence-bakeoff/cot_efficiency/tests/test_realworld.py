@@ -65,3 +65,12 @@ def test_draft_is_appended_to_the_last_user_turn_and_marked_unverified():
     out = rw.with_draft(msgs, '  thoughts  ')
     assert msgs[1]['content'] == 'code'
     assert out[1]['content'].startswith('code\n\nA faster assistant') and '<draft>\nthoughts\n</draft>' in out[1]['content']
+
+
+def test_route_by_task_before_kind():
+    r = rows(T={'rc': (1, 100, 'v'), 'd': (0, 100, 'v')}, N={'rc': (0, 5, 'n'), 'd': (1, 5, 'v')})
+    for arm in r.values():
+        arm['rc'].update(kind='secpatch', task='root_cause')
+        arm['d'].update(kind='secpatch', task='detect')
+    pol = {'kind': 'route', 'route': {'root_cause': {'kind': 'single', 'arm': 'T'}, 'secpatch': {'kind': 'single', 'arm': 'N'}}}
+    assert rw.simulate(pol, r, ['rc', 'd']) == {'rc': (1, 100, False), 'd': (1, 5, False)}

@@ -62,6 +62,14 @@ def parse_json(text: str):
 GUTTER = re.compile(r'^\s*\d+ \| ?')
 
 
+def cwe_ids(values) -> set[str]:
+    """CWE identifiers in a model's cwe list. The prompt asks for strings, so "CWE-22: Path Traversal",
+    "cwe-22" and "CWE-22" all name the same weakness."""
+    if isinstance(values, str):
+        values = [values]
+    return {f'CWE-{m}' for v in values or [] for m in re.findall(r'(?i)\bCWE[-_ ]?(\d+)', str(v))}
+
+
 def code_block(text: str) -> str | None:
     text = re.sub(r'<think>.*?</think>', '', text, flags=re.S)
     m = re.search(r'```(?:python|py)?\s*\n(.*?)```', text, re.S)
@@ -221,10 +229,10 @@ def grade(item: dict, output: str, bandit: str) -> dict:
             res['unsupported'] = (any(not lo <= x <= hi for x in lines) or
                                   (bool(fn) and fn.rsplit('.', 1)[-1] not in item['messages'][-1]['content']))
             if label == 'vulnerable':
-                res['cwe_match'] = bool(set(obj.get('cwe') or []) & set(g['cwe'])) if g['cwe'] else None
+                res['cwe_match'] = bool(cwe_ids(obj.get('cwe')) & cwe_ids(g['cwe'])) if g['cwe'] else None
                 res['evidence_hit'] = bool(set(lines) & set(g['changed_lines']))
     elif task == 'root_cause':
-        res['score'] = int(bool(set(obj.get('cwe') or []) & set(g['cwe'])))
+        res['score'] = int(bool(cwe_ids(obj.get('cwe')) & cwe_ids(g['cwe'])))
     elif task == 'tool_select':
         res['score'] = int(str(obj.get('tool', '')).lower() == 'bandit' and obj.get('rule') == g['bandit']['test_id'])
     elif task == 'finding_support':
