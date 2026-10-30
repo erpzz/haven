@@ -57,6 +57,24 @@ LLAMA_TAG = CFG.get('llama_tag', 'b11146')
 ENGINE = None
 
 
+def get_engine(sh, W, LLAMA, log):
+    """Prebuilt engine from the attached dataset if it runs on this driver; otherwise compile (sm75)."""
+    tars = list(pathlib.Path('/kaggle/input').rglob('llama-b*.tar'))
+    if tars:
+        sh(f'tar -C {W} -xf {tars[0]}', log)
+        eng = next(W.glob('llama-b*/llama-server')).parent
+        ok = subprocess.run(f'LD_LIBRARY_PATH={eng} {eng}/llama-server --version', shell=True,
+                            capture_output=True, text=True)
+        if ok.returncode == 0:
+            return eng, 'prebuilt:' + tars[0].name
+        with open(OUT / 'logs' / log, 'a') as f:
+            f.write('prebuilt engine failed: ' + ok.stdout[-500:] + ok.stderr[-1500:] + '\n')
+    sh(f'git clone -q --depth 1 --branch {LLAMA} https://github.com/ggml-org/llama.cpp {W}/llama.cpp-src && cd {W}/llama.cpp-src && export LIBRARY_PATH=/usr/local/cuda/lib64/stubs:$LIBRARY_PATH && '
+           f'cmake -B build -DGGML_CUDA=ON -DGGML_CUDA_NO_VMM=ON -DCMAKE_CUDA_ARCHITECTURES=75 -DLLAMA_CURL=OFF '
+           f'-DCMAKE_BUILD_TYPE=Release && cmake --build build -j4 --target llama-server llama-quantize', log)
+    return W / 'llama.cpp-src/build/bin', 'compiled'
+
+
 @stage('setup')
 def setup():
     global ENGINE
