@@ -138,7 +138,8 @@ def step_mix(s, cfg, data: pathlib.Path | None = None):
     drops = prior_files(s, 'c*/review-teach.json') + prior_files(s, 'c*/review-drops*.json')
     r = subprocess.run([sys.executable, str(HERE / 'mix.py'), '--data', str(data), '--out', str(out), '--traces',
                         *map(str, traces), '--selfplay', *map(str, selfplay), '--pairs', *map(str, pairs),
-                        '--reviews', *map(str, drops)], capture_output=True, text=True)
+                        '--reviews', *map(str, drops), '--critic', *map(str, prior_files(s, 'c*/teach/critic*.jsonl'))],
+                       capture_output=True, text=True)
     if r.returncode:
         raise RuntimeError(r.stderr[-2000:])
     s['data'] = str(data)

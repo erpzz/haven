@@ -79,6 +79,8 @@ cfg = json.loads(sys.argv[1]); deadline = float(sys.argv[2])
 rank = int(os.environ.get("LOCAL_RANK", 0)); torch.cuda.set_device(rank); set_seed(cfg["seed"])
 tok = AutoTokenizer.from_pretrained(cfg["student"], revision=cfg["revision"])
 rows = [json.loads(x) for x in open(cfg["sft"]) if x.strip()]
+if cfg.get("max_rows"):  # dry runs: a small deterministic slice
+    rows = rows[:cfg["max_rows"]]
 enc, skipped = [], 0
 for r in rows:
     msgs = r["messages"]
@@ -157,7 +159,7 @@ from peft import PeftModel, prepare_model_for_kbit_training
 cfg = json.loads(sys.argv[1]); deadline = float(sys.argv[2])
 torch.manual_seed(cfg["seed"]); random.seed(cfg["seed"])
 tok = AutoTokenizer.from_pretrained(cfg["student"], revision=cfg["revision"])
-pairs = [json.loads(x) for x in open(cfg["pairs"]) if x.strip()]
+pairs = [json.loads(x) for x in open(cfg["pairs"]) if x.strip()][:cfg.get("max_pairs") or None]
 def encode(prompt, answer):
     prefix = tok.apply_chat_template(prompt, tokenize=False, add_generation_prompt=True, enable_thinking=False)
     p = tok(prefix, add_special_tokens=False)["input_ids"]
@@ -281,6 +283,7 @@ def evaluate(gguf, arm):
             out = OUT / 'eval' / arm / name
             sh(f'{sys.executable} {CYCLE}/code/forge/evalrun.py eval --rows {CYCLE}/{name}.jsonl --out {out} '
                f'--base-url http://127.0.0.1:8091/v1 --workers {CFG["serve_parallel"]} --label {arm} '
+               + (f'--limit {CFG["eval_limit"]} ' if CFG.get('eval_limit') else '') +
                f'--bandit {shutil.which("bandit") or "bandit"}', f'eval-{arm}.log')
             s = json.loads((out / 'summary.json').read_text())
             res[name] = {k: s[k] for k in ('n', 'score', 'by_task', 'false_positive_rate', 'detection_recall',

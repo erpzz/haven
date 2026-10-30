@@ -48,6 +48,7 @@ def main(argv=None):
     ap.add_argument('--selfplay-per-row', type=int, default=1)
     ap.add_argument('--no-reverify', dest='reverify', action='store_false')
     ap.add_argument('--reviews', type=pathlib.Path, nargs='*', default=[], help='review-teach.json decisions')
+    ap.add_argument('--critic', type=pathlib.Path, nargs='*', default=[], help='critic.py verdicts')
     ap.add_argument('--pairs', type=pathlib.Path, nargs='*', default=[], help='self-play chosen/rejected pairs')
     args = ap.parse_args(argv)
     train, dev = jl(args.data / 'train.jsonl'), jl(args.data / 'dev.jsonl')
@@ -68,6 +69,9 @@ def main(argv=None):
     dropped = set()
     for path in args.reviews:  # traces (id:hash) a reviewer rejected never train
         dropped |= set(json.loads(path.read_text()).get('drop_ids', []))
+    for path in args.critic:  # the automated critic's rejections count like a reviewer's drops
+        dropped |= {json.loads(x)['key'] for x in path.read_text().splitlines()
+                    if x.strip() and json.loads(x).get('sound') is False}
     for path in args.traces:
         for rec in jl(path):
             if rec.get('sft') and rec['id'] in pool_ids and trace_key(rec) in dropped:

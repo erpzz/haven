@@ -97,7 +97,8 @@ def main(argv=None):
         raise SystemExit('Self-play samples only training rows.')
     items = [i for i in (as_item(r) for r in rows if r['task'] in tasks) if i is not None]
     if args.limit:  # rotate through the pool across cycles: the order depends on the row ids only
-        items = sorted(items, key=lambda i: hashlib.sha256((i['id'] + args.label).encode()).hexdigest())[:args.limit]
+        salt = args.label if args.mode == 'selfplay' else ''  # eval arms must see identical items
+        items = sorted(items, key=lambda i: hashlib.sha256((i['id'] + salt).encode()).hexdigest())[:args.limit]
     eval_sha = hashlib.sha256(json.dumps([i['id'] for i in items]).encode()).hexdigest()
     gen = ev.OpenAI(args.base_url, args.model, None)
     args.out.mkdir(parents=True, exist_ok=True)
