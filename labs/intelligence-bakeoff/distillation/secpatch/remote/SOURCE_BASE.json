@@ -1,5 +1,5 @@
 {
-  "base_commit": "670117a",
+  "base_commit": "10243e302d60245ddcb014a75f43857af861b7d1",
   "core_sha256": {
     "secpatch/build.py": "efa9e28c0c24e98243e06e2c2d2fb6dd91e119150f59de8c592fce535dc9bcb7",
     "secpatch/evaluate.py": "91d6519c584142df3602ce3ecbb8a2aee5042486f84ecff78fad7f6665bff356",
@@ -16,7 +16,8 @@
     "PR75": "118f55ec8aefaa11faa8e8e9184d1b4bc3660304",
     "PR82": "c9cf96f4ade6b82c1688f4bf5f768b828c0a92eb",
     "PR84": "632fe9d1be1ae844ba742c5d1cbb2c4903a60138",
-    "R02-branch-merge": "670117a"
+    "R02-branch-merge": "670117a",
+    "R02-grader-cwe-ids": "10243e302d60245ddcb014a75f43857af861b7d1"
   },
   "previous_base": {
     "base_commit": "eaa76f834bc9f64fe9aada542fdf3c00ba9a6f55",
@@ -49,9 +50,15 @@
   "amendments": [
     {
       "at": "2026-10-30",
-      "commit": "10243e3",
-      "file": "secpatch/evaluate.py",
-      "from_sha256": "7e7e002bb90aa4cc93dac8349751dcaa0995ec79e3982d625d925c29913d3a6e",
+      "base_commit_from": "670117a",
+      "base_commit_to": "10243e3",
+      "changed": {
+        "secpatch/evaluate.py": {
+          "from_sha256": "7e7e002bb90aa4cc93dac8349751dcaa0995ec79e3982d625d925c29913d3a6e",
+          "to_sha256": "91d6519c584142df3602ce3ecbb8a2aee5042486f84ecff78fad7f6665bff356"
+        }
+      },
+      "unchanged": "every other core file is identical at 670117a and 10243e3",
       "why": "CWE answers are matched by identifier (CWE-<n>), not exact string, for root_cause scoring and detect cwe_match. See remote/README.md \"Pipeline changes since the original base\"."
     }
   ]
