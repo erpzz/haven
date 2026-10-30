@@ -13,6 +13,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'secpatch'))
 sys.path.insert(0, str(HERE.parent))
 import build  # noqa: E402
+import fresh  # noqa: E402
 from secpatch import evaluate  # noqa: E402 (avoid legacy distillation/evaluate.py)
 import harvest  # noqa: E402
 import osv  # noqa: E402
@@ -296,6 +297,16 @@ class CaseArmTests(unittest.TestCase):
     def test_lora_targets_are_architecture_aware(self):
         self.assertEqual(train.lora_targets('Qwen/Qwen3-0.6B'), train.TARGET_MODULES)
         self.assertEqual(train.lora_targets('LiquidAI/LFM2.5-8B-A1B'), 'all-linear')
+
+
+class FreshTests(unittest.TestCase):
+    def test_select_only_new_unseen_non_training(self):
+        c = lambda k, repo, pub: {'key': k, 'repo': repo, 'published': pub}
+        cands = [c('old', 'x/a', '2026-09-01'), c('seen', 'x/a', '2026-10-29'), c('train', 't/r', '2026-10-29'),
+                 c('ok1', 'x/a', '2026-10-29'), c('ok2', 'x/a', '2026-10-29'), c('ok3', 'x/a', '2026-10-29'),
+                 c('cap', 'x/a', '2026-10-30'), c('ok4', 'y/b', '2026-10-30')]
+        got = [x['key'] for x in fresh.select(cands, '2026-10-28', {'seen'}, {'t/r'}, 10)]
+        self.assertEqual(got, ['ok1', 'ok2', 'ok3', 'ok4'])  # at most 3 per repository
 
 
 class ReportTests(unittest.TestCase):
