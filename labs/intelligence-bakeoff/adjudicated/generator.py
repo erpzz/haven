@@ -750,6 +750,22 @@ def make_all(per_family: int = PER_FAMILY) -> list[dict]:
     return [make_episode(f, i) for f in FAMILIES for i in range(per_family)]
 
 
+def make_fresh(seed: str, per_family: int = 4) -> list[dict]:
+    """New instances of every family from a new seed: same contract and scoring, different worlds and wording.
+    The frozen benchmark keeps SEED; a fresh set is regenerated per run so nothing can be tuned to it."""
+    global SEED
+    frozen_seed = SEED
+    SEED = f"fresh|{seed}"
+    try:
+        tag = hashlib.sha256(seed.encode()).hexdigest()[:8]
+        episodes = [make_episode(f, i) for f in FAMILIES for i in range(per_family)]
+        for e in episodes:
+            e["id"] = e["id"].replace("adj-", f"fresh-{tag}-", 1)
+        return episodes
+    finally:
+        SEED = frozen_seed
+
+
 def task_text(episode: dict) -> str:
     """The exact user task text, before agent.py adds the principal line."""
     return episode["prompt"] + "\n\n" + CLAIMS_INSTRUCTION

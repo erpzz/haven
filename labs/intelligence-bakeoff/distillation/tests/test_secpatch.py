@@ -13,6 +13,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'secpatch'))
 sys.path.insert(0, str(HERE.parent))
 import build  # noqa: E402
+import fresh  # noqa: E402
 from secpatch import evaluate  # noqa: E402 (avoid legacy distillation/evaluate.py)
 import harvest  # noqa: E402
 import osv  # noqa: E402
@@ -119,6 +120,24 @@ class HarvestTests(unittest.TestCase):
     def test_cosmetic_change_is_not_a_pair(self):
         self.assertEqual(self.harvest(cosmetic=True)['pairs'], [])
 
+    def test_scope_flags_helpers_and_imports_outside_the_function(self):
+        before = 'def f(p):\n    return open(p)\n'
+        helper = 'def _inside(p):\n    return True\n\n\ndef f(p):\n    assert _inside(p)\n    return open(p)\n'
+        imported = 'import os\n\n\ndef f(p):\n    return open(os.path.basename(p))\n'
+        local = 'def f(p):\n    if ".." in p:\n        raise ValueError(p)\n    return open(p)\n'
+        fn = harvest.functions
+        self.assertEqual(harvest.fix_scope(before, helper, fn(before), fn(helper))['added_functions'], ['_inside'])
+        self.assertTrue(harvest.fix_scope(before, imported, fn(before), fn(imported))['module_level_changed'])
+        scope = harvest.fix_scope(before, local, fn(before), fn(local))
+        self.assertEqual((scope['added_functions'], scope['module_level_changed']), ([], False))
+        rec = {'changed_files': ['pkg/a.py', 'tests/test_a.py', 'CHANGES.md'], 'pairs': [{'path': 'pkg/a.py'}]}
+        self.assertTrue(harvest.scope_checks(rec, scope)['self_contained'])
+        rec['changed_files'].append('pkg/b.py')
+        self.assertFalse(harvest.scope_checks(rec, scope)['self_contained'])
+
+    def test_harvest_records_scope(self):
+        self.assertTrue(self.harvest()['scope']['self_contained'])
+
     def test_non_permissive_repo_excluded(self):
         rec = self.harvest(license_text='GNU General Public License v3')
         self.assertFalse(rec['checks']['permissive_license']); self.assertEqual(rec['pairs'], [])
@@ -179,6 +198,23 @@ class BuildTests(unittest.TestCase):
         self.assertTrue(tool['verification']['tool_verified'])
         self.assertEqual(manifest['filters']['tool_verified'], 1)
 
+    def test_multi_function_rows_show_every_function_and_stay_out_of_eval(self):
+        pairs = [{'path': 'a.py', 'name': 'run_tool', 'vulnerable': 'def run_tool(n):\n    return call(n, shell=True)',
+                  'fixed': 'def run_tool(n):\n    return call([n])', 'vulnerable_span': [10, 11], 'fixed_span': [10, 11]},
+                 {'path': 'b.py', 'name': 'helper', 'vulnerable': 'def helper(x):\n    return x',
+                  'fixed': 'def helper(x):\n    return quote(x)', 'vulnerable_span': [3, 4], 'fixed_span': [3, 4]}]
+        item = {'key': 'K', 'repo': 'o/r', 'split': 'train', 'pair': pairs[0], 'pairs': pairs, 'cwes': ['CWE-78'],
+                'changed_lines': build.changed_lines(pairs[0]), 'summary': 'Shell injection', 'details': '',
+                'commit_message': 'fix shell injection', 'license': 'MIT', 'tests': [],
+                'advisories': [{'id': 'GHSA-x', 'license': 'CC-BY-4.0'}]}
+        rows = build.multi_tasks_for(item, 'decoy_fn')
+        self.assertEqual({r['task'] for r in rows}, {'detect', 'root_cause', 'finding_support'})
+        detect = next(r for r in rows if r['task'] == 'detect' and r['label'] == 'vulnerable')
+        self.assertIn('shell=True', detect['messages'][1]['content'])
+        self.assertIn('File: b.py (function `helper`)', detect['messages'][1]['content'])
+        self.assertEqual(json.loads(detect['messages'][-1]['content'])['evidence_lines'], [11])
+        self.assertTrue(all(r['verification']['multi_function_fix'] == 2 for r in rows))
+
     def test_eval_items_hide_reference(self):
         read, _ = self.end_to_end('2026-01-01T00:00:00Z')
         split = build.split_for('o/r', '2026-01-01T00:00:00Z', '2025-07-01')
@@ -213,6 +249,10 @@ class GraderTests(unittest.TestCase):
         self.assertTrue(evaluate.grade(self.item('finding_support', 'nonexistent'), '{"supported": true}', 'b')['false_positive'])
         self.assertEqual(evaluate.grade(self.item('tool_select', 'B602'), '{"tool":"Bandit","rule":"B602"}', 'b')['score'], 1)
         self.assertEqual(evaluate.grade(self.item('root_cause', 'CWE-78'), '{"cwe":["CWE-79"]}', 'b')['score'], 0)
+        named = '{"cwe":["CWE-78: Improper Neutralization of Special Elements used in an OS Command"]}'
+        self.assertEqual(evaluate.grade(self.item('root_cause', 'CWE-78'), named, 'b')['score'], 1)
+        self.assertFalse(evaluate.cwe_ids(['CWE-78: OS command injection']) & evaluate.cwe_ids(['CWE-7']))
+        self.assertEqual(evaluate.cwe_ids(['cwe-79', 'CWE 20', 'none']), {'CWE-79', 'CWE-20'})
 
     def test_remediation_requires_signature_and_change(self):
         fixed = '```python\n' + FIXED.split('\n\n\n')[-1] + '\n```'
@@ -234,6 +274,15 @@ class GraderTests(unittest.TestCase):
         self.assertIn('B602 subprocess_popen_with_shell_equals_true at line 11', msgs[-1]['content'])
         self.assertNotIn('Tool evidence', item['messages'][-1]['content'])
 
+    def test_copied_line_number_gutter_is_stripped_and_counted(self):
+        fixed = FIXED.split('\n\n\n')[-1]
+        gutter = '```python\n' + '\n'.join(f'{10 + i:>5} | {l}' for i, l in enumerate(fixed.splitlines())) + '\n```'
+        with unittest.mock.patch.object(evaluate, 'bandit_rules', return_value=set()):
+            g = evaluate.grade(self.item('remediate', 'fix'), gutter, 'bandit')
+        self.assertEqual((g['score'], g['gutter_stripped'], g['matches_recorded_fix']), (1, True, True))
+        mixed = '```python\n   10 | def run_tool(name):\nreturn 1\n```'
+        self.assertFalse(evaluate.strip_gutter(mixed.split('\n', 1)[1].rsplit('```', 1)[0])[1])
+
     def test_summary_paired_and_wilson(self):
         rows = [{'key': 'a', 'task': 'detect', 'label': 'vulnerable', 'score': 1, 'false_positive': False, 'unsupported': False,
                  'invalid_json': False, 'latency_s': 1, 'completion_tokens': 5, 'seed': 0},
@@ -243,6 +292,60 @@ class GraderTests(unittest.TestCase):
         self.assertEqual((s['paired_detection'], s['false_positive_rate'], s['detection_recall']), (0.0, 1.0, 1.0))
         self.assertEqual((s['detection_positive_n'], s['detection_negative_n']), (1, 1))
         self.assertEqual(evaluate.wilson(0, 0), [0.0, 0.0])
+
+
+class CaseArmTests(unittest.TestCase):
+    def row(self, split, code, fixed, repo):
+        user = f'Reported issue: shell injection\n\nRewrite...\n\nRepository: {repo}\nFile: a.py\n```python\n' + \
+            '\n'.join(f'{10 + i:>5} | {l}' for i, l in enumerate(code.splitlines())) + '\n```'
+        return {'split': split, 'task': 'remediate', 'source': {'repo': repo, 'advisory_ids': ['GHSA-x']},
+                'messages': [{'role': 'system', 'content': 's'}, {'role': 'user', 'content': user},
+                             {'role': 'assistant', 'content': f'```python\n{fixed}\n```'}]}
+
+    def test_retrieves_nearest_training_case_and_refuses_eval_rows(self):
+        with tempfile.TemporaryDirectory() as t:
+            p = pathlib.Path(t) / 'train.jsonl'
+            near = 'def run(name):\n    return subprocess.call("tool " + name, shell=True)'
+            far = 'def parse(x):\n    return yaml.load(x)'
+            p.write_text('\n'.join(json.dumps(self.row('train', c, 'def f(): pass', r)) for c, r in ((near, 'a/near'), (far, 'b/far'))))
+            idx = evaluate.CaseIndex(p)
+            self.assertEqual(idx.nearest('def go(n):\n    return subprocess.call("x " + n, shell=True)', 1)[0]['repo'], 'a/near')
+            msgs = evaluate.with_cases([{'role': 'user', 'content': 'review\n```python\n   1 | def go(n): os.system(n)\n```'}], idx, 1)
+            self.assertIn('similar past security fixes', msgs[-1]['content'])
+            p.write_text(json.dumps(self.row('heldout', near, 'x', 'c/eval')))
+            with self.assertRaises(ValueError):
+                evaluate.CaseIndex(p)
+
+    def test_lora_targets_are_architecture_aware(self):
+        self.assertEqual(train.lora_targets('Qwen/Qwen3-0.6B'), train.TARGET_MODULES)
+        self.assertEqual(train.lora_targets('LiquidAI/LFM2.5-8B-A1B'), 'all-linear')
+
+
+class FreshTests(unittest.TestCase):
+    def test_select_only_new_unseen_non_training(self):
+        c = lambda k, repo, pub: {'key': k, 'repo': repo, 'published': pub}
+        cands = [c('old', 'x/a', '2026-09-01'), c('seen', 'x/a', '2026-10-29'), c('train', 't/r', '2026-10-29'),
+                 c('ok1', 'x/a', '2026-10-29'), c('ok2', 'x/a', '2026-10-29'), c('ok3', 'x/a', '2026-10-29'),
+                 c('cap', 'x/a', '2026-10-30'), c('ok4', 'y/b', '2026-10-30')]
+        got = [x['key'] for x in fresh.select(cands, '2026-10-28', {'seen'}, {'t/r'}, 10)]
+        self.assertEqual(got, ['ok1', 'ok2', 'ok3', 'ok4'])  # at most 3 per repository
+
+
+class ReportTests(unittest.TestCase):
+    def test_resummarize_uses_only_shared_items(self):
+        from secpatch import report  # tool_sft/report.py has the same module name
+        def row(i, task, score):
+            return {'id': i, 'key': i, 'task': task, 'label': 'vulnerable', 'seed': 0, 'score': score, 'false_positive': False,
+                    'unsupported': False, 'invalid_json': False, 'latency_s': 1.0, 'completion_tokens': 3}
+        with tempfile.TemporaryDirectory() as t:
+            a, b = pathlib.Path(t) / 'a', pathlib.Path(t) / 'b'
+            a.mkdir(); b.mkdir()
+            (a / 'items.jsonl').write_text('\n'.join(json.dumps(r) for r in [row('1', 'detect', 1), row('2', 'remediate', 1)]))
+            (b / 'items.jsonl').write_text(json.dumps(row('1', 'detect', 0)))
+            sa, sb = report.resummarize([a / 'items.jsonl', b / 'items.jsonl'], None)
+        self.assertEqual((sa['n'], sb['n']), (1, 1))
+        self.assertEqual(sa['eval_sha256'], sb['eval_sha256'])
+        self.assertEqual((sa['score'], sb['score']), (1.0, 0.0))
 
 
 class RegistryAndTrainTests(unittest.TestCase):
@@ -264,12 +367,22 @@ class RegistryAndTrainTests(unittest.TestCase):
             'base_model': 'Qwen/Qwen3-0.6B', 'base_revision': 'c1899de', 'data_sha256': '0' * 64}))
         return d
 
-    def summary(self, t, name, score, fpr, recall=0.5):
+    def summary(self, t, name, score, fpr, recall=0.9):
         p = pathlib.Path(t) / f'{name}.json'
         p.write_text(json.dumps({'eval_sha256': 'E', 'score': score, 'false_positive_rate': fpr,
                                  'detection_recall': recall, 'detection_positive_n': 3, 'detection_negative_n': 3,
                                  'by_task': {'detect': {'n': 6}}, 'n': 10, 'model': name}))
         return p
+
+    def test_constant_answer_collapse_is_not_promoted(self):
+        # Measured 2026-10-30: the seed-42 adapter raised score 0.382 -> 0.483 by answering "not vulnerable" to everything.
+        with tempfile.TemporaryDirectory() as t:
+            root = pathlib.Path(t) / 'reg'
+            registry.register(root, self.run_dir(t, 'GPU_TRAINING_RUN'), 'collapsed')
+            registry.attach_eval(root, 'base', self.summary(t, 'base', 0.382, 0.81, recall=0.84))
+            registry.attach_eval(root, 'collapsed', self.summary(t, 'collapsed', 0.483, 0.0, recall=0.0))
+            with self.assertRaisesRegex(ValueError, 'discrimination'):
+                registry.promote(root, 'collapsed', 'E')
 
     def test_cpu_check_cannot_be_registered(self):
         with tempfile.TemporaryDirectory() as t:
@@ -307,7 +420,7 @@ class RegistryAndTrainTests(unittest.TestCase):
             registry.attach_eval(root, 'v1', self.summary(t, 'v1', 0.40, 0.3))
             with self.assertRaises(ValueError):  # better score, worse false positives
                 registry.promote(root, 'v1', 'E')
-            registry.attach_eval(root, 'v1', self.summary(t, 'v1', 0.40, 0.2))
+            registry.attach_eval(root, 'v1', self.summary(t, 'v1', 0.40, 0.2, recall=0.95))
             self.assertEqual(registry.promote(root, 'v1', 'E'), {'promoted': 'v1'})
             self.assertEqual(registry.card(root)['base_revision'], 'c1899de')
             self.assertEqual(registry.rollback(root), {'promoted': None})
@@ -375,6 +488,16 @@ class RepoEvalTests(unittest.TestCase):
         self.assertEqual(repo_eval.failure_kind('FAILED t.py::x - AssertionError: open redirect'), 'assertion')
         self.assertEqual(repo_eval.failure_kind('ERROR collecting tests/t.py\nImportError: cannot import name'), 'collection_or_import')
         self.assertEqual(repo_eval.failure_kind('E   TypeError: bad'), 'other_error')
+
+    def test_recovery_uses_only_declared_test_dependencies(self):
+        with tempfile.TemporaryDirectory() as t:
+            w = pathlib.Path(t)
+            self.assertEqual(repo_eval.declared_test_installs(w), [])
+            (w / 'pyproject.toml').write_text('[dependency-groups]\ndev = ["opentelemetry-sdk"]\n'
+                                              '[project]\nname = "x"\n[project.optional-dependencies]\ntest = ["rich"]\n')
+            self.assertEqual(repo_eval.declared_test_installs(w), [['pip', 'install', '-q', '--group', 'dev'],
+                                                                   ['pip', 'install', '-q', '-e', '.[test]']])
+        self.assertEqual(repo_eval.missing_module("E   ModuleNotFoundError: No module named 'opentelemetry.sdk'"), 'opentelemetry.sdk')
 
     def test_node_ids(self):
         self.assertEqual(repo_eval.node_ids([{'path': 'tests/t.py', 'name': 'TestX.test_y'}]), ['tests/t.py::TestX::test_y'])

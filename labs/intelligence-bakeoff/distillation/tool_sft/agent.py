@@ -62,7 +62,8 @@ def run_episode(backend, principal, prompt, dispatch, tools, bind=("haven_read_n
             return {"ok_transport": False, "error": f"{type(error).__name__}: {str(error)[:300]}",
                     "answer": "", "trace": trace, "messages": messages, "format_errors": format_errors,
                     "steps": steps, "elapsed_seconds": round(time.monotonic() - started, 3)}
-        steps.append({"seconds": round(time.monotonic() - t0, 3), "usage": reply.get("usage") or {}})
+        steps.append({"seconds": round(time.monotonic() - t0, 3), "usage": reply.get("usage") or {},
+                      "finish_reason": reply.get("finish_reason")})
         if reply.get("format_error"):
             format_errors.append(reply["format_error"])
         calls = reply.get("tool_calls") or []
@@ -171,18 +172,20 @@ class OpenAIBackend:
     """A loopback OpenAI-compatible server (llama.cpp / Strata). No proxies, no cloud."""
 
     def __init__(self, base_url, model, api_key=None, temperature=0.0, max_tokens=256,
-                 timeout=300, seed=None):
+                 timeout=300, seed=None, thinking=False, sampling=None):
         self.url = base_url.rstrip("/") + "/chat/completions"
         if not self.url.startswith("http://127.0.0.1:"):
             raise ValueError("Only literal loopback inference endpoints are allowed.")
         self.model, self.key, self.timeout = model, api_key, timeout
         self.temperature, self.max_tokens, self.seed = temperature, max_tokens, seed
+        self.thinking, self.sampling = thinking, dict(sampling or {})  # e.g. {"top_p": 0.8}
         self.opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 
     def step(self, messages, tools):
         body = {"model": self.model, "messages": to_openai(messages), "tools": tools,
                 "tool_choice": "auto", "temperature": self.temperature, "stream": False,
-                "max_tokens": self.max_tokens, "chat_template_kwargs": {"enable_thinking": False}}
+                "max_tokens": self.max_tokens, "chat_template_kwargs": {"enable_thinking": self.thinking},
+                **self.sampling}
         if self.seed is not None:
             body["seed"] = self.seed
         headers = {"Content-Type": "application/json"}
@@ -207,7 +210,8 @@ class OpenAIBackend:
         if not calls and text_calls:
             calls = text_calls  # the server did not parse a textual tool call
         return {"content": content, "tool_calls": calls, "format_error": error or text_error,
-                "usage": obj.get("usage") or {}, "timings": obj.get("timings") or {}}
+                "usage": obj.get("usage") or {}, "timings": obj.get("timings") or {},
+                "finish_reason": (obj.get("choices") or [{}])[0].get("finish_reason")}
 
 
 class HFBackend:

@@ -315,7 +315,7 @@ def main(argv=None):
     }, indent=2))
     (kernel / "campaign.ipynb").write_text(json.dumps(notebook(digest(payload)), indent=2))
     (kernel / "kernel-metadata.json").write_text(json.dumps({
-        "id": a.owner + "/" + a.slug, "title": "Haven R02 secpatch real CUDA experiment",
+        "id": a.owner + "/" + a.slug, "title": a.slug.replace("-", " "),
         "code_file": "campaign.ipynb", "language": "python", "kernel_type": "notebook",
         "is_private": True, "enable_gpu": True, "enable_tpu": False, "enable_internet": True,
         "dataset_sources": [a.owner + "/" + a.slug + "-input"],

@@ -119,6 +119,10 @@ a 2-hour job on a T4×2 allocation plus startup; it is **not** a claim that Kagg
 always charges both GPUs or that 5 hours will be consumed. Verify that GPU
 eligibility, private datasets/notebooks and internet access are enabled on this
 account. Stop at phone/account verification or exhausted quota; no workaround.
+An authenticated quota response does not prove accelerator eligibility. An
+unverified account can accept GPU notebook metadata and still execute without
+CUDA. Check the account's Phone verification status and enabled GPU choices
+before submission; keep phone numbers and SMS codes on Kaggle, outside chat.
 Run no other GPU sessions during the experiment if quota attribution is needed.
 
 `prepare.py` generates a private notebook, exact input lock and allowlisted
@@ -139,6 +143,9 @@ publish the input dataset, notebook or outputs. Avoid unrelated broad source
 archives; the ZIP contains only pipeline Python files, frozen dataset and source
 provenance. The public Qwen snapshot needs no Hugging Face token. CLI credentials
 stay on the controller; do not attach Kaggle Secrets to this notebook.
+Use the actual notebook URL returned by `kernels push` for later commands. For
+new notebooks Kaggle derives the slug from the title; the generator keeps them
+aligned. Requested `enable_gpu`/`machine_shape` metadata is not CUDA evidence.
 
 ## Runtime, retrieval and acceptance
 
@@ -201,3 +208,19 @@ metadata, private dataset default, `kernels status` and `kernels output`.
 Sources: <https://github.com/Kaggle/kaggle-cli>,
 <https://pypi.org/project/kaggle/2.2.5/>. The provider priority comes from the
 operator; no third-party provisioning or paid account was used.
+
+## Pipeline changes since the original base (re-pinned 2026-10-30)
+
+`SOURCE_BASE.json` pins the merged R02 branch (`670117a`), advanced to `10243e3` for the CWE grading fix and to `4c1417a` for the multi-function build option below. The previous pins are kept under `previous_base`. The core files changed in ways a remote run inherits:
+
+- **Training (`train.py`).** The loss uses only answer-position logits. It equals the default loss (verified 3.067844 against 3.067844), and it fixes the out-of-memory error on an 8 GiB card at 1,536 tokens. LoRA targets now depend on the architecture: Qwen's projection names stay the default, and other students get `all-linear`. The #82 GPU-evidence and adapter-digest checks are kept.
+- **Grading (`evaluate.py`, `build.py`).** A line-number gutter that the model copies onto every line of a patch is stripped before grading. Targets are restricted to self-contained fixes (scope analysis in `harvest.py`), with `--allow-non-self-contained-targets` to opt out. Tool-augmented and case-retrieval arms were added.
+- **Promotion (`registry.py`).** A candidate must also beat the base on detection discrimination (recall − FPR). The first real GPU adapter (seed 42, 2026-10-30) collapsed to a constant answer. Its score rose and its FPR fell to 0, which the old gate would have accepted.
+- **Repository evaluation (`repo_eval.py`).** It refuses to run without `--acknowledge-isolated-runner`.
+
+- **CWE matching (`evaluate.py`, `10243e3`).** `root_cause` scoring and the detect `cwe_match` compare CWE identifiers (`CWE-<n>`) extracted from each answer rather than exact strings, so "CWE-22: Improper Limitation of a Pathname…" now matches `CWE-22`. `SOURCE_BASE.json` therefore anchors `10243e3` instead of `670117a`; `evaluate.py` is the only core file that differs between them, and the replaced hash is kept under `amendments`.
+
+- **Multi-function fixes (`build.py --multi-function`, opt-in).** Focused fixes that changed 2-4 functions become training-only detect, root_cause and finding_support rows that show every changed function. Without the flag the build output is unchanged; dev, held-out and eval files never include them.
+- **Recall guard (`registry.py`, `evaluate.py`, `gpu_campaign.py`, #99).** Promotion and the campaign's `improved_vs_base` also require detection recall not to fall below the base, and both evaluations must carry matching, nonempty positive and negative detection counts. A paired held-out run had risen from 33/72 to 35/72 overall while recall fell from 10/12 to 1/12. Summaries written before this change lack the counts and must be re-evaluated before a gated promotion.
+
+The tasks and the dataset schema are unchanged.

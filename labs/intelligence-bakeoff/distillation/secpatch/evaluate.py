@@ -59,10 +59,29 @@ def parse_json(text: str):
     return None
 
 
+GUTTER = re.compile(r'^\s*\d+ \| ?')
+
+
+def cwe_ids(values) -> set[str]:
+    """CWE identifiers in a model's cwe list. The prompt asks for strings, so "CWE-22: Path Traversal",
+    "cwe-22" and "CWE-22" all name the same weakness."""
+    if isinstance(values, str):
+        values = [values]
+    return {f'CWE-{m}' for v in values or [] for m in re.findall(r'(?i)\bCWE[-_ ]?(\d+)', str(v))}
+
+
 def code_block(text: str) -> str | None:
     text = re.sub(r'<think>.*?</think>', '', text, flags=re.S)
     m = re.search(r'```(?:python|py)?\s*\n(.*?)```', text, re.S)
-    return m.group(1) if m else None
+    return strip_gutter(m.group(1))[0] if m else None
+
+
+def strip_gutter(code: str) -> tuple[str, bool]:
+    """Remove the `  123 | ` line-number gutter the prompt shows, when the model copied it onto every line."""
+    lines = [l for l in code.splitlines() if l.strip()]
+    if lines and all(GUTTER.match(l) for l in lines):
+        return '\n'.join(GUTTER.sub('', l, count=1) for l in code.splitlines()), True
+    return code, False
 
 
 def signature(code: str):
@@ -121,6 +140,56 @@ def with_tool_evidence(item: dict, bandit: str) -> list[dict]:
     return msgs
 
 
+SHOWN = re.compile(r'```python\n(.*?)```', re.S)
+
+
+def shown_code(text: str) -> str | None:
+    m = SHOWN.search(text)
+    return '\n'.join(GUTTER.sub('', l, count=1) for l in m.group(1).splitlines()) if m else None
+
+
+class CaseIndex:
+    """Nearest past fixes from the *training* split, for case-based prompting.
+
+    Training repositories and dates are disjoint from dev/held-out by construction, so a retrieved case is never
+    the item itself or from its project."""
+    def __init__(self, train_path: pathlib.Path):
+        from build import shingles
+        self.shingles, self.cases = shingles, []
+        for line in train_path.read_text().splitlines():
+            row = json.loads(line)
+            if row.get('split') != 'train':
+                raise ValueError('Cases must come from the training split only.')
+            if row['task'] != 'remediate':
+                continue
+            vuln = shown_code(row['messages'][1]['content'])
+            fixed = code_block(row['messages'][-1]['content'])
+            if vuln and fixed:
+                src = row['source']
+                self.cases.append({'repo': src['repo'], 'advisory': (src.get('advisory_ids') or ['?'])[0],
+                                   'vulnerable': vuln, 'fixed': fixed, 'sh': shingles(vuln),
+                                   'issue': row['messages'][1]['content'].split('\n', 1)[0].removeprefix('Reported issue: ')})
+
+    def nearest(self, code: str, k: int) -> list[dict]:
+        from build import jaccard
+        sh = self.shingles(code)
+        return sorted(self.cases, key=lambda c: -jaccard(sh, c['sh']))[:k]
+
+
+def with_cases(messages: list[dict], index: 'CaseIndex', k: int) -> list[dict]:
+    msgs = [dict(m) for m in messages]
+    code = shown_code(msgs[-1]['content'])
+    if not code:
+        return msgs
+    blocks = []
+    for c in index.nearest(code, k):
+        blocks.append(f"Past fix in {c['repo']} ({c['advisory']}): {c['issue'][:200]}\nBefore:\n```\n{c['vulnerable'][:1500]}\n```\n"
+                      f"After:\n```\n{c['fixed'][:1500]}\n```")
+    msgs[-1]['content'] += ('\n\nFor reference, similar past security fixes from other projects (they are not the code under '
+                            'review; use them only as analogies):\n\n' + '\n\n'.join(blocks))
+    return msgs
+
+
 def shown_span(item: dict) -> tuple[int, int]:
     lines = [int(m) for m in re.findall(r'^\s*(\d+) \|', item['messages'][-1]['content'], re.M)]
     return (min(lines), max(lines)) if lines else (0, 0)
@@ -131,7 +200,8 @@ def grade(item: dict, output: str, bandit: str) -> dict:
     task, label = g['task'], g['label']
     res = {'score': 0, 'invalid_json': False, 'false_positive': False, 'unsupported': False}
     if task == 'remediate':
-        code = code_block(output) or ''
+        m = re.search(r'```(?:python|py)?\s*\n(.*?)```', re.sub(r'<think>.*?</think>', '', output, flags=re.S), re.S)
+        code, res['gutter_stripped'] = strip_gutter(m.group(1)) if m else ('', False)
         sig_ok = signature(code) is not None and signature(code) == signature(g['vulnerable'])
         changed = bool(code) and normalize(textwrap.dedent(code)) != normalize(textwrap.dedent(g['vulnerable']))
         res.update(parses=signature(code) is not None, same_signature=sig_ok, changed=changed,
@@ -159,10 +229,10 @@ def grade(item: dict, output: str, bandit: str) -> dict:
             res['unsupported'] = (any(not lo <= x <= hi for x in lines) or
                                   (bool(fn) and fn.rsplit('.', 1)[-1] not in item['messages'][-1]['content']))
             if label == 'vulnerable':
-                res['cwe_match'] = bool(set(obj.get('cwe') or []) & set(g['cwe'])) if g['cwe'] else None
+                res['cwe_match'] = bool(cwe_ids(obj.get('cwe')) & cwe_ids(g['cwe'])) if g['cwe'] else None
                 res['evidence_hit'] = bool(set(lines) & set(g['changed_lines']))
     elif task == 'root_cause':
-        res['score'] = int(bool(set(obj.get('cwe') or []) & set(g['cwe'])))
+        res['score'] = int(bool(cwe_ids(obj.get('cwe')) & cwe_ids(g['cwe'])))
     elif task == 'tool_select':
         res['score'] = int(str(obj.get('tool', '')).lower() == 'bandit' and obj.get('rule') == g['bandit']['test_id'])
     elif task == 'finding_support':
@@ -265,6 +335,8 @@ def main(argv=None):
     ap.add_argument('--seeds', default='0')
     ap.add_argument('--temperature', type=float, default=0.0)
     ap.add_argument('--with-tools', action='store_true', help='Tool-augmented arm: executed Bandit evidence in each prompt.')
+    ap.add_argument('--cases', type=pathlib.Path, help='Case-based arm: training-split jsonl to retrieve similar past fixes from.')
+    ap.add_argument('--k', type=int, default=2, help='Number of retrieved cases.')
     args = ap.parse_args(argv)
     items = [json.loads(x) for x in args.eval.read_text().splitlines() if x.strip()]
     if args.tasks:
@@ -273,6 +345,7 @@ def main(argv=None):
         keys = list(dict.fromkeys(i['key'] for i in items))[:args.limit]
         items = [i for i in items if i['key'] in set(keys)]
     eval_sha = hashlib.sha256(json.dumps([i['id'] for i in items]).encode()).hexdigest()
+    cases = CaseIndex(args.cases) if args.cases else None
     gen = HF(args.model, args.revision, args.adapter, args.device) if args.backend == 'hf' else \
         OpenAI(args.base_url, args.model, args.key_file)
     args.out.mkdir(parents=True, exist_ok=True)
@@ -283,18 +356,21 @@ def main(argv=None):
                 started = time.monotonic()
                 try:
                     messages = with_tool_evidence(item, args.bandit) if args.with_tools else item['messages']
+                    if cases:
+                        messages = with_cases(messages, cases, args.k)
                     text, ntok = gen(messages, MAX_NEW[item['task']], args.temperature, seed)
                     error = None
                 except Exception as exc:  # recorded, scored as wrong; never retried silently
                     text, ntok, error = '', 0, f'{type(exc).__name__}: {str(exc)[:200]}'
                 row = {'id': item['id'], 'key': item['key'], 'task': item['task'], 'label': item['label'], 'seed': seed,
                        'latency_s': round(time.monotonic() - started, 3), 'completion_tokens': ntok, 'error': error,
-                       **grade(item, text, args.bandit), 'output': text[:4000]}
+                       **grade(item, text, args.bandit), 'output': text[:16000], 'output_chars': len(text)}
                 rows.append(row)
                 f.write(json.dumps(row, ensure_ascii=False) + '\n'); f.flush()
     summary = summarize(rows, eval_sha, gen.name)
     summary.update(eval_file=str(args.eval), seeds=args.seeds, temperature=args.temperature, backend=args.backend,
-                   arm=('tools:bandit' if args.with_tools else 'plain') + ('+adapter' if args.adapter else ''),
+                   arm=('tools:bandit' if args.with_tools else 'plain') + (f'+cases{args.k}' if args.cases else '')
+                       + ('+adapter' if args.adapter else ''),
                    classification='MEASURED_ON_HELD_OUT' if 'heldout' in args.eval.name else 'MEASURED_ON_DEV')
     (args.out / 'summary.json').write_text(json.dumps(summary, indent=1) + '\n')
     print(json.dumps(summary))

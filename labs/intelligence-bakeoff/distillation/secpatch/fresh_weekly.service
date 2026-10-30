@@ -1,0 +1,9 @@
+[Unit]
+Description=Haven secpatch: build this week's fresh security-fix evaluation set (never used for training)
+
+[Service]
+Type=oneshot
+Nice=15
+IOSchedulingClass=idle
+UMask=0077
+ExecStart=%h/.local/state/haven-secpatch/code-fresh/secpatch/fresh_weekly.sh
