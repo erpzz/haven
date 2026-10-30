@@ -393,5 +393,22 @@
    ],
    "not_carried": "L2 and D are not run on confirmation. Calibration observations kept as hypotheses for a later experiment with its own fresh sets: L2 finding_support 7/8 at 20 s/item vs T 5/8 at 89 s; D (35B answering from L2's reasoning) never beat L2 alone and fell to 1/6 on remediate; L2 is weak on agentic tool use (8/30)."
   }
- ]
+ ],
+ "result": {
+  "written_at": "2026-10-30T18:46:21Z",
+  "confirmation": "n=130 (86 secpatch held-out+fresh, 44 adjudicated new-seed). Re-grade dry run: 0 changes. T 76/130 in 8429 s (secpatch 49/86, adjudicated 27/44).",
+  "chosen_policy": {
+   "policy": "task_N_B_T_N",
+   "correct": "71/130",
+   "secpatch": "43/86",
+   "adjudicated": "28/44",
+   "speedup": 2.57,
+   "wins_losses_vs_T": "10/15 overall; 1/7 secpatch",
+   "mcnemar_p_secpatch": 0.0703,
+   "verdict": "NOT ADOPTED: below T on secpatch (43 vs 49) and below 5x."
+  },
+  "why_it_failed": "Per task on confirmation (T / N / B correct): detect 15/15/14 of 24; finding_support 12/15/11 of 26; root_cause 7/6/7 of 18; remediate 15/10/16 of 18; adjudicated 27/28/26 of 44. The route sent remediation to N, which lost 5: 2 answers cut at the 1536-token cap and 3 returned the function unchanged. The calibration signal that only root_cause needs thinking (6 items: T 4, N 1) did not replicate (18 items: T 7, N 6).",
+  "exploratory_not_adoptable": "Policies not chosen on calibration cannot be adopted from confirmation. For the record: route_B_N (budget 512 on secpatch, thinking off on tool use) 76/130 = T at 2.82x; N 74/130 at 4.39x (17 wins / 19 losses, p=0.87); valid_N_T 79/130 at 1.76x.",
+  "conclusion": "No answering strategy built from the 35B and Liquid reached 5x at T-level accuracy. On unseen questions, full thinking bought 2 more correct of 130 than thinking off (76 vs 74, p=0.87) at 4.4x the time; the clearest place it helped was remediation, where a 512-token budget did as well as full thinking."
+ }
 }
