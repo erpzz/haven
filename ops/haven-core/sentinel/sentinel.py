@@ -335,7 +335,7 @@ def upgrade_target(installed_version: str, vulns: list[dict], V):
 
 
 def venv_label(venv: pathlib.Path) -> str:
-    return f'{venv.parent.name}/{venv.name}' if venv.name in ('venv', '.venv') else venv.name
+    return f'{venv.parent.name}/{venv.name}'
 
 
 def check_deps(venvs: list[pathlib.Path], archive: pathlib.Path | None) -> list[dict]:
@@ -408,6 +408,10 @@ def surfaces(home: pathlib.Path) -> dict[str, str]:
                 if p.is_file() or p.is_symlink():
                     data = os.readlink(p).encode() if p.is_symlink() else p.read_bytes()
                     items[f'{d}/{p.name}'] = hashlib.sha256(data).hexdigest()
+                elif p.is_dir() and p.name.endswith('.d'):  # drop-ins can replace a unit's ExecStart
+                    for q in sorted(p.iterdir()):
+                        if q.is_file():
+                            items[f'{d}/{p.name}/{q.name}'] = hashlib.sha256(q.read_bytes()).hexdigest()
     code, out, err = run(['crontab', '-l'])
     items['crontab'] = hashlib.sha256(out.encode()).hexdigest() if code == 0 else 'none'
     return items

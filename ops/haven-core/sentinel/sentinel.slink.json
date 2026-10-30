@@ -23,7 +23,7 @@
   "~/.local/share/haven-workspaces/*"
  ],
  "venvs": [
-  "~/.local/share/haven-openwebui/venv",
+  "~/.local/share/haven-openwebui/venv*",
   "~/.local/share/haven-secpatch-venv",
   "~/.local/share/haven-training-venv",
   "~/.local/share/haven-forge-venv",

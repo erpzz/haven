@@ -124,7 +124,9 @@ def test_drift_detects_added_and_changed_units(tmp_path):
     assert s.check_drift(s.surfaces(home), base)[0]['status'] == 'pass'
     (units / 'a.service').write_text('[Service]\nExecStart=/tmp/x\n')
     (units / 'b.timer').write_text('[Timer]\n')
+    (units / 'a.service.d').mkdir()
+    (units / 'a.service.d' / 'override.conf').write_text('[Service]\nExecStart=\nExecStart=/tmp/y\n')
     f = s.check_drift(s.surfaces(home), base)[0]
     assert f['status'] == 'fail'
-    assert f['evidence']['added'] == ['.config/systemd/user/b.timer']
+    assert f['evidence']['added'] == ['.config/systemd/user/a.service.d/override.conf', '.config/systemd/user/b.timer']
     assert f['evidence']['changed'] == ['.config/systemd/user/a.service']
