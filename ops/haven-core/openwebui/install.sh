@@ -5,7 +5,10 @@
 # Rollback: sh ops/haven-core/openwebui/rollback.sh (stops the frontend, revokes its key, keeps chats).
 set -eu
 REPO=$(cd "$(dirname "$0")/../../.." && pwd)
-VERSION=0.11.4
+VERSION=0.12.5
+# One venv per version, side by side: an upgrade never modifies the venv that is serving, and the
+# previous one stays for rollback. 0.12.5 (2026-10-30) fixes the advisories haven-sentinel found in
+# 0.11.4's pins (pillow 13.0.0, pypdf 6.21.2, aiohttp 3.14.5, brotli 1.2.1, mcp 2.3.0).
 INSTANCE=${HAVEN_OWUI_INSTANCE:-prod}
 PORT=${HAVEN_OWUI_PORT:-8878}
 LAB_DATA=${HAVEN_LAB_DATA:-$HOME/.local/share/haven-model-lab}
@@ -20,11 +23,12 @@ fi
 umask 077
 mkdir -p "$BASE" "$CONF" "$DATA"
 
-if ! "$BASE/venv/bin/open-webui" --help >/dev/null 2>&1 || \
-   [ "$("$BASE/venv/bin/pip" show open-webui 2>/dev/null | sed -n 's/^Version: //p')" != "$VERSION" ]; then
-  [ -x "$BASE/venv/bin/pip" ] || python3 -m venv "$BASE/venv"
+VENV=${HAVEN_OWUI_VENV:-$BASE/venv-$VERSION}
+if ! "$VENV/bin/open-webui" --help >/dev/null 2>&1 || \
+   [ "$("$VENV/bin/pip" show open-webui 2>/dev/null | sed -n 's/^Version: //p')" != "$VERSION" ]; then
+  [ -x "$VENV/bin/pip" ] || python3 -m venv "$VENV"
   # CPU torch only: the frontend must never take GPU memory from the inference runtime.
-  "$BASE/venv/bin/pip" install --disable-pip-version-check \
+  "$VENV/bin/pip" install --disable-pip-version-check \
     --extra-index-url https://download.pytorch.org/whl/cpu "open-webui==$VERSION"
 fi
 
@@ -87,6 +91,7 @@ EOF
 mv "$CONF/env.new" "$CONF/env"
 
 sed -e "s#%h/.config/haven-openwebui/env#$CONF/env#" -e "s#--port 8878#--port $PORT#" \
+    -e "s#%h/.local/share/haven-openwebui/venv/#$VENV/#" \
     "$REPO/ops/haven-core/openwebui/haven-openwebui.service" > "$HOME/.config/systemd/user/$UNIT"
 systemctl --user daemon-reload
 systemctl --user enable "$UNIT" >/dev/null

@@ -112,6 +112,15 @@ Receipts and the routing trace record the supplied and withheld names, and llama
 
 ## Install, update, roll back (on Slink)
 
+**Version.** 0.12.5 since 2026-10-30, upgraded from 0.11.4 because haven-sentinel (`ops/haven-core/sentinel`) found 183 known vulnerabilities in 0.11.4's pinned dependencies. Open WebUI pins exact versions, so the fix was a release upgrade, not package bumps. The upgrade was verified first on the test instance:
+
+- the database migrations applied cleanly;
+- the existing sessions still worked;
+- owner and member role mapping held;
+- `/haven status` went through the signed-identity gateway.
+
+On Slink, the 0.12.5 venv is `venv-0.12.5`, selected by the drop-in `haven-openwebui.service.d/venv-0.12.5.conf`. `install.sh` now installs into `venv-<VERSION>`. To roll back to 0.11.4: delete the drop-in, run `systemctl --user daemon-reload`, restore `data.bak-20261030T121312Z` (0.12.5 migrated the database), then restart.
+
 ```bash
 sh ops/haven-core/openwebui/install.sh                                   # prod, :8878
 HAVEN_OWUI_INSTANCE=test HAVEN_OWUI_PORT=8879 sh ops/haven-core/openwebui/install.sh
