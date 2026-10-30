@@ -57,7 +57,8 @@ class RemoteWrapperTests(unittest.TestCase):
         metadata = module("license_metadata")
         for value in ("GPL-3.0-or-later", "FSL-1.0-Apache-2.0", "ZPL 2.1", "AGPL"):
             raw = ('[project]\nlicense = "' + value + '"\n').encode()
-            item = {"key": "example", "notices": [{"path": "LICENSE"}],
+            item = {"key": "example", "source_path": "package/module.py",
+                    "notices": [{"path": "LICENSE"}],
                     "metadata": [{"path": "package/pyproject.toml", "sha256": "content"}]}
             with self.assertRaisesRegex(ValueError, "outside campaign allowlist"):
                 metadata.validate_metadata(item, {"content": raw})
@@ -65,10 +66,60 @@ class RemoteWrapperTests(unittest.TestCase):
 
     def test_deeper_source_license_overrides_broader_package_metadata(self):
         metadata = module("license_metadata")
-        item = {"key": "example", "notices": [{"path": "LICENSE"}, {"path": "applications/admin/LICENSE"}],
+        item = {"key": "example", "source_path": "applications/admin/module.py",
+                "notices": [{"path": "LICENSE"}, {"path": "applications/admin/LICENSE"}],
                 "metadata": [{"path": "pyproject.toml", "sha256": "content"}]}
         result = metadata.validate_metadata(item, {"content": b'[project]\nlicense="GPL-3.0-or-later"\n'})
         self.assertEqual(result["precedence"], "deeper_source_license")
+
+
+    def test_spdx_conjunction_and_malformed_metadata_fail_closed(self):
+        metadata = module("license_metadata")
+        permitted = ("MIT", "Apache-2.0", "MIT OR Apache-2.0",
+                     "MIT OR (GPL-3.0 AND GPL-3.0)",
+                     "MIT AND (Apache-2.0 OR GPL-3.0)")
+        refused = ("MIT AND GPL-3.0", "MIT AND GPL-3.0 OR GPL-3.0",
+                   "MIT AND (GPL-3.0 OR GPL-2.0)", "GPL-3.0-or-later",
+                   "MIT OR", "MIT OR GPL-3.0 AND", "MIT OR GPL-3.0 garbage",
+                   "DYNAMIC", "unknown", "")
+        for expression in permitted:
+            with self.subTest(permitted=expression):
+                self.assertTrue(metadata.allowed_declaration(expression))
+        for expression in refused:
+            with self.subTest(refused=expression):
+                self.assertFalse(metadata.allowed_declaration(expression))
+        item = {"key": "example", "source_path": "package/module.py",
+                "notices": [{"path": "LICENSE"}],
+                "metadata": [{"path": "package/pyproject.toml", "sha256": "content"}]}
+        with self.assertRaisesRegex(ValueError, "Malformed package metadata"):
+            metadata.validate_metadata(item, {"content": b'[project\nlicense="MIT"\n'})
+
+    def test_unrelated_deep_license_cannot_override_restrictive_package(self):
+        metadata = module("license_metadata")
+        item = {"key": "example", "source_path": "package/module.py",
+                "notices": [{"path": "LICENSE"}, {"path": "unrelated/deep/LICENSE"}],
+                "metadata": [{"path": "package/pyproject.toml", "sha256": "content"}]}
+        with self.assertRaisesRegex(ValueError, "outside campaign allowlist"):
+            metadata.validate_metadata(item, {"content": b'[project]\nlicense="GPL-3.0-or-later"\n'})
+
+    def test_unrelated_metadata_cannot_shadow_restrictive_package(self):
+        metadata = module("license_metadata")
+        item = {"key": "example", "source_path": "package/module.py",
+                "notices": [{"path": "LICENSE"}],
+                "metadata": [{"path": "package/pyproject.toml", "sha256": "restrictive"},
+                             {"path": "unrelated/deep/pyproject.toml", "sha256": "permissive"}]}
+        with self.assertRaisesRegex(ValueError, "not on the source path"):
+            metadata.validate_metadata(item, {
+                "restrictive": b'[project]\nlicense="GPL-3.0-or-later"\n',
+                "permissive": b'[project]\nlicense="MIT"\n'})
+
+    def test_unresolved_or_invalid_source_license_paths_are_refused(self):
+        metadata = module("license_metadata")
+        with self.assertRaisesRegex(ValueError, "Missing audited source path"):
+            metadata.validate_metadata({"key": "example", "notices": [{"path": "LICENSE"}]}, {})
+        with self.assertRaisesRegex(ValueError, "No applicable source license"):
+            metadata.validate_metadata({"key": "example", "source_path": "package/module.py",
+                                        "notices": [{"path": "NOTICE"}], "metadata": []}, {})
 
     def test_original_pipeline_files_match_recorded_base(self):
         base = json.loads((REMOTE / "SOURCE_BASE.json").read_text())
