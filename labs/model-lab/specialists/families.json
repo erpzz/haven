@@ -1,0 +1,42 @@
+{
+  "schema": "haven-spec2-families-1",
+  "pinned_utc": "2026-10-30",
+  "note": "Revisions read from the Hugging Face API on the pin date. gated=auto models need the owner to accept terms before download.",
+  "families": {
+    "medical": {
+      "large": {"repo": "google/medgemma-27b-text-it", "revision": "5b667cf2ddcf064085bc90952edb35a0edbfb79c",
+                "licence": "Health AI Developer Foundations terms (gated)", "params_b": 27.0, "train": "qlora",
+                "gpu": "1x 80 GB"},
+      "small": {"repo": "google/medgemma-1.5-4b-it", "revision": "91850547d9f0b2fdd21aa7c5f4f3d1a8a52c243b",
+                "licence": "Health AI Developer Foundations terms (gated)", "params_b": 4.3, "train": "lora",
+                "gpu": "1x 24 GB, or Slink 8 GB with QLoRA"},
+      "eval": ["medqa_test", "medmcqa_val", "pubmedqa_labeled", "mmlu_medical"],
+      "train_pools": ["medqa_train", "medmcqa_train"],
+      "gates": ["primary: mean accuracy over eval sets", "Haven medical safety set (to be authored and frozen before any promotion)"]
+    },
+    "cyber": {
+      "large": {"repo": "openai/gpt-oss-120b", "revision": "b5c939de8f754692c1647ca79fbf85e8c1e70f8a",
+                "licence": "Apache-2.0", "params_b": 117.0, "active_params_b": 5.1, "train": "lora on MXFP4 base",
+                "gpu": "1x 80 GB (2x for RL sampling throughput)"},
+      "small": {"repo": "cyber-pal-security/CyberPal2.0-20B", "revision": "f0c1505f317b71d000a169ef4f7f09ad83334049",
+                "licence": "Apache-2.0", "params_b": 20.9, "active_params_b": 3.6, "train": "lora",
+                "gguf": {"repo": "mradermacher/CyberPal2.0-20B-i1-GGUF", "revision": "0ec622ec387f812987381db780e7e42e31ac23bf"},
+                "gpu": "1x 48 GB; serves on Slink with MoE expert offload"},
+      "reference": {"repo": "fdtn-ai/Foundation-Sec-8B-Reasoning", "revision": "63c930c82d7646226d33502bec5870019738400e",
+                    "licence": "Foundation AI licence (see NOTICE.md)"},
+      "eval": ["cti_mcq", "cybermetric_2000", "mmlu_computer_security", "secpatch held-out (private, Slink)"],
+      "train_pools": ["secpatch train rows (private, Slink)"],
+      "gates": ["primary: mean accuracy over eval sets", "secpatch: no rise in detection FPR, no drop in vulnerability recall"]
+    },
+    "speech": {
+      "large": {"repo": "nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B", "revision": "c17667641642c4265ff2b7037dd101b7d4567634",
+                "licence": "OpenMDW-1.1", "params_b": 33.7, "active_params_b": 4.0},
+      "small": {"repo": "nvidia/nemotron-3.5-asr-streaming-0.6b", "revision": "ea30d66debe3740a08b573244286791d423d6b3e",
+                "licence": "OpenMDW-1.1", "params_b": 0.64},
+      "alternative_small": {"repo": "nvidia/parakeet-tdt-0.6b-v3", "revision": "541d1f99c6b0c3cd0b11a95167540bb8edefd82b",
+                            "licence": "CC-BY-4.0", "params_b": 0.63},
+      "eval": ["librispeech clean 300", "librispeech other 300", "owner household commands (private)"],
+      "gates": ["corpus WER per split", "real-time factor on owner hardware"]
+    }
+  }
+}

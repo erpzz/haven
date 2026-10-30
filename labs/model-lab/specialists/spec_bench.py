@@ -133,8 +133,12 @@ def cmd_freeze(args):
         raise SystemExit(f"{out} is not empty; frozen sets are never silently regenerated.")
     out.mkdir(parents=True, exist_ok=True)
     os.umask(0o077)
+    pinned = json.loads(pathlib.Path(args.pin).read_text())["sets"] if args.pin else None
     api, revisions = HfApi(), {}
     for repo in sorted({s[2] for s in SOURCES.values()}):
+        if pinned:  # reproduce a committed manifest exactly
+            revisions[repo] = next(v["revisions"] for v in pinned.values() if v["source"] == repo)
+            continue
         refs = {r.ref: r.target_commit for r in api.list_repo_refs(repo, repo_type="dataset").converts}
         revisions[repo] = {"main": api.dataset_info(repo).sha, "parquet": refs.get("refs/convert/parquet")}
     data = {name: load_source(name, revisions[SOURCES[name][2]]) for name in SOURCES}
@@ -151,6 +155,10 @@ def cmd_freeze(args):
                                   "revisions": revisions[repo], "licence": licence, "items": len(rows),
                                   "removed_as_eval_duplicates": removed, "sha256": sha256(path)}
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+    if pinned:
+        drift = sorted(n for n, v in manifest["sets"].items() if v["sha256"] != pinned[n]["sha256"])
+        if drift:
+            raise SystemExit(f"Re-frozen sets differ from the pinned manifest: {drift}")
     print(json.dumps(manifest, indent=2, sort_keys=True))
 
 
@@ -286,6 +294,7 @@ def main(argv=None):
     sub = parser.add_subparsers(dest="command", required=True)
     p = sub.add_parser("freeze")
     p.add_argument("--out", required=True)
+    p.add_argument("--pin", help="Re-freeze at a committed manifest's revisions and verify every hash.")
     p = sub.add_parser("run")
     p.add_argument("--bench", required=True)
     p.add_argument("--base-url", required=True)

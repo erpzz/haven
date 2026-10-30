@@ -69,5 +69,11 @@ promotion decision. Deployment into Haven is an owner decision, as AGENTS.md req
 | Hugging Face ZeroGPU | short large-model evaluations within the daily quota (free: 5 GPU-min/day) | available to host up to 2 Spaces; quota too small for training |
 | Cloudflare Workers AI (relay, PR #87) | large-model inference lane | needs the owner token on Slink |
 
+Launch-ready pieces (2026-10-30): `families.json` pins every model revision; `spec_bench.py freeze --pin` reproduces
+the committed benchmark manifest on any machine and refuses hash drift; `rft.py` is the loop above (CPU smoke-tested
+end to end); `gpu_job.sh FAMILY {baseline|rft} SIZE --approved ...` runs on a rented CUDA box and refuses to start
+without an approval note, a GPU and `HF_TOKEN`. Not yet validated on a GPU: the vLLM paths, and LoRA on gpt-oss-120b's
+MXFP4 weights (bitsandbytes QLoRA does not apply to it; the first rented run checks memory before any training).
+
 No paid compute starts without an owner-approved budget. Every run writes a receipt (data hashes, revisions,
 hyperparameters, wall time, cost) and private transcripts stay out of Git.
