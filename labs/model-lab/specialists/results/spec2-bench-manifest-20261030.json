@@ -1,0 +1,123 @@
+{
+  "frozen_unix": 1793402965,
+  "schema": "haven-spec2-bench-manifest-1",
+  "sets": {
+    "cti_mcq": {
+      "domain": "cyber",
+      "items": 2500,
+      "licence": "CC-BY-NC-SA-4.0 (evaluation only)",
+      "removed_as_eval_duplicates": 0,
+      "revisions": {
+        "main": "9237e1636ee3e168fbe5ebdcc1c571de0525e568",
+        "parquet": "832e4ab17262d1370d646aa78dee7f5ac9c7c7a8"
+      },
+      "role": "eval",
+      "sha256": "2e91137691d42c3e40941761c72a81b7b5ed3aa4e49c84d099f265c2d1e38661",
+      "source": "AI4Sec/cti-bench"
+    },
+    "cybermetric_2000": {
+      "domain": "cyber",
+      "items": 2000,
+      "licence": "Apache-2.0",
+      "removed_as_eval_duplicates": 0,
+      "revisions": {
+        "main": "32759c2fa90274706219e1cf946cadff93da52e3",
+        "parquet": "eb7784ae557294f034d97b4e69510adaf3264953"
+      },
+      "role": "eval",
+      "sha256": "43991776902812c26bc97a8e327a5ce9393f9c1e47e63fa0f7b53ea3aafc342c",
+      "source": "tihanyin/CyberMetric"
+    },
+    "medmcqa_train": {
+      "domain": "medical",
+      "items": 120762,
+      "licence": "Apache-2.0",
+      "removed_as_eval_duplicates": 3,
+      "revisions": {
+        "main": "91c6572c454088bf71b679ad90aa8dffcd0d5868",
+        "parquet": "75fdef2909a643a9270e3d7cfa1317dacccaa66b"
+      },
+      "role": "train",
+      "sha256": "6ae72f8d04dd64b2730a63aba7f427ab94d0952bf30e1e66e066d5814f57988a",
+      "source": "openlifescienceai/medmcqa"
+    },
+    "medmcqa_val": {
+      "domain": "medical",
+      "items": 2816,
+      "licence": "Apache-2.0",
+      "removed_as_eval_duplicates": 0,
+      "revisions": {
+        "main": "91c6572c454088bf71b679ad90aa8dffcd0d5868",
+        "parquet": "75fdef2909a643a9270e3d7cfa1317dacccaa66b"
+      },
+      "role": "eval",
+      "sha256": "5bf8680937b8c88b28ca6d50155e35cabadba379ae15ac39e18a135a40042f87",
+      "source": "openlifescienceai/medmcqa"
+    },
+    "medqa_test": {
+      "domain": "medical",
+      "items": 1273,
+      "licence": "CC-BY-4.0",
+      "removed_as_eval_duplicates": 0,
+      "revisions": {
+        "main": "0fb93dd23a7339b6dcd27e241cb9b5eca62d4d18",
+        "parquet": "d3ac8bb1a62d42bd88069a8dbac48be5a21f8097"
+      },
+      "role": "eval",
+      "sha256": "3863cd2d2b96456b2ca23f7e3329a59804f9656ebbb8051c5da1e0079febe2c5",
+      "source": "GBaker/MedQA-USMLE-4-options"
+    },
+    "medqa_train": {
+      "domain": "medical",
+      "items": 10178,
+      "licence": "CC-BY-4.0",
+      "removed_as_eval_duplicates": 0,
+      "revisions": {
+        "main": "0fb93dd23a7339b6dcd27e241cb9b5eca62d4d18",
+        "parquet": "d3ac8bb1a62d42bd88069a8dbac48be5a21f8097"
+      },
+      "role": "train",
+      "sha256": "d2c4b8bfeac244c983e3f597f720a05052998365e8f21d467f65d78976034ca2",
+      "source": "GBaker/MedQA-USMLE-4-options"
+    },
+    "mmlu_computer_security": {
+      "domain": "cyber",
+      "items": 100,
+      "licence": "MIT",
+      "removed_as_eval_duplicates": 0,
+      "revisions": {
+        "main": "c30699e8356da336a370243923dbaf21066bb9fe",
+        "parquet": "d183e18c31b6d5563d00fb87257819c64e76b985"
+      },
+      "role": "eval",
+      "sha256": "2aee3ca81abdb2a850fcf689a9d8614ee6018ea5f486115fc50ee170d359bf97",
+      "source": "cais/mmlu"
+    },
+    "mmlu_medical": {
+      "domain": "medical",
+      "items": 1089,
+      "licence": "MIT",
+      "removed_as_eval_duplicates": 0,
+      "revisions": {
+        "main": "c30699e8356da336a370243923dbaf21066bb9fe",
+        "parquet": "d183e18c31b6d5563d00fb87257819c64e76b985"
+      },
+      "role": "eval",
+      "sha256": "93288a18cbbc224070472ddc9d4bf96771c531b1ef84552dcba5e511fdc458c4",
+      "source": "cais/mmlu"
+    },
+    "pubmedqa_labeled": {
+      "domain": "medical",
+      "items": 1000,
+      "licence": "MIT",
+      "removed_as_eval_duplicates": 0,
+      "revisions": {
+        "main": "9001f2853fb87cab8d220904e0de81ac6973b318",
+        "parquet": "83f91a4e0b6d18d73c02ae27ff2544a3c51d7f41"
+      },
+      "role": "eval",
+      "sha256": "bc4cade4528382a7c0ea9c50f884d07239bf903650fa6601a8a517698ea470c7",
+      "source": "qiaojin/PubMedQA"
+    }
+  }
+}
