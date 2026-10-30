@@ -209,18 +209,138 @@ def receipt(row):
         stream.write((json.dumps(row) + '\n').encode())
 
 
-def upstream_body(cfg, messages, max_tokens):
-    body = {'messages': messages, 'stream': True, 'max_tokens': max_tokens}
+def template_kwargs(value):
+    """Validate chat_template_kwargs, a small bag of chat-template switches.
+
+    This is not a nicety to drop. A reasoning model left in thinking mode spends its
+    whole output budget reasoning and can return a truncated answer: measured on
+    qwen3-30b-a3b, one secpatch-shaped call cost 12.45 neurons with thinking on and
+    0.86 with `enable_thinking: false` -- a 14x difference, and the difference between
+    a parseable answer and a cut-off one. secpatch's evaluate.py sends this flag, so
+    silently dropping it made the lane unusable for evaluation.
+    """
+    if value is None:
+        return None
+    if not isinstance(value, dict) or len(value) > 8:
+        raise RelayError(400, 'chat_template_kwargs must be a small object.', 'REFUSED_400')
+    out = {}
+    for key, item in value.items():
+        if not isinstance(key, str) or not re.fullmatch(r'[a-z][a-z0-9_]{0,39}', key):
+            raise RelayError(400, 'chat_template_kwargs keys must be simple names.', 'REFUSED_400')
+        if isinstance(item, bool) or (isinstance(item, int) and not isinstance(item, bool)):
+            out[key] = item
+        elif isinstance(item, str) and len(item) <= 80 and all(ord(c) >= 32 for c in item):
+            out[key] = item
+        else:
+            raise RelayError(400, 'chat_template_kwargs values must be bool, int or short text.',
+                             'REFUSED_400')
+    return out
+
+
+def upstream_body(cfg, messages, max_tokens, stream=True, temperature=None, template=None):
+    body = {'messages': messages, 'max_tokens': max_tokens}
+    if stream:
+        body['stream'] = True
+    if temperature is not None:
+        body['temperature'] = temperature
+    if template:
+        body['chat_template_kwargs'] = template
     if cfg['vendor'] == 'groq':
         body['model'] = cfg['model']
     return body
 
 
+def read_complete(vendor, payload):
+    """Pull (text, usage) out of a non-streaming response, per vendor shape.
+
+    Non-streaming matters for evaluation harnesses: secpatch's evaluate.py posts
+    with stream unset and reads choices[0].message.content plus
+    usage.completion_tokens. Cloudflare also returns the request's neuron cost
+    inside usage here, not only in the header.
+    """
+    def from_choices(container):
+        choices = (container or {}).get('choices') or []
+        if not (choices and isinstance(choices[0], dict)):
+            return None
+        message = choices[0].get('message') or {}
+        content = message.get('content')
+        if isinstance(content, str) and content:
+            return content
+        # Provider quirk, observed live 2026-10-30 on qwen3-30b-a3b via Workers AI:
+        # with `enable_thinking: false` the completed answer is filed under
+        # reasoning_content while content is null, though finish_reason is "stop".
+        # That breaks any conforming OpenAI client, so read the answer where the
+        # provider actually put it rather than returning an empty completion.
+        for key in ('reasoning_content', 'reasoning'):
+            value = message.get(key)
+            if isinstance(value, str) and value:
+                return value
+        return ''
+
+    if vendor == 'cloudflare':
+        result = (payload or {}).get('result') or {}
+        usage = result.get('usage') or {}
+        # Observed live 2026-10-30: newer reasoning models (qwen3-30b-a3b) return a full
+        # OpenAI-shaped payload inside `result`, and set `result.response` to the PARSED
+        # JSON object when the model emitted valid JSON. Older models return a plain
+        # string. Prefer the OpenAI shape, then the string, and re-serialise a parsed
+        # object -- an evaluation harness calls json.loads on this text, so handing it a
+        # dict would break a grader that is otherwise correct.
+        text = from_choices(result)
+        if text is None:
+            response = result.get('response')
+            if isinstance(response, str):
+                text = response
+            elif isinstance(response, (dict, list)):
+                text = json.dumps(response)
+            else:
+                text = ''
+        return text, usage
+    return from_choices(payload) or '', (payload or {}).get('usage') or {}
+
+
+def complete(cfg, messages, max_tokens, temperature=None, template=None):
+    """One blocking turn. Returns (text, usage, allowance_headers, neurons)."""
+    spec = VENDORS[cfg['vendor']]
+    key = private_read(STATE / 'keys' / cfg['key_ref'])
+    request = urllib.request.Request(
+        spec['url'](cfg),
+        data=json.dumps(upstream_body(cfg, messages, max_tokens, stream=False,
+                                      temperature=temperature, template=template)).encode(),
+        headers={'authorization': 'Bearer ' + key, 'content-type': 'application/json'},
+        method='POST')
+    try:
+        with urllib.request.urlopen(request, timeout=300) as response:
+            allowance, neurons = allowance_of(response.headers)
+            payload = json.loads(response.read(4194304) or b'{}')
+    except urllib.error.HTTPError as exc:
+        raise RelayError(*classify(cfg['vendor'], exc.code,
+                                   exc.read(2048).decode('utf-8', 'replace'))) from exc
+    except urllib.error.URLError as exc:
+        raise RelayError(504, f'The provider was unreachable: {exc.reason}', 'REFUSED_504') from exc
+    except json.JSONDecodeError as exc:
+        raise RelayError(502, 'The provider returned a malformed body.', 'REFUSED_502') from exc
+    text, usage = read_complete(cfg['vendor'], payload)
+    # Cloudflare reports neurons inside usage for non-streaming calls; prefer the
+    # header when both are present so one code path reads consumption.
+    if neurons is None:
+        try:
+            neurons = float(usage['neurons'])
+        except (KeyError, TypeError, ValueError):
+            neurons = None
+    return text, usage, allowance, neurons
+
+
 def read_delta(vendor, payload):
-    """Pull the text increment out of one SSE payload, per vendor shape."""
+    """Pull the text increment out of one SSE payload, per vendor shape.
+
+    Cloudflare's older models stream `{"response": "..."}`; the newer reasoning
+    models stream OpenAI-shaped chunks, so fall through rather than dropping them.
+    """
     if vendor == 'cloudflare':
         text = payload.get('response')
-        return text if isinstance(text, str) else None
+        if isinstance(text, str):
+            return text
     choices = payload.get('choices') or []
     if choices and isinstance(choices[0], dict):
         text = (choices[0].get('delta') or {}).get('content')
@@ -228,7 +348,7 @@ def read_delta(vendor, payload):
     return None
 
 
-def dispatch(cfg, messages, max_tokens, write, closed):
+def dispatch(cfg, messages, max_tokens, write, closed, template=None):
     """Stream one turn from the provider, translating to OpenAI chunks.
 
     A 429 or allowance refusal is reported, not retried. Retrying an exhausted
@@ -238,7 +358,7 @@ def dispatch(cfg, messages, max_tokens, write, closed):
     key = private_read(STATE / 'keys' / cfg['key_ref'])
     request = urllib.request.Request(
         spec['url'](cfg),
-        data=json.dumps(upstream_body(cfg, messages, max_tokens)).encode(),
+        data=json.dumps(upstream_body(cfg, messages, max_tokens, template=template)).encode(),
         headers={'authorization': 'Bearer ' + key, 'content-type': 'application/json',
                  'accept': 'text/event-stream'},
         method='POST')
@@ -319,8 +439,6 @@ def make_handler(cfg, key):
                 body = json.loads(self.rfile.read(length))
             except (json.JSONDecodeError, UnicodeDecodeError):
                 return self.reply(400, {'error': {'message': 'bad json'}})
-            if body.get('stream') is not True:
-                return self.reply(400, {'error': {'message': 'this lane streams only'}})
             if body.get('model') != cfg['model']:
                 return self.reply(404, {'error': {'message': 'unknown model for this lane'}})
             messages = body.get('messages')
@@ -332,8 +450,42 @@ def make_handler(cfg, key):
             max_tokens = body.get('max_tokens')
             if type(max_tokens) is not int or not 1 <= max_tokens <= 2048:
                 return self.reply(400, {'error': {'message': 'bad max_tokens'}})
+            temperature = body.get('temperature')
+            if temperature is not None and (type(temperature) not in (int, float)
+                                            or isinstance(temperature, bool)
+                                            or not 0 <= temperature <= 2):
+                return self.reply(400, {'error': {'message': 'bad temperature'}})
+
+            try:
+                template = template_kwargs(body.get('chat_template_kwargs'))
+            except RelayError as exc:
+                return self.reply(400, {'error': {'message': exc.message}})
 
             cid = 'chatcmpl-' + os.urandom(8).hex()
+
+            if body.get('stream') is not True:
+                # Blocking turn. Evaluation harnesses need this shape: secpatch's
+                # evaluate.py posts without stream and reads choices[0].message.content
+                # plus usage.completion_tokens.
+                base = {'at': time.time(), 'lane': cfg['lane'],
+                        'route_class': VENDORS[cfg['vendor']]['route_class'],
+                        'cost_boundary': cfg.get('cost_boundary'), 'streamed': False}
+                try:
+                    text, usage, allowance, neurons = complete(
+                        cfg, messages, max_tokens, temperature, template)
+                except RelayError as exc:
+                    receipt({**base, 'outcome': exc.outcome, 'reason': exc.message})
+                    return self.reply(exc.status, {'error': {'message': exc.message}})
+                receipt({**base, 'outcome': 'COMPLETED', 'characters': len(text),
+                         'allowance_headers': allowance, 'allowance_units_consumed': neurons,
+                         'completion_tokens': usage.get('completion_tokens'),
+                         'prompt_tokens': usage.get('prompt_tokens')})
+                return self.reply(200, {
+                    'id': cid, 'object': 'chat.completion', 'model': cfg['model'],
+                    'choices': [{'index': 0, 'finish_reason': 'stop',
+                                 'message': {'role': 'assistant', 'content': text}}],
+                    'usage': usage, 'haven_allowance_units_consumed': neurons})
+
             self.send_response(200)
             self.send_header('content-type', 'text/event-stream')
             self.send_header('cache-control', 'no-store')
@@ -357,7 +509,7 @@ def make_handler(cfg, key):
                       'choices': [{'index': 0, 'delta': {'content': delta}, 'finish_reason': None}]})
 
             try:
-                dispatch(cfg, messages, max_tokens, write, lambda: closed['v'])
+                dispatch(cfg, messages, max_tokens, write, lambda: closed['v'], template)
                 send({'id': cid, 'object': 'chat.completion.chunk', 'model': cfg['model'],
                       'choices': [{'index': 0, 'delta': {}, 'finish_reason': 'stop'}]})
                 self.wfile.write(b'data: [DONE]\n\n')

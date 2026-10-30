@@ -42,9 +42,9 @@ GROQ_STREAM = [
 
 class FakeUpstream:
     """Stands in for urlopen. Records calls so a test can prove no retry happened."""
-    def __init__(self, lines=None, error=None, headers=None, status=200):
+    def __init__(self, lines=None, error=None, headers=None, status=200, body=None):
         self.lines, self.error, self.headers = lines or [], error, headers or {}
-        self.status = status
+        self.status, self.body = status, body
         self.calls = []
 
     def __call__(self, request, timeout=None):
@@ -59,7 +59,8 @@ class FakeUpstream:
     def __enter__(self): return self
     def __exit__(self, *a): return False
     def __iter__(self): return iter(self.lines)
-    def read(self, n=None): return b''
+    def read(self, n=None):
+        return b'' if self.body is None else json.dumps(self.body).encode()
 
 
 def http_error(code, body=None):
@@ -304,13 +305,13 @@ class RelayTests(unittest.TestCase):
         registry = Registry(self.folder) if (r.enroll() or True) else None
         self.assertNotIn(PROVIDER_KEY, json.dumps(registry.snapshot()))
 
-    def test_relay_rejects_bad_auth_model_and_non_streaming(self):
+    def test_relay_rejects_bad_auth_model_and_bad_bounds(self):
         r = Relay(self.folder); self.addCleanup(r.close)
         sock = r.socket('metered-cf')
         upstream = FakeUpstream(CF_STREAM)
         with patch.object(relay.urllib.request, 'urlopen', upstream):
             self.assertEqual(post(sock, TURN, auth='Bearer wrong')[0], 401)
-            self.assertEqual(post(sock, {**TURN, 'stream': False})[0], 400)
+            self.assertEqual(post(sock, {**TURN, 'temperature': 5})[0], 400)
             self.assertEqual(post(sock, {**TURN, 'model': 'other'})[0], 404)
             self.assertEqual(post(sock, {**TURN, 'messages': [{'role': 'assistant', 'content': 'x'}]})[0], 400)
             self.assertEqual(post(sock, {**TURN, 'max_tokens': 99999})[0], 400)
@@ -336,6 +337,132 @@ class EgressAckTests(unittest.TestCase):
             finally:
                 if lab: lab.shutdown()
                 r.close()
+
+
+CF_BLOCKING = {'result': {'response': '{"vulnerable": true, "cwe": "CWE-502"}',
+                          'usage': {'prompt_tokens': 209, 'completion_tokens': 300,
+                                    'total_tokens': 509, 'neurons': 10.108968734741211}}}
+GROQ_BLOCKING = {'choices': [{'message': {'role': 'assistant', 'content': 'blocking answer'}}],
+                 'usage': {'prompt_tokens': 11, 'completion_tokens': 3}}
+
+
+class BlockingTests(unittest.TestCase):
+    """Non-streaming turns, which is the shape an evaluation harness posts.
+
+    secpatch's evaluate.py reads choices[0].message.content and
+    usage.completion_tokens, so a metered lane must answer in that shape to be
+    usable as a measured baseline.
+    """
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(); self.folder = self.tmp.name
+        self.addCleanup(self.tmp.cleanup)
+
+    def test_blocking_turn_returns_openai_completion_with_usage(self):
+        r = Relay(self.folder); self.addCleanup(r.close)
+        upstream = FakeUpstream(body=CF_BLOCKING, headers={'cf-ai-neurons': '10.11'})
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            status, raw = post(r.socket('metered-cf'), {**TURN, 'stream': False})
+        self.assertEqual(status, 200)
+        d = json.loads(raw)
+        self.assertEqual(d['object'], 'chat.completion')
+        self.assertEqual(d['choices'][0]['message']['role'], 'assistant')
+        self.assertIn('CWE-502', d['choices'][0]['message']['content'])
+        self.assertEqual(d['choices'][0]['finish_reason'], 'stop')
+        # The field evaluate.py actually reads.
+        self.assertEqual(d['usage']['completion_tokens'], 300)
+        self.assertEqual(d['haven_allowance_units_consumed'], 10.11)
+        # Upstream must not have been asked to stream.
+        self.assertNotIn('stream', upstream.calls[0]['body'])
+
+    def test_blocking_turn_reads_neurons_from_usage_when_header_absent(self):
+        r = Relay(self.folder); self.addCleanup(r.close)
+        upstream = FakeUpstream(body=CF_BLOCKING)  # no cf-ai-neurons header
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            _, raw = post(r.socket('metered-cf'), {**TURN, 'stream': False})
+        self.assertAlmostEqual(json.loads(raw)['haven_allowance_units_consumed'], 10.1089687, places=5)
+        self.assertAlmostEqual(r.receipts()[-1]['allowance_units_consumed'], 10.1089687, places=5)
+
+    def test_blocking_groq_shape_and_temperature_passthrough(self):
+        r = Relay(self.folder, vendor='groq', model='llama-test'); self.addCleanup(r.close)
+        upstream = FakeUpstream(body=GROQ_BLOCKING)
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            _, raw = post(r.socket('metered-cf'),
+                          {**TURN, 'model': 'llama-test', 'stream': False, 'temperature': 0})
+        self.assertEqual(json.loads(raw)['choices'][0]['message']['content'], 'blocking answer')
+        self.assertEqual(upstream.calls[0]['body']['temperature'], 0)
+        self.assertEqual(upstream.calls[0]['body']['model'], 'llama-test')
+
+    def test_blocking_refusal_is_a_json_error_not_a_stream(self):
+        r = Relay(self.folder); self.addCleanup(r.close)
+        upstream = FakeUpstream(error=http_error(429, CF_EXHAUSTED))
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            status, raw = post(r.socket('metered-cf'), {**TURN, 'stream': False})
+        self.assertEqual(status, 429)
+        self.assertIn('daily free Neuron allocation', json.loads(raw)['error']['message'])
+        self.assertEqual(r.receipts()[-1]['outcome'], 'REFUSED_ALLOWANCE_EXHAUSTED')
+        self.assertEqual(len(upstream.calls), 1)
+
+    def test_reasoning_model_answer_filed_under_reasoning_content_is_recovered(self):
+        """Exact payload observed live on qwen3-30b-a3b via Workers AI, 2026-10-30,
+        with enable_thinking=false: finish_reason is "stop" and the answer sits in
+        reasoning_content while content is null."""
+        observed = {'result': {'response': None, 'choices': [{
+            'index': 0, 'finish_reason': 'stop', 'message': {
+                'role': 'assistant', 'content': None, 'refusal': None,
+                'reasoning': '{"vulnerable": true, "cwe": "CWE-502"}',
+                'reasoning_content': '{"vulnerable": true, "cwe": "CWE-502"}'}}],
+            'usage': {'prompt_tokens': 57, 'completion_tokens': 19, 'neurons': 0.8611201047897339}}}
+        r = Relay(self.folder); self.addCleanup(r.close)
+        upstream = FakeUpstream(body=observed)
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            status, raw = post(r.socket('metered-cf'), {**TURN, 'stream': False})
+        self.assertEqual(status, 200)
+        content = json.loads(raw)['choices'][0]['message']['content']
+        self.assertEqual(json.loads(content)['cwe'], 'CWE-502',
+                         'A graded harness calls json.loads on this; it must not be empty.')
+
+    def test_content_wins_over_reasoning_when_both_present(self):
+        both = {'result': {'choices': [{'message': {
+            'role': 'assistant', 'content': 'the answer',
+            'reasoning_content': 'scratch work'}}], 'usage': {}}}
+        r = Relay(self.folder); self.addCleanup(r.close)
+        with patch.object(relay.urllib.request, 'urlopen', FakeUpstream(body=both)):
+            _, raw = post(r.socket('metered-cf'), {**TURN, 'stream': False})
+        self.assertEqual(json.loads(raw)['choices'][0]['message']['content'], 'the answer')
+
+    def test_parsed_json_object_is_reserialised_for_the_grader(self):
+        """Workers AI returns result.response as a parsed object when the model
+        emitted valid JSON. A harness calling json.loads needs text back."""
+        parsed = {'result': {'response': {'vulnerable': True, 'cwe': 'CWE-502'}, 'usage': {}}}
+        r = Relay(self.folder); self.addCleanup(r.close)
+        with patch.object(relay.urllib.request, 'urlopen', FakeUpstream(body=parsed)):
+            _, raw = post(r.socket('metered-cf'), {**TURN, 'stream': False})
+        content = json.loads(raw)['choices'][0]['message']['content']
+        self.assertEqual(json.loads(content), {'vulnerable': True, 'cwe': 'CWE-502'})
+
+    def test_template_kwargs_are_forwarded_and_bounded(self):
+        r = Relay(self.folder); self.addCleanup(r.close)
+        sock = r.socket('metered-cf')
+        upstream = FakeUpstream(body=CF_BLOCKING)
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            post(sock, {**TURN, 'stream': False,
+                        'chat_template_kwargs': {'enable_thinking': False}})
+            self.assertEqual(upstream.calls[-1]['body']['chat_template_kwargs'],
+                             {'enable_thinking': False})
+            for bad in ({'enable_thinking': [1, 2]}, {'Bad-Key': True},
+                        {f'k{i}': True for i in range(9)}, 'nope'):
+                with self.subTest(bad=bad):
+                    self.assertEqual(post(sock, {**TURN, 'stream': False,
+                                                 'chat_template_kwargs': bad})[0], 400)
+
+    def test_blocking_receipt_records_token_counts(self):
+        r = Relay(self.folder); self.addCleanup(r.close)
+        upstream = FakeUpstream(body=CF_BLOCKING)
+        with patch.object(relay.urllib.request, 'urlopen', upstream):
+            post(r.socket('metered-cf'), {**TURN, 'stream': False})
+        rec = r.receipts()[-1]
+        self.assertEqual((rec['prompt_tokens'], rec['completion_tokens'], rec['streamed']),
+                         (209, 300, False))
 
 
 class VerifyTests(unittest.TestCase):
