@@ -11,6 +11,10 @@ result. No model writes a target. Splits are isolated by repository *and* time:
   (held-out repositories before the cutoff are never used, so no held-out repo code is trained on)
 
 Near-duplicate vulnerable functions across splits are removed from training.
+
+--multi-function also turns focused fixes that changed 2-4 functions into training rows (detect, root_cause,
+finding_support). Every changed function is shown, vulnerable or fixed side; the finding names the function the
+fix changed most. They are training-only: dev, held-out and every eval file are built exactly as without the flag.
 """
 from __future__ import annotations
 
@@ -35,6 +39,7 @@ SYSTEM = ("You are Haven's security engineering assistant for authorized defensi
           "or is permitted to audit. Base every claim on the code and evidence provided, cite the lines you rely on, "
           "and say when the evidence is insufficient. Answer in the JSON format requested.")
 MAX_FUNC_CHARS = 5000
+MAX_MULTI_CHARS = 8000  # all changed functions together, per side
 MAX_TEST_LINES = 60
 ATTRIBUTION_KEYS = ('repo', 'commit', 'parent', 'path', 'license', 'advisories', 'published')
 
@@ -118,8 +123,64 @@ def code_block(item: dict, side: str) -> str:
     return f"Repository: {item['repo']}\nFile: {item['pair']['path']}\n```python\n{numbered(item['pair'][side], start)}\n```"
 
 
-def tasks_for(item: dict, decoy_name: str, rng: random.Random) -> list[dict]:
-    """All task rows for one verified single-function fix. Each row keeps attribution and its verification."""
+def multi_code_block(item: dict, side: str) -> str:
+    span = 'vulnerable_span' if side == 'vulnerable' else 'fixed_span'
+    return f"Repository: {item['repo']}\n" + '\n\n'.join(
+        f"File: {p['path']} (function `{p['name']}`)\n```python\n{numbered(p[side], p[span][0])}\n```" for p in item['pairs'])
+
+
+def multi_tasks_for(item: dict, decoy_name: str) -> list[dict]:
+    """Training rows for a fix that changed 2-4 functions. No remediate, regression_test or tool_select rows:
+    a multi-function patch cannot be graded as one rewritten function."""
+    p, rec, cwe, lines = item['pair'], item, item['cwes'], item['changed_lines']
+    name, issue = p['name'], rec['summary'] or advisory_text(rec, 300)
+    ask_detect = ('Review the code below (several functions from one change) for security vulnerabilities. Respond with JSON: '
+                  '{"verdict": "vulnerable" | "not_vulnerable", "function": str, "cwe": [str], '
+                  '"evidence_lines": [int], "issue": str}. Use "not_vulnerable" when the code shows no exploitable weakness.')
+    rows = [{'task': 'detect', 'label': 'vulnerable', 'messages': chat(
+                f"{ask_detect}\n\n{multi_code_block(item, 'vulnerable')}",
+                {'verdict': 'vulnerable', 'function': name, 'cwe': cwe, 'evidence_lines': lines, 'issue': issue})},
+            {'task': 'detect', 'label': 'not_vulnerable', 'messages': chat(
+                f"{ask_detect}\n\n{multi_code_block(item, 'fixed')}",
+                {'verdict': 'not_vulnerable', 'function': name, 'cwe': [], 'evidence_lines': [],
+                 'issue': 'No exploitable weakness of the reported kind is visible in this code.'})}]
+    if cwe:
+        rows.append({'task': 'root_cause', 'label': ','.join(cwe), 'messages': chat(
+            'These functions were patched together for a security issue. Using the vulnerable and fixed versions, explain '
+            'the root cause. Respond with JSON: {"cwe": [str], "root_cause": str, "fix": str}.\n\nVulnerable:\n'
+            f"{multi_code_block(item, 'vulnerable')}\n\nFixed:\n{multi_code_block(item, 'fixed')}",
+            {'cwe': cwe, 'root_cause': advisory_text(rec), 'fix': rec['commit_message'].splitlines()[0][:200]})})
+    claim = (f"Finding: `{name}` in {p['path']} is vulnerable ({', '.join(cwe) or 'unclassified'}): "
+             f"{rec['summary'] or advisory_text(rec, 200)} Evidence lines: {lines}.")
+    ask = 'Is the finding supported by the code shown? Respond with JSON: {"supported": bool, "reason": str}.'
+    rows += [{'task': 'finding_support', 'label': 'supported', 'messages': chat(
+                 f"{claim}\n\n{ask}\n\n{multi_code_block(item, 'vulnerable')}",
+                 {'supported': True, 'reason': f'Lines {lines} of `{name}` contain the code the fix later changed.'})},
+             {'task': 'finding_support', 'label': 'stale', 'messages': chat(
+                 f"{claim}\n\n{ask}\n\n{multi_code_block(item, 'fixed')}",
+                 {'supported': False, 'reason': 'The code shown already contains the fix; the cited lines no longer hold the weakness.'})},
+             {'task': 'finding_support', 'label': 'nonexistent', 'messages': chat(
+                 f"{claim.replace(f'`{name}`', f'`{decoy_name}`', 1)}\n\n{ask}\n\n{multi_code_block(item, 'vulnerable')}",
+                 {'supported': False, 'reason': f'`{decoy_name}` does not appear in the code shown; the finding cites code that is not there.'})}]
+    attribution = {k: rec.get(k) for k in ATTRIBUTION_KEYS if k in rec}
+    attribution.update(path=p['path'], function=name, functions=[f"{q['path']}:{q['name']}" for q in item['pairs']],
+                       code_license=rec['license'], advisory_ids=[a['id'] for a in rec['advisories']],
+                       advisory_licenses=sorted({a['license'] for a in rec['advisories']}))
+    for row in rows:
+        row.update(id=hashlib.sha256((item['key'] + row['task'] + row['label']).encode()).hexdigest()[:16],
+                   key=item['key'], split=item['split'], source=attribution,
+                   verification={'fix_commit_fetched': True, 'single_parent': True, 'permissive_license': True,
+                                 'single_function_fix': False, 'multi_function_fix': len(item['pairs']),
+                                 'finding_function': 'the changed function with the most changed lines', 'parsed': True,
+                                 'tool_verified': False, 'tests_in_fix_commit': len(rec['tests'])})
+    return rows
+
+
+def tasks_for(item: dict, decoy_name: str, rng: random.Random, targets: bool = True) -> list[dict]:
+    """All task rows for one verified single-function fix. Each row keeps attribution and its verification.
+
+    `targets=False` omits remediate and regression_test rows: when the fix also added helpers, imports or edits
+    elsewhere, the fixed function alone is not a working patch and would teach the model to call unseen code."""
     p, rec = item['pair'], item
     name, lines = p['name'], item['changed_lines']
     cwe = rec['cwes']
@@ -141,11 +202,12 @@ def tasks_for(item: dict, decoy_name: str, rng: random.Random) -> list[dict]:
             'cause. Respond with JSON: {"cwe": [str], "root_cause": str, "fix": str}.\n\nVulnerable:\n'
             f"{code_block(item, 'vulnerable')}\n\nFixed:\n{code_block(item, 'fixed')}",
             {'cwe': cwe, 'root_cause': advisory_text(rec), 'fix': rec['commit_message'].splitlines()[0][:200]})})
-    rows.append({'task': 'remediate', 'label': 'fix', 'messages': chat(
-        f"Reported issue: {rec['summary'] or advisory_text(rec, 300)}\n\nRewrite the function below to fix the issue "
-        'without changing its interface or unrelated behavior. Return only the corrected function in one ```python block.'
-        f"\n\n{code_block(item, 'vulnerable')}", f"```python\n{p['fixed']}\n```")})
-    tests = [t for t in rec['tests'] if len(t['source'].splitlines()) <= MAX_TEST_LINES]
+    if targets:
+        rows.append({'task': 'remediate', 'label': 'fix', 'messages': chat(
+            f"Reported issue: {rec['summary'] or advisory_text(rec, 300)}\n\nRewrite the function below to fix the issue "
+            'without changing its interface or unrelated behavior. Return only the corrected function in one ```python block.'
+            f"\n\n{code_block(item, 'vulnerable')}", f"```python\n{p['fixed']}\n```")})
+    tests = [t for t in rec['tests'] if len(t['source'].splitlines()) <= MAX_TEST_LINES] if targets else []
     if tests:
         test = tests[0]
         rows.append({'task': 'regression_test', 'label': test['name'], 'messages': chat(
@@ -184,7 +246,9 @@ def tasks_for(item: dict, decoy_name: str, rng: random.Random) -> list[dict]:
                    verification={'fix_commit_fetched': True, 'single_parent': True, 'permissive_license': True,
                                  'single_function_fix': True, 'parsed': True,
                                  'tool_verified': bool(item.get('tool_verified')),
-                                 'tests_in_fix_commit': len(rec['tests'])})
+                                 'tests_in_fix_commit': len(rec['tests']),
+                                 'self_contained': item.get('self_contained'),
+                                 'fix_scope': {k: v for k, v in (item.get('scope') or {}).items() if k != 'non_python_changes'}})
     return rows
 
 
@@ -194,7 +258,8 @@ def eval_items(item: dict) -> list[dict]:
     for r in rows:
         r['grader'] = {'task': r['task'], 'label': r['label'], 'function': item['pair']['name'],
                        'cwe': item['cwes'], 'changed_lines': item['changed_lines'],
-                       'bandit': item.get('tool_verified'), 'vulnerable': item['pair']['vulnerable'],
+                       'bandit': item.get('tool_verified'), 'self_contained': item.get('self_contained'),
+                       'vulnerable': item['pair']['vulnerable'],
                        'fixed': item['pair']['fixed']}
         r['reference'] = r['messages'][-1]['content']
         r['messages'] = r['messages'][:-1]
@@ -209,10 +274,17 @@ def main(argv=None):
     ap.add_argument('--bandit', default='bandit')
     ap.add_argument('--cutoff', default='2025-07-01')
     ap.add_argument('--near-dup', type=float, default=0.8)
+    ap.add_argument('--scope', type=pathlib.Path, nargs='*', default=[],
+                    help='harvest.py --rescan output for records harvested before scope analysis.')
+    ap.add_argument('--multi-function', action='store_true',
+                    help='also build training rows from focused fixes that changed 2-4 functions (training split only).')
+    ap.add_argument('--allow-non-self-contained-targets', action='store_true',
+                    help='v1 behaviour: remediate/regression_test rows also from fixes that changed code outside the function.')
     args = ap.parse_args(argv)
     cands = {c['key']: c for c in map(json.loads, args.candidates.read_text().splitlines())}
     stats = collections.Counter()
     items, seen_exact = [], {}
+    scopes = {r['key']: r['scope'] for path in args.scope for r in map(json.loads, path.read_text().splitlines())}
     harvested = {}
     for line in (x for path in args.harvest for x in path.read_text().splitlines() if x.strip()):
         h = json.loads(line)
@@ -224,9 +296,24 @@ def main(argv=None):
         c = h.get('checks', {})
         if not c.get('permissive_license'):
             stats['license_excluded'] += 1; continue
-        if len(h.get('pairs', [])) != 1 or not c.get('focused_fix'):
-            stats['not_single_function'] += 1; continue
-        pair = h['pairs'][0]
+        pairs = h.get('pairs', [])
+        if len(pairs) != 1 or not c.get('focused_fix'):
+            if not (args.multi_function and c.get('focused_fix') and len(pairs) >= 2):
+                stats['not_single_function'] += 1; continue
+            if split_for(h['repo'], cands[h['key']]['published'], args.cutoff) != 'train':
+                stats['multi_function_not_train'] += 1; continue
+            if max(sum(len(q[side]) for q in pairs) for side in ('vulnerable', 'fixed')) > MAX_MULTI_CHARS:
+                stats['multi_function_too_long'] += 1; continue
+            digest = hashlib.sha256('\n'.join(normalize(q['vulnerable']) for q in pairs).encode()).hexdigest()
+            if digest in seen_exact:
+                stats['exact_duplicate'] += 1; continue
+            seen_exact[digest] = h['key']
+            primary = max(pairs, key=lambda q: len(changed_lines(q)))
+            items.append({**cands[h['key']], **h, 'pair': primary, 'pairs': pairs, 'multi': True, 'split': 'train',
+                          'digest': digest, 'changed_lines': changed_lines(primary)})
+            stats['multi_function_items'] += 1
+            continue
+        pair = pairs[0]
         if max(len(pair['vulnerable']), len(pair['fixed'])) > MAX_FUNC_CHARS:
             stats['too_long'] += 1; continue
         cand = cands[h['key']]
@@ -237,17 +324,22 @@ def main(argv=None):
         if digest in seen_exact:
             stats['exact_duplicate'] += 1; continue
         seen_exact[digest] = h['key']
-        items.append({**cand, **h, 'pair': pair, 'split': split, 'digest': digest,
-                      'changed_lines': changed_lines(pair)})
+        scope = h.get('scope') or scopes.get(h['key'])
+        items.append({**cand, **h, 'pair': pair, 'split': split, 'digest': digest, 'scope': scope,
+                      'self_contained': bool(scope and scope['self_contained']), 'changed_lines': changed_lines(pair)})
+        stats['self_contained'] += bool(scope and scope['self_contained'])
+        stats['scope_unknown'] += scope is None
     # Leakage: a training function that nearly matches any dev/held-out function is dropped from training.
-    sh = {it['key']: shingles(it['pair']['vulnerable']) for it in items}
-    protected = [it for it in items if it['split'] != 'train']
+    # Multi-function items are checked function by function.
+    sh = {it['key']: [shingles(q['vulnerable']) for q in it.get('pairs') or [it['pair']]] for it in items}
+    protected = [s for it in items if it['split'] != 'train' for s in sh[it['key']]]
     kept = []
     for it in items:
-        if it['split'] == 'train' and any(jaccard(sh[it['key']], sh[o['key']]) >= args.near_dup for o in protected):
+        if it['split'] == 'train' and any(jaccard(a, b) >= args.near_dup for a in sh[it['key']] for b in protected):
             stats['train_near_duplicate_of_eval_dropped'] += 1; continue
         kept.append(it)
-    items = kept
+    multi = [it for it in kept if it.get('multi')]
+    items = [it for it in kept if not it.get('multi')]
     assert not ({i['repo'] for i in items if i['split'] == 'train'} & {i['repo'] for i in items if i['split'] == 'heldout'})
     bandit = run_bandit(args.bandit, [it['pair'] for it in items])
     for i, it in enumerate(items):
@@ -267,19 +359,26 @@ def main(argv=None):
     evals = {s: (args.out / f'eval-{s}.jsonl').open('w', encoding='utf-8') for s in ('dev', 'heldout')}
     for it in items:
         decoy = rng.choice([n for n in names if n not in it['pair']['vulnerable']] or ['missing_helper'])
-        for row in tasks_for(it, decoy, rng):
+        for row in tasks_for(it, decoy, rng, targets=args.allow_non_self_contained_targets or it['self_contained']):
             files[it['split']].write(json.dumps(row, ensure_ascii=False) + '\n')
             counts[(it['split'], row['task'])] += 1
         if it['split'] in evals:
             for row in eval_items(it):
                 evals[it['split']].write(json.dumps(row, ensure_ascii=False) + '\n')
+    for it in multi:
+        shown = '\n'.join(q['vulnerable'] for q in it['pairs'])
+        decoy = rng.choice([n for n in names if n not in shown] or ['missing_helper'])  # after all single rows: their decoys are unchanged
+        for row in multi_tasks_for(it, decoy):
+            files['train'].write(json.dumps(row, ensure_ascii=False) + '\n')
+            counts[('train', row['task'] + '/multi_function')] += 1
     for f in [*files.values(), *evals.values()]:
         f.close()
     # Repository-level verification candidates: held-out fixes that shipped their own tests.
     with (args.out / 'repo-eval-candidates.jsonl').open('w', encoding='utf-8') as f:
         for it in items:
             if it['split'] == 'heldout' and it['tests']:
-                f.write(json.dumps({k: it[k] for k in ('key', 'repo', 'commit', 'parent', 'published', 'summary', 'cwes')}
+                f.write(json.dumps({k: it[k] for k in ('key', 'repo', 'commit', 'parent', 'published', 'summary', 'cwes',
+                                                       'self_contained')}
                                    | {'path': it['pair']['path'], 'function': it['pair']['name'],
                                       'tests': [{'path': t['path'], 'name': t['name']} for t in it['tests']]}) + '\n')
     manifest = {
@@ -287,6 +386,7 @@ def main(argv=None):
         'osv_archive_sha256': next(iter(cands.values()))['osv_archive_sha256'],
         'partition': 'sha256(repo)[:8] mod 5 == 0 -> held-out repositories',
         'filters': stats, 'items_by_split': collections.Counter(it['split'] for it in items),
+        'multi_function_train_items': len(multi),
         'rows': {f'{s}/{t}': n for (s, t), n in sorted(counts.items())},
         'repos_by_split': {s: len({i['repo'] for i in items if i['split'] == s}) for s in ('train', 'dev', 'heldout')},
         'code_licenses': collections.Counter(i['license'] for i in items),

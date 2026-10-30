@@ -70,8 +70,8 @@ def write_jsonl(path, rows, mode="w"):
             handle.write(json.dumps(row, sort_keys=True) + "\n")
 
 
-def load_episodes() -> list[dict]:
-    return read_jsonl(FROZEN)
+def load_episodes(path=None) -> list[dict]:
+    return read_jsonl(pathlib.Path(path) if path else FROZEN)
 
 
 def wilson(k: int, n: int, z: float = 1.959964) -> list[float]:
@@ -245,7 +245,7 @@ def cmd_eval(args):
     os.umask(0o077)
     sys.path.insert(0, str(TOOL_SFT))
     import run as tool_sft_run  # make_backend: the same openai/hf construction as tool_sft
-    episodes = load_episodes()
+    episodes = load_episodes(args.episodes)
     if args.limit:
         episodes = episodes[:args.limit]
     backend = tool_sft_run.make_backend(args)
@@ -261,8 +261,10 @@ def cmd_eval(args):
         records.append(record)
         write_jsonl(out, [record], mode="a")
         print(record["episode"], "ok" if record["ok_transport"] else record.get("error"), flush=True)
-    scores = score_records(records)
+    scores = score_records(records, episodes)
     report = {"schema": "haven-adjudicated-eval-1", "label": args.label, "backend": args.backend,
+              "episode_set": str(args.episodes) if args.episodes else "frozen",
+              "episode_set_sha256": sha256_file(pathlib.Path(args.episodes)) if args.episodes else None,
               "model": args.model, "revision": getattr(args, "revision", None),
               "adapter": bool(getattr(args, "adapter", None)), "temperature": args.temperature,
               "max_tokens": args.max_tokens, "frozen_sha256": sha256_file(FROZEN),
@@ -277,6 +279,29 @@ def cmd_eval(args):
         report["peak_allocated_bytes"] = torch.cuda.max_memory_allocated()
     summary_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(report["summary"], indent=2))
+
+
+def cmd_fresh(args):
+    """Write a novel episode set from a new seed; keep only episodes the scripted oracle passes."""
+    out = pathlib.Path(args.out)
+    if out.exists():
+        raise SystemExit("Refusing to overwrite a fresh episode set.")
+    episodes = generator.make_fresh(args.seed, args.per_family)
+    # Novel = a different question or a different hidden world; some families reuse wording over new worlds.
+    def task_key(e):
+        return sha256_bytes(json.dumps([e["prompt"], e["world"]], sort_keys=True).encode())
+    frozen_keys = {task_key(e) for e in load_episodes()}
+    kept, dropped = [], []
+    for e in episodes:
+        ok = adjudicator.adjudicate(e, run(agent.OracleBackend(e), e))["pass"]
+        (kept if ok and task_key(e) not in frozen_keys else dropped).append(e)
+    write_jsonl(out, kept)
+    meta = {"schema": "haven-adjudicated-fresh-1", "seed": args.seed, "per_family": args.per_family,
+            "episodes": len(kept), "dropped_oracle_fail_or_frozen_duplicate": [e["id"] for e in dropped],
+            "sha256": sha256_file(out), "code_sha256": code_hashes(),
+            "written_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
+    out.with_suffix(".meta.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({k: v for k, v in meta.items() if k != "code_sha256"}, indent=2))
 
 
 def cmd_rescore(args):
@@ -372,6 +397,11 @@ def main(argv=None):
     p.add_argument("--seed", type=int)
     p.add_argument("--limit", type=int)
     p.add_argument("--deadline-minutes", type=float)
+    p.add_argument("--episodes", help="Evaluate a fresh episode set (from `fresh`) instead of the frozen one.")
+    p = sub.add_parser("fresh")
+    p.add_argument("--seed", required=True, help="Use a new seed per run, e.g. the UTC date and time.")
+    p.add_argument("--per-family", type=int, default=4)
+    p.add_argument("--out", required=True)
     p = sub.add_parser("rescore")
     p.add_argument("--records", required=True)
     p.add_argument("--out", required=True)
@@ -382,7 +412,7 @@ def main(argv=None):
     p.add_argument("--worksheet", required=True)
     args = parser.parse_args(argv)
     {"freeze": cmd_freeze, "check": cmd_check, "eval": cmd_eval, "rescore": cmd_rescore,
-     "spotcheck": cmd_spotcheck, "agreement": cmd_agreement}[args.cmd](args)
+     "spotcheck": cmd_spotcheck, "agreement": cmd_agreement, "fresh": cmd_fresh}[args.cmd](args)
 
 
 if __name__ == "__main__":

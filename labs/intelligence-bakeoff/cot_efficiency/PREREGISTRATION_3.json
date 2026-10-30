@@ -1,0 +1,201 @@
+{
+ "id": "COT-EFF-3",
+ "written_at": "2026-10-30T14:58:23Z",
+ "question": "Can root-cause analysis, the only secpatch task where thinking paid in COT-EFF-2, keep thinking-on accuracy at >= 3.2x less wall time?",
+ "why": "COT-EFF-2 calibration: the best accuracy-keeping policy (task_N_B_T_N, 3.2x) spends 52% of its wall time on root_cause with full thinking (135 s/item; thinking off got 1/6 vs 4/6). Every other task is already fast. With the other tasks unchanged, the whole policy reaches 5x only if root cause runs at <= ~42 s/item, i.e. >= 3.2x faster than T, with no loss. Hypothesis: classifying the weakness is largely recognition, so labelled analogies retrieved from the training split can stand in for long reasoning.",
+ "hardware": "Slink: Ryzen 9 3900X, 62 GiB DDR4, RTX 2070 SUPER 8 GiB; the forge GLM-4.7-Flash teacher stays resident on the GPU (2.5 GiB) as an allowed neighbour",
+ "models": {
+  "q35": "~/.local/share/haven-model-lab/models/Qwen3.6-35B-A3B-UD-Q4_K_M.gguf",
+  "lfm8b": "~/.local/share/haven-paradigms/models/LFM2.5-8B-A1B-Q4_K_M.gguf"
+ },
+ "server_args": {
+  "moe": [
+   "--n-gpu-layers",
+   "999",
+   "--device",
+   "CUDA0",
+   "--cpu-moe",
+   "--ctx-size",
+   "32768",
+   "--parallel",
+   "1",
+   "--threads",
+   "6",
+   "--threads-batch",
+   "6",
+   "--batch-size",
+   "256",
+   "--ubatch-size",
+   "128",
+   "--flash-attn",
+   "auto",
+   "--cache-type-k",
+   "f16",
+   "--cache-type-v",
+   "f16"
+  ],
+  "lfm": [
+   "--n-gpu-layers",
+   "999",
+   "--device",
+   "CUDA0",
+   "--cpu-moe",
+   "--ctx-size",
+   "32768",
+   "--parallel",
+   "1",
+   "--threads",
+   "6",
+   "--threads-batch",
+   "6",
+   "--batch-size",
+   "512",
+   "--ubatch-size",
+   "256",
+   "--flash-attn",
+   "auto"
+  ]
+ },
+ "ready_deadline_s": 1200,
+ "defaults": {
+  "sampling": {
+   "temperature": 0.7,
+   "top_p": 0.8,
+   "seed": 42
+  },
+  "think_tokens": 8192,
+  "answer_tokens": 512
+ },
+ "baseline": "T",
+ "arms": [
+  {
+   "id": "T",
+   "model": "q35",
+   "server": "moe",
+   "thinking": true,
+   "lever": "baseline: full thinking"
+  },
+  {
+   "id": "N",
+   "model": "q35",
+   "server": "moe",
+   "thinking": false,
+   "lever": "same model, thinking off (Model Lab default)"
+  },
+  {
+   "id": "NC",
+   "model": "q35",
+   "server": "moe",
+   "thinking": false,
+   "cwe_cases": 3,
+   "lever": "thinking off + 3 nearest training-split root-cause fixes with their recorded CWE"
+  },
+  {
+   "id": "B2K",
+   "model": "q35",
+   "server": "moe",
+   "thinking": true,
+   "extra_args": [
+    "--reasoning-budget",
+    "2048",
+    "--reasoning-budget-message",
+    "Time is up; I will answer now."
+   ],
+   "lever": "budget forcing at 2048 thinking tokens"
+  },
+  {
+   "id": "BC",
+   "model": "q35",
+   "server": "moe",
+   "thinking": true,
+   "extra_args": [
+    "--reasoning-budget",
+    "512",
+    "--reasoning-budget-message",
+    "Time is up; I will answer now."
+   ],
+   "cwe_cases": 3,
+   "lever": "budget forcing at 512 + the same 3 labelled cases"
+  },
+  {
+   "id": "L2C",
+   "model": "lfm8b",
+   "server": "lfm",
+   "thinking": true,
+   "lever": "Liquid LFM2.5-8B-A1B with thinking budget + the same 3 labelled cases",
+   "sampling": {
+    "temperature": 0.1,
+    "top_p": 0.1,
+    "top_k": 50,
+    "repeat_penalty": 1.05,
+    "seed": 42
+   },
+   "sampling_note": "Liquid's published LFM2 generation settings, so the fast arm is not handicapped by Qwen's sampling",
+   "cwe_cases": 3
+  }
+ ],
+ "cases": "CWECases over a training-split train.jsonl (secpatch data-v3-multi, 415 usable root_cause rows). Retrieval by TF-IDF cosine over the tokens the fix added and removed (the prompt shows vulnerable and fixed code). Cases from the item's own repository are excluded. Build-time leakage control already removed training functions with Jaccard >= 0.8 to any dev/held-out function.",
+ "policies": {
+  "T": {
+   "kind": "single",
+   "arm": "T"
+  },
+  "N": {
+   "kind": "single",
+   "arm": "N"
+  },
+  "NC": {
+   "kind": "single",
+   "arm": "NC"
+  },
+  "B2K": {
+   "kind": "single",
+   "arm": "B2K"
+  },
+  "BC": {
+   "kind": "single",
+   "arm": "BC"
+  },
+  "L2C": {
+   "kind": "single",
+   "arm": "L2C"
+  }
+ },
+ "sets": {
+  "rc-calibration": "eval-dev root_cause, 40 items, seed 20261031, excluding every item in COT-EFF-2 calibration/confirmation and the COT-EFF-1 screen prompts",
+  "rc-confirmation": "every remaining eval-heldout root_cause item (20), plus root_cause items of fresh secpatch sets built after this file, if any exist when confirmation runs",
+  "rule": "arms are compared on rc-calibration only; rc-confirmation runs once, for T and the chosen arm, after the choice is recorded here",
+  "built": {
+   "rc-calibration": {
+    "n": 40,
+    "sha256": "15374dd9a771c01b2af4332ae448c4d1adceff0b79d66aeef5ff9a87028f2e42"
+   },
+   "rc-confirmation": {
+    "n": 20,
+    "sha256": "0c49e537217b033f9eb21c1075f1a704c640677c264ed6208385bda3afe93d41"
+   }
+  }
+ },
+ "grader": "secpatch evaluate.grade with CWE identifier matching (commit 10243e3); a root_cause answer is correct if any CWE it names is a recorded CWE of the advisory",
+ "choice_rule": "On rc-calibration: the fastest arm whose correct count >= T's. If none, the arm with the most correct among those >= 3.2x faster than T, reported as not meeting the bar.",
+ "adoption_rule": "Adopted as Haven's root-cause path only if on rc-confirmation its correct count >= T's AND it is >= 3.2x faster than T. Then COT-EFF-2's task routing with this arm for root_cause is re-scored on COT-EFF-2 confirmation rows only if those rows exist for the arm; otherwise the end-to-end speedup is reported as an estimate, not a measurement.",
+ "power_note": "20 confirmation items cannot show a small difference: a 2-item loss is p >= 0.5. A pass means \"no visible loss on 20 unseen items\", and the weekly fresh sets extend it.",
+ "predictions": {
+  "N": "~1-2/6-equivalent: well below T",
+  "NC": "3-6x faster than T; accuracy near T if analogies carry the CWE",
+  "B2K": "1.5-2.5x faster; near T",
+  "BC": "3-4x faster; at or below NC",
+  "L2C": "3-4x faster; below NC"
+ },
+ "not_claimed": "Nothing is trained. Load time and cold cache are out of scope.",
+ "runs_after": "COT-EFF-2 confirmation (unit haven-coteff2-conf) has finished; the GPU must be free of everything except the allowed GLM teacher",
+ "amendments": [
+  {
+   "n": 1,
+   "written_at": "2026-10-30T14:59:29Z",
+   "written_before": "any model was run on either COT-EFF-3 set",
+   "retrieval_diagnostic": "Label-only check on rc-calibration (no model output): the right CWE is among the 3 retrieved cases for 9/40 items with whole-function shingle retrieval, 14/40 with fix-diff TF-IDF (top-5: 18/40), and 10/40 for the three most common training CWEs regardless of the item. Retrieval switched to fix-diff TF-IDF; k stays 3.",
+   "expectation": "Retrieved analogies carry the answer for only about a third of items, so the cases arms are unlikely to replace thinking; B2K is the likeliest to keep accuracy. Recorded so the result cannot be re-framed afterwards."
+  }
+ ]
+}

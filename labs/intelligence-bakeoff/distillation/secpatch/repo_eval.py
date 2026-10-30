@@ -82,8 +82,32 @@ def replace_function(source: str, qualname: str, new_code: str) -> str:
     return out
 
 
+TEST_GROUPS = ('test', 'tests', 'testing', 'dev')
+
+
+def declared_test_installs(work: pathlib.Path) -> list[list[str]]:
+    """pip commands for test dependencies the project itself declares (PEP 735 groups, optional extras).
+    Missing imports are never mapped to guessed package names."""
+    try:
+        import tomllib
+        data = tomllib.loads((work / 'pyproject.toml').read_text())
+    except (OSError, ValueError, ImportError):
+        return []
+    groups = data.get('dependency-groups') or {}
+    extras = (data.get('project') or {}).get('optional-dependencies') or {}
+    cmds = [['pip', 'install', '-q', '--group', g] for g in TEST_GROUPS if g in groups]
+    cmds += [['pip', 'install', '-q', '-e', f'.[{e}]'] for e in TEST_GROUPS if e in extras]
+    return cmds
+
+
+def missing_module(output: str) -> str | None:
+    m = re.search(r"ModuleNotFoundError: No module named '([^']+)'", output)
+    return m.group(1) if m else None
+
+
 def install(work: pathlib.Path, venv: pathlib.Path, root: pathlib.Path, events: list) -> bool:
     env = sandbox_env(root, venv, offline=False)
+    run([venv / 'bin' / 'pip', 'install', '-q', '-U', 'pip>=25.1'], work, env, 600)  # PEP 735 --group support
     attempts = [['pip', 'install', '-q', '-e', '.[test]'], ['pip', 'install', '-q', '-e', '.[tests]'],
                 ['pip', 'install', '-q', '-e', '.'], ['pip', 'install', '-q', '.']]
     base = run([venv / 'bin' / 'pip', 'install', '-q', 'pytest'], work, env, 600)
@@ -155,6 +179,17 @@ def evaluate_fix(cand: dict, patches: dict, sandbox: pathlib.Path, timeout: int)
     if not install(work, venv, root, events):
         return {**rec, 'status': 'INSTALL_FAILED'}
     fixed = pytest(work, venv, root, rec['tests'], timeout)
+    if not fixed['passed'] and fixed['failure_kind'] == 'collection_or_import':
+        # Recovery: install the project's own declared test dependencies, then rerun once per step.
+        for cmd in declared_test_installs(work):
+            step = run([venv / 'bin' / cmd[0], *cmd[1:]], work, sandbox_env(root, venv, offline=False), 900)
+            retry = pytest(work, venv, root, rec['tests'], timeout)
+            events.append({'stage': 'test_dependencies', 'error': missing_module(fixed['tail']) or fixed['tail'][-300:],
+                           'recovery': step['cmd'], 'install_returncode': step['returncode'],
+                           'resolved': retry['passed'], 'after': retry['summary']})
+            fixed = retry
+            if fixed['passed'] or fixed['failure_kind'] != 'collection_or_import':
+                break
     rec['on_fix'] = fixed
     if not fixed['passed']:
         return {**rec, 'status': 'TESTS_FAIL_ON_FIX'}

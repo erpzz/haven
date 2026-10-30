@@ -30,6 +30,12 @@ from train_sft import LocalDataset, collator  # noqa: E402  (shared with the R02
 TARGET_MODULES = ['q_proj', 'k_proj', 'v_proj', 'o_proj', 'gate_proj', 'up_proj', 'down_proj']
 
 
+def lora_targets(model_id: str, choice: str = 'auto'):
+    if choice != 'auto':
+        return choice if choice == 'all-linear' else choice.split(',')
+    return TARGET_MODULES if 'qwen' in model_id.lower() else 'all-linear'
+
+
 def load_rows(path: pathlib.Path, tasks: set | None) -> list[dict]:
     rows = []
     for line in path.read_text(encoding='utf-8').splitlines():
@@ -67,6 +73,23 @@ def encode(rows: list[dict], tokenizer, max_length: int) -> tuple[list[dict], in
             continue
         encoded.append({'input_ids': p + t, 'attention_mask': [1] * (len(p) + len(t)), 'labels': [-100] * len(p) + t})
     return encoded, skipped
+
+
+def target_only_loss(model, inputs):
+    """Next-token loss computed from logits at answer positions only.
+
+    The default causal-LM loss materializes vocab-sized logits for every position (Qwen3: 151,936 per token),
+    including the prompt that is never learned from. On an 8 GiB card shared with another model, that is what
+    ran out of memory. Hidden states for prompt positions are dropped before the LM head, so memory scales
+    with the answer length. The value equals the default loss (mean over answer tokens)."""
+    import torch
+    base = model.get_base_model() if hasattr(model, 'get_base_model') else model
+    labels = inputs['labels']
+    hidden = base.model(input_ids=inputs['input_ids'], attention_mask=inputs['attention_mask']).last_hidden_state
+    target = labels[:, 1:]
+    keep = target != -100
+    logits = base.lm_head(hidden[:, :-1][keep]).float()
+    return torch.nn.functional.cross_entropy(logits, target[keep])
 
 
 def peak_rss_gib() -> float:
@@ -112,6 +135,8 @@ def main(argv=None):
     ap.add_argument('--batch', type=int, default=8, help='Effective batch via gradient accumulation.')
     ap.add_argument('--learning-rate', type=float, default=1e-4)
     ap.add_argument('--rank', type=int, default=16)
+    ap.add_argument('--target-modules', default='auto',
+                    help="'auto': Qwen projection names for Qwen students, every linear layer otherwise (e.g. Liquid LFM)")
     ap.add_argument('--seed', type=int, default=42)
     ap.add_argument('--save-steps', type=int, default=50, help='Checkpoint interval (resumable).')
     ap.add_argument('--resume', action='store_true')
@@ -122,7 +147,7 @@ def main(argv=None):
     rows = load_rows(args.data, tasks)
     data_sha = hashlib.sha256(args.data.read_bytes()).hexdigest()
     steps = args.max_steps or math.ceil(len(rows) * args.epochs / args.batch)
-    plan = {'recipe': 'completion_masked_lora_sft' + ('_qlora4' if args.qlora else ''), 'rows': len(rows),
+    plan = {'recipe': 'completion_masked_lora_sft_target_logits' + ('_qlora4' if args.qlora else ''), 'rows': len(rows),
             'by_task': collections.Counter(r['task'] for r in rows), 'steps': steps, 'effective_batch': args.batch,
             'device': args.device, 'data_sha256': data_sha, 'execute': args.execute}
     print(json.dumps(plan))
@@ -159,7 +184,7 @@ def main(argv=None):
         model = prepare_model_for_kbit_training(model)
     model.gradient_checkpointing_enable()
     model = get_peft_model(model, LoraConfig(r=args.rank, lora_alpha=2 * args.rank, lora_dropout=0.05, bias='none',
-                                             task_type='CAUSAL_LM', target_modules=TARGET_MODULES))
+                                             task_type='CAUSAL_LM', target_modules=lora_targets(args.model, args.target_modules)))
     model.enable_input_require_grads()
     cfg = TrainingArguments(
         output_dir=str(args.output / 'checkpoints'), max_steps=steps, per_device_train_batch_size=1,
@@ -168,7 +193,12 @@ def main(argv=None):
         logging_steps=1 if args.device == 'cpu' else 10, save_strategy='steps', save_steps=args.save_steps,
         save_total_limit=2, report_to=[], seed=args.seed, data_seed=args.seed, dataloader_num_workers=0,
         remove_unused_columns=False)
-    trainer = Trainer(model=model, args=cfg, train_dataset=LocalDataset(encoded), data_collator=collator(tok))
+    class TargetOnlyTrainer(Trainer):
+        def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+            return target_only_loss(model, inputs)
+
+    trainer = TargetOnlyTrainer(model=model, args=cfg, train_dataset=LocalDataset(encoded), data_collator=collator(tok))
+    trainer.model_accepts_loss_kwargs = False  # per-micro-batch mean; Trainer divides by accumulation steps
     if args.device == 'cuda':
         torch.cuda.reset_peak_memory_stats()
     started = time.monotonic()

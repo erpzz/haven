@@ -1,0 +1,12 @@
+[Unit]
+Description=Haven sentinel: read-only security posture audit (exposure, ssh, secrets, dependencies, persistence drift)
+Documentation=file://%h/.local/state/haven-sentinel/code/README.md
+
+[Service]
+Type=oneshot
+Nice=15
+IOSchedulingClass=idle
+UMask=0077
+# exit 1 = the audit ran and found a high-severity failure; that is a result, not a unit failure
+SuccessExitStatus=1
+ExecStart=/usr/bin/python3 %h/.local/state/haven-sentinel/code/sentinel.py --config %h/.local/state/haven-sentinel/code/sentinel.slink.json --out %h/.local/state/haven-sentinel/reports --refresh-osv-days 7

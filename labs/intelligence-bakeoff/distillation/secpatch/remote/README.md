@@ -208,3 +208,18 @@ metadata, private dataset default, `kernels status` and `kernels output`.
 Sources: <https://github.com/Kaggle/kaggle-cli>,
 <https://pypi.org/project/kaggle/2.2.5/>. The provider priority comes from the
 operator; no third-party provisioning or paid account was used.
+
+## Pipeline changes since the original base (re-pinned 2026-10-30)
+
+`SOURCE_BASE.json` pins the merged R02 branch (`670117a`), advanced to `10243e3` for the CWE grading fix and to `4c1417a` for the multi-function build option below. The previous pins are kept under `previous_base`. The core files changed in ways a remote run inherits:
+
+- **Training (`train.py`).** The loss uses only answer-position logits. It equals the default loss (verified 3.067844 against 3.067844), and it fixes the out-of-memory error on an 8 GiB card at 1,536 tokens. LoRA targets now depend on the architecture: Qwen's projection names stay the default, and other students get `all-linear`. The #82 GPU-evidence and adapter-digest checks are kept.
+- **Grading (`evaluate.py`, `build.py`).** A line-number gutter that the model copies onto every line of a patch is stripped before grading. Targets are restricted to self-contained fixes (scope analysis in `harvest.py`), with `--allow-non-self-contained-targets` to opt out. Tool-augmented and case-retrieval arms were added.
+- **Promotion (`registry.py`).** A candidate must also beat the base on detection discrimination (recall − FPR). The first real GPU adapter (seed 42, 2026-10-30) collapsed to a constant answer. Its score rose and its FPR fell to 0, which the old gate would have accepted.
+- **Repository evaluation (`repo_eval.py`).** It refuses to run without `--acknowledge-isolated-runner`.
+
+- **CWE matching (`evaluate.py`, `10243e3`).** `root_cause` scoring and the detect `cwe_match` compare CWE identifiers (`CWE-<n>`) extracted from each answer rather than exact strings, so "CWE-22: Improper Limitation of a Pathname…" now matches `CWE-22`. `SOURCE_BASE.json` therefore anchors `10243e3` instead of `670117a`; `evaluate.py` is the only core file that differs between them, and the replaced hash is kept under `amendments`.
+
+- **Multi-function fixes (`build.py --multi-function`, opt-in).** Focused fixes that changed 2-4 functions become training-only detect, root_cause and finding_support rows that show every changed function. Without the flag the build output is unchanged; dev, held-out and eval files never include them.
+
+The tasks and the dataset schema are unchanged.
