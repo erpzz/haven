@@ -113,7 +113,18 @@ args = TrainingArguments(output_dir=cfg["ckpt"], num_train_epochs=cfg["epochs"],
     fp16=True, logging_steps=5, save_strategy="epoch", save_total_limit=1, report_to=[], seed=cfg["seed"],
     dataloader_num_workers=0, remove_unused_columns=False, ddp_find_unused_parameters=False,
     group_by_length=True, max_grad_norm=1.0)
-tr = Trainer(model=model, args=args, train_dataset=DS(), data_collator=collate, callbacks=[Guard()])
+class AnswerOnlyTrainer(Trainer):
+    # Project hidden states to the 248k vocabulary only where a target token follows (about 10% of positions):
+    # same loss, a fraction of the logits memory and time.
+    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+        labels = inputs["labels"]
+        keep = (labels[0, 1:] != -100).nonzero().squeeze(-1)
+        out = model(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"], logits_to_keep=keep)
+        logits = out.logits[0].float()
+        loss = torch.nn.functional.cross_entropy(logits, labels[0, keep + 1])
+        return (loss, out) if return_outputs else loss
+tr = AnswerOnlyTrainer(model=model, args=args, train_dataset=DS(), data_collator=collate, callbacks=[Guard()])
+tr.model_accepts_loss_kwargs = False  # per-sequence mean loss; the Trainer averages over accumulation steps
 torch.cuda.reset_peak_memory_stats()
 res = tr.train()
 if rank == 0:
@@ -138,6 +149,78 @@ def train():
        f"'{json.dumps(cfg)}' {deadline}", 'train.log',
        env={**os.environ, 'PYTORCH_CUDA_ALLOC_CONF': 'expandable_segments:True', 'TOKENIZERS_PARALLELISM': 'false'})
     return json.loads((OUT / 'adapter' / 'train.json').read_text())
+
+PREF = r"""
+import json, math, random, sys, time, torch
+from transformers import AutoModelForImageTextToText, AutoTokenizer, BitsAndBytesConfig
+from peft import PeftModel, prepare_model_for_kbit_training
+cfg = json.loads(sys.argv[1]); deadline = float(sys.argv[2])
+torch.manual_seed(cfg["seed"]); random.seed(cfg["seed"])
+tok = AutoTokenizer.from_pretrained(cfg["student"], revision=cfg["revision"])
+pairs = [json.loads(x) for x in open(cfg["pairs"]) if x.strip()]
+def encode(prompt, answer):
+    prefix = tok.apply_chat_template(prompt, tokenize=False, add_generation_prompt=True, enable_thinking=False)
+    p = tok(prefix, add_special_tokens=False)["input_ids"]
+    t = tok(answer + tok.eos_token if tok.eos_token else answer, add_special_tokens=False)["input_ids"]
+    return p, t
+data = []
+for x in pairs:
+    pc, tc = encode(x["prompt"], x["chosen"]); pr, tr_ = encode(x["prompt"], x["rejected"])
+    if len(pc) + max(len(tc), len(tr_)) <= cfg["max_length"] and tc and tr_:
+        data.append((pc, tc, tr_))
+random.shuffle(data)
+q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
+model = AutoModelForImageTextToText.from_pretrained(cfg["student"], revision=cfg["revision"], quantization_config=q,
+                                                    device_map={"": 0}, dtype=torch.float16)
+model.config.use_cache = False
+model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True, gradient_checkpointing_kwargs={"use_reentrant": False})
+model = PeftModel.from_pretrained(model, cfg["adapter"], is_trainable=True)
+def seq_logp(p, t):
+    ids = torch.tensor([p + t], device="cuda")
+    keep = torch.arange(len(p) - 1, len(p) + len(t) - 1, device="cuda")
+    logits = model(input_ids=ids, logits_to_keep=keep).logits[0].float()
+    lp = torch.log_softmax(logits, -1).gather(-1, torch.tensor(t, device="cuda")[:, None]).squeeze(-1)
+    return lp.sum(), lp.mean()
+# Reference = the SFT policy itself (frozen log-probs computed once), as in iterative RPO.
+model.eval(); ref = []
+with torch.no_grad():
+    for pc, tc, tr_ in data:
+        ref.append((seq_logp(pc, tc)[0].item(), seq_logp(pc, tr_)[0].item()))
+model.train()
+opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad], lr=cfg["pref_lr"])
+scaler = torch.amp.GradScaler("cuda")
+beta, alpha, accum = cfg["pref_beta"], cfg["pref_nll"], cfg["grad_accum"]
+log, wins, steps = [], 0, 0
+for i, ((pc, tc, tr_), (rc, rr)) in enumerate(zip(data, ref)):
+    if time.time() > deadline:
+        break
+    with torch.autocast("cuda", dtype=torch.float16):
+        lc, mc = seq_logp(pc, tc); lr_, _ = seq_logp(pc, tr_)
+        margin = beta * ((lc - rc) - (lr_ - rr))
+        loss = (-torch.nn.functional.logsigmoid(margin) - alpha * mc) / accum
+    scaler.scale(loss).backward()
+    wins += int(margin.item() > 0)
+    if (i + 1) % accum == 0:
+        scaler.unscale_(opt); torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+        scaler.step(opt); scaler.update(); opt.zero_grad(); steps += 1
+        log.append({"pair": i + 1, "loss": round(loss.item() * accum, 4), "margin": round(margin.item(), 4)})
+model.save_pretrained(cfg["adapter"])
+json.dump({"pairs": len(pairs), "used": len(data), "optimizer_steps": steps, "reward_accuracy": round(wins / max(1, i + 1), 4),
+           "beta": beta, "nll_weight": alpha, "lr": cfg["pref_lr"], "log": log[-50:]},
+          open(cfg["adapter"] + "/pref.json", "w"))
+"""
+
+
+@stage('pref')
+def pref():
+    pairs = CYCLE / 'pairs.jsonl'
+    cfg = {**CFG['train'], **CFG.get('pref', {}), 'student': CFG['student'], 'revision': CFG['revision'],
+           'pairs': str(pairs), 'adapter': str(OUT / 'adapter')}
+    deadline = time.time() + max(300, CFG['session_seconds'] - CFG['eval_reserve_seconds'] - (time.monotonic() - T0))
+    (W / 'pref.py').write_text(PREF)
+    sh(f"{sys.executable} {W}/pref.py '{json.dumps(cfg)}' {deadline}", 'pref.log',
+       env={**os.environ, 'PYTORCH_CUDA_ALLOC_CONF': 'expandable_segments:True', 'CUDA_VISIBLE_DEVICES': '0'})
+    return json.loads((OUT / 'adapter' / 'pref.json').read_text())
 
 
 def to_gguf(src, name):
@@ -245,6 +328,9 @@ if setup()['ok']:
         R['stages']['train'] = {'ok': True, 'skipped': True}
     else:
         train()
+    pairs = CYCLE / 'pairs.jsonl'
+    if R['stages']['train']['ok'] and CFG.get('pref', {}).get('enabled') and pairs.exists() and pairs.stat().st_size:
+        pref()  # a failed preference stage leaves the SFT adapter in place (it saves only at the end)
     if R['stages']['train']['ok']:
         if merge_convert()['ok']:
             eval_student()

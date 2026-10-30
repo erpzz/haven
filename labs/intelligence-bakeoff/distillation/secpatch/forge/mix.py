@@ -36,6 +36,7 @@ def main(argv=None):
     ap.add_argument('--selfplay', type=pathlib.Path, nargs='*', default=[], help='selfplay.py outputs')
     ap.add_argument('--out', type=pathlib.Path, required=True)
     ap.add_argument('--selfplay-per-row', type=int, default=1)
+    ap.add_argument('--pairs', type=pathlib.Path, nargs='*', default=[], help='self-play chosen/rejected pairs')
     args = ap.parse_args(argv)
     train, dev = jl(args.data / 'train.jsonl'), jl(args.data / 'dev.jsonl')
     eval_dev, heldout = jl(args.data / 'eval-dev.jsonl'), jl(args.data / 'eval-heldout.jsonl')
@@ -68,7 +69,15 @@ def main(argv=None):
         for s in extra[r['id']]:
             rows.append({**s, 'split': 'train'})
             origin['selfplay_verified'] += 1
+    pairs = {}
+    for path in args.pairs:  # later cycles overwrite earlier ones: pairs from the newest policy win
+        for rec in jl(path):
+            if rec.get('id') in pool_ids:
+                pairs[rec['id']] = rec
     args.out.mkdir(parents=True, exist_ok=True)
+    with (args.out / 'pairs.jsonl').open('w', encoding='utf-8') as f:
+        for rec in pairs.values():
+            f.write(json.dumps(rec, ensure_ascii=False) + '\n')
     recorded = [{**r, 'split': 'train'} for r in pool]  # ground-truth targets: teacher input and self-play graders
     for name, data in (('sft.jsonl', rows), ('pool.jsonl', recorded), ('gate.jsonl', gate),
                        ('eval-heldout.jsonl', heldout)):
@@ -79,6 +88,7 @@ def main(argv=None):
         'source_manifest': json.loads((args.data / 'manifest.json').read_text()),
         'pool_rows': len(rows), 'pool_fixes': len({r['key'] for r in pool}), 'pool_repos': len(pool_repos),
         'by_task': collections.Counter(r['task'] for r in rows), 'by_origin': origin,
+        'preference_pairs': len(pairs),
         'gate_rows': len(gate), 'gate_fixes': len({r['key'] for r in gate}),
         'heldout_rows': len(heldout), 'heldout_fixes': len({r['key'] for r in heldout}),
         'sha256': {n: digest(args.out / n) for n in ('sft.jsonl', 'pool.jsonl', 'gate.jsonl', 'eval-heldout.jsonl')},

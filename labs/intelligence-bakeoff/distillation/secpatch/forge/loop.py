@@ -134,8 +134,10 @@ def step_mix(s, cfg, data: pathlib.Path | None = None):
     data = data or latest_data()
     traces = prior_files(s, 'c*/teach/traces*.jsonl')
     selfplay = prior_files(s, 'c*/train/selfplay/selfplay-sft.jsonl')
+    pairs = prior_files(s, 'c*/train/selfplay/selfplay-pairs.jsonl')
     r = subprocess.run([sys.executable, str(HERE / 'mix.py'), '--data', str(data), '--out', str(out), '--traces',
-                        *map(str, traces), '--selfplay', *map(str, selfplay)], capture_output=True, text=True)
+                        *map(str, traces), '--selfplay', *map(str, selfplay), '--pairs', *map(str, pairs)],
+                       capture_output=True, text=True)
     if r.returncode:
         raise RuntimeError(r.stderr[-2000:])
     s['data'] = str(data)
@@ -171,9 +173,9 @@ def package(s, cfg, kind: str) -> str:
     if stage.exists():
         shutil.rmtree(stage)
     (stage / 'code/forge').mkdir(parents=True)
-    for name in ('sft.jsonl', 'pool.jsonl', 'gate.jsonl', 'eval-heldout.jsonl', 'manifest.json'):
+    for name in ('sft.jsonl', 'pool.jsonl', 'pairs.jsonl', 'gate.jsonl', 'eval-heldout.jsonl', 'manifest.json'):
         shutil.copy(cdir(s) / 'data' / name, stage / name)
-    for f in HERE.glob('*.py'):
+    for f in [*HERE.glob('*.py'), HERE / 'handbook.md']:
         shutil.copy(f, stage / 'code/forge' / f.name)
     for name in ('evaluate.py', 'harvest.py'):
         shutil.copy(STATE_DIR / 'code/secpatch' / name, stage / 'code' / name)

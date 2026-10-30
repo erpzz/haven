@@ -26,12 +26,14 @@ import time
 import urllib.request
 
 TASKS = ('detect', 'root_cause', 'finding_support', 'remediate')
+HANDBOOK = (pathlib.Path(__file__).resolve().parent / 'handbook.md').read_text(encoding='utf-8')
 WORD_LIMIT = {'detect': 90, 'root_cause': 110, 'finding_support': 80, 'remediate': 60}
 LEAK = re.compile(r'\b(reference|ground truth|hint|we are told|i was told|the answer|advisory|hidden|provided label|'
                   r'recorded fix|gold)\b', re.I)
 GUTTER = re.compile(r'^\s*(\d+) \|', re.M)
 # When the code shown is the vulnerable version, the student cannot know about any later patch.
-FUTURE = re.compile(r'\b(patch(ed|es)?|the fix|fixed version|later (changed|fixed)|correct (attribute|name|spelling) is)\b', re.I)
+FUTURE = re.compile(r'\b(patch(ed|es)?|the fix|fixed version|earlier (version|form)|previous (version|code)|later '
+                    r'(changed|fixed|version)|updated (version|code)|correct (attribute|name|spelling) is|vulnerable version)\b', re.I)
 
 
 CODE = re.compile(r'```python\n(.*?)```', re.S)
@@ -99,28 +101,34 @@ def reference(row: dict) -> str | None:
     task, label, gold = row['task'], row['label'], target_json(row)
     adv = ' '.join(a.get('id', '') for a in row['source'].get('advisories', []))
     diff, _ = patch_diff(row['key'])
-    patch = ('\nThe security patch changed these lines (- vulnerable version, + patched version):\n' + diff) if diff else ''
+    old_lines = '\n'.join(l for l in diff.splitlines() if l.startswith('-'))
+    new_lines = '\n'.join(l for l in diff.splitlines() if l.startswith('+'))
+    weak = ('\nThe weakness lies in these lines of the code shown:\n' + old_lines) if old_lines else ''
+    safe = ('\nA safe implementation instead does this (NOT visible to the reader; use it only to understand '
+            'what control is missing):\n' + new_lines) if new_lines else ''
+    guard = ('\nThe protective lines in the code shown are:\n' + new_lines) if new_lines else ''
+    before = ('\nAn earlier unsafe form (NOT visible to the reader; never mention it) was:\n' + old_lines) if old_lines else ''
+    patch = ('\nThe security-relevant change, for your understanding only (- unsafe, + safe):\n' + diff) if diff else ''
     if task == 'detect':
         if label == 'vulnerable':
             cwe = ', '.join(gold.get('cwe') or []) or 'unclassified'
-            return (f"This exact function is the VULNERABLE version (later patched; {adv}). Weakness class: {cwe}. "
-                    f"Known issue: {gold.get('issue', '')[:500]}{patch}\nYour analysis must explain the concrete weakness in "
-                    f"the lines the patch changed, using their identifiers.")
-        return (f"This exact function is the already-PATCHED version of a function that had a security fix ({adv}). "
-                f"It should be judged not_vulnerable for that issue.{patch}\nExplain which guard, check or change in "
-                f"the code shown (the + lines) prevents the problem, using their identifiers.")
+            return (f"Verdict: vulnerable. Weakness class: {cwe}. Description: {gold.get('issue', '')[:500]}{weak}{safe}"
+                    f"\nExplain the concrete weakness in the code shown, as if discovering it yourself.")
+        return (f"Verdict: not_vulnerable for this weakness class. Description of the weakness this code defends "
+                f"against: {gold.get('issue', '') or adv}{guard}{before}\nExplain which guard in the code shown "
+                f"prevents it.")
     if task == 'root_cause':
         return (f"Recorded CWE: {', '.join(gold.get('cwe') or [])}. Advisory summary: {gold.get('root_cause', '')[:600]} "
                 f"Fix commit subject: {gold.get('fix', '')[:200]}{patch}")
     if task == 'finding_support':
         if label == 'supported':
-            return 'The finding IS supported: the cited lines hold the weakness in the code shown.' + patch
+            return 'The finding IS supported: the cited lines hold the weakness in the code shown.' + weak + safe
         if label == 'stale':
             return ('The finding is NOT supported: the code shown is the patched version; the cited weakness is '
-                    'already fixed. Name the guard or change that fixes it.' + patch)
+                    'already defended. Name the guard in the code shown.' + guard + before)
         return None  # nonexistent-function decoys: the recorded reason is already exact
     if task == 'remediate':
-        return ('Explain in one or two sentences what must change and why; the recorded fix is below.' + patch)
+        return ('Explain in one or two sentences what must change and why; the corrected lines are below.' + patch)
     return None
 
 
@@ -145,7 +153,9 @@ def teacher_messages(row: dict) -> list[dict] | None:
     if ref is None:
         return None
     msgs = [dict(m) for m in row['messages'][:-1]]
-    msgs[-1]['content'] += ('\n\n---\nPrivate reference for the reviewer (never quote or mention it): ' + ref +
+    if msgs and msgs[0]['role'] == 'system':
+        msgs[0] = {'role': 'system', 'content': msgs[0]['content'] + '\n\n' + HANDBOOK}
+    msgs[-1]['content'] += ('\n\n---\nPrivate notes for you (the reader never sees them): ' + ref +
                             '\n\n' + INSTRUCTIONS[row['task']].format(w=WORD_LIMIT[row['task']]))
     return msgs
 
@@ -189,22 +199,31 @@ def verify(row: dict, text: str) -> tuple[dict | None, str]:
         return None, 'braces'
     if LEAK.search(analysis):
         return None, 'leak'
-    shows_vulnerable = (task == 'detect' and label == 'vulnerable') or (task == 'finding_support' and label == 'supported')
-    if shows_vulnerable and FUTURE.search(analysis):
+    if task in ('detect', 'finding_support') and FUTURE.search(analysis):
         return None, 'future_leak'
     if task != 'remediate':
         for tick in re.findall(r'`([^`]+)`', analysis):
             for w in re.findall(r'[A-Za-z_][A-Za-z0-9_]{2,}', tick):
                 if w not in prompt:
                     return None, 'unseen_identifier'
-    _, idents = patch_diff(row['key'])
+    diff, idents = patch_diff(row['key'])
     idents = {w for w in idents if re.search(r'\b' + re.escape(w) + r'\b', prompt)}
-    if idents and not any(re.search(r'\b' + re.escape(w) + r'\b', analysis) for w in idents):
-        return None, 'ungrounded'
+    changed_lines = {int(m) for m in re.findall(r'^[-+]\s*(\d+) \|', diff, re.M)} & shown_lines(prompt)
+    cited_any = {int(x) for x in re.findall(r'\blines?\s+(\d+)', analysis, re.I)}
+    if idents:  # a visible changed identifier must be named
+        grounded = any(re.search(r'\b' + re.escape(w) + r'\b', analysis) for w in idents)
+    else:  # nothing visible changed by name (e.g. only lines were added): cite a changed line instead
+        grounded = not changed_lines or bool(cited_any & changed_lines)
+    if not grounded:
+        ground_fail = 'ungrounded'
+    else:
+        ground_fail = None
     cited = {int(x) for x in re.findall(r'\blines?\s+(\d+)', analysis, re.I)}
     if task != 'remediate' and label != 'nonexistent':
         if not cited or not cited <= shown_lines(prompt):
             return None, 'bad_citation'
+    if ground_fail:
+        return None, ground_fail
     if task == 'detect':
         if obj.get('verdict') != gold['verdict']:
             return None, 'wrong_verdict'
@@ -243,9 +262,9 @@ class Endpoint:
     def __init__(self, base: str, model: str, key: str = '', timeout: int = 900):
         self.base, self.model, self.key, self.timeout = base.rstrip('/'), model, key, timeout
 
-    def __call__(self, messages, max_tokens, temperature, seed):
+    def __call__(self, messages, max_tokens, temperature, seed, think=False):
         body = {'model': self.model, 'messages': messages, 'max_tokens': max_tokens, 'temperature': temperature,
-                'top_p': 0.95, 'seed': seed, 'chat_template_kwargs': {'enable_thinking': False}}
+                'top_p': 0.95, 'seed': seed, 'chat_template_kwargs': {'enable_thinking': think}}
         headers = {'Content-Type': 'application/json'}
         if self.key:
             headers['Authorization'] = 'Bearer ' + self.key
@@ -264,6 +283,7 @@ def main(argv=None):
     ap.add_argument('--key-file', type=pathlib.Path)
     ap.add_argument('--attempts', type=int, default=3, help='samples per row until one verifies')
     ap.add_argument('--workers', type=int, default=8)
+    ap.add_argument('--think-retries', type=int, default=1, help='retries use the teacher reasoning mode')
     ap.add_argument('--deadline', type=float, default=0, help='stop starting new rows after this many seconds')
     ap.add_argument('--limit', type=int, default=0)
     ap.add_argument('--shard', default='0-0/1', help='A-B/N: rows whose sha256(id) mod N is in A..B (split lanes)')
@@ -305,7 +325,9 @@ def main(argv=None):
         kept = None
         for attempt in range(args.attempts):
             try:
-                text, usage = ep(msgs, 700, 0.3 if attempt == 0 else 0.8, attempt)
+                # adaptive compute: a fast answer first; retries reason before answering (reasoning is discarded)
+                think = attempt > 0 and args.think_retries
+                text, usage = ep(msgs, 4000 if think else 700, 0.3 if attempt == 0 else 0.7, attempt, think)
             except Exception as exc:  # recorded, the row stays untaught (gold target remains)
                 reasons.append(f'error:{type(exc).__name__}')
                 continue

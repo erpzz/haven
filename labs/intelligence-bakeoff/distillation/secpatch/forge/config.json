@@ -11,6 +11,7 @@
  "eval_base": true,
  "selfplay_samples": 4,
  "selfplay_rows": 800,
+ "pref": {"enabled": true, "pref_lr": 0.00002, "pref_beta": 0.1, "pref_nll": 1.0},
  "teacher": {
   "repo": "unsloth/GLM-4.7-Flash-GGUF",
   "file": "GLM-4.7-Flash-Q4_K_M.gguf",
