@@ -25,7 +25,9 @@ HERE = pathlib.Path(__file__).resolve().parent
 def _load_evaluator():
     # By path, under its own name: distillation/evaluate.py would shadow a plain `import evaluate`.
     import importlib.util
-    spec = importlib.util.spec_from_file_location('secpatch_evaluate', HERE.parent / 'evaluate.py')
+    # Kaggle packages evaluate.py beside forge/; the repo and Slink keep it in secpatch/.
+    path = next(p for p in (HERE.parent / 'evaluate.py', HERE.parent / 'secpatch' / 'evaluate.py') if p.exists())
+    spec = importlib.util.spec_from_file_location('secpatch_evaluate', path)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
