@@ -376,6 +376,22 @@
     "policies task_N_B_T_N, task_N_B_T_T, task_N_B_B_N, task_N_B_D_N, task_N_B_D_D, task_N_B_DNT_N (order: detect, finding_support, root_cause, remediate; adjudicated -> N)"
    ],
    "choice_rule": "unchanged from amendment 1, applied to all policies after re-grading"
+  },
+  {
+   "n": 3,
+   "written_at": "2026-10-30T14:55:08Z",
+   "written_before": "any confirmation row exists",
+   "regrade": "realworld.py regrade applied to every calibration arm: score changes N 1, B 2, T 0, L 0, L2 0, D 0",
+   "calibration_scores": "run1/policy_calibration_v2.json (private). T 35/58 in 4966 s (secpatch 17/28, adjudicated 18/30).",
+   "chosen_policy": "task_N_B_T_N",
+   "why": "Applying amendment 1's rule: the fastest policy non-inferior to T on calibration in both kinds. task_N_B_T_N: 36/58 (secpatch 17/28, adjudicated 19/30), 1552 s, 3.20x, 6 wins / 5 losses vs T, McNemar p=1.0. Next non-inferior: task_N_B_DNT_N 2.47x, task_N_B_T_T 1.69x. Faster policies all lost items: task_N_B_B_N 34/58 at 5.29x, N 32/58 at 6.46x.",
+   "expected_outcome": "Below the 5x bar on calibration, so even if confirmed it is a partial result, not the 5-10x answer. It is carried forward because it is the fastest policy that kept accuracy.",
+   "confirmation_arms": [
+    "T",
+    "N",
+    "B"
+   ],
+   "not_carried": "L2 and D are not run on confirmation. Calibration observations kept as hypotheses for a later experiment with its own fresh sets: L2 finding_support 7/8 at 20 s/item vs T 5/8 at 89 s; D (35B answering from L2's reasoning) never beat L2 alone and fell to 1/6 on remediate; L2 is weak on agentic tool use (8/30)."
   }
  ]
 }

@@ -213,4 +213,6 @@ operator; no third-party provisioning or paid account was used.
 
 - **CWE matching (`evaluate.py`, `10243e3`).** `root_cause` scoring and the detect `cwe_match` compare CWE identifiers (`CWE-<n>`) extracted from each answer rather than exact strings, so "CWE-22: Improper Limitation of a Pathname…" now matches `CWE-22`. `SOURCE_BASE.json` therefore anchors `10243e3` instead of `670117a`; `evaluate.py` is the only core file that differs between them, and the replaced hash is kept under `amendments`.
 
+- **Multi-function fixes (`build.py --multi-function`, opt-in).** Focused fixes that changed 2-4 functions become training-only detect, root_cause and finding_support rows that show every changed function. Without the flag the build output is unchanged; dev, held-out and eval files never include them.
+
 The tasks and the dataset schema are unchanged.
