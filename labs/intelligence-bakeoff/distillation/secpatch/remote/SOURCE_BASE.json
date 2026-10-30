@@ -1,5 +1,5 @@
 {
-  "base_commit": "10243e302d60245ddcb014a75f43857af861b7d1",
+  "base_commit": "4c1417a6646bc068bb3106c8fd60fed522ddf2ae",
   "core_sha256": {
     "secpatch/build.py": "f32a80c5464e339571654c08b91529a8b304ac83efe1cb4db2b19c28a26cb407",
     "secpatch/evaluate.py": "91d6519c584142df3602ce3ecbb8a2aee5042486f84ecff78fad7f6665bff356",
@@ -17,7 +17,8 @@
     "PR82": "c9cf96f4ade6b82c1688f4bf5f768b828c0a92eb",
     "PR84": "632fe9d1be1ae844ba742c5d1cbb2c4903a60138",
     "R02-branch-merge": "670117a",
-    "R02-grader-cwe-ids": "10243e302d60245ddcb014a75f43857af861b7d1"
+    "R02-grader-cwe-ids": "10243e302d60245ddcb014a75f43857af861b7d1",
+    "R02-build-multi-function": "4c1417a6646bc068bb3106c8fd60fed522ddf2ae"
   },
   "previous_base": {
     "base_commit": "eaa76f834bc9f64fe9aada542fdf3c00ba9a6f55",
@@ -63,10 +64,11 @@
     },
     {
       "at": "2026-10-30",
-      "commit": "this commit (COT-EFF-2 amendment 3)",
+      "commit": "4c1417a",
       "file": "secpatch/build.py",
       "from_sha256": "efa9e28c0c24e98243e06e2c2d2fb6dd91e119150f59de8c592fce535dc9bcb7",
-      "why": "Opt-in --multi-function adds training-only rows from focused fixes that changed 2-4 functions. Without the flag the build is unchanged, and eval files are never affected. See remote/README.md \"Pipeline changes since the original base\"."
+      "why": "Opt-in --multi-function adds training-only rows from focused fixes that changed 2-4 functions. Without the flag the build is unchanged, and eval files are never affected. See remote/README.md \"Pipeline changes since the original base\".",
+      "base_commit_to": "4c1417a"
     }
   ]
 }
