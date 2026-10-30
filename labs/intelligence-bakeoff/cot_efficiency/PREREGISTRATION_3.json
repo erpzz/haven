@@ -134,7 +134,7 @@
    "cwe_cases": 3
   }
  ],
- "cases": "CWECases over a training-split train.jsonl (secpatch data-v3-multi: single- and multi-function root_cause rows). Nearest by 5-gram shingle Jaccard on the vulnerable code; cases from the item's own repository are excluded (dev shares repositories with training, only later in time; held-out repositories are disjoint by construction). Build-time leakage control already removed training functions with Jaccard >= 0.8 to any dev/held-out function.",
+ "cases": "CWECases over a training-split train.jsonl (secpatch data-v3-multi, 415 usable root_cause rows). Retrieval by TF-IDF cosine over the tokens the fix added and removed (the prompt shows vulnerable and fixed code). Cases from the item's own repository are excluded. Build-time leakage control already removed training functions with Jaccard >= 0.8 to any dev/held-out function.",
  "policies": {
   "T": {
    "kind": "single",
@@ -188,5 +188,14 @@
   "L2C": "3-4x faster; below NC"
  },
  "not_claimed": "Nothing is trained. Load time and cold cache are out of scope.",
- "runs_after": "COT-EFF-2 confirmation (unit haven-coteff2-conf) has finished; the GPU must be free of everything except the allowed GLM teacher"
+ "runs_after": "COT-EFF-2 confirmation (unit haven-coteff2-conf) has finished; the GPU must be free of everything except the allowed GLM teacher",
+ "amendments": [
+  {
+   "n": 1,
+   "written_at": "2026-10-30T14:59:29Z",
+   "written_before": "any model was run on either COT-EFF-3 set",
+   "retrieval_diagnostic": "Label-only check on rc-calibration (no model output): the right CWE is among the 3 retrieved cases for 9/40 items with whole-function shingle retrieval, 14/40 with fix-diff TF-IDF (top-5: 18/40), and 10/40 for the three most common training CWEs regardless of the item. Retrieval switched to fix-diff TF-IDF; k stays 3.",
+   "expectation": "Retrieved analogies carry the answer for only about a third of items, so the cases arms are unlikely to replace thinking; B2K is the likeliest to keep accuracy. Recorded so the result cannot be re-framed afterwards."
+  }
+ ]
 }

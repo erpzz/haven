@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import collections
+import difflib
 import hashlib
 import importlib.util
 import json
@@ -184,35 +185,68 @@ def with_draft(messages: list[dict], draft: str) -> list[dict]:
     return out
 
 
+CODE_BLOCK = re.compile(r'```python\n(.*?)```', re.S)
+GUTTER = re.compile(r'^\s*\d+ \| ?')
+TOKEN = re.compile(r'[A-Za-z_][A-Za-z0-9_]*|[^\sA-Za-z0-9_]')
+
+
+def fix_diff(prompt: str):
+    """Tokens the fix added (+) and removed (-), from a root-cause prompt's vulnerable and fixed code blocks."""
+    blocks = ['\n'.join(GUTTER.sub('', ln, count=1) for ln in b.splitlines()) for b in CODE_BLOCK.findall(prompt)]
+    half = len(blocks) // 2
+    if not half:
+        return None
+    vuln, fixed = '\n'.join(blocks[:half]).splitlines(), '\n'.join(blocks[half:]).splitlines()
+    out = collections.Counter()
+    for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(a=vuln, b=fixed, autojunk=False).get_opcodes():
+        if tag != 'equal':
+            out.update('-' + t for ln in vuln[i1:i2] for t in TOKEN.findall(ln))
+            out.update('+' + t for ln in fixed[j1:j2] for t in TOKEN.findall(ln))
+    return out
+
+
 class CWECases:
-    """Labelled past fixes for root-cause prompts: training-split root_cause rows with their recorded CWE.
-    A dev item's own repository is excluded (dev shares repositories with training, only later in time)."""
+    """Labelled past fixes for root-cause prompts: training-split root_cause rows with their recorded CWE, matched on
+    what the fix changed (TF-IDF over added/removed tokens). A dev item's own repository is excluded (dev shares
+    repositories with training, only later in time)."""
     def __init__(self, train_path):
-        from build import jaccard, shingles
-        self.jaccard, self.shingles, self.cases = jaccard, shingles, []
+        self.cases = []
         for row in read_jsonl(train_path):
             if row.get('split') != 'train':
                 raise ValueError('Cases must come from the training split only.')
             if row['task'] != 'root_cause':
                 continue
-            code, answer = evaluate.shown_code(row['messages'][1]['content']), evaluate.parse_json(row['messages'][-1]['content'])
-            if code and answer and evaluate.cwe_ids(answer.get('cwe')):
+            prompt, answer = row['messages'][1]['content'], evaluate.parse_json(row['messages'][-1]['content'])
+            diff, code = fix_diff(prompt), evaluate.shown_code(prompt)
+            if diff and code and answer and evaluate.cwe_ids(answer.get('cwe')):
                 self.cases.append({'repo': row['source']['repo'], 'cwe': sorted(evaluate.cwe_ids(answer['cwe'])),
-                                   'why': str(answer.get('root_cause', ''))[:200], 'code': code, 'sh': shingles(code)})
+                                   'why': str(answer.get('root_cause', ''))[:200], 'code': code, 'diff': diff})
+        self.df = collections.Counter(t for c in self.cases for t in c['diff'])
+        for c in self.cases:
+            c['w'] = self.weights(c['diff'])
 
-    def nearest(self, code: str, k: int, exclude_repo: str | None = None) -> list[dict]:
-        sh = self.shingles(code)
+    def weights(self, counts) -> dict:
+        n = len(self.cases)
+        w = {t: (1 + math.log(k)) * math.log((n + 1) / (self.df.get(t, 0) + 1)) for t, k in counts.items()}
+        norm = math.sqrt(sum(x * x for x in w.values())) or 1.0
+        return {t: x / norm for t, x in w.items()}
+
+    def nearest(self, prompt: str, k: int, exclude_repo: str | None = None) -> list[dict]:
+        diff = fix_diff(prompt)
+        if not diff:
+            return []
+        q = self.weights(diff)
         pool = [c for c in self.cases if c['repo'] != exclude_repo]
-        return sorted(pool, key=lambda c: -self.jaccard(sh, c['sh']))[:k]
+        return sorted(pool, key=lambda c: -sum(q.get(t, 0.0) * x for t, x in c['w'].items()))[:k]
 
 
 def with_cwe_cases(messages: list[dict], cases: CWECases, k: int, repo: str | None) -> list[dict]:
     out = [dict(m) for m in messages]
-    code = evaluate.shown_code(out[-1]['content'])
-    if not code:
+    found = cases.nearest(out[-1]['content'], k, repo)
+    if not found:
         return out
     blocks = [f"Past fix in {c['repo']}, recorded as {', '.join(c['cwe'])}: {c['why']}\n```python\n{c['code'][:1200]}\n```"
-              for c in cases.nearest(code, k, repo)]
+              for c in found]
     out[-1]['content'] += ('\n\nSimilar past fixes from other projects with their recorded weakness. They are analogies only; '
                            'classify the code under review on its own evidence.\n\n' + '\n\n'.join(blocks))
     return out
