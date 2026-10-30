@@ -49,5 +49,6 @@
   "think_retries": 0
  },
  "kaggle_owner": "yahboyomni",
- "hf_repo": "jankycoder/haven-secpatch-student"
+ "hf_repo": "jankycoder/haven-secpatch-student",
+ "teach_passes": 2
 }

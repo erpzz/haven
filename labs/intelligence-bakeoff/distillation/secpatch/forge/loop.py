@@ -273,8 +273,15 @@ def step_teach(s, cfg):
     nxt = kernel_step(s, cfg, 'teach', 'teach_kernel.py', 'train_mix', sources)
     if nxt == 'train_mix':
         k = cdir(s) / 'teach'
+        n = s.get('teach_pass', 0)
         if (k / 'traces.jsonl').exists():
-            (k / 'traces.jsonl').rename(k / 'traces-kaggle.jsonl')
+            (k / 'traces.jsonl').rename(k / f'traces-kaggle-p{n}.jsonl')
+        # Another pass re-teaches only rows without a trace that passes the CURRENT checks
+        # (prompts and rules improve while a cycle runs).
+        if n + 1 < cfg.get('teach_passes', 1):
+            s['teach_pass'] = n + 1
+            log('teach_pass', cycle=s['cycle'], next_pass=n + 1)
+            return 'teach'
     return nxt
 
 
@@ -387,6 +394,7 @@ def step_promote(s, cfg):
 def step_next(s, cfg):
     s['cycle'] += 1
     s.pop('attempts', None)
+    s.pop('teach_pass', None)
     return 'refresh'
 
 
