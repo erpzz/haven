@@ -271,6 +271,33 @@ class GraderTests(unittest.TestCase):
         self.assertEqual(evaluate.wilson(0, 0), [0.0, 0.0])
 
 
+class CaseArmTests(unittest.TestCase):
+    def row(self, split, code, fixed, repo):
+        user = f'Reported issue: shell injection\n\nRewrite...\n\nRepository: {repo}\nFile: a.py\n```python\n' + \
+            '\n'.join(f'{10 + i:>5} | {l}' for i, l in enumerate(code.splitlines())) + '\n```'
+        return {'split': split, 'task': 'remediate', 'source': {'repo': repo, 'advisory_ids': ['GHSA-x']},
+                'messages': [{'role': 'system', 'content': 's'}, {'role': 'user', 'content': user},
+                             {'role': 'assistant', 'content': f'```python\n{fixed}\n```'}]}
+
+    def test_retrieves_nearest_training_case_and_refuses_eval_rows(self):
+        with tempfile.TemporaryDirectory() as t:
+            p = pathlib.Path(t) / 'train.jsonl'
+            near = 'def run(name):\n    return subprocess.call("tool " + name, shell=True)'
+            far = 'def parse(x):\n    return yaml.load(x)'
+            p.write_text('\n'.join(json.dumps(self.row('train', c, 'def f(): pass', r)) for c, r in ((near, 'a/near'), (far, 'b/far'))))
+            idx = evaluate.CaseIndex(p)
+            self.assertEqual(idx.nearest('def go(n):\n    return subprocess.call("x " + n, shell=True)', 1)[0]['repo'], 'a/near')
+            msgs = evaluate.with_cases([{'role': 'user', 'content': 'review\n```python\n   1 | def go(n): os.system(n)\n```'}], idx, 1)
+            self.assertIn('similar past security fixes', msgs[-1]['content'])
+            p.write_text(json.dumps(self.row('heldout', near, 'x', 'c/eval')))
+            with self.assertRaises(ValueError):
+                evaluate.CaseIndex(p)
+
+    def test_lora_targets_are_architecture_aware(self):
+        self.assertEqual(train.lora_targets('Qwen/Qwen3-0.6B'), train.TARGET_MODULES)
+        self.assertEqual(train.lora_targets('LiquidAI/LFM2.5-8B-A1B'), 'all-linear')
+
+
 class ReportTests(unittest.TestCase):
     def test_resummarize_uses_only_shared_items(self):
         import report

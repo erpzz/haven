@@ -30,6 +30,12 @@ from train_sft import LocalDataset, collator  # noqa: E402  (shared with the R02
 TARGET_MODULES = ['q_proj', 'k_proj', 'v_proj', 'o_proj', 'gate_proj', 'up_proj', 'down_proj']
 
 
+def lora_targets(model_id: str, choice: str = 'auto'):
+    if choice != 'auto':
+        return choice if choice == 'all-linear' else choice.split(',')
+    return TARGET_MODULES if 'qwen' in model_id.lower() else 'all-linear'
+
+
 def load_rows(path: pathlib.Path, tasks: set | None) -> list[dict]:
     rows = []
     for line in path.read_text(encoding='utf-8').splitlines():
@@ -106,6 +112,8 @@ def main(argv=None):
     ap.add_argument('--batch', type=int, default=8, help='Effective batch via gradient accumulation.')
     ap.add_argument('--learning-rate', type=float, default=1e-4)
     ap.add_argument('--rank', type=int, default=16)
+    ap.add_argument('--target-modules', default='auto',
+                    help="'auto': Qwen projection names for Qwen students, every linear layer otherwise (e.g. Liquid LFM)")
     ap.add_argument('--seed', type=int, default=42)
     ap.add_argument('--save-steps', type=int, default=50, help='Checkpoint interval (resumable).')
     ap.add_argument('--resume', action='store_true')
@@ -153,7 +161,7 @@ def main(argv=None):
         model = prepare_model_for_kbit_training(model)
     model.gradient_checkpointing_enable()
     model = get_peft_model(model, LoraConfig(r=args.rank, lora_alpha=2 * args.rank, lora_dropout=0.05, bias='none',
-                                             task_type='CAUSAL_LM', target_modules=TARGET_MODULES))
+                                             task_type='CAUSAL_LM', target_modules=lora_targets(args.model, args.target_modules)))
     model.enable_input_require_grads()
     cfg = TrainingArguments(
         output_dir=str(args.output / 'checkpoints'), max_steps=steps, per_device_train_batch_size=1,
