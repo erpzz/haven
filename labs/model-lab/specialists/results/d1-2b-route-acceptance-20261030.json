@@ -1,0 +1,650 @@
+{
+ "schema": "haven.systemone-acceptance/v1",
+ "question_sha256": "753ee257a4f9266858bdda26ef28a4f72fae2a96764581bf2acd7513fc403500",
+ "dataset_sha256": "ec94c3ecf8be02603a055eafcb31ca7a79bc11aee4f1243f74f122250825e371",
+ "threshold": 0.55,
+ "input_tokens_total": 5769,
+ "output_tokens_total": 0,
+ "environment": "cloud CPU container (2 vCPU Xeon, 8 GB), llama.cpp b11946 CPU build 8ca4060, d1-2B-Q8_0 sha256 073313d9...; NOT Slink",
+ "summary": {
+  "all": {
+   "n": 36,
+   "d1_correct": 28,
+   "rules_correct": 29,
+   "d1_only_correct": 0,
+   "rules_only_correct": 1,
+   "sign_test_p": 1.0,
+   "d1_accepted_at_0.55": 32,
+   "d1_accepted_correct": 28
+  },
+  "train": {
+   "n": 25,
+   "d1_correct": 19,
+   "rules_correct": 20,
+   "d1_only_correct": 0,
+   "rules_only_correct": 1,
+   "sign_test_p": 1.0,
+   "d1_accepted_at_0.55": 22,
+   "d1_accepted_correct": 19
+  },
+  "validation": {
+   "n": 3,
+   "d1_correct": 2,
+   "rules_correct": 2,
+   "d1_only_correct": 0,
+   "rules_only_correct": 0,
+   "sign_test_p": 1.0,
+   "d1_accepted_at_0.55": 2,
+   "d1_accepted_correct": 2
+  },
+  "test": {
+   "n": 8,
+   "d1_correct": 7,
+   "rules_correct": 7,
+   "d1_only_correct": 0,
+   "rules_only_correct": 0,
+   "sign_test_p": 1.0,
+   "d1_accepted_at_0.55": 8,
+   "d1_accepted_correct": 7
+  },
+  "per_gold_class": {
+   "inference": {
+    "n": 14,
+    "d1_correct": 13,
+    "rules_correct": 13
+   },
+   "training": {
+    "n": 11,
+    "d1_correct": 8,
+    "rules_correct": 8
+   },
+   "orchestration": {
+    "n": 11,
+    "d1_correct": 7,
+    "rules_correct": 8
+   }
+  },
+  "latency_seconds": {
+   "median": 4.424,
+   "max": 5.853
+  }
+ },
+ "records": [
+  {
+   "pr": 25,
+   "split": "train",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.7618,
+   "probabilities": {
+    "inference": 0.7618,
+    "training": 0.1477,
+    "orchestration": 0.0905
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.853
+  },
+  {
+   "pr": 26,
+   "split": "train",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.6817,
+   "probabilities": {
+    "inference": 0.6817,
+    "training": 0.2969,
+    "orchestration": 0.0214
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.143
+  },
+  {
+   "pr": 28,
+   "split": "train",
+   "gold": "training",
+   "d1": "inference",
+   "confidence": 0.5334,
+   "probabilities": {
+    "inference": 0.5334,
+    "training": 0.4457,
+    "orchestration": 0.0208
+   },
+   "rules": "inference",
+   "d1_correct": false,
+   "rules_correct": false,
+   "seconds": 4.491
+  },
+  {
+   "pr": 29,
+   "split": "train",
+   "gold": "training",
+   "d1": "training",
+   "confidence": 0.9659,
+   "probabilities": {
+    "inference": 0.0284,
+    "training": 0.9659,
+    "orchestration": 0.0056
+   },
+   "rules": "training",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.431
+  },
+  {
+   "pr": 35,
+   "split": "train",
+   "gold": "orchestration",
+   "d1": "orchestration",
+   "confidence": 0.9653,
+   "probabilities": {
+    "inference": 0.0222,
+    "training": 0.0125,
+    "orchestration": 0.9653
+   },
+   "rules": "orchestration",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 3.853
+  },
+  {
+   "pr": 36,
+   "split": "train",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.9013,
+   "probabilities": {
+    "inference": 0.9013,
+    "training": 0.0422,
+    "orchestration": 0.0566
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.284
+  },
+  {
+   "pr": 37,
+   "split": "train",
+   "gold": "training",
+   "d1": "training",
+   "confidence": 0.9043,
+   "probabilities": {
+    "inference": 0.0668,
+    "training": 0.9043,
+    "orchestration": 0.0289
+   },
+   "rules": "training",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.124
+  },
+  {
+   "pr": 41,
+   "split": "train",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.6157,
+   "probabilities": {
+    "inference": 0.6157,
+    "training": 0.0981,
+    "orchestration": 0.2862
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.195
+  },
+  {
+   "pr": 42,
+   "split": "train",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.9063,
+   "probabilities": {
+    "inference": 0.9063,
+    "training": 0.006,
+    "orchestration": 0.0877
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.126
+  },
+  {
+   "pr": 43,
+   "split": "train",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.9465,
+   "probabilities": {
+    "inference": 0.9465,
+    "training": 0.0306,
+    "orchestration": 0.0228
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 3.636
+  },
+  {
+   "pr": 44,
+   "split": "train",
+   "gold": "inference",
+   "d1": "orchestration",
+   "confidence": 0.6108,
+   "probabilities": {
+    "inference": 0.3837,
+    "training": 0.0055,
+    "orchestration": 0.6108
+   },
+   "rules": "orchestration",
+   "d1_correct": false,
+   "rules_correct": false,
+   "seconds": 3.885
+  },
+  {
+   "pr": 45,
+   "split": "train",
+   "gold": "training",
+   "d1": "training",
+   "confidence": 0.9167,
+   "probabilities": {
+    "inference": 0.0682,
+    "training": 0.9167,
+    "orchestration": 0.0151
+   },
+   "rules": "training",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.602
+  },
+  {
+   "pr": 47,
+   "split": "train",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.8215,
+   "probabilities": {
+    "inference": 0.8215,
+    "training": 0.1347,
+    "orchestration": 0.0439
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.415
+  },
+  {
+   "pr": 49,
+   "split": "train",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.7865,
+   "probabilities": {
+    "inference": 0.7865,
+    "training": 0.2013,
+    "orchestration": 0.0122
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.455
+  },
+  {
+   "pr": 53,
+   "split": "train",
+   "gold": "training",
+   "d1": "training",
+   "confidence": 0.9012,
+   "probabilities": {
+    "inference": 0.0696,
+    "training": 0.9012,
+    "orchestration": 0.0292
+   },
+   "rules": "training",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.805
+  },
+  {
+   "pr": 54,
+   "split": "train",
+   "gold": "training",
+   "d1": "training",
+   "confidence": 0.9497,
+   "probabilities": {
+    "inference": 0.0424,
+    "training": 0.9497,
+    "orchestration": 0.0079
+   },
+   "rules": "training",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 3.909
+  },
+  {
+   "pr": 55,
+   "split": "train",
+   "gold": "training",
+   "d1": "inference",
+   "confidence": 0.6945,
+   "probabilities": {
+    "inference": 0.6945,
+    "training": 0.1633,
+    "orchestration": 0.1422
+   },
+   "rules": "inference",
+   "d1_correct": false,
+   "rules_correct": false,
+   "seconds": 4.849
+  },
+  {
+   "pr": 56,
+   "split": "train",
+   "gold": "orchestration",
+   "d1": "inference",
+   "confidence": 0.416,
+   "probabilities": {
+    "inference": 0.416,
+    "training": 0.2142,
+    "orchestration": 0.3698
+   },
+   "rules": "orchestration",
+   "d1_correct": false,
+   "rules_correct": true,
+   "seconds": 3.741
+  },
+  {
+   "pr": 58,
+   "split": "train",
+   "gold": "orchestration",
+   "d1": "orchestration",
+   "confidence": 0.9759,
+   "probabilities": {
+    "inference": 0.0147,
+    "training": 0.0094,
+    "orchestration": 0.9759
+   },
+   "rules": "orchestration",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.231
+  },
+  {
+   "pr": 59,
+   "split": "train",
+   "gold": "orchestration",
+   "d1": "orchestration",
+   "confidence": 0.9534,
+   "probabilities": {
+    "inference": 0.0299,
+    "training": 0.0166,
+    "orchestration": 0.9534
+   },
+   "rules": "orchestration",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.53
+  },
+  {
+   "pr": 60,
+   "split": "train",
+   "gold": "orchestration",
+   "d1": "orchestration",
+   "confidence": 0.9758,
+   "probabilities": {
+    "inference": 0.0162,
+    "training": 0.008,
+    "orchestration": 0.9758
+   },
+   "rules": "orchestration",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.163
+  },
+  {
+   "pr": 61,
+   "split": "train",
+   "gold": "training",
+   "d1": "training",
+   "confidence": 0.841,
+   "probabilities": {
+    "inference": 0.0967,
+    "training": 0.841,
+    "orchestration": 0.0622
+   },
+   "rules": "training",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.541
+  },
+  {
+   "pr": 62,
+   "split": "train",
+   "gold": "orchestration",
+   "d1": "orchestration",
+   "confidence": 0.9756,
+   "probabilities": {
+    "inference": 0.0153,
+    "training": 0.0091,
+    "orchestration": 0.9756
+   },
+   "rules": "orchestration",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.118
+  },
+  {
+   "pr": 63,
+   "split": "train",
+   "gold": "orchestration",
+   "d1": "inference",
+   "confidence": 0.6718,
+   "probabilities": {
+    "inference": 0.6718,
+    "training": 0.078,
+    "orchestration": 0.2502
+   },
+   "rules": "inference",
+   "d1_correct": false,
+   "rules_correct": false,
+   "seconds": 4.089
+  },
+  {
+   "pr": 64,
+   "split": "train",
+   "gold": "orchestration",
+   "d1": "inference",
+   "confidence": 0.4253,
+   "probabilities": {
+    "inference": 0.4253,
+    "training": 0.355,
+    "orchestration": 0.2196
+   },
+   "rules": "inference",
+   "d1_correct": false,
+   "rules_correct": false,
+   "seconds": 4.782
+  },
+  {
+   "pr": 65,
+   "split": "validation",
+   "gold": "orchestration",
+   "d1": "orchestration",
+   "confidence": 0.8756,
+   "probabilities": {
+    "inference": 0.0838,
+    "training": 0.0406,
+    "orchestration": 0.8756
+   },
+   "rules": "orchestration",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.635
+  },
+  {
+   "pr": 66,
+   "split": "validation",
+   "gold": "orchestration",
+   "d1": "training",
+   "confidence": 0.4727,
+   "probabilities": {
+    "inference": 0.3429,
+    "training": 0.4727,
+    "orchestration": 0.1844
+   },
+   "rules": "inference",
+   "d1_correct": false,
+   "rules_correct": false,
+   "seconds": 5.274
+  },
+  {
+   "pr": 68,
+   "split": "validation",
+   "gold": "orchestration",
+   "d1": "orchestration",
+   "confidence": 0.8536,
+   "probabilities": {
+    "inference": 0.0965,
+    "training": 0.0499,
+    "orchestration": 0.8536
+   },
+   "rules": "orchestration",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 5.853
+  },
+  {
+   "pr": 74,
+   "split": "test",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.9357,
+   "probabilities": {
+    "inference": 0.9357,
+    "training": 0.0073,
+    "orchestration": 0.057
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 3.957
+  },
+  {
+   "pr": 75,
+   "split": "test",
+   "gold": "training",
+   "d1": "training",
+   "confidence": 0.9781,
+   "probabilities": {
+    "inference": 0.0168,
+    "training": 0.9781,
+    "orchestration": 0.0051
+   },
+   "rules": "training",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.927
+  },
+  {
+   "pr": 76,
+   "split": "test",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.9403,
+   "probabilities": {
+    "inference": 0.9403,
+    "training": 0.0132,
+    "orchestration": 0.0465
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.424
+  },
+  {
+   "pr": 77,
+   "split": "test",
+   "gold": "training",
+   "d1": "training",
+   "confidence": 0.6681,
+   "probabilities": {
+    "inference": 0.2248,
+    "training": 0.6681,
+    "orchestration": 0.1072
+   },
+   "rules": "training",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.781
+  },
+  {
+   "pr": 78,
+   "split": "test",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.9216,
+   "probabilities": {
+    "inference": 0.9216,
+    "training": 0.0164,
+    "orchestration": 0.0621
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.378
+  },
+  {
+   "pr": 79,
+   "split": "test",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.914,
+   "probabilities": {
+    "inference": 0.914,
+    "training": 0.0128,
+    "orchestration": 0.0732
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 5.649
+  },
+  {
+   "pr": 80,
+   "split": "test",
+   "gold": "training",
+   "d1": "orchestration",
+   "confidence": 0.581,
+   "probabilities": {
+    "inference": 0.325,
+    "training": 0.094,
+    "orchestration": 0.581
+   },
+   "rules": "inference",
+   "d1_correct": false,
+   "rules_correct": false,
+   "seconds": 5.014
+  },
+  {
+   "pr": 81,
+   "split": "test",
+   "gold": "inference",
+   "d1": "inference",
+   "confidence": 0.9675,
+   "probabilities": {
+    "inference": 0.9675,
+    "training": 0.0162,
+    "orchestration": 0.0164
+   },
+   "rules": "inference",
+   "d1_correct": true,
+   "rules_correct": true,
+   "seconds": 4.024
+  }
+ ]
+}

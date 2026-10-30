@@ -177,6 +177,76 @@
       "source": "https://huggingface.co/ggml-org/NVIDIA-Nemotron-3-Nano-30B-A3B-GGUF",
       "offload": "cpu-moe",
       "gpu_mib": 2850
+    },
+    {
+      "id": "d1-2b",
+      "name": "d1 \u00b7 2B decision specialist (Liquid)",
+      "repo": "LiquidAI/d1-2B-GGUF",
+      "filename": "d1-2B-Q8_0.gguf",
+      "sha256": "073313d92b53b0ac8193db6e906cb3c78a98183d244b15b7b8f5426115c6738c",
+      "size_bytes": 1846240576,
+      "download_gb": 1.85,
+      "description": "System One decision model on the LFM3 backbone (1.92B parameters; 13 gated short-convolution, 5 sliding-window and 6 global-attention layers). It answers typed yes/no, choice and score questions with probabilities in one forward pass and generates no text. Not a chat model: the Lab will not load it as one. Needs llama.cpp b11945 or newer; Slink pins b11146.",
+      "tag": "DECISION SPECIALIST \u00b7 NOT CHAT",
+      "quant": "Q8_0",
+      "license": "LFM Open License v1.0",
+      "revision": "63be75e6586882defeb706ed4bda812d90256a6d",
+      "url": "https://huggingface.co/LiquidAI/d1-2B-GGUF/resolve/63be75e6586882defeb706ed4bda812d90256a6d/d1-2B-Q8_0.gguf",
+      "source": "https://huggingface.co/LiquidAI/d1-2B",
+      "architecture": "lfm3",
+      "interface": "systemone",
+      "runtime": {
+        "backend": "llama.cpp",
+        "min_build": 11945,
+        "endpoint": "/v1/systemone",
+        "question_types": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "server_flags": [
+          "-b",
+          "8192",
+          "-ub",
+          "8192"
+        ],
+        "source": "llama.cpp PR #31275, first in release b11945 (2026-10-27)"
+      },
+      "parameters": 1920000000,
+      "context_tokens": 128000,
+      "roles": [
+        "decision",
+        "routing",
+        "classification",
+        "guardrail"
+      ],
+      "capabilities": {
+        "typed_choice": "measured_off_host",
+        "calibrated_abstention": "measured_off_host",
+        "noul": "measured_off_host",
+        "score": "measured_off_host",
+        "extraction": "unsupported_by_runtime",
+        "multi_label_choice": "unsupported_by_runtime",
+        "vision": "vendor_claim",
+        "text_generation": "not_supported",
+        "tool_calls": "not_supported",
+        "coding": "not_supported"
+      },
+      "explanation": {
+        "why": "Many Haven steps are small decisions (which subsystem, is this request risky, does this need a person) that do not need a generative model. d1 answers them with a probability, so low-confidence cases can be escalated instead of silently guessed.",
+        "can": "Answer named yes/no, one-of-N choice and ordered score questions about a text or JSON state in one pass, with zero output tokens and a confidence per answer. Measured off Slink on 36 real Haven pull-request titles: 28/36 correct zero-shot (keyword rules 29/36); at the 0.55 confidence floor its 4 abstentions were all real errors.",
+        "cannot": "Chat, write code, call tools, reason step by step or explain itself. Extraction, multi-label choice and video are not served by llama.cpp yet. It runs on llama.cpp b11945 or newer only, which Slink does not have installed, and it is not wired into any Haven routing."
+      },
+      "verification": [
+        {
+          "where": "cloud CPU container (2 vCPU, 8 GB), not Slink",
+          "runtime_build": "b11946 (8ca4060, CPU)",
+          "evidence": "measured_off_host",
+          "date": "2026-10-30",
+          "result": "/v1/systemone answered 36/36 typed requests; 0 output tokens; median 4.4 s per request on 2 CPU threads; 1.9 GB resident",
+          "receipt": "labs/model-lab/specialists/results/d1-2b-route-acceptance-20261030.json"
+        }
+      ]
     }
   ],
   "notes": "Model content hashes are pinned. Download URLs use main; changed bytes fail verification rather than silently updating. Approximate catalog sizes are decimal GB, not allocation estimates.",
