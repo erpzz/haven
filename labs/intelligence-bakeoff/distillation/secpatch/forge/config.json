@@ -53,5 +53,6 @@
  "kaggle_owner": "yahboyomni",
  "hf_repo": "jankycoder/haven-secpatch-student",
  "teach_passes": 2,
- "review_timeout_hours": 6
+ "review_timeout_hours": 6,
+ "data_dir": "~/.local/state/haven-secpatch/data-v3-multi"
 }

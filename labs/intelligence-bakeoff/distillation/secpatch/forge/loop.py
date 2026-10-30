@@ -85,8 +85,15 @@ def cdir(s: dict) -> pathlib.Path:
     return STATE_DIR / 'cycles' / f'c{s["cycle"]:03d}'
 
 
-def latest_data() -> pathlib.Path:
-    dirs = sorted((d for d in SECPATCH_STATE.glob('data-*') if (d / 'manifest.json').exists()),
+def latest_data(cfg: dict | None = None) -> pathlib.Path:
+    """Newest dataset among the weekly refreshes and the configured base (other data-* dirs are experiments)."""
+    cfg = cfg or {}
+    cands = list(SECPATCH_STATE.glob('data-auto-*'))
+    if cfg.get('data_dir'):
+        cands.append(pathlib.Path(cfg['data_dir']).expanduser())
+    if not cands:
+        cands = list(SECPATCH_STATE.glob('data-*'))
+    dirs = sorted((d for d in cands if (d / 'manifest.json').exists()),
                   key=lambda d: json.loads((d / 'manifest.json').read_text())['built_at'])
     return dirs[-1]
 
@@ -112,7 +119,7 @@ def step_refresh(s, cfg):
          '--work-dirs', *map(str, sorted(S.glob('git*'))), '--out', str(S / 'scope.jsonl')],
         [sys.executable, str(code / 'build.py'), '--candidates', str(S / 'candidates.jsonl'), '--harvest',
          *map(str, sorted(S.glob('harvest*.jsonl'))), '--scope', str(S / 'scope.jsonl'),
-         '--out', str(S / f'data-auto-{stamp}'), '--bandit', str(bandit)],
+         '--out', str(S / f'data-auto-{stamp}'), '--bandit', str(bandit), '--multi-function'],
     ]
     for cmd in cmds:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=6 * 3600)
@@ -131,7 +138,7 @@ def prior_files(s, pattern: str) -> list[pathlib.Path]:
 
 def step_mix(s, cfg, data: pathlib.Path | None = None):
     out = cdir(s) / 'data'
-    data = data or latest_data()
+    data = data or latest_data(cfg)
     traces = prior_files(s, 'c*/teach/traces*.jsonl')
     selfplay = prior_files(s, 'c*/train/selfplay/selfplay-sft.jsonl')
     pairs = prior_files(s, 'c*/train/selfplay/selfplay-pairs.jsonl')

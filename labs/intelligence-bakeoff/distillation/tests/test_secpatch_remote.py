@@ -71,29 +71,10 @@ class RemoteWrapperTests(unittest.TestCase):
         self.assertEqual(result["precedence"], "deeper_source_license")
 
     def test_original_pipeline_files_match_recorded_base(self):
-        # SOURCE_BASE.json records the core code the private package was prepared from. In a Git
-        # checkout the tree may move on (v2 scope/grading), so check the record against its base
-        # commit; in a portable package (no Git), check the shipped files themselves.
         base = json.loads((REMOTE / "SOURCE_BASE.json").read_text())
-        distillation = REMOTE.parent.parent
-        git = ["git", "-C", str(distillation)]
-        try:
-            top = subprocess.check_output(git + ["rev-parse", "--show-toplevel"], text=True,
-                                          stderr=subprocess.DEVNULL).strip()
-        except (OSError, subprocess.CalledProcessError):
-            top = None
-        if top:
-            commit = base["base_commit"]
-            if subprocess.run(git + ["cat-file", "-e", commit + "^{commit}"],
-                              stderr=subprocess.DEVNULL).returncode:
-                self.skipTest("recorded base commit is not in this (shallow) clone")
-            prefix = distillation.resolve().relative_to(pathlib.Path(top).resolve()).as_posix()
         for name, expected in base["core_sha256"].items():
-            if top:
-                data = subprocess.check_output(git + ["show", f"{commit}:{prefix}/{name}"])
-            else:
-                data = (distillation / name).read_bytes()
-            self.assertEqual(hashlib.sha256(data).hexdigest(), expected, name)
+            path = REMOTE.parent.parent / name
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), expected, name)
 
     def test_payload_tampering_and_path_escape_are_rejected(self):
         run = module("run")
