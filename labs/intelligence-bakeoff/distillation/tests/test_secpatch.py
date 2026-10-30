@@ -198,6 +198,23 @@ class BuildTests(unittest.TestCase):
         self.assertTrue(tool['verification']['tool_verified'])
         self.assertEqual(manifest['filters']['tool_verified'], 1)
 
+    def test_multi_function_rows_show_every_function_and_stay_out_of_eval(self):
+        pairs = [{'path': 'a.py', 'name': 'run_tool', 'vulnerable': 'def run_tool(n):\n    return call(n, shell=True)',
+                  'fixed': 'def run_tool(n):\n    return call([n])', 'vulnerable_span': [10, 11], 'fixed_span': [10, 11]},
+                 {'path': 'b.py', 'name': 'helper', 'vulnerable': 'def helper(x):\n    return x',
+                  'fixed': 'def helper(x):\n    return quote(x)', 'vulnerable_span': [3, 4], 'fixed_span': [3, 4]}]
+        item = {'key': 'K', 'repo': 'o/r', 'split': 'train', 'pair': pairs[0], 'pairs': pairs, 'cwes': ['CWE-78'],
+                'changed_lines': build.changed_lines(pairs[0]), 'summary': 'Shell injection', 'details': '',
+                'commit_message': 'fix shell injection', 'license': 'MIT', 'tests': [],
+                'advisories': [{'id': 'GHSA-x', 'license': 'CC-BY-4.0'}]}
+        rows = build.multi_tasks_for(item, 'decoy_fn')
+        self.assertEqual({r['task'] for r in rows}, {'detect', 'root_cause', 'finding_support'})
+        detect = next(r for r in rows if r['task'] == 'detect' and r['label'] == 'vulnerable')
+        self.assertIn('shell=True', detect['messages'][1]['content'])
+        self.assertIn('File: b.py (function `helper`)', detect['messages'][1]['content'])
+        self.assertEqual(json.loads(detect['messages'][-1]['content'])['evidence_lines'], [11])
+        self.assertTrue(all(r['verification']['multi_function_fix'] == 2 for r in rows))
+
     def test_eval_items_hide_reference(self):
         read, _ = self.end_to_end('2026-01-01T00:00:00Z')
         split = build.split_for('o/r', '2026-01-01T00:00:00Z', '2025-07-01')
