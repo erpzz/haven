@@ -209,6 +209,20 @@
    "defect": "Arm BC was not measured: llama-server crashed on its 2nd item (CUDA error: an illegal memory access, in llama_context::graph_compute, engine b11146), and the remaining items got connection refused (37) or a dropped connection (1). Its 0/40 reflects the crash, not the method.",
    "action": "The first BC rows are kept as rc-calibration.crashed.jsonl. BC is re-run on all 40 items with identical arguments. If it crashes again, BC is reported as unmeasurable on this engine and excluded from the choice.",
    "seen_before_this_amendment": "rc-calibration scores of T 18, N 17, NC 16, B2K 19, L2C 8 of 40. BC can change the choice only by reaching >= 18, which the choice rule already specifies."
+  },
+  {
+   "n": 4,
+   "written_at": "2026-10-30T22:18:44Z",
+   "written_before": "any rc-confirmation row exists",
+   "bc_rerun": "BC re-run finished without a crash: 18/40, 1801 s, 0 errors.",
+   "calibration": "rc-calibration, 40 items: T 18 (3515 s); BC 18 (1.95x); B2K 19 (1.21x); N 17 (3.84x); NC 16 (2.75x); L2C 8 (1.96x).",
+   "chosen_arm": "BC",
+   "why": "Choice rule: the fastest arm whose correct count >= T's. BC (18) and B2K (19) qualify; BC is faster. It is below the 3.2x bar, so it cannot be adopted as the path to 5x even if confirmed, and is reported as not meeting the bar.",
+   "confirmation_arms": [
+    "T",
+    "BC"
+   ],
+   "observation": "Thinking adds little to root cause here (T 18 vs N 17, 4 wins / 5 losses), consistent with COT-EFF-2 confirmation (7 vs 6 of 18) and forge's Kaggle eval (35B 15 -> 18 of 36 with thinking)."
   }
  ]
 }
