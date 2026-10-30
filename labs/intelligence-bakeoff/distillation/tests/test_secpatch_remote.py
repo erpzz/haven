@@ -70,8 +70,10 @@ class RemoteWrapperTests(unittest.TestCase):
         result = metadata.validate_metadata(item, {"content": b'[project]\nlicense="GPL-3.0-or-later"\n'})
         self.assertEqual(result["precedence"], "deeper_source_license")
 
-    def test_original_pipeline_files_match_recorded_base(self):
+    def test_pipeline_files_match_recorded_base_and_preserve_upstream(self):
         base = json.loads((REMOTE / "SOURCE_BASE.json").read_text())
+        self.assertEqual(base["upstream_base"]["base_commit"], "eaa76f834bc9f64fe9aada542fdf3c00ba9a6f55")
+        self.assertEqual(set(base["upstream_base"]["core_sha256"]), set(base["core_sha256"]))
         for name, expected in base["core_sha256"].items():
             path = REMOTE.parent.parent / name
             self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), expected, name)
