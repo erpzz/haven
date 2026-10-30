@@ -183,7 +183,7 @@ def campaign(argv=None):
             "--max-steps", str(args.max_steps), "--max-length", str(args.max_length),
             "--batch", "8", "--save-steps", "30", "--execute"]
     run_logged(base, args.output / "train.log", timeout_s=10800)
-    from registry import verify_training_artifacts
+    from registry import passes_quality_gate, verify_training_artifacts
     receipt_path = args.output / "training" / "receipt.json"
     if not receipt_path.is_file():
         raise RuntimeError("Trainer did not write a GPU receipt.")
@@ -216,8 +216,7 @@ def campaign(argv=None):
         "status": "verified_result_not_production_promoted",
         "dataset": report, "train_receipt": receipt, "weights": weights,
         "base": b, "adapter": a,
-        "improved_vs_base": a["score"] > b["score"] and
-                            a["false_positive_rate"] <= b["false_positive_rate"],
+        "improved_vs_base": passes_quality_gate(a, b),
         "finished_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     (args.output / "campaign-result.json").write_text(json.dumps(final, indent=2) + "\n")
     print(json.dumps({"classification": final["classification"],

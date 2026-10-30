@@ -121,8 +121,10 @@ class RemoteWrapperTests(unittest.TestCase):
             metadata.validate_metadata({"key": "example", "source_path": "package/module.py",
                                         "notices": [{"path": "NOTICE"}], "metadata": []}, {})
 
-    def test_original_pipeline_files_match_recorded_base(self):
+    def test_pipeline_files_match_recorded_base_and_preserve_upstream(self):
         base = json.loads((REMOTE / "SOURCE_BASE.json").read_text())
+        self.assertEqual(base["previous_base"]["base_commit"], "eaa76f834bc9f64fe9aada542fdf3c00ba9a6f55")
+        self.assertEqual(set(base["previous_base"]["core_sha256"]), set(base["core_sha256"]))
         for name, expected in base["core_sha256"].items():
             path = REMOTE.parent.parent / name
             self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), expected, name)

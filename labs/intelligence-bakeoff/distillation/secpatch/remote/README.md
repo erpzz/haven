@@ -221,5 +221,6 @@ operator; no third-party provisioning or paid account was used.
 - **CWE matching (`evaluate.py`, `10243e3`).** `root_cause` scoring and the detect `cwe_match` compare CWE identifiers (`CWE-<n>`) extracted from each answer rather than exact strings, so "CWE-22: Improper Limitation of a Pathname…" now matches `CWE-22`. `SOURCE_BASE.json` therefore anchors `10243e3` instead of `670117a`; `evaluate.py` is the only core file that differs between them, and the replaced hash is kept under `amendments`.
 
 - **Multi-function fixes (`build.py --multi-function`, opt-in).** Focused fixes that changed 2-4 functions become training-only detect, root_cause and finding_support rows that show every changed function. Without the flag the build output is unchanged; dev, held-out and eval files never include them.
+- **Recall guard (`registry.py`, `evaluate.py`, `gpu_campaign.py`, #99).** Promotion and the campaign's `improved_vs_base` also require detection recall not to fall below the base, and both evaluations must carry matching, nonempty positive and negative detection counts. A paired held-out run had risen from 33/72 to 35/72 overall while recall fell from 10/12 to 1/12. Summaries written before this change lack the counts and must be re-evaluated before a gated promotion.
 
 The tasks and the dataset schema are unchanged.

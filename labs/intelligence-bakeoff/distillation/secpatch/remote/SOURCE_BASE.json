@@ -1,12 +1,12 @@
 {
-  "base_commit": "4c1417a6646bc068bb3106c8fd60fed522ddf2ae",
+  "base_commit": "076cb18e5b6210e1936281b88c95b264b9048f19",
   "core_sha256": {
     "secpatch/build.py": "f32a80c5464e339571654c08b91529a8b304ac83efe1cb4db2b19c28a26cb407",
-    "secpatch/evaluate.py": "91d6519c584142df3602ce3ecbb8a2aee5042486f84ecff78fad7f6665bff356",
-    "secpatch/gpu_campaign.py": "64a439256f6bfe4b209dd844d7a98c1dcfaa083bd20c8dbb250382a557053843",
+    "secpatch/evaluate.py": "1162999fe7fd7f8b0bb289a21783f8b9dcee2efc4ca31868e49ef26dca220c1e",
+    "secpatch/gpu_campaign.py": "fb3b2a770289e65b94547b051e995db89495a4c86aac500cff5917b771d81527",
     "secpatch/harvest.py": "7ab49e2f6e26ab427fbef5afae8548d4e78f240c1902cbf3d3f74b32986d2772",
     "secpatch/osv.py": "7029202a04f5e407611891234dbcf6b4393f9a6448150118aafe91748dcaa40c",
-    "secpatch/registry.py": "4804b52103a5a4f7017bcfa87c5e1ad4c5f9d17de61ae482c089e070801496dd",
+    "secpatch/registry.py": "bcd0e2771d0680054553232fffbfbc6fbd6395d09fc8fc08ea094d30506315c2",
     "secpatch/repo_eval.py": "b72221077a41324e60d3e9139ab2f9016333625dab9277aaad2fa0b1b2597336",
     "secpatch/report.py": "0f780e408509a140dcd9831e572456d53c0344525f3f6b397519e624c2b35418",
     "secpatch/train.py": "87290ebd76492f58db089131dbe290dd82068bad770ce6185986e4a993bd9594",
@@ -18,7 +18,8 @@
     "PR84": "632fe9d1be1ae844ba742c5d1cbb2c4903a60138",
     "R02-branch-merge": "670117a",
     "R02-grader-cwe-ids": "10243e302d60245ddcb014a75f43857af861b7d1",
-    "R02-build-multi-function": "4c1417a6646bc068bb3106c8fd60fed522ddf2ae"
+    "R02-build-multi-function": "4c1417a6646bc068bb3106c8fd60fed522ddf2ae",
+    "PR99-recall-guard": "076cb18e5b6210e1936281b88c95b264b9048f19"
   },
   "previous_base": {
     "base_commit": "eaa76f834bc9f64fe9aada542fdf3c00ba9a6f55",
@@ -69,6 +70,27 @@
       "from_sha256": "efa9e28c0c24e98243e06e2c2d2fb6dd91e119150f59de8c592fce535dc9bcb7",
       "why": "Opt-in --multi-function adds training-only rows from focused fixes that changed 2-4 functions. Without the flag the build is unchanged, and eval files are never affected. See remote/README.md \"Pipeline changes since the original base\".",
       "base_commit_to": "4c1417a"
+    },
+    {
+      "at": "2026-10-30",
+      "pr": 99,
+      "base_commit_from": "4c1417a",
+      "base_commit_to": "076cb18",
+      "changed": {
+        "secpatch/evaluate.py": {
+          "from_sha256": "91d6519c584142df3602ce3ecbb8a2aee5042486f84ecff78fad7f6665bff356",
+          "to_sha256": "1162999fe7fd7f8b0bb289a21783f8b9dcee2efc4ca31868e49ef26dca220c1e"
+        },
+        "secpatch/gpu_campaign.py": {
+          "from_sha256": "64a439256f6bfe4b209dd844d7a98c1dcfaa083bd20c8dbb250382a557053843",
+          "to_sha256": "fb3b2a770289e65b94547b051e995db89495a4c86aac500cff5917b771d81527"
+        },
+        "secpatch/registry.py": {
+          "from_sha256": "4804b52103a5a4f7017bcfa87c5e1ad4c5f9d17de61ae482c089e070801496dd",
+          "to_sha256": "bcd0e2771d0680054553232fffbfbc6fbd6395d09fc8fc08ea094d30506315c2"
+        }
+      },
+      "why": "Promotion and gpu_campaign improved_vs_base require non-regressing detection recall and complete, matching positive/negative detection counts (#99), in addition to recall - FPR beating the base (#96). Evaluation summaries record detection_positive_n / detection_negative_n; older summaries need re-evaluation before gated promotion."
     }
   ]
 }

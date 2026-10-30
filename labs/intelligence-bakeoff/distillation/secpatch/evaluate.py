@@ -303,6 +303,8 @@ def summarize(rows: list[dict], eval_sha: str, model: str) -> dict:
     for r in det:
         pairs[(r['key'], r.get('seed'))].append(r['score'])
     out.update(
+        detection_positive_n=len(pos),
+        detection_negative_n=len(neg),
         false_positive_rate=round(sum(r['false_positive'] for r in neg) / max(1, len(neg)), 4),
         detection_recall=round(sum(r['score'] for r in pos) / max(1, len(pos)), 4),
         paired_detection=round(sum(all(v) and len(v) == 2 for v in pairs.values()) / max(1, len(pairs)), 4),
