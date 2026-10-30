@@ -89,6 +89,7 @@ def main(argv=None):
     ap.add_argument('--label', default='', help='arm name recorded in the summary')
     ap.add_argument('--limit', type=int, default=0, help='selfplay: rows to sample (deterministic shuffle)')
     ap.add_argument('--deadline', type=float, default=0, help='stop starting new rows after this many seconds')
+    ap.add_argument('--think', type=int, default=0, help='reasoning mode on, with this many extra tokens of budget')
     args = ap.parse_args(argv)
     started = time.monotonic()
     tasks = set(args.tasks.split(','))
@@ -101,6 +102,18 @@ def main(argv=None):
         items = sorted(items, key=lambda i: hashlib.sha256((i['id'] + salt).encode()).hexdigest())[:args.limit]
     eval_sha = hashlib.sha256(json.dumps([i['id'] for i in items]).encode()).hexdigest()
     gen = ev.OpenAI(args.base_url, args.model, None)
+    if args.think:  # reasoning mode: the answer is graded, reasoning (reasoning_content or <think>) is not
+        import urllib.request
+
+        def gen(messages, max_new, temperature, seed, _base=args.base_url.rstrip('/'), _model=args.model):
+            body = {'model': _model, 'messages': messages, 'max_tokens': max_new + args.think,
+                    'temperature': temperature, 'seed': seed, 'chat_template_kwargs': {'enable_thinking': True}}
+            req = urllib.request.Request(_base + '/chat/completions', json.dumps(body).encode(),
+                                         {'Content-Type': 'application/json'})
+            with urllib.request.urlopen(req, timeout=1800) as r:
+                data = json.loads(r.read())
+            return data['choices'][0]['message'].get('content') or '', (data.get('usage') or {}).get('completion_tokens')
+        gen.name = args.model
     args.out.mkdir(parents=True, exist_ok=True)
     lock, results = threading.Lock(), []
     sink = (args.out / 'items.jsonl').open('w', encoding='utf-8')
@@ -151,6 +164,7 @@ def main(argv=None):
         if f:
             f.close()
     summary = ev.summarize(results, eval_sha, args.label or args.model)
+    summary['think_budget'] = args.think
     summary.update(eval_file=str(args.rows), seeds=','.join(map(str, range(args.samples))),
                    temperature=args.temperature, backend='openai', arm=args.label, mode=args.mode,
                    classification=('SELFPLAY_ON_TRAIN' if args.mode == 'selfplay' else

@@ -68,7 +68,7 @@ for cand in CFG['candidates']:
                     raise RuntimeError(f'server exited {srv.returncode}')
                 time.sleep(2)
         res = {}
-        for ev in CFG['evals']:
+        for ev in CFG.get('evals', []):
             out = OUT / 'eval' / name / ev
             sh(f'{sys.executable} {CYCLE}/code/forge/evalrun.py eval --rows {CYCLE}/{ev}.jsonl --out {out} '
                f'--base-url http://127.0.0.1:8090/v1 --workers 8 --label {name} --bandit {shutil.which("bandit") or "bandit"}',
@@ -76,6 +76,13 @@ for cand in CFG['candidates']:
             sm = json.loads((out / 'summary.json').read_text())
             res[ev] = {k: sm[k] for k in ('n', 'score', 'by_task', 'false_positive_rate', 'detection_recall',
                                           'paired_detection', 'cwe_match_when_detected', 'remediation_bandit_cleared')}
+        for te in CFG.get('think_evals', []):  # reasoning-mode pass on chosen tasks
+            out = OUT / 'eval' / name / (te['rows'] + '-think-' + te['tasks'].replace(',', '+'))
+            sh(f'{sys.executable} {CYCLE}/code/forge/evalrun.py eval --rows {CYCLE}/{te["rows"]}.jsonl --out {out} '
+               f'--base-url http://127.0.0.1:8090/v1 --workers 8 --label {name}-think --tasks {te["tasks"]} '
+               f'--think {te.get("budget", 4096)} --bandit {shutil.which("bandit") or "bandit"}', f'eval-{name}.log')
+            sm = json.loads((out / 'summary.json').read_text())
+            res[out.name] = {k: sm[k] for k in ('n', 'score', 'by_task', 'completion_tokens')}
         srv.terminate(); srv.wait(timeout=60)
         R['candidates'][name] = {'ok': True, 'eval': res, 'seconds': round(time.monotonic() - t, 1)}
         os.remove(gguf)
