@@ -1,0 +1,252 @@
+"""Forge train+evaluate kernel (free Kaggle 2x T4 lane; also runs on any 2-GPU CUDA box).
+
+Input: a private dataset holding a forge cycle (`sft.jsonl`, `gate.jsonl`, `eval-heldout.jsonl`, `config.json`,
+`code/` with forge + secpatch evaluator) and optionally `haven-llama-engine` (prebuilt llama.cpp CUDA build).
+Steps, each recorded in /kaggle/working/receipt.json:
+  1. QLoRA SFT of the student on both GPUs (completion-only loss, chat template exactly as at inference,
+     time-guarded so evaluation always fits in the session).
+  2. Merge into the original checkpoint layout, convert to GGUF and quantize (the format Haven serves).
+  3. The base model goes through the identical convert/quantize/serve path.
+  4. Both GGUFs are served by llama-server and graded on the gate and held-out sets by secpatch's
+     deterministic graders. Optional: student self-play on training rows (credit-free self-teaching data).
+"""
+import json, os, pathlib, shutil, subprocess, sys, time, traceback, urllib.request
+
+T0 = time.monotonic()
+OUT = pathlib.Path('/kaggle/working'); OUT.mkdir(exist_ok=True)
+W = pathlib.Path('/tmp/forge'); W.mkdir(exist_ok=True)
+CYCLE = next(p.parent for p in pathlib.Path('/kaggle/input').rglob('config.json') if (p.parent / 'sft.jsonl').exists())
+CFG = json.loads((CYCLE / 'config.json').read_text())
+R = {'cycle': CFG.get('cycle'), 'config': CFG, 'started': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'stages': {}}
+
+
+def save():
+    (OUT / 'receipt.json').write_text(json.dumps(R, indent=1, default=str))
+
+
+def stage(name):
+    def deco(fn):
+        def run(*a, **k):
+            t = time.monotonic()
+            try:
+                res = fn(*a, **k)
+                R['stages'][name] = {'ok': True, 'seconds': round(time.monotonic() - t, 1), **(res or {})}
+            except Exception:
+                R['stages'][name] = {'ok': False, 'seconds': round(time.monotonic() - t, 1),
+                                     'error': traceback.format_exc()[-3000:]}
+            save()
+            return R['stages'][name]
+        return run
+    return deco
+
+
+def sh(cmd, log, check=True, **kw):
+    with open(OUT / 'logs' / log, 'a') as f:
+        f.write(f'$ {cmd}\n'); f.flush()
+        r = subprocess.run(cmd, shell=True, stdout=f, stderr=subprocess.STDOUT, **kw)
+    if check and r.returncode:
+        raise RuntimeError(f'{cmd[:200]} -> exit {r.returncode}; see logs/{log}')
+    return r
+
+
+(OUT / 'logs').mkdir(exist_ok=True)
+R['gpus'] = subprocess.run('nvidia-smi --query-gpu=name,memory.total --format=csv,noheader', shell=True,
+                           capture_output=True, text=True).stdout.strip().splitlines()
+save()
+LLAMA_TAG = CFG.get('llama_tag', 'b11146')
+ENGINE = None
+
+
+@stage('setup')
+def setup():
+    global ENGINE
+    sh(f'{sys.executable} -m pip install -q -U "transformers>=5.0" peft accelerate bitsandbytes bandit==1.9.4 '
+       f'flash-linear-attention sentencepiece', 'pip.log')
+    sh(f'git clone -q --depth 1 --branch {LLAMA_TAG} https://github.com/ggml-org/llama.cpp {W}/llama.cpp', 'llama.log')
+    sh(f'{sys.executable} -m pip install -q {W}/llama.cpp/gguf-py', 'pip.log')
+    ENGINE, how = get_engine(sh, W, LLAMA_TAG, 'llama.log')
+    os.environ['LD_LIBRARY_PATH'] = f'{ENGINE}:' + os.environ.get('LD_LIBRARY_PATH', '')
+    sh(f'{sys.executable} -m bandit --version', 'pip.log')
+    return {'engine': how}
+
+
+TRAINER = r'''
+import json, math, os, pathlib, sys, time, torch
+from transformers import (AutoModelForImageTextToText, AutoTokenizer, BitsAndBytesConfig, Trainer,
+                          TrainingArguments, TrainerCallback, set_seed)
+from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+cfg = json.loads(sys.argv[1]); deadline = float(sys.argv[2])
+rank = int(os.environ.get("LOCAL_RANK", 0)); torch.cuda.set_device(rank); set_seed(cfg["seed"])
+tok = AutoTokenizer.from_pretrained(cfg["student"], revision=cfg["revision"])
+rows = [json.loads(x) for x in open(cfg["sft"]) if x.strip()]
+enc, skipped = [], 0
+for r in rows:
+    msgs = r["messages"]
+    prefix = tok.apply_chat_template(msgs[:-1], tokenize=False, add_generation_prompt=True, enable_thinking=False)
+    full = tok.apply_chat_template(msgs, tokenize=False, enable_thinking=False)
+    assert full.startswith(prefix), "chat template prefix mismatch"
+    p = tok(prefix, add_special_tokens=False)["input_ids"]; t = tok(full[len(prefix):].rstrip("\n"), add_special_tokens=False)["input_ids"]
+    if len(p) + len(t) > cfg["max_length"]:
+        skipped += 1; continue
+    enc.append({"input_ids": p + t, "labels": [-100] * len(p) + t})
+class DS(torch.utils.data.Dataset):
+    def __len__(self): return len(enc)
+    def __getitem__(self, i): return enc[i]
+def collate(b):
+    n = max(len(x["input_ids"]) for x in b); pad = tok.pad_token_id or 0
+    return {"input_ids": torch.tensor([x["input_ids"] + [pad] * (n - len(x["input_ids"])) for x in b]),
+            "attention_mask": torch.tensor([[1] * len(x["input_ids"]) + [0] * (n - len(x["input_ids"])) for x in b]),
+            "labels": torch.tensor([x["labels"] + [-100] * (n - len(x["labels"])) for x in b])}
+q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
+model = AutoModelForImageTextToText.from_pretrained(cfg["student"], revision=cfg["revision"], quantization_config=q,
+                                                    device_map={"": rank}, dtype=torch.float16)
+model.config.use_cache = False
+model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True, gradient_checkpointing_kwargs={"use_reentrant": False})
+model = get_peft_model(model, LoraConfig(r=cfg["rank"], lora_alpha=cfg["alpha"], lora_dropout=0.05, task_type="CAUSAL_LM",
+    target_modules=r".*language_model.*\.(q_proj|k_proj|v_proj|o_proj|gate_proj|up_proj|down_proj|in_proj_\w+|out_proj)"))
+class Guard(TrainerCallback):
+    def on_step_end(self, args, state, control, **kw):
+        if time.time() > deadline:
+            control.should_training_stop = True; control.should_save = True
+args = TrainingArguments(output_dir=cfg["ckpt"], num_train_epochs=cfg["epochs"], per_device_train_batch_size=1,
+    gradient_accumulation_steps=cfg["grad_accum"], learning_rate=cfg["lr"], lr_scheduler_type="cosine", warmup_ratio=0.03,
+    fp16=True, logging_steps=5, save_strategy="epoch", save_total_limit=1, report_to=[], seed=cfg["seed"],
+    dataloader_num_workers=0, remove_unused_columns=False, ddp_find_unused_parameters=False,
+    group_by_length=True, max_grad_norm=1.0)
+tr = Trainer(model=model, args=args, train_dataset=DS(), data_collator=collate, callbacks=[Guard()])
+torch.cuda.reset_peak_memory_stats()
+res = tr.train()
+if rank == 0:
+    model.save_pretrained(cfg["adapter"])
+    json.dump({"rows": len(rows), "encoded": len(enc), "skipped_too_long": skipped, "train_loss": res.training_loss,
+               "steps": tr.state.global_step, "max_steps": tr.state.max_steps, "epochs_done": tr.state.epoch,
+               "stopped_by_deadline": time.time() > deadline,
+               "loss_log": [x for x in tr.state.log_history if "loss" in x],
+               "peak_cuda_gib": round(torch.cuda.max_memory_allocated() / 2**30, 2)}, open(cfg["adapter"] + "/train.json", "w"), default=str)
+'''
+
+
+@stage('train')
+def train():
+    cfg = {**CFG['train'], 'student': CFG['student'], 'revision': CFG['revision'], 'sft': str(CYCLE / 'sft.jsonl'),
+           'ckpt': str(W / 'ckpt'), 'adapter': str(OUT / 'adapter')}
+    # Leave the configured evaluation reserve inside Kaggle's session limit.
+    deadline = time.time() + max(600, CFG['session_seconds'] - CFG['eval_reserve_seconds'] - (time.monotonic() - T0))
+    (W / 'trainer.py').write_text(TRAINER)
+    ngpu = len(R['gpus'])
+    sh(f'{sys.executable} -m torch.distributed.run --nproc_per_node {ngpu} {W}/trainer.py '
+       f"'{json.dumps(cfg)}' {deadline}", 'train.log',
+       env={**os.environ, 'PYTORCH_CUDA_ALLOC_CONF': 'expandable_segments:True', 'TOKENIZERS_PARALLELISM': 'false'})
+    return json.loads((OUT / 'adapter' / 'train.json').read_text())
+
+
+def to_gguf(src, name):
+    f16 = W / f'{name}-f16.gguf'
+    sh(f'{sys.executable} {W}/llama.cpp/convert_hf_to_gguf.py {src} --outtype f16 --outfile {f16}', 'gguf.log')
+    q = OUT / f'{name}-{CFG["quant"]}.gguf'
+    sh(f'{ENGINE}/llama-quantize {f16} {q} {CFG["quant"]}', 'gguf.log')
+    f16.unlink()
+    return q
+
+
+@stage('merge_convert')
+def merge_convert():
+    import torch
+    from huggingface_hub import snapshot_download
+    from peft import PeftModel
+    from transformers import AutoModelForImageTextToText
+    base_dir = snapshot_download(CFG['student'], revision=CFG['revision'])
+    model = AutoModelForImageTextToText.from_pretrained(base_dir, dtype=torch.float16, device_map={'': 'cpu'})
+    model = PeftModel.from_pretrained(model, str(OUT / 'adapter')).merge_and_unload()
+    merged = W / 'merged'
+    model.save_pretrained(merged, safe_serialization=True)
+    del model
+    for f in pathlib.Path(base_dir).iterdir():  # tokenizer, processor, chat template: byte-identical to base
+        if not f.name.endswith('.safetensors') and not f.name.endswith('.index.json') and f.name != 'config.json':
+            shutil.copy(f, merged / f.name)
+    student = to_gguf(merged, 'student')
+    shutil.rmtree(merged)
+    out = {'student_gguf': student.name, 'student_bytes': student.stat().st_size}
+    if CFG.get('eval_base', True):
+        base = to_gguf(base_dir, 'base')
+        out.update(base_gguf=base.name)
+    return out
+
+
+def serve(gguf, port):
+    ctx = CFG['serve_parallel'] * CFG['serve_ctx_per_slot']
+    p = subprocess.Popen([str(ENGINE / 'llama-server'), '-m', str(gguf), '--host', '127.0.0.1', '--port', str(port),
+                          '-ngl', '999', '-np', str(CFG['serve_parallel']), '-c', str(ctx), '--jinja', '-fa', 'on',
+                          '--alias', 'student'], stdout=open(OUT / 'logs' / f'serve-{gguf.stem}.log', 'w'),
+                         stderr=subprocess.STDOUT, env=os.environ)
+    for _ in range(300):
+        try:
+            urllib.request.urlopen(f'http://127.0.0.1:{port}/health', timeout=2)
+            return p
+        except Exception:
+            if p.poll() is not None:
+                raise RuntimeError(f'llama-server exited {p.returncode}')
+            time.sleep(2)
+    raise RuntimeError('llama-server did not become healthy')
+
+
+def evaluate(gguf, arm):
+    p = serve(gguf, 8091)
+    res = {}
+    try:
+        for name in ('gate', 'eval-heldout'):
+            out = OUT / 'eval' / arm / name
+            sh(f'{sys.executable} {CYCLE}/code/forge/evalrun.py eval --rows {CYCLE}/{name}.jsonl --out {out} '
+               f'--base-url http://127.0.0.1:8091/v1 --workers {CFG["serve_parallel"]} --label {arm} '
+               f'--bandit {shutil.which("bandit") or "bandit"}', f'eval-{arm}.log')
+            s = json.loads((out / 'summary.json').read_text())
+            res[name] = {k: s[k] for k in ('n', 'score', 'by_task', 'false_positive_rate', 'detection_recall',
+                                           'paired_detection', 'cwe_match_when_detected', 'unsupported_rate',
+                                           'remediation_bandit_cleared')}
+        if arm == 'student' and CFG.get('selfplay_samples', 0):
+            out = OUT / 'selfplay'
+            sh(f'{sys.executable} {CYCLE}/code/forge/evalrun.py selfplay --rows {CYCLE}/pool.jsonl --out {out} '
+               f'--base-url http://127.0.0.1:8091/v1 --workers {CFG["serve_parallel"]} --label selfplay '
+               f'--samples {CFG["selfplay_samples"]} --temperature 0.8 --bandit {shutil.which("bandit") or "bandit"}',
+               'selfplay.log', check=False)
+    finally:
+        p.terminate(); p.wait(timeout=60)
+    return res
+
+
+@stage('eval_student')
+def eval_student():
+    return evaluate(OUT / f'student-{CFG["quant"]}.gguf', 'student')
+
+
+@stage('eval_base')
+def eval_base():
+    return evaluate(OUT / f'base-{CFG["quant"]}.gguf', 'base')
+
+
+@stage('eval_champion')
+def eval_champion(path):
+    return evaluate(path, 'champion')
+
+
+if setup()['ok']:
+    if CFG.get('skip_train'):
+        R['stages']['train'] = {'ok': True, 'skipped': True}
+    else:
+        train()
+    if R['stages']['train']['ok']:
+        if merge_convert()['ok']:
+            eval_student()
+            if CFG.get('eval_base', True):
+                eval_base()
+            champ = list(pathlib.Path('/kaggle/input').rglob('champion-*.gguf'))
+            if champ:
+                eval_champion(champ[0])
+for f in OUT.glob('base-*.gguf'):
+    f.unlink()  # reproducible from the pinned base; keep the output small
+R['finished'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+R['wall_seconds'] = round(time.monotonic() - T0, 1)
+save()
+print(json.dumps({k: v for k, v in R.items() if k != 'config'}, indent=1, default=str)[:20000])
+if not all(s.get('ok') for s in R['stages'].values()):
+    sys.exit(1)

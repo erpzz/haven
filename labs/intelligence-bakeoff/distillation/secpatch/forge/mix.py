@@ -1,0 +1,93 @@
+"""Assemble one forge cycle's SFT pool and its evaluation gate from a built secpatch data directory.
+
+Splits (all by repository, so no repository's code is ever both trained on and used to judge):
+  * gate  = dev-split repositories with sha256(repo) odd                 (eval rows; promotion decisions)
+  * pool  = train + dev rows from every other repository                 (training rows; a gate repository's
+            pre-cutoff fixes are dropped too)
+  * heldout = the held-out split, untouched                              (eval rows; reported, also gated)
+Targets: a verified teacher trace replaces the recorded target when one exists; verified self-play samples
+(student outputs that the deterministic grader accepted) are added; otherwise the recorded target is used.
+"""
+from __future__ import annotations
+
+import argparse
+import collections
+import hashlib
+import json
+import pathlib
+
+
+def jl(path: pathlib.Path):
+    return [json.loads(x) for x in path.read_text(encoding='utf-8').splitlines() if x.strip()]
+
+
+def repo_half(repo: str) -> int:
+    return int(hashlib.sha256(repo.encode()).hexdigest()[:8], 16) % 2
+
+
+def digest(path: pathlib.Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--data', type=pathlib.Path, required=True, help='built data dir (train/dev/eval-dev/eval-heldout)')
+    ap.add_argument('--traces', type=pathlib.Path, nargs='*', default=[], help='teach.py outputs')
+    ap.add_argument('--selfplay', type=pathlib.Path, nargs='*', default=[], help='selfplay.py outputs')
+    ap.add_argument('--out', type=pathlib.Path, required=True)
+    ap.add_argument('--selfplay-per-row', type=int, default=1)
+    args = ap.parse_args(argv)
+    train, dev = jl(args.data / 'train.jsonl'), jl(args.data / 'dev.jsonl')
+    eval_dev, heldout = jl(args.data / 'eval-dev.jsonl'), jl(args.data / 'eval-heldout.jsonl')
+    # dev repositories also have pre-cutoff fixes in train; a gate repository contributes nothing to the pool.
+    gate_repos = {r['source']['repo'] for r in dev if repo_half(r['source']['repo']) == 1}
+    pool = [r for r in train + dev if r['source']['repo'] not in gate_repos]
+    gate = [r for r in eval_dev if r['source']['repo'] in gate_repos]
+    pool_repos = {r['source']['repo'] for r in pool}
+    judge_repos = {r['source']['repo'] for r in gate} | {r['source']['repo'] for r in heldout}
+    if pool_repos & judge_repos:
+        raise SystemExit(f'Repository leak between pool and gate/heldout: {sorted(pool_repos & judge_repos)[:5]}')
+    pool_ids = {r['id'] for r in pool}
+    taught = {}
+    for path in args.traces:
+        for rec in jl(path):
+            if rec.get('sft') and rec['id'] in pool_ids:
+                taught[rec['id']] = rec['sft']
+    extra = collections.defaultdict(list)
+    for path in args.selfplay:
+        for rec in jl(path):
+            if rec.get('id') in pool_ids and len(extra[rec['id']]) < args.selfplay_per_row:
+                extra[rec['id']].append(rec)
+    rows, origin = [], collections.Counter()
+    for r in pool:
+        row = taught.get(r['id'])
+        if row is None:
+            row = {**r, 'origin': 'recorded'}
+        rows.append({**row, 'split': 'train'})
+        origin[row['origin']] += 1
+        for s in extra[r['id']]:
+            rows.append({**s, 'split': 'train'})
+            origin['selfplay_verified'] += 1
+    args.out.mkdir(parents=True, exist_ok=True)
+    recorded = [{**r, 'split': 'train'} for r in pool]  # ground-truth targets: teacher input and self-play graders
+    for name, data in (('sft.jsonl', rows), ('pool.jsonl', recorded), ('gate.jsonl', gate),
+                       ('eval-heldout.jsonl', heldout)):
+        with (args.out / name).open('w', encoding='utf-8') as f:
+            for r in data:
+                f.write(json.dumps(r, ensure_ascii=False) + '\n')
+    manifest = {
+        'source_manifest': json.loads((args.data / 'manifest.json').read_text()),
+        'pool_rows': len(rows), 'pool_fixes': len({r['key'] for r in pool}), 'pool_repos': len(pool_repos),
+        'by_task': collections.Counter(r['task'] for r in rows), 'by_origin': origin,
+        'gate_rows': len(gate), 'gate_fixes': len({r['key'] for r in gate}),
+        'heldout_rows': len(heldout), 'heldout_fixes': len({r['key'] for r in heldout}),
+        'sha256': {n: digest(args.out / n) for n in ('sft.jsonl', 'pool.jsonl', 'gate.jsonl', 'eval-heldout.jsonl')},
+        'split_rule': 'dev repos with sha256(repo)[:8] odd -> gate (all their rows leave the pool)',
+    }
+    (args.out / 'manifest.json').write_text(json.dumps(manifest, indent=1) + '\n')
+    print(json.dumps({k: manifest[k] for k in manifest if k != 'source_manifest'}, indent=1))
+    return manifest
+
+
+if __name__ == '__main__':
+    main()

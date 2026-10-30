@@ -1,0 +1,30 @@
+{
+ "student": "Qwen/Qwen3.5-4B",
+ "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+ "quant": "Q4_K_M",
+ "llama_tag": "b11146",
+ "train": {"rank": 64, "alpha": 128, "lr": 0.0001, "epochs": 2, "grad_accum": 8, "max_length": 3072, "seed": 42},
+ "session_seconds": 42000,
+ "eval_reserve_seconds": 7200,
+ "serve_parallel": 8,
+ "serve_ctx_per_slot": 6144,
+ "eval_base": true,
+ "selfplay_samples": 4,
+ "teacher": {
+  "repo": "unsloth/GLM-4.7-Flash-GGUF",
+  "file": "GLM-4.7-Flash-Q4_K_M.gguf",
+  "revision": "0d32489ecb9db6d2a4fc93bd27ef01519f95474d",
+  "parallel": 8,
+  "ctx_per_slot": 8192,
+  "attempts": 3,
+  "shard": "0-5/8"
+ },
+ "gate": {
+  "min_gain": 0.0,
+  "max_fpr_increase": 0.02,
+  "bootstrap_samples": 2000,
+  "max_p_value": 0.1
+ },
+ "kaggle_owner": "yahboyomni",
+ "hf_repo": "jankycoder/haven-secpatch-student"
+}
