@@ -111,6 +111,8 @@ def main(argv=None):
     ap.add_argument('--out', type=pathlib.Path, required=True)
     ap.add_argument('--arms', default=','.join(a[0] for a in ARMS))
     ap.add_argument('--wait-gpu-hours', type=float, default=6)
+    ap.add_argument('--wait-units', default='', help='comma-separated systemd user units that must all be inactive first '
+                                                    '(chained jobs leave gaps where only the teacher holds the GPU)')
     ap.add_argument('--bandit', default=str(HOME / '.local/share/haven-forge-venv/bin/bandit'))
     args = ap.parse_args(argv)
     args.out.mkdir(parents=True, exist_ok=True)
@@ -122,9 +124,14 @@ def main(argv=None):
                            capture_output=True, text=True)
         return r.stdout.strip()
     deadline = time.time() + args.wait_gpu_hours * 3600
-    while gpu_pids() - {teacher_pid(), '0', ''}:
+    units = [u for u in args.wait_units.split(',') if u]
+
+    def units_busy() -> list[str]:
+        return [u for u in units if subprocess.run(['systemctl', '--user', 'is-active', u], capture_output=True,
+                                                   text=True).stdout.strip() in ('active', 'activating', 'reloading')]
+    while units_busy() or gpu_pids() - {teacher_pid(), '0', ''}:
         if time.time() > deadline:
-            log(args.out, 'gpu_busy_gave_up', pids=sorted(gpu_pids()))
+            log(args.out, 'gpu_busy_gave_up', pids=sorted(gpu_pids()), units=units_busy())
             return 1
         time.sleep(60)
     if subprocess.run(['systemctl', '--user', 'is-active', 'forge-teacher-server'], capture_output=True,
@@ -174,6 +181,8 @@ def main(argv=None):
                                'answer_tokens': sm.get('completion_tokens'), 'relay': sm.get('relay'),
                                'seconds_per_item': round((sum(r['latency_s'] for r in rows) + reason_s) / max(1, len(rows)), 1),
                                'reruns': sum(r.get('retries') or 0 for r in rows), 'cut_off': sm.get('finish_length')}
+        table['_conditions'] = {'threads': 12, 'batch_ubatch': 2048, 'parallel': 1, 'engine': 'llama.cpp b11146',
+                                'note': 'latencies are threads-12 and not comparable to COT-EFF-2/3 (threads 6)'}
         (args.out / 'table.json').write_text(json.dumps(table, indent=1))
         log(args.out, 'bench_done', arms=list(table))
     finally:
