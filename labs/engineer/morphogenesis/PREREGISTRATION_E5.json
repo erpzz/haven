@@ -1,0 +1,133 @@
+{
+  "schema": "haven-morphogenesis-prereg-1",
+  "experiment": "E5: reasoning-budget recovery and test controller on harder tasks",
+  "registered_before_any_run": true,
+  "motivation": "In the E2 rerun every errored run (4/96, and all of Qwen's failures) was the same mechanism: the model spent the whole 4096-token completion budget on reasoning and emitted no text or tool call, three turns in a row. The loop answered each such turn with a generic 'Reply with a tool call' and the model re-thought from scratch. E2's tasks were also near ceiling for Qwen (11/12 unaided), which left the controller no room to show a success effect.",
+  "intervention": {
+    "name": "exhaust_recovery (loop.py)",
+    "trigger": "a model turn with no tool call and no visible text that stopped on the token limit (finish_reason 'length' or completion_tokens >= max_tokens)",
+    "action": "the next user message carries the last 1200 characters of that turn's reasoning and asks for the next tool call or the final summary, and the next request is sent with chat_template_kwargs.enable_thinking = false; thinking returns to the agent's setting after that turn",
+    "baseline_behavior": "unchanged loop: 'Reply with a tool call, or with your final summary.' with thinking on; three empty turns in a row end the run as an error (same in every arm)"
+  },
+  "arms": {
+    "none": "Haven tools only",
+    "recover": "tools + exhaust_recovery",
+    "controller": "the runtime runs skill_run_tests (sha256 081dd5aa2763...) before the first turn and after every successful edit",
+    "controller_recover": "controller + exhaust_recovery"
+  },
+  "agent": "qwen35-4b-mac (Qwen3.5-4B Q4_K_M, llama.cpp Metal, thinking at the model default, max_tokens 4096). LFM2.5 is excluded: it succeeded on 3/48 E2 runs and its failures were not budget exhaustion.",
+  "candidate_tasks": [
+    "e5a-invoice-pytest-src",
+    "e5b-lru-node",
+    "e5c-slots-unittest",
+    "e5d-csvline-pytest",
+    "e5e-toposort-pytest-class",
+    "e5f-semver-node",
+    "e5g-layers-unittest",
+    "e5h-ratelimit-pytest-src"
+  ],
+  "task_provenance": "Written by the experimenter (Opus) after the E2 rerun and before any model saw them. Each has two or more interacting bugs, a judge that fails on the fixture and passes with the reference fix (fix.json, outside the copied repo), and every reference fix is necessary (bench/validate_tasks.py, plus a leave-one-fix-out check). Disjoint from E1, E2, the skill's dev and held-out cases.",
+  "calibration": {
+    "runs": "Qwen, arm none, seed 7, all 8 candidates (8 runs)",
+    "selection_rule": "bench/select_e5.py: rank failed before succeeded, then more steps, then more wall time, then task name; keep the first 6",
+    "use": "selection only; calibration rows are never analysed; seed 7 is not reused"
+  },
+  "sampling": {
+    "temperature": 0.3,
+    "seeds": [
+      44,
+      55,
+      66
+    ],
+    "max_steps": 24,
+    "max_seconds_per_run": 1200,
+    "mode": "engineer",
+    "network": "owner grant"
+  },
+  "runs": "6 selected tasks x 3 seeds x 4 arms = 72; arms interleaved within each task and seed",
+  "outcome_judge": "bench/run_bench.py: protected tests byte-identical AND the task verifier passes",
+  "unit_of_analysis": "paired unit = (task, seed); 18 units per arm comparison",
+  "primary_hypotheses": {
+    "H_R": {
+      "claim": "recover beats none on success",
+      "test": "exact one-sided sign test on discordant units",
+      "supported_if": "p < 0.05 and wins - losses >= 4",
+      "rejected_if": "losses >= wins",
+      "otherwise": "inconclusive"
+    },
+    "H_RM": {
+      "claim": "after an exhausted turn, the next turn produces a tool call or visible text more often with recovery than without",
+      "test": "pool turns that follow an exhausted turn; recovery arms (recover, controller_recover) vs baseline arms (none, controller); one-sided Fisher exact test on non-empty vs empty",
+      "supported_if": "recovery rate higher and p < 0.05",
+      "rejected_if": "recovery rate <= baseline rate",
+      "untestable_if": "fewer than 5 such turns in either group",
+      "otherwise": "inconclusive"
+    }
+  },
+  "secondary_hypotheses": {
+    "H_C": "controller beats none on success (same test and thresholds as H_R)",
+    "H_CR": "controller_recover beats controller on success (same test and thresholds)"
+  },
+  "descriptive_only": [
+    "success by arm",
+    "median steps",
+    "median wall seconds",
+    "executor actions including runtime test runs",
+    "exhausted turns",
+    "errored runs",
+    "committed rate"
+  ],
+  "known_threats": [
+    "H_R has little power if exhaustion stays rare (E2: 4/96 runs). H_RM is the direct test of the mechanism; H_R is whether it matters for outcomes.",
+    "Turns in H_RM are not independent: several can come from one run. The Fisher test treats them as independent; the per-run counts are reported.",
+    "The recovery turn runs without thinking, so it is much faster; under the 1200 s per-run limit the recover arms can get more turns in. Steps and wall time are reported.",
+    "The recovery message contains the model's own reasoning tail; any success effect could come from that carry-over, from turning thinking off, or both. This experiment does not separate them.",
+    "Controller arms receive runtime test runs that do not count against the 24 steps.",
+    "Tasks and arms were written by the same experimenter; calibration chooses the hardest tasks for the unaided arm at a different seed, so 'none' success at seeds 44/55/66 may regress upward.",
+    "Seeds vary sampling only; llama.cpp Metal is not bit-exact (E2 measured 3/24 discordant pairs between identical treatments)."
+  ],
+  "analysis_code": "bench/summarize_e5.py and bench/select_e5.py (committed with this file)",
+  "amendments": [
+    {
+      "at": "2026-10-27, before any experimental (seed 44/55/66) run; 3 of 8 calibration runs (seed 7) existed",
+      "by": "Opus merge review",
+      "change": "Clarifies baseline_behavior: the same commit makes an unclosed <think> block count as empty in every arm (previously it was visible text and could end a run as an answer). E5 compares arms within E5, so this is fair inside the experiment, but E5's 'none' arm is not the E2 'none' arm and E5 results must not be pooled with E2.",
+      "analysis_changed": false
+    },
+    {
+      "at": "2026-10-27 16:48 EDT, before any experimental (seed 44/55/66) run",
+      "by": "experimenter (Opus, the session running E5)",
+      "change": "Corrects the count in the previous amendment: 4 of 8 calibration runs (e5a-e5d, seed 7) completed. The 5th (e5e) crashed at start because another session checked out the shared clone to origin/main while calibration was running, which removed the task files. Calibration resumes from a dedicated worktree on this branch. run_bench.py skips the 4 completed rows. loop.py, runtime.py, executor.py, the skill, the bench scripts and the tasks are byte-identical to edef00a, where those rows were produced.",
+      "analysis_changed": false
+    },
+    {
+      "at": "2026-10-27 18:40 EDT, after 5 of 72 experimental runs",
+      "by": "experimenter (Opus, the session running E5)",
+      "change": "Calibration finished (8/8). select_e5.py chose e5d, e5f, e5a, e5e, e5h, e5g. At about 18:24 EDT the Mac model server stopped because the owner shut down Mac compute to let the laptop cool. The 67 runs after that ended in connection errors. Only rows whose run ended with a model-server connection error (URLError or RemoteDisconnected) are set aside, chosen without looking at outcomes, and they will be rerun with the same settings. The 5 completed rows stand. The experiment is paused until the owner allows Mac compute again. Running on another machine would need its own amendment, because the backend would change.",
+      "analysis_changed": false
+    },
+    {
+      "at": "2026-10-27 18:34 EDT, before any Slink experimental run",
+      "by": "experimenter (Opus, the session running E5), on the owner's instruction: 'Rerun all 72 E5 runs on Slink'",
+      "change": "Backend moves to Slink. All 72 experimental runs (6 selected tasks x seeds 44/55/66 x 4 arms) run there from scratch. The 5 Mac rows are excluded from analysis and kept privately, so no backends are mixed in the analysis. The task selection from the Mac calibration stands: it is a design choice, made before any experimental run. Nothing else in the design or analysis changes.",
+      "slink_environment": {
+        "agent_id": "qwen35-4b-slink",
+        "weights": "Qwen3.5-4B-Q4_K_M.gguf, sha256 00fe7986ff5f6b46..., byte-identical to the Mac file",
+        "engine": "llama.cpp b11146 CUDA 12.8 (Mac: build 11669 Metal), same server flags: ctx 32768, parallel 1, jinja, flash-attn auto, n-gpu-layers 999",
+        "gpu": "RTX 2070 SUPER 8 GB, driver 580.178.04; held under Model Lab's cooperative GPU lease (gpu_lease.acquire) for the whole run",
+        "agent_shell": "python3 3.12 without pytest (Mac: 3.9 without pytest), no `python`, no `pytest`; node 26.4.0 (same as Mac) from nodejs.org, checksum-verified, with libatomic1 from the Ubuntu archive; Landlock ABI4 sandbox (Mac: Seatbelt)",
+        "judge": "pytest 8.3.5 in a private venv; all 8 candidate judges re-validated on Slink (fixture fails, reference fix passes)",
+        "skill": "run_tests re-admitted on Slink under Slink's own registry key: same sha256 081dd5aa2763..., held-out 5/5, dev 3/3",
+        "checks": "Probe: thinking on with max_tokens 60 gives finish_reason 'length' with empty content; thinking off gives a direct answer, as on the Mac. Smoke run on the E2 task e2c-truncate-node (not an E5 task) succeeded end to end.",
+        "speed": "About 3x faster per token than the Mac, so the 1200 s per-run limit binds less than it would have there.",
+        "launcher": "morphogenesis/e5_slink.py (copy of the script that ran)"
+      },
+      "analysis_changed": false
+    },
+    {
+      "at": "2026-10-28, after all 72 Slink runs, outcomes known",
+      "by": "experimenter (Opus, the session running E5)",
+      "change": "Two post-hoc notes, no change to verdict rules or to any row. (1) One run (controller_recover, e5f-semver-node, seed 66, wall 2047 s) exceeded max_seconds_per_run=1200: its last command (`rm -rf node_modules/.cache ...`) escalated to an owner approval, nobody attends approvals during a bench run, and the run waited the 1800 s approval timeout before refusal; the loop checks the time limit only between steps. It is the only one of 72 runs with a non-policy decision. Its row is kept as judged (failure). The paired controller run also failed, so the unit is a tie in H_CR; had it succeeded H_CR would be 4-1, p=0.19, still inconclusive. No verdict depends on it. (2) summarize_e5.py now prints p to 3 significant figures (rounding to 5 decimals printed 2.2e-6 as 0.0) and reports the per-run H_RM counts promised under known_threats; the test and thresholds are unchanged."
+    }
+  ]
+}

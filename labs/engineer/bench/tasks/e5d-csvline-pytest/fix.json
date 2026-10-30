@@ -1,0 +1,12 @@
+[
+  {
+    "path": "csvline.py",
+    "old": "            if ch == '\"':\n                quoted = False",
+    "new": "            if ch == '\"' and i + 1 < len(line) and line[i + 1] == '\"':\n                buf.append('\"')\n                i += 1\n            elif ch == '\"':\n                quoted = False"
+  },
+  {
+    "path": "csvline.py",
+    "old": "    if buf:\n        fields.append(\"\".join(buf))\n",
+    "new": "    fields.append(\"\".join(buf))\n"
+  }
+]
