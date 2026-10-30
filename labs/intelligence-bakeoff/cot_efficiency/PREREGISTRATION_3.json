@@ -202,6 +202,13 @@
    "written_at": "2026-10-30T18:46:44Z",
    "written_before": "any COT-EFF-3 result was examined (T arm loading on rc-calibration)",
    "note": "COT-EFF-2 confirmation weakened this experiment's premise: on 18 unseen root_cause items T scored 7 and thinking-off N 6, against 4 vs 1 of 6 on calibration. The design is unchanged and the run continues. With 40 items it is now mainly the better-powered estimate of whether thinking helps root cause at all. If T does not beat N here, the fast path is thinking off and the 3.2x bar is moot."
+  },
+  {
+   "n": 3,
+   "written_at": "2026-10-30T21:47:52Z",
+   "defect": "Arm BC was not measured: llama-server crashed on its 2nd item (CUDA error: an illegal memory access, in llama_context::graph_compute, engine b11146), and the remaining items got connection refused (37) or a dropped connection (1). Its 0/40 reflects the crash, not the method.",
+   "action": "The first BC rows are kept as rc-calibration.crashed.jsonl. BC is re-run on all 40 items with identical arguments. If it crashes again, BC is reported as unmeasurable on this engine and excluded from the choice.",
+   "seen_before_this_amendment": "rc-calibration scores of T 18, N 17, NC 16, B2K 19, L2C 8 of 40. BC can change the choice only by reaching >= 18, which the choice rule already specifies."
   }
  ]
 }
