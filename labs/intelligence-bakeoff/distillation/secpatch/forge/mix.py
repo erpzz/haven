@@ -15,6 +15,10 @@ import collections
 import hashlib
 import json
 import pathlib
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import teach  # noqa: E402
 
 
 def jl(path: pathlib.Path):
@@ -36,6 +40,7 @@ def main(argv=None):
     ap.add_argument('--selfplay', type=pathlib.Path, nargs='*', default=[], help='selfplay.py outputs')
     ap.add_argument('--out', type=pathlib.Path, required=True)
     ap.add_argument('--selfplay-per-row', type=int, default=1)
+    ap.add_argument('--no-reverify', dest='reverify', action='store_false')
     ap.add_argument('--pairs', type=pathlib.Path, nargs='*', default=[], help='self-play chosen/rejected pairs')
     args = ap.parse_args(argv)
     train, dev = jl(args.data / 'train.jsonl'), jl(args.data / 'dev.jsonl')
@@ -49,11 +54,20 @@ def main(argv=None):
     if pool_repos & judge_repos:
         raise SystemExit(f'Repository leak between pool and gate/heldout: {sorted(pool_repos & judge_repos)[:5]}')
     pool_ids = {r['id'] for r in pool}
-    taught = {}
+    by_id = {r['id']: r for r in pool}
+    teach.VERSIONS.clear()
+    teach.index_versions(train + dev)
+    taught, rejected = {}, collections.Counter()
     for path in args.traces:
         for rec in jl(path):
             if rec.get('sft') and rec['id'] in pool_ids:
-                taught[rec['id']] = rec['sft']
+                # Re-check every stored trace against the CURRENT rules, so tightening the teacher's checks
+                # also removes traces accepted under older, looser ones.
+                kept, why = teach.verify(by_id[rec['id']], rec['sft']['messages'][-1]['content'])
+                if kept or not args.reverify:
+                    taught[rec['id']] = rec['sft']
+                else:
+                    rejected[why] += 1
     extra = collections.defaultdict(list)
     for path in args.selfplay:
         for rec in jl(path):
@@ -88,6 +102,7 @@ def main(argv=None):
         'source_manifest': json.loads((args.data / 'manifest.json').read_text()),
         'pool_rows': len(rows), 'pool_fixes': len({r['key'] for r in pool}), 'pool_repos': len(pool_repos),
         'by_task': collections.Counter(r['task'] for r in rows), 'by_origin': origin,
+        'traces_rejected_on_reverify': rejected,
         'preference_pairs': len(pairs),
         'gate_rows': len(gate), 'gate_fixes': len({r['key'] for r in gate}),
         'heldout_rows': len(heldout), 'heldout_fixes': len({r['key'] for r in heldout}),

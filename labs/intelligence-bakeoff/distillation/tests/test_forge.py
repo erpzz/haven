@@ -115,19 +115,35 @@ class MixTests(unittest.TestCase):
             self.assertFalse({r['source']['repo'] for r in pool} & {gate_repo})
             self.assertEqual(m['pool_fixes'], 2)  # A and B; D left with its gate repository
 
+    def trace(self, data, analysis):
+        rid = 'A-detect-vulnerable'
+        target = analysis + '\n\n{"verdict": "vulnerable", "function": "load", "cwe": ["CWE-22"], "evidence_lines": [11], "issue": "x"}'
+        v = detect_pair('A', 'o/train')[0]
+        sft = {**v, 'messages': v['messages'][:-1] + [{'role': 'assistant', 'content': target}], 'origin': 'teacher_verified'}
+        t = data / 'traces.jsonl'
+        t.write_text(json.dumps({'id': rid, 'sft': sft}) + '\n')
+        return rid, t
+
     def test_verified_traces_replace_targets(self):
         with tempfile.TemporaryDirectory() as d:
             data, _ = self.build(d)
-            rid = 'A-detect-vulnerable'
-            t = data / 'traces.jsonl'
-            t.write_text(json.dumps({'id': rid, 'sft': {'id': rid, 'key': 'A', 'task': 'detect', 'label': 'vulnerable',
-                                                        'split': 'train', 'source': {'repo': 'o/train'},
-                                                        'messages': [], 'origin': 'teacher_verified'}}) + '\n')
+            rid, t = self.trace(data, 'The function load concatenates the caller supplied p onto base on line 11 and '
+                                      'opens it directly, so dot dot segments escape the base directory.')
             mix.main(['--data', str(data), '--out', str(data / 'out'), '--traces', str(t)])
             rows = {json.loads(x)['id']: json.loads(x) for x in (data / 'out/sft.jsonl').read_text().splitlines()}
             self.assertEqual(rows[rid]['origin'], 'teacher_verified')
             recorded = [json.loads(x) for x in (data / 'out/pool.jsonl').read_text().splitlines()]
             self.assertTrue(all(r['messages'][-1]['role'] == 'assistant' and 'origin' not in r for r in recorded))
+
+    def test_stored_trace_failing_current_rules_is_dropped(self):
+        with tempfile.TemporaryDirectory() as d:
+            data, _ = self.build(d)
+            rid, t = self.trace(data, 'The function load concatenates p onto base on line 11 and the patch later '
+                                      'added normalization, so dot dot segments escape the base directory.')
+            m = mix.main(['--data', str(data), '--out', str(data / 'out'), '--traces', str(t)])
+            rows = {json.loads(x)['id']: json.loads(x) for x in (data / 'out/sft.jsonl').read_text().splitlines()}
+            self.assertEqual(rows[rid]['origin'], 'recorded')
+            self.assertEqual(m['traces_rejected_on_reverify'], {'future_leak': 1})
 
 
 class SelfPlayGraderTests(unittest.TestCase):

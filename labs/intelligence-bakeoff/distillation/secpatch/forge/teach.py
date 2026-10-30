@@ -26,6 +26,7 @@ import time
 import urllib.request
 
 TASKS = ('detect', 'root_cause', 'finding_support', 'remediate')
+RULES = 2  # bump when prompts or checks change: rows taught under older rules are taught again
 HANDBOOK = (pathlib.Path(__file__).resolve().parent / 'handbook.md').read_text(encoding='utf-8')
 WORD_LIMIT = {'detect': 90, 'root_cause': 110, 'finding_support': 80, 'remediate': 60}
 LEAK = re.compile(r'\b(reference|ground truth|hint|we are told|i was told|the answer|advisory|hidden|provided label|'
@@ -303,14 +304,20 @@ def main(argv=None):
                 if row['task'] in TASKS and row['messages'][-1]['role'] == 'assistant':
                     rows.append(row)
     index_versions(rows)
-    done = set()
+    done = set()  # resumable; see below
     if args.out.exists():
+        by_id = {r['id']: r for r in rows}
         for x in args.out.read_text().splitlines():
             if x.strip():
                 rec = json.loads(x)
-                # rows that only hit transport errors (server restart, timeout) are retried
-                if rec.get('sft') or not all(v.startswith('error:') for v in rec.get('verdicts', [])):
-                    done.add(rec['id'])
+                row = by_id.get(rec['id'])
+                if row is None:
+                    continue
+                if rec.get('sft'):  # a stored trace counts only if it still passes the current checks
+                    if verify(row, rec['sft']['messages'][-1]['content'])[0]:
+                        done.add(rec['id'])
+                elif rec.get('rules') == RULES and not all(v.startswith('error:') for v in rec.get('verdicts', [])):
+                    done.add(rec['id'])  # genuinely failed under the current rules; transport errors are retried
     todo = [r for r in rows if r['id'] not in done and in_shard(r['id']) and teacher_messages(r) is not None]
     if args.limit:
         todo = todo[:args.limit]
@@ -338,7 +345,7 @@ def main(argv=None):
             if kept:
                 break
         rec = {'id': row['id'], 'task': row['task'], 'label': row['label'], 'verdicts': reasons, 'usage': usage_total,
-               'sft': kept}
+               'sft': kept, 'rules': RULES}
         with lock:
             with args.out.open('a', encoding='utf-8') as f:
                 f.write(json.dumps(rec, ensure_ascii=False) + '\n')
