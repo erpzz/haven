@@ -270,6 +270,36 @@ def to_gguf(src, name):
     return q
 
 
+def restore_untouched_tensors(base_dir: pathlib.Path, merged: pathlib.Path) -> int:
+    """Copy tensors transformers drops on load (Qwen3.5's multi-token-prediction layer) back from the base.
+
+    The config still declares them, so the GGUF converter expects them; LoRA never touched them, so the base
+    tensors are exact. Keeping them also keeps MTP speculative decoding possible when serving.
+    """
+    from safetensors import safe_open
+    from safetensors.torch import save_file
+    have = set()
+    for f in merged.glob('*.safetensors'):
+        with safe_open(str(f), 'pt') as h:
+            have |= set(h.keys())
+    missing = {}
+    for f in base_dir.glob('*.safetensors'):
+        with safe_open(str(f), 'pt') as h:
+            for k in h.keys():
+                if k not in have:
+                    missing[k] = h.get_tensor(k)
+    if not missing:
+        return 0
+    extra = 'model-restored-00001.safetensors'
+    save_file(missing, str(merged / extra), metadata={'format': 'pt'})
+    index = merged / 'model.safetensors.index.json'
+    if index.exists():  # sharded save: the converter follows the index, so register the new shard there
+        idx = json.loads(index.read_text())
+        idx['weight_map'].update({k: extra for k in missing})
+        index.write_text(json.dumps(idx, indent=1))
+    return len(missing)
+
+
 @stage('merge_convert')
 def merge_convert():
     import torch
@@ -285,9 +315,10 @@ def merge_convert():
     for f in pathlib.Path(base_dir).iterdir():  # tokenizer, processor, chat template: byte-identical to base
         if not f.name.endswith('.safetensors') and not f.name.endswith('.index.json') and f.name != 'config.json':
             shutil.copy(f, merged / f.name)
+    restored = restore_untouched_tensors(pathlib.Path(base_dir), merged)
     student = to_gguf(merged, 'student')
     shutil.rmtree(merged)
-    out = {'student_gguf': student.name, 'student_bytes': student.stat().st_size}
+    out = {'student_gguf': student.name, 'student_bytes': student.stat().st_size, 'restored_tensors': restored}
     if CFG.get('eval_base', True):
         base = to_gguf(base_dir, 'base')
         out.update(base_gguf=base.name)
