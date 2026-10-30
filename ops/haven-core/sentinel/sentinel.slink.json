@@ -1,0 +1,33 @@
+{
+ "exposure_allowlist": [
+  "tcp 0.0.0.0:22",
+  "tcp [::]:22",
+  "udp 192.168.*:68"
+ ],
+ "exposure_allowlist_reasons": {
+  "tcp 0.0.0.0:22 / [::]:22": "owner administration over SSH (keys); see the ssh check",
+  "udp *:68": "DHCP client"
+ },
+ "secret_roots": [
+  "~/.ssh",
+  "~/.config",
+  "~/.local/state",
+  "~/.local/share/haven-model-lab",
+  "~/.local/share/haven-openwebui"
+ ],
+ "git_repos": [
+  "~/projects/haven",
+  "~/projects/haven-integrated",
+  "~/projects/haven-distillation",
+  "~/projects/haven-tool-sft",
+  "~/.local/share/haven-workspaces/*"
+ ],
+ "venvs": [
+  "~/.local/share/haven-openwebui/venv",
+  "~/.local/share/haven-secpatch-venv",
+  "~/.local/share/haven-training-venv",
+  "~/.local/share/haven-forge-venv",
+  "~/.local/share/haven-engineer-bench/venv"
+ ],
+ "osv_pypi_export": "~/.local/state/haven-sentinel/osv/PyPI-all.zip"
+}
