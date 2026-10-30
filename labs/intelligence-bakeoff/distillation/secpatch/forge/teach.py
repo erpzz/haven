@@ -26,7 +26,7 @@ import time
 import urllib.request
 
 TASKS = ('detect', 'root_cause', 'finding_support', 'remediate')
-RULES = 2  # bump when prompts or checks change: rows taught under older rules are taught again
+RULES = 3  # bump when prompts or checks change: rows taught under older rules are taught again
 HANDBOOK = (pathlib.Path(__file__).resolve().parent / 'handbook.md').read_text(encoding='utf-8')
 WORD_LIMIT = {'detect': 90, 'root_cause': 110, 'finding_support': 80, 'remediate': 60}
 LEAK = re.compile(r'\b(reference|ground truth|hint|we are told|i was told|the answer|advisory|hidden|provided label|'
@@ -211,8 +211,9 @@ def verify(row: dict, text: str) -> tuple[dict | None, str]:
     idents = {w for w in idents if re.search(r'\b' + re.escape(w) + r'\b', prompt)}
     changed_lines = {int(m) for m in re.findall(r'^[-+]\s*(\d+) \|', diff, re.M)} & shown_lines(prompt)
     cited_any = {int(x) for x in re.findall(r'\blines?\s+(\d+)', analysis, re.I)}
-    if idents:  # a visible changed identifier must be named
-        grounded = any(re.search(r'\b' + re.escape(w) + r'\b', analysis) for w in idents)
+    if idents:  # a visible changed identifier must be named (stems count: replace -> replacing)
+        grounded = any(re.search(r'\b' + re.escape(w) + (r'' if len(w) >= 5 else r'\b'), analysis, re.I if len(w) >= 5 else 0)
+                       for w in idents)
     else:  # nothing visible changed by name (e.g. only lines were added): cite a changed line instead
         grounded = not changed_lines or bool(cited_any & changed_lines)
     if not grounded:
@@ -334,7 +335,7 @@ def main(argv=None):
             try:
                 # adaptive compute: a fast answer first; retries reason before answering (reasoning is discarded)
                 think = attempt > 0 and args.think_retries
-                text, usage = ep(msgs, 4000 if think else 700, 0.3 if attempt == 0 else 0.7, attempt, think)
+                text, usage = ep(msgs, 5200 if think else 700, 0.3 if attempt == 0 else 0.7, attempt, think)
             except Exception as exc:  # recorded, the row stays untaught (gold target remains)
                 reasons.append(f'error:{type(exc).__name__}')
                 continue

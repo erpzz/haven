@@ -3,7 +3,15 @@
  "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
  "quant": "Q4_K_M",
  "llama_tag": "b11146",
- "train": {"rank": 64, "alpha": 128, "lr": 0.0001, "epochs": 2, "grad_accum": 8, "max_length": 3072, "seed": 42},
+ "train": {
+  "rank": 64,
+  "alpha": 128,
+  "lr": 0.0001,
+  "epochs": 2,
+  "grad_accum": 8,
+  "max_length": 3072,
+  "seed": 42
+ },
  "session_seconds": 42000,
  "eval_reserve_seconds": 10800,
  "serve_parallel": 8,
@@ -11,15 +19,21 @@
  "eval_base": true,
  "selfplay_samples": 4,
  "selfplay_rows": 800,
- "pref": {"enabled": true, "pref_lr": 0.00002, "pref_beta": 0.1, "pref_nll": 1.0},
+ "pref": {
+  "enabled": true,
+  "pref_lr": 2e-05,
+  "pref_beta": 0.1,
+  "pref_nll": 1.0
+ },
  "teacher": {
   "repo": "unsloth/GLM-4.7-Flash-GGUF",
   "file": "GLM-4.7-Flash-Q4_K_M.gguf",
   "revision": "0d32489ecb9db6d2a4fc93bd27ef01519f95474d",
   "parallel": 8,
-  "ctx_per_slot": 8192,
+  "ctx_per_slot": 12288,
   "attempts": 3,
-  "shard": "0-5/8"
+  "shard": "0-5/8",
+  "think_retries": 1
  },
  "gate": {
   "min_gain": 0.0,
@@ -27,7 +41,13 @@
   "bootstrap_samples": 2000,
   "max_p_value": 0.1
  },
- "slink_teacher": {"enabled": true, "port": 8093, "workers": 2, "shard": "6-7/8"},
+ "slink_teacher": {
+  "enabled": true,
+  "port": 8093,
+  "workers": 2,
+  "shard": "6-7/8",
+  "think_retries": 0
+ },
  "kaggle_owner": "yahboyomni",
  "hf_repo": "jankycoder/haven-secpatch-student"
 }

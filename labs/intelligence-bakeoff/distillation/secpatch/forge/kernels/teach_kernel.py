@@ -74,7 +74,8 @@ try:
     rows = [str(CYCLE / 'pool.jsonl')] + [str(p) for p in CYCLE.glob('teach-extra*.jsonl')]
     sh(f'{sys.executable} {CYCLE}/code/forge/teach.py --rows {" ".join(rows)} --out {traces} '
        f'--base-url http://127.0.0.1:8090/v1 --model teacher --workers {T["parallel"]} '
-       f'--attempts {T["attempts"]} --deadline {int(deadline)} --shard {T.get("shard", "0-0/1")}', 'teach.log')
+       f'--attempts {T["attempts"]} --deadline {int(deadline)} --shard {T.get("shard", "0-0/1")} '
+       f'--think-retries {T.get("think_retries", 1)}', 'teach.log')
     srv.terminate()
     recs = [json.loads(x) for x in traces.read_text().splitlines() if x.strip()]
     by = {}

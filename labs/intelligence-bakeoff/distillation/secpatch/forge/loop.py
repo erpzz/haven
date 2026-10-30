@@ -161,7 +161,8 @@ def start_slink_teacher(s, cfg):
                         sys.executable, str(HERE / 'teach.py'), '--rows', str(cdir(s) / 'data' / 'pool.jsonl'),
                         '--out', str(out), '--base-url', f'http://127.0.0.1:{lane.get("port", 8093)}/v1',
                         '--model', 'teacher', '--workers', str(lane.get('workers', 2)), '--attempts', '3',
-                        '--shard', lane.get('shard', '6-7/8')], capture_output=True, text=True)
+                        '--shard', lane.get('shard', '6-7/8'), '--think-retries', str(lane.get('think_retries', 0))],
+                       capture_output=True, text=True)
     log('slink_teacher_started' if r.returncode == 0 else 'slink_teacher_failed', cycle=s['cycle'],
         detail=(r.stdout + r.stderr)[-300:])
 
