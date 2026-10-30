@@ -1,0 +1,7 @@
+[
+  {
+    "path": "slots/intervals.py",
+    "old": "key=lambda iv: iv[1]):\n        if out and start < out[-1][1]:",
+    "new": "key=lambda iv: iv[0]):\n        if out and start <= out[-1][1]:"
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "path": "conf/merge.py",
+    "old": "    out = base\n",
+    "new": "    out = dict(base)\n"
+  },
+  {
+    "path": "conf/merge.py",
+    "old": "        elif isinstance(v, list) and isinstance(out.get(k), list):\n            out[k] = out[k] + v\n",
+    "new": ""
+  }
+]
