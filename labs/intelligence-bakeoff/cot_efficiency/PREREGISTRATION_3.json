@@ -196,6 +196,12 @@
    "written_before": "any model was run on either COT-EFF-3 set",
    "retrieval_diagnostic": "Label-only check on rc-calibration (no model output): the right CWE is among the 3 retrieved cases for 9/40 items with whole-function shingle retrieval, 14/40 with fix-diff TF-IDF (top-5: 18/40), and 10/40 for the three most common training CWEs regardless of the item. Retrieval switched to fix-diff TF-IDF; k stays 3.",
    "expectation": "Retrieved analogies carry the answer for only about a third of items, so the cases arms are unlikely to replace thinking; B2K is the likeliest to keep accuracy. Recorded so the result cannot be re-framed afterwards."
+  },
+  {
+   "n": 2,
+   "written_at": "2026-10-30T18:46:44Z",
+   "written_before": "any COT-EFF-3 result was examined (T arm loading on rc-calibration)",
+   "note": "COT-EFF-2 confirmation weakened this experiment's premise: on 18 unseen root_cause items T scored 7 and thinking-off N 6, against 4 vs 1 of 6 on calibration. The design is unchanged and the run continues. With 40 items it is now mainly the better-powered estimate of whether thinking helps root cause at all. If T does not beat N here, the fast path is thinking off and the 3.2x bar is moot."
   }
  ]
 }
