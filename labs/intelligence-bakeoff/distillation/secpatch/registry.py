@@ -59,7 +59,8 @@ def attach_eval(root: pathlib.Path, name: str, summary_path: pathlib.Path) -> di
     if target is None:
         raise ValueError('Unknown adapter.')
     evals = target if name == 'base' else target['evals']
-    evals[summary['eval_sha256']] = {k: summary[k] for k in (PRIMARY, GUARD, 'n', 'model', 'by_task') if k in summary}
+    evals[summary['eval_sha256']] = {k: summary[k] for k in (PRIMARY, GUARD, 'detection_recall', 'paired_detection',
+                                                              'n', 'model', 'by_task') if k in summary}
     save(root, reg)
     return evals[summary['eval_sha256']]
 
@@ -76,6 +77,12 @@ def promote(root: pathlib.Path, name: str, eval_sha256: str, force: bool = False
         if mine[PRIMARY] <= base[PRIMARY] or mine.get(GUARD, 0) > base.get(GUARD, 0):
             raise ValueError(f"Gate failed: score {mine[PRIMARY]} vs base {base[PRIMARY]}, "
                              f"FPR {mine.get(GUARD)} vs {base.get(GUARD)}. Not promoted.")
+        # A model that always answers "not vulnerable" lowers FPR to 0 and can raise the score at the majority floor.
+        # Require discrimination (recall - FPR, Youden's J) to beat the base, so a constant answer never promotes.
+        j = lambda e: e.get('detection_recall', 0) - e.get(GUARD, 0)
+        if j(mine) <= j(base):
+            raise ValueError(f"Gate failed: detection discrimination (recall - FPR) {j(mine):.3f} does not beat "
+                             f"base {j(base):.3f}; a constant answer is not a better model. Not promoted.")
     reg['history'].append({'at': time.time(), 'from': reg['promoted'], 'to': name, 'eval_sha256': eval_sha256, 'forced': force})
     reg['promoted'] = name
     save(root, reg)

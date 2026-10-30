@@ -335,10 +335,21 @@ class RegistryAndTrainTests(unittest.TestCase):
                                                      'base_revision': 'c1899de', 'data_sha256': '0' * 64}))
         return d
 
-    def summary(self, t, name, score, fpr):
+    def summary(self, t, name, score, fpr, recall=0.9):
         p = pathlib.Path(t) / f'{name}.json'
-        p.write_text(json.dumps({'eval_sha256': 'E', 'score': score, 'false_positive_rate': fpr, 'n': 10, 'model': name}))
+        p.write_text(json.dumps({'eval_sha256': 'E', 'score': score, 'false_positive_rate': fpr, 'detection_recall': recall,
+                                 'n': 10, 'model': name}))
         return p
+
+    def test_constant_answer_collapse_is_not_promoted(self):
+        # Measured 2026-10-30: the seed-42 adapter raised score 0.382 -> 0.483 by answering "not vulnerable" to everything.
+        with tempfile.TemporaryDirectory() as t:
+            root = pathlib.Path(t) / 'reg'
+            registry.register(root, self.run_dir(t, 'GPU_TRAINING_RUN'), 'collapsed')
+            registry.attach_eval(root, 'base', self.summary(t, 'base', 0.382, 0.81, recall=0.84))
+            registry.attach_eval(root, 'collapsed', self.summary(t, 'collapsed', 0.483, 0.0, recall=0.0))
+            with self.assertRaisesRegex(ValueError, 'discrimination'):
+                registry.promote(root, 'collapsed', 'E')
 
     def test_cpu_check_cannot_be_registered(self):
         with tempfile.TemporaryDirectory() as t:
