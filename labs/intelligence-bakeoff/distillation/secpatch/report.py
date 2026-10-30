@@ -65,12 +65,24 @@ def majority_baseline(eval_path: pathlib.Path, keep: set | None = None) -> dict:
     return out
 
 
+def _evaluate():
+    """secpatch/evaluate.py by path: a bare `import evaluate` can resolve to distillation/evaluate.py."""
+    import importlib.util
+    import sys
+    here = pathlib.Path(__file__).resolve().parent
+    if 'secpatch_evaluate' not in sys.modules:
+        sys.path.insert(0, str(here))
+        spec = importlib.util.spec_from_file_location('secpatch_evaluate', here / 'evaluate.py')
+        module = importlib.util.module_from_spec(spec)
+        sys.modules['secpatch_evaluate'] = module
+        spec.loader.exec_module(module)
+    return sys.modules['secpatch_evaluate']
+
+
 def regrade(item_files: list[pathlib.Path], eval_path: pathlib.Path, bandit: str) -> None:
     """Re-run the current graders on stored outputs (in place, with a .orig backup)."""
     import shutil
-    import sys
-    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-    from evaluate import grade
+    grade = _evaluate().grade
     items = {r['id']: r for r in map(json.loads, eval_path.read_text().splitlines())}
     for path in item_files:
         if not path.with_suffix('.jsonl.orig').exists():
@@ -87,9 +99,7 @@ def resummarize(item_files: list[pathlib.Path], tasks: set | None) -> list[dict]
     """Re-score arms from their per-item files over the ids every arm answered (optionally a task subset),
     so arms run on different task subsets still compare on identical items."""
     import hashlib
-    import sys
-    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-    from evaluate import summarize
+    summarize = _evaluate().summarize
     arms = []
     for path in item_files:
         rows = [json.loads(x) for x in path.read_text().splitlines() if x.strip()]

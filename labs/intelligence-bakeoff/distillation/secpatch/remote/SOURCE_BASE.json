@@ -1,20 +1,49 @@
 {
-  "base_commit": "eaa76f834bc9f64fe9aada542fdf3c00ba9a6f55",
+  "base_commit": "670117a",
   "core_sha256": {
-    "secpatch/build.py": "6e90fa01bc0b7163a6b4157449621e98e4c0f1e427b38cd6864967b1f8eab673",
-    "secpatch/evaluate.py": "b39d830bb0f0bfd16d724f1c41e19f6812e866bb16bb0123d4bb7f3de7b47bf5",
+    "secpatch/build.py": "efa9e28c0c24e98243e06e2c2d2fb6dd91e119150f59de8c592fce535dc9bcb7",
+    "secpatch/evaluate.py": "7e7e002bb90aa4cc93dac8349751dcaa0995ec79e3982d625d925c29913d3a6e",
     "secpatch/gpu_campaign.py": "64a439256f6bfe4b209dd844d7a98c1dcfaa083bd20c8dbb250382a557053843",
-    "secpatch/harvest.py": "9ef8ae0db9e623b601994398ef24f64c9002b181eb09dbf8a2725fa8106466ca",
+    "secpatch/harvest.py": "7ab49e2f6e26ab427fbef5afae8548d4e78f240c1902cbf3d3f74b32986d2772",
     "secpatch/osv.py": "7029202a04f5e407611891234dbcf6b4393f9a6448150118aafe91748dcaa40c",
-    "secpatch/registry.py": "d5752565befd6399f84fca03af0c94442f89d0861632a3f4815c92adad34b8d6",
-    "secpatch/repo_eval.py": "03884aa4e9a55970d73c9a46d4b1e76b042aebf419a4289fd71271b85268c3f7",
-    "secpatch/report.py": "c6aeb2c237d12308f64bbf5df1512573e8e83694320a42aa5d47b44a5e545792",
-    "secpatch/train.py": "2ced5efea68031943057031b71fba9edbcb9b2e5810b734362efff90449de925",
+    "secpatch/registry.py": "4804b52103a5a4f7017bcfa87c5e1ad4c5f9d17de61ae482c089e070801496dd",
+    "secpatch/repo_eval.py": "b72221077a41324e60d3e9139ab2f9016333625dab9277aaad2fa0b1b2597336",
+    "secpatch/report.py": "0f780e408509a140dcd9831e572456d53c0344525f3f6b397519e624c2b35418",
+    "secpatch/train.py": "87290ebd76492f58db089131dbe290dd82068bad770ce6185986e4a993bd9594",
     "train_sft.py": "f42cf7b02195dcea45719941e2ec090f86cde45e862acbc86b2c4b244904a693"
   },
   "inputs": {
     "PR75": "118f55ec8aefaa11faa8e8e9184d1b4bc3660304",
     "PR82": "c9cf96f4ade6b82c1688f4bf5f768b828c0a92eb",
-    "PR84": "632fe9d1be1ae844ba742c5d1cbb2c4903a60138"
+    "PR84": "632fe9d1be1ae844ba742c5d1cbb2c4903a60138",
+    "R02-branch-merge": "670117a"
+  },
+  "previous_base": {
+    "base_commit": "eaa76f834bc9f64fe9aada542fdf3c00ba9a6f55",
+    "core_sha256": {
+      "secpatch/build.py": "6e90fa01bc0b7163a6b4157449621e98e4c0f1e427b38cd6864967b1f8eab673",
+      "secpatch/evaluate.py": "b39d830bb0f0bfd16d724f1c41e19f6812e866bb16bb0123d4bb7f3de7b47bf5",
+      "secpatch/gpu_campaign.py": "64a439256f6bfe4b209dd844d7a98c1dcfaa083bd20c8dbb250382a557053843",
+      "secpatch/harvest.py": "9ef8ae0db9e623b601994398ef24f64c9002b181eb09dbf8a2725fa8106466ca",
+      "secpatch/osv.py": "7029202a04f5e407611891234dbcf6b4393f9a6448150118aafe91748dcaa40c",
+      "secpatch/registry.py": "d5752565befd6399f84fca03af0c94442f89d0861632a3f4815c92adad34b8d6",
+      "secpatch/repo_eval.py": "03884aa4e9a55970d73c9a46d4b1e76b042aebf419a4289fd71271b85268c3f7",
+      "secpatch/report.py": "c6aeb2c237d12308f64bbf5df1512573e8e83694320a42aa5d47b44a5e545792",
+      "secpatch/train.py": "2ced5efea68031943057031b71fba9edbcb9b2e5810b734362efff90449de925",
+      "train_sft.py": "f42cf7b02195dcea45719941e2ec090f86cde45e862acbc86b2c4b244904a693"
+    }
+  },
+  "repinned": {
+    "at": "2026-10-30",
+    "changed": [
+      "secpatch/build.py",
+      "secpatch/evaluate.py",
+      "secpatch/harvest.py",
+      "secpatch/registry.py",
+      "secpatch/repo_eval.py",
+      "secpatch/report.py",
+      "secpatch/train.py"
+    ],
+    "why": "The R02 branch advanced the pipeline after #75 was squash-merged; see remote/README.md \"Pipeline changes since the original base\"."
   }
 }

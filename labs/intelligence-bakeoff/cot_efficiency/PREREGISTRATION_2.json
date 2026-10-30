@@ -1,0 +1,381 @@
+{
+ "id": "COT-EFF-2",
+ "written_at": "2026-10-30T11:48:00Z",
+ "question": "Can Haven answer at least as accurately as the 35B with thinking on, in 5-10x less wall time, on questions nothing was tuned on?",
+ "why": "COT-EFF-1 found no lossless decode lever above 1.07x, and its 1024-token cap stopped the thinking baseline before any answer (12/12 finish=length). The owner's bar is 5-10x real-world speed with accuracy kept or improved on novel questions. The large factors are the number of tokens generated and which model generates them, so this experiment measures time per correct answer for whole answering strategies.",
+ "hardware": "Slink: Ryzen 9 3900X, 62 GiB DDR4, RTX 2070 SUPER 8 GiB; the forge GLM-4.7-Flash teacher stays resident on the GPU (2.5 GiB) as an allowed neighbour",
+ "baseline": "T",
+ "baseline_meaning": "Qwen3.6-35B-A3B with thinking on, production server arguments and production sampling (Model Lab defaults temperature 0.7, top_p 0.8, seed 42), up to 8192 thinking+answer tokens per call. This is what an owner gets today when they switch reasoning on.",
+ "models": {
+  "q35": "~/.local/share/haven-model-lab/models/Qwen3.6-35B-A3B-UD-Q4_K_M.gguf",
+  "lfm8b": "~/.local/share/haven-paradigms/models/LFM2.5-8B-A1B-Q4_K_M.gguf"
+ },
+ "server_args": {
+  "moe": [
+   "--n-gpu-layers",
+   "999",
+   "--device",
+   "CUDA0",
+   "--cpu-moe",
+   "--ctx-size",
+   "32768",
+   "--parallel",
+   "1",
+   "--threads",
+   "6",
+   "--threads-batch",
+   "6",
+   "--batch-size",
+   "256",
+   "--ubatch-size",
+   "128",
+   "--flash-attn",
+   "auto",
+   "--cache-type-k",
+   "f16",
+   "--cache-type-v",
+   "f16"
+  ],
+  "lfm": [
+   "--n-gpu-layers",
+   "999",
+   "--device",
+   "CUDA0",
+   "--cpu-moe",
+   "--ctx-size",
+   "32768",
+   "--parallel",
+   "1",
+   "--threads",
+   "6",
+   "--threads-batch",
+   "6",
+   "--batch-size",
+   "512",
+   "--ubatch-size",
+   "256",
+   "--flash-attn",
+   "auto"
+  ]
+ },
+ "ready_deadline_s": 1200,
+ "defaults": {
+  "sampling": {
+   "temperature": 0.7,
+   "top_p": 0.8,
+   "seed": 42
+  },
+  "think_tokens": 8192,
+  "answer_tokens": 512
+ },
+ "arms": [
+  {
+   "id": "T",
+   "model": "q35",
+   "server": "moe",
+   "thinking": true,
+   "lever": "baseline: full thinking"
+  },
+  {
+   "id": "N",
+   "model": "q35",
+   "server": "moe",
+   "thinking": false,
+   "lever": "same model, thinking off (Model Lab default)"
+  },
+  {
+   "id": "B",
+   "model": "q35",
+   "server": "moe",
+   "thinking": true,
+   "think_tokens": 8192,
+   "extra_args": [
+    "--reasoning-budget",
+    "512",
+    "--reasoning-budget-message",
+    "Time is up; I will answer now."
+   ],
+   "lever": "budget forcing: at most 512 thinking tokens, then the server closes the thought and the model answers"
+  },
+  {
+   "id": "L",
+   "model": "lfm8b",
+   "server": "lfm",
+   "thinking": false,
+   "lever": "Liquid LFM2.5-8B-A1B, 1B active (2.04x tokens/s in COT-EFF-1)",
+   "sampling": {
+    "temperature": 0.1,
+    "top_p": 0.1,
+    "top_k": 50,
+    "repeat_penalty": 1.05,
+    "seed": 42
+   },
+   "sampling_note": "Liquid's published LFM2 generation settings, so the fast arm is not handicapped by Qwen's sampling"
+  },
+  {
+   "id": "L2",
+   "model": "lfm8b",
+   "server": "lfm",
+   "thinking": true,
+   "lever": "Liquid LFM2.5-8B-A1B with room to think (8192 thinking + answer tokens), its reasoning kept for arm D",
+   "sampling": {
+    "temperature": 0.1,
+    "top_p": 0.1,
+    "top_k": 50,
+    "repeat_penalty": 1.05,
+    "seed": 42
+   },
+   "sampling_note": "Liquid's published LFM2 generation settings, so the fast arm is not handicapped by Qwen's sampling",
+   "keep_reasoning": true,
+   "amendment": 1
+  },
+  {
+   "id": "D",
+   "model": "q35",
+   "server": "moe",
+   "thinking": false,
+   "draft_from": "L2",
+   "kinds": [
+    "secpatch"
+   ],
+   "amendment": 1,
+   "lever": "owner's idea: the fast model thinks, the 35B reads L2's reasoning (marked unverified) and answers with thinking off; cost = L2 wall + D wall"
+  }
+ ],
+ "policies": {
+  "T": {
+   "kind": "single",
+   "arm": "T"
+  },
+  "N": {
+   "kind": "single",
+   "arm": "N"
+  },
+  "B": {
+   "kind": "single",
+   "arm": "B"
+  },
+  "L": {
+   "kind": "single",
+   "arm": "L"
+  },
+  "valid_N_T": {
+   "kind": "valid",
+   "arm": "N",
+   "escalate": "T"
+  },
+  "valid_L_T": {
+   "kind": "valid",
+   "arm": "L",
+   "escalate": "T"
+  },
+  "agree_LN_T": {
+   "kind": "agree",
+   "first": [
+    "L",
+    "N"
+   ],
+   "escalate": "T"
+  },
+  "agree_NL_T": {
+   "kind": "agree",
+   "first": [
+    "N",
+    "L"
+   ],
+   "escalate": "T"
+  },
+  "agree_LN_B": {
+   "kind": "agree",
+   "first": [
+    "L",
+    "N"
+   ],
+   "escalate": "B"
+  },
+  "agree_NB_T": {
+   "kind": "agree",
+   "first": [
+    "N",
+    "B"
+   ],
+   "escalate": "T"
+  },
+  "L2": {
+   "kind": "single",
+   "arm": "L2"
+  },
+  "valid_L2_T": {
+   "kind": "valid",
+   "arm": "L2",
+   "escalate": "T"
+  },
+  "agree_L2N_T": {
+   "kind": "agree",
+   "first": [
+    "L2",
+    "N"
+   ],
+   "escalate": "T"
+  },
+  "agree_L2N_B": {
+   "kind": "agree",
+   "first": [
+    "L2",
+    "N"
+   ],
+   "escalate": "B"
+  },
+  "D": {
+   "kind": "single",
+   "arm": "D"
+  },
+  "agree_DN_T": {
+   "kind": "agree",
+   "first": [
+    "D",
+    "N"
+   ],
+   "escalate": "T"
+  },
+  "route_D_N": {
+   "kind": "route",
+   "route": {
+    "secpatch": "D",
+    "adjudicated": "N"
+   }
+  },
+  "route_B_N": {
+   "kind": "route",
+   "route": {
+    "secpatch": "B",
+    "adjudicated": "N"
+   }
+  },
+  "route_DNT_N": {
+   "kind": "route",
+   "route": {
+    "secpatch": "agree_DN_T",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_T_N": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "T",
+    "remediate": "N",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_T_T": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "T",
+    "remediate": "T",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_B_N": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "B",
+    "remediate": "N",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_D_N": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "D",
+    "remediate": "N",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_D_D": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "D",
+    "remediate": "D",
+    "adjudicated": "N"
+   }
+  },
+  "task_N_B_DNT_N": {
+   "kind": "route",
+   "route": {
+    "detect": "N",
+    "finding_support": "B",
+    "root_cause": "agree_DN_T",
+    "remediate": "N",
+    "adjudicated": "N"
+   }
+  }
+ },
+ "policy_semantics": {
+  "single": "one arm answers everything",
+  "valid": "the fast arm answers; if its answer cannot be read (no parseable verdict/claims, transport error, or remediation which has no comparable key) the item goes to the escalation arm; cost = fast + escalation",
+  "agree": "the first arms answer in turn; if their answer keys match, the first arm's answer is kept; otherwise the escalation arm answers; cost = all first arms + escalation when used. Keys come only from model output (secpatch verdict / supported / CWE set; adjudicated final claims (value, status) plus the set of tools called), never from the grader",
+  "execution": "sequential on one machine, model resident; load time excluded and reported separately",
+  "route": "the item kind (secpatch analysis vs agentic tool use) is known when the request arrives; each kind is answered by its own named sub-policy; a route may name secpatch tasks (detect, finding_support, root_cause, remediate), which take precedence over the kind"
+ },
+ "sets": {
+  "calibration": "secpatch dev split (8 detect, 8 finding_support, 6 root_cause, 6 remediate; never the 12 COT-EFF-1 screen prompts) + adjudicated fresh episodes from new seed cal-20261030 (2 per family, oracle-validated)",
+  "confirmation": "secpatch held-out split (20 detect, 20 finding_support, 16 root_cause, 16 remediate; never used for any 35B or policy decision) + every item of the newest fresh secpatch set (advisories published from 2026-10-28) + adjudicated fresh episodes from new seed conf-20261030 (3 per family)",
+  "rule": "policies are compared on calibration only; confirmation is run once for T and for the arms the chosen policy needs, after the choice is recorded in this file's amendment"
+ },
+ "primary_metric": "speedup = baseline wall seconds / policy wall seconds over the same items; reported with correct counts, seconds per correct answer, escalation count, wins/losses vs T and an exact McNemar p",
+ "adoption_rule": "A policy is adopted for Haven only if on the CONFIRMATION set its correct count >= T's on each kind (secpatch and adjudicated) AND its overall speedup >= 5x. A policy that is non-inferior but below 5x is reported as a partial result, not adopted as the 5-10x answer.",
+ "predictions": {
+  "N": "3x-10x faster than T; accuracy near T on detection/finding tasks, below T on root cause",
+  "B": "2x-5x faster than T; accuracy between N and T",
+  "L": "10x-25x faster than T; accuracy well below T",
+  "agree_LN_T": "4x-8x faster than T with escalations on the disagreeing ~20-40%; accuracy within one item of T"
+ },
+ "not_claimed": "This measures answering strategies with existing models. Nothing is trained here. Load time, cold cache and Strata are out of scope.",
+ "sets_built": {
+  "utc": "2026-10-30T11:51:59Z",
+  "calibration_sha256": "9f631f1a965069a7d958d93549178be39160e9074b775f349e66902606d30043",
+  "calibration_n": 58,
+  "confirmation_sha256": "dae9cdcceb9f7961b05cdca59651add70d7f70ccb7b615d511d591a294a8cf1b",
+  "confirmation_n": 130,
+  "note": "confirmation has 86 secpatch items (72 held-out + 14 fresh from advisories published 2026-10-28 or later) and 44 adjudicated episodes (45 generated, oracle-validated)"
+ },
+ "amendments": [
+  {
+   "n": 1,
+   "written_at": "2026-10-30T14:13:52Z",
+   "written_before": "any L2 or D row and any confirmation row existed; confirmation set untouched",
+   "calibration_result_of_original_policies": "n=58. T 35/58 in 4966 s. No original policy met the adoption bar on calibration: N 31/58 at 6.46x, B 31/58 at 3.45x, agree_LN_T 35/58 at 0.77x. By kind: adjudicated N 19/30 vs T 18/30 at 3.29x; secpatch N 12/28 vs T 17/28. Calibration T items between about 12:03 and 12:25 UTC overlapped venv maintenance, so T may be slightly slow there.",
+   "defect": "Arm L is not a valid measurement of Liquid. LFM2.5-8B-A1B reasons even when enable_thinking is false; its reasoning went to reasoning_content and used the whole answer budget, so 27/28 secpatch and at least 8/30 adjudicated rows ended at finish=length with an empty answer. Its rows are kept and reported as run, not re-scored.",
+   "changes": [
+    "Arm L2: Liquid with the same thinking budget as T; reasoning text kept in the private rows.",
+    "Arm D (owner's suggestion 2026-10-30): the 35B with thinking off answers secpatch items with L2's reasoning appended to the prompt as an unverified draft. Secpatch only: the adjudicated benchmark is multi-turn tool use with no single reasoning block to hand over.",
+    "Policy kind route, so a kind can use the policy that suits it.",
+    "New policies: L2, valid_L2_T, agree_L2N_T, agree_L2N_B, D, agree_DN_T, route_D_N, route_B_N, route_DNT_N."
+   ],
+   "choice_rule": "After L2 and D run on calibration, the policy carried to confirmation is the fastest one that is non-inferior to T on calibration in both kinds; if none is, the one with the fewest losses to T among those at >= 2x, and the result is reported as not meeting the bar. The adoption rule is unchanged."
+  },
+  {
+   "n": 2,
+   "written_at": "2026-10-30T14:38:06Z",
+   "written_before": "any L2 or D row was looked at beyond the first 4 L2 log lines (2/4 correct); confirmation set untouched",
+   "grader_fix": "secpatch evaluate.grade compared CWE strings exactly. The prompt asks for \"cwe\": [str], and arms N and B often answer \"CWE-22: Improper Limitation of a Pathname...\" which named the right weakness but scored 0. evaluate.cwe_ids now extracts CWE-<n> identifiers for root_cause scoring, detect cwe_match and the agreement key. Every arm's stored calibration answers are re-graded alike with realworld.py regrade (remediation untouched); the first grade stays in each changed row as correct_v1 and a .bak-v1 copy is kept. Dry run before writing: N 1 score change, B 2, T 0, L 0.",
+   "observation_motivating_task_routes": "Per secpatch task on calibration (pre-fix grades): detect T 3/8 N 4/8; finding_support T 5/8 N 4/8 B 5/8; root_cause T 4/6 N 0/6 B 0/6; remediate T 5/6 (254 s/item) N 4/6. Thinking only pays on root_cause and possibly remediate. These routes are chosen on 6-8 items per task, so overfitting is likely; only the confirmation set can show whether they hold.",
+   "changes": [
+    "realworld.py regrade subcommand",
+    "route policies may key on secpatch task",
+    "policies task_N_B_T_N, task_N_B_T_T, task_N_B_B_N, task_N_B_D_N, task_N_B_D_D, task_N_B_DNT_N (order: detect, finding_support, root_cause, remediate; adjudicated -> N)"
+   ],
+   "choice_rule": "unchanged from amendment 1, applied to all policies after re-grading"
+  }
+ ]
+}
