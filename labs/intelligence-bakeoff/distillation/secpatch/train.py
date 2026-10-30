@@ -69,6 +69,23 @@ def encode(rows: list[dict], tokenizer, max_length: int) -> tuple[list[dict], in
     return encoded, skipped
 
 
+def target_only_loss(model, inputs):
+    """Next-token loss computed from logits at answer positions only.
+
+    The default causal-LM loss materializes vocab-sized logits for every position (Qwen3: 151,936 per token),
+    including the prompt that is never learned from. On an 8 GiB card shared with another model, that is what
+    ran out of memory. Hidden states for prompt positions are dropped before the LM head, so memory scales
+    with the answer length. The value equals the default loss (mean over answer tokens)."""
+    import torch
+    base = model.get_base_model() if hasattr(model, 'get_base_model') else model
+    labels = inputs['labels']
+    hidden = base.model(input_ids=inputs['input_ids'], attention_mask=inputs['attention_mask']).last_hidden_state
+    target = labels[:, 1:]
+    keep = target != -100
+    logits = base.lm_head(hidden[:, :-1][keep]).float()
+    return torch.nn.functional.cross_entropy(logits, target[keep])
+
+
 def peak_rss_gib() -> float:
     scale = 1 if platform.system() == 'Darwin' else 1024
     return round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * scale / 2**30, 3)
@@ -99,7 +116,7 @@ def main(argv=None):
     rows = load_rows(args.data, tasks)
     data_sha = hashlib.sha256(args.data.read_bytes()).hexdigest()
     steps = args.max_steps or math.ceil(len(rows) * args.epochs / args.batch)
-    plan = {'recipe': 'completion_masked_lora_sft' + ('_qlora4' if args.qlora else ''), 'rows': len(rows),
+    plan = {'recipe': 'completion_masked_lora_sft_target_logits' + ('_qlora4' if args.qlora else ''), 'rows': len(rows),
             'by_task': collections.Counter(r['task'] for r in rows), 'steps': steps, 'effective_batch': args.batch,
             'device': args.device, 'data_sha256': data_sha, 'execute': args.execute}
     print(json.dumps(plan))
@@ -145,7 +162,12 @@ def main(argv=None):
         logging_steps=1 if args.device == 'cpu' else 10, save_strategy='steps', save_steps=args.save_steps,
         save_total_limit=2, report_to=[], seed=args.seed, data_seed=args.seed, dataloader_num_workers=0,
         remove_unused_columns=False)
-    trainer = Trainer(model=model, args=cfg, train_dataset=LocalDataset(encoded), data_collator=collator(tok))
+    class TargetOnlyTrainer(Trainer):
+        def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+            return target_only_loss(model, inputs)
+
+    trainer = TargetOnlyTrainer(model=model, args=cfg, train_dataset=LocalDataset(encoded), data_collator=collator(tok))
+    trainer.model_accepts_loss_kwargs = False  # per-micro-batch mean; Trainer divides by accumulation steps
     if args.device == 'cuda':
         torch.cuda.reset_peak_memory_stats()
     started = time.monotonic()
