@@ -211,7 +211,7 @@ class GateTests(unittest.TestCase):
                 observed = [json.loads(x) for x in (ev / 'student' / name / 'items.jsonl').read_text().splitlines()]
                 expected = [{k: r[k] for k in ('id', 'key', 'task', 'label')} for r in observed]
                 p = data / (name + '.jsonl')
-                p.write_text(''.join(json.dumps(r) + '\\n' for r in expected))
+                p.write_text(''.join(json.dumps(r) + '\n' for r in expected))
                 hashes[p.name] = hashlib.sha256(p.read_bytes()).hexdigest()
             (data / 'manifest.json').write_text(json.dumps({'sha256': hashes}))
             receipt = {'cycle': 0, 'finished': '2026-10-30T00:00:00Z', 'gpus': ['NVIDIA T4'],
