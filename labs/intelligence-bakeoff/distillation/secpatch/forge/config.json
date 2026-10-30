@@ -26,9 +26,9 @@
   "pref_nll": 1.0
  },
  "teacher": {
-  "repo": "unsloth/GLM-4.7-Flash-GGUF",
-  "file": "GLM-4.7-Flash-Q4_K_M.gguf",
-  "revision": "0d32489ecb9db6d2a4fc93bd27ef01519f95474d",
+  "repo": "unsloth/Qwen3.6-35B-A3B-GGUF",
+  "file": "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf",
+  "revision": "a483e9e6cbd595906af30beda3187c2663a1118c",
   "parallel": 8,
   "ctx_per_slot": 12288,
   "attempts": 3,
@@ -54,5 +54,15 @@
  "hf_repo": "jankycoder/haven-secpatch-student",
  "teach_passes": 2,
  "review_timeout_hours": 6,
- "data_dir": "~/.local/state/haven-secpatch/data-v3-multi"
+ "data_dir": "~/.local/state/haven-secpatch/data-v3-multi",
+ "teacher_bakeoff_2026_10_30": {
+  "rows": 67,
+  "fixes": 12,
+  "first_try_pass": {
+   "qwen36-35ba3b-q4": 53,
+   "glm47flash-q4": 46,
+   "qwen38-27b-q4": 43
+  },
+  "note": "Kaggle 2x T4, one attempt, no reasoning mode; Qwen3.8-27B fails mostly on too_short root_cause answers"
+ }
 }
