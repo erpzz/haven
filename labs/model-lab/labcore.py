@@ -884,8 +884,10 @@ class Lab:
                 # A frontend that attaches its tools to every turn may let a lane without verified tool support
                 # answer in text instead; the job records that the tools were not offered.
                 'tools_optional': req.get('tools_optional') is True,
-                # Cloud lanes leave the house; the client must say so explicitly on every request.
-                'egress_ack': req.get('egress_ack') if req.get('egress_ack') == 'HOSTED_SUBSCRIPTION' else None,
+                # Hosted lanes leave the house; the client must say so explicitly on every request,
+                # naming which kind of egress it is acknowledging.
+                'egress_ack': req.get('egress_ack') if req.get('egress_ack') in
+                    ('HOSTED_SUBSCRIPTION', 'METERED_FREE_ALLOWANCE') else None,
                 'expected_connected_at': None if req.get('expected_connected_at') is None else
                     finite_float(req['expected_connected_at'], 0, 1e12, 'Expected connection identity')}
     def generate(self, request: dict) -> str:
@@ -900,9 +902,12 @@ class Lab:
         with self.lock:
             self.guard_runtime()
             if not conn: raise ValueError('Connect or load a model first.')
-            if conn.get('kind') == 'cloud' and args['egress_ack'] != 'HOSTED_SUBSCRIPTION':
-                raise ValueError('Cloud lanes send this conversation outside the house; the request lacked the explicit '
-                                 'egress acknowledgment. Nothing was sent.')
+            # The acknowledgment must name this lane's own egress kind: acknowledging a
+            # subscription lane does not authorise a metered one, or the reverse.
+            required_ack = {'cloud': 'HOSTED_SUBSCRIPTION', 'metered': 'METERED_FREE_ALLOWANCE'}.get(conn.get('kind'))
+            if required_ack and args['egress_ack'] != required_ack:
+                raise ValueError('Hosted lanes send this conversation outside the house; the request lacked the explicit '
+                                 f'{required_ack} egress acknowledgment. Nothing was sent.')
             if conn['provider_id'] == 'managed' and managed != (self.connection or {}):
                 raise ValueError('Slink runtime changed during routing. No request was sent.')
             if conn['provider_id'] != 'managed' and args['reasoning'] != 'none':
@@ -937,7 +942,8 @@ class Lab:
                 j = self.new_job('generation')
                 j.update(provider_id=conn['provider_id'], worker_label=conn['worker_label'],
                          compute=conn.get('compute', 'gpu'), model_sha256=conn.get('model_sha256'),
-                         egress=conn.get('route_class') if conn.get('kind') == 'cloud' else 'NONE',
+                         egress=conn.get('route_class') if conn.get('kind') in ('cloud', 'metered') else 'NONE',
+                         cost_boundary=conn.get('cost_boundary'),
                          digest_provenance=conn.get('digest_provenance', 'LOCAL_ARTIFACT'), route_reason=conn['route_reason'],
                          tool_calls=[], tools_offered=len(args['tools'] or []), tools_dropped=args.get('tools_dropped', False))
             except Exception:
