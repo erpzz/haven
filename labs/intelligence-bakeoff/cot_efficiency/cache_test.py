@@ -52,6 +52,45 @@ def chat(srv, first_message: str) -> dict:
             'prompt_s': round((tm.get('prompt_ms') or 0) / 1000, 3), 'wall_s': round(time.monotonic() - t0, 3)}
 
 
+def send(srv, messages, with_tools=True, max_tokens=16) -> dict:
+    body = {'model': 'bench', 'messages': messages, 'max_tokens': max_tokens, 'temperature': 0, 'cache_prompt': True,
+            'chat_template_kwargs': {'enable_thinking': False}}
+    if with_tools:
+        body['tools'] = tools()
+    t0 = time.monotonic()
+    r = srv.call('/v1/chat/completions', body, timeout=900)
+    tm = r.get('timings') or {}
+    return {'prompt_processed': tm.get('prompt_n'), 'prompt_cached': tm.get('cache_n'),
+            'prompt_s': round((tm.get('prompt_ms') or 0) / 1000, 3), 'wall_s': round(time.monotonic() - t0, 3),
+            'reply': r['choices'][0]['message'].get('content') or ''}
+
+
+def realistic_sequence(srv, warm: bool) -> dict:
+    """A multi-turn chat, a title-style side request, then a brand-new chat with the same system+tools.
+    With warm=True, a 1-token system+tools request is sent after the chat (what a gateway could do when idle)."""
+    sys_msg = {'role': 'system', 'content': SYSTEM}
+    convo = [sys_msg]
+    out = {}
+    for i, q in enumerate(['What is listening on the network right now?', 'Which of those are reachable from the LAN?',
+                           'Show me how to close the one on port 8877 safely.', 'And how do I verify it is closed?']):
+        convo.append({'role': 'user', 'content': q + ' ' + ('Please be detailed about the reasoning. ' * 60)})
+        r = send(srv, convo, max_tokens=48)
+        convo.append({'role': 'assistant', 'content': r.pop('reply')})
+        out[f'turn{i + 1}'] = r
+    if warm:
+        r = send(srv, [sys_msg, {'role': 'user', 'content': '.'}], max_tokens=1)
+        r.pop('reply')
+        out['warm'] = r
+    r = send(srv, [{'role': 'system', 'content': 'Generate a concise 3-5 word title for this chat.'},
+                   {'role': 'user', 'content': convo[1]['content'][:400]}], with_tools=False, max_tokens=12)
+    r.pop('reply')
+    out['title_side_request'] = r
+    r = send(srv, [sys_msg, {'role': 'user', 'content': 'New topic: summarize yesterday\'s journal warnings.'}])
+    r.pop('reply')
+    out['new_chat'] = r
+    return out
+
+
 def checkpoint_positions(log: pathlib.Path) -> list[int]:
     return [int(m.group(1)) for m in re.finditer(r'created context checkpoint \d+ of \d+ \(pos_min = (\d+)', log.read_text())]
 
@@ -60,6 +99,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--prereg', required=True)
     ap.add_argument('--configs', default='default,cms512,cms0', help='default | cmsN (--checkpoint-min-step N)')
+    ap.add_argument('--sequence', action='store_true', help='CACHE-2: realistic multi-turn sequence, without and with a warm prefix')
     ap.add_argument('--out', required=True)
     ap.add_argument('--allow-gpu-pid', type=int, action='append', default=[])
     args = ap.parse_args(argv)
@@ -79,9 +119,13 @@ def main(argv=None):
         row = {'config': cfg, 'extra_args': extra}
         try:
             srv.wait_ready(prereg['ready_deadline_s'])
-            row['chat_a'] = chat(srv, 'What is listening on the network right now, and is any of it exposed beyond loopback?')
-            row['chat_b'] = chat(srv, 'Summarize yesterday\'s journal warnings for the Open WebUI service.')
-            row['chat_b_followup_shape'] = 'new chat: same system+tools, different first message'
+            if args.sequence:
+                row['cold'] = realistic_sequence(srv, warm=False)
+                row['warm'] = realistic_sequence(srv, warm=True)
+            else:
+                row['chat_a'] = chat(srv, 'What is listening on the network right now, and is any of it exposed beyond loopback?')
+                row['chat_b'] = chat(srv, 'Summarize yesterday\'s journal warnings for the Open WebUI service.')
+                row['chat_b_followup_shape'] = 'new chat: same system+tools, different first message'
         except Exception as exc:
             row['error'] = f'{type(exc).__name__}: {str(exc)[:300]}'
         finally:
