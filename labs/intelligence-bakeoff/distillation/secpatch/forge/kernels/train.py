@@ -137,7 +137,9 @@ class DS(torch.utils.data.Dataset):
     def __len__(self): return len(enc)
     def __getitem__(self, i): return enc[i]
 def collate(b):
-    n = max(len(x["input_ids"]) for x in b); pad = tok.pad_token_id or 0
+    # Pad up to a multiple of 256: the DeltaNet (fla/Triton) kernels compile per sequence shape, and thousands of
+    # distinct lengths grew host RAM until cycle 0's first full run was OOM-killed at step 146 of 284.
+    n = max(len(x["input_ids"]) for x in b); n = -(-n // 256) * 256; pad = tok.pad_token_id or 0
     return {"input_ids": torch.tensor([x["input_ids"] + [pad] * (n - len(x["input_ids"])) for x in b]),
             "attention_mask": torch.tensor([[1] * len(x["input_ids"]) + [0] * (n - len(x["input_ids"])) for x in b]),
             "labels": torch.tensor([x["labels"] + [-100] * (n - len(x["labels"])) for x in b])}
