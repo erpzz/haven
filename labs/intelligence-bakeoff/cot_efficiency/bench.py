@@ -111,20 +111,33 @@ def run_arm(arm: dict, prompts: list[dict], out: pathlib.Path, params: dict) -> 
     rows = []
     try:
         load_s = srv.wait_ready(params['ready_deadline_s'])
+        thinking = arm.get('thinking', True)
         for p in prompts:
             started = time.monotonic()
-            r = srv.call('/v1/chat/completions', {
-                'model': 'bench', 'messages': p['messages'], 'temperature': 0, 'seed': 7, 'top_k': 1,
-                'max_tokens': params['max_tokens'], 'chat_template_kwargs': {'enable_thinking': True}})
+            body = {'model': 'bench', 'messages': p['messages'], 'temperature': 0, 'seed': 7, 'top_k': 1,
+                    'max_tokens': arm.get('max_tokens', params['max_tokens']),
+                    'chat_template_kwargs': {'enable_thinking': thinking}, 'cache_prompt': True}
+            r = srv.call('/v1/chat/completions', body)
             msg = r['choices'][0]['message']
-            text = (msg.get('reasoning_content') or '') + '\n<<answer>>\n' + (msg.get('content') or '')
+            reasoning, answer = msg.get('reasoning_content') or '', msg.get('content') or ''
+            text = reasoning + '\n<<answer>>\n' + answer
             t = r.get('timings') or {}
-            rows.append({'arm': arm['id'], 'prompt': p['id'], 'wall_s': round(time.monotonic() - started, 3),
-                         'predicted_n': t.get('predicted_n'), 'decode_tps': t.get('predicted_per_second'),
-                         'prompt_n': t.get('prompt_n'), 'prefill_tps': t.get('prompt_per_second'),
-                         'draft_n': t.get('draft_n'), 'draft_accepted': t.get('draft_n_accepted'),
-                         'finish': r['choices'][0].get('finish_reason'),
-                         'sha256': hashlib.sha256(text.encode()).hexdigest(), 'chars': len(text)})
+            row = {'arm': arm['id'], 'prompt': p['id'], 'wall_s': round(time.monotonic() - started, 3),
+                   'predicted_n': t.get('predicted_n'), 'decode_tps': t.get('predicted_per_second'),
+                   'prompt_n': t.get('prompt_n'), 'prefill_tps': t.get('prompt_per_second'),
+                   'draft_n': t.get('draft_n'), 'draft_accepted': t.get('draft_n_accepted'),
+                   'finish': r['choices'][0].get('finish_reason'), 'reasoning_chars': len(reasoning),
+                   'answer': answer[:16000], 'sha256': hashlib.sha256(text.encode()).hexdigest(), 'chars': len(text)}
+            # Turn 2: a short follow-up in the same conversation. With prompt caching the server should
+            # re-read only the new tokens; prompt_n shows how much it actually processed.
+            follow = {**body, 'max_tokens': 64, 'messages': p['messages'] + [
+                {'role': 'assistant', 'content': answer}, {'role': 'user', 'content': params['followup']}]}
+            t2 = time.monotonic()
+            r2 = srv.call('/v1/chat/completions', follow)
+            tt = r2.get('timings') or {}
+            row.update(followup_wall_s=round(time.monotonic() - t2, 3), followup_prompt_n=tt.get('prompt_n'),
+                       followup_prefill_ms=tt.get('prompt_ms'), followup_cache_n=tt.get('cache_n'))
+            rows.append(row)
         summary = {'arm': arm['id'], 'status': 'OK', 'load_s': round(load_s, 1), 'peak_vram_mib': srv.peak_vram,
                    'rss_mib': srv.rss_mib()}
     except Exception as exc:  # recorded, never hidden; the next arm still runs
