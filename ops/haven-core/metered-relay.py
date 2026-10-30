@@ -26,6 +26,7 @@ import json
 import os
 from pathlib import Path
 import re
+import secrets
 import socket
 import socketserver
 import stat
@@ -137,12 +138,55 @@ def private_read(path):
         return f.read().decode().strip()
 
 
-def private_write(path, value):
+def private_directory(path):
+    """Require an owner-only real directory, with no symlinked ancestors.
+
+    The directory must be private *before* we create or replace files/sockets.
+    """
     path = Path(path)
-    path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
-    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
-    with os.fdopen(fd, 'w') as f:
-        f.write(value)
+    for ancestor in (path, *path.parents):
+        try:
+            info = ancestor.lstat()
+        except FileNotFoundError:
+            continue
+        if stat.S_ISLNK(info.st_mode):
+            raise RelayError(500, 'Relay state directory must not be a symlink.', 'REFUSED_500')
+    path.mkdir(mode=0o700, parents=True, exist_ok=True)
+    info = path.lstat()
+    if (not stat.S_ISDIR(info.st_mode)
+            or info.st_uid != os.getuid() or info.st_mode & 0o077):
+        raise RelayError(500, 'Relay state directory must be owner-private.', 'REFUSED_500')
+
+
+def private_write(path, value):
+    """Atomically replace an owner-private regular file, never following symlinks."""
+    path = Path(path)
+    private_directory(path.parent)
+    directory = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    temporary = '.' + path.name + '.' + secrets.token_hex(12) + '.tmp'
+    try:
+        try:
+            existing = os.stat(path.name, dir_fd=directory, follow_symlinks=False)
+        except FileNotFoundError:
+            existing = None
+        if existing is not None and (
+                not stat.S_ISREG(existing.st_mode) or existing.st_uid != os.getuid()
+                or existing.st_mode & 0o077):
+            raise RelayError(500, 'Existing relay file is not owner-private.', 'REFUSED_500')
+        fd = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                     0o600, dir_fd=directory)
+        with os.fdopen(fd, 'w') as stream:
+            stream.write(value)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path.name, src_dir_fd=directory, dst_dir_fd=directory)
+        os.fsync(directory)
+    finally:
+        try:
+            os.unlink(temporary, dir_fd=directory)
+        except FileNotFoundError:
+            pass
+        os.close(directory)
 
 
 def lane_config(lane):
@@ -153,11 +197,16 @@ def lane_config(lane):
 
 
 def receipt(row):
-    """Append an execution receipt. Never contains prompt or completion text."""
+    """Append a private receipt without following an attacker-planted symlink."""
     path = STATE / 'requests.jsonl'
-    path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
-    with open(path, 'a') as f:
-        f.write(json.dumps(row) + '\n')
+    private_directory(path.parent)
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(fd, 'ab') as stream:
+        info = os.fstat(stream.fileno())
+        if (not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid()
+                or info.st_mode & 0o077):
+            raise RelayError(500, 'Relay receipt file is not owner-private.', 'REFUSED_500')
+        stream.write((json.dumps(row) + '\n').encode())
 
 
 def upstream_body(cfg, messages, max_tokens):
@@ -394,23 +443,78 @@ def verify(args):
     return 0 if result['outcome'] == 'VERIFIED' else 1
 
 
+def remove_owned_socket(target, expected):
+    """Never unlink a path replaced by another process after our inode check."""
+    try:
+        current = target.lstat()
+    except FileNotFoundError:
+        return
+    if (not stat.S_ISSOCK(current.st_mode) or current.st_uid != os.getuid()
+            or (current.st_dev, current.st_ino) != (expected.st_dev, expected.st_ino)):
+        raise RelayError(500, 'Socket path changed ownership or identity.', 'REFUSED_500')
+    target.unlink()
+
+
+def prepare_socket(target):
+    """Refuse live/foreign sockets; clean only an owner-owned, provably stale one."""
+    target = Path(target)
+    private_directory(target.parent)
+    try:
+        current = target.lstat()
+    except FileNotFoundError:
+        return
+    if (not stat.S_ISSOCK(current.st_mode) or current.st_uid != os.getuid()
+            or current.st_mode & 0o077):
+        raise RelayError(409, 'Socket path is not an owner-private Unix socket.', 'REFUSED_409')
+    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as probe:
+        probe.settimeout(0.3)
+        try:
+            probe.connect(str(target))
+        except ConnectionRefusedError:
+            remove_owned_socket(target, current)
+            return
+        except OSError as exc:
+            raise RelayError(409, 'Cannot prove existing Unix socket is stale.', 'REFUSED_409') from exc
+    raise RelayError(409, 'A relay is already listening on this Unix socket.', 'REFUSED_409')
+
+
+class MeteredUnixServer(socketserver.ThreadingUnixStreamServer):
+    daemon_threads = True
+    request_queue_size = 16
+    max_active_requests = 4
+
+    def __init__(self, *args, **kwargs):
+        self._slots = threading.BoundedSemaphore(self.max_active_requests)
+        super().__init__(*args, **kwargs)
+
+    def process_request(self, request, client_address):
+        if not self._slots.acquire(blocking=False):
+            self.shutdown_request(request)
+            return
+        try:
+            super().process_request(request, client_address)
+        except BaseException:
+            self._slots.release()
+            raise
+
+    def process_request_thread(self, request, client_address):
+        try:
+            super().process_request_thread(request, client_address)
+        finally:
+            self._slots.release()
+
+
 def serve(args):
     cfg = lane_config(args.lane)
     key = private_read(STATE / 'keys' / (cfg['lane'] + '.lab'))
     target = Path(args.socket) if args.socket else STATE / 'sockets' / (cfg['lane'] + '.sock')
-    target.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
-    if target.exists():
-        target.unlink()
-
-    class Server(socketserver.ThreadingUnixStreamServer):
-        daemon_threads = True
-        request_queue_size = 16
-
+    prepare_socket(target)
     old = os.umask(0o077)
     try:
-        server = Server(str(target), make_handler(cfg, key))
+        server = MeteredUnixServer(str(target), make_handler(cfg, key))
     finally:
         os.umask(old)
+    bound = target.lstat()
     print(json.dumps({'serving': cfg['lane'], 'socket': str(target),
                       'route_class': VENDORS[cfg['vendor']]['route_class']}))
     try:
@@ -419,8 +523,7 @@ def serve(args):
         pass
     finally:
         server.server_close()
-        if target.exists():
-            target.unlink()
+        remove_owned_socket(target, bound)
 
 
 def main(argv=None):
