@@ -383,14 +383,32 @@ def step_gate(s, cfg):
         neg = [r for r in d.values() if r['task'] == 'detect' and r['label'] == 'not_vulnerable']
         return sum(r['false_positive'] for r in neg) / max(1, len(neg))
     fs, fr = fpr({i: stu[i] for i in shared}), fpr({i: riv[i] for i in shared})
+
+    def recall(d):
+        pos = [r for r in d.values() if r['task'] == 'detect' and r['label'] == 'vulnerable']
+        return sum(r['score'] for r in pos) / max(1, len(pos))
+
+    def paired(d):
+        pairs = {}
+        for r in d.values():
+            if r['task'] == 'detect':
+                pairs.setdefault(r['key'], []).append(r['score'])
+        return sum(all(v) and len(v) == 2 for v in pairs.values()) / max(1, len(pairs))
+    # Collapse guard: SFT on recorded JSON alone produced students that always answer not_vulnerable (recall 0,
+    # FPR 0) and still scored above base. A student must discriminate and must pair-detect better than its rival.
+    rs, ps, pr = recall({i: stu[i] for i in shared}), paired({i: stu[i] for i in shared}), paired({i: riv[i] for i in shared})
+    degenerate = rs < 0.2 or (1 - fs) < 0.2 or ps <= pr
     held = [i for i in shared if i in items(ev / 'student' / 'eval-heldout' / 'items.jsonl')]
     held_diff = sum(stu[i]['score'] - riv[i]['score'] for i in held) / max(1, len(held))
-    promote = diff > g['min_gain'] and p < g['max_p_value'] and fs <= fr + g['max_fpr_increase'] and held_diff >= -0.02
+    promote = (diff > g['min_gain'] and p < g['max_p_value'] and fs <= fr + g['max_fpr_increase']
+               and held_diff >= -0.02 and not degenerate)
     verdict = {'cycle': s['cycle'], 'rival': rival, 'items': len(shared), 'fixes': len(keys),
                'student_score': round(sum(stu[i]['score'] for i in shared) / len(shared), 4),
                'rival_score': round(sum(riv[i]['score'] for i in shared) / len(shared), 4),
                'diff': round(diff, 4), 'p_not_better': round(p, 4), 'fpr_student': round(fs, 4),
-               'fpr_rival': round(fr, 4), 'heldout_diff': round(held_diff, 4), 'promote': promote, 't': now()}
+               'fpr_rival': round(fr, 4), 'recall_student': round(rs, 4), 'paired_student': round(ps, 4),
+               'paired_rival': round(pr, 4), 'degenerate': degenerate,
+               'heldout_diff': round(held_diff, 4), 'promote': promote, 't': now()}
     (cdir(s) / 'gate.json').write_text(json.dumps(verdict, indent=1))
     s['history'].append(verdict)
     log('gate', **verdict)

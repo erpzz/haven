@@ -181,5 +181,42 @@ class SelfPlayGraderTests(unittest.TestCase):
         self.assertTrue(g['vulnerable'].startswith('def load(p):'))
 
 
+class GateTests(unittest.TestCase):
+    def run_gate(self, student_detect_scores):
+        import importlib, os
+        with tempfile.TemporaryDirectory() as d:
+            os.environ['FORGE_STATE'] = d
+            import loop
+            importlib.reload(loop)
+            ev = pathlib.Path(d) / 'cycles/c000/train/eval'
+            for arm, det, other in (('student', student_detect_scores, 1), ('base', (1, 0), 0)):
+                for name in ('gate', 'eval-heldout'):
+                    rows = []
+                    for k in range(30):
+                        key = f'{name}-K{k}'
+                        for label, sc in zip(('vulnerable', 'not_vulnerable'), det):
+                            rows.append({'id': f'{key}-{label}', 'key': key, 'task': 'detect', 'label': label,
+                                         'score': sc, 'false_positive': label == 'not_vulnerable' and not sc})
+                        rows.append({'id': f'{key}-fs', 'key': key, 'task': 'finding_support', 'label': 'stale',
+                                     'score': other, 'false_positive': False})
+                    out = ev / arm / name
+                    out.mkdir(parents=True)
+                    (out / 'items.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in rows))
+            s = {'cycle': 0, 'history': []}
+            nxt = loop.step_gate(s, loop.config())
+            del os.environ['FORGE_STATE']
+            return nxt, s['history'][-1]
+
+    def test_collapsed_student_is_not_promoted(self):
+        nxt, v = self.run_gate((0, 1))  # always "not vulnerable": recall 0, wins on finding_support
+        self.assertTrue(v['diff'] > 0 and v['degenerate'])
+        self.assertEqual(nxt, 'next')
+
+    def test_discriminating_student_is_promoted(self):
+        nxt, v = self.run_gate((1, 1))  # gets both versions of every fix right
+        self.assertFalse(v['degenerate'])
+        self.assertEqual(nxt, 'promote')
+
+
 if __name__ == '__main__':
     unittest.main()
