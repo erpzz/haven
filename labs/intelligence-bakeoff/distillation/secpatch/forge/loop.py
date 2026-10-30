@@ -177,7 +177,8 @@ def package(s, cfg, kind: str) -> str:
         shutil.rmtree(stage)
     (stage / 'code/forge').mkdir(parents=True)
     for name in ('sft.jsonl', 'pool.jsonl', 'pairs.jsonl', 'gate.jsonl', 'eval-heldout.jsonl', 'manifest.json'):
-        shutil.copy(cdir(s) / 'data' / name, stage / name)
+        if (cdir(s) / 'data' / name).exists() or name != 'pairs.jsonl':  # pairs are optional (older cycles)
+            shutil.copy(cdir(s) / 'data' / name, stage / name)
     for f in [*HERE.glob('*.py'), HERE / 'handbook.md']:
         shutil.copy(f, stage / 'code/forge' / f.name)
     for name in ('evaluate.py', 'harvest.py'):
@@ -279,6 +280,8 @@ def step_teach(s, cfg):
         n = s.get('teach_pass', 0)
         if (k / 'traces.jsonl').exists():
             (k / 'traces.jsonl').rename(k / f'traces-kaggle-p{n}.jsonl')
+        if (k / 'critic.jsonl').exists():
+            (k / 'critic.jsonl').rename(k / f'critic-kaggle-p{n}.jsonl')
         # Another pass re-teaches only rows without a trace that passes the CURRENT checks
         # (prompts and rules improve while a cycle runs).
         if n + 1 < cfg.get('teach_passes', 1):

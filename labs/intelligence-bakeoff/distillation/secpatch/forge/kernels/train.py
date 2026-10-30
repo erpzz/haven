@@ -60,9 +60,18 @@ ENGINE = None
 def get_engine(sh, W, LLAMA, log):
     """Prebuilt engine from the attached dataset if it runs on this driver; otherwise compile (sm75)."""
     tars = list(pathlib.Path('/kaggle/input').rglob('llama-b*.tar'))
-    if tars:
-        sh(f'tar -C {W} -xf {tars[0]}', log)
-        eng = next(W.glob('llama-b*/llama-server')).parent
+    # Kaggle unpacks uploaded archives, so the dataset usually holds the extracted engine directory.
+    servers = [p for p in pathlib.Path('/kaggle/input').rglob('llama-server') if p.is_file()]
+    if servers or tars:
+        if servers:
+            eng = W / 'engine'
+            shutil.copytree(servers[0].parent, eng, symlinks=True, dirs_exist_ok=True)
+            for f in eng.iterdir():
+                f.chmod(0o755)
+            tars = [servers[0]]
+        else:
+            sh(f'tar -C {W} -xf {tars[0]}', log)
+            eng = next(W.glob('llama-b*/llama-server')).parent
         ok = subprocess.run(f'LD_LIBRARY_PATH={eng} {eng}/llama-server --version', shell=True,
                             capture_output=True, text=True)
         if ok.returncode == 0:
@@ -128,11 +137,18 @@ class Guard(TrainerCallback):
     def on_step_end(self, args, state, control, **kw):
         if time.time() > deadline:
             control.should_training_stop = True; control.should_save = True
-args = TrainingArguments(output_dir=cfg["ckpt"], num_train_epochs=cfg["epochs"], per_device_train_batch_size=1,
-    gradient_accumulation_steps=cfg["grad_accum"], learning_rate=cfg["lr"], lr_scheduler_type="cosine", warmup_ratio=0.03,
-    fp16=True, logging_steps=5, save_strategy="epoch", save_total_limit=1, report_to=[], seed=cfg["seed"],
-    dataloader_num_workers=0, remove_unused_columns=False, ddp_find_unused_parameters=False,
-    group_by_length=True, max_grad_norm=1.0)
+import inspect
+world = int(os.environ.get("WORLD_SIZE", 1))
+total_steps = max(1, math.ceil(len(enc) / (world * cfg["grad_accum"])) * math.ceil(cfg["epochs"]))
+kw = dict(output_dir=cfg["ckpt"], num_train_epochs=cfg["epochs"], per_device_train_batch_size=1,
+          gradient_accumulation_steps=cfg["grad_accum"], learning_rate=cfg["lr"], lr_scheduler_type="cosine",
+          warmup_steps=max(1, int(0.03 * total_steps)), fp16=True, logging_steps=5, save_strategy="epoch",
+          save_total_limit=1, report_to=[], seed=cfg["seed"], dataloader_num_workers=0, remove_unused_columns=False,
+          ddp_find_unused_parameters=False, group_by_length=True, max_grad_norm=1.0)
+accepted = inspect.signature(TrainingArguments.__init__).parameters
+if rank == 0 and set(kw) - set(accepted):
+    print("TrainingArguments: dropping unsupported", sorted(set(kw) - set(accepted)), flush=True)
+args = TrainingArguments(**{k: v for k, v in kw.items() if k in accepted})
 class AnswerOnlyTrainer(Trainer):
     # Project hidden states to the 248k vocabulary only where a target token follows (about 10% of positions):
     # same loss, a fraction of the logits memory and time.

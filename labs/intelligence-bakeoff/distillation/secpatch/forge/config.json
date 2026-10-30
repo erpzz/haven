@@ -33,7 +33,8 @@
   "ctx_per_slot": 12288,
   "attempts": 3,
   "shard": "0-5/8",
-  "think_retries": 1
+  "think_retries": 1,
+  "critic": true
  },
  "gate": {
   "min_gain": 0.0,

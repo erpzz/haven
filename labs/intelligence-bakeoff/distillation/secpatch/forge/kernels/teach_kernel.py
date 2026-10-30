@@ -29,9 +29,18 @@ def sh(cmd, log):
 def get_engine(sh, W, LLAMA, log):
     """Prebuilt engine from the attached dataset if it runs on this driver; otherwise compile (sm75)."""
     tars = list(pathlib.Path('/kaggle/input').rglob('llama-b*.tar'))
-    if tars:
-        sh(f'tar -C {W} -xf {tars[0]}', log)
-        eng = next(W.glob('llama-b*/llama-server')).parent
+    # Kaggle unpacks uploaded archives, so the dataset usually holds the extracted engine directory.
+    servers = [p for p in pathlib.Path('/kaggle/input').rglob('llama-server') if p.is_file()]
+    if servers or tars:
+        if servers:
+            eng = W / 'engine'
+            shutil.copytree(servers[0].parent, eng, symlinks=True, dirs_exist_ok=True)
+            for f in eng.iterdir():
+                f.chmod(0o755)
+            tars = [servers[0]]
+        else:
+            sh(f'tar -C {W} -xf {tars[0]}', log)
+            eng = next(W.glob('llama-b*/llama-server')).parent
         ok = subprocess.run(f'LD_LIBRARY_PATH={eng} {eng}/llama-server --version', shell=True,
                             capture_output=True, text=True)
         if ok.returncode == 0:
@@ -76,6 +85,16 @@ try:
        f'--base-url http://127.0.0.1:8090/v1 --model teacher --workers {T["parallel"]} '
        f'--attempts {T["attempts"]} --deadline {int(deadline)} --shard {T.get("shard", "0-0/1")} '
        f'--think-retries {T.get("think_retries", 1)}', 'teach.log')
+    if T.get('critic', True):  # blind second read of every trace this cycle has (carried forward + new)
+        prior = [str(p) for p in pathlib.Path('/kaggle/input').rglob('traces*.jsonl')]
+        left = CFG['session_seconds'] - 600 - (time.monotonic() - T0)
+        if left > 600:
+            sh(f'{sys.executable} {CYCLE}/code/forge/critic.py --pool {CYCLE}/pool.jsonl --traces {traces} '
+               f'{" ".join(prior)} --out {OUT}/critic.jsonl --base-url http://127.0.0.1:8090/v1 '
+               f'--workers {T["parallel"]} --deadline {int(left)}', 'critic.log')
+            cr = [json.loads(x) for x in (OUT / 'critic.jsonl').read_text().splitlines() if x.strip()] \
+                if (OUT / 'critic.jsonl').exists() else []
+            R['critic'] = {'judged': len(cr), 'unsound': sum(1 for c in cr if not c['sound'])}
     srv.terminate()
     recs = [json.loads(x) for x in traces.read_text().splitlines() if x.strip()]
     by = {}
