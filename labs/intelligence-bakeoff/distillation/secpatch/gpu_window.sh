@@ -3,16 +3,22 @@
 # (plain and with Bandit evidence), and register the runs. Nothing is promoted or served automatically.
 #
 #   secpatch/gpu_window.sh --approved "owner, 2026-10-28 window"     # refuses without an approval note
+#   ... --allow-gpu-peer forge-teacher-server.service                 # share the GPU with a named unit
 #
-# Preflight refuses to start if any process holds the GPU or Strata is up; it never stops anything.
+# Preflight refuses to start if any process outside the allowed units holds the GPU, if less than
+# --min-free-mib VRAM is free, or if Strata is up. It never stops anything.
 # Rollback: delete $S/runs/<run> and `registry.py rollback`; no runtime or service is changed.
 set -euo pipefail
 APPROVED=""
 SEEDS="42 7 13"
+PEERS=()
+MIN_FREE_MIB=3000
 while [ $# -gt 0 ]; do
   case "$1" in
     --approved) APPROVED="$2"; shift 2 ;;
     --seeds) SEEDS="$2"; shift 2 ;;
+    --allow-gpu-peer) PEERS+=("$2"); shift 2 ;;
+    --min-free-mib) MIN_FREE_MIB="$2"; shift 2 ;;
     *) echo "unknown argument $1" >&2; exit 2 ;;
   esac
 done
@@ -26,16 +32,26 @@ REV=${SECPATCH_REVISION:-c1899de289a04d12100db370d81485cdf75e47ca}
 DATA=${SECPATCH_DATA:-$S/data-v2}
 export HF_HOME=${HF_HOME:-$HOME/.local/share/haven-training-cache} HF_HUB_OFFLINE=1
 
-busy=$(nvidia-smi --query-compute-apps=pid --format=csv,noheader | tr -d ' ')
-if [ -n "$busy" ]; then echo "Refusing: GPU in use by PID(s) $busy. Nothing was stopped." >&2; exit 3; fi
+allowed=""
+for unit in ${PEERS[@]+"${PEERS[@]}"}; do
+  pid=$(systemctl --user show -p MainPID --value "$unit" 2>/dev/null || true)
+  [ -n "$pid" ] && [ "$pid" != 0 ] && allowed="$allowed $pid $(pgrep -P "$pid" | tr '\n' ' ')"
+done
+busy=""
+for pid in $(nvidia-smi --query-compute-apps=pid --format=csv,noheader | tr -d ' '); do
+  case " $allowed " in *" $pid "*) ;; *) busy="$busy $pid" ;; esac
+done
+if [ -n "$busy" ]; then echo "Refusing: GPU in use by PID(s)$busy outside the allowed units. Nothing was stopped." >&2; exit 3; fi
+free=$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -1 | tr -d ' ')
+if [ "${free:-0}" -lt "$MIN_FREE_MIB" ]; then echo "Refusing: ${free} MiB VRAM free, need $MIN_FREE_MIB." >&2; exit 3; fi
 if [ "$(systemctl --user is-active haven-strata.service || true)" = active ]; then
   echo "Refusing: haven-strata.service is active." >&2; exit 3
 fi
 
 mkdir -p "$S/runs" "$S/eval"
-printf '{"approved": %s, "started_at": "%s", "seeds": "%s", "data": "%s"}\n' \
+printf '{"approved": %s, "started_at": "%s", "seeds": "%s", "data": "%s", "gpu_peers": %s, "vram_free_mib": %s}\n' \
   "$(python3 -c 'import json,sys;print(json.dumps(sys.argv[1]))' "$APPROVED")" "$(date -u +%FT%TZ)" "$SEEDS" "$DATA" \
-  >> "$S/runs/gpu-windows.jsonl"
+  "$(python3 -c 'import json,sys;print(json.dumps(sys.argv[1:]))' ${PEERS[@]+"${PEERS[@]}"})" "$free" >> "$S/runs/gpu-windows.jsonl"
 
 for seed in $SEEDS; do
   run="qwen3-0.6b-secpatch-v2-s$seed"
