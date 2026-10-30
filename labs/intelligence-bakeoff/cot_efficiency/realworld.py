@@ -102,6 +102,29 @@ def cmd_sets(args):
     print(json.dumps(manifest, indent=1))
 
 
+def cmd_rc_sets(args):
+    """COT-EFF-3 root-cause sets: items no earlier COT-EFF decision has seen."""
+    out = pathlib.Path(args.out)
+    used = set()
+    for f in args.exclude_sets:
+        used |= {r['id'].removeprefix('s:') for r in read_jsonl(f) if r['kind'] == 'secpatch'}
+    if args.screen_prompts:
+        used |= {json.loads(x)['id'] for x in pathlib.Path(args.screen_prompts).read_text().splitlines() if x.strip()}
+    rng = random.Random(args.seed)
+    manifest = {}
+    for name, src, n in (('rc-calibration', args.dev, args.cal_n), ('rc-confirmation', args.heldout, -1)):
+        picked = pick_secpatch(read_jsonl(src), {'root_cause': n}, used, rng)
+        rows = [{'kind': 'secpatch', 'id': 's:' + it['id'], 'task': it['task'], 'item': it} for it in picked]
+        path = out / f'{name}.jsonl'
+        if path.exists():
+            raise SystemExit(f'Refusing to overwrite {path}.')
+        write_jsonl(path, rows)
+        manifest[name] = {'file': path.name, 'sha256': sha(path), 'n': len(rows), 'source': pathlib.Path(src).name}
+    manifest.update(written_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), excluded_ids=len(used), selection_seed=args.seed)
+    (out / 'rc-sets-manifest.json').write_text(json.dumps(manifest, indent=1) + '\n')
+    print(json.dumps(manifest, indent=1))
+
+
 # ---------- run ----------
 
 def chat(srv, messages, max_tokens, thinking, sampling) -> dict:
@@ -161,12 +184,49 @@ def with_draft(messages: list[dict], draft: str) -> list[dict]:
     return out
 
 
-def run_secpatch(srv, row, arm, bandit, draft=None):
+class CWECases:
+    """Labelled past fixes for root-cause prompts: training-split root_cause rows with their recorded CWE.
+    A dev item's own repository is excluded (dev shares repositories with training, only later in time)."""
+    def __init__(self, train_path):
+        from build import jaccard, shingles
+        self.jaccard, self.shingles, self.cases = jaccard, shingles, []
+        for row in read_jsonl(train_path):
+            if row.get('split') != 'train':
+                raise ValueError('Cases must come from the training split only.')
+            if row['task'] != 'root_cause':
+                continue
+            code, answer = evaluate.shown_code(row['messages'][1]['content']), evaluate.parse_json(row['messages'][-1]['content'])
+            if code and answer and evaluate.cwe_ids(answer.get('cwe')):
+                self.cases.append({'repo': row['source']['repo'], 'cwe': sorted(evaluate.cwe_ids(answer['cwe'])),
+                                   'why': str(answer.get('root_cause', ''))[:200], 'code': code, 'sh': shingles(code)})
+
+    def nearest(self, code: str, k: int, exclude_repo: str | None = None) -> list[dict]:
+        sh = self.shingles(code)
+        pool = [c for c in self.cases if c['repo'] != exclude_repo]
+        return sorted(pool, key=lambda c: -self.jaccard(sh, c['sh']))[:k]
+
+
+def with_cwe_cases(messages: list[dict], cases: CWECases, k: int, repo: str | None) -> list[dict]:
+    out = [dict(m) for m in messages]
+    code = evaluate.shown_code(out[-1]['content'])
+    if not code:
+        return out
+    blocks = [f"Past fix in {c['repo']}, recorded as {', '.join(c['cwe'])}: {c['why']}\n```python\n{c['code'][:1200]}\n```"
+              for c in cases.nearest(code, k, repo)]
+    out[-1]['content'] += ('\n\nSimilar past fixes from other projects with their recorded weakness. They are analogies only; '
+                           'classify the code under review on its own evidence.\n\n' + '\n\n'.join(blocks))
+    return out
+
+
+def run_secpatch(srv, row, arm, bandit, draft=None, cases=None):
     """draft: the upstream arm's row for this item when the arm answers from another model's reasoning;
     its wall time is charged to this row, so policy cost stays end-to-end."""
     item = row['item']
     budget = evaluate.MAX_NEW[item['task']] + (arm.get('think_tokens', 0) if arm['thinking'] else 0)
     messages = with_draft(item['messages'], draft.get('reasoning') or '') if draft else item['messages']
+    if arm.get('cwe_cases') and item['task'] == 'root_cause':
+        repo = (item.get('source') or {}).get('repo')
+        messages = with_cwe_cases(messages, cases, arm['cwe_cases'], repo)
     started = time.monotonic()
     try:
         r = chat(srv, messages, budget, arm['thinking'], arm['sampling'])
@@ -217,6 +277,11 @@ def cmd_run(args):
     out.mkdir(parents=True, exist_ok=True)
     os.umask(0o077)
     arms = [a for a in prereg['arms'] if a['id'] in args.arms.split(',')]
+    cases = None
+    if any(a.get('cwe_cases') for a in arms):
+        if not args.cases_train:
+            raise SystemExit('Arms with cwe_cases need --cases-train (a training-split train.jsonl).')
+        cases = CWECases(args.cases_train)
     for arm in arms:
         arm = {**prereg['defaults'], **arm}
         model = os.path.expanduser(prereg['models'][arm['model']])
@@ -247,7 +312,7 @@ def cmd_run(args):
                         continue
                     if row['kind'] == 'secpatch':
                         draft = drafts[name][row['id']] if drafts else None
-                        res = run_secpatch(srv, row, arm, args.bandit, draft)
+                        res = run_secpatch(srv, row, arm, args.bandit, draft, cases)
                     else:
                         res = run_adjudicated(srv, row, arm, adj)
                     res.update(arm=arm['id'], set=name, id=row['id'], kind=row['kind'], task=row['task'])
@@ -420,18 +485,27 @@ def main(argv=None):
     p.add_argument('--out', required=True)
     p.add_argument('--bandit', default='bandit')
     p.add_argument('--allow-gpu-pid', type=int, action='append', default=[])
+    p.add_argument('--cases-train', help='training-split train.jsonl for arms with cwe_cases')
     p = sub.add_parser('policy')
     p.add_argument('--prereg', required=True)
     p.add_argument('--run', required=True)
     p.add_argument('--set', default='calibration')
     p.add_argument('--out')
+    p = sub.add_parser('rc-sets')
+    p.add_argument('--dev', required=True)
+    p.add_argument('--heldout', required=True)
+    p.add_argument('--exclude-sets', nargs='+', required=True, help='COT-EFF-2 calibration/confirmation set files')
+    p.add_argument('--screen-prompts')
+    p.add_argument('--cal-n', type=int, default=40)
+    p.add_argument('--seed', type=int, default=20261031)
+    p.add_argument('--out', required=True)
     p = sub.add_parser('regrade')
     p.add_argument('--sets', required=True)
     p.add_argument('--run', required=True)
     p.add_argument('--set', default='calibration')
     p.add_argument('--dry-run', action='store_true')
     args = ap.parse_args(argv)
-    {'sets': cmd_sets, 'run': cmd_run, 'policy': cmd_policy, 'regrade': cmd_regrade}[args.cmd](args)
+    {'sets': cmd_sets, 'rc-sets': cmd_rc_sets, 'run': cmd_run, 'policy': cmd_policy, 'regrade': cmd_regrade}[args.cmd](args)
 
 
 if __name__ == '__main__':

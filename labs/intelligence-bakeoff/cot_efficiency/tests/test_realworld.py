@@ -74,3 +74,26 @@ def test_route_by_task_before_kind():
         arm['d'].update(kind='secpatch', task='detect')
     pol = {'kind': 'route', 'route': {'root_cause': {'kind': 'single', 'arm': 'T'}, 'secpatch': {'kind': 'single', 'arm': 'N'}}}
     assert rw.simulate(pol, r, ['rc', 'd']) == {'rc': (1, 100, False), 'd': (1, 5, False)}
+
+
+def test_cwe_cases_are_labelled_training_rows_and_skip_the_items_repo(tmp_path):
+    import json
+    def row(repo, cwe, code, split='train'):
+        user = f'Explain.\n\nVulnerable:\nRepository: {repo}\nFile: a.py\n```python\n   10 | {code}\n```'
+        return {'split': split, 'task': 'root_cause', 'source': {'repo': repo},
+                'messages': [{'role': 'system', 'content': 's'}, {'role': 'user', 'content': user},
+                             {'role': 'assistant', 'content': json.dumps({'cwe': [cwe], 'root_cause': 'why'})}]}
+    p = tmp_path / 'train.jsonl'
+    p.write_text('\n'.join(json.dumps(r) for r in [row('o/same', 'CWE-78', 'os.system(cmd + x)'),
+                                                     row('o/other', 'CWE-1333', 're.match(r"(a+)+$", s)')]) + '\n')
+    cases = rw.CWECases(p)
+    item = [{'role': 'user', 'content': 'Q\n\nVulnerable:\nRepository: o/same\nFile: b.py\n```python\n    5 | os.system(cmd + y)\n```'}]
+    out = rw.with_cwe_cases(item, cases, 1, 'o/same')
+    assert 'recorded as CWE-1333' in out[-1]['content'] and 'o/same, recorded' not in out[-1]['content']
+    assert 'recorded as CWE-78' in rw.with_cwe_cases(item, cases, 1, None)[-1]['content']
+    (tmp_path / 'bad.jsonl').write_text(json.dumps(row('o/x', 'CWE-1', 'x', split='dev')) + '\n')
+    try:
+        rw.CWECases(tmp_path / 'bad.jsonl')
+        assert False
+    except ValueError:
+        pass
