@@ -30,6 +30,8 @@ PY=${SECPATCH_TRAIN_PY:-$HOME/.local/share/haven-training-venv/bin/python}
 BANDIT=${SECPATCH_BANDIT:-$HOME/.local/share/haven-secpatch-venv/bin/bandit}
 REV=${SECPATCH_REVISION:-c1899de289a04d12100db370d81485cdf75e47ca}
 DATA=${SECPATCH_DATA:-$S/data-v2}
+# 1536 keeps 89% of v2 rows and fits beside a 2.5 GiB GPU neighbour; skipped rows are counted in each receipt.
+MAX_LENGTH=${SECPATCH_MAX_LENGTH:-1536}
 export HF_HOME=${HF_HOME:-$HOME/.local/share/haven-training-cache} HF_HUB_OFFLINE=1
 
 allowed=""
@@ -56,7 +58,7 @@ printf '{"approved": %s, "started_at": "%s", "seeds": "%s", "data": "%s", "gpu_p
 for seed in $SEEDS; do
   run="qwen3-0.6b-secpatch-v2-s$seed"
   "$PY" "$C/train.py" --data "$DATA/train.jsonl" --revision "$REV" --output "$S/runs/$run" \
-    --device cuda --epochs 2 --batch 8 --seed "$seed" --execute --resume
+    --device cuda --epochs 2 --batch 8 --seed "$seed" --max-length "$MAX_LENGTH" --execute --resume
   for arm in plain tools; do
     flag=""; [ "$arm" = tools ] && flag=--with-tools
     "$PY" "$C/evaluate.py" --eval "$DATA/eval-heldout.jsonl" --backend hf --model Qwen/Qwen3-0.6B --revision "$REV" \
