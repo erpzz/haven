@@ -281,7 +281,9 @@ def step_teach(s, cfg):
         if (k / 'traces.jsonl').exists():
             (k / 'traces.jsonl').rename(k / f'traces-kaggle-p{n}.jsonl')
         if (k / 'critic.jsonl').exists():
-            (k / 'critic.jsonl').rename(k / f'critic-kaggle-p{n}.jsonl')
+            # enforce: mix drops what it rejects; advisory: its rejections are red flags for the reviewer only
+            prefix = 'critic' if cfg['teacher'].get('critic_mode') == 'enforce' else 'advice-critic'
+            (k / 'critic.jsonl').rename(k / f'{prefix}-kaggle-p{n}.jsonl')
         # Another pass re-teaches only rows without a trace that passes the CURRENT checks
         # (prompts and rules improve while a cycle runs).
         if n + 1 < cfg.get('teach_passes', 1):

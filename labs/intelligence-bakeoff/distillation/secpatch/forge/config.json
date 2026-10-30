@@ -34,7 +34,8 @@
   "attempts": 3,
   "shard": "0-5/8",
   "think_retries": 1,
-  "critic": true
+  "critic": true,
+  "critic_mode": "advisory"
  },
  "gate": {
   "min_gain": 0.0,

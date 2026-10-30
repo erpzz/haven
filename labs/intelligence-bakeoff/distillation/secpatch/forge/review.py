@@ -61,6 +61,13 @@ def main(argv=None):
     for f in [*args.cycle.glob('review-drops*.json'), args.cycle / 'review-teach.json']:
         if f.exists():
             dropped |= set(json.loads(f.read_text()).get('drop_ids', []))
+    advice = {}
+    for f in args.cycle.glob('teach/advice-critic*.jsonl'):  # advisory critic: rejections to double-check
+        for x in f.read_text().splitlines():
+            if x.strip():
+                v = json.loads(x)
+                if v.get('sound') is False:
+                    advice[v['key']] = v.get('problem', '')
     stats = collections.defaultdict(collections.Counter)
     kept, flags, seen_text = [], collections.defaultdict(list), {}
     for rid, rec in latest.items():
@@ -82,6 +89,8 @@ def main(argv=None):
         a = analysis_of(text)
         kept.append((trace_key(rec), key, a, text, rec['file']))
         rid = trace_key(rec)
+        if rid in advice:
+            flags['critic_flagged'].append(rid)
         if len(HEDGE.findall(a)) >= 2:
             flags['hedging'].append(rid)
         if GENERIC.search(a) and len(a.split()) < 45:
