@@ -1,0 +1,12 @@
+[
+  {
+    "path": "src/billing/money.py",
+    "old": "    return Decimal(round(amount * 100)) / 100\n",
+    "new": "    from decimal import ROUND_HALF_UP\n    return Decimal(amount).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP)\n"
+  },
+  {
+    "path": "src/billing/invoice.py",
+    "old": "        taxed = self.subtotal() * (1 + self.tax_rate)\n        return to_cents(taxed * (1 - self.discount))\n",
+    "new": "        discounted = to_cents(self.subtotal() * (1 - self.discount))\n        return to_cents(discounted * (1 + self.tax_rate))\n"
+  }
+]

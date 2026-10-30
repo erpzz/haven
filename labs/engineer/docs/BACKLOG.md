@@ -38,8 +38,9 @@ Each item names what done looks like. Nothing here is implemented unless stated.
 12. **Second skill family** (e.g. `localize_failure`: map a failing test to the suspect function)
     with its own held-out set, to test whether VEI generalizes beyond test running.
 13. **Premature-finish guard.** Tested in the E2 rerun: not supported. It made LFM2.5 act more, not succeed more.
-14. **Reasoning-budget exhaustion.** All 4 errored E2 runs spent the full 4096-token budget thinking and emitted nothing, three turns running. Test a recovery (lower the thinking budget or ask for the tool call directly after one empty turn) as a preregistered arm.
-15. **Harder tasks for Qwen.** E2 tasks were near ceiling for Qwen (11/12 unaided). The controller's step savings need a preregistered test on tasks Qwen fails unaided.
+14. **Reasoning-budget exhaustion.** Recovery (reasoning tail back, thinking off one turn) tested in E5: the mechanism works (39/39 vs 23/39 non-empty followups, no run ended on empty replies) but the success gain, 4-0, is inconclusive. Next: make it the default and test it with the outcome as the primary, more units, and an arm that separates the reasoning carry-over from turning thinking off.
+15. **Harder tasks for Qwen.** Done in E5: on tasks Qwen solves 3/18 unaided, the test-driven controller is supported (12/18, 9-0, p=0.002). Next: make the controller the default engineer mode for small local models.
+15a. **Unattended approvals in bench runs.** One E5 run waited 1800 s on an approval nobody could answer and overran its 1200 s limit, because the loop checks time only between steps. Bench runs should deny escalations at once, and the time limit should bound approval waits.
 
 ## Inference (Stream D)
 
