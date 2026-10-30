@@ -1,0 +1,12 @@
+[
+  {
+    "path": "src/throttle/limiter.py",
+    "old": "    def __init__(self, limit, window, hits={}):\n        self.limit, self.window = limit, window\n        self.hits = hits\n",
+    "new": "    def __init__(self, limit, window, hits=None):\n        self.limit, self.window = limit, window\n        self.hits = {} if hits is None else hits\n"
+  },
+  {
+    "path": "src/throttle/limiter.py",
+    "old": "if t >= now - self.window]",
+    "new": "if t > now - self.window]"
+  }
+]

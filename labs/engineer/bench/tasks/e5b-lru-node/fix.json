@@ -1,0 +1,12 @@
+[
+  {
+    "path": "lib/lru.js",
+    "old": "    if (!this.map.has(key)) return undefined;\n    return this.map.get(key);\n",
+    "new": "    if (!this.map.has(key)) return undefined;\n    const v = this.map.get(key);\n    this.map.delete(key);\n    this.map.set(key, v);\n    return v;\n"
+  },
+  {
+    "path": "lib/lru.js",
+    "old": "    this.map.set(key, value);\n    this.size += 1;\n",
+    "new": "    if (this.map.has(key)) this.map.delete(key); else this.size += 1;\n    this.map.set(key, value);\n"
+  }
+]

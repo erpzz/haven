@@ -39,7 +39,11 @@ receipt shows it succeeded.
 Autonomy mode: {mode}. Workspace: {workspace}. Keep answers short."""
 
 _TEXT_CALL = re.compile(r"<tool_call>\s*(\{.*?\})\s*</tool_call>", re.S)
-_THINK = re.compile(r"<think>.*?</think>", re.S)
+_THINK = re.compile(r"<think>.*?(?:</think>|$)", re.S)  # an unclosed block (budget ran out) is not an answer
+
+
+def _reasoning_text(content):
+    return "\n".join(m.group(1) for m in re.finditer(r"<think>(.*?)(?:</think>|$)", content or "", re.S))
 
 
 class ModelError(RuntimeError):
@@ -77,7 +81,7 @@ class Agent:
     def __init__(self, executor: ex.Executor, *, base_url, model, api_key="", label=None,
                  max_steps=30, max_seconds=1200, max_tokens=2048, temperature=0.2, thinking=None,
                  tools=None, verify_nudge=True, answer_check=True, ctx_chars=60_000, on_event=None, recipes="",
-                 auto_tests=None, seed=None, finish_guard=False):
+                 auto_tests=None, seed=None, finish_guard=False, exhaust_recovery=False):
         self.ex = executor
         self.base_url, self.model, self.api_key = base_url, model, api_key
         self.label = label or model
@@ -92,6 +96,9 @@ class Agent:
         self.seed = seed
         # Premature-finish guard: a final answer before any successful edit or command goes back once.
         self.finish_guard = finish_guard
+        # Reasoning-budget recovery: a turn that spends the whole token budget thinking and says nothing
+        # is answered with the tail of that reasoning, and the next turn runs with thinking off.
+        self.exhaust_recovery = exhaust_recovery
         self.verify_nudge, self.answer_check = verify_nudge, answer_check
         self.ctx_chars = ctx_chars
         self.on_event = on_event or (lambda e: None)
@@ -105,7 +112,8 @@ class Agent:
     def run(self, task: str) -> dict:
         started = time.monotonic()
         stats = {"steps": 0, "tool_calls": 0, "invalid_calls": 0, "recovered_text_calls": 0, "model_s": 0.0,
-                 "tool_s": 0.0, "prompt_tokens": 0, "completion_tokens": 0, "nudges": [], "refused": 0}
+                 "tool_s": 0.0, "prompt_tokens": 0, "completion_tokens": 0, "nudges": [], "refused": 0,
+                 "exhausted_turns": 0, "exhaust_followups": 0, "exhaust_recovered": 0}
         system = SYSTEM.format(mode=self.ex.scope.mode, workspace=self.ex.root.name)
         if self.recipes:
             system += "\n\nProcedures from earlier verified work (follow them when they apply):\n" + self.recipes
@@ -121,6 +129,7 @@ class Agent:
         last_write_step, last_cmd_step = -1, -1
         nudged = checked = guarded = False
         did_act = False
+        after_exhaust = no_think = False
         cancel = self.ex.cancel
         self._emit("task_started", model=self.label, mode=self.ex.scope.mode)
         while True:
@@ -139,8 +148,11 @@ class Agent:
                     "temperature": self.temperature, "max_tokens": self.max_tokens}
             if self.seed is not None:
                 body["seed"] = int(self.seed)
-            if self.thinking is not None:
+            if no_think:
+                body["chat_template_kwargs"] = {"enable_thinking": False}
+            elif self.thinking is not None:
                 body["chat_template_kwargs"] = {"enable_thinking": bool(self.thinking)}
+            no_think = False
             t0 = time.monotonic()
             try:
                 data = chat(self.base_url, self.api_key, body, cancel=cancel)
@@ -167,14 +179,30 @@ class Agent:
                        prompt_tokens=usage.get("prompt_tokens"), completion_tokens=usage.get("completion_tokens"),
                        text=_THINK.sub("", content).strip()[:2000], reasoning=(msg.get("reasoning_content") or "")[:1500],
                        calls=[c.get("function", {}).get("name") for c in calls])
+            visible = _THINK.sub("", content).strip()
+            if after_exhaust:
+                stats["exhaust_followups"] += 1
+                stats["exhaust_recovered"] += bool(calls or visible)
+            exhausted = not calls and not visible and (
+                choice.get("finish_reason") == "length" or (usage.get("completion_tokens") or 0) >= self.max_tokens)
+            stats["exhausted_turns"] += exhausted
+            after_exhaust = exhausted
             if not calls:
-                visible = _THINK.sub("", content).strip()
                 if not visible:
                     if consecutive_invalid >= 2:
                         status, error = "error", "model returned empty replies"
                         break
                     consecutive_invalid += 1
                     msgs.append({"role": "assistant", "content": content})
+                    reasoning = (msg.get("reasoning_content") or _reasoning_text(content)).strip()
+                    if exhausted and self.exhaust_recovery:
+                        no_think = True
+                        stats["nudges"].append("exhaust_recovery")
+                        msgs.append({"role": "user", "content": "Your reasoning used the whole token budget before you "
+                                     "replied. It ended with:\n" + reasoning[-1200:] + "\nDo not think further. Reply "
+                                     "now with the next tool call, or with your final summary if the task is done."})
+                        self._emit("nudge", kind="exhaust_recovery")
+                        continue
                     msgs.append({"role": "user", "content": "Reply with a tool call, or with your final summary."})
                     continue
                 if self.finish_guard and not guarded and not did_act:
