@@ -129,16 +129,26 @@ def main(argv=None):
         outs = []
         for seed in range(args.samples):
             t0 = time.monotonic()
-            try:
-                out = gen(item['messages'], ev.MAX_NEW[item['task']], args.temperature, seed)
-                text, ntok = out[0], out[1]
-                finish = out[2] if len(out) > 2 else None  # 'length' = cut off by the budget, not answered wrong
-                err = None
-            except Exception as exc:  # scored as wrong, never retried silently
-                text, ntok, err, finish = '', 0, f'{type(exc).__name__}: {str(exc)[:200]}', None
+            # Transport failures (timeouts, a restarting server) are retried twice, and the retries are recorded:
+            # the promotion gate fails closed on any remaining error, so one network hiccup must not void a cycle.
+            retries = 0
+            while True:
+                try:
+                    out = gen(item['messages'], ev.MAX_NEW[item['task']], args.temperature, seed)
+                    text, ntok = out[0], out[1]
+                    finish = out[2] if len(out) > 2 else None  # 'length' = cut off by the budget, not answered wrong
+                    err = None
+                    break
+                except Exception as exc:
+                    if retries < 2:
+                        retries += 1
+                        time.sleep(10 * retries)
+                        continue
+                    text, ntok, err, finish = '', 0, f'{type(exc).__name__}: {str(exc)[:200]}', None
+                    break
             row = {'id': item['id'], 'key': item['key'], 'task': item['task'], 'label': item['label'], 'seed': seed,
                    'latency_s': round(time.monotonic() - t0, 3), 'completion_tokens': ntok, 'error': err,
-                   'finish': finish,
+                   'finish': finish, 'retries': retries,
                    **ev.grade(item, text, args.bandit), 'output': text[:4000]}
             outs.append(row)
         with lock:
