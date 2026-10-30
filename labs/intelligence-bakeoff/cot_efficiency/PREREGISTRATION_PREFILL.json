@@ -1,0 +1,104 @@
+{
+ "id": "PREFILL-1",
+ "written_at": "2026-10-30T22:30:13Z",
+ "question": "Does a 2048 batch/microbatch make the production 35B read prompts 5x+ faster with no loss of graded accuracy?",
+ "why": "Real Open WebUI requests on Slink spend most of their wall time reading the prompt: engine.log shows 91 s prompt vs 8 s decode over 5 requests, and the first message of a chat waited 26-117 s at ~87-100 tok/s. Production uses batch 256 / microbatch 128 with experts in RAM (labcore.py \"balanced\" profile).",
+ "speed_sweep": {
+  "tool": "prefill.py (cache_prompt off, greedy, 64-token answers, 2 repeats, GLM teacher resident)",
+  "prompt_seconds": {
+   "256/128": {
+    "2675": 26.4,
+    "7362": 73.9,
+    "9479": 95.4
+   },
+   "512/512": {
+    "2675": 10.1,
+    "7362": 26.3,
+    "9479": "server crashed"
+   },
+   "1024/1024": {
+    "2675": 6.3,
+    "7362": 16.1,
+    "9479": 20.4
+   },
+   "2048/2048": {
+    "2675": 4.6,
+    "7362": 10.1,
+    "9479": 12.8
+   }
+  },
+  "speedup_2048_vs_production": "5.7x / 7.3x / 7.5x",
+  "decode_tok_s": "unchanged, 35.5-36.9 in every config",
+  "peak_vram_mib": {
+   "256/128": 5713,
+   "512/512": 5765,
+   "1024/1024": 5849,
+   "2048/2048": 6015
+  },
+  "same_greedy_text_as_production": "identical at 2675 and 9479 tokens for 1024 and 2048; different at 7362 tokens for every larger microbatch (summation order changes); texts were not saved",
+  "crash": "512/512 crashed on its 4th long request with \"CUDA error: an illegal memory access\", the same error as COT-EFF-3 arm BC at production settings (batch 256 / microbatch 128). Two crashes in ~350 requests on engine b11146 across two configs, so this is not specific to large batches."
+ },
+ "models": {
+  "q35": "~/.local/share/haven-model-lab/models/Qwen3.6-35B-A3B-UD-Q4_K_M.gguf"
+ },
+ "server_args": {
+  "moe2k": [
+   "--n-gpu-layers",
+   "999",
+   "--device",
+   "CUDA0",
+   "--cpu-moe",
+   "--ctx-size",
+   "32768",
+   "--parallel",
+   "1",
+   "--threads",
+   "6",
+   "--threads-batch",
+   "6",
+   "--batch-size",
+   "2048",
+   "--ubatch-size",
+   "2048",
+   "--flash-attn",
+   "auto",
+   "--cache-type-k",
+   "f16",
+   "--cache-type-v",
+   "f16"
+  ]
+ },
+ "ready_deadline_s": 1200,
+ "defaults": {
+  "sampling": {
+   "temperature": 0.7,
+   "top_p": 0.8,
+   "seed": 42
+  },
+  "think_tokens": 8192,
+  "answer_tokens": 512
+ },
+ "baseline": "N",
+ "arms": [
+  {
+   "id": "N2K",
+   "model": "q35",
+   "server": "moe2k",
+   "thinking": false,
+   "lever": "thinking off (the Model Lab default) with batch/microbatch 2048; otherwise identical to COT-EFF-2 arm N"
+  }
+ ],
+ "policies": {
+  "N2K": {
+   "kind": "single",
+   "arm": "N2K"
+  },
+  "N": {
+   "kind": "single",
+   "arm": "N"
+  }
+ },
+ "accuracy_check": "N2K runs once on the COT-EFF-2 confirmation set (130 items) into the same run directory, so it is paired item by item with arm N (74/130 at batch 256 / microbatch 128). Grading is unchanged.",
+ "adoption_rule": "Production Model Lab uses batch/microbatch 2048 for the 35B if N2K correct >= N - 2 of 130 with an exact McNemar p > 0.05 (microbatch changes no weights, so any difference is greedy-path noise), AND N2K has no more server crashes than one in 130. Otherwise production stays at 256/128 and the result is reported.",
+ "production_change": "labcore.py profile change for the 35B, applied at its next load (it is not loaded now; nothing is restarted). Rollback: restore batch 256 / microbatch 128 in the same profile."
+}
