@@ -89,6 +89,8 @@ def setup():
     global ENGINE
     sh(f'{sys.executable} -m pip install -q -U "transformers>=5.0" peft accelerate bitsandbytes bandit==1.9.4 '
        f'flash-linear-attention sentencepiece', 'pip.log')
+    # Kaggle ships torchao 0.10; PEFT refuses to wrap plain Linear layers (the fp16 merge) next to it. Nothing here uses it.
+    sh(f'{sys.executable} -m pip uninstall -y -q torchao', 'pip.log', check=False)
     sh(f'git clone -q --depth 1 --branch {LLAMA_TAG} https://github.com/ggml-org/llama.cpp {W}/llama.cpp', 'llama.log')
     sh(f'{sys.executable} -m pip install -q {W}/llama.cpp/gguf-py', 'pip.log')
     ENGINE, how = get_engine(sh, W, LLAMA_TAG, 'llama.log')
