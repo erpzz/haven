@@ -112,7 +112,9 @@ def main(argv=None):
                                          {'Content-Type': 'application/json'})
             with urllib.request.urlopen(req, timeout=1800) as r:
                 data = json.loads(r.read())
-            return data['choices'][0]['message'].get('content') or '', (data.get('usage') or {}).get('completion_tokens')
+            ch = data['choices'][0]
+            return (ch['message'].get('content') or '', (data.get('usage') or {}).get('completion_tokens'),
+                    ch.get('finish_reason'))
         gen.name = args.model
     args.out.mkdir(parents=True, exist_ok=True)
     lock, results = threading.Lock(), []
@@ -128,12 +130,15 @@ def main(argv=None):
         for seed in range(args.samples):
             t0 = time.monotonic()
             try:
-                text, ntok = gen(item['messages'], ev.MAX_NEW[item['task']], args.temperature, seed)
+                out = gen(item['messages'], ev.MAX_NEW[item['task']], args.temperature, seed)
+                text, ntok = out[0], out[1]
+                finish = out[2] if len(out) > 2 else None  # 'length' = cut off by the budget, not answered wrong
                 err = None
             except Exception as exc:  # scored as wrong, never retried silently
-                text, ntok, err = '', 0, f'{type(exc).__name__}: {str(exc)[:200]}'
+                text, ntok, err, finish = '', 0, f'{type(exc).__name__}: {str(exc)[:200]}', None
             row = {'id': item['id'], 'key': item['key'], 'task': item['task'], 'label': item['label'], 'seed': seed,
                    'latency_s': round(time.monotonic() - t0, 3), 'completion_tokens': ntok, 'error': err,
+                   'finish': finish,
                    **ev.grade(item, text, args.bandit), 'output': text[:4000]}
             outs.append(row)
         with lock:
@@ -165,6 +170,7 @@ def main(argv=None):
             f.close()
     summary = ev.summarize(results, eval_sha, args.label or args.model)
     summary['think_budget'] = args.think
+    summary['finish_length'] = sum(1 for r in results if r.get('finish') == 'length')
     summary.update(eval_file=str(args.rows), seeds=','.join(map(str, range(args.samples))),
                    temperature=args.temperature, backend='openai', arm=args.label, mode=args.mode,
                    classification=('SELFPLAY_ON_TRAIN' if args.mode == 'selfplay' else

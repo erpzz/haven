@@ -9,7 +9,20 @@ import json, os, pathlib, shutil, subprocess, sys, time, traceback, urllib.reque
 T0 = time.monotonic()
 OUT = pathlib.Path('/kaggle/working'); (OUT / 'logs').mkdir(parents=True, exist_ok=True)
 W = pathlib.Path('/tmp/forge'); W.mkdir(exist_ok=True)
-CYCLE = next(p.parent for p in pathlib.Path('/kaggle/input').rglob('config.json') if (p.parent / 'pool.jsonl').exists())
+def find_input(marker, sibling=None, wait_s=900):
+    """Locate the attached dataset. A just-uploaded dataset version can mount minutes after the session starts,
+    so poll instead of failing (cycle 0's first training kernel died here with StopIteration)."""
+    deadline = time.monotonic() + wait_s
+    while True:
+        for p in pathlib.Path('/kaggle/input').rglob(marker):
+            if sibling is None or (p.parent / sibling).exists():
+                return p.parent
+        if time.monotonic() > deadline:
+            raise SystemExit(f'input dataset with {marker} (+{sibling}) not mounted after {wait_s}s')
+        time.sleep(15)
+
+
+CYCLE = find_input('config.json', 'pool.jsonl')
 CFG = json.loads((CYCLE / 'config.json').read_text())
 T = CFG['teacher']
 R = {'cycle': CFG.get('cycle'), 'teacher': T, 'started': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}

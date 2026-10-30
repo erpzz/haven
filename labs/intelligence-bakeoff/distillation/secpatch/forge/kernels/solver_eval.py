@@ -6,7 +6,20 @@ import json, os, pathlib, shutil, subprocess, sys, time, traceback, urllib.reque
 T0 = time.monotonic()
 OUT = pathlib.Path('/kaggle/working'); (OUT / 'logs').mkdir(parents=True, exist_ok=True)
 W = pathlib.Path('/tmp/forge'); W.mkdir(exist_ok=True)
-CYCLE = next(p.parent for p in pathlib.Path('/kaggle/input').rglob('solver.json'))
+def find_input(marker, sibling=None, wait_s=900):
+    """Locate the attached dataset. A just-uploaded dataset version can mount minutes after the session starts,
+    so poll instead of failing (cycle 0's first training kernel died here with StopIteration)."""
+    deadline = time.monotonic() + wait_s
+    while True:
+        for p in pathlib.Path('/kaggle/input').rglob(marker):
+            if sibling is None or (p.parent / sibling).exists():
+                return p.parent
+        if time.monotonic() > deadline:
+            raise SystemExit(f'input dataset with {marker} (+{sibling}) not mounted after {wait_s}s')
+        time.sleep(15)
+
+
+CYCLE = find_input('solver.json')
 CFG = json.loads((CYCLE / 'solver.json').read_text())
 R = {'started': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'candidates': {}}
 
@@ -58,7 +71,7 @@ for cand in CFG['candidates']:
     try:
         gguf = hf_hub_download(cand['repo'], cand['file'], revision=cand.get('revision'), local_dir=str(W))
         srv = subprocess.Popen([str(engine / 'llama-server'), '-m', gguf, '--host', '127.0.0.1', '--port', '8090',
-                                '-ngl', '999', '-np', '8', '-c', str(8 * 8192), '--jinja', '-fa', 'on', '--alias', 'teacher'],
+                                '-ngl', '999', '-np', str(CFG.get('parallel', 8)), '-c', str(CFG.get('parallel', 8) * CFG.get('ctx_per_slot', 8192)), '--jinja', '-fa', 'on', '--alias', 'teacher'],
                                stdout=open(OUT / 'logs' / f'server-{name}.log', 'w'), stderr=subprocess.STDOUT, env=os.environ)
         for _ in range(600):
             try:
@@ -79,10 +92,10 @@ for cand in CFG['candidates']:
         for te in CFG.get('think_evals', []):  # reasoning-mode pass on chosen tasks
             out = OUT / 'eval' / name / (te['rows'] + '-think-' + te['tasks'].replace(',', '+'))
             sh(f'{sys.executable} {CYCLE}/code/forge/evalrun.py eval --rows {CYCLE}/{te["rows"]}.jsonl --out {out} '
-               f'--base-url http://127.0.0.1:8090/v1 --workers 8 --label {name}-think --tasks {te["tasks"]} '
+               f'--base-url http://127.0.0.1:8090/v1 --workers {CFG.get("parallel", 8)} --label {name}-think --tasks {te["tasks"]} '
                f'--think {te.get("budget", 4096)} --bandit {shutil.which("bandit") or "bandit"}', f'eval-{name}.log')
             sm = json.loads((out / 'summary.json').read_text())
-            res[out.name] = {k: sm[k] for k in ('n', 'score', 'by_task', 'completion_tokens')}
+            res[out.name] = {k: sm[k] for k in ('n', 'score', 'by_task', 'completion_tokens', 'finish_length', 'think_budget')}
         srv.terminate(); srv.wait(timeout=60)
         R['candidates'][name] = {'ok': True, 'eval': res, 'seconds': round(time.monotonic() - t, 1)}
         os.remove(gguf)
