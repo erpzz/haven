@@ -6,7 +6,9 @@ import stat
 import subprocess
 
 PEER_UNITS = ('haven-toolsft-base.service', 'haven-toolsft-teacher.service',
-              'haven-toolsft-arms.service')
+              'haven-toolsft-arms.service',
+              # Research campaigns that run their own llama-server on the GPU.
+              'haven-e5.service', 'haven-paradigms-round2.service')
 STRATA_UNIT = 'haven-strata.service'
 
 

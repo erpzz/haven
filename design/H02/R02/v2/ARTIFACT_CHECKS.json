@@ -1,0 +1,29 @@
+{
+  "artifact_kind": "DOCUMENTATION_ONLY_CHECKS",
+  "status": "COMPLETED_DOCUMENTATION_CHECKS_ONLY",
+  "input_archive_hash_matches_recorded_baseline": true,
+  "tonight_nested_starter_byte_match": true,
+  "required_input_members_present": true,
+  "main_handoff_has_exact_starter_section_headings": true,
+  "one_page_summary_word_count": 418,
+  "source_register_count": 23,
+  "all_local_source_ids_resolve": true,
+  "all_local_links_resolve_after_packaging": true,
+  "implemented_application_files": 0,
+  "live_or_mock_runtime_tests": "NOT_EXECUTED",
+  "model_benchmarks": "NOT_EXECUTED",
+  "physical_or_native_device_tests": "NOT_EXECUTED",
+  "illustrative_arithmetic": {
+    "luna_3000_in_500_out_usd": 0.0005499999999999999,
+    "gemini_3000_in_500_out_usd": 0.00215,
+    "sol_3000_in_500_out_usd": 0.011,
+    "astra_3000_in_500_out_usd": 0.055,
+    "hypothetical_cascade_cpst_usd": 0.0028947368421052633,
+    "hypothetical_strong_cpst_usd": 0.011224489795918368,
+    "illustrative_idle_kwh": 36.0,
+    "illustrative_idle_cost_usd": 7.2
+  },
+  "limitations": "These checks establish documentation consistency and input preservation, not source truth, production security, model quality, device compatibility or M0 acceptance.",
+  "all_proposed_runtime_tests_explicitly_not_executed": true,
+  "no_executable_or_application_implementation_files": true
+}

@@ -22,19 +22,23 @@ def plan(manifest: dict) -> dict:
     Not a proof of runtime fit: real layer sizes, backend compatibility, host
     memory overhead and synchronization are not modeled.
     """
+    if not isinstance(manifest, dict) or not isinstance(manifest.get("model"), dict):
+        raise ValueError("manifest and model must be objects")
     model = manifest["model"]
-    layers = model["layers"]
+    layers = model.get("layers")
     if isinstance(layers, bool) or not isinstance(layers, int) or layers <= 0:
         raise ValueError("model.layers must be a positive integer")
-    weights = _number(model["weights_mib"], "weights_mib", positive=True)
-    kv = _number(model["kv_mib"], "kv_mib")
+    weights = _number(model.get("weights_mib"), "weights_mib", positive=True)
+    kv = _number(model.get("kv_mib"), "kv_mib")
     boundary_kib = _number(model.get("boundary_activation_kib", 0), "boundary_activation_kib")
-    nodes = manifest["nodes"]
+    nodes = manifest.get("nodes")
     if not isinstance(nodes, list):
         raise ValueError("nodes must be a list")
     eligible, ignored, seen = [], [], set()
     for node in nodes:
-        identity = node["id"]
+        if not isinstance(node, dict):
+            raise ValueError("node must be an object")
+        identity = node.get("id")
         if not isinstance(identity, str) or not identity or identity in seen:
             raise ValueError("node IDs must be unique nonempty strings")
         seen.add(identity)
@@ -42,8 +46,8 @@ def plan(manifest: dict) -> dict:
         if not all(node.get(field) is True for field in ("enrolled", "online", "inference_grant")):
             ignored.append(identity)
             continue
-        free = _number(node["accelerator_free_mib"], f"{identity}.accelerator_free_mib")
-        bandwidth = _number(node["fabric_mbps"], f"{identity}.fabric_mbps", positive=True)
+        free = _number(node.get("accelerator_free_mib"), f"{identity}.accelerator_free_mib")
+        bandwidth = _number(node.get("fabric_mbps"), f"{identity}.fabric_mbps", positive=True)
         backend = node.get("backend", "unknown")
         if not isinstance(backend, str) or not backend:
             raise ValueError("backend must be a nonempty string")
@@ -51,7 +55,7 @@ def plan(manifest: dict) -> dict:
     eligible.sort(key=lambda n: (-n["free"], n["id"]))
     if not eligible:
         return {"status": "NO_ENROLLED_READY_INFERENCE_NODES", "assignments": [], "ignored_nodes": sorted(ignored)}
-    total = weights + kv
+    total = _number(weights + kv, "total memory", positive=True)
     for node in eligible:
         if node["free"] >= total:
             return {
@@ -60,10 +64,13 @@ def plan(manifest: dict) -> dict:
                 "ignored_nodes": sorted(ignored), "cross_node_boundaries": 0, "transfer_floor_ms_per_token": 0.0,
                 "warnings": ["Memory estimate only: architecture, runtime and overhead are not verified."]
             }
-    per_layer = total / layers
+    try:
+        per_layer = _number(total / layers, "per-layer memory", positive=True)
+    except OverflowError as exc:
+        raise ValueError("layer count exceeds supported numeric range") from exc
     remaining, assignments = layers, []
     for node in eligible:
-        count = min(remaining, math.floor(node["free"] / per_layer + 1e-9))
+        count = min(remaining, math.floor(node["free"] / per_layer))
         if count:
             start = layers - remaining
             assignments.append({"node_id": node["id"], "start_layer": start,
