@@ -13,7 +13,7 @@ Start with [docs/research/IMPLEMENTATION_STATUS.md](docs/research/IMPLEMENTATION
 ## Commands (run from `labs/cyber`)
 
 ```bash
-python3 -m unittest discover -s tests                     # 39 tests
+python3 -m unittest discover -s tests                     # 46 tests
 python3 -m haven_cyber.kb build                           # index corpus/ → runs/kb.sqlite
 python3 -m haven_cyber.kb search "report-only conditional access" --domain entra
 python3 -m haven_cyber.slice --offline \

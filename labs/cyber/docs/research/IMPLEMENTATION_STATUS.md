@@ -6,7 +6,7 @@ Legend: **implemented + tested** (code with passing automated tests), **verified
 |---|---|---|
 | Environment audit | done | CYBER_ENVIRONMENT_AUDIT.md (commands on Slink and the Mac) |
 | Integration matrix (Phase 1) | done | OPEN_SOURCE_INTEGRATION_MATRIX.md; upstream formats read from source |
-| Knowledge corpus, Entra + Azure + detection + general (20 docs, 80 sections) | implemented + tested | `tests/test_kb.py`: provenance on every item, ranking probes, untrusted wrapper, FTS operator safety, eval-leakage guard |
+| Knowledge corpus: Entra, Azure, Windows/AD, M365, detection, general (25 docs, 111 sections) | implemented + tested | `tests/test_kb.py`: provenance on every item, ranking probes, untrusted wrapper, FTS operator safety, eval-leakage guard |
 | Deterministic retrieval (SQLite FTS5/BM25, domain routing, ≤2 sections/doc, staleness) | implemented + tested | same |
 | Entra CA assessor HCA-001..010 | implemented + tested | `tests/test_entra_ca.py`; every observation pointer re-resolves |
 | Azure RBAC effective-permission evaluator | implemented + tested | `tests/test_registry_and_graph.py::RBACTests`; agrees with the RBAC eval labels |
@@ -21,15 +21,18 @@ Legend: **implemented + tested** (code with passing automated tests), **verified
 | Thinking-on evaluation | running at time of writing | `runs/eval/qwythos-think-v1` on Slink; results added when complete |
 | LoRA research (Phase 6) | investigated; **no pilot run by this session** | LORA_RESEARCH_PLAN.md: 9B QLoRA blocked on the 8 GB card (measured); Kaggle lane in use by the forge Qwythos run; dataset generator agreed with the forge session |
 | Agent-reliability training data | planned (forge session) | handoff sent with rules: grader-verified, fresh identity space, canary filter |
-| Sigma / ATT&CK STIX ingestion | planned | matrix: next milestone |
+| ATT&CK v20.0 technique table + SigmaHQ cloud rule index (metadata only) + finding→technique→rule mapping (`detection.map`) | implemented + tested | `tests/test_attack.py`: every technique id in the corpus, eval and mappings is current in v20.0; Sigma index carries no detection logic; HCA-004 surfaces a real detection gap (no SigmaHQ cloud rule for AiTM session theft) |
+| Retrieval evaluation (hand-labelled relevant docs, recall@3) + opt-in artifact query expansion | implemented + tested; **off by default** | plain 48/55, expanded 50/55 (dev signal: labels written after seeing scenarios); frozen v1 harness unchanged |
+| Maester 3.0 results (schema 2.1 typed fields) | implemented + tested | found while checking upstream docs; 2.x still accepted |
 | Live tenant (Graph, Resource Graph, Azure MCP Server) | planned; needs an authorized lab tenant | |
-| Upstream contributions | planned; none filed | UPSTREAM_CONTRIBUTION_PLAN.md |
+| Upstream contributions | checked against existing issues/PRs; none filed (posting needs owner approval) | Maester schema already documented upstream; Hermes `mcp add --yes` already has PRs #31979 / #147106 |
+| Three-way adapter comparison (base vs agent adapter vs secpatch adapter) | pre-registered and tooled; waiting for the thinking-on baseline and both GGUFs | ADAPTER_SELECTION_PREREGISTRATION.md, `results/compare/2026-10-31/` |
 
 ## Reproduce
 
 ```bash
 cd labs/cyber
-python3 -m unittest discover -s tests                                   # 39 tests, ~1.5 s, stdlib only
+python3 -m unittest discover -s tests                                   # 46 tests, ~1.5 s, stdlib only
 python3 -m haven_cyber.slice --offline                                  # outcome=ok
 PYTHONPATH=. <venv-with-mcp>/bin/python scripts/mcp_smoke.py             # MCP SMOKE PASS
 # Model runs (Slink): llama-server -m Qwythos-9B-v2-MTP-Q4_K_M.gguf --port 8095 --jinja -c 24576 -np 1 -b 2048 -ub 2048
