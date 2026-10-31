@@ -45,6 +45,7 @@ def run(cmd, log: pathlib.Path, env=None):
 
 
 PREEMPT_REQUEST = HOME / '.local/state/haven/gpu-preempt-request'
+GPU_WANTED = HOME / '.local/state/haven/gpu-wanted'
 
 
 def note(log: pathlib.Path, msg: str):
@@ -70,18 +71,38 @@ class ChatWatcher:
         return 'Model Lab gpu-preempt-request' if fresh_request() else None
 
 
+def want_gpu(on: bool):
+    """Model Lab's idle-unload signal: present (mtime refreshed, fresh for 10 min) only while we wait for the GPU.
+
+    Model Lab unloads its own engine when this is fresh and the engine has served nothing for 30 minutes; it must
+    never exist while we train, or an idle chat engine would be unloaded although nobody is waiting.
+    """
+    if not on:
+        GPU_WANTED.unlink(missing_ok=True)
+        return
+    GPU_WANTED.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(GPU_WANTED, os.O_WRONLY | os.O_CREAT | os.O_TRUNC | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(fd, 'w') as f:
+        os.fchmod(f.fileno(), 0o600)
+        f.write(time.strftime('%FT%TZ\n', time.gmtime()))
+
+
 def wait_for_quiet_gpu(out: pathlib.Path, log: pathlib.Path):
     """Start or resume only when no other process holds the GPU and no fresh preemption request is pending."""
-    while True:
-        teacher = subprocess.run(['systemctl', '--user', 'show', '-p', 'MainPID', '--value', 'forge-teacher-server'],
-                                 capture_output=True, text=True).stdout.strip()
-        pids = set(subprocess.run(['nvidia-smi', '--query-compute-apps=pid', '--format=csv,noheader'],
-                                  capture_output=True, text=True).stdout.split()) - {teacher, '0', ''}
-        if not pids and not fresh_request():
-            subprocess.run(['systemctl', '--user', 'stop', 'forge-teacher-server'])  # this session's own teacher
-            note(log, 'GPU free and no pending preemption request; (re)starting training')
-            return
-        time.sleep(60)
+    try:
+        while True:
+            teacher = subprocess.run(['systemctl', '--user', 'show', '-p', 'MainPID', '--value', 'forge-teacher-server'],
+                                     capture_output=True, text=True).stdout.strip()
+            pids = set(subprocess.run(['nvidia-smi', '--query-compute-apps=pid', '--format=csv,noheader'],
+                                      capture_output=True, text=True).stdout.split()) - {teacher, '0', ''}
+            if not pids and not fresh_request():
+                subprocess.run(['systemctl', '--user', 'stop', 'forge-teacher-server'])  # this session's own teacher
+                note(log, 'GPU free and no pending preemption request; (re)starting training')
+                return
+            want_gpu(True)  # refreshed every minute; the contract asks for at least every 5
+            time.sleep(60)
+    finally:
+        want_gpu(False)
 
 
 def main(argv=None):
@@ -182,4 +203,5 @@ if __name__ == '__main__':
     try:
         main()
     finally:  # this session's own teacher was stopped for training
+        want_gpu(False)
         subprocess.run(['systemctl', '--user', 'start', 'forge-teacher-server'])

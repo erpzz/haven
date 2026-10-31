@@ -234,5 +234,54 @@ class GateTests(unittest.TestCase):
         self.assertEqual(nxt, 'promote')
 
 
+class GpuWantedTests(unittest.TestCase):
+    """Model Lab contract: gpu-wanted exists (0600, fresh) only while local training waits for the GPU."""
+
+    def setUp(self):
+        import local_train
+        self.lt = local_train
+        self.tmp = pathlib.Path(tempfile.mkdtemp())
+        self.orig = local_train.GPU_WANTED, local_train.PREEMPT_REQUEST
+        local_train.GPU_WANTED = self.tmp / 'gpu-wanted'
+        local_train.PREEMPT_REQUEST = self.tmp / 'gpu-preempt-request'
+
+    def tearDown(self):
+        self.lt.GPU_WANTED, self.lt.PREEMPT_REQUEST = self.orig
+
+    def wait(self, busy_checks):
+        """Run wait_for_quiet_gpu with the GPU busy for `busy_checks` polls; returns gpu-wanted states seen at each sleep."""
+        from unittest import mock
+        seen, calls = [], {'smi': 0}
+
+        def fake_run(cmd, **kw):
+            out = ''
+            if cmd[0] == 'nvidia-smi':
+                calls['smi'] += 1
+                out = '4242\n' if calls['smi'] <= busy_checks else ''
+            return mock.Mock(stdout=out, returncode=0)
+
+        def fake_sleep(_):
+            w = self.lt.GPU_WANTED
+            seen.append(oct(w.stat().st_mode & 0o777) if w.exists() else None)
+        with mock.patch.object(self.lt.subprocess, 'run', fake_run), mock.patch.object(self.lt.time, 'sleep', fake_sleep):
+            self.lt.wait_for_quiet_gpu(self.tmp, self.tmp / 'log')
+        return seen
+
+    def test_written_while_waiting_and_removed_once_gpu_is_held(self):
+        self.assertEqual(self.wait(busy_checks=2), ['0o600', '0o600'])
+        self.assertFalse(self.lt.GPU_WANTED.exists())
+
+    def test_never_written_when_gpu_is_free(self):
+        self.assertEqual(self.wait(busy_checks=0), [])
+        self.assertFalse(self.lt.GPU_WANTED.exists())
+
+    def test_refuses_to_follow_a_symlink(self):
+        target = self.tmp / 'elsewhere'
+        self.lt.GPU_WANTED.symlink_to(target)
+        with self.assertRaises(OSError):
+            self.lt.want_gpu(True)
+        self.assertFalse(target.exists())
+
+
 if __name__ == '__main__':
     unittest.main()
