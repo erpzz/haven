@@ -221,8 +221,12 @@ class KB:
             hits.append(Hit(doc_id, section, body, -s, m, stale))
         return hits
 
-    def retrieve(self, question: str, k: int = 4, max_chars: int = 6000) -> tuple[str, list[Hit]]:
-        """The retrieval workflow: route domains, search within them (fall back to all), and format with citations."""
+    def retrieve(self, question: str, k: int = 4, max_chars: int = 6000, artifacts: dict | None = None,
+                 expand: bool = False) -> tuple[str, list[Hit]]:
+        """The retrieval workflow: route domains, search within them (fall back to all), and format with citations.
+        expand=True (opt-in, off in the frozen v1 evaluation) adds salient artifact terms to the query."""
+        if expand and artifacts:
+            question = question + " " + expansion_terms(artifacts)
         domains = route_domains(question)
         pool = self.search(question, k=k * 3, domains=domains[:2] or None)
         if len(pool) < k * 3 and domains:
@@ -236,6 +240,40 @@ class KB:
             if len(hits) == k:
                 break
         return format_context(hits, max_chars), hits
+
+
+ARTIFACT_PHRASES = {"signin_log": "sign-in log error codes patterns", "audit_log": "audit log activities consent",
+                    "azure_rbac": "role definitions built-in roles actions dataActions", "nsgs": "network security group rules priority",
+                    "key_vault": "key vault authorization access policy rbac", "storage_account": "storage anonymous public access",
+                    "tool_output": "tool finding verification false positive", "nmap": "nmap port states version detection",
+                    "tenant_snapshot": "conditional access policy", "token_claims": "token audience scp roles",
+                    "http_response": "graph error", "cli_output": "error authorization", "oauth2_permission_grants": "consent delegated permissions",
+                    "graph_app_role_assignments": "application permissions", "role_assignments": "role assignments privileged",
+                    "commands": "operating system identification", "defender_recommendation": "defender recommendation alert"}
+SALIENT_KEYS = {"roleName", "errorCode", "clientAppUsed", "activityDisplayName", "code", "status", "publicAccess", "appRoleValue",
+                "scope", "consentType", "access", "destinationPort"}
+
+
+def expansion_terms(artifacts: dict, limit: int = 24) -> str:
+    """Salient terms from task artifacts: the artifact kinds (as phrases) plus values of a few telling keys
+    (role names, error codes, client types, activity names). Deterministic and bounded."""
+    terms: list[str] = [ARTIFACT_PHRASES[k] for k in artifacts if k in ARTIFACT_PHRASES]
+    seen: set[str] = set()
+
+    def walk(o):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                if k in SALIENT_KEYS and isinstance(v, (str, int)) and len(str(v)) < 60:
+                    sv = str(v)
+                    if sv not in seen:
+                        seen.add(sv)
+                        terms.append(sv)
+                walk(v)
+        elif isinstance(o, list):
+            for x in o[:50]:
+                walk(x)
+    walk(artifacts)
+    return " ".join(terms[:limit])
 
 
 def format_context(hits: list[Hit], max_chars: int = 6000) -> str:

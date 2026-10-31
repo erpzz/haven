@@ -48,6 +48,15 @@ class KBTests(unittest.TestCase):
         self.assertIn("learn.microsoft.com", text)
         self.assertEqual(route_domains("conditional access mfa")[0], "entra")
 
+    def test_expansion_is_opt_in_and_deterministic(self):
+        from haven_cyber.kb import expansion_terms
+        arts = {"signin_log": [{"status": {"errorCode": 500121}, "clientAppUsed": "Browser"}]}
+        q = "Which technique do these events show?"
+        plain = [h.doc_id for h in self.kb.retrieve(q, k=3)[1]]
+        self.assertEqual(plain, [h.doc_id for h in self.kb.retrieve(q, k=3, artifacts=arts, expand=False)[1]])
+        self.assertEqual(expansion_terms(arts), expansion_terms(arts))
+        self.assertIn("500121", expansion_terms(arts))
+
     def test_fts_operators_are_inert(self):
         q = fts_query('NEAR(a b) AND "x" OR -y col:z')
         self.assertNotIn(" AND ", q.replace('"and"', ""))
