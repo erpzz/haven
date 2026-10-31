@@ -32,7 +32,7 @@ from .tools.registry import default_registry
 DEFAULT_Q = ("Are our Global Administrators actually forced to use MFA, and could any Conditional Access policy lock out "
              "our emergency-access accounts? Give findings with remediation.")
 PLAN_SYS = """You select one security tool for a question. Reply with ONLY JSON: {"tool_id": "...", "arguments": {...}, "why": "..."}.
-Use only a tool id from the list. Tools are read-only."""
+Use only a tool id from the list. Tools are read-only. Keep "why" to one short sentence."""
 ANSWER_SYS = """You are a security analyst. Write the answer from the VERIFIED EVIDENCE only.
 Rules: cite rule ids (e.g. HCA-002) and policy/user ids exactly as given; cite references as [R#];
 label each finding with its verification state; say "inference" for anything not in the evidence;
@@ -101,8 +101,11 @@ def grounding_check(answer: str, bundle: EvidenceBundle, snapshot: dict, n_refs:
     return {"unknown_rules": sorted(cited_rules - rules_known), "unknown_ids": sorted(cited_ids - ids_known),
             "bad_refs": sorted(r for r in cited_refs if r < 1 or r > n_refs), "missed_corroborated_failures": sorted(fails - cited_rules),
             "cites_refuted_as_fact": sorted(r for r in refuted if r in answer and "refuted" not in answer.lower()),
+            "cited_refs": sorted(cited_refs),
             "ok": not (cited_rules - rules_known) and not (cited_ids - ids_known)
-            and not [r for r in cited_refs if r < 1 or r > n_refs]}
+            and not [r for r in cited_refs if r < 1 or r > n_refs],
+            # complete: every corroborated failure in scope is named by rule id and at least one reference is cited
+            "complete": not (fails - cited_rules) and bool(cited_refs)}
 
 
 def run(question: str, snapshot: str, imports: list[str], endpoint: str | None, model: str, offline: bool,
@@ -124,9 +127,11 @@ def run(question: str, snapshot: str, imports: list[str], endpoint: str | None, 
         desc = reg.describe("entra.ca.assess")
         msg = (f"Question: {question}\nA Graph snapshot is available at {snapshot}.\nTools: {json.dumps(caps)}\n"
                f"Schema of the assessment tool: {json.dumps(desc['input_schema'])}")
-        text = chat(endpoint, model, [{"role": "system", "content": PLAN_SYS}, {"role": "user", "content": msg}], 400, think)
-        from .eval.grade import extract_json
-        plan = extract_json(text) or {"tool_id": None, "raw": text[-300:]}
+        text = chat(endpoint, model, [{"role": "system", "content": PLAN_SYS}, {"role": "user", "content": msg}], 1200, think)
+        from .eval.grade import extract_json_lenient
+        plan, repaired = extract_json_lenient(text)
+        plan = plan or {"tool_id": None}
+        plan.update(raw=text, json_repaired=repaired)
     rec["steps"]["plan"] = plan
     # 4 run tool (registry validates, scopes paths, audits)
     res = reg.invoke(plan.get("tool_id") or "none", plan.get("arguments") or {}, caller="slice")
@@ -159,7 +164,8 @@ def run(question: str, snapshot: str, imports: list[str], endpoint: str | None, 
     snap = json.loads((ROOT / snapshot).read_text() if not Path(snapshot).is_absolute() else Path(snapshot).read_text())
     rec["steps"]["grounding"] = grounding_check(answer, bundle, snap, len(hits), focus)
     rec["bundle"] = bundle.to_dict()
-    rec["outcome"] = "ok" if rec["steps"]["grounding"]["ok"] else "grounding_failed"
+    g = rec["steps"]["grounding"]
+    rec["outcome"] = "grounding_failed" if not g["ok"] else ("ok" if g["complete"] else "grounded_incomplete")
     rec["seconds"] = round(time.monotonic() - t0, 1)
     return _save(rec, out_root)
 

@@ -41,6 +41,30 @@ def extract_json(text: str) -> dict | None:
     return best
 
 
+def extract_json_lenient(text: str) -> tuple[dict | None, bool]:
+    """Production parsing (not used for grading): if no complete object parses, close a truncated trailing object.
+    Returns (object, repaired). Qwythos sometimes stops right before the final '}'."""
+    obj = extract_json(text)
+    if obj is not None:
+        return obj, False
+    t = strip_reasoning(text)
+    start = t.find("{")
+    if start < 0:
+        return None, False
+    frag = t[start:].rstrip()
+    depth_curly = frag.count("{") - frag.count("}")
+    depth_square = frag.count("[") - frag.count("]")
+    if frag.count('"') % 2:
+        frag += '"'
+    for cand in (frag + "]" * max(0, depth_square) + "}" * max(0, depth_curly),):
+        try:
+            o = json.loads(cand)
+            return (o, True) if isinstance(o, dict) else (None, False)
+        except json.JSONDecodeError:
+            pass
+    return None, False
+
+
 def _norm(v):
     if isinstance(v, str):
         s = v.strip().lower()
