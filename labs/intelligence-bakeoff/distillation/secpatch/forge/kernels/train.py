@@ -128,8 +128,16 @@ for r in rows:
     msgs = r["messages"]
     prefix = tok.apply_chat_template(msgs[:-1], tokenize=False, add_generation_prompt=True, enable_thinking=False)
     full = tok.apply_chat_template(msgs, tokenize=False, enable_thinking=False)
-    assert full.startswith(prefix), "chat template prefix mismatch"
-    p = tok(prefix, add_special_tokens=False)["input_ids"]; t = tok(full[len(prefix):].rstrip("\n"), add_special_tokens=False)["input_ids"]
+    if full.startswith(prefix):
+        target = full[len(prefix):]
+    else:
+        # Some templates (Qwythos-9B-v2) render a reasoning-free answer without the empty think block that their
+        # generation prompt still emits: train on exactly the inference prefix + answer + the template's turn end.
+        base = tok.apply_chat_template(msgs[:-1], tokenize=False, enable_thinking=False)
+        turn, ans = full[len(base):], msgs[-1]["content"].strip()  # the template trims the answer
+        assert full.startswith(base) and ans in turn, "chat template prefix mismatch"
+        target = turn[turn.index(ans):]
+    p = tok(prefix, add_special_tokens=False)["input_ids"]; t = tok(target.rstrip("\n"), add_special_tokens=False)["input_ids"]
     if len(p) + len(t) > cfg["max_length"]:
         skipped += 1; continue
     enc.append({"input_ids": p + t, "labels": [-100] * len(p) + t})

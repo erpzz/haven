@@ -234,6 +234,46 @@ class GateTests(unittest.TestCase):
         self.assertEqual(nxt, 'promote')
 
 
+class TrainerEncodingTests(unittest.TestCase):
+    """SFT rows are tokenized exactly as served: generation prompt (empty think block) + answer + the turn end,
+    whether or not the chat template renders that think block for a finished answer (Qwythos-9B-v2 does not)."""
+
+    class Tok:
+        def __init__(self, think_in_history):
+            self.h = think_in_history
+
+        def apply_chat_template(self, msgs, tokenize=False, add_generation_prompt=False, enable_thinking=True):
+            out = ''
+            for m in msgs:
+                if m['role'] == 'assistant':
+                    out += '<a>' + ('<t></t>' if self.h else '') + m['content'].strip() + '</e>\n'
+                else:
+                    out += f'<{m["role"]}>{m["content"]}</e>\n'
+            return out + ('<a><t></t>' if add_generation_prompt else '')
+
+        def __call__(self, text, add_special_tokens=False):
+            return {'input_ids': [ord(c) for c in text]}
+
+    def encode(self, think_in_history):
+        import ast
+        src = (FORGE / 'kernels' / 'train.py').read_text()
+        trainer = next(ast.literal_eval(n.value) for n in ast.parse(src).body
+                       if isinstance(n, ast.Assign) and getattr(n.targets[0], 'id', '') == 'TRAINER')
+        ns = {'tok': self.Tok(think_in_history), 'cfg': {'max_length': 4096},
+              'rows': [{'messages': [SYSTEM, {'role': 'user', 'content': 'Review.'},
+                                     {'role': 'assistant', 'content': '{"verdict": "safe"}  \n'}]}]}
+        exec(trainer[trainer.index('enc, skipped = [], 0'):trainer.index('class DS')], ns)
+        e = ns['enc'][0]
+        k = e['labels'].count(-100)
+        return ''.join(map(chr, e['input_ids'][:k])), ''.join(map(chr, e['input_ids'][k:]))
+
+    def test_same_tokens_with_or_without_think_block_in_history(self):
+        stock, qwythos = self.encode(True), self.encode(False)
+        self.assertEqual(stock, qwythos)
+        self.assertTrue(stock[0].endswith('<a><t></t>'))
+        self.assertEqual(stock[1], '{"verdict": "safe"}</e>')
+
+
 class GpuWantedTests(unittest.TestCase):
     """Model Lab contract: gpu-wanted exists (0600, fresh) only while local training waits for the GPU."""
 
