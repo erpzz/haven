@@ -77,7 +77,8 @@
  "backup": {
   "hf_repo": "jankycoder/haven-forge-state",
   "kaggle_pull": [
-   "haven-forge-train-qwythos-c001"
+   "haven-forge-train-qwythos-c001",
+   "haven-forge-train-qwythos-agent-v1"
   ]
  }
 }
