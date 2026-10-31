@@ -5,13 +5,23 @@ import json
 from pathlib import Path
 
 from .evidence import digest
-from .knowledge import search
+from .knowledge import load_cards, search
 
 
 FIXTURES = Path(__file__).with_name("fixtures")
 STATES = {"enabled", "disabled", "enabledForReportingButNotEnforced"}
 _CONTROLS = {"mfa", "compliantDevice", "domainJoinedDevice", "approvedApplication",
              "compliantApplication", "passwordChange", "block", "unknownFutureValue", "riskRemediation"}
+
+SCOPE = "Per-policy requirement only; does not establish sign-in or tenant MFA coverage."
+REMEDIATIONS = {
+    "not_enforced_by_policy": "Review report-only results and exclusions; obtain approval before enabling a tested policy.",
+    "mfa_not_required_by_policy": "Review grant alternatives. Requiring MFA needs a supported AND control or a separate applicable policy.",
+    "mfa_required_by_policy": "Verify assignments, exclusions and actual sign-in results independently.",
+    "access_blocked_by_policy": "This policy blocks access; it does not demonstrate MFA enrollment or successful MFA.",
+    "indeterminate": "Unsupported control combination: inspect official semantics and sign-in evidence before concluding.",
+}
+REFERENCE_FIELDS = ("id", "version", "source_url", "sha256", "trust")
 
 
 def fixture(name: str = "entra-demo") -> dict:
@@ -97,8 +107,8 @@ def assess(snapshot: dict, question: str) -> dict:
     report = {
         "schema_version": 1, "synthetic": True, "route": selected,
         "snapshot_sha256": digest(snapshot), "coverage_evaluated": False,
-        "scope": "Per-policy requirement only; does not establish sign-in or tenant MFA coverage.",
-        "knowledge": [{k: card[k] for k in ("id", "version", "source_url", "sha256", "trust")} for card in cards],
+        "scope": SCOPE,
+        "knowledge": [{k: card[k] for k in REFERENCE_FIELDS} for card in cards],
         "findings": [], "model_invocations": 0, "network_requests": 0,
     }
     if selected == "retrieve_only":
@@ -111,13 +121,7 @@ def assess(snapshot: dict, question: str) -> dict:
             "grantControls": policy["grantControls"],
         }
         verdict = policy_verdict(policy)
-        remediation = {
-            "not_enforced_by_policy": "Review report-only results and exclusions; obtain approval before enabling a tested policy.",
-            "mfa_not_required_by_policy": "Review grant alternatives. Requiring MFA needs a supported AND control or a separate applicable policy.",
-            "mfa_required_by_policy": "Verify assignments, exclusions and actual sign-in results independently.",
-            "access_blocked_by_policy": "This policy blocks access; it does not demonstrate MFA enrollment or successful MFA.",
-            "indeterminate": "Unsupported control combination: inspect official semantics and sign-in evidence before concluding.",
-        }[verdict]
+        remediation = REMEDIATIONS[verdict]
         report["findings"].append({
             "policy_id": policy["id"], "verdict": verdict, "evidence": evidence,
             "evidence_id": "entra-" + digest(evidence)[:24], "remediation": remediation,
@@ -135,6 +139,17 @@ def verify(snapshot: dict, report: dict) -> dict:
     """
     policies = validate(snapshot)
     failures = []
+    if (report.get("schema_version") != 1 or report.get("synthetic") is not True
+            or report.get("route") != "deterministic_entra_mfa"
+            or report.get("coverage_evaluated") is not False or report.get("scope") != SCOPE):
+        failures.append("scope_or_schema_mismatch")
+    references = report.get("knowledge")
+    known = {card["id"]: {**{k: card[k] for k in REFERENCE_FIELDS if k != "trust"},
+                           "trust": "REFERENCE_DATA_ONLY"} for card in load_cards()}
+    if (not isinstance(references, list) or any(not isinstance(ref, dict)
+            or ref.get("id") not in known or ref != known[ref["id"]] for ref in references)
+            or len({ref["id"] for ref in references if isinstance(ref, dict) and "id" in ref}) != len(references)):
+        failures.append("knowledge_reference_mismatch")
     if report.get("snapshot_sha256") != digest(snapshot):
         failures.append("snapshot_hash_mismatch")
     findings = report.get("findings", [])
@@ -161,7 +176,8 @@ def verify(snapshot: dict, report: dict) -> dict:
         }
         if (finding.get("policy_id") != policy["id"] or finding.get("verdict") != expected
                 or finding.get("evidence") != expected_evidence
-                or finding.get("evidence_id") != "entra-" + digest(expected_evidence)[:24]):
+                or finding.get("evidence_id") != "entra-" + digest(expected_evidence)[:24]
+                or finding.get("remediation") != REMEDIATIONS[expected]):
             failures.append(f"policy_{index}_evidence_or_verdict_mismatch")
     return {"passed": not failures, "checked_policies": len(policies), "failures": failures,
             "method": "source_hash_json_pointer_and_separate_truth_table"}

@@ -184,6 +184,24 @@ class EntraTests(unittest.TestCase):
         report["findings"].pop()
         self.assertFalse(verify(snapshot, report)["passed"])
 
+    def test_verifier_rejects_tampered_explanations_scope_and_sources(self):
+        snapshot = fixture()
+        report = assess(snapshot, "Entra MFA")
+        mutations = (
+            lambda r: r["findings"][0].update(remediation="Run an unrelated command"),
+            lambda r: r.update(scope="Tenant-wide coverage established"),
+            lambda r: r.update(coverage_evaluated=True),
+            lambda r: r.update(synthetic=False),
+            lambda r: r["knowledge"][0].update(source_url="https://example.invalid/"),
+            lambda r: r["knowledge"][0].update(sha256="fabricated"),
+            lambda r: r["knowledge"].append(r["knowledge"][0]),
+        )
+        for mutate in mutations:
+            with self.subTest(mutation=mutate):
+                changed = copy.deepcopy(report)
+                mutate(changed)
+                self.assertFalse(verify(snapshot, changed)["passed"])
+
     def test_synthetic_boundary_and_schema_fail_closed(self):
         for mutation in (lambda s: s.update(synthetic=False),
                          lambda s: s["policies"].append(s["policies"][0]),
@@ -321,7 +339,8 @@ class RoutingTests(unittest.TestCase):
             calls.append(args)
             return "{}"
         questions = ("Disable MFA on this Entra policy", "Does Entra enforce MFA for all users?",
-                     "Explain this Linux policy", "Update this Entra policy MFA", "")
+                     "Explain this Linux policy", "Update this Entra policy MFA",
+                     "Turn MFA off for this Entra policy", "Add MFA to this Entra policy", "")
         for question in questions:
             with self.subTest(question=question):
                 row = route_synthetic(question, "entra-demo", "synthetic-mfa-or-device", execute)
@@ -329,6 +348,15 @@ class RoutingTests(unittest.TestCase):
         row = route_synthetic("Does this Entra policy require MFA?", "../../private", "x", execute)
         self.assertEqual(row["route_status"], "NOT_HANDLED")
         self.assertEqual(calls, [])
+
+    def test_modified_remediation_is_not_returned_as_verified(self):
+        def tampered(args):
+            report = json.loads(self.execute(args))
+            report["findings"][0]["remediation"] = "Run an unrelated command"
+            return json.dumps(report)
+        result = route_synthetic("Does this Entra policy require MFA?", "entra-demo",
+                                 "synthetic-mfa-or-device", tampered)
+        self.assertEqual(result["route_status"], "ERROR")
 
     def test_fabricated_or_malformed_evidence_is_not_accepted(self):
         args = ("Does this Entra policy require MFA?", "entra-demo", "synthetic-mfa-or-device")

@@ -9,7 +9,7 @@ from .entra import fixture, route, select_policy, verify
 
 
 _POLICY_SCOPE = re.compile(r"\b(?:this|the)\s+(?:entra\s+)?(?:conditional\s+access\s+)?policy\b", re.I)
-_MUTATION = re.compile(r"\b(?:disable|enable|delete|remove|create|change|modify|update|turn\s+(?:on|off))\b", re.I)
+_MUTATION = re.compile(r"\b(?:disable|enable|delete|remove|create|change|modify|update|turn|configure|add|set|apply|edit|alter|reset|toggle|switch|revoke|grant)\b", re.I)
 
 
 def route_synthetic(question: str, fixture_name: str, policy_id: str, execute: Callable[[dict], str]) -> dict:
