@@ -1,0 +1,37 @@
+[
+  {
+    "repository": "huggingface/peft",
+    "commit": "03412afcf1e96f74a014e467a313b22baeb74498",
+    "file": "src/peft/utils/constants.py",
+    "sha256": "3207c27c6fda8c5790fe96b6c4e793bfc95833b4f006b75c0c800af5210f62f4",
+    "url": "https://github.com/huggingface/peft/blob/03412afcf1e96f74a014e467a313b22baeb74498/src/peft/utils/constants.py"
+  },
+  {
+    "repository": "huggingface/transformers",
+    "commit": "66f51e76efd8542232b8bdd40ade7d1edbaac46f",
+    "file": "src/transformers/models/qwen3_5/modeling_qwen3_5.py",
+    "sha256": "41a55adcfaebf92a762de7ca1c5c456310d3e03c64d4413a90ccf098c00dc6d8",
+    "url": "https://github.com/huggingface/transformers/blob/66f51e76efd8542232b8bdd40ade7d1edbaac46f/src/transformers/models/qwen3_5/modeling_qwen3_5.py"
+  },
+  {
+    "repository": "ml-explore/mlx-lm",
+    "commit": "736ab0d8c1d0edc79c3d798044fe6904e2fa23be",
+    "file": "mlx_lm/models/qwen3_5.py",
+    "sha256": "851449fd9989d6bf4b3c4fed92ddc3be5f1e781eb2246f89c54d7eff2518d9c6",
+    "url": "https://github.com/ml-explore/mlx-lm/blob/736ab0d8c1d0edc79c3d798044fe6904e2fa23be/mlx_lm/models/qwen3_5.py"
+  },
+  {
+    "repository": "ggml-org/llama.cpp",
+    "commit": "0138937e3f987f70e90e97d022c73ecb9bec037c",
+    "file": "convert_lora_to_gguf.py",
+    "sha256": "ddb143ac34022b0646e51d9c35e9cfa3ec3d0a36091975ebc88f553dd18ca350",
+    "url": "https://github.com/ggml-org/llama.cpp/blob/0138937e3f987f70e90e97d022c73ecb9bec037c/convert_lora_to_gguf.py"
+  },
+  {
+    "repository": "microsoftgraph/microsoft-graph-docs-contrib",
+    "commit": "bb35043c742d4406d73ccae904c05fbfca7c7428",
+    "file": "api-reference/v1.0/resources/conditionalaccesspolicy.md",
+    "sha256": "7c03e582c842d1ffd2b6e8bcf1fbc385aa9638da4c12b2af970f4f3e8058108e",
+    "url": "https://github.com/microsoftgraph/microsoft-graph-docs-contrib/blob/bb35043c742d4406d73ccae904c05fbfca7c7428/api-reference/v1.0/resources/conditionalaccesspolicy.md"
+  }
+]
