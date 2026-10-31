@@ -16,6 +16,7 @@ from pathlib import Path
 import secrets
 import signal
 import socket
+import sys
 import tempfile
 import threading
 import time
@@ -676,6 +677,8 @@ def main():
     if args.lan and args.launch_file:
         ap.error('--launch-file is for the loopback service; LAN owner setup is separate.')
     lab = Lab(args.data_dir)
+    if sys.platform == 'linux':
+        lab.start_idle_watch()
     control_token = os.environ.pop('HAVEN_CONTROL_TOKEN', '')
     bind = '0.0.0.0' if args.lan else '127.0.0.1'
     try:

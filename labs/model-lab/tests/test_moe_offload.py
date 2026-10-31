@@ -162,6 +162,56 @@ class MoeLaneTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'tight'):
                 self.lab.start_llama('moe', 'gpu')
 
+    def _wanted(self, home, age_s):
+        import gpu_lease
+        d = home / '.local/state/haven'
+        d.mkdir(parents=True, exist_ok=True, mode=0o700)
+        f = d / gpu_lease.WANTED_FILE
+        f.write_text('1')
+        f.chmod(0o600)
+        old = time.time() - age_s
+        import os
+        os.utime(f, (old, old))
+
+    def test_idle_engine_unloads_only_when_background_work_waits(self):
+        home = Path(self.temp.name) / 'home-idle'
+        self._start('moe', home=home)
+        self.lab.engine.record['state'] = 'READY'
+        self.lab.connection = {'ownership': 'OWNED', 'compute': 'gpu', 'display_model': 'MOE'}
+        stopped = []
+        with patch('labcore.sys.platform', 'linux'), patch('pathlib.Path.home', return_value=home), \
+             patch.object(self.lab.engine, 'stop', side_effect=lambda **k: stopped.append(1) or {'stopped': True}):
+            t0 = self.lab.last_activity
+            self.assertIsNone(self.lab.idle_unload_check(t0 + 31 * 60))           # idle, but nothing waits
+            self._wanted(home, age_s=30)
+            self.assertIsNone(self.lab.idle_unload_check(t0 + 10 * 60))           # waits, but not idle long enough
+            self.assertEqual(stopped, [])
+            got = self.lab.idle_unload_check(t0 + 31 * 60)
+        self.assertEqual(stopped, [1])
+        self.assertEqual(got['model'], 'MOE')
+        self.assertIsNone(self.lab.connection)
+        self.assertEqual(self.lab.public_state()['idle_unloaded']['model'], 'MOE')
+
+    def test_idle_unload_ignores_stale_wanted_file_and_busy_generation(self):
+        home = Path(self.temp.name) / 'home-idle2'
+        self._start('moe', home=home)
+        self.lab.engine.record['state'] = 'READY'
+        self.lab.connection = {'ownership': 'OWNED', 'compute': 'gpu', 'display_model': 'MOE'}
+        t0 = self.lab.last_activity
+        with patch('labcore.sys.platform', 'linux'), patch('pathlib.Path.home', return_value=home), \
+             patch.object(self.lab.engine, 'stop') as stop:
+            self._wanted(home, age_s=3600)
+            self.assertIsNone(self.lab.idle_unload_check(t0 + 31 * 60))
+            self._wanted(home, age_s=0)
+            self.lab.generation.acquire()
+            try:
+                self.assertIsNone(self.lab.idle_unload_check(t0 + 31 * 60))
+            finally:
+                self.lab.generation.release()
+            self.lab.settings['idle_unload_minutes'] = 0
+            self.assertIsNone(self.lab.idle_unload_check(t0 + 31 * 60))
+        stop.assert_not_called()
+
     def test_override_cannot_request_offload(self):
         self.lab.settings['models']['dense']['size_bytes'] = 2 * MIB
         args = self._start('dense', {'cpu_moe': True})

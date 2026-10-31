@@ -499,6 +499,8 @@ class Lab:
         self.runtime_job = None
         self.shutting_down = False
         self.settings = read_json(self.data / 'settings.json', {'models': {}})
+        self.last_activity = time.monotonic()
+        self.idle_unloaded = None
         self.hw = hardware(self.data)
         self.hw_at = time.monotonic()
         from diagnostics import Store
@@ -540,6 +542,7 @@ class Lab:
                 runtime = status()
                 runtime['switch_job'] = self.runtime_job
             return {'version': VERSION, 'connection': conn, 'engine': self.engine.status(), 'models': models,
+                    'idle_unloaded': self.idle_unloaded,
                     'providers': self.providers.snapshot(),
                     'prepared_runtime': runtime,
                     'presets': PRESETS, 'hardware': self.get_hardware(), 'llama_installed': self.llama_exe() is not None,
@@ -820,6 +823,7 @@ class Lab:
                                     'display_model': item['name'], 'profile': profile, 'compute': compute,
                                     'model_sha256': item.get('sha256'), 'connected_at': time.time()}
                                 self.engine.record['state'] = 'READY'
+                                self.last_activity = time.monotonic(); self.idle_unloaded = None
                                 j.update(state='COMPLETED', message=('CPU-only engine ready; verify no GPU layers in engine log.' if compute == 'cpu'
                                     else 'Engine ready; inspect log and live GPU telemetry to verify offload.'))
                             return
@@ -1066,10 +1070,47 @@ class Lab:
                         with (self.data / 'benchmarks.jsonl').open('a', encoding='utf-8') as f: f.write(json.dumps(record) + '\n')
                 except OSError:
                     job.update(receipt_error='Benchmark could not be saved. Result not discarded.')
+            self.last_activity = time.monotonic()
             self.generation.release()
             # Publish terminal status LAST: metrics/receipts and the concurrency slot
             # must be ready before the UI can dispatch the next benchmark request.
             job.update(state=final_state)
+    IDLE_UNLOAD_MINUTES = 30
+
+    def idle_unload_check(self, now_mono: float | None = None, now_wall: float | None = None) -> dict | None:
+        """Unload the owned GPU engine when it has served nothing for the idle window AND cooperative background
+        work is waiting for the GPU. Interactive use still wins: a refused load asks that work to pause again."""
+        minutes = self.settings.get('idle_unload_minutes', self.IDLE_UNLOAD_MINUTES)
+        if not isinstance(minutes, (int, float)) or minutes <= 0 or sys.platform != 'linux':
+            return None
+        now_mono = time.monotonic() if now_mono is None else now_mono
+        with self.lock:
+            conn = self.connection or {}
+            if (self.runtime_job or self.generation.locked() or conn.get('ownership') != 'OWNED' or conn.get('compute') != 'gpu'
+                    or self.engine.status()['state'] != 'READY' or now_mono - self.last_activity < minutes * 60):
+                return None
+            if any(j.kind in ('generation', 'engine-start') and j.snapshot()['state'] == 'RUNNING' for j in self.jobs.values()):
+                return None
+            import gpu_lease
+            if not gpu_lease.gpu_wanted(time.time() if now_wall is None else now_wall):
+                return None
+            model = conn.get('display_model')
+            self.stop_engine()
+            self.idle_unloaded = {'model': model, 'at': time.time(), 'idle_minutes': minutes,
+                                  'reason': 'idle and background GPU work was waiting'}
+        print(f'Idle unload: {model} served nothing for {minutes} min while background GPU work waited; engine stopped.', flush=True)
+        return self.idle_unloaded
+
+    def start_idle_watch(self, interval_s: float = 60):
+        def watch():
+            while not self.shutting_down:
+                time.sleep(interval_s)
+                try:
+                    self.idle_unload_check()
+                except Exception as exc:  # never let the watcher take the Lab down
+                    print(f'Idle unload check failed: {type(exc).__name__}: {exc}', flush=True)
+        threading.Thread(target=watch, daemon=True).start()
+
     def shutdown(self):
         self.shutting_down = True
         for j in list(self.jobs.values()): j.cancel()

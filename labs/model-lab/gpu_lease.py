@@ -81,6 +81,20 @@ def clear_preempt():
         pass
 
 
+WANTED_FILE = 'gpu-wanted'
+
+
+def gpu_wanted(now: float, max_age_s: float = 600) -> bool:
+    """True when cooperative background GPU work (forge training) is paused and waiting for the GPU.
+    It refreshes the owner-only file while it waits; an old or foreign file does not count."""
+    try:
+        info = (state_dir() / WANTED_FILE).lstat()
+    except (FileNotFoundError, ValueError):
+        return False
+    return (stat.S_ISREG(info.st_mode) and info.st_uid == os.getuid() and not info.st_mode & 0o077
+            and now - info.st_mtime < max_age_s)
+
+
 def acquire(owned_pid=None, allow_strata=False):
     """Hold this file object across the entire admitted operation."""
     path = Path.home() / '.local/state/haven'
