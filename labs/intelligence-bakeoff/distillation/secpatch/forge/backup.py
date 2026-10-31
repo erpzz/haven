@@ -123,6 +123,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('action', choices=['run', 'plan'])
     args = ap.parse_args(argv)
+    BACKUP_DIR.mkdir(parents=True, exist_ok=True)
     cfg = loop.config()
     repo = cfg['backup']['hf_repo']
     fresh = pull_finished(cfg) if args.action == 'run' else []
