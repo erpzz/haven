@@ -64,3 +64,11 @@ An adapter is **convincingly better** than base only if **all** of the following
 - All three GGUFs stay on Slink, with sha256 recorded.
 - Evaluation rows (`results.jsonl`), summaries, server command lines, the teacher state and harness commit go into `labs/cyber/results/compare/<date>/receipt.json`, committed to the PR.
 - Training provenance (kernel ids and versions, data and generator commits, dataset sha256, config, losses, disclosure) is copied from the forge session into the same folder.
+
+## Amendment 1 (2026-10-31, before any adapter output)
+
+- **Classes.** Provenance classes are frozen in `results/compare/2026-10-31/classes.json`, from the forge session's disclosure.
+  - The CA training family was modelled on the generators behind the eval fixtures, so **all CA scenarios are T1**, along with rbac-01, rbac-04 (design-overlapping) and tf-01.
+  - Held-out: T1 5, T2 2, T3 13. Criterion 2's generalization set is therefore the 15 held-out T2+T3 cases.
+- **Secondary control.** The thinking-on check (criterion 6) uses a **base re-run** of held-out condition C with thinking on, in the comparison window under identical conditions. The earlier thinking-on baseline is reported, not used for the decision.
+- **Teacher idle.** The forge teacher and its timer are paused for the whole window (`scripts/run_compare_slink.sh`, restored on exit), so all three models see the same GPU state.
