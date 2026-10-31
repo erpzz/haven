@@ -44,7 +44,6 @@ def run(cmd, log: pathlib.Path, env=None):
         raise RuntimeError(f'{cmd[1] if len(cmd) > 1 else cmd[0]} exited {r.returncode}; see {log}')
 
 
-GATEWAY_RECEIPTS = HOME / '.local/share/haven-model-lab/gateway-receipts.jsonl'
 PREEMPT_REQUEST = HOME / '.local/state/haven/gpu-preempt-request'
 
 
@@ -53,40 +52,34 @@ def note(log: pathlib.Path, msg: str):
         f.write(time.strftime('%FT%TZ ', time.gmtime()) + msg + '\n')
 
 
+def fresh_request(max_age_s: int = 1800) -> bool:
+    """Model Lab writes this when a load would fit an empty card but our VRAM blocks it (and deletes it once loaded)."""
+    try:
+        return time.time() - PREEMPT_REQUEST.stat().st_mtime < max_age_s
+    except FileNotFoundError:
+        return False
+
+
 class ChatWatcher:
-    """Signs the owner wants interactive inference on this GPU (the owner's rule: it takes precedence)."""
-    def __init__(self):
-        self.receipts = GATEWAY_RECEIPTS.stat().st_size if GATEWAY_RECEIPTS.exists() else 0
-        self.since = time.strftime('%Y-%m-%d %H:%M:%S')
+    """The owner wants this GPU for interactive inference: Model Lab's explicit preemption request.
 
+    Chat traffic alone is not a signal: Model Lab never auto-loads on chat, and cloud-routed chats need no GPU, so
+    pausing on every gateway request would stall training for no one.
+    """
     def chat_wanted(self) -> str | None:
-        if PREEMPT_REQUEST.exists():
-            return 'gpu-preempt-request file present'
-        if GATEWAY_RECEIPTS.exists() and GATEWAY_RECEIPTS.stat().st_size > self.receipts:
-            return 'new Haven gateway chat request'
-        r = subprocess.run(['journalctl', '--user', '-u', 'haven-model-lab', '--since', self.since, '--no-pager', '-o', 'cat'],
-                           capture_output=True, text=True)
-        if any(k in r.stdout for k in ('unowned GPU process', 'GPU access is blocked', 'owns the lease')):
-            return 'Model Lab GPU load refused'
-        return None
+        return 'Model Lab gpu-preempt-request' if fresh_request() else None
 
 
-def wait_for_quiet_gpu(out: pathlib.Path, log: pathlib.Path, quiet_min: int = 20):
-    """Start or resume only when no other process holds the GPU and nobody has chatted for quiet_min minutes."""
-    last_size, last_change = -1, time.time() - quiet_min * 60
+def wait_for_quiet_gpu(out: pathlib.Path, log: pathlib.Path):
+    """Start or resume only when no other process holds the GPU and no fresh preemption request is pending."""
     while True:
-        size = GATEWAY_RECEIPTS.stat().st_size if GATEWAY_RECEIPTS.exists() else 0
-        if size != last_size:
-            if last_size != -1:
-                last_change = time.time()
-            last_size = size
         teacher = subprocess.run(['systemctl', '--user', 'show', '-p', 'MainPID', '--value', 'forge-teacher-server'],
                                  capture_output=True, text=True).stdout.strip()
         pids = set(subprocess.run(['nvidia-smi', '--query-compute-apps=pid', '--format=csv,noheader'],
                                   capture_output=True, text=True).stdout.split()) - {teacher, '0', ''}
-        if not pids and not PREEMPT_REQUEST.exists() and time.time() - last_change >= quiet_min * 60:
+        if not pids and not fresh_request():
             subprocess.run(['systemctl', '--user', 'stop', 'forge-teacher-server'])  # this session's own teacher
-            note(log, 'GPU quiet; (re)starting training')
+            note(log, 'GPU free and no pending preemption request; (re)starting training')
             return
         time.sleep(60)
 
