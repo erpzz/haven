@@ -1,0 +1,2 @@
+# Install separately in an isolated virtual environment; never in production Model Lab.
+torch>=2.2,<3
