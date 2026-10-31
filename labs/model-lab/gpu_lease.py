@@ -52,6 +52,35 @@ def strata_pids():
     return {int(v) for p in path.rglob('cgroup.procs') for v in p.read_text().split()}
 
 
+PREEMPT_FILE = 'gpu-preempt-request'
+
+
+def state_dir() -> Path:
+    path = Path.home() / '.local/state/haven'
+    path.mkdir(parents=True, exist_ok=True, mode=0o700)
+    info = path.lstat()
+    if not stat.S_ISDIR(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o022:
+        raise ValueError('GPU lease directory must be owned and not writable by others.')
+    return path
+
+
+def request_preempt(now: float) -> Path:
+    """Ask cooperative background GPU work (forge training) to pause at its next safe point.
+    It is a request only: nothing is signalled or stopped from here."""
+    target = state_dir() / PREEMPT_FILE
+    fd = os.open(target, os.O_CREAT | os.O_WRONLY | os.O_TRUNC | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(fd, 'w') as f:
+        f.write(f'{now:.0f}\n')
+    return target
+
+
+def clear_preempt():
+    try:
+        (state_dir() / PREEMPT_FILE).unlink()
+    except FileNotFoundError:
+        pass
+
+
 def acquire(owned_pid=None, allow_strata=False):
     """Hold this file object across the entire admitted operation."""
     path = Path.home() / '.local/state/haven'

@@ -746,7 +746,15 @@ class Lab:
                 else:
                     fit = estimate_fit(item['size_bytes'], first['memory_free_mib'], profile['context'])
                 if fit['status'] != 'LIKELY_FITS' and not allow_tight:
+                    if sys.platform == 'linux' and gpu_lease.compute_pids():
+                        # Interactive use takes precedence: cooperative training watches this request and
+                        # yields within about one optimizer step. Nothing is stopped from here.
+                        gpu_lease.request_preempt(time.time())
+                        raise ValueError('Background GPU work is holding memory. Haven asked it to pause; it yields within '
+                                         'about two minutes. Load again then. Nothing was stopped.')
                     raise ValueError('This configuration is tight for current free VRAM. Try a 4B model/shorter context, or explicitly enable the memory-risk experiment.')
+                if sys.platform == 'linux':
+                    gpu_lease.clear_preempt()
             else:
                 # CPU inference must never bypass RAM admission just because GPU VRAM is occupied.
                 context = bounded_int(profile.get('context', 2048), 512, 8192, 'CPU context')

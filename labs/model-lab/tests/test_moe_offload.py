@@ -121,6 +121,32 @@ class MoeLaneTests(unittest.TestCase):
         import gpu_lease
         self.assertIn('haven-e5.service', gpu_lease.PEER_UNITS)
 
+    def test_refused_load_requests_training_preemption_and_success_clears_it(self):
+        import gpu_lease
+        home = Path(self.temp.name) / 'home'
+        low = {'gpus': [{'index': 0, 'memory_free_mib': 900}], 'ram_available_gib': 60}
+        with patch.object(self.lab, 'llama_exe', return_value=Path('/fake/llama-server')), \
+             patch.object(self.lab, 'get_hardware', return_value=low), patch('labcore.sys.platform', 'linux'), \
+             patch('gpu_lease.peer_busy', return_value=[]), patch('gpu_lease.compute_pids', return_value={4242}), \
+             patch('pathlib.Path.home', return_value=home):
+            with self.assertRaisesRegex(ValueError, 'asked it to pause'):
+                self.lab.start_llama('moe', 'gpu')
+            request = home / '.local/state/haven' / gpu_lease.PREEMPT_FILE
+            self.assertTrue(request.is_file())
+            self.assertEqual(request.stat().st_mode & 0o777, 0o600)
+        self.assertIsNone(self.lab.engine.proc)
+        with patch('labcore.sys.platform', 'linux'), patch('pathlib.Path.home', return_value=home):
+            self._start('moe')
+        self.assertFalse(request.exists())
+
+    def test_tight_load_without_other_gpu_process_keeps_the_old_message(self):
+        low = {'gpus': [{'index': 0, 'memory_free_mib': 900}], 'ram_available_gib': 60}
+        with patch.object(self.lab, 'llama_exe', return_value=Path('/fake/llama-server')), \
+             patch.object(self.lab, 'get_hardware', return_value=low), patch('labcore.sys.platform', 'linux'), \
+             patch('gpu_lease.peer_busy', return_value=[]), patch('gpu_lease.compute_pids', return_value=set()):
+            with self.assertRaisesRegex(ValueError, 'tight'):
+                self.lab.start_llama('moe', 'gpu')
+
     def test_override_cannot_request_offload(self):
         self.lab.settings['models']['dense']['size_bytes'] = 2 * MIB
         args = self._start('dense', {'cpu_moe': True})
