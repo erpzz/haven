@@ -17,7 +17,7 @@ Legend: **implemented + tested** (code with passing automated tests), **verified
 | MCP server (4 tools, mcp 1.x/2.x) | verified live | `scripts/mcp_smoke.py` PASS with mcp 2.3.0; `hermes mcp test haven-cyber`: connected, 4 tools |
 | Vertical slice (Phase 8) | implemented + tested; verified live with Qwythos | `tests/test_slice.py` (offline + stub-model live path + bad tool choice contained); live run `results/slice/live-qwythos-nothink-20261031.json` → `grounded_incomplete` (correct findings, no fabrication, but rule ids and references not cited) |
 | Evaluation set (55 scenarios, 20 held out, hidden canary-tagged answers) | implemented + tested | `tests/test_eval_set.py`: oracle answers pass; CA and RBAC labels agree with the independent tools |
-| Harness A/B/C(/D), deterministic grader, gap report | verified live | runs on Slink against Qwythos Q4_K_M; see CYBER_CAPABILITY_MATRIX.md |
+| Harness A/B/C(/D), deterministic grader, gap report | verified live | thinking-off baseline: A 38/55, B 38/55, C 41/55, with **0 tool calls** in C; 11 of 17 failures are orchestration (see CYBER_CAPABILITY_MATRIX.md) |
 | Thinking-on evaluation | running at time of writing | `runs/eval/qwythos-think-v1` on Slink; results added when complete |
 | LoRA research (Phase 6) | investigated; **no pilot run by this session** | LORA_RESEARCH_PLAN.md: 9B QLoRA blocked on the 8 GB card (measured); Kaggle lane in use by the forge Qwythos run; dataset generator agreed with the forge session |
 | Agent-reliability training data | planned (forge session) | handoff sent with rules: grader-verified, fresh identity space, canary filter |
