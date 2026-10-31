@@ -19,7 +19,7 @@ def main(argv=None):
     ap.add_argument('--model', required=True, help='local HF checkpoint directory')
     ap.add_argument('--rows', type=pathlib.Path, required=True, help='forge sft.jsonl')
     ap.add_argument('--out', type=pathlib.Path, required=True)
-    ap.add_argument('--settings', default='1024:16,1536:16,2048:16,1536:64')
+    ap.add_argument('--settings', default='768:16,1024:16,1536:16,1024:64')
     ap.add_argument('--steps', type=int, default=6)
     args = ap.parse_args(argv)
     import torch
@@ -29,13 +29,14 @@ def main(argv=None):
     rows = [json.loads(x) for x in args.rows.read_text().splitlines() if x.strip()]
     cfg, DEV = {'lowvram': True}, 0
     if cfg.get("lowvram"):
-        # 8 GB cards: Qwen3.5-9B's untied 248k-vocab embedding and lm_head are ~1B params each. Quantize lm_head with the
-        # body, keep the embedding (a lookup) and the unused vision tower on CPU, and skip PEFT's fp32 upcast.
+        # 8 GB cards: Qwen3.5-9B's untied 248k-vocab embedding and lm_head are ~1B params each, and a 4-bit lm_head is
+        # dequantized whole (1.9 GiB) on every training matmul. Keep both on CPU (logits are only computed at answer
+        # positions, ~10% of tokens), the unused vision tower too, and skip PEFT's fp32 upcast.
         q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16,
-                               bnb_4bit_use_double_quant=True, llm_int8_skip_modules=["visual"],
+                               bnb_4bit_use_double_quant=True, llm_int8_skip_modules=["visual", "lm_head"],
                                llm_int8_enable_fp32_cpu_offload=True)
         dmap = {"model.visual": "cpu", "model.language_model.embed_tokens": "cpu", "model.language_model.layers": DEV,
-                "model.language_model.norm": DEV, "model.language_model.rotary_emb": DEV, "lm_head": DEV}
+                "model.language_model.norm": DEV, "model.language_model.rotary_emb": DEV, "lm_head": "cpu"}
     else:
         q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
         dmap = {"": DEV}
@@ -57,6 +58,7 @@ def main(argv=None):
         try:
             pm = get_peft_model(model, LoraConfig(r=rank, lora_alpha=2 * rank, lora_dropout=0.05, task_type='CAUSAL_LM',
                 target_modules=r'.*language_model.*\.(q_proj|k_proj|v_proj|o_proj|gate_proj|up_proj|down_proj|in_proj_\w+|out_proj)'))
+            pm.train()  # gradient checkpointing only applies in training mode (from_pretrained returns eval mode)
             opt = torch.optim.AdamW([p for p in pm.parameters() if p.requires_grad], lr=1e-4)
             scaler = torch.amp.GradScaler('cuda')
             enc = []
