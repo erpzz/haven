@@ -240,7 +240,7 @@ def default_registry(audit_path: Path | None = AUDIT) -> Registry:
     r = Registry(audit_path)
     r.register(ToolSpec("cyber.kb.search", "Search the versioned cyber knowledge base (Entra, Azure, detection); returns cited sections.",
                         _obj({"query": {"type": "string"}, "k": {"type": "integer", "minimum": 1, "maximum": 8},
-                              "domain": {"type": "string", "enum": ["entra", "azure", "m365", "detection", "linux", "macos", "network", "general"]}},
+                              "domain": {"type": "string", "enum": ["entra", "azure", "m365", "windows-ad", "detection", "linux", "macos", "network", "general"]}},
                              ["query"]),
                         {"type": "object", "properties": {"hits": {"type": "array"}}}, _kb_search, domain="general",
                         scope="local-files", timeout_s=10))
