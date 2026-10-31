@@ -76,8 +76,18 @@ def build() -> tuple[list[dict], list[dict]]:
 
 
 def _candidate(group: str, inputs: dict, target: dict, reproduction: dict) -> dict:
+    hypothetical_errors = {
+        "missing-executable": "Hypothetical wrong interpretation: the requested tool ran successfully.",
+        "missing-file": "Hypothetical wrong interpretation: the missing path proves insufficient privilege.",
+        "short-circuit": "Hypothetical wrong interpretation: the final command ran and failed.",
+        "report-only-policy": "Hypothetical wrong interpretation: a report-only policy enforces MFA.",
+    }
     return {"id": "train-" + group, "group": group, "synthetic": True,
             "license": "CC0-1.0", "privacy_review": "passed",
+            "task": "Interpret the synthetic " + group + " result without overclaiming.",
+            "original_behavior": hypothetical_errors[group],
+            "verified_result": reproduction,
+            "correction_rationale": target["correction"],
             "reviewer": "operator-authorized-local-review", "input": inputs, "target": target,
             "provenance": {"kind": "original-synthetic-reproduction", "reproduction": reproduction,
                            "private_session_text_included": False},

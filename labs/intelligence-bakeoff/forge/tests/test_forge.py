@@ -300,6 +300,16 @@ class ForensicsTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 write_private_jsonl(parent / "private.jsonl", [])
 
+    def test_correction_seed_distinguishes_hypothetical_errors_from_reproduction(self):
+        import build_dataset
+        training, evaluation = build_dataset.build()
+        self.assertEqual(len(training), 4)
+        self.assertTrue({row["group"] for row in training}.isdisjoint(row["group"] for row in evaluation))
+        for row in training:
+            self.assertTrue(row["original_behavior"].startswith("Hypothetical wrong interpretation:"))
+            self.assertTrue(row["task"] and row["verified_result"] and row["correction_rationale"])
+            self.assertEqual(row["verified_result"], row["provenance"]["reproduction"])
+
     def test_admission_rejects_unverified_private_or_overlapping_examples(self):
         row = {"id": "synthetic-example", "group": "train-error", "synthetic": True,
                "license": "CC0-1.0", "privacy_review": "passed",
