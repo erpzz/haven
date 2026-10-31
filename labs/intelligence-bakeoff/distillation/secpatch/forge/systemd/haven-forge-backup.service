@@ -1,0 +1,13 @@
+[Unit]
+Description=Haven forge: pull finished one-off Kaggle runs and back up forge state to the private HF repo
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/.local/state/haven-forge
+ExecStart=%h/.local/share/haven-forge-venv/bin/python %h/.local/state/haven-forge/code/forge/backup.py run
+CPUWeight=5
+IOWeight=10
+IOSchedulingClass=idle
+Nice=19
+TimeoutStartSec=6h

@@ -4,6 +4,7 @@ import json
 import pathlib
 import sys
 import tempfile
+import time
 import unittest
 
 FORGE = pathlib.Path(__file__).resolve().parents[1] / 'secpatch' / 'forge'
@@ -272,6 +273,53 @@ class TrainerEncodingTests(unittest.TestCase):
         self.assertEqual(stock, qwythos)
         self.assertTrue(stock[0].endswith('<a><t></t>'))
         self.assertEqual(stock[1], '{"verdict": "safe"}</e>')
+
+
+class BackupSelectionTests(unittest.TestCase):
+    """Off-box backup: settled data and trained artifacts go up once; secrets, scratch and re-downloadables never."""
+
+    def setUp(self):
+        import os
+        import backup
+        self.b = backup
+        self.root = pathlib.Path(tempfile.mkdtemp())
+        files = {'state.json': '{}', 'cycles/c000/train/student-Q4_K_M.gguf': 'g', 'cycles/c000/train/adapter/a.json': 'a',
+                 'cycles/c000/train/merged/model.safetensors': 'm', 'cycles/c000/student-f16.gguf': 'f',
+                 'runs/x/hf_token': 't', 'models/stock.gguf': 's', 'kaggle/staged.jsonl': 'k', 'cycles/c001/new.jsonl': 'n'}
+        old = time.time() - 3600
+        for rel, text in files.items():
+            p = self.root / rel
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(text)
+            if rel != 'cycles/c001/new.jsonl':
+                os.utime(p, (old, old))
+
+    def select(self, **kw):
+        skipped = []
+        got = list(self.b.candidates(self.root, 'forge/', ['state.json', 'cycles', 'runs'], time.time(), skipped=skipped, **kw))
+        return sorted(f[0] for f in got), skipped
+
+    def test_selects_settled_artifacts_only(self):
+        got, skipped = self.select()
+        self.assertEqual(got, ['forge/cycles/c000/train/adapter/a.json', 'forge/cycles/c000/train/student-Q4_K_M.gguf',
+                               'forge/state.json'])
+        self.assertEqual(skipped, ['forge/runs/x/hf_token'])
+
+    def test_freshly_pulled_run_skips_settle_wait(self):
+        got, _ = self.select(fresh_ok=frozenset([self.root / 'cycles/c001']))
+        self.assertIn('forge/cycles/c001/new.jsonl', got)
+
+    def test_only_changed_files_are_resent(self):
+        files = list(self.b.candidates(self.root, 'forge/', ['state.json'], time.time()))
+        manifest = {f[0]: [f[2], f[3]] for f in files}
+        self.assertEqual(self.b.changed(files, manifest), [])
+        (self.root / 'state.json').write_text('{"cycle": 1}')
+        files = list(self.b.candidates(self.root, 'forge/', ['state.json'], time.time() + 3600))
+        self.assertEqual([f[0] for f in self.b.changed(files, manifest)], ['forge/state.json'])
+
+    def test_batches_respect_file_and_byte_limits(self):
+        files = [(f'p{i}', None, 3 * 2**30, 0) for i in range(3)]
+        self.assertEqual([len(b) for b in self.b.batches(files)], [1, 1, 1])
 
 
 class GpuWantedTests(unittest.TestCase):

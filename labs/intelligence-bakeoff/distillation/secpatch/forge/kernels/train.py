@@ -228,8 +228,17 @@ if rank == 0:
 
 @stage('train')
 def train():
+    # Checkpoints go to the saved output: a session that dies mid-training keeps its last one, and attaching that
+    # run's output to the next run (kernel_sources) resumes from it instead of starting over.
+    ckpt = OUT / 'ckpt'
+    step = lambda p: int(p.name.split('-')[-1])
+    prev = sorted((p for p in pathlib.Path('/kaggle/input').rglob('ckpt/checkpoint-*') if (p / 'trainer_state.json').exists()), key=step)
+    if prev and not list(ckpt.glob('checkpoint-*')):
+        shutil.copytree(prev[-1], ckpt / prev[-1].name)
+        R['resumed_from_input'] = str(prev[-1])
     cfg = {**CFG['train'], 'student': CFG['student'], 'revision': CFG['revision'], 'sft': str(CYCLE / 'sft.jsonl'),
-           'ckpt': str(W / 'ckpt'), 'adapter': str(OUT / 'adapter')}
+           'ckpt': str(ckpt), 'adapter': str(OUT / 'adapter'), 'resume': True,
+           'save_steps': CFG['train'].get('save_steps', 25)}
     # Leave the configured evaluation reserve inside Kaggle's session limit.
     deadline = time.time() + max(600, CFG['session_seconds'] - CFG['eval_reserve_seconds'] - (time.monotonic() - T0))
     (W / 'trainer.py').write_text(TRAINER)
@@ -237,7 +246,10 @@ def train():
     sh(f'{sys.executable} -m torch.distributed.run --nproc_per_node {ngpu} {W}/trainer.py '
        f"'{json.dumps(cfg)}' {deadline}", 'train.log',
        env={**os.environ, 'PYTORCH_CUDA_ALLOC_CONF': 'expandable_segments:True', 'TOKENIZERS_PARALLELISM': 'false'})
-    return json.loads((OUT / 'adapter' / 'train.json').read_text())
+    res = json.loads((OUT / 'adapter' / 'train.json').read_text())
+    if not res['stopped_by_deadline'] and res['steps'] >= res['max_steps']:
+        shutil.rmtree(ckpt, ignore_errors=True)  # finished: the adapter is in the output; keep the download small
+    return res
 
 PREF = r"""
 import json, math, random, sys, time, torch

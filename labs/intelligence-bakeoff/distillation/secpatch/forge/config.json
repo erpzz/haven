@@ -73,5 +73,11 @@
   },
   "cycle1_sample_precision": "9-10 of 20 flags real",
   "note": "main false-reject pattern: line-number nitpicks (prompt now tolerates them)"
+ },
+ "backup": {
+  "hf_repo": "jankycoder/haven-forge-state",
+  "kaggle_pull": [
+   "haven-forge-train-qwythos-c001"
+  ]
  }
 }
