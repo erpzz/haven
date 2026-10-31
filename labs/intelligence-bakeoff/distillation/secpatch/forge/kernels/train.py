@@ -143,11 +143,26 @@ def collate(b):
     return {"input_ids": torch.tensor([x["input_ids"] + [pad] * (n - len(x["input_ids"])) for x in b]),
             "attention_mask": torch.tensor([[1] * len(x["input_ids"]) + [0] * (n - len(x["input_ids"])) for x in b]),
             "labels": torch.tensor([x["labels"] + [-100] * (n - len(x["labels"])) for x in b])}
-q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
+DEV = rank
+if cfg.get("lowvram"):
+    # 8 GB cards: Qwen3.5-9B's untied 248k-vocab embedding and lm_head are ~1B params each. Quantize lm_head with the
+    # body, keep the embedding (a lookup) and the unused vision tower on CPU, and skip PEFT's fp32 upcast.
+    q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16,
+                           bnb_4bit_use_double_quant=True, llm_int8_skip_modules=["visual"],
+                           llm_int8_enable_fp32_cpu_offload=True)
+    dmap = {"model.visual": "cpu", "model.language_model.embed_tokens": "cpu", "model.language_model.layers": DEV,
+            "model.language_model.norm": DEV, "model.language_model.rotary_emb": DEV, "lm_head": DEV}
+else:
+    q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
+    dmap = {"": DEV}
 model = AutoModelForImageTextToText.from_pretrained(cfg["student"], revision=cfg["revision"], quantization_config=q,
-                                                    device_map={"": rank}, dtype=torch.float16)
+                                                    device_map=dmap, dtype=torch.float16)
 model.config.use_cache = False
-model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True, gradient_checkpointing_kwargs={"use_reentrant": False})
+if cfg.get("lowvram"):
+    model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+    model.enable_input_require_grads()
+else:
+    model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True, gradient_checkpointing_kwargs={"use_reentrant": False})
 model = get_peft_model(model, LoraConfig(r=cfg["rank"], lora_alpha=cfg["alpha"], lora_dropout=0.05, task_type="CAUSAL_LM",
     target_modules=r".*language_model.*\.(q_proj|k_proj|v_proj|o_proj|gate_proj|up_proj|down_proj|in_proj_\w+|out_proj)"))
 class Guard(TrainerCallback):
@@ -231,11 +246,26 @@ for x in pairs:
     if len(pc) + max(len(tc), len(tr_)) <= cfg["max_length"] and tc and tr_:
         data.append((pc, tc, tr_))
 random.shuffle(data)
-q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
+DEV = 0
+if cfg.get("lowvram"):
+    # 8 GB cards: Qwen3.5-9B's untied 248k-vocab embedding and lm_head are ~1B params each. Quantize lm_head with the
+    # body, keep the embedding (a lookup) and the unused vision tower on CPU, and skip PEFT's fp32 upcast.
+    q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16,
+                           bnb_4bit_use_double_quant=True, llm_int8_skip_modules=["visual"],
+                           llm_int8_enable_fp32_cpu_offload=True)
+    dmap = {"model.visual": "cpu", "model.language_model.embed_tokens": "cpu", "model.language_model.layers": DEV,
+            "model.language_model.norm": DEV, "model.language_model.rotary_emb": DEV, "lm_head": DEV}
+else:
+    q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
+    dmap = {"": DEV}
 model = AutoModelForImageTextToText.from_pretrained(cfg["student"], revision=cfg["revision"], quantization_config=q,
-                                                    device_map={"": 0}, dtype=torch.float16)
+                                                    device_map=dmap, dtype=torch.float16)
 model.config.use_cache = False
-model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True, gradient_checkpointing_kwargs={"use_reentrant": False})
+if cfg.get("lowvram"):
+    model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+    model.enable_input_require_grads()
+else:
+    model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True, gradient_checkpointing_kwargs={"use_reentrant": False})
 model = PeftModel.from_pretrained(model, cfg["adapter"], is_trainable=True)
 def seq_logp(p, t):
     ids = torch.tensor([p + t], device="cuda")

@@ -27,13 +27,26 @@ def main(argv=None):
     from transformers import AutoModelForImageTextToText, AutoTokenizer, BitsAndBytesConfig
     tok = AutoTokenizer.from_pretrained(args.model)
     rows = [json.loads(x) for x in args.rows.read_text().splitlines() if x.strip()]
-    q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type='nf4', bnb_4bit_compute_dtype=torch.float16,
-                           bnb_4bit_use_double_quant=True)
-    model = AutoModelForImageTextToText.from_pretrained(args.model, quantization_config=q, device_map={'': 0},
+    cfg, DEV = {'lowvram': True}, 0
+    if cfg.get("lowvram"):
+        # 8 GB cards: Qwen3.5-9B's untied 248k-vocab embedding and lm_head are ~1B params each. Quantize lm_head with the
+        # body, keep the embedding (a lookup) and the unused vision tower on CPU, and skip PEFT's fp32 upcast.
+        q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16,
+                               bnb_4bit_use_double_quant=True, llm_int8_skip_modules=["visual"],
+                               llm_int8_enable_fp32_cpu_offload=True)
+        dmap = {"model.visual": "cpu", "model.language_model.embed_tokens": "cpu", "model.language_model.layers": DEV,
+                "model.language_model.norm": DEV, "model.language_model.rotary_emb": DEV, "lm_head": DEV}
+    else:
+        q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
+        dmap = {"": DEV}
+    model = AutoModelForImageTextToText.from_pretrained(args.model, quantization_config=q, device_map=dmap,
                                                         dtype=torch.float16)
     model.config.use_cache = False
-    model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True,
-                                            gradient_checkpointing_kwargs={'use_reentrant': False})
+    if cfg.get("lowvram"):
+        model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+        model.enable_input_require_grads()
+    else:
+        model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True, gradient_checkpointing_kwargs={"use_reentrant": False})
     base_gib = torch.cuda.memory_allocated() / 2**30
     with args.out.open('a') as f:
         f.write(json.dumps({'event': 'loaded', 'weights_gib': round(base_gib, 2),
