@@ -26,7 +26,7 @@ import time
 import urllib.request
 
 TASKS = ('detect', 'root_cause', 'finding_support', 'remediate')
-RULES = 5  # bump when prompts or checks change: rows taught under older rules are taught again
+RULES = 6  # bump when prompts or checks change: rows taught under older rules are taught again
 HANDBOOK = (pathlib.Path(__file__).resolve().parent / 'handbook.md').read_text(encoding='utf-8')
 WORD_LIMIT = {'detect': 90, 'root_cause': 110, 'finding_support': 80, 'remediate': 60}
 LEAK = re.compile(r'\b(reference|ground truth|hint|we are told|i was told|the answer|advisory|hidden|provided label|'
@@ -34,7 +34,8 @@ LEAK = re.compile(r'\b(reference|ground truth|hint|we are told|i was told|the an
 GUTTER = re.compile(r'^\s*(\d+) \|', re.M)
 # Single-version rows: the student sees one version and cannot know its history.
 HISTORY = re.compile(r'\b(previous(ly)?|no longer|used to|originally|formerly|was (previously )?missing|'
-                     r'replac(es|ed|ing) (the )?(previous|old|earlier)|now (delegates|uses|checks|calls|validates|rejects|passes)|'
+                     r'replac(es|ed|ing) (the )?(previous|old|earlier)|now (delegates|uses|checks|calls|validates|rejects|passes|sanitizes|escapes|normalizes|verifies|strips|limits|'
+                     r'enforces|filters|requires|restricts|raises|returns|compares|resolves|applies)|(function|code|method) now|'
                      r'(earlier|old|original) (unsafe |vulnerable |insecure )?(code|implementation|logic|check|version))\b', re.I)
 # Training targets state what the code does; guesses about unseen code are not evidence.
 SPECULATION = re.compile(r'\b(likely|presumably|probably|appears to|seems to|(does not |doesn.t )?appears? (to be )?(vulnerable|safe|secure))\b', re.I)
