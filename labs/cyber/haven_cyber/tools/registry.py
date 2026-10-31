@@ -218,6 +218,13 @@ def _findings_lookup(path: str, status: str | None = None, check_id: str | None 
                                              "remediation": f.remediation, "references": f.references} for f in out]}
 
 
+def _detection_map(check_id: str) -> dict:
+    from ..attack import ATTACK_TABLE, map_finding
+    if not ATTACK_TABLE.exists():
+        raise ToolError("not_found", "ATT&CK table missing; run python -m haven_cyber.attack build-attack <bundle>")
+    return map_finding(check_id)
+
+
 def _graph_collect(emergency_account_ids: list) -> dict:
     from . import graph
     snap = graph.collect(os.environ["HAVEN_GRAPH_TOKEN"], emergency_account_ids)
@@ -250,6 +257,9 @@ def default_registry(audit_path: Path | None = AUDIT) -> Registry:
                         _obj({"path": {"type": "string"}, "status": {"type": "string", "enum": ["fail", "pass", "manual", "error", "skipped"]},
                               "check_id": {"type": "string"}, "domain": {"type": "string"}}, ["path"]),
                         {"type": "object"}, _findings_lookup, domain="general", timeout_s=10))
+    r.register(ToolSpec("detection.map", "Map a finding/check id to MITRE ATT&CK techniques and matching SigmaHQ cloud detection rules (or a detection gap).",
+                        _obj({"check_id": {"type": "string"}}, ["check_id"]), {"type": "object"}, _detection_map,
+                        domain="detection", timeout_s=10))
     r.register(ToolSpec("entra.graph.collect", "Collect a read-only Conditional Access snapshot from an authorized tenant via Microsoft Graph.",
                         _obj({"emergency_account_ids": {"type": "array"}}, ["emergency_account_ids"]), {"type": "object"},
                         _graph_collect, domain="entra", scope="tenant-read",

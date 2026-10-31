@@ -16,6 +16,11 @@ from pathlib import Path
 
 from ..evidence import ArtifactRef, EvidenceBundle, Finding, Observation, sha256_bytes, utcnow
 
+
+def attack_techniques(rule: str) -> list[str]:
+    from ..attack import FINDING_TECHNIQUES
+    return FINDING_TECHNIQUES.get(rule, [])
+
 GLOBAL_ADMIN = "62e90394-69f5-4237-9190-012177145e10"
 # Role templates in Microsoft's "Require MFA for administrators" policy template.
 ADMIN_ROLES = {
@@ -243,7 +248,8 @@ class Assessor:
             observation_point="microsoft-graph:v1.0 snapshot", status=status, description=description,
             severity=severity if status == "fail" else "informational", confidence=confidence,
             collected_at=self.snap.artifact.collected_at or utcnow(), observations=obs,
-            artifacts=[self.snap.artifact.sha256], controls=(controls or []) + CROSSWALK.get(rule, []),
+            artifacts=[self.snap.artifact.sha256],
+            controls=(controls or []) + CROSSWALK.get(rule, []) + [f"attack:{t}" for t in attack_techniques(rule)],
             remediation=remediation, references=[LEARN + ref] if ref else [], limitations=limitations or [],
             next_validation_step=next_step))
 
