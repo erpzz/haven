@@ -333,7 +333,11 @@ class FreshTests(unittest.TestCase):
 
 class ReportTests(unittest.TestCase):
     def test_resummarize_uses_only_shared_items(self):
-        from secpatch import report  # tool_sft/report.py has the same module name
+        # Load secpatch/report.py by path: tool_sft/report.py shares the module name in a full test run.
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('secpatch_report', HERE.parent / 'secpatch' / 'report.py')
+        report = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(report)
         def row(i, task, score):
             return {'id': i, 'key': i, 'task': task, 'label': 'vulnerable', 'seed': 0, 'score': score, 'false_positive': False,
                     'unsupported': False, 'invalid_json': False, 'latency_s': 1.0, 'completion_tokens': 3}
@@ -342,7 +346,8 @@ class ReportTests(unittest.TestCase):
             a.mkdir(); b.mkdir()
             (a / 'items.jsonl').write_text('\n'.join(json.dumps(r) for r in [row('1', 'detect', 1), row('2', 'remediate', 1)]))
             (b / 'items.jsonl').write_text(json.dumps(row('1', 'detect', 0)))
-            sa, sb = report.resummarize([a / 'items.jsonl', b / 'items.jsonl'], None)
+            with unittest.mock.patch.dict(sys.modules, {'evaluate': evaluate}):
+                sa, sb = report.resummarize([a / 'items.jsonl', b / 'items.jsonl'], None)
         self.assertEqual((sa['n'], sb['n']), (1, 1))
         self.assertEqual(sa['eval_sha256'], sb['eval_sha256'])
         self.assertEqual((sa['score'], sb['score']), (1.0, 0.0))

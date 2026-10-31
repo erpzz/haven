@@ -1,0 +1,77 @@
+{
+ "student": "Qwen/Qwen3.5-4B",
+ "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+ "quant": "Q4_K_M",
+ "llama_tag": "b11146",
+ "train": {
+  "rank": 64,
+  "alpha": 128,
+  "lr": 0.0001,
+  "epochs": 2,
+  "grad_accum": 8,
+  "max_length": 3072,
+  "seed": 42
+ },
+ "session_seconds": 42000,
+ "eval_reserve_seconds": 10800,
+ "serve_parallel": 8,
+ "serve_ctx_per_slot": 6144,
+ "eval_base": true,
+ "selfplay_samples": 4,
+ "selfplay_rows": 800,
+ "pref": {
+  "enabled": true,
+  "pref_lr": 2e-05,
+  "pref_beta": 0.1,
+  "pref_nll": 1.0
+ },
+ "teacher": {
+  "repo": "unsloth/Qwen3.6-35B-A3B-GGUF",
+  "file": "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf",
+  "revision": "a483e9e6cbd595906af30beda3187c2663a1118c",
+  "parallel": 8,
+  "ctx_per_slot": 12288,
+  "attempts": 3,
+  "shard": "0-5/8",
+  "think_retries": 1,
+  "critic": true,
+  "critic_mode": "enforce"
+ },
+ "gate": {
+  "min_gain": 0.0,
+  "max_fpr_increase": 0.02,
+  "bootstrap_samples": 2000,
+  "max_p_value": 0.1
+ },
+ "slink_teacher": {
+  "enabled": true,
+  "port": 8093,
+  "workers": 2,
+  "shard": "6-7/8",
+  "think_retries": 0
+ },
+ "kaggle_owner": "yahboyomni",
+ "hf_repo": "jankycoder/haven-secpatch-student",
+ "teach_passes": 2,
+ "review_timeout_hours": 6,
+ "data_dir": "~/.local/state/haven-secpatch/data-v3-multi",
+ "teacher_bakeoff_2026_10_30": {
+  "rows": 67,
+  "fixes": 12,
+  "first_try_pass": {
+   "qwen36-35ba3b-q4": 53,
+   "glm47flash-q4": 46,
+   "qwen38-27b-q4": 43
+  },
+  "note": "Kaggle 2x T4, one attempt, no reasoning mode; Qwen3.8-27B fails mostly on too_short root_cause answers"
+ },
+ "critic_calibration_2026_10_31": {
+  "critic": "Qwen3.6-35B-A3B",
+  "labels": {
+   "bad_caught": "13/18",
+   "good_rejected": "1/17"
+  },
+  "cycle1_sample_precision": "9-10 of 20 flags real",
+  "note": "main false-reject pattern: line-number nitpicks (prompt now tolerates them)"
+ }
+}
