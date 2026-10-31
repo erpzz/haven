@@ -15,6 +15,7 @@ import collections
 import hashlib
 import json
 import pathlib
+import re
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -33,6 +34,32 @@ def trace_key(rec: dict) -> str:
     """Identity of one trace: row id + content hash, so a dropped trace does not block a later good one."""
     text = rec['sft']['messages'][-1]['content']
     return rec['id'] + ':' + hashlib.sha256(text.encode()).hexdigest()[:12]
+
+
+VERDICT = re.compile(r'"(verdict|supported)"\s*:\s*"?(\w+)"?')
+
+
+def balance_pairs(pairs: list[dict]) -> tuple[list[dict], dict]:
+    """Equal numbers of pairs pushing each way on yes/no tasks.
+
+    Self-play pairs mirror the policy's errors: a model that misses vulnerabilities yields mostly "vulnerable beats
+    not_vulnerable" pairs, and preference training on them raises the false-positive rate (cycle 1: 86 vs 54 on detect,
+    85 vs 68 on finding_support; held-out FPR 0.135 -> 0.270). Within each task, keep at most as many pairs per chosen
+    answer as the rarer direction has; deterministic by pair id. Tasks without a yes/no answer pass through.
+    """
+    groups = collections.defaultdict(list)
+    for p in pairs:
+        m = VERDICT.search(p.get('chosen') or '')
+        groups[(p.get('task'), m.group(2).lower() if m else None)].append(p)
+    out, counts = [], {}
+    for task in sorted({t for t, _ in groups}, key=str):
+        keyed = {v: sorted(g, key=lambda p: hashlib.sha256(p['id'].encode()).hexdigest()) for (t, v), g in groups.items() if t == task}
+        cap = min(len(g) for v, g in keyed.items() if v is not None) if None not in keyed and len(keyed) > 1 else None
+        for v, g in keyed.items():
+            kept = g if cap is None else g[:cap]
+            out += kept
+            counts[f'{task}:{v}'] = f'{len(kept)}/{len(g)}'
+    return out, counts
 
 
 def digest(path: pathlib.Path) -> str:
@@ -113,8 +140,9 @@ def main(argv=None):
             if rec.get('id') in pool_ids:
                 pairs[rec['id']] = rec
     args.out.mkdir(parents=True, exist_ok=True)
+    pair_list, pair_balance = balance_pairs(list(pairs.values()))
     with (args.out / 'pairs.jsonl').open('w', encoding='utf-8') as f:
-        for rec in pairs.values():
+        for rec in pair_list:
             f.write(json.dumps(rec, ensure_ascii=False) + '\n')
     recorded = [{**r, 'split': 'train'} for r in pool]  # ground-truth targets: teacher input and self-play graders
     for name, data in (('sft.jsonl', rows), ('pool.jsonl', recorded), ('gate.jsonl', gate),
@@ -128,7 +156,7 @@ def main(argv=None):
         'by_task': collections.Counter(r['task'] for r in rows), 'by_origin': origin,
         'traces_rejected_on_reverify': rejected,
         'critic_files_ignored_as_miscalibrated': critic_ignored,
-        'preference_pairs': len(pairs),
+        'preference_pairs': len(pair_list), 'preference_pair_balance': pair_balance,
         'gate_rows': len(gate), 'gate_fixes': len({r['key'] for r in gate}),
         'heldout_rows': len(heldout), 'heldout_fixes': len({r['key'] for r in heldout}),
         'sha256': {n: digest(args.out / n) for n in ('sft.jsonl', 'pool.jsonl', 'gate.jsonl', 'eval-heldout.jsonl')},

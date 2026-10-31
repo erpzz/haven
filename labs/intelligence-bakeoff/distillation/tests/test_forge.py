@@ -165,6 +165,25 @@ class MixTests(unittest.TestCase):
             self.assertEqual(rows[rid]['origin'], 'recorded')
 
 
+class PairBalanceTests(unittest.TestCase):
+    """Preference pairs push equally toward each answer on yes/no tasks, or they skew the false-positive rate."""
+
+    def test_detect_and_finding_support_are_balanced(self):
+        mk = lambda i, task, chosen: {'id': f'{task}-{i}', 'task': task, 'chosen': chosen, 'rejected': 'x', 'prompt': []}
+        pairs = ([mk(i, 'detect', '{"verdict": "vulnerable"}') for i in range(9)]
+                 + [mk(i + 9, 'detect', '{"verdict": "not_vulnerable"}') for i in range(4)]
+                 + [mk(i, 'finding_support', '{"supported": true}') for i in range(5)]
+                 + [mk(i + 5, 'finding_support', '{"supported": false}') for i in range(3)]
+                 + [mk(i, 'remediate', 'patched code') for i in range(6)])
+        out, counts = mix.balance_pairs(pairs)
+        by = lambda t, v: sum(1 for p in out if p['task'] == t and v in p['chosen'])
+        self.assertEqual((by('detect', '"vulnerable"'), by('detect', 'not_vulnerable')), (4, 4))
+        self.assertEqual((by('finding_support', 'true'), by('finding_support', 'false')), (3, 3))
+        self.assertEqual(by('remediate', 'patched'), 6)
+        self.assertEqual(counts['detect:vulnerable'], '4/9')
+        self.assertEqual({p['id'] for p in out}, {p['id'] for p in mix.balance_pairs(list(reversed(pairs)))[0]})  # order-free
+
+
 class SelfPlayGraderTests(unittest.TestCase):
     def test_gold_grader_matches_recorded_target(self):
         v, f = detect_pair()
