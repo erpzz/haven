@@ -58,7 +58,11 @@ class MoeLaneTests(unittest.TestCase):
         self.lab.shutdown()
         self.temp.cleanup()
 
-    def _start(self, model_id, overrides=None):
+    def _start(self, model_id, overrides=None, home=None):
+        # Hermetic on a real Linux host: never read or write the live preempt request.
+        home_patch = patch('pathlib.Path.home', return_value=home or Path(self.temp.name) / 'home-start')
+        home_patch.start()
+        self.addCleanup(home_patch.stop)
         class FakeProc:
             def poll(self):
                 return None
@@ -101,7 +105,7 @@ class MoeLaneTests(unittest.TestCase):
     def test_dense_model_of_same_size_is_refused(self):
         with patch.object(self.lab, 'llama_exe', return_value=Path('/fake/llama-server')), \
              patch.object(self.lab, 'get_hardware', return_value={'gpus': [GPU], 'ram_available_gib': 60}), \
-             patch('gpu_lease.peer_busy', return_value=[]):
+             patch('gpu_lease.peer_busy', return_value=[]), patch('gpu_lease.compute_pids', return_value=set()):
             with self.assertRaisesRegex(ValueError, 'tight'):
                 self.lab.start_llama('dense', 'gpu')
         self.assertIsNone(self.lab.engine.proc)
@@ -124,7 +128,7 @@ class MoeLaneTests(unittest.TestCase):
     def test_refused_load_requests_training_preemption_and_success_clears_it(self):
         import gpu_lease
         home = Path(self.temp.name) / 'home'
-        low = {'gpus': [{'index': 0, 'memory_free_mib': 900}], 'ram_available_gib': 60}
+        low = {'gpus': [{'index': 0, 'memory_free_mib': 900, 'memory_total_mib': 8192}], 'ram_available_gib': 60}
         with patch.object(self.lab, 'llama_exe', return_value=Path('/fake/llama-server')), \
              patch.object(self.lab, 'get_hardware', return_value=low), patch('labcore.sys.platform', 'linux'), \
              patch('gpu_lease.peer_busy', return_value=[]), patch('gpu_lease.compute_pids', return_value={4242}), \
@@ -135,9 +139,20 @@ class MoeLaneTests(unittest.TestCase):
             self.assertTrue(request.is_file())
             self.assertEqual(request.stat().st_mode & 0o777, 0o600)
         self.assertIsNone(self.lab.engine.proc)
-        with patch('labcore.sys.platform', 'linux'), patch('pathlib.Path.home', return_value=home):
-            self._start('moe')
+        with patch('labcore.sys.platform', 'linux'):
+            self._start('moe', home=home)
         self.assertFalse(request.exists())
+
+    def test_model_too_large_even_for_an_empty_gpu_does_not_ask_training_to_yield(self):
+        home = Path(self.temp.name) / 'home2'
+        low = {'gpus': [{'index': 0, 'memory_free_mib': 900, 'memory_total_mib': 8192}], 'ram_available_gib': 60}
+        with patch.object(self.lab, 'llama_exe', return_value=Path('/fake/llama-server')), \
+             patch.object(self.lab, 'get_hardware', return_value=low), patch('labcore.sys.platform', 'linux'), \
+             patch('gpu_lease.peer_busy', return_value=[]), patch('gpu_lease.compute_pids', return_value={4242}), \
+             patch('pathlib.Path.home', return_value=home):
+            with self.assertRaisesRegex(ValueError, 'tight'):
+                self.lab.start_llama('dense', 'gpu')
+        self.assertFalse((home / '.local/state/haven/gpu-preempt-request').exists())
 
     def test_tight_load_without_other_gpu_process_keeps_the_old_message(self):
         low = {'gpus': [{'index': 0, 'memory_free_mib': 900}], 'ram_available_gib': 60}

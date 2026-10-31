@@ -741,12 +741,16 @@ class Lab:
                         profile['batch'] = profile['ubatch'] = int(entry['prefill_batch'])
                     if entry.get('checkpoint_min_step') is not None:
                         profile['checkpoint_min_step'] = int(entry['checkpoint_min_step'])
-                    fit = estimate_moe_fit(item['size_bytes'], int(entry['gpu_mib']), first['memory_free_mib'],
-                                           hw.get('ram_available_gib'), profile['context'])
-                else:
-                    fit = estimate_fit(item['size_bytes'], first['memory_free_mib'], profile['context'])
+                def fit_with(free_mib):
+                    if profile.get('cpu_moe'):
+                        return estimate_moe_fit(item['size_bytes'], int(entry['gpu_mib']), free_mib,
+                                                hw.get('ram_available_gib'), profile['context'])
+                    return estimate_fit(item['size_bytes'], free_mib, profile['context'])
+                fit = fit_with(first['memory_free_mib'])
                 if fit['status'] != 'LIKELY_FITS' and not allow_tight:
-                    if sys.platform == 'linux' and gpu_lease.compute_pids():
+                    total = first.get('memory_total_mib')
+                    fits_when_empty = bool(total) and fit_with(total - 400)['status'] == 'LIKELY_FITS'
+                    if sys.platform == 'linux' and fits_when_empty and gpu_lease.compute_pids():
                         # Interactive use takes precedence: cooperative training watches this request and
                         # yields within about one optimizer step. Nothing is stopped from here.
                         gpu_lease.request_preempt(time.time())
