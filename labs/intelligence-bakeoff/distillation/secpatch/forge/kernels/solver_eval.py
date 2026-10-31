@@ -6,7 +6,7 @@ import json, os, pathlib, shutil, subprocess, sys, time, traceback, urllib.reque
 T0 = time.monotonic()
 OUT = pathlib.Path('/kaggle/working'); (OUT / 'logs').mkdir(parents=True, exist_ok=True)
 W = pathlib.Path('/tmp/forge'); W.mkdir(exist_ok=True)
-def find_input(marker, sibling=None, wait_s=900):
+def find_input(marker, sibling=None, wait_s=2700):
     """Locate the attached dataset. A just-uploaded dataset version can mount minutes after the session starts,
     so poll instead of failing (cycle 0's first training kernel died here with StopIteration)."""
     deadline = time.monotonic() + wait_s

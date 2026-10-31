@@ -192,8 +192,9 @@ def package(s, cfg, kind: str) -> str:
         shutil.copy(f, stage / 'code/forge' / f.name)
     for name in ('evaluate.py', 'harvest.py'):
         shutil.copy(STATE_DIR / 'code/secpatch' / name, stage / 'code' / name)
-    for prev in prior_files(s, 'c*/teach/traces*.jsonl'):  # the teacher skips rows already taught
-        shutil.copy(prev, stage / f'traces-{prev.parent.parent.name}-{prev.name}')
+    if kind == 'teach':  # only the teacher needs earlier traces (to skip taught rows); they make up most of the bytes
+        for prev in prior_files(s, 'c*/teach/traces*.jsonl'):
+            shutil.copy(prev, stage / f'traces-{prev.parent.parent.name}-{prev.name}')
     (stage / 'config.json').write_text(json.dumps({**cfg, 'cycle': s['cycle'], 'kind': kind}, indent=1))
     (stage / 'dataset-metadata.json').write_text(json.dumps(
         {'title': slug, 'id': f'{cfg["kaggle_owner"]}/{slug}', 'licenses': [{'name': 'other'}], 'isPrivate': True}))
