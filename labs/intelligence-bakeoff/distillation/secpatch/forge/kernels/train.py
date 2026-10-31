@@ -125,18 +125,21 @@ if cfg.get("max_rows"):  # dry runs: a small deterministic slice
     rows = rows[:cfg["max_rows"]]
 enc, skipped = [], 0
 for r in rows:
-    msgs = r["messages"]
-    prefix = tok.apply_chat_template(msgs[:-1], tokenize=False, add_generation_prompt=True, enable_thinking=False)
-    full = tok.apply_chat_template(msgs, tokenize=False, enable_thinking=False)
+    msgs, tools = r["messages"], r.get("tools")  # tools: agent rows whose target may be a tool call
+    prefix = tok.apply_chat_template(msgs[:-1], tools=tools, tokenize=False, add_generation_prompt=True, enable_thinking=False)
+    full = tok.apply_chat_template(msgs, tools=tools, tokenize=False, enable_thinking=False)
     if full.startswith(prefix):
         target = full[len(prefix):]
     else:
-        # Some templates (Qwythos-9B-v2) render a reasoning-free answer without the empty think block that their
-        # generation prompt still emits: train on exactly the inference prefix + answer + the template's turn end.
-        base = tok.apply_chat_template(msgs[:-1], tokenize=False, enable_thinking=False)
-        turn, ans = full[len(base):], msgs[-1]["content"].strip()  # the template trims the answer
-        assert full.startswith(base) and ans in turn, "chat template prefix mismatch"
-        target = turn[turn.index(ans):]
+        # Some templates (Qwythos-9B-v2) render a reasoning-free turn without the empty think block that their
+        # generation prompt still emits: train on exactly the inference prefix + the rendered turn after its header.
+        base = tok.apply_chat_template(msgs[:-1], tools=tools, tokenize=False, enable_thinking=False)
+        assert full.startswith(base) and prefix.startswith(base), "chat template prefix mismatch"
+        turn, gen = full[len(base):], prefix[len(base):]
+        head = os.path.commonprefix([turn, gen])
+        head = head[:head.rfind("\n") + 1]  # the role header line, never part of the content
+        assert head, "chat template prefix mismatch"
+        target = turn[len(head):]
     p = tok(prefix, add_special_tokens=False)["input_ids"]; t = tok(target.rstrip("\n"), add_special_tokens=False)["input_ids"]
     if len(p) + len(t) > cfg["max_length"]:
         skipped += 1; continue

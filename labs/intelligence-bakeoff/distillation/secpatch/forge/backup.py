@@ -34,7 +34,7 @@ MANIFEST = BACKUP_DIR / 'manifest.json'
 LOG = BACKUP_DIR / 'backup.jsonl'
 SETTLE_S = 300  # a file modified this recently may still be being written; it goes in the next run
 SOURCES = [  # (local root, path prefix in the repo, top-level entries to include)
-    (loop.STATE_DIR, 'forge/', ['state.json', 'config.override.json', 'logs', 'bench', 'cycles', 'runs']),
+    (loop.STATE_DIR, 'forge/', ['state.json', 'config.override.json', 'logs', 'bench', 'cycles', 'runs', 'agent']),
     (loop.SECPATCH_STATE, 'secpatch/', ['adapters', 'baseline', 'candidates.jsonl', 'data', 'data-*', 'eval',
                                         'eval-regraded', 'fresh', 'harvest*.jsonl', 'raw', 'runs', 'scope.jsonl', '*.sh']),
 ]

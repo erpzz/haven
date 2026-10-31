@@ -243,26 +243,28 @@ class TrainerEncodingTests(unittest.TestCase):
         def __init__(self, think_in_history):
             self.h = think_in_history
 
-        def apply_chat_template(self, msgs, tokenize=False, add_generation_prompt=False, enable_thinking=True):
+        def apply_chat_template(self, msgs, tools=None, tokenize=False, add_generation_prompt=False, enable_thinking=True):
             out = ''
             for m in msgs:
                 if m['role'] == 'assistant':
-                    out += '<a>' + ('<t></t>' if self.h else '') + m['content'].strip() + '</e>\n'
+                    body = m['content'].strip() + ''.join(f'<tc>{c["function"]["name"]}</tc>' for c in m.get('tool_calls', []))
+                    out += '<a>\n' + ('<t></t>' if self.h else '') + body + '</e>\n'
                 else:
                     out += f'<{m["role"]}>{m["content"]}</e>\n'
-            return out + ('<a><t></t>' if add_generation_prompt else '')
+            return out + ('<a>\n<t></t>' if add_generation_prompt else '')
 
         def __call__(self, text, add_special_tokens=False):
             return {'input_ids': [ord(c) for c in text]}
 
-    def encode(self, think_in_history):
+    def encode(self, think_in_history, last=None):
         import ast
+        import os
         src = (FORGE / 'kernels' / 'train.py').read_text()
         trainer = next(ast.literal_eval(n.value) for n in ast.parse(src).body
                        if isinstance(n, ast.Assign) and getattr(n.targets[0], 'id', '') == 'TRAINER')
-        ns = {'tok': self.Tok(think_in_history), 'cfg': {'max_length': 4096},
-              'rows': [{'messages': [SYSTEM, {'role': 'user', 'content': 'Review.'},
-                                     {'role': 'assistant', 'content': '{"verdict": "safe"}  \n'}]}]}
+        last = last or {'role': 'assistant', 'content': '{"verdict": "safe"}  \n'}
+        ns = {'tok': self.Tok(think_in_history), 'cfg': {'max_length': 4096}, 'os': os,
+              'rows': [{'messages': [SYSTEM, {'role': 'user', 'content': 'Review.'}, last], 'tools': [{'type': 'function'}]}]}
         exec(trainer[trainer.index('enc, skipped = [], 0'):trainer.index('class DS')], ns)
         e = ns['enc'][0]
         k = e['labels'].count(-100)
@@ -271,8 +273,15 @@ class TrainerEncodingTests(unittest.TestCase):
     def test_same_tokens_with_or_without_think_block_in_history(self):
         stock, qwythos = self.encode(True), self.encode(False)
         self.assertEqual(stock, qwythos)
-        self.assertTrue(stock[0].endswith('<a><t></t>'))
+        self.assertTrue(stock[0].endswith('<a>\n<t></t>'))
         self.assertEqual(stock[1], '{"verdict": "safe"}</e>')
+
+    def test_tool_call_turn_with_empty_content_is_the_target(self):
+        call = {'role': 'assistant', 'content': '', 'tool_calls': [{'function': {'name': 'entra_ca_assess', 'arguments': {}}}]}
+        for h in (True, False):
+            prefix, target = self.encode(h, call)
+            self.assertTrue(prefix.endswith('<a>\n<t></t>'))
+            self.assertEqual(target, '<tc>entra_ca_assess</tc></e>')
 
 
 class BackupSelectionTests(unittest.TestCase):
