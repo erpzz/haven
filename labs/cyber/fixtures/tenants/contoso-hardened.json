@@ -1,0 +1,473 @@
+{
+  "schema": "haven-graph-snapshot-v1",
+  "collector": "synthetic-fixture",
+  "source": "synthetic",
+  "collected_at": "2026-10-31T12:00:00Z",
+  "tenant": {
+    "id": "8905d969-e664-51de-a0b1-4404f03a6dae",
+    "displayName": "Contoso (hardened, synthetic)"
+  },
+  "graph_endpoints": [
+    "GET /v1.0/identity/conditionalAccess/policies",
+    "GET /v1.0/users",
+    "GET /v1.0/groups",
+    "GET /v1.0/roleManagement/directory/roleAssignments",
+    "GET /v1.0/policies/authenticationStrengthPolicies"
+  ],
+  "conditionalAccessPolicies": [
+    {
+      "id": "3e310cc5-217a-5edd-9e43-c97b624a11cc",
+      "displayName": "CA001 Block legacy authentication",
+      "state": "enabled",
+      "createdDateTime": "2026-03-02T10:00:00Z",
+      "modifiedDateTime": "2026-09-14T16:20:00Z",
+      "conditions": {
+        "users": {
+          "includeUsers": [
+            "All"
+          ],
+          "excludeUsers": [],
+          "includeGroups": [],
+          "excludeGroups": [
+            "6c7b5668-5ad1-513e-8e6d-e1858a978862"
+          ],
+          "includeRoles": [],
+          "excludeRoles": []
+        },
+        "applications": {
+          "includeApplications": [
+            "All"
+          ],
+          "excludeApplications": []
+        },
+        "clientAppTypes": [
+          "exchangeActiveSync",
+          "other"
+        ],
+        "signInRiskLevels": [],
+        "userRiskLevels": []
+      },
+      "grantControls": {
+        "operator": "OR",
+        "builtInControls": [
+          "block"
+        ],
+        "authenticationStrength": null
+      },
+      "sessionControls": null
+    },
+    {
+      "id": "e3c40a96-b703-593d-a81d-3f4de3b9cd93",
+      "displayName": "CA002 Require MFA for administrators",
+      "state": "enabled",
+      "createdDateTime": "2026-03-02T10:00:00Z",
+      "modifiedDateTime": "2026-09-14T16:20:00Z",
+      "conditions": {
+        "users": {
+          "includeUsers": [],
+          "excludeUsers": [],
+          "includeGroups": [],
+          "excludeGroups": [
+            "6c7b5668-5ad1-513e-8e6d-e1858a978862"
+          ],
+          "includeRoles": [
+            "62e90394-69f5-4237-9190-012177145e10",
+            "e8611ab8-c189-46e8-94e1-60213ab1f814",
+            "194ae4cb-b126-40b2-bd5b-6091b380977d"
+          ],
+          "excludeRoles": []
+        },
+        "applications": {
+          "includeApplications": [
+            "All"
+          ],
+          "excludeApplications": []
+        },
+        "clientAppTypes": [
+          "all"
+        ],
+        "signInRiskLevels": [],
+        "userRiskLevels": []
+      },
+      "grantControls": {
+        "operator": "OR",
+        "builtInControls": [
+          "mfa"
+        ],
+        "authenticationStrength": null
+      },
+      "sessionControls": null
+    },
+    {
+      "id": "771b7210-27b6-509e-a7b0-abc2b1bebe5d",
+      "displayName": "CA003 Require MFA for all users",
+      "state": "enabled",
+      "createdDateTime": "2026-03-02T10:00:00Z",
+      "modifiedDateTime": "2026-09-14T16:20:00Z",
+      "conditions": {
+        "users": {
+          "includeUsers": [
+            "All"
+          ],
+          "excludeUsers": [],
+          "includeGroups": [],
+          "excludeGroups": [
+            "6c7b5668-5ad1-513e-8e6d-e1858a978862"
+          ],
+          "includeRoles": [],
+          "excludeRoles": []
+        },
+        "applications": {
+          "includeApplications": [
+            "All"
+          ],
+          "excludeApplications": []
+        },
+        "clientAppTypes": [
+          "all"
+        ],
+        "signInRiskLevels": [],
+        "userRiskLevels": []
+      },
+      "grantControls": {
+        "operator": "OR",
+        "builtInControls": [
+          "mfa"
+        ],
+        "authenticationStrength": null
+      },
+      "sessionControls": null
+    },
+    {
+      "id": "6fba8afc-dce0-5611-a36a-ce355ab37f8c",
+      "displayName": "CA004 Phishing-resistant MFA for admins",
+      "state": "enabled",
+      "createdDateTime": "2026-03-02T10:00:00Z",
+      "modifiedDateTime": "2026-09-14T16:20:00Z",
+      "conditions": {
+        "users": {
+          "includeUsers": [],
+          "excludeUsers": [],
+          "includeGroups": [],
+          "excludeGroups": [
+            "6c7b5668-5ad1-513e-8e6d-e1858a978862"
+          ],
+          "includeRoles": [
+            "62e90394-69f5-4237-9190-012177145e10",
+            "e8611ab8-c189-46e8-94e1-60213ab1f814",
+            "194ae4cb-b126-40b2-bd5b-6091b380977d"
+          ],
+          "excludeRoles": []
+        },
+        "applications": {
+          "includeApplications": [
+            "All"
+          ],
+          "excludeApplications": []
+        },
+        "clientAppTypes": [
+          "all"
+        ],
+        "signInRiskLevels": [],
+        "userRiskLevels": []
+      },
+      "grantControls": {
+        "operator": "OR",
+        "builtInControls": [],
+        "authenticationStrength": {
+          "id": "00000000-0000-0000-0000-000000000004",
+          "displayName": "Phishing-resistant MFA"
+        }
+      },
+      "sessionControls": null
+    },
+    {
+      "id": "034e8ea6-23c7-5bac-9916-0f300eaa36ec",
+      "displayName": "CA005 Block high sign-in risk",
+      "state": "enabled",
+      "createdDateTime": "2026-03-02T10:00:00Z",
+      "modifiedDateTime": "2026-09-14T16:20:00Z",
+      "conditions": {
+        "users": {
+          "includeUsers": [
+            "All"
+          ],
+          "excludeUsers": [],
+          "includeGroups": [],
+          "excludeGroups": [
+            "6c7b5668-5ad1-513e-8e6d-e1858a978862"
+          ],
+          "includeRoles": [],
+          "excludeRoles": []
+        },
+        "applications": {
+          "includeApplications": [
+            "All"
+          ],
+          "excludeApplications": []
+        },
+        "clientAppTypes": [
+          "all"
+        ],
+        "signInRiskLevels": [
+          "high"
+        ],
+        "userRiskLevels": []
+      },
+      "grantControls": {
+        "operator": "OR",
+        "builtInControls": [
+          "block"
+        ],
+        "authenticationStrength": null
+      },
+      "sessionControls": null
+    },
+    {
+      "id": "f162a286-c0a5-5860-bcbd-ecfb6d1a61d1",
+      "displayName": "CA006 Block device code flow",
+      "state": "enabled",
+      "createdDateTime": "2026-03-02T10:00:00Z",
+      "modifiedDateTime": "2026-09-14T16:20:00Z",
+      "conditions": {
+        "users": {
+          "includeUsers": [
+            "All"
+          ],
+          "excludeUsers": [],
+          "includeGroups": [],
+          "excludeGroups": [
+            "6c7b5668-5ad1-513e-8e6d-e1858a978862"
+          ],
+          "includeRoles": [],
+          "excludeRoles": []
+        },
+        "applications": {
+          "includeApplications": [
+            "All"
+          ],
+          "excludeApplications": []
+        },
+        "clientAppTypes": [
+          "all"
+        ],
+        "signInRiskLevels": [],
+        "userRiskLevels": [],
+        "authenticationFlows": {
+          "transferMethods": [
+            "deviceCodeFlow"
+          ]
+        }
+      },
+      "grantControls": {
+        "operator": "OR",
+        "builtInControls": [
+          "block"
+        ],
+        "authenticationStrength": null
+      },
+      "sessionControls": null
+    },
+    {
+      "id": "ea521fd2-c831-513a-90d1-41b067f3f7f9",
+      "displayName": "CA001-old Block legacy auth (superseded)",
+      "state": "disabled",
+      "createdDateTime": "2026-03-02T10:00:00Z",
+      "modifiedDateTime": "2026-09-14T16:20:00Z",
+      "conditions": {
+        "users": {
+          "includeUsers": [
+            "All"
+          ],
+          "excludeUsers": [],
+          "includeGroups": [],
+          "excludeGroups": [],
+          "includeRoles": [],
+          "excludeRoles": []
+        },
+        "applications": {
+          "includeApplications": [
+            "All"
+          ],
+          "excludeApplications": []
+        },
+        "clientAppTypes": [
+          "other"
+        ],
+        "signInRiskLevels": [],
+        "userRiskLevels": []
+      },
+      "grantControls": {
+        "operator": "OR",
+        "builtInControls": [
+          "block"
+        ],
+        "authenticationStrength": null
+      },
+      "sessionControls": null
+    }
+  ],
+  "users": [
+    {
+      "id": "b5a96c3b-003a-52a7-b8ac-ca8970a922c5",
+      "userPrincipalName": "alice.admin@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "2c078217-54a2-520b-a96a-bd4dd0298c97",
+      "userPrincipalName": "ops.admin@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "b2ea782f-384a-58ab-beb1-7aad80367cb6",
+      "userPrincipalName": "bg-01@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "c85db28e-c045-58fd-9534-6de175f05397",
+      "userPrincipalName": "bg-02@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "bea21d3f-6f53-515c-9f7b-381ec3de20da",
+      "userPrincipalName": "svc-mailscan@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "96669ffe-6055-5fc2-bd51-6eb9409ba35b",
+      "userPrincipalName": "dana@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "ad1b70a9-ece7-58ba-b691-c4d769b8dcb0",
+      "userPrincipalName": "eli@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "b1b511d4-77bd-541d-8321-b0ff7d9093dc",
+      "userPrincipalName": "fay@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "682fe753-7c02-5a3a-9477-ab8b922f2d7d",
+      "userPrincipalName": "gus@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "23a89919-9326-53e7-a9c5-342a8cdcdcb6",
+      "userPrincipalName": "hana@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "8803e5e1-0ef4-55d5-809d-f16fedd6631d",
+      "userPrincipalName": "ivan@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "6423ae3e-0c53-505e-865b-4091c4b81da4",
+      "userPrincipalName": "jo@contoso.example",
+      "userType": "Member",
+      "accountEnabled": true
+    },
+    {
+      "id": "fdc31b24-3dfe-532f-99f8-5a0e970cd349",
+      "userPrincipalName": "kim_fabrikam.example#EXT#@contoso.example",
+      "userType": "Guest",
+      "accountEnabled": true
+    }
+  ],
+  "groups": [
+    {
+      "id": "6c7b5668-5ad1-513e-8e6d-e1858a978862",
+      "displayName": "CA-Exclude-EmergencyAccess",
+      "members": [
+        "b2ea782f-384a-58ab-beb1-7aad80367cb6",
+        "c85db28e-c045-58fd-9534-6de175f05397"
+      ]
+    },
+    {
+      "id": "1e8b46ff-b7ad-587c-a3d2-3bbbaf9b7a10",
+      "displayName": "Legacy-Mail-Clients",
+      "members": [
+        "bea21d3f-6f53-515c-9f7b-381ec3de20da"
+      ]
+    },
+    {
+      "id": "180f4a71-9e4b-5a25-ab3f-482fb299e153",
+      "displayName": "Contractors",
+      "members": [
+        "96669ffe-6055-5fc2-bd51-6eb9409ba35b",
+        "ad1b70a9-ece7-58ba-b691-c4d769b8dcb0",
+        "b1b511d4-77bd-541d-8321-b0ff7d9093dc",
+        "682fe753-7c02-5a3a-9477-ab8b922f2d7d",
+        "23a89919-9326-53e7-a9c5-342a8cdcdcb6",
+        "8803e5e1-0ef4-55d5-809d-f16fedd6631d",
+        "6423ae3e-0c53-505e-865b-4091c4b81da4"
+      ]
+    }
+  ],
+  "roleAssignments": [
+    {
+      "roleTemplateId": "62e90394-69f5-4237-9190-012177145e10",
+      "principalId": "b5a96c3b-003a-52a7-b8ac-ca8970a922c5"
+    },
+    {
+      "roleTemplateId": "62e90394-69f5-4237-9190-012177145e10",
+      "principalId": "2c078217-54a2-520b-a96a-bd4dd0298c97"
+    },
+    {
+      "roleTemplateId": "62e90394-69f5-4237-9190-012177145e10",
+      "principalId": "b2ea782f-384a-58ab-beb1-7aad80367cb6"
+    },
+    {
+      "roleTemplateId": "62e90394-69f5-4237-9190-012177145e10",
+      "principalId": "c85db28e-c045-58fd-9534-6de175f05397"
+    }
+  ],
+  "directoryRoleTemplates": [
+    {
+      "id": "62e90394-69f5-4237-9190-012177145e10",
+      "displayName": "Global Administrator"
+    },
+    {
+      "id": "e8611ab8-c189-46e8-94e1-60213ab1f814",
+      "displayName": "Privileged Role Administrator"
+    },
+    {
+      "id": "194ae4cb-b126-40b2-bd5b-6091b380977d",
+      "displayName": "Security Administrator"
+    }
+  ],
+  "authenticationStrengthPolicies": [
+    {
+      "id": "00000000-0000-0000-0000-000000000002",
+      "displayName": "Multifactor authentication",
+      "policyType": "builtIn"
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000004",
+      "displayName": "Phishing-resistant MFA",
+      "policyType": "builtIn",
+      "allowedCombinations": [
+        "windowsHelloForBusiness",
+        "fido2",
+        "x509CertificateMultiFactor"
+      ]
+    }
+  ],
+  "emergencyAccessAccounts": [
+    "b2ea782f-384a-58ab-beb1-7aad80367cb6",
+    "c85db28e-c045-58fd-9534-6de175f05397"
+  ]
+}

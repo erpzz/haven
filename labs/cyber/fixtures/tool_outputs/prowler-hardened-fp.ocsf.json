@@ -1,0 +1,91 @@
+[
+  {
+    "message": "Conditional Access Policy 'CA001-old Block legacy auth (superseded)' is disabled; legacy authentication is not blocked.",
+    "activity_id": 1,
+    "activity_name": "Create",
+    "finding_info": {
+      "created_time": 1793448300,
+      "created_time_dt": "2026-10-31T12:05:00Z",
+      "desc": "At least one Conditional Access policy blocks legacy authentication",
+      "title": "At least one Conditional Access policy blocks legacy authentication",
+      "uid": "prowler-m365-entra_legacy_authentication_blocked-1e4b7e83-0b9f-5e3a-a3c9-7d1e5f9b2c20-global-1",
+      "name": "Conditional Access Policies",
+      "types": []
+    },
+    "time": 1793448300,
+    "time_dt": "2026-10-31T12:05:00Z",
+    "remediation": {
+      "desc": "Block legacy authentication with Conditional Access.",
+      "references": [
+        "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-legacy-authentication"
+      ]
+    },
+    "severity_id": 5,
+    "severity": "Critical",
+    "status_id": 1,
+    "status": "New",
+    "status_code": "FAIL",
+    "status_detail": "Conditional Access Policy 'CA001-old Block legacy auth (superseded)' is disabled; legacy authentication is not blocked.",
+    "risk_details": "",
+    "resources": [
+      {
+        "labels": [],
+        "name": "Conditional Access Policies",
+        "uid": "conditionalAccessPolicies",
+        "group": {
+          "name": "entra"
+        },
+        "type": "NotDefined",
+        "cloud_partition": null,
+        "region": "global",
+        "data": {}
+      }
+    ],
+    "metadata": {
+      "event_code": "entra_legacy_authentication_blocked",
+      "product": {
+        "uid": "prowler",
+        "name": "Prowler",
+        "vendor_name": "Prowler",
+        "version": "5.14.0"
+      },
+      "profiles": [
+        "cloud",
+        "datetime"
+      ],
+      "tenant_uid": "1e4b7e83-0b9f-5e3a-a3c9-7d1e5f9b2c20",
+      "version": "1.5.0"
+    },
+    "type_uid": 200401,
+    "type_name": "Detection Finding: Create",
+    "category_uid": 2,
+    "class_uid": 2004,
+    "unmapped": {
+      "related_url": "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-legacy-authentication",
+      "categories": [],
+      "depends_on": [],
+      "related_to": [],
+      "additional_urls": [],
+      "notes": "",
+      "compliance": {},
+      "scan_id": "00000000-0000-4000-8000-00000000c0de",
+      "provider_uid": "1e4b7e83-0b9f-5e3a-a3c9-7d1e5f9b2c20",
+      "provider": "m365"
+    },
+    "cloud": {
+      "account": {
+        "name": "Contoso (synthetic)",
+        "type_id": 99,
+        "type": "Other",
+        "uid": "1e4b7e83-0b9f-5e3a-a3c9-7d1e5f9b2c20",
+        "labels": []
+      },
+      "org": {
+        "uid": "1e4b7e83-0b9f-5e3a-a3c9-7d1e5f9b2c20",
+        "name": "Contoso (synthetic)"
+      },
+      "provider": "m365",
+      "region": "global"
+    }
+  }
+]
