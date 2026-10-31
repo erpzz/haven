@@ -31,7 +31,8 @@ SYSTEM = ('You are a strict senior application-security reviewer checking a juni
 ASK = ('\n\n---\nEstablished verdict: {verdict}\n{extra}Junior\'s explanation:\n{analysis}\n\n'
        'Answer sound=false ONLY for a clear error: the explanation states something the code shown contradicts '
        '(a wrong identifier, line or control flow), or names a mechanism or guard that plainly does not apply to '
-       'this code. Imperfect wording, missing detail or a different emphasis are sound. If unsure, answer sound=true. '
+       'this code. Imperfect wording, missing detail, a different emphasis, a debatable CWE label, or line numbers off by '
+       'one or two (or a slightly different line range) are sound. If unsure, answer sound=true. '
        'Respond with only JSON: {{"sound": true|false, "problem": "<empty if sound, else one sentence>"}}')
 
 

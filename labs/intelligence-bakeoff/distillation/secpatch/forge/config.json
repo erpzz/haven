@@ -35,7 +35,7 @@
   "shard": "0-5/8",
   "think_retries": 1,
   "critic": true,
-  "critic_mode": "advisory"
+  "critic_mode": "enforce"
  },
  "gate": {
   "min_gain": 0.0,
@@ -64,5 +64,14 @@
    "qwen38-27b-q4": 43
   },
   "note": "Kaggle 2x T4, one attempt, no reasoning mode; Qwen3.8-27B fails mostly on too_short root_cause answers"
+ },
+ "critic_calibration_2026_10_31": {
+  "critic": "Qwen3.6-35B-A3B",
+  "labels": {
+   "bad_caught": "13/18",
+   "good_rejected": "1/17"
+  },
+  "cycle1_sample_precision": "9-10 of 20 flags real",
+  "note": "main false-reject pattern: line-number nitpicks (prompt now tolerates them)"
  }
 }
