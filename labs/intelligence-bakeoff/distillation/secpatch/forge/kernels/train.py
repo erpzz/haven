@@ -151,16 +151,20 @@ model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True, 
 model = get_peft_model(model, LoraConfig(r=cfg["rank"], lora_alpha=cfg["alpha"], lora_dropout=0.05, task_type="CAUSAL_LM",
     target_modules=r".*language_model.*\.(q_proj|k_proj|v_proj|o_proj|gate_proj|up_proj|down_proj|in_proj_\w+|out_proj)"))
 class Guard(TrainerCallback):
+    # Deadline (Kaggle session limit) and, on a shared machine, preemption: when the flag file appears, save a
+    # checkpoint at the end of the current optimizer step and stop so interactive inference can take the GPU.
     def on_step_end(self, args, state, control, **kw):
-        if time.time() > deadline:
+        flag = cfg.get("preempt_flag")
+        if time.time() > deadline or (flag and os.path.exists(flag)):
             control.should_training_stop = True; control.should_save = True
 import inspect
 world = int(os.environ.get("WORLD_SIZE", 1))
 total_steps = max(1, math.ceil(len(enc) / (world * cfg["grad_accum"])) * math.ceil(cfg["epochs"]))
 kw = dict(output_dir=cfg["ckpt"], num_train_epochs=cfg["epochs"], per_device_train_batch_size=1,
           gradient_accumulation_steps=cfg["grad_accum"], learning_rate=cfg["lr"], lr_scheduler_type="cosine",
-          warmup_steps=max(1, int(0.03 * total_steps)), fp16=True, logging_steps=5, save_strategy="epoch",
-          save_total_limit=1, report_to=[], seed=cfg["seed"], dataloader_num_workers=0, remove_unused_columns=False,
+          warmup_steps=max(1, int(0.03 * total_steps)), fp16=True, logging_steps=5,
+          save_strategy="steps" if cfg.get("save_steps") else "epoch", save_steps=cfg.get("save_steps") or 500,
+          save_total_limit=2, report_to=[], seed=cfg["seed"], dataloader_num_workers=0, remove_unused_columns=False,
           ddp_find_unused_parameters=False, group_by_length=True, max_grad_norm=1.0)
 accepted = inspect.signature(TrainingArguments.__init__).parameters
 if rank == 0 and set(kw) - set(accepted):
@@ -179,12 +183,17 @@ class AnswerOnlyTrainer(Trainer):
 tr = AnswerOnlyTrainer(model=model, args=args, train_dataset=DS(), data_collator=collate, callbacks=[Guard()])
 tr.model_accepts_loss_kwargs = False  # per-sequence mean loss; the Trainer averages over accumulation steps
 torch.cuda.reset_peak_memory_stats()
-res = tr.train()
+ckpts = sorted(pathlib.Path(cfg["ckpt"]).glob("checkpoint-*"), key=lambda p: int(p.name.split("-")[-1])) if cfg.get("resume") else []
+res = tr.train(resume_from_checkpoint=str(ckpts[-1]) if ckpts else None)
+preempted = bool(cfg.get("preempt_flag")) and os.path.exists(cfg["preempt_flag"])
+if rank == 0 and preempted:
+    tr.save_model(cfg["ckpt"] + "/preempt-latest")  # the step checkpoint is what resume uses; this is a safety copy
 if rank == 0:
     model.save_pretrained(cfg["adapter"])
     json.dump({"rows": len(rows), "encoded": len(enc), "skipped_too_long": skipped, "train_loss": res.training_loss,
                "steps": tr.state.global_step, "max_steps": tr.state.max_steps, "epochs_done": tr.state.epoch,
-               "stopped_by_deadline": time.time() > deadline,
+               "stopped_by_deadline": time.time() > deadline, "preempted": preempted,
+               "resumed_from": str(ckpts[-1]) if ckpts else None,
                "loss_log": [x for x in tr.state.log_history if "loss" in x],
                "peak_cuda_gib": round(torch.cuda.max_memory_allocated() / 2**30, 2)}, open(cfg["adapter"] + "/train.json", "w"), default=str)
 '''

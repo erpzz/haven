@@ -44,6 +44,53 @@ def run(cmd, log: pathlib.Path, env=None):
         raise RuntimeError(f'{cmd[1] if len(cmd) > 1 else cmd[0]} exited {r.returncode}; see {log}')
 
 
+GATEWAY_RECEIPTS = HOME / '.local/share/haven-model-lab/gateway-receipts.jsonl'
+PREEMPT_REQUEST = HOME / '.local/state/haven/gpu-preempt-request'
+
+
+def note(log: pathlib.Path, msg: str):
+    with log.open('a') as f:
+        f.write(time.strftime('%FT%TZ ', time.gmtime()) + msg + '\n')
+
+
+class ChatWatcher:
+    """Signs the owner wants interactive inference on this GPU (the owner's rule: it takes precedence)."""
+    def __init__(self):
+        self.receipts = GATEWAY_RECEIPTS.stat().st_size if GATEWAY_RECEIPTS.exists() else 0
+        self.since = time.strftime('%Y-%m-%d %H:%M:%S')
+
+    def chat_wanted(self) -> str | None:
+        if PREEMPT_REQUEST.exists():
+            return 'gpu-preempt-request file present'
+        if GATEWAY_RECEIPTS.exists() and GATEWAY_RECEIPTS.stat().st_size > self.receipts:
+            return 'new Haven gateway chat request'
+        r = subprocess.run(['journalctl', '--user', '-u', 'haven-model-lab', '--since', self.since, '--no-pager', '-o', 'cat'],
+                           capture_output=True, text=True)
+        if any(k in r.stdout for k in ('unowned GPU process', 'GPU access is blocked', 'owns the lease')):
+            return 'Model Lab GPU load refused'
+        return None
+
+
+def wait_for_quiet_gpu(out: pathlib.Path, log: pathlib.Path, quiet_min: int = 20):
+    """Start or resume only when no other process holds the GPU and nobody has chatted for quiet_min minutes."""
+    last_size, last_change = -1, time.time() - quiet_min * 60
+    while True:
+        size = GATEWAY_RECEIPTS.stat().st_size if GATEWAY_RECEIPTS.exists() else 0
+        if size != last_size:
+            if last_size != -1:
+                last_change = time.time()
+            last_size = size
+        teacher = subprocess.run(['systemctl', '--user', 'show', '-p', 'MainPID', '--value', 'forge-teacher-server'],
+                                 capture_output=True, text=True).stdout.strip()
+        pids = set(subprocess.run(['nvidia-smi', '--query-compute-apps=pid', '--format=csv,noheader'],
+                                  capture_output=True, text=True).stdout.split()) - {teacher, '0', ''}
+        if not pids and not PREEMPT_REQUEST.exists() and time.time() - last_change >= quiet_min * 60:
+            subprocess.run(['systemctl', '--user', 'stop', 'forge-teacher-server'])  # this session's own teacher
+            note(log, 'GPU quiet; (re)starting training')
+            return
+        time.sleep(60)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--model', type=pathlib.Path, required=True, help='local HF checkpoint (student base)')
@@ -57,6 +104,7 @@ def main(argv=None):
     ap.add_argument('--hours', type=float, default=20, help='training deadline; the adapter is saved when it hits')
     ap.add_argument('--pref', action='store_true', help='run the DPO+NLL stage on pairs.jsonl after SFT')
     ap.add_argument('--quant', default='Q4_K_M')
+    ap.add_argument('--save-steps', type=int, default=10, help='checkpoint interval (optimizer steps); bounds lost work')
     ap.add_argument('--python', default=str(HOME / '.local/share/forge-train-venv/bin/python'))
     args = ap.parse_args(argv)
     out = args.out; out.mkdir(parents=True, exist_ok=True)
@@ -71,8 +119,30 @@ def main(argv=None):
            'sft': str(args.cycle_data / 'sft.jsonl'), 'ckpt': str(out / 'ckpt'), 'adapter': str(out / 'adapter')}
     t0 = time.monotonic()
     (out / 'trainer.py').write_text(kernel_script('TRAINER'))
-    run([args.python, out / 'trainer.py', json.dumps(cfg), time.time() + args.hours * 3600], log, env)
-    receipt['train'] = json.loads((out / 'adapter' / 'train.json').read_text()); save()
+    flag = out / 'PREEMPT'
+    cfg.update(preempt_flag=str(flag), save_steps=args.save_steps, resume=True)
+    deadline = time.time() + args.hours * 3600
+    receipt['preemptions'] = []
+    while True:  # interactive inference takes precedence: yield the GPU, then resume from the checkpoint
+        flag.unlink(missing_ok=True)
+        wait_for_quiet_gpu(out, log)
+        proc = subprocess.Popen([args.python, str(out / 'trainer.py'), json.dumps(cfg), str(deadline)],
+                                stdout=log.open('a'), stderr=subprocess.STDOUT, env=env)
+        watcher = ChatWatcher()
+        while proc.poll() is None:
+            time.sleep(15)
+            why = watcher.chat_wanted()
+            if why and not flag.exists():
+                flag.write_text(why)
+                receipt['preemptions'].append({'at': time.strftime('%FT%TZ', time.gmtime()), 'why': why}); save()
+                note(log, f'preempting training: {why}')
+        if proc.returncode:
+            raise RuntimeError(f'trainer exited {proc.returncode}; see {log}')
+        train = json.loads((out / 'adapter' / 'train.json').read_text())
+        if not train.get('preempted'):
+            break
+        note(log, 'training paused for interactive use; will resume when the GPU is quiet')
+    receipt['train'] = train; save()
     if args.pref and (args.cycle_data / 'pairs.jsonl').exists():
         pcfg = {**cfg, 'pairs': str(args.cycle_data / 'pairs.jsonl'), 'pref_lr': 2e-5, 'pref_beta': 0.1, 'pref_nll': 1.0}
         (out / 'pref.py').write_text(kernel_script('PREF'))
@@ -114,4 +184,7 @@ for f in base.iterdir():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    finally:  # this session's own teacher was stopped for training
+        subprocess.run(['systemctl', '--user', 'start', 'forge-teacher-server'])
