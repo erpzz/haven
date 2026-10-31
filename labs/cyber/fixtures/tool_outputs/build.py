@@ -79,6 +79,17 @@ def main():
     tests[3]["ResultDetail"]["SkippedReason"] = "Not connected to the required service"
     (here / "maester-weak.json").write_text(json.dumps(maester(tests, TENANT_WEAK), indent=2) + "\n")
 
+    # Maester 3.0 shape (SchemaVersion 2.1): same rows, typed attributes instead of suite/product tags.
+    v3 = maester([dict(t) for t in tests], TENANT_WEAK)
+    v3.update(SchemaVersion="2.1", CatalogVersion="3.0.0", CurrentVersion="3.0.0", LatestVersion="3.0.0")
+    for t in v3["Tests"]:
+        t.update(Tag=[], Block="Entra ID", Source="Maester" if t["Id"].startswith("MT.") else "EIDSCA",
+                 Suite="Maester" if t["Id"].startswith("MT.") else "EIDSCA", Product="entra",
+                 Feature="conditional-access" if t["Id"].startswith("MT.") else "authorization-policy",
+                 Area="authentication", Mitre=["T1078.004"] if t["Id"] != "EIDSCA.AP01" else ["None"],
+                 Control=["example:REQ-7"] if t["Id"] == "MT.1007" else [], Lifecycle="Stable")
+    (here / "maester-weak-v3.json").write_text(json.dumps(v3, indent=2) + "\n")
+
     weak = [
         ocsf(1, "entra_legacy_authentication_blocked", "At least one Conditional Access policy blocks legacy authentication", "PASS",
              "Critical", "Conditional Access Policy 'CA001 Block legacy authentication' blocks legacy authentication.", TENANT_WEAK,
@@ -96,7 +107,7 @@ def main():
                "Critical", "Conditional Access Policy 'CA001-old Block legacy auth (superseded)' is disabled; legacy authentication is not blocked.",
                TENANT_HARD, "Block legacy authentication with Conditional Access.", LEARN + "conditional-access/policy-block-legacy-authentication")]
     (here / "prowler-hardened-fp.ocsf.json").write_text(json.dumps(fp, indent=2) + "\n")
-    print("wrote 3 tool outputs")
+    print("wrote 4 tool outputs")
 
 
 if __name__ == "__main__":

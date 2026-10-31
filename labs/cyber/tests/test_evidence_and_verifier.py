@@ -25,6 +25,18 @@ class NormalizerTests(unittest.TestCase):
         self.assertTrue(any("Skipped is not a pass" in x for x in by["EIDSCA.AP01"].limitations))
         self.assertIn("https://maester.dev/docs/tests/maester/MT.1005", by["MT.1005"].references)
 
+    def test_maester_v3_schema_2_1(self):
+        b = maester.normalize(FIXTURES / "tool_outputs" / "maester-weak-v3.json", ROOT)
+        by = {f.source_check_id: f for f in b.findings}
+        self.assertEqual(by["MT.1005"].domain, "entra")  # from Product, not tags (3.0 rows carry no product tags)
+        self.assertEqual(by["MT.1005"].service, "conditional-access")
+        self.assertIn("attack:T1078.004", by["MT.1006"].controls)
+        self.assertIn("example:REQ-7", by["MT.1007"].controls)  # synthetic control id, not a real framework mapping
+        self.assertNotIn("attack:None", by["EIDSCA.AP01"].controls)
+        self.assertIn("schema 2.1", by["MT.1005"].source_tool)
+        verify(b, ROOT, WEAK)  # cross-tool corroboration works the same for 3.0 results
+        self.assertEqual(by["MT.1005"].verification, "corroborated")
+
     def test_prowler_ocsf(self):
         b = prowler_ocsf.normalize(FIXTURES / "tool_outputs" / "prowler-weak.ocsf.json", ROOT)
         by = {f.source_check_id: f for f in b.findings}

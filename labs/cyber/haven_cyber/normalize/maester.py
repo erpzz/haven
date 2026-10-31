@@ -5,6 +5,10 @@ Field names follow maester365/maester powershell/internal/report/ConvertTo-MtMae
 HelpUrl, Severity, Tag, Result (Passed|Failed|Error|Investigate|Skipped|NotRun), Block and ResultDetail
 (TestDescription, TestResult, TestSkipped, SkippedReason, Severity, Service). Test identifiers, severity,
 documentation links and remediation text are preserved verbatim; the test suite itself is not reimplemented.
+
+Maester 3.0 results (`SchemaVersion` "2.1", website/docs/result-schema.md on main, read 2026-10-31) keep every 2.x
+field but no longer put suite/product tags in `Tag`; rows carry typed `Product`, `Feature`, `Mitre`, `Control` and
+`Lifecycle` instead. Both shapes are accepted: typed fields win, tags are the 2.x fallback.
 """
 from __future__ import annotations
 
@@ -17,6 +21,9 @@ STATUS = {"Passed": "pass", "Failed": "fail", "Error": "error", "Investigate": "
           "NotRun": "skipped"}
 SEVERITY = {"critical": "critical", "high": "high", "medium": "medium", "low": "low", "info": "informational",
             "informational": "informational", "": "medium"}
+DOMAIN_BY_PRODUCT = {"entra": "entra", "azure": "azure", "exchange": "m365", "teams": "m365", "sharepoint": "m365",
+                     "onedrive": "m365", "defender": "m365", "purview": "m365", "intune": "m365", "ad": "windows-ad",
+                     "active-directory": "windows-ad"}
 DOMAIN_BY_TAG = {"Entra": "entra", "EIDSCA": "entra", "CA": "entra", "Azure": "azure", "Exchange": "m365",
                  "Teams": "m365", "SharePoint": "m365", "Defender": "m365", "AD": "windows-ad"}
 
@@ -46,16 +53,23 @@ def normalize(path: Path, rel_to: Path | None = None) -> EvidenceBundle:
         limitations = []
         if status == "skipped":
             limitations.append("Skipped is not a pass: " + str(detail.get("SkippedReason") or detail.get("TestSkipped") or "no reason recorded"))
+        product = str(t.get("Product") or "").lower()
+        domain = DOMAIN_BY_PRODUCT.get(product) or next((DOMAIN_BY_TAG[x] for x in tags if x in DOMAIN_BY_TAG), "entra")
+        mitre = [m for m in (t.get("Mitre") or []) if m and m != "None"]
+        typed_controls = [f"attack:{m}" for m in mitre] + [str(c) for c in (t.get("Control") or [])]
+        if t.get("Lifecycle") == "Deprecated":
+            limitations.append(f"Test is deprecated upstream; replaced by {t.get('ReplacedBy') or 'unknown'}")
         b.findings.append(Finding(
             id=f"maester:{t.get('Id')}:{i}", title=t.get("Title") or t.get("Name", ""),
-            domain=next((DOMAIN_BY_TAG[x] for x in tags if x in DOMAIN_BY_TAG), "entra"),
-            service=str(detail.get("Service") or t.get("Block") or ""), source_tool="maester",
+            domain=domain,
+            service=str(t.get("Feature") or detail.get("Service") or t.get("Block") or ""),
+            source_tool=f"maester {doc.get('CurrentVersion', '')} schema {doc.get('SchemaVersion', '2.0')}".strip(),
             source_check_id=str(t.get("Id", "")), resource_id=env, environment=env,
             observation_point="microsoft-graph via Maester/Pester", status=status,
             description=str(detail.get("TestResult") or detail.get("TestDescription") or t.get("Name", "")),
             severity=sev if status == "fail" else "informational", confidence=0.7 if status == "fail" else 0.5,
             collected_at=art.collected_at, observations=obs, artifacts=[art.sha256],
-            controls=[f"maester:{t.get('Id')}"] + [f"tag:{x}" for x in tags],
+            controls=[f"maester:{t.get('Id')}"] + typed_controls + [f"tag:{x}" for x in tags],
             remediation=str(detail.get("TestDescription") or ""), references=[t["HelpUrl"]] if t.get("HelpUrl") else [],
             limitations=limitations + ["Imported tool result: the raw Graph objects Maester evaluated are not in this artifact."],
             next_validation_step="Re-check against a Graph snapshot with haven.verify (cross-tool corroboration)."))
