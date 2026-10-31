@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "description": "Confirmation of the nine cases in v1 and v2, now including heuristic routing and re-verification. These cases were already observed in the two prior pilots.",
+  "fixture": "entra-heldout",
+  "additional_instructions": "For this limited assessment, return indeterminate for authenticationStrength, customAuthenticationFactors, termsOfUse, unknownFutureValue, riskRemediation, passwordChange, no built-in grant controls, or block combined with another control. Do not guess their semantics.",
+  "cases": [
+    {"policy_id": "eval-disabled", "expected": "not_enforced_by_policy", "question": "Does this Entra policy require MFA?"},
+    {"policy_id": "eval-single-or", "expected": "mfa_required_by_policy", "question": "Does this Conditional Access policy require multifactor authentication?"},
+    {"policy_id": "eval-no-mfa", "expected": "mfa_not_required_by_policy", "question": "Does the Entra policy require MFA?"},
+    {"policy_id": "eval-block", "expected": "access_blocked_by_policy", "question": "Does this Entra policy require MFA?"},
+    {"policy_id": "eval-strength", "expected": "indeterminate", "question": "Does this Entra policy require MFA?"},
+    {"policy_id": "eval-future", "expected": "indeterminate", "question": "Does this Entra policy require MFA?"},
+    {"policy_id": "eval-mixed-block", "expected": "indeterminate", "question": "Does this Entra policy require MFA?"},
+    {"policy_id": "eval-custom", "expected": "indeterminate", "question": "Does this Entra policy require MFA?"},
+    {"policy_id": "eval-empty", "expected": "indeterminate", "question": "Does this Entra policy require MFA?"}
+  ]
+}

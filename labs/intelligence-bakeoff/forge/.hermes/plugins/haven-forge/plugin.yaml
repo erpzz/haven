@@ -1,0 +1,8 @@
+name: haven-forge
+version: "0.1.0"
+description: Local evidence annotations and synthetic Entra policy assessment with versioned retrieval
+provides_tools:
+  - forge_knowledge_search
+  - forge_assess_entra
+provides_hooks:
+  - transform_tool_result

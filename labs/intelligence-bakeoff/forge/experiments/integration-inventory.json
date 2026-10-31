@@ -1,0 +1,92 @@
+[
+  {
+    "full_name": "maester365/maester",
+    "pushed_at": "2026-10-31T22:17:50Z",
+    "archived": false,
+    "default_branch": "main",
+    "html_url": "https://github.com/maester365/maester",
+    "license": "MIT"
+  },
+  {
+    "full_name": "dirkjanm/ROADtools",
+    "pushed_at": "2026-10-22T08:04:44Z",
+    "archived": false,
+    "default_branch": "master",
+    "html_url": "https://github.com/dirkjanm/ROADtools",
+    "license": "MIT"
+  },
+  {
+    "full_name": "microsoftgraph/msgraph-sdk-python",
+    "pushed_at": "2026-10-31T05:20:44Z",
+    "archived": false,
+    "default_branch": "main",
+    "html_url": "https://github.com/microsoftgraph/msgraph-sdk-python",
+    "license": "MIT"
+  },
+  {
+    "full_name": "prowler-cloud/prowler",
+    "pushed_at": "2026-10-30T20:30:13Z",
+    "archived": false,
+    "default_branch": "master",
+    "html_url": "https://github.com/prowler-cloud/prowler",
+    "license": "Apache-2.0"
+  },
+  {
+    "full_name": "nccgroup/ScoutSuite",
+    "pushed_at": "2025-09-23T18:33:52Z",
+    "archived": false,
+    "default_branch": "master",
+    "html_url": "https://github.com/nccgroup/ScoutSuite",
+    "license": "GPL-2.0"
+  },
+  {
+    "full_name": "SigmaHQ/sigma",
+    "pushed_at": "2026-10-21T03:04:45Z",
+    "archived": false,
+    "default_branch": "master",
+    "html_url": "https://github.com/SigmaHQ/sigma",
+    "license": "NOASSERTION"
+  },
+  {
+    "full_name": "mitre-attack/attack-stix-data",
+    "pushed_at": "2026-10-13T19:11:18Z",
+    "archived": false,
+    "default_branch": "master",
+    "html_url": "https://github.com/mitre-attack/attack-stix-data",
+    "license": "NOASSERTION"
+  },
+  {
+    "full_name": "osquery/osquery",
+    "pushed_at": "2026-10-31T06:05:06Z",
+    "archived": false,
+    "default_branch": "master",
+    "html_url": "https://github.com/osquery/osquery",
+    "license": "NOASSERTION"
+  },
+  {
+    "full_name": "semgrep/semgrep",
+    "pushed_at": "2026-10-30T00:01:59Z",
+    "archived": false,
+    "default_branch": "develop",
+    "html_url": "https://github.com/semgrep/semgrep",
+    "license": "LGPL-2.1"
+  },
+  {
+    "full_name": "Azure/azure-mcp",
+    "pushed_at": "2026-02-06T15:52:58Z",
+    "archived": true,
+    "default_branch": "main",
+    "html_url": "https://github.com/Azure/azure-mcp",
+    "description": "The Azure MCP Server, bringing the power of Azure to your agents.",
+    "license": "MIT"
+  },
+  {
+    "full_name": "microsoft/mcp",
+    "pushed_at": "2026-10-30T22:51:33Z",
+    "archived": false,
+    "default_branch": "main",
+    "html_url": "https://github.com/microsoft/mcp",
+    "description": "Catalog of official Microsoft MCP (Model Context Protocol) server implementations for AI-powered data access and tool integration",
+    "license": "MIT"
+  }
+]
