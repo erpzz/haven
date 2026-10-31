@@ -97,7 +97,7 @@ def main(argv=None):
     ap.add_argument('--hours', type=float, default=20, help='training deadline; the adapter is saved when it hits')
     ap.add_argument('--pref', action='store_true', help='run the DPO+NLL stage on pairs.jsonl after SFT')
     ap.add_argument('--quant', default='Q4_K_M')
-    ap.add_argument('--lowvram', action='store_true', help='9B on 8 GB: 4-bit lm_head, embedding and vision on CPU')
+    ap.add_argument('--lowvram', action='store_true', help='9B on 8 GB: fp16 lm_head, embedding and vision on CPU')
     ap.add_argument('--save-steps', type=int, default=10, help='checkpoint interval (optimizer steps); bounds lost work')
     ap.add_argument('--python', default=str(HOME / '.local/share/forge-train-venv/bin/python'))
     args = ap.parse_args(argv)

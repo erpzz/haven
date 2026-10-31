@@ -145,14 +145,17 @@ def collate(b):
             "labels": torch.tensor([x["labels"] + [-100] * (n - len(x["labels"])) for x in b])}
 DEV = rank
 if cfg.get("lowvram"):
-    # 8 GB cards: Qwen3.5-9B's untied 248k-vocab embedding and lm_head are ~1B params each, and a 4-bit lm_head is
-    # dequantized whole (1.9 GiB) on every training matmul. Keep both on CPU (logits are only computed at answer
-    # positions, ~10% of tokens), the unused vision tower too, and skip PEFT's fp32 upcast.
+    # Qwen3.5-9B's untied 248k-vocab embedding and lm_head are ~1B params each: keep lm_head fp16 (a 4-bit one is
+    # dequantized whole, 1.9 GiB, on every training matmul) and skip PEFT's fp32 upcast (+2 GiB per matrix). 16 GB
+    # cards keep everything on the GPU (one device, so DDP works; the unused vision tower stays 4-bit). 8 GB cards
+    # ("lowvram_offload", single process only) also put embedding, lm_head and the vision tower on CPU: logits are
+    # only computed at answer positions, ~10% of tokens.
+    off = cfg.get("lowvram_offload", True)
     q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16,
-                           bnb_4bit_use_double_quant=True, llm_int8_skip_modules=["visual", "lm_head"],
-                           llm_int8_enable_fp32_cpu_offload=True)
+                           bnb_4bit_use_double_quant=True, llm_int8_skip_modules=["visual", "lm_head"] if off else ["lm_head"],
+                           llm_int8_enable_fp32_cpu_offload=off)
     dmap = {"model.visual": "cpu", "model.language_model.embed_tokens": "cpu", "model.language_model.layers": DEV,
-            "model.language_model.norm": DEV, "model.language_model.rotary_emb": DEV, "lm_head": "cpu"}
+            "model.language_model.norm": DEV, "model.language_model.rotary_emb": DEV, "lm_head": "cpu"} if off else {"": DEV}
 else:
     q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
     dmap = {"": DEV}
@@ -249,14 +252,17 @@ for x in pairs:
 random.shuffle(data)
 DEV = 0
 if cfg.get("lowvram"):
-    # 8 GB cards: Qwen3.5-9B's untied 248k-vocab embedding and lm_head are ~1B params each, and a 4-bit lm_head is
-    # dequantized whole (1.9 GiB) on every training matmul. Keep both on CPU (logits are only computed at answer
-    # positions, ~10% of tokens), the unused vision tower too, and skip PEFT's fp32 upcast.
+    # Qwen3.5-9B's untied 248k-vocab embedding and lm_head are ~1B params each: keep lm_head fp16 (a 4-bit one is
+    # dequantized whole, 1.9 GiB, on every training matmul) and skip PEFT's fp32 upcast (+2 GiB per matrix). 16 GB
+    # cards keep everything on the GPU (one device, so DDP works; the unused vision tower stays 4-bit). 8 GB cards
+    # ("lowvram_offload", single process only) also put embedding, lm_head and the vision tower on CPU: logits are
+    # only computed at answer positions, ~10% of tokens.
+    off = cfg.get("lowvram_offload", True)
     q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16,
-                           bnb_4bit_use_double_quant=True, llm_int8_skip_modules=["visual", "lm_head"],
-                           llm_int8_enable_fp32_cpu_offload=True)
+                           bnb_4bit_use_double_quant=True, llm_int8_skip_modules=["visual", "lm_head"] if off else ["lm_head"],
+                           llm_int8_enable_fp32_cpu_offload=off)
     dmap = {"model.visual": "cpu", "model.language_model.embed_tokens": "cpu", "model.language_model.layers": DEV,
-            "model.language_model.norm": DEV, "model.language_model.rotary_emb": DEV, "lm_head": "cpu"}
+            "model.language_model.norm": DEV, "model.language_model.rotary_emb": DEV, "lm_head": "cpu"} if off else {"": DEV}
 else:
     q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
     dmap = {"": DEV}
@@ -372,10 +378,22 @@ def merge_convert():
         if not f.name.endswith('.safetensors') and not f.name.endswith('.index.json') and f.name != 'config.json':
             shutil.copy(f, merged / f.name)
     restored = restore_untouched_tensors(pathlib.Path(base_dir), merged)
+    if CFG.get('base_gguf'):  # the base is evaluated from its published GGUF: free its checkpoint before the f16 pass
+        from huggingface_hub import scan_cache_dir
+        c = scan_cache_dir()
+        c.delete_revisions(*[r.commit_hash for repo in c.repos if repo.repo_id == CFG['student'] for r in repo.revisions]).execute()
     student = to_gguf(merged, 'student')
     shutil.rmtree(merged)
     out = {'student_gguf': student.name, 'student_bytes': student.stat().st_size, 'restored_tensors': restored}
-    if CFG.get('eval_base', True):
+    if CFG.get('eval_base', True) and CFG.get('base_gguf'):
+        # A published GGUF of the base (e.g. the vendor's MTP quant): no second 18 GB conversion on Kaggle's disk.
+        from huggingface_hub import hf_hub_download
+        b = CFG['base_gguf']
+        src = hf_hub_download(b['repo'], b['file'], revision=b.get('revision'), local_dir=str(W))
+        base = OUT / f'base-{CFG["quant"]}.gguf'
+        shutil.move(src, base)
+        out.update(base_gguf=base.name, base_source=f"{b['repo']}/{b['file']}@{b.get('revision')}")
+    elif CFG.get('eval_base', True):
         base = to_gguf(base_dir, 'base')
         out.update(base_gguf=base.name)
     return out
