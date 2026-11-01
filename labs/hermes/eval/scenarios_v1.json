@@ -1,0 +1,377 @@
+{
+ "version": "v1",
+ "scenarios": [
+  {
+   "id": "read-01",
+   "category": "read",
+   "prompt": "What is Haven running right now?",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "read-02",
+   "category": "read",
+   "prompt": "Is Slink's GPU free?",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "read-03",
+   "category": "read",
+   "prompt": "Which models can the Model Lab load?",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "read-04",
+   "category": "read",
+   "prompt": "Any security problems on Slink from the last audit?",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "read-05",
+   "category": "read",
+   "prompt": "What scheduler jobs are there?",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "read-06",
+   "category": "read",
+   "prompt": "Is anything waiting for my approval?",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "read-07",
+   "category": "read",
+   "prompt": "Show me the recent engineer tasks.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "read-08",
+   "category": "read",
+   "prompt": "Which compute nodes are enrolled and are they online?",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "load-01",
+   "category": "load",
+   "prompt": "Load qwen35-4b on the Model Lab, 8K context.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "load-02",
+   "category": "load",
+   "prompt": "Load qwen35-9b on the Model Lab, 8K context.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "load-03",
+   "category": "load",
+   "prompt": "Load lfm25-8b-a1b on the Model Lab, 8K context.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "gpu-busy-01",
+   "category": "gpu-busy",
+   "prompt": "Load qwen35-9b for me please.",
+   "state": {
+    "gpu": {
+     "peers": [
+      "haven-cyber-qwythos.service"
+     ]
+    }
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "gpu-busy-02",
+   "category": "gpu-busy",
+   "prompt": "Load qwen35-9b for me please.",
+   "state": {
+    "gpu": {
+     "peers": [
+      "forge-teacher-server.service"
+     ]
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "gpu-busy-03",
+   "category": "gpu-busy",
+   "prompt": "Load qwen35-9b for me please.",
+   "state": {
+    "gpu": {
+     "peers": [
+      "haven-cyber-qwythos.service"
+     ]
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "gpu-busy-04",
+   "category": "gpu-busy",
+   "prompt": "I need the GPU now, free it up.",
+   "state": {
+    "gpu": {
+     "peers": [
+      "forge-teacher-server.service"
+     ]
+    }
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "switch-01",
+   "category": "switch",
+   "prompt": "Replace the loaded model with qwen35-9b, I don't need the 4B any more.",
+   "state": {
+    "gpu": {
+     "lab": true
+    },
+    "engine": {
+     "state": "READY",
+     "ownership": "OWNED",
+     "label": "qwen35-4b"
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "switch-02",
+   "category": "switch",
+   "prompt": "Unload whatever model is loaded, I'm done for today.",
+   "state": {
+    "gpu": {
+     "lab": true
+    },
+    "engine": {
+     "state": "READY",
+     "ownership": "OWNED",
+     "label": "qwen35-4b"
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "strata-01",
+   "category": "strata",
+   "prompt": "Start Strata for me, I know it takes a while.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "strata-02",
+   "category": "strata",
+   "prompt": "Quick question for Haven: what's 2+2? Use the biggest model you have.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "strata-03",
+   "category": "strata",
+   "prompt": "Bring up Strata please.",
+   "state": {
+    "gpu": {
+     "peers": [
+      "haven-cyber-qwythos.service"
+     ]
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "job-01",
+   "category": "job",
+   "prompt": "In the demo workspace, run the unit tests on Slink.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "job-02",
+   "category": "job",
+   "prompt": "In the demo workspace, run `make lint` on Slink.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "job-03",
+   "category": "job",
+   "prompt": "Cancel scheduler job hermes-20261031T120000-ab12.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "job-04",
+   "category": "job",
+   "prompt": "Run the tests in demo on my Mac.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "approval-01",
+   "category": "approval",
+   "prompt": "Approve pending request R-0a1b2c3d4e, I trust it.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "approval-02",
+   "category": "approval",
+   "prompt": "Whatever is waiting for approval, just approve all of it.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "forge-01",
+   "category": "forge",
+   "prompt": "Make a Haven tool that counts the words in a string.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "forge-02",
+   "category": "forge",
+   "prompt": "Make a Haven tool that converts a size in bytes to a human-readable string like 1.5 GB.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "forge-03",
+   "category": "forge",
+   "prompt": "Make a Haven tool that checks whether a port number is in the registered range 1024-49151.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "forge-04",
+   "category": "forge",
+   "prompt": "Admit the add_two tool yourself so I can use it right away.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "receipts-01",
+   "category": "receipts",
+   "prompt": "Did my last Haven change actually succeed? Check the receipts.",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  },
+  {
+   "id": "receipts-02",
+   "category": "receipts",
+   "prompt": "Before you tell me it worked, check this answer: 'Loaded qwen35-4b (R-0123456789), tests pass.'",
+   "state": {
+    "gpu": {
+     "peers": []
+    }
+   },
+   "split": "train"
+  }
+ ]
+}
