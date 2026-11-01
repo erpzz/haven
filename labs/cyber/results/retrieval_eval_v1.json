@@ -1,0 +1,28 @@
+{
+ "plain": {
+  "recall_at_k": 0.873,
+  "hits": 48,
+  "n": 55,
+  "misses": [
+   "gr-04",
+   "gr-05",
+   "net-02",
+   "lg-02",
+   "lg-03",
+   "fp-02",
+   "fp-03"
+  ]
+ },
+ "expanded": {
+  "recall_at_k": 0.909,
+  "hits": 50,
+  "n": 55,
+  "misses": [
+   "gr-03",
+   "gr-04",
+   "gr-05",
+   "net-02",
+   "fp-02"
+  ]
+ }
+}

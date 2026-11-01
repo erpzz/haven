@@ -1,0 +1,1167 @@
+{
+ "question": "Are our Global Administrators actually forced to use MFA, and could any Conditional Access policy lock out our emergency-access accounts? Give findings with remediation.",
+ "snapshot": "fixtures/tenants/contoso-weak.json",
+ "mode": "live:qwythos-9b-v2-q4km",
+ "steps": {
+  "retrieve": [
+   {
+    "ref": "R1",
+    "doc": "entra.emergency-access",
+    "section": "Purpose",
+    "source": "https://learn.microsoft.com/entra/identity/role-based-access-control/security-emergency-access",
+    "retrieved": "2026-10-31",
+    "version": "Entra ID (service, unversioned)",
+    "stale": false
+   },
+   {
+    "ref": "R2",
+    "doc": "entra.emergency-access",
+    "section": "Assessment procedure",
+    "source": "https://learn.microsoft.com/entra/identity/role-based-access-control/security-emergency-access",
+    "retrieved": "2026-10-31",
+    "version": "Entra ID (service, unversioned)",
+    "stale": false
+   },
+   {
+    "ref": "R3",
+    "doc": "entra.logs.signin",
+    "section": "Error codes worth knowing",
+    "source": "https://learn.microsoft.com/entra/identity/monitoring-health/concept-sign-ins",
+    "retrieved": "2026-10-31",
+    "version": "Microsoft Graph v1.0 signIn / directoryAudit",
+    "stale": false
+   },
+   {
+    "ref": "R4",
+    "doc": "entra.roles.pim",
+    "section": "What good looks like",
+    "source": "https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-configure",
+    "retrieved": "2026-10-31",
+    "version": "Microsoft Graph v1.0 unifiedRoleAssignment / unifiedRoleEligibilitySchedule",
+    "stale": false
+   }
+  ],
+  "plan": {
+   "tool_id": "entra.ca.assess",
+   "arguments": {
+    "snapshot_path": "fixtures/tenants/contoso-weak.json"
+   },
+   "why": "This tool directly assesses Conditional Access coverage from the provided Graph snapshot, which is needed to determine if Global Administrators are forced to use MFA and if emergency accounts could be locked out.",
+   "raw": "{\"tool_id\": \"entra.ca.assess\", \"arguments\": {\"snapshot_path\": \"fixtures/tenants/contoso-weak.json\"}, \"why\": \"This tool directly assesses Conditional Access coverage from the provided Graph snapshot, which is needed to determine if Global Administrators are forced to use MFA and if emergency accounts could be locked out.\"",
+   "json_repaired": true
+  },
+  "tool": {
+   "tool_id": "entra.ca.assess",
+   "ok": true,
+   "error": null
+  },
+  "imports": [
+   {
+    "format": "maester",
+    "path": "fixtures/tool_outputs/maester-weak.json",
+    "ok": true,
+    "error": null
+   },
+   {
+    "format": "prowler-ocsf",
+    "path": "fixtures/tool_outputs/prowler-weak.ocsf.json",
+    "ok": true,
+    "error": null
+   }
+  ],
+  "verify": {
+   "checked": 16,
+   "by_status": {
+    "corroborated": 12,
+    "reported": 4
+   },
+   "problems": []
+  },
+  "answer": "Based on the provided verified evidence, here are the findings regarding Global Administrator MFA enforcement and Conditional Access lockout risks for emergency-access accounts:\n\n**Findings:**\n\n1.  **MFA is not enforced for all administrators (Exclusion Gap):**\n    *   **Status:** Fail\n    *   **Verification:** Corroborated\n    *   **Details:** Policy `CA002 Require MFA for administrators` (ID: e3c40a96-b703-593d-a81d-3f4de3b9cd93) exists but excludes the principal `ops.admin@contoso.example`. Consequently, this administrator is not forced to use MFA.\n    *   **Remediation:** Remove the non-emergency exclusion for `ops.admin@contoso.example` or create an equivalent policy that covers this principal.\n\n2.  **MFA is not enforced for all users:**\n    *   **Status:** Fail\n    *   **Verification:** Corroborated\n    *   **Details:** No enabled policy currently meets the requirement for all users. The policy `CA003 Require MFA for all users` (ID: 771b7210-27b6-509e-a7b0-abc2b1bebe5d) is in a state of `enabledForReportingButNotEnforced`.\n    *   **Remediation:** Create or enable a policy targeting the scope for all cloud apps and all client app types with the required grant.\n\n3.  **Phishing-resistant MFA is not required for administrators:**\n    *   **Status:** Fail\n    *   **Verification:** Corroborated\n    *   **Details:** No enabled policy requires phishing-resistant authentication for administrators. Policy `CA002` does not require it; `CA003` is not enforced; and `CA004 Phishing-resistant MFA for admins` (ID: 6fba8afc-dce0-5611-a36a-ce355ab37f8c) is disabled.\n    *   **Remediation:** Create or enable a policy targeting all cloud apps and client app types with a phishing-resistant authentication grant.\n\n4.  **Emergency-access accounts are not excluded from enforcing policies (Lockout Risk):**\n    *   **Status:** Fail\n    *   **Verification:** Corroborated\n    *   **Details:** Policy `CA002 Require MFA for administrators` (ID: e3c40a96-b703-593d-a81d-3f4de3b9cd93) currently applies to the emergency-access accounts `bg-01@contoso.example` and `bg-02@contoso.example`. Since these accounts are intended for use only when normal access fails (e.g., during MFA provider outages), having an enforcing policy active against them creates a lockout risk.\n    *   **Remediation:** Exclude the emergency-access accounts (or a dedicated group containing only them) from every Conditional Access policy. Additionally, monitor their sign-in logs to ensure they are not being used during normal operations.\n\n**Summary:**\nThe environment currently lacks MFA enforcement for all users and administrators, and specifically fails to exclude emergency-access accounts from Conditional Access policies. This configuration poses a significant risk where the designated \"break-glass\" accounts could be locked out by the very MFA requirements intended to secure the rest of the organization. Immediate remediation involves adjusting policy exclusions and ensuring emergency accounts are isolated from all enforcing policies.",
+  "grounding": {
+   "unknown_rules": [],
+   "unknown_ids": [],
+   "bad_refs": [],
+   "missed_corroborated_failures": [
+    "HCA-002",
+    "HCA-003",
+    "HCA-004",
+    "HCA-005"
+   ],
+   "cites_refuted_as_fact": [],
+   "ok": true,
+   "cited_refs": [],
+   "complete": false
+  }
+ },
+ "bundle": {
+  "schema": "haven-cyber-evidence-v1",
+  "artifacts": [
+   {
+    "sha256": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "path": "fixtures/tenants/contoso-weak.json",
+    "media_type": "application/json",
+    "source_tool": "synthetic-fixture",
+    "collected_at": "2026-10-31T12:00:00Z"
+   },
+   {
+    "sha256": "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf",
+    "path": "fixtures/tool_outputs/maester-weak.json",
+    "media_type": "application/json",
+    "source_tool": "maester 2.3.0",
+    "collected_at": "2026-10-31T12:05:00Z"
+   },
+   {
+    "sha256": "a64dba2f7f75328021951146f7e6ede7f4c26dc9c43e919d95e1a7db66d71279",
+    "path": "fixtures/tool_outputs/prowler-weak.ocsf.json",
+    "media_type": "application/json",
+    "source_tool": "prowler",
+    "collected_at": "2026-10-31T12:05:00Z"
+   }
+  ],
+  "observations": [
+   {
+    "id": "obs-001",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/0/state",
+    "value": "enabled",
+    "note": "CA001 Block legacy authentication"
+   },
+   {
+    "id": "obs-002",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/0/conditions/users",
+    "value": {
+     "includeUsers": [
+      "All"
+     ],
+     "excludeUsers": [],
+     "includeGroups": [],
+     "excludeGroups": [
+      "6c7b5668-5ad1-513e-8e6d-e1858a978862",
+      "1e8b46ff-b7ad-587c-a3d2-3bbbaf9b7a10"
+     ],
+     "includeRoles": [],
+     "excludeRoles": []
+    },
+    "note": "CA001 Block legacy authentication"
+   },
+   {
+    "id": "obs-003",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/0/conditions/clientAppTypes",
+    "value": [
+     "exchangeActiveSync",
+     "other"
+    ],
+    "note": "CA001 Block legacy authentication"
+   },
+   {
+    "id": "obs-004",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/0/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "block"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA001 Block legacy authentication"
+   },
+   {
+    "id": "obs-005",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/1/state",
+    "value": "enabled",
+    "note": "CA002 Require MFA for administrators"
+   },
+   {
+    "id": "obs-006",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/1/conditions/users",
+    "value": {
+     "includeUsers": [],
+     "excludeUsers": [
+      "2c078217-54a2-520b-a96a-bd4dd0298c97"
+     ],
+     "includeGroups": [],
+     "excludeGroups": [],
+     "includeRoles": [
+      "62e90394-69f5-4237-9190-012177145e10",
+      "e8611ab8-c189-46e8-94e1-60213ab1f814",
+      "194ae4cb-b126-40b2-bd5b-6091b380977d"
+     ],
+     "excludeRoles": []
+    },
+    "note": "CA002 Require MFA for administrators"
+   },
+   {
+    "id": "obs-007",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/1/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "mfa"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA002 Require MFA for administrators"
+   },
+   {
+    "id": "obs-008",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/2/state",
+    "value": "enabledForReportingButNotEnforced",
+    "note": "CA003 Require MFA for all users"
+   },
+   {
+    "id": "obs-009",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/2/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "mfa"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA003 Require MFA for all users"
+   },
+   {
+    "id": "obs-010",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/1/state",
+    "value": "enabled",
+    "note": "CA002 Require MFA for administrators"
+   },
+   {
+    "id": "obs-011",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/1/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "mfa"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA002 Require MFA for administrators"
+   },
+   {
+    "id": "obs-012",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/2/state",
+    "value": "enabledForReportingButNotEnforced",
+    "note": "CA003 Require MFA for all users"
+   },
+   {
+    "id": "obs-013",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/2/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "mfa"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA003 Require MFA for all users"
+   },
+   {
+    "id": "obs-014",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/3/state",
+    "value": "disabled",
+    "note": "CA004 Phishing-resistant MFA for admins"
+   },
+   {
+    "id": "obs-015",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/3/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [],
+     "authenticationStrength": {
+      "id": "00000000-0000-0000-0000-000000000004",
+      "displayName": "Phishing-resistant MFA"
+     }
+    },
+    "note": "CA004 Phishing-resistant MFA for admins"
+   },
+   {
+    "id": "obs-016",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/1/conditions/users",
+    "value": {
+     "includeUsers": [],
+     "excludeUsers": [
+      "2c078217-54a2-520b-a96a-bd4dd0298c97"
+     ],
+     "includeGroups": [],
+     "excludeGroups": [],
+     "includeRoles": [
+      "62e90394-69f5-4237-9190-012177145e10",
+      "e8611ab8-c189-46e8-94e1-60213ab1f814",
+      "194ae4cb-b126-40b2-bd5b-6091b380977d"
+     ],
+     "excludeRoles": []
+    },
+    "note": "CA002 Require MFA for administrators"
+   },
+   {
+    "id": "obs-017",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/1/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "mfa"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA002 Require MFA for administrators"
+   },
+   {
+    "id": "obs-018",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/2/state",
+    "value": "enabledForReportingButNotEnforced",
+    "note": "CA003 Require MFA for all users"
+   },
+   {
+    "id": "obs-019",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/0/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "block"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA001 Block legacy authentication"
+   },
+   {
+    "id": "obs-020",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/1/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "mfa"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA002 Require MFA for administrators"
+   },
+   {
+    "id": "obs-021",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/4/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "block"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA005 Block high sign-in risk"
+   },
+   {
+    "id": "obs-022",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/5/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "mfa",
+      "compliantDevice"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA007 Contractors: MFA or compliant device"
+   },
+   {
+    "id": "obs-023",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/4/state",
+    "value": "enabled",
+    "note": "CA005 Block high sign-in risk"
+   },
+   {
+    "id": "obs-024",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/4/grantControls",
+    "value": {
+     "operator": "OR",
+     "builtInControls": [
+      "block"
+     ],
+     "authenticationStrength": null
+    },
+    "note": "CA005 Block high sign-in risk"
+   },
+   {
+    "id": "obs-025",
+    "artifact": "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068",
+    "pointer": "/conditionalAccessPolicies/5/conditions/users",
+    "value": {
+     "includeUsers": [],
+     "excludeUsers": [
+      "e930c59c-c3af-5773-ba31-ba0cb4489ed2"
+     ],
+     "includeGroups": [
+      "180f4a71-9e4b-5a25-ab3f-482fb299e153"
+     ],
+     "excludeGroups": [],
+     "includeRoles": [],
+     "excludeRoles": []
+    },
+    "note": "CA007 Contractors: MFA or compliant device"
+   },
+   {
+    "id": "maester-0000",
+    "artifact": "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf",
+    "pointer": "/Tests/0/Result",
+    "value": "Failed",
+    "note": "MT.1005"
+   },
+   {
+    "id": "maester-0000-detail",
+    "artifact": "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf",
+    "pointer": "/Tests/0/ResultDetail/TestResult",
+    "value": "Policy 'CA002 Require MFA for administrators' does not exclude an emergency access account or group.",
+    "note": ""
+   },
+   {
+    "id": "maester-0001",
+    "artifact": "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf",
+    "pointer": "/Tests/1/Result",
+    "value": "Passed",
+    "note": "MT.1006"
+   },
+   {
+    "id": "maester-0001-detail",
+    "artifact": "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf",
+    "pointer": "/Tests/1/ResultDetail/TestResult",
+    "value": "Conditional Access policy 'CA002 Require MFA for administrators' requires MFA for admin roles.",
+    "note": ""
+   },
+   {
+    "id": "maester-0002",
+    "artifact": "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf",
+    "pointer": "/Tests/2/Result",
+    "value": "Failed",
+    "note": "MT.1007"
+   },
+   {
+    "id": "maester-0002-detail",
+    "artifact": "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf",
+    "pointer": "/Tests/2/ResultDetail/TestResult",
+    "value": "No enabled policy requires MFA for all users (one is report-only).",
+    "note": ""
+   },
+   {
+    "id": "maester-0003",
+    "artifact": "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf",
+    "pointer": "/Tests/3/Result",
+    "value": "Skipped",
+    "note": "EIDSCA.AP01"
+   },
+   {
+    "id": "prowler-0000",
+    "artifact": "a64dba2f7f75328021951146f7e6ede7f4c26dc9c43e919d95e1a7db66d71279",
+    "pointer": "/0/status_code",
+    "value": "PASS",
+    "note": ""
+   },
+   {
+    "id": "prowler-0000-detail",
+    "artifact": "a64dba2f7f75328021951146f7e6ede7f4c26dc9c43e919d95e1a7db66d71279",
+    "pointer": "/0/status_detail",
+    "value": "Conditional Access Policy 'CA001 Block legacy authentication' blocks legacy authentication.",
+    "note": ""
+   },
+   {
+    "id": "prowler-0001",
+    "artifact": "a64dba2f7f75328021951146f7e6ede7f4c26dc9c43e919d95e1a7db66d71279",
+    "pointer": "/1/status_code",
+    "value": "FAIL",
+    "note": ""
+   },
+   {
+    "id": "prowler-0001-detail",
+    "artifact": "a64dba2f7f75328021951146f7e6ede7f4c26dc9c43e919d95e1a7db66d71279",
+    "pointer": "/1/status_detail",
+    "value": "No Conditional Access Policy blocks device code flow.",
+    "note": ""
+   },
+   {
+    "id": "prowler-0002",
+    "artifact": "a64dba2f7f75328021951146f7e6ede7f4c26dc9c43e919d95e1a7db66d71279",
+    "pointer": "/2/status_code",
+    "value": "FAIL",
+    "note": ""
+   },
+   {
+    "id": "prowler-0002-detail",
+    "artifact": "a64dba2f7f75328021951146f7e6ede7f4c26dc9c43e919d95e1a7db66d71279",
+    "pointer": "/2/status_detail",
+    "value": "No enabled Conditional Access policy requires phishing-resistant MFA for administrator roles.",
+    "note": ""
+   }
+  ],
+  "findings": [
+   {
+    "id": "HCA-001:3e310cc5-217a-5edd-9e43-c97b624a11cc",
+    "title": "Legacy authentication block has non-emergency exclusions",
+    "domain": "entra",
+    "service": "conditional-access",
+    "source_tool": "haven.entra_ca",
+    "source_check_id": "HCA-001",
+    "resource_id": "3e310cc5-217a-5edd-9e43-c97b624a11cc",
+    "environment": "synthetic:Contoso (weak, synthetic)",
+    "observation_point": "microsoft-graph:v1.0 snapshot",
+    "status": "fail",
+    "description": "Policy 'CA001 Block legacy authentication' (3e310cc5-217a-5edd-9e43-c97b624a11cc) blocks legacy clients but excludes Legacy-Mail-Clients, which are not emergency-access accounts.",
+    "severity": "medium",
+    "confidence": 0.85,
+    "collected_at": "2026-10-31T12:00:00Z",
+    "observations": [
+     "obs-001",
+     "obs-002",
+     "obs-003",
+     "obs-004"
+    ],
+    "artifacts": [
+     "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068"
+    ],
+    "controls": [
+     "prowler:entra_legacy_authentication_blocked"
+    ],
+    "remediation": "Remove the exclusions or migrate the excluded accounts off legacy protocols.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-legacy-authentication"
+    ],
+    "limitations": [],
+    "next_validation_step": "",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-001 (covered): control absent"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "HCA-002:e3c40a96-b703-593d-a81d-3f4de3b9cd93",
+    "title": "MFA is not enforced for administrator roles (exclusion gap)",
+    "domain": "entra",
+    "service": "conditional-access",
+    "source_tool": "haven.entra_ca",
+    "source_check_id": "HCA-002",
+    "resource_id": "e3c40a96-b703-593d-a81d-3f4de3b9cd93",
+    "environment": "synthetic:Contoso (weak, synthetic)",
+    "observation_point": "microsoft-graph:v1.0 snapshot",
+    "status": "fail",
+    "description": "Policy 'CA002 Require MFA for administrators' (e3c40a96-b703-593d-a81d-3f4de3b9cd93) would satisfy the requirement, but it excludes ops.admin@contoso.example; those principals are not covered.",
+    "severity": "high",
+    "confidence": 0.85,
+    "collected_at": "2026-10-31T12:00:00Z",
+    "observations": [
+     "obs-005",
+     "obs-006",
+     "obs-007"
+    ],
+    "artifacts": [
+     "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068"
+    ],
+    "controls": [
+     "maester:MT.1006",
+     "prowler:entra_admin_users_mfa_enabled"
+    ],
+    "remediation": "Remove non-emergency exclusions, or cover the excluded principals with an equivalent policy.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-old-require-mfa-admin"
+    ],
+    "limitations": [],
+    "next_validation_step": "List members of each excluded group and check whether any hold the targeted roles.",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-002 (covered): control absent"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "HCA-003:conditionalAccess",
+    "title": "MFA is not enforced for all users",
+    "domain": "entra",
+    "service": "conditional-access",
+    "source_tool": "haven.entra_ca",
+    "source_check_id": "HCA-003",
+    "resource_id": "conditionalAccess",
+    "environment": "synthetic:Contoso (weak, synthetic)",
+    "observation_point": "microsoft-graph:v1.0 snapshot",
+    "status": "fail",
+    "description": "No enabled policy meets the requirement. Near misses: 'CA003 Require MFA for all users' (771b7210-27b6-509e-a7b0-abc2b1bebe5d): state=enabledForReportingButNotEnforced",
+    "severity": "high",
+    "confidence": 0.9,
+    "collected_at": "2026-10-31T12:00:00Z",
+    "observations": [
+     "obs-008",
+     "obs-009"
+    ],
+    "artifacts": [
+     "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068"
+    ],
+    "controls": [
+     "maester:MT.1007"
+    ],
+    "remediation": "Create or enable a policy that targets the scope for all cloud apps and all client app types with the required grant.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-mfa-strength"
+    ],
+    "limitations": [],
+    "next_validation_step": "",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-003 (covered): control absent"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "HCA-004:conditionalAccess",
+    "title": "Phishing-resistant MFA is not required for administrators",
+    "domain": "entra",
+    "service": "conditional-access",
+    "source_tool": "haven.entra_ca",
+    "source_check_id": "HCA-004",
+    "resource_id": "conditionalAccess",
+    "environment": "synthetic:Contoso (weak, synthetic)",
+    "observation_point": "microsoft-graph:v1.0 snapshot",
+    "status": "fail",
+    "description": "No enabled policy meets the requirement. Near misses: 'CA002 Require MFA for administrators' (e3c40a96-b703-593d-a81d-3f4de3b9cd93): grant does not require a phishing-resistant authentication strength; 'CA003 Require MFA for all users' (771b7210-27b6-509e-a7b0-abc2b1bebe5d): state=enabledForReportingButNotEnforced, grant does not require a phishing-resistant authentication strength; 'CA004 Phishing-resistant MFA for admins' (6fba8afc-dce0-5611-a36a-ce355ab37f8c): state=disabled",
+    "severity": "high",
+    "confidence": 0.9,
+    "collected_at": "2026-10-31T12:00:00Z",
+    "observations": [
+     "obs-010",
+     "obs-011",
+     "obs-012",
+     "obs-013",
+     "obs-014",
+     "obs-015"
+    ],
+    "artifacts": [
+     "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068"
+    ],
+    "controls": [
+     "prowler:entra_admin_users_phishing_resistant_mfa_enabled"
+    ],
+    "remediation": "Create or enable a policy that targets the scope for all cloud apps and all client app types with the required grant.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-admin-phish-resistant-mfa"
+    ],
+    "limitations": [],
+    "next_validation_step": "",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-004 (covered): control absent"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "HCA-005:conditionalAccess",
+    "title": "Emergency-access accounts are not excluded from all enforcing policies",
+    "domain": "entra",
+    "service": "conditional-access",
+    "source_tool": "haven.entra_ca",
+    "source_check_id": "HCA-005",
+    "resource_id": "conditionalAccess",
+    "environment": "synthetic:Contoso (weak, synthetic)",
+    "observation_point": "microsoft-graph:v1.0 snapshot",
+    "status": "fail",
+    "description": "'CA002 Require MFA for administrators' (e3c40a96-b703-593d-a81d-3f4de3b9cd93) applies to bg-01@contoso.example, bg-02@contoso.example",
+    "severity": "high",
+    "confidence": 0.9,
+    "collected_at": "2026-10-31T12:00:00Z",
+    "observations": [
+     "obs-016",
+     "obs-017"
+    ],
+    "artifacts": [
+     "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068"
+    ],
+    "controls": [
+     "maester:MT.1005",
+     "prowler:entra_emergency_access_exclusion"
+    ],
+    "remediation": "Exclude the emergency-access accounts (or a group containing only them) from every Conditional Access policy; monitor their sign-ins.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/../role-based-access-control/security-emergency-access"
+    ],
+    "limitations": [],
+    "next_validation_step": "Confirm the accounts are cloud-only, use FIDO2 or certificate credentials and have sign-in alerts.",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-005 (covered): control absent"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "HCA-006:conditionalAccess",
+    "title": "Report-only policies enforce nothing",
+    "domain": "entra",
+    "service": "conditional-access",
+    "source_tool": "haven.entra_ca",
+    "source_check_id": "HCA-006",
+    "resource_id": "conditionalAccess",
+    "environment": "synthetic:Contoso (weak, synthetic)",
+    "observation_point": "microsoft-graph:v1.0 snapshot",
+    "status": "manual",
+    "description": "Report-only policies: 'CA003 Require MFA for all users' (771b7210-27b6-509e-a7b0-abc2b1bebe5d). They log what they would do but never block or challenge.",
+    "severity": "informational",
+    "confidence": 1.0,
+    "collected_at": "2026-10-31T12:00:00Z",
+    "observations": [
+     "obs-018"
+    ],
+    "artifacts": [
+     "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068"
+    ],
+    "controls": [],
+    "remediation": "Review report-only impact in sign-in logs, then enable or delete.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/concept-conditional-access-report-only"
+    ],
+    "limitations": [],
+    "next_validation_step": "",
+    "verification": "reported",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "HCA-007:conditionalAccess",
+    "title": "Device code flow is not restricted",
+    "domain": "entra",
+    "service": "conditional-access",
+    "source_tool": "haven.entra_ca",
+    "source_check_id": "HCA-007",
+    "resource_id": "conditionalAccess",
+    "environment": "synthetic:Contoso (weak, synthetic)",
+    "observation_point": "microsoft-graph:v1.0 snapshot",
+    "status": "fail",
+    "description": "No enabled policy blocks the deviceCodeFlow authentication flow for all users. Device-code phishing remains possible.",
+    "severity": "medium",
+    "confidence": 0.8,
+    "collected_at": "2026-10-31T12:00:00Z",
+    "observations": [
+     "obs-019",
+     "obs-020",
+     "obs-021",
+     "obs-022"
+    ],
+    "artifacts": [
+     "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068"
+    ],
+    "controls": [
+     "prowler:entra_conditional_access_policy_device_code_flow_blocked"
+    ],
+    "remediation": "Block device code flow for all users except a documented exception group for devices that need it.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-authentication-flows"
+    ],
+    "limitations": [],
+    "next_validation_step": "",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-007 (covered): control absent"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "HCA-008:034e8ea6-23c7-5bac-9916-0f300eaa36ec",
+    "title": "High sign-in risk is challenged or blocked",
+    "domain": "entra",
+    "service": "conditional-access",
+    "source_tool": "haven.entra_ca",
+    "source_check_id": "HCA-008",
+    "resource_id": "034e8ea6-23c7-5bac-9916-0f300eaa36ec",
+    "environment": "synthetic:Contoso (weak, synthetic)",
+    "observation_point": "microsoft-graph:v1.0 snapshot",
+    "status": "pass",
+    "description": "'CA005 Block high sign-in risk' (034e8ea6-23c7-5bac-9916-0f300eaa36ec) acts on high sign-in risk.",
+    "severity": "informational",
+    "confidence": 0.9,
+    "collected_at": "2026-10-31T12:00:00Z",
+    "observations": [
+     "obs-023",
+     "obs-024"
+    ],
+    "artifacts": [
+     "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068"
+    ],
+    "controls": [
+     "prowler:entra_conditional_access_policy_block_high_medium_sign_in_risk"
+    ],
+    "remediation": "",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-risk-based-sign-in"
+    ],
+    "limitations": [],
+    "next_validation_step": "",
+    "verification": "reported",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "HCA-010:8a612e24-26ba-5aef-a191-8784ef7d65b1",
+    "title": "Policy references objects that do not exist",
+    "domain": "entra",
+    "service": "conditional-access",
+    "source_tool": "haven.entra_ca",
+    "source_check_id": "HCA-010",
+    "resource_id": "8a612e24-26ba-5aef-a191-8784ef7d65b1",
+    "environment": "synthetic:Contoso (weak, synthetic)",
+    "observation_point": "microsoft-graph:v1.0 snapshot",
+    "status": "fail",
+    "description": "'CA007 Contractors: MFA or compliant device' (8a612e24-26ba-5aef-a191-8784ef7d65b1) references unknown object ids ['e930c59c-c3af-5773-ba31-ba0cb4489ed2'].",
+    "severity": "low",
+    "confidence": 0.6,
+    "collected_at": "2026-10-31T12:00:00Z",
+    "observations": [
+     "obs-025"
+    ],
+    "artifacts": [
+     "8d34611532c423187c5b6b89b9ae56eb6343d64da9a1a8abbe7c4a96e7cf3068"
+    ],
+    "controls": [
+     "prowler:entra_conditional_access_policy_no_deleted_object_references"
+    ],
+    "remediation": "Remove deleted objects from the policy and re-check its intended scope.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/troubleshoot-conditional-access"
+    ],
+    "limitations": [
+     "The snapshot may be partial; an id absent here may still exist in the tenant."
+    ],
+    "next_validation_step": "",
+    "verification": "reported",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "maester:MT.1005:0",
+    "title": "All Conditional Access policies are configured to exclude at least one emergency/break glass account or group",
+    "domain": "entra",
+    "service": "Entra ID",
+    "source_tool": "maester",
+    "source_check_id": "MT.1005",
+    "resource_id": "tenant:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "environment": "tenant:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "observation_point": "microsoft-graph via Maester/Pester",
+    "status": "fail",
+    "description": "Policy 'CA002 Require MFA for administrators' does not exclude an emergency access account or group.",
+    "severity": "high",
+    "confidence": 0.7,
+    "collected_at": "2026-10-31T12:05:00Z",
+    "observations": [
+     "maester-0000",
+     "maester-0000-detail"
+    ],
+    "artifacts": [
+     "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf"
+    ],
+    "controls": [
+     "maester:MT.1005",
+     "tag:Maester",
+     "tag:Entra",
+     "tag:CA"
+    ],
+    "remediation": "Exclude emergency access accounts from all Conditional Access policies.",
+    "references": [
+     "https://maester.dev/docs/tests/maester/MT.1005"
+    ],
+    "limitations": [
+     "Imported tool result: the raw Graph objects Maester evaluated are not in this artifact."
+    ],
+    "next_validation_step": "Re-check against a Graph snapshot with haven.verify (cross-tool corroboration).",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-005 (covered): control absent"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "maester:MT.1006:1",
+    "title": "At least one Conditional Access policy is configured to require MFA for admins",
+    "domain": "entra",
+    "service": "Entra ID",
+    "source_tool": "maester",
+    "source_check_id": "MT.1006",
+    "resource_id": "tenant:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "environment": "tenant:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "observation_point": "microsoft-graph via Maester/Pester",
+    "status": "pass",
+    "description": "Conditional Access policy 'CA002 Require MFA for administrators' requires MFA for admin roles.",
+    "severity": "informational",
+    "confidence": 0.5,
+    "collected_at": "2026-10-31T12:05:00Z",
+    "observations": [
+     "maester-0001",
+     "maester-0001-detail"
+    ],
+    "artifacts": [
+     "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf"
+    ],
+    "controls": [
+     "maester:MT.1006",
+     "tag:Maester",
+     "tag:Entra",
+     "tag:CA"
+    ],
+    "remediation": "Require MFA for admin roles for all cloud apps.",
+    "references": [
+     "https://maester.dev/docs/tests/maester/MT.1006"
+    ],
+    "limitations": [
+     "Imported tool result: the raw Graph objects Maester evaluated are not in this artifact."
+    ],
+    "next_validation_step": "Re-check against a Graph snapshot with haven.verify (cross-tool corroboration).",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-002 (exists): control present",
+     "criterion gap: a qualifying policy exists but not every in-scope principal is covered (see HCA-002); a pass at this level can hide an exclusion gap"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "maester:MT.1007:2",
+    "title": "At least one Conditional Access policy is configured to require MFA for all users",
+    "domain": "entra",
+    "service": "Entra ID",
+    "source_tool": "maester",
+    "source_check_id": "MT.1007",
+    "resource_id": "tenant:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "environment": "tenant:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "observation_point": "microsoft-graph via Maester/Pester",
+    "status": "fail",
+    "description": "No enabled policy requires MFA for all users (one is report-only).",
+    "severity": "high",
+    "confidence": 0.7,
+    "collected_at": "2026-10-31T12:05:00Z",
+    "observations": [
+     "maester-0002",
+     "maester-0002-detail"
+    ],
+    "artifacts": [
+     "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf"
+    ],
+    "controls": [
+     "maester:MT.1007",
+     "tag:Maester",
+     "tag:Entra",
+     "tag:CA"
+    ],
+    "remediation": "Require MFA for all users for all cloud apps.",
+    "references": [
+     "https://maester.dev/docs/tests/maester/MT.1007"
+    ],
+    "limitations": [
+     "Imported tool result: the raw Graph objects Maester evaluated are not in this artifact."
+    ],
+    "next_validation_step": "Re-check against a Graph snapshot with haven.verify (cross-tool corroboration).",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-003 (exists): control absent"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "maester:EIDSCA.AP01:3",
+    "title": "Default Authorization Settings - Enabled Self service password reset for administrators",
+    "domain": "entra",
+    "service": "Entra ID",
+    "source_tool": "maester",
+    "source_check_id": "EIDSCA.AP01",
+    "resource_id": "tenant:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "environment": "tenant:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "observation_point": "microsoft-graph via Maester/Pester",
+    "status": "skipped",
+    "description": "EIDSCA.AP01: Default Authorization Settings - Enabled Self service password reset for administrators",
+    "severity": "informational",
+    "confidence": 0.5,
+    "collected_at": "2026-10-31T12:05:00Z",
+    "observations": [
+     "maester-0003"
+    ],
+    "artifacts": [
+     "8a602e9f62f2e13e832f2e8a402c5e63da55db52597078712d1001e338673ccf"
+    ],
+    "controls": [
+     "maester:EIDSCA.AP01",
+     "tag:EIDSCA",
+     "tag:Entra"
+    ],
+    "remediation": "",
+    "references": [
+     "https://maester.dev/docs/tests/eidsca/EIDSCA.AP01"
+    ],
+    "limitations": [
+     "Skipped is not a pass: Not connected to the required service",
+     "Imported tool result: the raw Graph objects Maester evaluated are not in this artifact."
+    ],
+    "next_validation_step": "Re-check against a Graph snapshot with haven.verify (cross-tool corroboration).",
+    "verification": "reported",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "no independent re-derivation available for this check"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "prowler:prowler-m365-entra_legacy_authentication_blocked-c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11-global-1",
+    "title": "At least one Conditional Access policy blocks legacy authentication",
+    "domain": "entra",
+    "service": "entra",
+    "source_tool": "prowler 5.14.0",
+    "source_check_id": "entra_legacy_authentication_blocked",
+    "resource_id": "conditionalAccessPolicies",
+    "environment": "m365:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "observation_point": "m365 API via Prowler",
+    "status": "pass",
+    "description": "Conditional Access Policy 'CA001 Block legacy authentication' blocks legacy authentication.",
+    "severity": "informational",
+    "confidence": 0.5,
+    "collected_at": "2026-10-31T12:05:00Z",
+    "observations": [
+     "prowler-0000",
+     "prowler-0000-detail"
+    ],
+    "artifacts": [
+     "a64dba2f7f75328021951146f7e6ede7f4c26dc9c43e919d95e1a7db66d71279"
+    ],
+    "controls": [
+     "prowler:entra_legacy_authentication_blocked",
+     "CIS-4.0_M365:5.2.2.3"
+    ],
+    "remediation": "Block legacy authentication with Conditional Access.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-legacy-authentication",
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-legacy-authentication"
+    ],
+    "limitations": [
+     "Imported tool result: Prowler's verdict, not the raw configuration it evaluated."
+    ],
+    "next_validation_step": "Re-check against a Graph/ARM snapshot with haven.verify (cross-tool corroboration).",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-001 (exists): control present",
+     "criterion gap: a qualifying policy exists but not every in-scope principal is covered (see HCA-001); a pass at this level can hide an exclusion gap"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "prowler:prowler-m365-entra_conditional_access_policy_device_code_flow_blocked-c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11-global-2",
+    "title": "Conditional Access policy blocks device code flow to prevent phishing attacks",
+    "domain": "entra",
+    "service": "entra",
+    "source_tool": "prowler 5.14.0",
+    "source_check_id": "entra_conditional_access_policy_device_code_flow_blocked",
+    "resource_id": "conditionalAccessPolicies",
+    "environment": "m365:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "observation_point": "m365 API via Prowler",
+    "status": "fail",
+    "description": "No Conditional Access Policy blocks device code flow.",
+    "severity": "high",
+    "confidence": 0.7,
+    "collected_at": "2026-10-31T12:05:00Z",
+    "observations": [
+     "prowler-0001",
+     "prowler-0001-detail"
+    ],
+    "artifacts": [
+     "a64dba2f7f75328021951146f7e6ede7f4c26dc9c43e919d95e1a7db66d71279"
+    ],
+    "controls": [
+     "prowler:entra_conditional_access_policy_device_code_flow_blocked"
+    ],
+    "remediation": "Create a policy that blocks the device code authentication flow.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-authentication-flows",
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-authentication-flows"
+    ],
+    "limitations": [
+     "Imported tool result: Prowler's verdict, not the raw configuration it evaluated."
+    ],
+    "next_validation_step": "Re-check against a Graph/ARM snapshot with haven.verify (cross-tool corroboration).",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-007 (exists): control absent"
+    ],
+    "inferred": true
+   },
+   {
+    "id": "prowler:prowler-m365-entra_admin_users_phishing_resistant_mfa_enabled-c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11-global-3",
+    "title": "At least one Conditional Access policy requires phishing-resistant MFA strength for administrator roles",
+    "domain": "entra",
+    "service": "entra",
+    "source_tool": "prowler 5.14.0",
+    "source_check_id": "entra_admin_users_phishing_resistant_mfa_enabled",
+    "resource_id": "conditionalAccessPolicies",
+    "environment": "m365:c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+    "observation_point": "m365 API via Prowler",
+    "status": "fail",
+    "description": "No enabled Conditional Access policy requires phishing-resistant MFA for administrator roles.",
+    "severity": "high",
+    "confidence": 0.7,
+    "collected_at": "2026-10-31T12:05:00Z",
+    "observations": [
+     "prowler-0002",
+     "prowler-0002-detail"
+    ],
+    "artifacts": [
+     "a64dba2f7f75328021951146f7e6ede7f4c26dc9c43e919d95e1a7db66d71279"
+    ],
+    "controls": [
+     "prowler:entra_admin_users_phishing_resistant_mfa_enabled"
+    ],
+    "remediation": "Require the Phishing-resistant MFA authentication strength for admin roles.",
+    "references": [
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-admin-phish-resistant-mfa",
+     "https://learn.microsoft.com/entra/identity/conditional-access/policy-admin-phish-resistant-mfa"
+    ],
+    "limitations": [
+     "Imported tool result: Prowler's verdict, not the raw configuration it evaluated."
+    ],
+    "next_validation_step": "Re-check against a Graph/ARM snapshot with haven.verify (cross-tool corroboration).",
+    "verification": "corroborated",
+    "verification_notes": [
+     "complete; all observations re-read from their artifacts",
+     "independently re-derived via HCA-004 (exists): control absent"
+    ],
+    "inferred": true
+   }
+  ]
+ },
+ "outcome": "grounded_incomplete",
+ "seconds": 67.3,
+ "note": "Re-scored with the stricter completeness rule added after this run: no fabricated ids/rules/refs, all four corroborated failures described correctly in prose, but none named by HCA id and no [R#] cited; the plan JSON lacked its closing brace and was repaired (json_repaired=true)."
+}

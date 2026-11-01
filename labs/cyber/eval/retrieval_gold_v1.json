@@ -1,0 +1,188 @@
+{
+ "version": "v1",
+ "note": "hand-labelled: any listed doc counts as relevant; for measuring retrieval only, not shown to models",
+ "gold": {
+  "ca-01": [
+   "entra.ca.legacy-auth"
+  ],
+  "ca-02": [
+   "entra.ca.legacy-auth"
+  ],
+  "ca-03": [
+   "entra.ca.legacy-auth"
+  ],
+  "ca-04": [
+   "entra.ca.legacy-auth"
+  ],
+  "ca-05": [
+   "entra.auth.mfa-strength",
+   "entra.ca.fundamentals"
+  ],
+  "ca-06": [
+   "entra.auth.mfa-strength",
+   "entra.ca.fundamentals"
+  ],
+  "ca-07": [
+   "entra.auth.mfa-strength",
+   "entra.ca.fundamentals"
+  ],
+  "ca-08": [
+   "entra.auth.mfa-strength",
+   "entra.ca.fundamentals"
+  ],
+  "ca-09": [
+   "entra.auth.mfa-strength",
+   "entra.ca.fundamentals"
+  ],
+  "ca-12": [
+   "entra.auth.mfa-strength",
+   "entra.ca.fundamentals"
+  ],
+  "ca-10": [
+   "entra.emergency-access"
+  ],
+  "ca-11": [
+   "entra.emergency-access"
+  ],
+  "ca-13": [
+   "entra.ca.auth-flows"
+  ],
+  "ca-14": [
+   "entra.ca.auth-flows"
+  ],
+  "ca-15": [
+   "entra.ca.fundamentals",
+   "entra.cross-tenant"
+  ],
+  "idp-01": [
+   "entra.apps.consent",
+   "entra.roles.pim"
+  ],
+  "idp-02": [
+   "entra.apps.consent"
+  ],
+  "idp-03": [
+   "entra.apps.consent"
+  ],
+  "idp-04": [
+   "entra.roles.pim"
+  ],
+  "idp-05": [
+   "entra.roles.pim"
+  ],
+  "rbac-01": [
+   "azure.rbac.model"
+  ],
+  "rbac-02": [
+   "azure.rbac.model"
+  ],
+  "rbac-03": [
+   "azure.rbac.model"
+  ],
+  "rbac-07": [
+   "azure.rbac.model"
+  ],
+  "rbac-04": [
+   "azure.rbac.model",
+   "azure.storage.access"
+  ],
+  "rbac-05": [
+   "azure.rbac.model",
+   "azure.storage.access"
+  ],
+  "rbac-06": [
+   "azure.rbac.model",
+   "azure.storage.access"
+  ],
+  "cl-01": [
+   "azure.storage.access"
+  ],
+  "cl-02": [
+   "azure.storage.access"
+  ],
+  "cl-03": [
+   "azure.keyvault.access"
+  ],
+  "cl-04": [
+   "azure.keyvault.access"
+  ],
+  "cl-05": [
+   "azure.network.nsg"
+  ],
+  "cl-06": [
+   "azure.network.nsg"
+  ],
+  "gr-01": [
+   "general.tool-failures",
+   "entra.apps.consent"
+  ],
+  "gr-02": [
+   "general.tool-failures",
+   "entra.apps.consent"
+  ],
+  "gr-03": [
+   "general.tool-failures"
+  ],
+  "gr-04": [
+   "general.tool-failures"
+  ],
+  "gr-05": [
+   "general.tool-failures"
+  ],
+  "os-01": [
+   "general.os-recognition"
+  ],
+  "os-02": [
+   "general.os-recognition"
+  ],
+  "os-03": [
+   "general.os-recognition"
+  ],
+  "net-01": [
+   "general.network-scan"
+  ],
+  "net-02": [
+   "general.network-scan"
+  ],
+  "net-03": [
+   "general.network-scan"
+  ],
+  "tf-01": [
+   "general.tool-failures",
+   "general.os-recognition"
+  ],
+  "tf-02": [
+   "general.tool-failures"
+  ],
+  "tf-03": [
+   "general.tool-failures"
+  ],
+  "lg-01": [
+   "entra.logs.signin"
+  ],
+  "lg-02": [
+   "entra.logs.signin"
+  ],
+  "lg-03": [
+   "entra.logs.signin"
+  ],
+  "lg-04": [
+   "entra.logs.signin",
+   "entra.apps.consent"
+  ],
+  "fp-01": [
+   "general.evidence",
+   "entra.ca.legacy-auth"
+  ],
+  "fp-02": [
+   "general.evidence",
+   "entra.auth.mfa-strength"
+  ],
+  "fp-03": [
+   "general.evidence"
+  ],
+  "fp-04": [
+   "azure.policy-defender"
+  ]
+ }
+}
