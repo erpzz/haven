@@ -175,6 +175,13 @@ Gap attribution over 55 scenarios: known 42, knowledge 5, orchestration 4, tool 
 | Reasoning under tools | not measurable until tools are used | re-measure after D | - |
 | Permissions / live data | no tenant | `entra.graph.collect` and Resource Graph on an authorized lab tenant | owner decision |
 
+## Interim: Adapter B (secpatch c001) vs clean base, 2026-11-01
+
+Informational only. See `results/compare/2026-11-01-interim/INTERIM_REPORT.md`.
+- Held-out C, thinking off: base 16/20, B 13/20, false positives 1 against 2. B fails three of six pre-registered criteria.
+- B over-flags in every condition and never calls tools.
+- The clean-base re-run reproduces the bit-flipped baseline on 162 of 165 thinking-off cases.
+
 ## Condition D
 
 Scheduled after the thinking-on baseline: the forge session serves both Kaggle adapters (agent-reliability v1 and secpatch c001), merged and quantized to Q4_K_M, with the same server flags, and runs this harness at the same commit. Promotion rule: held-out pass ≥ base, false positives ≤ base, per category.
