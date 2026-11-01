@@ -87,6 +87,10 @@ def check_case(result, expect):
     """Harness-side judgement of one held-out case."""
     if not isinstance(result, dict):
         return False, "no JSON result"
+    if "result" in expect:  # general skills: the expected object must be contained in the result
+        ok = _contains(result, expect["result"])
+        return ok, "" if ok else (f"result {json.dumps(result, sort_keys=True)[:300]} does not contain "
+                                  f"{json.dumps(expect['result'], sort_keys=True)[:300]}")
     problems = []
     if expect.get("framework") and result.get("framework") != expect["framework"]:
         problems.append(f"framework {result.get('framework')!r} != {expect['framework']!r}")
@@ -99,6 +103,15 @@ def check_case(result, expect):
     if expect.get("failing") and not all(f.get("message") for f in result.get("failing") or []):
         problems.append("a failure has no message")
     return not problems, "; ".join(problems)
+
+
+def _contains(got, want):
+    """want is a subset of got: dict keys recursively, lists element-wise, everything else equal."""
+    if isinstance(want, dict):
+        return isinstance(got, dict) and all(k in got and _contains(got[k], v) for k, v in want.items())
+    if isinstance(want, list):
+        return isinstance(got, list) and len(got) == len(want) and all(map(_contains, got, want))
+    return got == want and type(got) is type(want)
 
 
 def _norm_id(s):
