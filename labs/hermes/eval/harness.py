@@ -1,7 +1,13 @@
-"""Run the Haven operator evaluation against any OpenAI-compatible endpoint with tool calling.
+"""Run the Haven operator evaluation, or distill a teacher, against the real tool surface.
 
     python3 eval/harness.py --endpoint http://127.0.0.1:8095/v1 --model qwythos --out runs/eval/qwythos-v1
     python3 eval/harness.py ... --export-train runs/eval/qwythos-v1/train_rows.jsonl
+    python3 eval/harness.py --set distill --teacher codex --out runs/distill/chatgpt-v1 --resume \
+        --export-train runs/distill/chatgpt-v1/train_rows.jsonl      # ChatGPT plan, chat mode (eval/teacher.py)
+
+`--set eval` is the scored evaluation (scenarios_v1 + answers_v1, 10 held out). `--set distill` is a disjoint
+prompt set (distill_v1, all train) for producing training rows. `--resume` skips scenarios already recorded, so a
+run stopped by a plan limit continues where it left off.
 
 The model gets the server's real instructions, the haven-operator skill and the real tool schemas (operate mode,
 Strata allowed). Each scenario runs against a simulated Slink and a private temporary engineer state, so no tool
@@ -27,13 +33,15 @@ sys.path.insert(0, str(LAB))
 EVAL = LAB / "eval"
 
 
-def _private_state():
+def _private_state(workspaces=("demo",)):
     base = Path(tempfile.mkdtemp(prefix="haven-hermes-eval-"))
     cfg = base / "config"
     cfg.mkdir()
-    ws = base / "demo"
-    ws.mkdir()
-    (cfg / "workspaces.json").write_text(json.dumps([{"name": "demo", "path": str(ws)}]))
+    rows = []
+    for name in workspaces:
+        (base / name).mkdir()
+        rows.append({"name": name, "path": str(base / name)})
+    (cfg / "workspaces.json").write_text(json.dumps(rows))
     (cfg / "fleet.json").write_text(json.dumps({"nodes": [{"name": "local", "kind": "local"},
                                                           {"name": "slink", "kind": "ssh", "ssh": "haven"}]}))
     (cfg / "scope.json").write_text(json.dumps({"network": False}))
@@ -68,9 +76,9 @@ class Client:
 
 def run_one(scenario, model, max_steps=8):
     """One scenario: returns {calls, answer, messages, tools}. model(messages, tools) -> assistant message."""
-    import scheduler
-    from haven_hermes import server
+    from haven_hermes import server  # first: puts labs/engineer on sys.path
     from haven_hermes.simulated import from_state
+    import scheduler
     reg = server.build("operate", allow_strata=True, slink=from_state(scenario["state"]), settings={},
                        state=Path(tempfile.mkdtemp(prefix="haven-hermes-eval-surface-")))
     tools = openai_tools(reg)
@@ -148,45 +156,83 @@ def export_train(results, scenarios, canary, path):
     return rows
 
 
+def load_set(name):
+    if name == "eval":
+        scen = json.loads((EVAL / "scenarios_v1.json").read_text())["scenarios"]
+        ans = json.loads((EVAL / "answers_v1.json").read_text())
+        return scen, {x["id"]: x for x in ans["answers"]}, ans["canary"], ("demo",)
+    d = json.loads((EVAL / "distill_v1.json").read_text())
+    scen = [{**s, "split": "train"} for s in d["scenarios"]]
+    canary = json.loads((EVAL / "answers_v1.json").read_text())["canary"]
+    return scen, {s["id"]: s["rule"] for s in scen}, canary, tuple(d["workspaces"])
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--endpoint", required=True)
-    ap.add_argument("--model", required=True)
+    ap.add_argument("--set", choices=("eval", "distill"), default="eval")
+    ap.add_argument("--endpoint")
+    ap.add_argument("--model", default="")
+    ap.add_argument("--teacher", choices=("codex",), help="use the ChatGPT plan in chat mode instead of an endpoint")
+    ap.add_argument("--teacher-model")
+    ap.add_argument("--effort", default="high")
     ap.add_argument("--out", required=True)
     ap.add_argument("--split", choices=("all", "train", "heldout"), default="all")
     ap.add_argument("--think", action="store_true")
+    ap.add_argument("--resume", action="store_true")
     ap.add_argument("--export-train")
     a = ap.parse_args()
-    _private_state()
-    scen = json.loads((EVAL / "scenarios_v1.json").read_text())["scenarios"]
-    ans = json.loads((EVAL / "answers_v1.json").read_text())
-    rules = {x["id"]: x for x in ans["answers"]}
-    client = Client(a.endpoint, a.model, think=a.think)
+    scen, rules, canary, workspaces = load_set(a.set)
+    _private_state(workspaces)
+    if a.teacher:
+        from teacher import CodexChatTeacher, PlanLimit
+        client = CodexChatTeacher(a.teacher_model, effort=a.effort)
+        label = f"chatgpt-plan:{client.model}"
+    else:
+        if not a.endpoint:
+            ap.error("--endpoint or --teacher is required")
+        PlanLimit = ()  # noqa: N806
+        client = Client(a.endpoint, a.model, think=a.think)
+        label = a.model
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
-    results = []
-    with open(out / "results.jsonl", "w") as f:
+    done = set()
+    if a.resume and (out / "results.jsonl").exists():
+        done = {json.loads(line)["id"] for line in (out / "results.jsonl").read_text().splitlines() if line.strip()}
+    stopped = None
+    with open(out / "results.jsonl", "a") as f, open(out / "trajectories.jsonl", "a") as tf:
         for s in scen:
-            if a.split != "all" and s["split"] != a.split:
+            if s["id"] in done or (a.split != "all" and s["split"] != a.split):
                 continue
             t0 = time.monotonic()
             try:
                 run = run_one(s, client)
+            except PlanLimit as e:
+                stopped = str(e)
+                print("stopped:", stopped, flush=True)
+                break
             except Exception as e:  # an endpoint error is a failed scenario, not a crash of the run
                 run = {"calls": [], "answer": "", "messages": [], "tools": [], "error": f"{type(e).__name__}: {e}"}
             g = grade(run, rules[s["id"]])
             rec = {"id": s["id"], "category": s["category"], "split": s["split"], "grade": g,
                    "answer": run["answer"][:2000], "seconds": round(time.monotonic() - t0, 1),
-                   "messages": run["messages"], "tools": run["tools"], **({"error": run["error"]} if "error" in run else {})}
-            results.append(rec)
-            f.write(json.dumps({k: v for k, v in rec.items() if k not in ("messages", "tools")}) + "\n")
-            print(f"{s['id']:<12} {s['split']:<8} pass={g['pass']} tools={g['tools']} {rec['seconds']}s", flush=True)
-    summary = {"model": a.model, "think": a.think, "n": len(results),
+                   **({"error": run["error"]} if "error" in run else {})}
+            f.write(json.dumps(rec) + "\n")
+            f.flush()
+            tf.write(json.dumps({"id": s["id"], "messages": run["messages"], "tools": run["tools"]}) + "\n")
+            tf.flush()
+            print(f"{s['id']:<16} {s['split']:<8} pass={g['pass']} tools={g['tools']} {rec['seconds']}s", flush=True)
+    results = [json.loads(line) for line in (out / "results.jsonl").read_text().splitlines() if line.strip()]
+    trajs = {}
+    for line in (out / "trajectories.jsonl").read_text().splitlines():
+        if line.strip():
+            t = json.loads(line)
+            trajs[t["id"]] = t
+    summary = {"set": a.set, "model": label, "think": a.think, "n": len(results), "of": len(scen),
                "pass": sum(r["grade"]["pass"] for r in results),
                "heldout_pass": sum(r["grade"]["pass"] for r in results if r["split"] == "heldout"),
                "heldout_n": sum(r["split"] == "heldout" for r in results),
                "scenarios_with_any_tool_call": sum(r["grade"]["tool_calls"] > 0 for r in results),
-               "by_category": {}}
+               "errors": sum("error" in r for r in results), "stopped": stopped, "by_category": {}}
     for r in results:
         c = summary["by_category"].setdefault(r["category"], {"pass": 0, "n": 0})
         c["n"] += 1
@@ -194,7 +240,10 @@ def main():
     (out / "summary.json").write_text(json.dumps(summary, indent=1))
     print(json.dumps(summary, indent=1))
     if a.export_train:
-        print("exported", export_train(results, scen, ans["canary"], a.export_train), "training rows")
+        full = [{**r, **trajs.get(r["id"], {"messages": [], "tools": []})} for r in results]
+        print("exported", export_train(full, scen, canary, a.export_train), "training rows")
+    if stopped:
+        sys.exit(4)
 
 
 if __name__ == "__main__":

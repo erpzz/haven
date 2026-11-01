@@ -68,5 +68,48 @@ class EvalTests(unittest.TestCase):
         self.assertEqual(rows[0]["meta"]["scenario"], "read-01")
 
 
+FAKE_CODEX = """#!/bin/sh
+cat > /dev/null
+case "$(cat "$(dirname "$0")/mode")" in
+  call) echo '{"type":"item.completed","item":{"type":"agent_message","text":"{\\"tool_calls\\":[{\\"name\\":\\"haven_gpu\\",\\"arguments_json\\":\\"{}\\"}],\\"answer\\":\\"\\"}"}}' ;;
+  shell) echo '{"type":"item.started","item":{"type":"command_execution","command":"ls"}}' ;;
+  limit) echo '{"type":"turn.failed","error":{"message":"You have hit your usage limit."}}' ;;
+esac
+echo '{"type":"turn.completed","usage":{}}'
+"""
+
+
+class TeacherTests(unittest.TestCase):
+    def setUp(self):
+        import teacher
+        self.teacher = teacher
+        d = Path(tempfile.mkdtemp())
+        self.exe = d / "codex"
+        self.exe.write_text(FAKE_CODEX)
+        self.exe.chmod(0o755)
+
+    def ask(self, mode):
+        (self.exe.parent / "mode").write_text(mode)  # the teacher passes the child no extra environment
+        t = self.teacher.CodexChatTeacher("test-model", exe=str(self.exe))
+        return t([{"role": "system", "content": "s"}, {"role": "user", "content": "u"}],
+                 [{"type": "function", "function": {"name": "haven_gpu", "description": "d", "parameters": {}}}])
+
+    def test_reply_becomes_native_tool_calls(self):
+        msg = self.ask("call")
+        self.assertEqual(msg["tool_calls"][0]["function"], {"name": "haven_gpu", "arguments": "{}"})
+
+    def test_tool_attempt_and_plan_limit_stop(self):
+        with self.assertRaises(self.teacher.TeacherError):
+            self.ask("shell")
+        with self.assertRaises(self.teacher.PlanLimit):
+            self.ask("limit")
+
+    def test_chat_mode_argv(self):
+        argv = self.teacher.CodexChatTeacher("m", exe="codex").argv(Path("/tmp"), Path("/tmp/s.json"))
+        for flag in ("--ephemeral", "--ignore-user-config", "read-only", "--output-schema"):
+            self.assertIn(flag, argv)
+        self.assertIn("shell_tool", argv)
+
+
 if __name__ == "__main__":
     unittest.main()
