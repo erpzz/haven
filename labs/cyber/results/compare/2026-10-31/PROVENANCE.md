@@ -53,3 +53,11 @@ Family by family:
 ## Provenance classes used in the comparison
 
 `classes.json` in this folder, committed before any adapter result. Held-out split: T1 5 (all CA), T2 2 (rbac-02, rbac-05), T3 13.
+
+## Update: Adapter A run 2 (reported by the forge session, 2026-10-31 night)
+
+- Run 1 (kernel version 1) hit CUDA OOM at step 37/80 on a ~6k-token row. **No GGUF was produced.**
+- Run 2 (kernel version 2) makes one change: `max_length` 6144 → **5632**, which drops the 45 longest rows (all agent-ca, large tenant snapshots). That leaves 1,235 of 1,280 step rows.
+- Data files are byte-identical (`sft.jsonl` `c9d0cb87…ee4ee`); only the length cap in `config.json` changed.
+- Effect on classes: none. The dropped rows are CA (T1 already).
+- Scheduling decision: wait for both adapters and run base, A and B **back to back in one window**, as pre-registered, rather than splitting into two windows.
