@@ -1,6 +1,6 @@
 #!/bin/bash
 # Controlled three-way comparison (ADAPTER_SELECTION_PREREGISTRATION.md) on Slink.
-#   scripts/run_compare_slink.sh base=<gguf> adapter-A=<gguf> adapter-B=<gguf>
+#   scripts/run_compare_slink.sh base=<gguf>@<sha256> adapter-A=<gguf>@<sha256> adapter-B=<gguf>@<sha256>
 # One model at a time on :8095 with identical flags. Per model: thinking off, A/B/C on all 55 cases; then thinking on,
 # condition C on the 20 held-out cases. The forge teacher and its timer are paused for the window (owner-approved via
 # the forge session) and ALWAYS restarted on exit. Writes runs/cmp/<label>-{nothink,think}/ and runs/cmp/receipt.jsonl.
@@ -19,9 +19,18 @@ trap restore EXIT
 systemctl --user stop haven-cyber-eval haven-cyber-qwythos 2>/dev/null
 systemctl --user stop haven-forge.timer forge-teacher-server
 echo "{\"t\": \"$(date -u +%FT%TZ)\", \"event\": \"forge_paused\", \"teacher\": \"$(systemctl --user is-active forge-teacher-server)\"}" >> $OUT/receipt.jsonl
+integrity() {  # $1 label, $2 phase, $3 gguf, $4 expected sha256: disk (O_DIRECT) and page-cache hashes
+  local d c ok
+  d=$(dd if="$3" iflag=direct bs=16M status=none | sha256sum | cut -d' ' -f1)
+  c=$(sha256sum "$3" | cut -d' ' -f1)
+  ok=$([ "$d" = "$4" ] && [ "$c" = "$4" ] && echo true || echo false)
+  echo "{\"t\": \"$(date -u +%FT%TZ)\", \"event\": \"integrity\", \"label\": \"$1\", \"phase\": \"$2\", \"expected\": \"$4\", \"disk_direct\": \"$d\", \"page_cache\": \"$c\", \"ok\": $ok}" >> $OUT/receipt.jsonl
+}
 for spec in "$@"; do
-  label=${spec%%=*}; gguf=${spec#*=}
-  sha=$(sha256sum "$gguf" | cut -d' ' -f1)
+  label=${spec%%=*}; rest=${spec#*=}; gguf=${rest%%@*}; expected=${rest#*@}
+  # Slink has silent RAM bit flips (2026-11-01): every model is checked against its known-good hash before and after.
+  integrity "$label" before "$gguf" "$expected"
+  sha=$expected
   systemctl --user reset-failed haven-cyber-cmp 2>/dev/null
   systemd-run --user --unit=haven-cyber-cmp --property=Nice=5 $E -m "$gguf" --alias "$label" $FLAGS >/dev/null
   for i in $(seq 1 120); do curl -sf 127.0.0.1:8095/health >/dev/null && break; sleep 5; done
@@ -41,4 +50,5 @@ print(json.dumps({"event": "model_run", "label": label, "gguf": gguf, "gguf_sha2
                   "scenarios_sha256": h("eval/scenarios/v1.json"), "answers_sha256": h("eval/answers/v1.json")}))
 PY
   systemctl --user stop haven-cyber-cmp
+  integrity "$label" after "$gguf" "$expected"
 done

@@ -78,3 +78,15 @@ An adapter is **convincingly better** than base only if **all** of the following
 - Adapter A cannot exist for ~6 days (Kaggle quota exhausted; three training attempts failed with OOM). Adapter B has landed.
 - **Interim window (informational only).** Run base vs adapter-B now, under exactly the conditions of this document: same Slink harness deployment (`VERSION` 11e865b, unchanged since the thinking-on baseline), same server flags, teacher paused. The criteria are computed and reported for B, but **no selection is made from the interim window**.
 - **Decision window.** When Adapter A's GGUF lands, run base, adapter-A and adapter-B back to back in one window, re-running base and B, and apply the decision rule to that window only. If A never lands, a base-vs-B decision may be taken from a fresh window run at that time; this is a stated future amendment, not done now.
+
+## Amendment 3 (2026-11-01, before any adapter output was seen): host memory fault
+
+- **Finding.** The base GGUF used for both A/B/C baselines on Slink was not the upstream file. Its sha256 is `7d68ba92…`, against the upstream LFS oid `cfdd00ac…`, which the Mac copy of commit `97c11b0` matches.
+  - It differs by **three single-bit flips** (offsets 2211447204, 2382294632, 3631800168).
+  - Two flips are on disk. The third exists only in the page cache (the O_DIRECT read is correct), which shows bits flipping in RAM.
+  - Slink registers no EDAC/ECC memory controller.
+- **Consequences.**
+  - The thinking-off and thinking-on baselines were measured on a 3-bit-corrupted base. They remain reported, labelled as such, and are **not** used for any decision. The base re-run in each comparison window uses a **verified clean copy** (`~/.local/state/haven-cyber/models/Qwythos-9B-v2-MTP-Q4_K_M.cfdd00ac.gguf`). The difference between the two base runs gives a rough measure of the flips' effect.
+  - The runner now hashes every model through O_DIRECT and through the page cache, before and after its run, against a known-good sha256 (`receipt.jsonl`, event `integrity`). A mismatch marks that model's run compromised; it is re-run or reported as such.
+  - Adapter B was verified intact on Slink's disk by the forge session (direct-IO sha `38cea636…`, equal to a fresh Kaggle download on the Mac).
+- **Owner action needed:** memtest86+ and a BIOS memory-profile check (physical access and a reboot). Until then, every Slink result carries this caveat.
