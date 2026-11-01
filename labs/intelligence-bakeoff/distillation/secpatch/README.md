@@ -105,7 +105,7 @@ S="$HOME/.local/state/haven-secpatch"
 C="$HOME/projects/haven/labs/intelligence-bakeoff/distillation/secpatch"
 PY="$HOME/.local/share/haven-training-venv/bin/python"
 export HF_HOME="$HOME/.local/share/haven-training-cache" HF_HUB_OFFLINE=1
-"$PY" "$C/gpu_campaign.py" --data "$S/data" \
+"$PY" "$C/gpu_campaign.py" --data "$S/data-v2" \
   --output "$S/runs/real-cuda-$(date +%Y%m%dT%H%M%S)" \
   --model Qwen/Qwen3-0.6B \
   --revision c1899de289a04d12100db370d81485cdf75e47ca \
@@ -132,6 +132,11 @@ The GPU-memory check is conservative but not a GPU lease. Coordinate with
 Haven's existing Model Lab scheduling before starting, particularly if the 35B
 is in active use. Offline CI exercises only admission logic and never claims
 to have run a CUDA optimizer.
+
+The private Kaggle execution package under `remote/` was prepared from
+`eaa76f834bc9f64fe9aada542fdf3c00ba9a6f55` (hashes in `remote/SOURCE_BASE.json`). `remote/verify.py`
+refuses local core code that differs from the submitted lock, so verify that package's results from a
+checkout of that commit, not from a tree that carries the v2 changes.
 
 ## Evaluation
 
