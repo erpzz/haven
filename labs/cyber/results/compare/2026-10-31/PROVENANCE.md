@@ -70,4 +70,13 @@ Family by family:
   - same data (`sft.jsonl` `c9d0cb87…ee4ee`), max_length 5632, hyperparameters and seed;
   - trainer change (commit after `7fd154a`): `torch.cuda.empty_cache()` every step and a checkpoint every 10 steps.
 - The final adapter is steps 1–20 from run 2 plus steps 21–78 from run 3. If the checkpoint was not mounted, run 3 starts at step 0 instead; the forge session will report which happened.
-- Open question sent: whether optimizer, LR-scheduler and data-order (RNG) state were restored with the weights. If only the weights were resumed, the result is not equivalent to one uninterrupted run, and that will be noted next to the comparison.
+- **Resume state (answered):** a full trainer-state resume, not weights only. `checkpoint-20` contains:
+  - `adapter_model.safetensors`, `optimizer.pt`, `scheduler.pt`, `scaler.pt`;
+  - per-rank `rng_state_0/1.pth`;
+  - `trainer_state.json` (global_step 20, max_steps 78).
+
+  HF Trainer `resume_from_checkpoint` restores the optimizer, LR-scheduler position, grad scaler and RNG, and skips the first 20×8 accumulation batches. Data, seed, length cap and world size match run 2, so steps 21+ see the batches an uninterrupted run 2 would have seen. **Run 3 is treated as equivalent to an uninterrupted run 2.** (Run 1 → run 2 changed the row set, so that step is a data change, not a resume.)
+- **Seam data** from run 2's checkpoint (step, loss, LR): (5, 0.090, 9.98e-5), (10, 0.082, 9.79e-5), (15, 0.0091, 9.40e-5), (20, 0.0092, 8.82e-5).
+  - Loss is ≈0.009 by step 15: tool-call and JSON targets are highly predictable for this generator.
+  - **Risk to watch in the comparison:** overfitting to the generator's phrasing. It would show as gains on T1 (CA, generator-shaped) with no gain or regressions on T2/T3. The pre-registered generalization criterion (#2) exists for exactly this.
+  - Steps 21–25 and the full curve are to follow.
