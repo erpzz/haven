@@ -61,3 +61,13 @@ Family by family:
 - Data files are byte-identical (`sft.jsonl` `c9d0cb87…ee4ee`); only the length cap in `config.json` changed.
 - Effect on classes: none. The dropped rows are CA (T1 already).
 - Scheduling decision: wait for both adapters and run base, A and B **back to back in one window**, as pre-registered, rather than splitting into two windows.
+
+## Update: Adapter A run 3 (reported 2026-11-01 ~04:05Z)
+
+- **Run 2** (kernel v2, max_length 5632) also hit CUDA OOM, at step 32/78. Runs 1 and 2 both failed on the same ~400 MiB allocation after ~85 min. The forge session reads this as memory growing across the run, not a single long row. No GGUF.
+- **Run 3** (kernel v3, pushed ~04:05Z):
+  - resumes run 2's `checkpoint-20`;
+  - same data (`sft.jsonl` `c9d0cb87…ee4ee`), max_length 5632, hyperparameters and seed;
+  - trainer change (commit after `7fd154a`): `torch.cuda.empty_cache()` every step and a checkpoint every 10 steps.
+- The final adapter is steps 1–20 from run 2 plus steps 21–78 from run 3. If the checkpoint was not mounted, run 3 starts at step 0 instead; the forge session will report which happened.
+- Open question sent: whether optimizer, LR-scheduler and data-order (RNG) state were restored with the weights. If only the weights were resumed, the result is not equivalent to one uninterrupted run, and that will be noted next to the comparison.
