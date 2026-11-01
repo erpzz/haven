@@ -19,7 +19,7 @@
 | base | **16/20** | 1 | 0 | 2.8 s |
 | adapter-B | 13/20 | 2 | 0 | 3.8 s |
 
-- **Net:** −3 (gain ca-02; losses ca-06, ca-09, net-02, plus one more held-out). One-sided p = 0.97.
+- **Net:** −3 (gain ca-02; losses ca-06, ca-09, net-02, rbac-05). One-sided p = 0.97.
 - **Generalization (T2+T3) net:** −2.
 - **Pre-registered criteria:** B fails #1 (gain), #2 (generalization) and #3 (false positives), and passes #4, #5 and #6 (thinking on: 15/20 against 16/20).
 - **Interim outcome: retain untouched Qwythos.**
