@@ -4,6 +4,10 @@ from __future__ import annotations
 
 import copy
 
+# The Model Lab catalog ids (labs/model-lab/catalog.json), all treated as downloaded.
+CATALOG = ["qwen35-4b", "qwen35-9b", "qwen3-8b", "qwen3-4b", "smollm2-1.7b", "lfm25-8b-a1b", "qwen36-35b-a3b",
+           "nemotron3-nano-30b-a3b", "d1-2b"]
+
 
 def gpu(peers=(), lab=False):
     apps = [{"pid": 100 + i, "mib": 2000, "unit": u, "owner": "peer"} for i, u in enumerate(peers)]
@@ -30,7 +34,7 @@ class FakeSlink:
                     "gpu": copy.deepcopy(self.gpu_state), "units": ["haven-model-lab.service"],
                     "sentinel": {"counts": {}, "not_passing": []}}
         if command == "models":
-            return {"loaded": None, "models": [{"id": "qwen35-4b", "downloaded": True}]}
+            return {"loaded": self.engine.get("label"), "models": [{"id": m, "downloaded": True} for m in CATALOG]}
         if command == "sentinel":
             return {"counts": {"pass:info": 3}, "not_passing": []}
         return {"unknown": True, "error": "unknown probe"}

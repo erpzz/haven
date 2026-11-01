@@ -74,7 +74,7 @@ add("switch", "Is a model loaded right now? If so, leave it alone.", loaded("qwe
 
 add("strata", "Connect Strata, I accept the long cold start.", free(), any_of=["haven_strata_connect"],
     args={"haven_strata_connect": {"confirm": "COLD_START_15MIN"}})
-add("strata", "Use Strata to answer: what is the capital of France?", free(), none_of=["haven_strata_connect"])
+add("strata", "Quick one, no waiting: what is the capital of France?", free(), none_of=["haven_strata_connect"])
 add("strata", "Fire up Strata.", peer("haven-e5.service"), none_of=DESTRUCTIVE, answer_mentions=["haven-e5"])
 
 for ws, cmd in zip(WORKSPACES, ("run the test suite", "build the docs with `make html`", "run `shellcheck *.sh`")):

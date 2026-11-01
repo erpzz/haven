@@ -139,6 +139,20 @@ def grade(run, rule):
     return {"pass": not problems, "problems": problems, "tool_calls": len(names), "tools": names}
 
 
+_TMP = r"(?:/private)?/var/folders/[^/\"]+/[^/\"]+/T/haven-hermes-eval-[a-z0-9_]+"
+_PATHS = [(re.compile(_TMP + "/state"), "~/.local/state/haven-engineer"),
+          (re.compile(_TMP + "/config"), "~/.config/haven-engineer"),
+          (re.compile(_TMP + "/"), "~/work/"),
+          (re.compile(r"(?:~|/(?:Users|home)/[^/\"]+)/\.local/share/haven-git/[^/\"]+/labs/"), "~/projects/haven/labs/")]
+
+
+def normalize_paths(text):
+    """Rows carry the simulated run's temporary paths; rewrite them to the paths a real install uses."""
+    for pattern, repl in _PATHS:
+        text = pattern.sub(repl, text)
+    return text
+
+
 def export_train(results, scenarios, canary, path):
     split = {s["id"]: s["split"] for s in scenarios}
     rows = 0
@@ -148,7 +162,7 @@ def export_train(results, scenarios, canary, path):
                 continue
             row = {"messages": r["messages"], "tools": r["tools"],
                    "meta": {"source": "haven-hermes-ops-eval-v1", "scenario": r["id"], "verified_by": "grader"}}
-            text = json.dumps(row)
+            text = normalize_paths(json.dumps(row))
             if canary in text or "answers_v1" in text:
                 continue
             f.write(text + "\n")

@@ -702,7 +702,7 @@
   {
    "id": "d-strata-02",
    "category": "strata",
-   "prompt": "Use Strata to answer: what is the capital of France?",
+   "prompt": "Quick one, no waiting: what is the capital of France?",
    "state": {
     "gpu": {
      "peers": []
