@@ -93,9 +93,76 @@ Mean latency per item: A 6.6 s, B 6.2 s, C 7.6 s (single request; prefill domina
 
 tf-03 offers both `user_lacks_role` and `missing_rbac_permission`, and an ARM `AuthorizationFailed` arguably fits both. The label (`missing_rbac_permission`) is kept for v1 so that adapter results stay comparable. Scored leniently, condition A–C would each gain +1 on tool. v2 renames the option to `user_lacks_directory_role`.
 
-## Thinking on (`qwythos-think-v1`)
+## Thinking on (`qwythos-think-v1`, completed 2026-11-01 02:44Z)
 
-Running on Slink at the time of this commit (≈60–95 s per item). Smoke results: with thinking on, Qwythos *does* call tools (tf-01: five `run_command` calls; rbac-01 answered correctly). The table will be added from `results/eval/qwythos-think-v1` when the run completes.
+| Condition | Pass | Held-out pass | False positives (of eligible) | Unparsed | Tool calls | Bad / hallucinated tool calls | Hallucinated results | Tool calls per success | Prompt / completion tokens | Latency (s) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| A | 42/55 (76%) | 14/20 | 2/15 | 0 | 0 | 0 / 0 | 0 | - | 72067 / 44222 | 4241 |
+| B | 45/55 (82%) | 18/20 | 0/15 | 1 | 0 | 0 / 0 | 0 | - | 104379 / 50279 | 4810 |
+| C | 49/55 (89%) | 16/20 | 0/15 | 0 | 1 | 0 / 0 | 0 | 0.02 | 143531 / 53739 | 5243 |
+
+Paired comparisons (exact McNemar on scenarios present in both conditions):
+
+- A → B: +3 passes; only-A 2, only-B 5, p = 0.453 (n = 55)
+- B → C: +4 passes; only-B 2, only-C 6, p = 0.289 (n = 55)
+- A → C: +7 passes; only-A 1, only-C 8, p = 0.039 (n = 55)
+
+| Category | A | B | C | Dominant gap |
+|---|---|---|---|---|
+| ca | 11/15 | 13/15 | 12/15 | knowledge 2, orchestration 1, tool 1 |
+| cloud | 3/6 | 5/6 | 6/6 | knowledge 2, tool 1 |
+| fp | 4/4 | 4/4 | 4/4 | none |
+| graph | 5/5 | 5/5 | 5/5 | none |
+| identity | 5/5 | 4/5 | 5/5 | none |
+| logs | 1/4 | 2/4 | 2/4 | orchestration 2, knowledge 1 |
+| network | 3/3 | 3/3 | 3/3 | none |
+| os | 3/3 | 3/3 | 3/3 | none |
+| rbac | 5/7 | 5/7 | 6/7 | orchestration 1, tool 1 |
+| tool | 2/3 | 1/3 | 3/3 | tool 1 |
+
+Gap attribution over 55 scenarios: known 42, knowledge 5, orchestration 4, tool 4
+
+<details><summary>Per-scenario attribution</summary>
+
+| Scenario | Category | Split | A | B | C | Gap | C tools used |
+|---|---|---|---|---|---|---|---|
+| ca-03 | ca | dev | ✗ | ✗ | ✗ | orchestration | - |
+| ca-06 | ca | heldout | ✗ | ✓ | ✗ | knowledge | - |
+| ca-09 | ca | heldout | ✗ | ✓ | ✓ | knowledge | - |
+| ca-12 | ca | dev | ✗ | ✗ | ✓ | tool | - |
+| cl-01 | cloud | dev | ✗ | ✓ | ✓ | knowledge | - |
+| cl-03 | cloud | dev | ✗ | ✗ | ✓ | tool | - |
+| cl-04 | cloud | heldout | ✗ | ✓ | ✓ | knowledge | - |
+| lg-01 | logs | dev | ✗ | ✗ | ✗ | orchestration | - |
+| lg-02 | logs | heldout | ✗ | ✗ | ✗ | orchestration | - |
+| lg-04 | logs | heldout | ✗ | ✓ | ✓ | knowledge | - |
+| rbac-01 | rbac | dev | ✗ | ✗ | ✓ | tool | - |
+| rbac-05 | rbac | heldout | ✗ | ✗ | ✗ | orchestration | - |
+| tf-01 | tool | dev | ✗ | ✗ | ✓ | tool | run_command |
+
+</details>
+
+
+### Thinking on versus thinking off (same 55 cases, paired)
+
+| Condition | Pass off → on | Cases only thinking-on passes / only thinking-off passes | Mean latency per item | Mean completion tokens |
+|---|---|---|---|---|
+| A | 38 → 42 | 9 / 5 | 6.6 s → 77.1 s (11.6×) | 63 → 804 |
+| B | 38 → 45 | 10 / 3 | 6.2 s → 87.4 s (14.2×) | 70 → 914 |
+| C | 41 → 49 | 11 / 3 | 7.6 s → 95.3 s (12.5×) | 83 → 977 |
+
+### What this adds
+
+1. **Thinking buys accuracy, not tool use.** With thinking on, condition C reaches 49/55 with **zero false positives**, yet Qwythos made exactly **one** tool call in 55 items (`run_command` on tf-01, which it then solved). The gain comes from reasoning over artifacts and references, not from checking with tools.
+2. **Retrieval helps once the model reasons.** A → B is +3 thinking on versus +0 thinking off, and false positives drop from 2 to 0. A → C is significant thinking on (p = 0.039, n = 55).
+3. **The price is about 12.5× latency** on Slink (95 s versus 7.6 s per item in C). That is the opposite of the owner's 5–10× speed goal.
+4. **What remains wrong with thinking on:**
+   - ca-03 ("other"-only block treated as complete);
+   - lg-01 and lg-02 (misread spray and MFA-fatigue patterns);
+   - rbac-05 (Contributor → listKeys → data access not inferred);
+   - ca-06 in C (an OR-with-compliant-device grant).
+
+**Target this sets for the agent adapter:** reach thinking-on accuracy (C 49/55, 0 false positives) at thinking-off latency by calling the tools that already answer these cases. The three-way comparison measures exactly that.
 
 ## Gap → remedy
 

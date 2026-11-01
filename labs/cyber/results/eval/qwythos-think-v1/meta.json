@@ -1,0 +1,9 @@
+{
+ "model": "qwythos-9b-v2-q4km",
+ "endpoint": "http://127.0.0.1:8095/v1",
+ "think": true,
+ "conditions": "A,B,C",
+ "version": "v1",
+ "split": "dev",
+ "started": "2026-11-01T00:20:26Z"
+}
