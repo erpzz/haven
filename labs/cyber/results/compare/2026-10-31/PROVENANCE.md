@@ -80,3 +80,21 @@ Family by family:
   - Loss is ≈0.009 by step 15: tool-call and JSON targets are highly predictable for this generator.
   - **Risk to watch in the comparison:** overfitting to the generator's phrasing. It would show as gains on T1 (CA, generator-shaped) with no gain or regressions on T2/T3. The pre-registered generalization criterion (#2) exists for exactly this.
   - Steps 21–25 and the full curve are to follow.
+
+## Update: Adapter B landed; Adapter A blocked (reported 2026-11-01)
+
+### Adapter B (secpatch c001): complete
+- GGUF on Slink: `~/.local/state/haven-forge/runs/haven-forge-train-qwythos-c001/2026-10-31T221024/student-Q4_K_M.gguf`, sha256 `38cea636749688b014ee9ada5e08ffc72e6cc883194e4c37228f36f75e2646a1` (re-hashed on Slink by this session before the run; see `receipt.jsonl`).
+- Kernel `haven-forge-train-qwythos-c001` v2, COMPLETE.
+- SFT: 235/235 steps, 1 epoch, final train loss 0.528 (curve 1.18 → ~0.45), 107 rows skipped as longer than 3,072 tokens, peak 12.96 GiB.
+- Preference stage: 353/355 pairs used, reward accuracy 0.575. The pairs come from another model's self-play, so the DPO signal is weak.
+- Merge: 15 MTP tensors restored; the converter log shows no skipped or unknown tensors.
+- Forge secpatch regression, student vs base GGUF:
+  - held-out 0.676 vs 0.490, **FPR 0.405 vs 0.081**;
+  - gate 0.674 vs 0.497, **FPR 0.426 vs 0.026**.
+
+  The 5× false-positive rate is the over-flagging skew already seen in forge cycle 1.
+
+### Adapter A (agent v1): no GGUF
+- Kaggle's weekly GPU quota (30 h) is exhausted. A cannot be trained until it resets (~6 days).
+- Run 3 did **not** resume: the dataset version with `ckpt/` was not ready at mount time, so it ran run 2's config from step 0. It hit OOM at step 32 again, with the same 400 MiB allocation. The forge session now attributes this to one deterministic long batch placed at step 32 by `group_by_length`, not memory creep, and will fix and disclose it before the next attempt.

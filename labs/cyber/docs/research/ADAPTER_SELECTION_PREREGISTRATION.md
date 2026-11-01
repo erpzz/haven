@@ -72,3 +72,9 @@ An adapter is **convincingly better** than base only if **all** of the following
   - Held-out: T1 5, T2 2, T3 13. Criterion 2's generalization set is therefore the 15 held-out T2+T3 cases.
 - **Secondary control.** The thinking-on check (criterion 6) uses a **base re-run** of held-out condition C with thinking on, in the comparison window under identical conditions. The earlier thinking-on baseline is reported, not used for the decision.
 - **Teacher idle.** The forge teacher and its timer are paused for the whole window (`scripts/run_compare_slink.sh`, restored on exit), so all three models see the same GPU state.
+
+## Amendment 2 (2026-11-01, before any adapter output was seen)
+
+- Adapter A cannot exist for ~6 days (Kaggle quota exhausted; three training attempts failed with OOM). Adapter B has landed.
+- **Interim window (informational only).** Run base vs adapter-B now, under exactly the conditions of this document: same Slink harness deployment (`VERSION` 11e865b, unchanged since the thinking-on baseline), same server flags, teacher paused. The criteria are computed and reported for B, but **no selection is made from the interim window**.
+- **Decision window.** When Adapter A's GGUF lands, run base, adapter-A and adapter-B back to back in one window, re-running base and B, and apply the decision rule to that window only. If A never lands, a base-vs-B decision may be taken from a fresh window run at that time; this is a stated future amendment, not done now.
