@@ -184,6 +184,8 @@ class Guard(TrainerCallback):
     # Deadline (Kaggle session limit) and, on a shared machine, preemption: when the flag file appears, save a
     # checkpoint at the end of the current optimizer step and stop so interactive inference can take the GPU.
     def on_step_end(self, args, state, control, **kw):
+        if cfg.get("empty_cache"):  # long-sequence runs crept to OOM after ~35 steps (Qwythos agent v1 runs 1-2)
+            torch.cuda.empty_cache()
         flag = cfg.get("preempt_flag")
         if time.time() > deadline or (flag and os.path.exists(flag)):
             control.should_training_stop = True; control.should_save = True
