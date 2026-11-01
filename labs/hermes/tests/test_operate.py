@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-from fakes import FakeSlink, gpu
+from haven_hermes.simulated import FakeSlink, gpu
 from haven_hermes import server
 from haven_hermes.registry import ToolError
 

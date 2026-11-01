@@ -1,4 +1,5 @@
-"""A fake Slink: canned probe and labctl answers, and a record of every call."""
+"""A simulated Slink for tests, the offline smoke and the evaluation: canned probe and labctl answers built
+from a small state description, and a record of every call. Never used by the real server."""
 from __future__ import annotations
 
 import copy
@@ -57,3 +58,10 @@ class FakeSlink:
 
     def actions(self):
         return [c[1] for c in self.calls if c[0] == "labctl"]
+
+
+def from_state(state: dict) -> FakeSlink:
+    """Build a simulated Slink from an evaluation scenario's state description."""
+    g = state.get("gpu") or {}
+    return FakeSlink(gpu_state=gpu(peers=g.get("peers", ()), lab=g.get("lab", False)), engine=state.get("engine"),
+                     connection=state.get("connection"))

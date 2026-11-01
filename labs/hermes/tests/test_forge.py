@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from fakes import FakeSlink
+from haven_hermes.simulated import FakeSlink
 from haven_hermes import server
 from haven_hermes.tools import forge
 

@@ -16,7 +16,6 @@ from pathlib import Path
 
 LAB = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(LAB))
-sys.path.insert(0, str(LAB / "tests"))
 
 
 def frames(*msgs):
@@ -40,7 +39,7 @@ def parse(text):
 def offline():
     tmp = Path(tempfile.mkdtemp(prefix="haven-hermes-smoke-"))
     os.environ.update(HAVEN_ENGINEER_STATE=str(tmp / "state"), HAVEN_ENGINEER_CONFIG=str(tmp / "cfg"))
-    from fakes import FakeSlink, gpu
+    from haven_hermes.simulated import FakeSlink, gpu
     from haven_hermes import server
     from haven_hermes.mcp_stdio import Server
     results = []
