@@ -31,13 +31,31 @@ for spec in "$@"; do
   # Slink has silent RAM bit flips (2026-11-01): every model is checked against its known-good hash before and after.
   integrity "$label" before "$gguf" "$expected"
   sha=$expected
-  systemctl --user reset-failed haven-cyber-cmp 2>/dev/null
-  systemd-run --user --unit=haven-cyber-cmp --property=Nice=5 $E -m "$gguf" --alias "$label" $FLAGS >/dev/null
-  for i in $(seq 1 120); do curl -sf 127.0.0.1:8095/health >/dev/null && break; sleep 5; done
+  start_server() {  # start, wait for health, confirm the served alias, warm up; returns non-zero if the server is not usable
+    systemctl --user stop haven-cyber-cmp 2>/dev/null; systemctl --user reset-failed haven-cyber-cmp 2>/dev/null
+    while curl -sf 127.0.0.1:8095/health >/dev/null; do sleep 1; done  # previous server fully gone
+    systemd-run --user --unit=haven-cyber-cmp --property=Nice=5 $E -m "$gguf" --alias "$label" $FLAGS >/dev/null || return 1
+    for i in $(seq 1 120); do curl -sf 127.0.0.1:8095/health >/dev/null && break; sleep 5; done
+    curl -sf 127.0.0.1:8095/v1/models | grep -q "\"$label\"" || return 2
+    curl -sf 127.0.0.1:8095/v1/chat/completions -H 'Content-Type: application/json' \
+      -d '{"messages":[{"role":"user","content":"Reply with OK."}],"max_tokens":8,"temperature":0}' >/dev/null || return 3
+    systemctl --user is-active -q haven-cyber-cmp || return 4
+  }
+  for attempt in 1 2; do
+    start_server && break
+    rc=$?
+    echo "{\"t\": \"$(date -u +%FT%TZ)\", \"event\": \"server_start_failed\", \"label\": \"$label\", \"attempt\": $attempt, \"rc\": $rc}" >> $OUT/receipt.jsonl
+  done
   gpu=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader)
   offload=$(journalctl --user -u haven-cyber-cmp --no-pager | grep -o "offloaded [0-9]*/[0-9]* layers to GPU" | tail -1)
   t0=$(date -u +%FT%TZ)
-  python3 -m haven_cyber.eval.harness --endpoint http://127.0.0.1:8095/v1 --model "$label" --conditions A,B,C --out $OUT/$label-nothink
+  # A crash mid-run leaves error rows; they are moved aside and the model is re-run once from a fresh server.
+  for attempt in 1 2; do
+    python3 -m haven_cyber.eval.harness --endpoint http://127.0.0.1:8095/v1 --model "$label" --conditions A,B,C --out $OUT/$label-nothink
+    systemctl --user is-active -q haven-cyber-cmp && break
+    echo "{\"t\": \"$(date -u +%FT%TZ)\", \"event\": \"server_crashed\", \"label\": \"$label\", \"phase\": \"nothink\", \"attempt\": $attempt}" >> $OUT/receipt.jsonl
+    mv $OUT/$label-nothink $OUT/_crashed-$label-nothink-$(date -u +%H%M%S); start_server
+  done
   python3 -m haven_cyber.eval.harness --endpoint http://127.0.0.1:8095/v1 --model "$label" --think --conditions C --split heldout --out $OUT/$label-think
   python3 - "$label" "$gguf" "$sha" "$t0" "$gpu" "$offload" "$E $FLAGS" >> $OUT/receipt.jsonl <<'PY'
 import hashlib, json, sys, datetime, pathlib
