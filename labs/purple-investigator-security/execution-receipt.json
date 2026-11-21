@@ -1,5 +1,5 @@
 {
-  "executed": "Exact createInvestigator and runTests function bodies in isolated JavaScript runtime",
+  "executed": "Exact updated source and test function bodies in isolated JavaScript runtime; source fetched from review branch and updated in memory before run",
   "not_executed": [
     "Node CLI",
     "live MCP",
@@ -8,8 +8,8 @@
     "garak",
     "production tenant"
   ],
-  "total": 48,
-  "passed": 48,
+  "total": 54,
+  "passed": 54,
   "tests": [
     {
       "name": "deterministic_four_topics",
@@ -201,6 +201,30 @@
     },
     {
       "name": "benign_instruction_bearing_record_remains_usable",
+      "pass": true
+    },
+    {
+      "name": "foreign_dataset",
+      "pass": true
+    },
+    {
+      "name": "missing_lineage",
+      "pass": true
+    },
+    {
+      "name": "source_lineage_only_in_host_report",
+      "pass": true
+    },
+    {
+      "name": "duplicate_lineage_fails_closed",
+      "pass": true
+    },
+    {
+      "name": "host_scope_mutation_does_not_change_receipt",
+      "pass": true
+    },
+    {
+      "name": "record_lineage_mutation_does_not_change_report",
       "pass": true
     }
   ]
