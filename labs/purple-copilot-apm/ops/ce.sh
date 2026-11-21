@@ -11,6 +11,8 @@ if [[ ! -e "$state/pgsecret" ]]; then
 fi
 export POSTGRES_PASSWORD
 POSTGRES_PASSWORD=$(cat "$state/pgsecret")
+export bhe_database_connection
+printf -v bhe_database_connection 'user=%s dbname=%s host=app-db password=%s'     "${POSTGRES_USER:-bloodhound}" "${POSTGRES_DB:-bloodhound}" "$POSTGRES_PASSWORD"
 compose=$(realpath "$(dirname "$0")/compose.yaml")
 case "${1:-}" in
     install)
