@@ -14,23 +14,25 @@ export function createInvestigator(config) {
     if(typeof raw!=="string"||raw.length>max) return null;
     try { return JSON.parse(raw); } catch { return null; }
   };
-  const {scope,evidence,topics,authorized,budget=8}=config;
-  if(!keys(scope,["run","tenant","finding","snapshot","asOf"]) ||
-     !["run","tenant","finding","snapshot"].every(k=>token(scope[k])) ||
+  let {scope,evidence,topics,authorized,budget=8}=config;
+  if(!keys(scope,["run","tenant","dataset","finding","snapshot","asOf"]) ||
+     !["run","tenant","dataset","finding","snapshot"].every(k=>token(scope[k])) ||
      !Number.isSafeInteger(scope.asOf)||scope.asOf<0 ||
      !Array.isArray(topics)||!topics.length||topics.length>4||
      new Set(topics).size!==topics.length||!topics.every(t=>TOPICS.includes(t))||
      typeof authorized!=="boolean" || !Number.isSafeInteger(budget)||budget<1||budget>32 ||
      !Array.isArray(evidence)||evidence.length>256) throw Error("invalid host configuration");
+  scope=Object.freeze({...scope});
   const run=scope.run, selected=[...topics], limit=budget;
   const byTopic=new Map(TOPICS.map(t=>[t,[]]));
-  const events=[], received=new Map();
+  const events=[], received=new Map(), lineage=new Map(), lineageKeys=new Set();
   let rejected=0, overflow=0, closed=false;
   // Host records are parsed JSON data, not JavaScript supplied by the model.
   // Evidence state is an assertion made by the adapter; this does not authenticate a producer.
   for(const r of evidence){
     if(!plain(r)||!TOPICS.includes(r.topic)||r.tenant!==scope.tenant||
-       r.finding!==scope.finding||r.snapshot!==scope.snapshot||
+       r.dataset!==scope.dataset||r.finding!==scope.finding||r.snapshot!==scope.snapshot||
+       !token(r.artifact)||!Number.isSafeInteger(r.record)||r.record<0||
        r.sourceTenant!==scope.tenant||!Number.isSafeInteger(r.observed)||
        !Number.isSafeInteger(r.received)||r.observed<0||r.received<r.observed||
        r.received>scope.asOf||!STATES[r.topic].includes(r.state)){
@@ -38,7 +40,12 @@ export function createInvestigator(config) {
     }
     const rows=byTopic.get(r.topic);
     // No raw descriptions, display names, object IDs, URLs, or source text cross this boundary.
-    rows.push({ref:"e"+(TOPICS.indexOf(r.topic)+1)+"_"+(rows.length+1),state:r.state,observed:r.observed});
+    const ref="e"+(TOPICS.indexOf(r.topic)+1)+"_"+(rows.length+1);
+    const key=JSON.stringify([r.topic,r.artifact,r.record]);
+    if(lineageKeys.has(key))throw Error("duplicate evidence lineage");
+    lineageKeys.add(key);
+    lineage.set(ref,{artifact:r.artifact,record:r.record});
+    rows.push({ref,state:r.state,observed:r.observed});
   }
   for(const t of TOPICS){
     if(!byTopic.get(t).length) byTopic.set(t,[{ref:"e"+(TOPICS.indexOf(t)+1)+"_0",state:"no_qualified_observation",observed:null}]);
@@ -89,8 +96,8 @@ export function createInvestigator(config) {
     }
     if(required.some(ref=>!seen.has(ref)))return {released:false,reason:"coverage"};
     // Re-render from trusted dispatcher records, never from model-controlled prose/order.
-    return {released:true,report:{run,scope:{tenant:scope.tenant,finding:scope.finding,snapshot:scope.snapshot,asOf:scope.asOf},
-      assessment:"source_observations_only",claims:required.map(ref=>clone(received.get(ref))),
+    return {released:true,report:{run,scope:{tenant:scope.tenant,dataset:scope.dataset,finding:scope.finding,snapshot:scope.snapshot,asOf:scope.asOf},
+      assessment:"source_observations_only",claims:required.map(ref=>({...clone(received.get(ref)),lineage:lineage.has(ref)?clone(lineage.get(ref)):null})),
       limitations:["receipt_claims_are_not_producer_authentication","membership_is_not_compromise","eligibility_is_not_activation","posture_is_not_remediation"],
       next_step:"verify_current_evidence_with_authorized_owner"}};
   };
