@@ -209,3 +209,51 @@ class OfflineEvidence(unittest.TestCase):
         self.assertEqual(set(view["source_coverage"].values()), {"unknown"})
         self.assertFalse(view["collection_quality"])
         self.assertFalse((store.ROOT / "enrichment-v1.sqlite3").exists())
+
+    def test_report_clock_and_trust(self):
+        self.submit("maester_2x", received_utc="2026-11-22T00:00:00Z")
+        with self.assertRaisesRegex(ValueError, "report clock"):
+            report(self.run_id, self.fp, "2020-01-01T00:00:00Z")
+        self.assertEqual(self.view()["joins"], [])
+        later = report(self.run_id, self.fp, "2026-11-22T00:00:00Z")
+        q = later["collection_quality"][0]
+        self.assertEqual(
+            (
+                q["producer_authentication"],
+                q["coverage"],
+                q["freshness"],
+                q["integrity"],
+            ),
+            ("unverified", "complete", "fresh", "sha256_matched_at_import"),
+        )
+
+    def test_alternate_views_and_conflicts(self):
+        self.submit("entraops_eam")
+        self.submit("entraops_opengraph")
+        self.assertEqual(
+            len(self.view()["latest_observations_as_of"]["entitlements"]), 1
+        )
+        doc = fixture("entraops_eam")
+        a = doc[0]["RoleAssignments"][0]
+        a.update(PIMAssignmentType="Active", RoleSystem="Defender")
+        with self.assertRaisesRegex(ValueError, "RoleSystem"):
+            self.submit("entraops_eam", doc, run="changed")
+        a["RoleSystem"] = "EntraID"
+        self.submit("entraops_eam", doc, run="changed")
+        group = self.view()["latest_observations_as_of"]["entitlements"][0]
+        self.assertTrue(group["conflict"])
+        self.assertEqual(group["values"], ["active", "eligible"])
+        self.submit("maester_2x")
+        doc = fixture("maester_2x")
+        doc["ExecutedAt"] = "2026-11-21T19:15:00Z"
+        doc["Tests"][0]["Result"] = "Passed"
+        self.submit(
+            "maester_2x",
+            doc,
+            run="later",
+            collected_utc=doc["ExecutedAt"],
+            received_utc=doc["ExecutedAt"],
+        )
+        check = self.view()["latest_observations_as_of"]["posture"][0]
+        self.assertTrue(check["historical_disagreement"])
+        self.assertEqual(check["values"], ["Passed"])
