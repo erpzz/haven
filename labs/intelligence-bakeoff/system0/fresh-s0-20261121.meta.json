@@ -1,0 +1,16 @@
+{
+  "schema": "haven-adjudicated-fresh-1",
+  "seed": "s0-fresh-20261121",
+  "per_family": 12,
+  "episodes": 179,
+  "dropped_oracle_fail_or_frozen_duplicate": [
+    "fresh-8313aaf1-no_tool-06"
+  ],
+  "sha256": "9646aaaf829f22c127ac7af7fe70596a25d011887e7fc824ae72b08da772394e",
+  "code_sha256": {
+    "generator.py": "25839d4ca6bfe358d0de202069acff76ac537e6eadadba29d6c5b83dadb53a91",
+    "adjudicator.py": "fbd7feb69ef77e2cd9e42b208d03537265484f2d6aef259e08e9471172ee4e26",
+    "bench.py": "a4e4f514819dfa9362aa6a9f0b28ceacea2fdd98dbe90ca3344f3b8c2c651dd5"
+  },
+  "written_utc": "2026-11-21T22:48:08Z"
+}

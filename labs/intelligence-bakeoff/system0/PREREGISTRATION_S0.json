@@ -1,0 +1,74 @@
+{
+  "schema": "haven-s0-prereg-1",
+  "id": "HARE-S0-1",
+  "registered_utc": "2026-11-21T23:30:00Z",
+  "registered_before_any_inference": true,
+  "base_commit": "53387e74a0ad90786ac3ea16753c8ad99142e9df",
+  "question": "Do deterministic runtime checks (System 0) let the deployed Qwen3.5-4B close its round-2 gap to Qwen3.6-35B-A3B on the adjudicated suite, at 4B latency?",
+  "motivation": [
+    "Round 2: 4B 58/180, 9B 101/180, 35B 121/180 (paradigms/RESULTS_ROUND2.md).",
+    "Oracle routing 4B<->35B from the paired receipt: 131/180, only +10 over always-35B; learned and task routers already failed (PR #83, PR #96).",
+    "The 35B's wins concentrate in stale premises, conflict rules, distractors, injected tool output and execute refusals: checks that software can perform.",
+    "PR #96 relay test: passing another model's unverified reasoning made the 35B worse (0.528 -> 0.389); System 0 passes only checked facts."
+  ],
+  "arms": {
+    "4b-plain": "adjudicated/bench.py run(), unchanged round-2 protocol",
+    "4b-s0": "same loop; checks.py findings appended to model-visible user/tool messages; trace and scoring unchanged",
+    "35b-plain (optional, same hardware)": "Qwen3.6-35B-A3B, unchanged protocol",
+    "35b-s0 (optional, same hardware)": "Qwen3.6-35B-A3B with System 0"
+  },
+  "settings": {
+    "engine": "llama.cpp b11146 (built from the release tag, CUDA)",
+    "temperature": 0,
+    "max_tokens": 1024,
+    "thinking": false,
+    "server_args": "-c 33280 -ngl 99 --jinja -np 1 -fa auto --fit off -cram 0 --no-webui",
+    "4b": {
+      "repo": "unsloth/Qwen3.5-4B-GGUF",
+      "revision": "e87f176479d0855a907a41277aca2f8ee7a09523",
+      "file": "Qwen3.5-4B-Q4_K_M.gguf",
+      "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4"
+    },
+    "35b": {
+      "repo": "unsloth/Qwen3.6-35B-A3B-GGUF",
+      "revision": "a483e9e6cbd595906af30beda3187c2663a1118c",
+      "file": "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf",
+      "sha256": "ac0e2c1189e055faa36eff361580e79c5bd6f8e76bffb4ce547f167d53e31a61"
+    },
+    "hardware": "Slink is offline (RAM fault). Planned: Kaggle notebook, 2x T4; 4B pinned to one GPU. Any host is acceptable if all compared arms run on it in one session."
+  },
+  "episode_sets": {
+    "primary": {
+      "path": "adjudicated/frozen/episodes.jsonl",
+      "n": 180,
+      "sha256": "983bdf04c44a1816d9bcb5a6d15a8087289bd3a6f716be6cd2443cfe6c38f929"
+    },
+    "replication": {
+      "path": "system0/fresh-s0-20261121.jsonl",
+      "n": 179,
+      "seed": "s0-fresh-20261121",
+      "sha256": "9646aaaf829f22c127ac7af7fe70596a25d011887e7fc824ae72b08da772394e",
+      "note": "same generator templates over new worlds; tests world overfitting, not template overfitting"
+    }
+  },
+  "decision_rules": {
+    "H1_primary": "On the 180 frozen episodes, 4b-s0 vs 4b-plain on the same host: gained > lost and two-sided sign test p < 0.05.",
+    "H2_hare_thesis": "4b-s0 >= (35B score - 10). The 35B score is 35b-plain from the same session if run, otherwise the round-2 receipt (121, so the bar is 111). The 4b-s0 mean seconds per episode must be below the 35B's when both ran on one host; otherwise the latency claim is marked unmeasured.",
+    "replication": "On the 179 fresh episodes, 4b-s0 gained > lost (p reported, not gated).",
+    "harm_guard": "No family may show a paired net loss of 3 or more episodes (of 12) for s0 vs plain. Any such family blocks adoption and is reported.",
+    "calibration": "4b-plain on the new host is compared with round-2's 58/180. |difference| > 10 is reported as environment drift; paired arms remain valid.",
+    "adoption": "System 0 is proposed for Purple Copilot/Haven only if H1, the harm guard and replication direction all hold. H2 decides whether the 4B can replace the 35B for this class of work.",
+    "kill": "If H1 fails, System 0 annotations are not adopted, 35B thinking-off remains the hard-case default, and the d1-2B escalation experiment is not started."
+  },
+  "next_if_pass": "Separate preregistration: replace classify_request with Liquid d1-2B and test it as an escalation signal against saved per-episode outcomes.",
+  "disclosures": [
+    "Checks were written after reading the generator's family list (suite-aware). They read only the request text and tool outputs, never expectations or world state; tests enforce no new facts and an untouched scored trace.",
+    "The request classifier is a regex placeholder for a decision model.",
+    "One greedy run per arm. Different GPU kernels can change greedy outputs, so only same-host arms are compared directly.",
+    "External validity requires the independent Purple Copilot held-out set (PR #113 Phase 4), not this suite."
+  ],
+  "code_sha256": {
+    "checks.py": "d8e5428f197476c028cbff65c761d9268454aee52e47eaceec25cee0ec4e370b",
+    "bench_s0.py": "63cf692c09f9835a7ddb7ebc513eb653fd5e0f8ee642a7b11fc26c42507e9f7b"
+  }
+}
