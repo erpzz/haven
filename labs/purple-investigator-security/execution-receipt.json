@@ -1,0 +1,207 @@
+{
+  "executed": "Exact createInvestigator and runTests function bodies in isolated JavaScript runtime",
+  "not_executed": [
+    "Node CLI",
+    "live MCP",
+    "live model",
+    "PyRIT",
+    "garak",
+    "production tenant"
+  ],
+  "total": 48,
+  "passed": 48,
+  "tests": [
+    {
+      "name": "deterministic_four_topics",
+      "pass": true
+    },
+    {
+      "name": "valid_model_shaped_answer",
+      "pass": true
+    },
+    {
+      "name": "canonical_order_not_model_order",
+      "pass": true
+    },
+    {
+      "name": "no_raw_instructions_projected",
+      "pass": true
+    },
+    {
+      "name": "foreign_tenant",
+      "pass": true
+    },
+    {
+      "name": "foreign_source_tenant",
+      "pass": true
+    },
+    {
+      "name": "unresolved_source_tenant",
+      "pass": true
+    },
+    {
+      "name": "foreign_finding",
+      "pass": true
+    },
+    {
+      "name": "foreign_snapshot",
+      "pass": true
+    },
+    {
+      "name": "future_receipt",
+      "pass": true
+    },
+    {
+      "name": "future_observation",
+      "pass": true
+    },
+    {
+      "name": "receipt_before_observed",
+      "pass": true
+    },
+    {
+      "name": "invalid_state",
+      "pass": true
+    },
+    {
+      "name": "invalid_timestamp",
+      "pass": true
+    },
+    {
+      "name": "missing_source_tenant",
+      "pass": true
+    },
+    {
+      "name": "missing_data_is_unknown",
+      "pass": true
+    },
+    {
+      "name": "invalid_topic_in_host_config",
+      "pass": true
+    },
+    {
+      "name": "oversized_host_record_count",
+      "pass": true
+    },
+    {
+      "name": "unauthorized_read",
+      "pass": true
+    },
+    {
+      "name": "unauthorized_deterministic_report",
+      "pass": true
+    },
+    {
+      "name": "out_of_scope_read",
+      "pass": true
+    },
+    {
+      "name": "unknown_tool",
+      "pass": true
+    },
+    {
+      "name": "extra_arguments",
+      "pass": true
+    },
+    {
+      "name": "extra_command_keys",
+      "pass": true
+    },
+    {
+      "name": "array_arguments",
+      "pass": true
+    },
+    {
+      "name": "malformed_json",
+      "pass": true
+    },
+    {
+      "name": "oversized_command",
+      "pass": true
+    },
+    {
+      "name": "duplicate_read",
+      "pass": true
+    },
+    {
+      "name": "budget_exhaustion",
+      "pass": true
+    },
+    {
+      "name": "missing_actual_read",
+      "pass": true
+    },
+    {
+      "name": "fabricated_trace_rejected",
+      "pass": true
+    },
+    {
+      "name": "forged_effects_rejected",
+      "pass": true
+    },
+    {
+      "name": "raw_text_answer_rejected",
+      "pass": true
+    },
+    {
+      "name": "wrong_run",
+      "pass": true
+    },
+    {
+      "name": "wrong_ref",
+      "pass": true
+    },
+    {
+      "name": "eligibility_not_activation",
+      "pass": true
+    },
+    {
+      "name": "posture_not_remediation",
+      "pass": true
+    },
+    {
+      "name": "exposure_not_compromise",
+      "pass": true
+    },
+    {
+      "name": "missing_claim",
+      "pass": true
+    },
+    {
+      "name": "duplicate_claim",
+      "pass": true
+    },
+    {
+      "name": "returned_projection_is_copy",
+      "pass": true
+    },
+    {
+      "name": "receipt_is_copy",
+      "pass": true
+    },
+    {
+      "name": "session_closes_after_finalize",
+      "pass": true
+    },
+    {
+      "name": "preserve_conflicting_observations",
+      "pass": true
+    },
+    {
+      "name": "no_producer_authentication_upgrade",
+      "pass": true
+    },
+    {
+      "name": "missing_record_not_hidden_by_model",
+      "pass": true
+    },
+    {
+      "name": "host_config_mutation_does_not_widen_topics",
+      "pass": true
+    },
+    {
+      "name": "benign_instruction_bearing_record_remains_usable",
+      "pass": true
+    }
+  ]
+}
