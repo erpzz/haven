@@ -1,0 +1,18 @@
+{
+  "contract": "purple-apm-evidence/v1",
+  "dataset": "specterops-entra-sample",
+  "tenant": "6c12b0b0-b2cc-4a73-8252-0b94bfca2145",
+  "run": "fixture-entraops_opengraph",
+  "format": "entraops_opengraph",
+  "producer_revision": "5bdaebd1f8c4d8a037025b312e9a05405649e378",
+  "collected_utc": "2026-11-21T19:00:00Z",
+  "received_utc": "2026-11-21T19:01:00Z",
+  "complete": true,
+  "partitions": [
+    "role-assignments"
+  ],
+  "warnings": [],
+  "sha256": "4e93d2889ec6120b3282ed5a8178ab74d536d5280dc7a778a1244c96655626ca",
+  "origin": "offline-fixture",
+  "identity_basis": "native"
+}

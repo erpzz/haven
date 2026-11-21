@@ -1,0 +1,18 @@
+{
+  "contract": "purple-apm-evidence/v1",
+  "dataset": "specterops-entra-sample",
+  "tenant": "6c12b0b0-b2cc-4a73-8252-0b94bfca2145",
+  "run": "fixture-maester_3_preview",
+  "format": "maester_3_preview",
+  "producer_revision": "2d659e85c1ae57162412c499283ae4b431392379",
+  "collected_utc": "2026-11-21T19:00:00Z",
+  "received_utc": "2026-11-21T19:01:00Z",
+  "complete": true,
+  "partitions": [
+    "tests"
+  ],
+  "warnings": [],
+  "sha256": "e8c850518ece3ae1dfa2fa0018ff6e886ad3f945a0d5b737608124a22e08b407",
+  "origin": "offline-fixture",
+  "identity_basis": "native"
+}

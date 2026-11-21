@@ -4,6 +4,8 @@ Haven’s local identity review lab monitors direct membership of two designated
 
 For configurable critical assets, directed multi-hop comparisons and finding-scoped investigation, see the [Phase 2 runbook](PHASE2.md).
 
+To correlate offline EntraOps and Maester evidence with a historical sample path, see the [Phase 3 runbook](PHASE3_OFFLINE.md).
+
 ## Start the sample lab
 
 Use a Linux x86-64 host with Python 3.11+, Docker Engine with Compose v2, curl, tar, sha256sum, uv and free loopback ports 8080 and 8134. The CPU model runner also uses 8135. Allow space for the database, Docker layers and a 3.05 GB GGUF. Run the commands below from this directory. Private state defaults to `~/.local/state/purple-copilot-apm`. Set `APM_STATE` consistently to use another private directory.
