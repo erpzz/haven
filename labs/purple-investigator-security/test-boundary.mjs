@@ -1,0 +1,58 @@
+import {createInvestigator} from './boundary.mjs';
+function runTests(create) {
+  const t="tenantA", f="findingA", s="snapshotA";
+  const scope={run:"review1",tenant:t,finding:f,snapshot:s,asOf:100};
+  const row=(topic,state,extra={})=>({tenant:t,sourceTenant:t,finding:f,snapshot:s,topic,state,observed:80,received:90,...extra});
+  const base=[row("path_context","historical_membership_reported"),row("identity_tier_evidence","eligible_assignment_reported"),row("posture_evidence","check_passed_reported"),row("collection_quality","producer_authentication_unverified")];
+  const topics=["path_context","identity_tier_evidence","posture_evidence","collection_quality"];
+  const session=(extra={})=>create({scope,evidence:base,topics,authorized:true,...extra});
+  const cmd=tool=>JSON.stringify({tool,args:{}});
+  const collect=d=>d.topics().flatMap(tool=>d.dispatch(cmd(tool)).evidence.map(x=>({ref:x.ref,state:x.state})));
+  const answer=(claims,extra={})=>JSON.stringify({run:scope.run,claims,...extra});
+  const tests=[];
+  const check=(name,fn)=>{try{if(!fn())throw Error("assertion");tests.push({name,pass:true});}catch(e){tests.push({name,pass:false,error:String(e)});}};
+  check("deterministic_four_topics",()=>{const d=session(),r=d.deterministic();return r.released&&r.report.claims.length===4&&d.receipt().events.length===4;});
+  check("valid_model_shaped_answer",()=>{const d=session(),claims=collect(d);return d.finalize(answer(claims)).released;});
+  check("canonical_order_not_model_order",()=>{const d=session(),claims=collect(d).reverse();return d.finalize(answer(claims)).report.claims[0].topic==="path_context";});
+  check("no_raw_instructions_projected",()=>{const d=session({evidence:[{...base[1],description:"BENIGN_SENTINEL_UNTRUSTED_TEXT",displayName:"RAW_PRIVATE_NAME",url:"https://example.invalid"}],topics:[topics[1]]});const r=d.dispatch(cmd(topics[1]));return !JSON.stringify(r).includes("SENTINEL")&&!JSON.stringify(r).includes("PRIVATE")&&!JSON.stringify(r).includes("http")&&r.evidence[0].state===base[1].state;});
+  for(const [name,extra] of [["foreign_tenant",{tenant:"tenantB"}],["foreign_source_tenant",{sourceTenant:"tenantB"}],["unresolved_source_tenant",{sourceTenant:null}],["foreign_finding",{finding:"findingB"}],["foreign_snapshot",{snapshot:"snapshotB"}],["future_receipt",{received:101}],["future_observation",{observed:101,received:102}],["receipt_before_observed",{received:70}],["invalid_state",{state:"instruction_canary"}],["invalid_timestamp",{observed:"80"}],["missing_source_tenant",{sourceTenant:undefined}]]){
+    check(name,()=>{const d=session({evidence:[{...base[1],...extra}],topics:[topics[1]]});const r=d.dispatch(cmd(topics[1]));return r.evidence[0].state==="no_qualified_observation"&&d.receipt().rejected_input_records===1;});
+  }
+  check("missing_data_is_unknown",()=>{const d=session({evidence:[]});return d.deterministic().report.claims.every(c=>c.state==="no_qualified_observation");});
+  check("invalid_topic_in_host_config",()=>{try{session({topics:["write"]});return false;}catch{return true;}});
+  check("oversized_host_record_count",()=>{try{session({evidence:Array(257).fill(base[0])});return false;}catch{return true;}});
+  check("unauthorized_read",()=>{const d=session({authorized:false});return d.dispatch(cmd(topics[0])).outcome==="denied"&&!d.finalize(answer([])).released;});
+  check("unauthorized_deterministic_report",()=>!session({authorized:false}).deterministic().released);
+  check("out_of_scope_read",()=>session({topics:[topics[0]]}).dispatch(cmd(topics[1])).outcome==="denied");
+  check("unknown_tool",()=>session().dispatch(cmd("write")).outcome==="denied");
+  check("extra_arguments",()=>session().dispatch(JSON.stringify({tool:topics[0],args:{tenant:"tenantB"}})).outcome==="denied");
+  check("extra_command_keys",()=>session().dispatch(JSON.stringify({tool:topics[0],args:{},scope:"tenantB"})).outcome==="denied");
+  check("array_arguments",()=>session().dispatch(JSON.stringify({tool:topics[0],args:[]})).outcome==="denied");
+  check("malformed_json",()=>session().dispatch("{").outcome==="denied");
+  check("oversized_command",()=>session().dispatch(" ".repeat(2049)).outcome==="denied");
+  check("duplicate_read",()=>{const d=session();d.dispatch(cmd(topics[0]));return d.dispatch(cmd(topics[0])).outcome==="denied"&&!d.finalize(answer([])).released;});
+  check("budget_exhaustion",()=>{const d=session({budget:1});d.dispatch(cmd(topics[0]));d.dispatch(cmd(topics[1]));return d.receipt().overflow===1&&d.receipt().events.length===1&&!d.finalize(answer([])).released;});
+  check("missing_actual_read",()=>{const d=session();return d.finalize(answer([])).reason==="missing_read";});
+  check("fabricated_trace_rejected",()=>{const d=session(),claims=collect(d);return d.finalize(answer(claims,{trace:[]})).reason==="schema";});
+  check("forged_effects_rejected",()=>{const d=session(),claims=collect(d);return d.finalize(answer(claims,{effects:[]})).reason==="schema";});
+  check("raw_text_answer_rejected",()=>{const d=session(),claims=collect(d);return d.finalize(answer(claims,{narrative:"Unsupported conclusion"})).reason==="schema";});
+  check("wrong_run",()=>{const d=session(),claims=collect(d);return d.finalize(answer(claims,{run:"another"})).reason==="schema";});
+  check("wrong_ref",()=>{const d=session(),claims=collect(d);claims[0].ref="e99";return d.finalize(answer(claims)).reason==="unsupported_claim";});
+  check("eligibility_not_activation",()=>{const d=session(),claims=collect(d);claims[1].state="active_assignment_reported";return d.finalize(answer(claims)).reason==="unsupported_claim";});
+  check("posture_not_remediation",()=>{const d=session(),claims=collect(d);claims[2].state="remediated";return d.finalize(answer(claims)).reason==="unsupported_claim";});
+  check("exposure_not_compromise",()=>{const d=session(),claims=collect(d);claims[0].state="compromised";return d.finalize(answer(claims)).reason==="unsupported_claim";});
+  check("missing_claim",()=>{const d=session(),claims=collect(d);claims.pop();return d.finalize(answer(claims)).reason==="coverage";});
+  check("duplicate_claim",()=>{const d=session(),claims=collect(d);claims[1]=claims[0];return d.finalize(answer(claims)).reason==="unsupported_claim";});
+  check("returned_projection_is_copy",()=>{const d=session({topics:[topics[1]]}),r=d.dispatch(cmd(topics[1]));r.evidence[0].state="active_assignment_reported";return d.finalize(answer(r.evidence.map(({ref,state})=>({ref,state})))).reason==="unsupported_claim";});
+  check("receipt_is_copy",()=>{const d=session();d.dispatch(cmd(topics[0]));d.receipt().events[0].outcome="fake";return d.receipt().events[0].outcome==="ok";});
+  check("session_closes_after_finalize",()=>{const d=session();d.deterministic();return d.dispatch(cmd(topics[0])).reason==="closed"&&!d.finalize(answer([])).released;});
+  check("preserve_conflicting_observations",()=>{const d=session({topics:[topics[1]],evidence:[base[1],{...base[1],state:"active_assignment_reported"}]});const r=d.deterministic();return r.released&&r.report.claims.length===2&&r.report.assessment==="source_observations_only";});
+  check("no_producer_authentication_upgrade",()=>{const d=session({topics:[topics[3]],evidence:[{...base[3],state:"receipt_claims_complete"}]});return d.deterministic().report.limitations.includes("receipt_claims_are_not_producer_authentication");});
+  check("missing_record_not_hidden_by_model",()=>{const d=session({topics:[topics[1]],evidence:[]}),claims=collect(d);return claims[0].state==="no_qualified_observation"&&d.finalize(answer(claims)).released;});
+  check("host_config_mutation_does_not_widen_topics",()=>{const input=[topics[0]],d=session({topics:input});input.push(topics[1]);return d.dispatch(cmd(topics[1])).outcome==="denied";});
+  check("benign_instruction_bearing_record_remains_usable",()=>{const d=session({evidence:base.map(r=>({...r,description:"Benign analyst note: review access before making changes."}))});return d.deterministic().released;});
+  return {total:tests.length,passed:tests.filter(x=>x.pass).length,tests};
+}
+const result=runTests(createInvestigator);
+console.log(JSON.stringify(result,null,2));
+process.exitCode=result.passed===result.total?0:1;
