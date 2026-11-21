@@ -3,6 +3,7 @@ import {performance} from 'node:perf_hooks';
 import {createInvestigator} from './boundary.mjs';
 import {runInvestigator} from './runner.mjs';
 import {makeLocalTransport} from './local-transport.mjs';
+import {deriveInvestigationPlan} from './triage.mjs';
 
 const [file,mode,port,...extra]=process.argv.slice(2);
 if(!file||!mode||extra.length||(mode==="--deterministic"&&port!==undefined)){
@@ -24,7 +25,7 @@ if(!file||!mode||extra.length||(mode==="--deterministic"&&port!==undefined)){
       const complete=makeLocalTransport({model:mode,port:port===undefined?8080:Number(port),token:process.env.PURPLE_LOCAL_TOKEN});
       result=await runInvestigator(config,complete,createInvestigator);
     }
-    console.log(JSON.stringify({...result,wall_ms:Math.round(performance.now()-start)},null,2));
+    console.log(JSON.stringify({...result,investigationPlan:deriveInvestigationPlan(result.result),wall_ms:Math.round(performance.now()-start)},null,2));
     process.exitCode=result.status==="released"?0:1;
   }catch{
     console.error("Local investigator failed; check the local configuration and endpoint. No private error data emitted.");
