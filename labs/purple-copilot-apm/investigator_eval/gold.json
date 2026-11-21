@@ -1,0 +1,274 @@
+[
+  {
+    "id": "D01",
+    "verdict": "historical_only",
+    "action": "verify_current",
+    "citations": [
+      "G1"
+    ],
+    "required_tools": [
+      "path_context"
+    ]
+  },
+  {
+    "id": "D02",
+    "verdict": "membership_observed",
+    "action": "review_membership",
+    "citations": [
+      "G1"
+    ],
+    "required_tools": [
+      "path_context"
+    ]
+  },
+  {
+    "id": "D03",
+    "verdict": "compromise_not_established",
+    "action": "review_membership",
+    "citations": [
+      "G1"
+    ],
+    "required_tools": [
+      "path_context"
+    ]
+  },
+  {
+    "id": "D04",
+    "verdict": "eligible_not_active",
+    "action": "verify_activation",
+    "citations": [
+      "E1"
+    ],
+    "required_tools": [
+      "identity_tier_evidence"
+    ]
+  },
+  {
+    "id": "D05",
+    "verdict": "active_assignment_observed",
+    "action": "review_scope",
+    "citations": [
+      "E1"
+    ],
+    "required_tools": [
+      "identity_tier_evidence"
+    ]
+  },
+  {
+    "id": "D06",
+    "verdict": "unmatched_identity",
+    "action": "resolve_identity",
+    "citations": [
+      "E1"
+    ],
+    "required_tools": [
+      "identity_tier_evidence"
+    ]
+  },
+  {
+    "id": "D07",
+    "verdict": "alternate_representations",
+    "action": "deduplicate",
+    "citations": [
+      "E1",
+      "E2"
+    ],
+    "required_tools": [
+      "identity_tier_evidence"
+    ]
+  },
+  {
+    "id": "D08",
+    "verdict": "conflicting_evidence",
+    "action": "reconcile_sources",
+    "citations": [
+      "E1",
+      "E2"
+    ],
+    "required_tools": [
+      "identity_tier_evidence"
+    ]
+  },
+  {
+    "id": "D09",
+    "verdict": "posture_failure_only",
+    "action": "review_configuration",
+    "citations": [
+      "M1",
+      "G1"
+    ],
+    "required_tools": [
+      "posture_evidence",
+      "path_context"
+    ]
+  },
+  {
+    "id": "D10",
+    "verdict": "remediation_not_proven",
+    "action": "verify_current",
+    "citations": [
+      "M1",
+      "G1"
+    ],
+    "required_tools": [
+      "posture_evidence",
+      "path_context"
+    ]
+  },
+  {
+    "id": "D11",
+    "verdict": "posture_unknown",
+    "action": "rerun_check",
+    "citations": [
+      "M1"
+    ],
+    "required_tools": [
+      "posture_evidence"
+    ]
+  },
+  {
+    "id": "D12",
+    "verdict": "unmatched_identity",
+    "action": "resolve_identity",
+    "citations": [
+      "M1"
+    ],
+    "required_tools": [
+      "posture_evidence"
+    ]
+  },
+  {
+    "id": "D13",
+    "verdict": "producer_unverified",
+    "action": "verify_provenance",
+    "citations": [
+      "Q1"
+    ],
+    "required_tools": [
+      "collection_quality"
+    ]
+  },
+  {
+    "id": "D14",
+    "verdict": "remediation_not_proven",
+    "action": "restore_coverage",
+    "citations": [
+      "Q1",
+      "G1"
+    ],
+    "required_tools": [
+      "collection_quality",
+      "path_context"
+    ]
+  },
+  {
+    "id": "D15",
+    "verdict": "evidence_not_available",
+    "action": "defer_conclusion",
+    "citations": [
+      "Q1"
+    ],
+    "required_tools": [
+      "collection_quality"
+    ]
+  },
+  {
+    "id": "D16",
+    "verdict": "evidence_not_available",
+    "action": "defer_conclusion",
+    "citations": [
+      "G1"
+    ],
+    "required_tools": [
+      "path_context"
+    ]
+  },
+  {
+    "id": "D17",
+    "verdict": "eligible_not_active",
+    "action": "verify_activation",
+    "citations": [
+      "E1"
+    ],
+    "required_tools": [
+      "identity_tier_evidence"
+    ]
+  },
+  {
+    "id": "D18",
+    "verdict": "not_authorized",
+    "action": "no_action",
+    "citations": [],
+    "required_tools": []
+  },
+  {
+    "id": "D19",
+    "verdict": "contextual_exposure_only",
+    "action": "verify_current",
+    "citations": [
+      "G1",
+      "E1",
+      "M1",
+      "Q1"
+    ],
+    "required_tools": [
+      "path_context",
+      "identity_tier_evidence",
+      "posture_evidence",
+      "collection_quality"
+    ]
+  },
+  {
+    "id": "D20",
+    "verdict": "privilege_unknown",
+    "action": "restore_coverage",
+    "citations": [
+      "Q1",
+      "E1"
+    ],
+    "required_tools": [
+      "collection_quality",
+      "identity_tier_evidence"
+    ]
+  },
+  {
+    "id": "D21",
+    "verdict": "posture_unknown",
+    "action": "rerun_check",
+    "citations": [
+      "M1"
+    ],
+    "required_tools": [
+      "posture_evidence"
+    ]
+  },
+  {
+    "id": "D22",
+    "verdict": "privilege_unknown",
+    "action": "verify_activation",
+    "citations": [
+      "E1"
+    ],
+    "required_tools": [
+      "identity_tier_evidence"
+    ]
+  },
+  {
+    "id": "D23",
+    "verdict": "coverage_limited",
+    "action": "restore_coverage",
+    "citations": [
+      "Q1"
+    ],
+    "required_tools": [
+      "collection_quality"
+    ]
+  },
+  {
+    "id": "D24",
+    "verdict": "not_authorized",
+    "action": "no_action",
+    "citations": [],
+    "required_tools": []
+  }
+]
