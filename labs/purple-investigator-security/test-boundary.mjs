@@ -1,8 +1,8 @@
 import {createInvestigator} from './boundary.mjs';
 function runTests(create) {
   const t="tenantA", f="findingA", s="snapshotA";
-  const scope={run:"review1",tenant:t,finding:f,snapshot:s,asOf:100};
-  const row=(topic,state,extra={})=>({tenant:t,sourceTenant:t,finding:f,snapshot:s,topic,state,observed:80,received:90,...extra});
+  const scope={run:"review1",tenant:t,dataset:"datasetA",finding:f,snapshot:s,asOf:100};
+  const row=(topic,state,extra={})=>({tenant:t,dataset:"datasetA",sourceTenant:t,finding:f,snapshot:s,artifact:"artifactA",record:0,topic,state,observed:80,received:90,...extra});
   const base=[row("path_context","historical_membership_reported"),row("identity_tier_evidence","eligible_assignment_reported"),row("posture_evidence","check_passed_reported"),row("collection_quality","producer_authentication_unverified")];
   const topics=["path_context","identity_tier_evidence","posture_evidence","collection_quality"];
   const session=(extra={})=>create({scope,evidence:base,topics,authorized:true,...extra});
@@ -46,11 +46,17 @@ function runTests(create) {
   check("returned_projection_is_copy",()=>{const d=session({topics:[topics[1]]}),r=d.dispatch(cmd(topics[1]));r.evidence[0].state="active_assignment_reported";return d.finalize(answer(r.evidence.map(({ref,state})=>({ref,state})))).reason==="unsupported_claim";});
   check("receipt_is_copy",()=>{const d=session();d.dispatch(cmd(topics[0]));d.receipt().events[0].outcome="fake";return d.receipt().events[0].outcome==="ok";});
   check("session_closes_after_finalize",()=>{const d=session();d.deterministic();return d.dispatch(cmd(topics[0])).reason==="closed"&&!d.finalize(answer([])).released;});
-  check("preserve_conflicting_observations",()=>{const d=session({topics:[topics[1]],evidence:[base[1],{...base[1],state:"active_assignment_reported"}]});const r=d.deterministic();return r.released&&r.report.claims.length===2&&r.report.assessment==="source_observations_only";});
+  check("preserve_conflicting_observations",()=>{const d=session({topics:[topics[1]],evidence:[base[1],{...base[1],record:1,state:"active_assignment_reported"}]});const r=d.deterministic();return r.released&&r.report.claims.length===2&&r.report.assessment==="source_observations_only";});
   check("no_producer_authentication_upgrade",()=>{const d=session({topics:[topics[3]],evidence:[{...base[3],state:"receipt_claims_complete"}]});return d.deterministic().report.limitations.includes("receipt_claims_are_not_producer_authentication");});
   check("missing_record_not_hidden_by_model",()=>{const d=session({topics:[topics[1]],evidence:[]}),claims=collect(d);return claims[0].state==="no_qualified_observation"&&d.finalize(answer(claims)).released;});
   check("host_config_mutation_does_not_widen_topics",()=>{const input=[topics[0]],d=session({topics:input});input.push(topics[1]);return d.dispatch(cmd(topics[1])).outcome==="denied";});
   check("benign_instruction_bearing_record_remains_usable",()=>{const d=session({evidence:base.map(r=>({...r,description:"Benign analyst note: review access before making changes."}))});return d.deterministic().released;});
+  check("foreign_dataset",()=>{const d=session({evidence:[{...base[1],dataset:"datasetB"}],topics:[topics[1]]});return d.deterministic().report.claims[0].state==="no_qualified_observation";});
+  check("missing_lineage",()=>{const d=session({evidence:[{...base[1],artifact:null}],topics:[topics[1]]});return d.deterministic().report.claims[0].lineage===null;});
+  check("source_lineage_only_in_host_report",()=>{const d=session({topics:[topics[1]]}),r=d.dispatch(cmd(topics[1]));return !JSON.stringify(r).includes("artifactA")&&d.finalize(answer(r.evidence.map(({ref,state})=>({ref,state})))).report.claims[0].lineage.artifact==="artifactA";});
+  check("duplicate_lineage_fails_closed",()=>{try{session({evidence:[base[1],base[1]]});return false;}catch{return true;}});
+  check("host_scope_mutation_does_not_change_receipt",()=>{const original={...scope},d=session({scope:original});original.tenant="tenantB";original.snapshot="snapshotB";const r=d.deterministic();return r.report.scope.tenant===t&&d.receipt().snapshot===s;});
+  check("record_lineage_mutation_does_not_change_report",()=>{const original={...base[1]},d=session({evidence:[original],topics:[topics[1]]});original.artifact="changed";return d.deterministic().report.claims[0].lineage.artifact==="artifactA";});
   return {total:tests.length,passed:tests.filter(x=>x.pass).length,tests};
 }
 const result=runTests(createInvestigator);
