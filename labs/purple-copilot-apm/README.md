@@ -2,6 +2,8 @@
 
 Haven’s local identity review lab monitors direct membership of two designated critical assets in SpecterOps’ synthetic AD and Entra samples. Each membership is a one-edge identity access path. A signed REST read records the actual graph, an independent archive read checks collection coverage, and SQLite retains the evidence behind every change. The dashboard opens at [localhost:8134](http://127.0.0.1:8134/).
 
+For configurable critical assets, directed multi-hop comparisons and finding-scoped investigation, see the [Phase 2 runbook](PHASE2.md).
+
 ## Start the sample lab
 
 Use a Linux x86-64 host with Python 3.11+, Docker Engine with Compose v2, curl, tar, sha256sum, uv and free loopback ports 8080 and 8134. The CPU model runner also uses 8135. Allow space for the database, Docker layers and a 3.05 GB GGUF. Run the commands below from this directory. Private state defaults to `~/.local/state/purple-copilot-apm`. Set `APM_STATE` consistently to use another private directory.

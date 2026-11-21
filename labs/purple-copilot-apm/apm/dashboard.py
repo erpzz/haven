@@ -57,9 +57,41 @@ def page(selected=None):
             raise KeyError("Unknown snapshot")
         timeline = "".join(f'<li><a href="/?run={r["id"]}">#{r["id"]} · {h(r["scope"].upper())}</a> <time>{h(r["observed"][:19])} UTC</time></li>' for r in history)
         return f"""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Purple Copilot APM · Haven</title><style>{STYLE.read_text()}</style><main><header><b>HAVEN</b><span>Identity security</span></header>
+<title>Purple Copilot APM · Haven</title><style>{STYLE.read_text()}</style><main><header><b>HAVEN</b><span>Identity security</span><a href="/paths">Path history</a></header>
 <h1>Purple Copilot APM</h1><p>Critical assets · Official sample graphs</p><div class="cards">{''.join(cards)}</div>
 <div class="layout"><article>{body}</article><aside><h2>Snapshot history</h2><ol>{timeline}</ol></aside></div></main></html>"""
+
+
+def path_page(selected=None):
+    with closing(database(True)) as db:
+        available = db.execute("SELECT 1 FROM sqlite_master WHERE name='path_runs'").fetchone()
+        runs = list(db.execute("SELECT id,observed FROM path_runs ORDER BY id DESC LIMIT 40")) if available else []
+        if selected is None and runs:
+            selected = runs[0]["id"]
+        run = db.execute("SELECT * FROM path_runs WHERE id=?", (selected,)).fetchone() if available else None
+    report = "<p>No path scans recorded.</p>"
+    if run:
+        evidence = json.loads(run["evidence"])
+        findings = json.loads(run["findings"])
+        rows = []
+        for key, finding in sorted(findings.items(), key=lambda item: -item[1]["priority"]["score"]):
+            path = finding["path"]
+            chain = " ".join([path[0][0]] + [f"→ {kind} → {target}" for _, kind, target in path])
+            detail = json.dumps(dict(finding=key, **finding), indent=2)
+            rows.append(f'<tr><td><details><summary>{h(chain)}</summary><pre>{h(detail)}</pre></details></td>'
+                        f'<td>{h(finding.get("observation") or finding["state"])}</td>'
+                        f'<td>{h(finding["priority"]["score"])}</td></tr>')
+        report = f"""<section><small>{h(evidence['origin'])} · SNAPSHOT {selected}</small>
+<h2>{h(evidence['asset']['key'])}</h2><p>{h(run['observed'])}</p>
+<details><summary>Collection evidence and query</summary><pre>{h(json.dumps(evidence, indent=2))}</pre></details></section>
+<section><div class="scroll"><table><thead><tr><th>Directed path</th><th>State</th><th>Priority</th></tr></thead>
+<tbody>{''.join(rows)}</tbody></table></div></section>"""
+    elif selected is not None:
+        raise KeyError("Unknown path snapshot")
+    history = "".join(f'<li><a href="/paths?run={r["id"]}">Snapshot {r["id"]}</a><time>{h(r["observed"][:19])} UTC</time></li>' for r in runs)
+    return f"""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Path history · Purple Copilot APM</title><style>{STYLE.read_text()}</style><main><header><b>HAVEN</b><a href="/">Membership reviews</a></header>
+<h1>Path history</h1><div class="layout"><article>{report}</article><aside><h2>Observations</h2><ol>{history}</ol></aside></div></main></html>"""
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -67,11 +99,12 @@ class Handler(BaseHTTPRequestHandler):
         if self.headers.get("Host") not in ("localhost:8134", "127.0.0.1:8134"):
             return self.send_error(403)
         url = urlsplit(self.path)
-        if url.path != "/":
+        if url.path not in ("/", "/paths"):
             return self.send_error(404)
         try:
             selected = parse_qs(url.query).get("run")
-            content = page(int(selected[0]) if selected else None).encode()
+            render = page if url.path == "/" else path_page
+            content = render(int(selected[0]) if selected else None).encode()
         except (ValueError, KeyError):
             return self.send_error(404)
         self.send_response(200)

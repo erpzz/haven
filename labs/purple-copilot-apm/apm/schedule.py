@@ -4,11 +4,13 @@ import signal
 from threading import Event
 
 from .collect import collect
+from .path_history import scan
 
 
 def schedule(interval, stop):
     while not stop.is_set():
         collect()
+        scan()
         stop.wait(interval)
 
 

@@ -17,6 +17,10 @@ server = FastMCP("Purple Copilot read-only reviews")
 async def review_memberships(scope: str) -> dict:
     """Read synthetic group memberships for one approved scope, ad or entra."""
     review = authorize(scope)
+    return await community_graph(scope, review.query)
+
+
+async def community_graph(scope, cypher):
     verify_reader()
     token = read("reader.json")
     upstream = ROOT / "community"
@@ -26,12 +30,12 @@ async def review_memberships(scope: str) -> dict:
                                         "BLOODHOUND_SCHEME": "http", "BLOODHOUND_TOKEN_ID": token["id"],
                                         "BLOODHOUND_TOKEN_KEY": token["key"], "NO_PROXY": "127.0.0.1"})
     stamp = now()
-    audit = {"query": review.query, "scope": scope, "observed": stamp, "status": "started"}
+    audit = {"query": cypher, "scope": scope, "observed": stamp, "status": "started"}
     filename = f"mcp-{stamp}.json"
     save(filename, audit)
     async with stdio_client(params) as (rx, tx), ClientSession(rx, tx, read_timeout_seconds=timedelta(seconds=90)) as client:
         await client.initialize()
-        reply = await client.call_tool("cypher_query", {"info_type": "run", "query": review.query,
+        reply = await client.call_tool("cypher_query", {"info_type": "run", "query": cypher,
                                                         "include_properties": False})
         result = json.loads(reply.content[0].text)
         save(filename, dict(audit, status="returned", response=result))
