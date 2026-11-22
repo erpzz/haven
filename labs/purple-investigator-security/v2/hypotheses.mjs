@@ -1,4 +1,4 @@
-import {isRelease,strictJSON} from './security.mjs';
+import {isRelease,strictJSON,ProtocolIngressError} from './security.mjs';
 // These are conservative compatibility rules, not benchmark expected answers.
 const rules={
   activation_gap:{requires:[['eligible_assignment_reported']],action:'request_activation_history',meaning:'An eligible assignment may have a separately recorded activation; effective access is unresolved.'},
@@ -32,7 +32,7 @@ export function enumerateHypotheses(release){const ctx=hypothesisContext(release
 export async function proposeHypotheses(release,complete,expectedModel){
   if(typeof expectedModel!=='string'||!/^[a-zA-Z0-9_.:/-]{1,128}$/.test(expectedModel)||typeof complete!=='function')throw Error('configuration');
   const ctx=hypothesisContext(release),start=performance.now();let r;
-  try{r=await complete({messages:[{role:'system',content:'Propose bounded hypotheses only. Return JSON {run,proposals:[{kind,refs,priority}]}. Use allowed kinds and observed refs only. No authoritative conclusions or execution.'},{role:'user',content:JSON.stringify(ctx)}],tools:[]});}catch{return {status:'transport_error',wall_ms:performance.now()-start};}
+  try{r=await complete({messages:[{role:'system',content:'Propose bounded hypotheses only. Return JSON {run,proposals:[{kind,refs,priority}]}. Use allowed kinds and observed refs only. No authoritative conclusions or execution.'},{role:'user',content:JSON.stringify(ctx)}],tools:[]});}catch(e){return {status:e instanceof ProtocolIngressError?'protocol_json':'transport_error',wall_ms:performance.now()-start};}
   const m=r?.choices?.[0]?.message;
   const u=r?.usage,usage=u&&['prompt_tokens','completion_tokens','total_tokens'].every(k=>Number.isSafeInteger(u[k])&&u[k]>=0&&u[k]<=100000000)&&u.total_tokens===u.prompt_tokens+u.completion_tokens?{prompt_tokens:u.prompt_tokens,completion_tokens:u.completion_tokens,total_tokens:u.total_tokens}:null;
   const receipt={reportedModel:typeof r?.model==='string'&&/^[a-zA-Z0-9_.:/-]{1,128}$/.test(r.model)?r.model:null,expectedModel,provenance:'unverified',usage,wall_ms:performance.now()-start};
