@@ -94,19 +94,31 @@ def find_libcuda():
              "find /usr/local/nvidia /usr/lib64-nvidia /usr/local/cuda /usr/local/cuda-13.0 /usr/lib /usr/lib64 /opt "
              "-name 'libcuda.so*' 2>/dev/null | head -40", check=False)
     found = {p.strip() for p in out.split() if os.path.basename(p.strip()).startswith("libcuda.so") and os.path.exists(p.strip())}
-    if not [p for p in found if "/stubs/" not in p]:
+    if not [p for p in found if os.path.getsize(os.path.realpath(p)) > 5_000_000]:
         out = sh("timeout 180 find / -path /proc -prune -o -path /sys -prune -o -path /kaggle/input -prune -o "
                  "-name 'libcuda.so*' -print 2>/dev/null | head -20", check=False)
         found |= {p.strip() for p in out.split() if os.path.basename(p.strip()).startswith("libcuda.so") and os.path.exists(p.strip())}
     return sorted(found)
+def is_real_driver(p):
+    # the driver library is tens of MB; NVIDIA's link stub (and our renamed copies of it) is tiny.
+    # cuda-*/compat holds a forward-compatibility libcuda for OLDER host drivers: loading it on a newer
+    # host driver fails with "unsupported display driver / cuda driver combination", so never use it.
+    return os.path.getsize(os.path.realpath(p)) > 5_000_000 and "/compat/" not in p
+def host_drivers(found):
+    real = [p for p in found if is_real_driver(p)]
+    return sorted(real, key=lambda p: (not p.startswith("/usr/local/nvidia"), p))
+def find_libcuda_runtime():
+    real = host_drivers(find_libcuda())
+    if real:  # host driver directory first, ahead of anything else on the path
+        os.environ["LD_LIBRARY_PATH"] = os.path.dirname(real[0]) + ":" + os.environ.get("LD_LIBRARY_PATH", "")
 def libcuda_for_link():
     found = find_libcuda()
     print("libcuda candidates:", found)
-    real = [p for p in found if "/stubs/" not in p]
-    if real:  # make sure the server can load the real driver at run time
+    real = host_drivers(found)
+    if real:  # make sure the server loads the host driver at run time, not a compat copy
         d = os.path.dirname(real[0])
         os.environ["LD_LIBRARY_PATH"] = d + ":" + os.environ.get("LD_LIBRARY_PATH", "")
-    stubs = [p for p in found if "/stubs/" in p]
+    stubs = [p for p in found if os.path.getsize(os.path.realpath(p)) <= 5_000_000 and "/libcuda-link" not in p]
     if stubs:
         stub = stubs[0]
     else:
@@ -120,8 +132,25 @@ def libcuda_for_link():
     sh(f"rm -rf /tmp/libcuda-link && mkdir -p /tmp/libcuda-link && cp {stub} /tmp/libcuda-link/libcuda.so "
        "&& ln -s libcuda.so /tmp/libcuda-link/libcuda.so.1")
     return "/tmp/libcuda-link/libcuda.so"
+def cached_build(tag):
+    # a private Kaggle dataset holding a prebuilt llama-server (+ libs) and a sha256 manifest
+    import glob
+    for man in glob.glob(f"/kaggle/input/**/haven-llama-{tag}-cuda13-sm75/manifest.json", recursive=True):
+        root = os.path.dirname(man)
+        files = json.load(open(man))["files"]
+        if all(hashlib.sha256(open(os.path.join(root, f), "rb").read()).hexdigest() == h for f, h in files.items()):
+            return root
+        print("cached build failed its hash check, ignoring:", root)
+    return None
 def build_llama(tag, prefix):
     engine = f"{prefix}/build/bin/llama-server"
+    cache = cached_build(tag) if not os.path.exists(engine) else None
+    if cache:
+        sh(f"mkdir -p {prefix}/build/bin && cp -a {cache}/bin/. {prefix}/build/bin/ && chmod +x {engine}")
+        print("using cached build from", cache)
+        os.environ["LD_LIBRARY_PATH"] = (f"{prefix}/build/bin:/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib:"
+                                         + os.environ.get("LD_LIBRARY_PATH", ""))
+        find_libcuda_runtime()
     if not os.path.exists(engine):
         sh(f"git clone -q --depth 1 --branch {tag} https://github.com/ggml-org/llama.cpp {prefix}")
         t0 = time.time()
@@ -134,6 +163,8 @@ def build_llama(tag, prefix):
         sh(f"cd {prefix} && {cmake} -S . -B build {flags} > /tmp/cmake.log 2>&1 || (tail -40 /tmp/cmake.log; false)")
         sh(f"cd {prefix} && {cmake} --build build --target llama-server -j4 > /tmp/build.log 2>&1 || (tail -60 /tmp/build.log; false)")
         print(f"{tag} build minutes: {(time.time()-t0)/60:.1f}")
+    sh("nvidia-smi --query-gpu=driver_version --format=csv,noheader | head -1", check=False)
+    sh(f"ldd {os.path.dirname(engine)}/libggml-cuda.so | grep -E 'libcuda|libcudart|libcublas'", check=False)
     out = sh(f"{engine} --version 2>&1 | tail -6", check=False)
     if "failed to initialize CUDA" in out or "CUDA devices" not in out:
         raise SystemExit("llama-server cannot use the GPUs (see the libcuda lines above); stopping instead of running on CPU")
