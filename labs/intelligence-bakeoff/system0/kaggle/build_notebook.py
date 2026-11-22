@@ -84,29 +84,59 @@ S0 = dest / "system0"
 sh(f"cd {{dest}} && python3 -m unittest discover -s system0/tests 2>&1 | tail -3")
 sh(f"cd {{dest}} && python3 system0/bench_s0.py check")
 """),
-        code("""def build_llama(tag, prefix):
+        code("""STUB_DEB = ("https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-driver-dev-13-0_13.0.88-1_amd64.deb",
+            "3ffcc3fc69aa914629a97839aaf2b624508fbae9d87f187231795745a6be2550")
+def find_libcuda():
+    # every libcuda.so* the loader cache, nvidia-smi's own libraries or common driver dirs know about
+    sh("echo LD_LIBRARY_PATH=$LD_LIBRARY_PATH; ldd $(command -v nvidia-smi) 2>/dev/null | grep -i nvidia", check=False)
+    out = sh("ldconfig -p | grep -o '/[^ ]*libcuda[.]so[.0-9]*' ; "
+             "for d in $(ldd $(command -v nvidia-smi) 2>/dev/null | grep -o '/[^ ]*libnvidia-ml[^ ]*' | xargs -r -n1 dirname); do ls $d/libcuda.so* 2>/dev/null; done; "
+             "find /usr/local/nvidia /usr/lib64-nvidia /usr/local/cuda /usr/local/cuda-13.0 /usr/lib /usr/lib64 /opt "
+             "-name 'libcuda.so*' 2>/dev/null | head -40", check=False)
+    found = {p.strip() for p in out.split() if os.path.basename(p.strip()).startswith("libcuda.so") and os.path.exists(p.strip())}
+    if not [p for p in found if "/stubs/" not in p]:
+        out = sh("timeout 180 find / -path /proc -prune -o -path /sys -prune -o -path /kaggle/input -prune -o "
+                 "-name 'libcuda.so*' -print 2>/dev/null | head -20", check=False)
+        found |= {p.strip() for p in out.split() if os.path.basename(p.strip()).startswith("libcuda.so") and os.path.exists(p.strip())}
+    return sorted(found)
+def libcuda_for_link():
+    found = find_libcuda()
+    print("libcuda candidates:", found)
+    real = [p for p in found if "/stubs/" not in p]
+    if real:  # make sure the server can load the real driver at run time
+        d = os.path.dirname(real[0])
+        os.environ["LD_LIBRARY_PATH"] = d + ":" + os.environ.get("LD_LIBRARY_PATH", "")
+    stubs = [p for p in found if "/stubs/" in p]
+    if stubs:
+        stub = stubs[0]
+    else:
+        deb = "/tmp/cuda-driver-dev.deb"
+        sh(f"curl -sSL --retry 5 -o {deb} '{STUB_DEB[0]}'")
+        assert hashlib.sha256(open(deb, "rb").read()).hexdigest() == STUB_DEB[1], "stub package hash mismatch"
+        sh(f"rm -rf /tmp/cuda-stub && dpkg-deb -x {deb} /tmp/cuda-stub")
+        stub = sh("find /tmp/cuda-stub -name libcuda.so | head -1").strip()
+        assert stub, "no libcuda.so in the stub package"
+    # the linker resolves the dependency by its soname (libcuda.so.1); give it both names in one writable dir
+    sh(f"rm -rf /tmp/libcuda-link && mkdir -p /tmp/libcuda-link && cp {stub} /tmp/libcuda-link/libcuda.so "
+       "&& ln -s libcuda.so /tmp/libcuda-link/libcuda.so.1")
+    return "/tmp/libcuda-link/libcuda.so"
+def build_llama(tag, prefix):
     engine = f"{prefix}/build/bin/llama-server"
     if not os.path.exists(engine):
         sh(f"git clone -q --depth 1 --branch {tag} https://github.com/ggml-org/llama.cpp {prefix}")
         t0 = time.time()
-        # CUDA 13 images: CMake may not locate the driver library (CUDA::cuda_driver). Point it there.
-        cands = sh("ls /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/targets/x86_64-linux/lib/stubs/libcuda.so "
-                   "/usr/lib/x86_64-linux-gnu/libcuda.so /usr/lib/x86_64-linux-gnu/libcuda.so.1 2>/dev/null", check=False).split()
-        drv = f"-DCUDA_cuda_driver_LIBRARY={cands[0]}" if cands else ""
-        flags = (f"-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=75 {drv} -DLLAMA_CURL=OFF -DLLAMA_USE_PREBUILT_UI=OFF "
-                 "-DLLAMA_BUILD_UI=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF")
+        drv_lib = libcuda_for_link()
+        link = f"-Wl,-rpath-link,{os.path.dirname(drv_lib)}"
+        flags = (f"-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=75 -DCUDA_cuda_driver_LIBRARY={drv_lib} "
+                 f"'-DCMAKE_EXE_LINKER_FLAGS={link}' '-DCMAKE_SHARED_LINKER_FLAGS={link}' -DLLAMA_CURL=OFF "
+                 "-DLLAMA_USE_PREBUILT_UI=OFF -DLLAMA_BUILD_UI=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF")
         cmake = "cmake"
-        if subprocess.run(f"cd {prefix} && {cmake} -S . -B build {flags} > /tmp/cmake.log 2>&1", shell=True).returncode:
-            print(open("/tmp/cmake.log").read()[-2500:])
-            print("Retrying configure with a newer CMake from pip", flush=True)
-            sh("pip install -q 'cmake>=3.31,<4.2'")
-            import importlib, site
-            importlib.invalidate_caches()
-            cmake = sh("python3 -c 'import cmake,os;print(os.path.join(cmake.CMAKE_BIN_DIR,chr(99)+chr(109)+chr(97)+chr(107)+chr(101)))'").strip()
-            sh(f"rm -rf {prefix}/build && cd {prefix} && {cmake} -S . -B build {flags} > /tmp/cmake.log 2>&1 || (tail -40 /tmp/cmake.log; false)")
+        sh(f"cd {prefix} && {cmake} -S . -B build {flags} > /tmp/cmake.log 2>&1 || (tail -40 /tmp/cmake.log; false)")
         sh(f"cd {prefix} && {cmake} --build build --target llama-server -j4 > /tmp/build.log 2>&1 || (tail -60 /tmp/build.log; false)")
         print(f"{tag} build minutes: {(time.time()-t0)/60:.1f}")
-    sh(f"{engine} --version 2>&1 | tail -2")
+    out = sh(f"{engine} --version 2>&1 | tail -6", check=False)
+    if "failed to initialize CUDA" in out or "CUDA devices" not in out:
+        raise SystemExit("llama-server cannot use the GPUs (see the libcuda lines above); stopping instead of running on CPU")
     return engine
 ENGINE = build_llama("b11146", "/tmp/llama.cpp")   # pinned engine for every Qwen arm
 """),
