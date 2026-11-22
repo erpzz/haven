@@ -57,7 +57,7 @@ def page(selected=None):
             raise KeyError("Unknown snapshot")
         timeline = "".join(f'<li><a href="/?run={r["id"]}">#{r["id"]} · {h(r["scope"].upper())}</a> <time>{h(r["observed"][:19])} UTC</time></li>' for r in history)
         return f"""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Purple Copilot APM · Haven</title><style>{STYLE.read_text()}</style><main><header><b>HAVEN</b><span>Identity security</span><a href="/paths">Path history</a></header>
+<title>Purple Copilot APM · Haven</title><style>{STYLE.read_text()}</style><main><header><b>HAVEN</b><span>Identity security</span><a href="/tier-zero">Tier Zero control</a><a href="/paths">Path history</a></header>
 <h1>Purple Copilot APM</h1><p>Critical assets · Official sample graphs</p><div class="cards">{''.join(cards)}</div>
 <div class="layout"><article>{body}</article><aside><h2>Snapshot history</h2><ol>{timeline}</ol></aside></div></main></html>"""
 
@@ -65,10 +65,11 @@ def page(selected=None):
 def path_page(selected=None):
     with closing(database(True)) as db:
         available = db.execute("SELECT 1 FROM sqlite_master WHERE name='path_runs'").fetchone()
-        runs = list(db.execute("SELECT id,observed FROM path_runs ORDER BY id DESC LIMIT 40")) if available else []
+        membership = "coalesce(json_extract(evidence,'$.asset.key'),'') NOT LIKE 'tier-zero-%'"
+        runs = list(db.execute(f"SELECT id,observed FROM path_runs WHERE {membership} ORDER BY id DESC LIMIT 40")) if available else []
         if selected is None and runs:
             selected = runs[0]["id"]
-        run = db.execute("SELECT * FROM path_runs WHERE id=?", (selected,)).fetchone() if available else None
+        run = db.execute(f"SELECT * FROM path_runs WHERE id=? AND {membership}", (selected,)).fetchone() if available else None
     report = "<p>No path scans recorded.</p>"
     if run:
         evidence = json.loads(run["evidence"])
@@ -90,8 +91,70 @@ def path_page(selected=None):
         raise KeyError("Unknown path snapshot")
     history = "".join(f'<li><a href="/paths?run={r["id"]}">Snapshot {r["id"]}</a><time>{h(r["observed"][:19])} UTC</time></li>' for r in runs)
     return f"""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Path history · Purple Copilot APM</title><style>{STYLE.read_text()}</style><main><header><b>HAVEN</b><a href="/">Membership reviews</a></header>
+<title>Path history · Purple Copilot APM</title><style>{STYLE.read_text()}</style><main><header><b>HAVEN</b><a href="/">Membership reviews</a><a href="/tier-zero">Tier Zero control</a></header>
 <h1>Path history</h1><div class="layout"><article>{report}</article><aside><h2>Observations</h2><ol>{history}</ol></aside></div></main></html>"""
+
+
+LIVE = ("new", "persistent", "changed")
+
+
+def tier_zero_page(selected=None):
+    """Tier Zero control findings grouped by the non-Tier Zero principal that holds them."""
+    with closing(database(True)) as db:
+        available = db.execute("SELECT 1 FROM sqlite_master WHERE name='path_runs'").fetchone()
+        latest = list(db.execute("""SELECT * FROM path_runs WHERE id IN (SELECT max(id) FROM path_runs
+            WHERE json_extract(evidence,'$.asset.key') LIKE 'tier-zero-%' GROUP BY stream) ORDER BY id""")) if available else []
+        if selected is not None:
+            latest = [r for r in latest if r["id"] == selected] or list(db.execute(
+                "SELECT * FROM path_runs WHERE id=? AND json_extract(evidence,'$.asset.key') LIKE 'tier-zero-%'", (selected,)))
+            if not latest:
+                raise KeyError("Unknown Tier Zero snapshot")
+    sections = []
+    for run in latest:
+        e, findings = json.loads(run["evidence"]), json.loads(run["findings"])
+        platform = e["asset"]["platform"].upper()
+        if e.get("unavailable"):
+            sections.append(f'<section><small>{h(platform)} · SNAPSHOT {run["id"]}</small><h2>Observation unavailable</h2>'
+                            f'<p>{h(" · ".join(e["issues"]))}. Prior findings are carried unchanged.</p></section>')
+            continue
+        nodes, groups = e["nodes"], {}
+        for key, f in findings.items():
+            groups.setdefault(f["path"][0][0], []).append((key, f))
+        rows = []
+        for source, items in sorted(groups.items(), key=lambda kv: (-kv[1][0][1]["priority"]["score"], kv[0])):
+            live = [(k, f) for k, f in items if (f.get("observation") or f["state"]) in LIVE]
+            states = sorted({f.get("observation") or f["state"] for _, f in items})
+            factors = items[0][1]["priority"].get("factors", {})
+            kinds = {}
+            for _, f in live:
+                kinds[f["path"][0][1]] = kinds.get(f["path"][0][1], 0) + 1
+            edges = "".join(f'<li>{h(f["path"][0][1])} → {h(nodes.get(f["path"][0][2], {}).get("label") or f["path"][0][2])}'
+                            f' <small>{h(f.get("observation") or f["state"])} · {h(k[:12])}</small></li>'
+                            for k, f in sorted(items, key=lambda kf: kf[1]["path"][0][1]))
+            label = nodes.get(source, {})
+            rows.append(f'<tr><td><details><summary><b>{h(label.get("label") or source)}</b> <small>{h(label.get("kind"))}</small></summary>'
+                        f'<p><small>{h(source)}</small></p><ul>{edges}</ul></details></td>'
+                        f'<td data-label="Identities able to gain it"><b>{h(items[0][1]["priority"]["score"])}</b><br><small>{h(factors.get("users", 0))} users · '
+                        f'{h(factors.get("computers", 0))} computers · {h(factors.get("workloads", 0))} workloads</small></td>'
+                        f'<td data-label="Control edges">{h(", ".join(f"{k} ×{n}" if n > 1 else k for k, n in sorted(kinds.items(), key=lambda kv: -kv[1])) or "—")}</td>'
+                        f'<td data-label="State">{h(" / ".join(states))}</td></tr>')
+        pop = e.get("population", {})
+        identities = sum(pop.get(k, 0) for k in ("users", "computers", "workloads"))
+        live_count = sum((f.get("observation") or f["state"]) in LIVE for f in findings.values())
+        health = ". ".join(e["issues"] + e.get("notes", [])) + "." if e["issues"] or e.get("notes") else "Sample ingest complete."
+        sections.append(f"""<section><small>{h(platform)} · SNAPSHOT {run['id']} · {h(run['observed'][:19])} UTC</small>
+<h2>{len([g for g in groups.values() if any((f.get('observation') or f['state']) in LIVE for _, f in g)])} principals hold direct control of Tier Zero</h2>
+<p><b>{live_count}</b> control edges · <b>{identities}</b> identities can reach Tier Zero
+({h(pop.get('users', 0))} users, {h(pop.get('computers', 0))} computers, {h(pop.get('workloads', 0))} workloads)</p>
+<p><b>Collection</b> · {h(health)} Confidence is limited: an archived sample cannot attest a fresh collection.</p>
+<details><summary>Queries and receipts</summary><pre>{h(json.dumps({k: e.get(k) for k in ('query', 'expansion', 'upstream', 'receipt', 'issues', 'notes')}, indent=2))}</pre></details>
+<div class="scroll"><table class="t0"><thead><tr><th>Non-Tier Zero principal</th><th>Identities able to gain it</th><th>Control edges</th><th>State</th></tr></thead>
+<tbody>{''.join(rows)}</tbody></table></div></section>""")
+    body = "".join(sections) or "<p>No Tier Zero scans recorded. Run <code>python3 -m apm.tier_zero</code>.</p>"
+    return f"""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tier Zero control · Purple Copilot APM</title><style>{STYLE.read_text()}</style><main><header><b>HAVEN</b><a href="/">Membership reviews</a><a href="/paths">Path history</a></header>
+<h1>Tier Zero control</h1><p>Attack edges from non-Tier Zero objects into BloodHound's Tier Zero, ranked by the number of identities able to gain each control.</p>
+<article>{body}</article></main></html>"""
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -99,11 +162,11 @@ class Handler(BaseHTTPRequestHandler):
         if self.headers.get("Host") not in ("localhost:8134", "127.0.0.1:8134"):
             return self.send_error(403)
         url = urlsplit(self.path)
-        if url.path not in ("/", "/paths"):
+        if url.path not in ("/", "/paths", "/tier-zero"):
             return self.send_error(404)
         try:
             selected = parse_qs(url.query).get("run")
-            render = page if url.path == "/" else path_page
+            render = {"/": page, "/paths": path_page, "/tier-zero": tier_zero_page}[url.path]
             content = render(int(selected[0]) if selected else None).encode()
         except (ValueError, KeyError):
             return self.send_error(404)

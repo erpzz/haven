@@ -13,3 +13,12 @@ ol{padding:0;list-style:none}li{border-top:1px solid #eee;padding:10px 0}a{color
 td:first-child{font-family:"IBM Plex Mono",monospace;overflow-wrap:anywhere}th{color:#575569}table{width:100%;border-collapse:collapse}
 @media(max-width:720px){.cards,.layout{grid-template-columns:1fr}main{padding:20px 14px}}
 article{min-width:0}
+
+.t0 li { overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  .t0 thead { display: none; }
+  .t0, .t0 tbody, .t0 tr, .t0 td { display: block; width: auto; }
+  .t0 tr { padding: .75rem 0; border-bottom: 1px solid rgba(0,0,0,.1); }
+  .t0 td { border: 0; padding: .2rem 0; }
+  .t0 td[data-label]::before { content: attr(data-label) " · "; font-size: .75rem; opacity: .7; }
+}

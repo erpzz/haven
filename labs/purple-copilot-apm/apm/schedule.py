@@ -5,12 +5,14 @@ from threading import Event
 
 from .collect import collect
 from .path_history import scan
+from .tier_zero import scan as tier_zero_scan
 
 
 def schedule(interval, stop):
     while not stop.is_set():
         collect()
         scan()
+        tier_zero_scan()
         stop.wait(interval)
 
 

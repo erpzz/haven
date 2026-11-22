@@ -48,8 +48,17 @@ def priority(asset, verified):
 
 
 def compare(e, prior):
+    # A detector may supply its own deterministic per-finding rank. A finding without a current
+    # rank keeps the one from its last observation.
+    ranks = e.get("rank")
+
+    def rank(key, verified, old=None):
+        if ranks is None:
+            return priority(e["asset"], verified)
+        return ranks.get(key) or (old or {}).get("priority") or {"score": 0, "factors": {}}
+
     if e.get("unavailable"):
-        return {k: dict(v, observation="unavailable", priority=priority(e["asset"], False)) for k, v in prior.items()}
+        return {k: dict(v, observation="unavailable", priority=rank(k, False, v)) for k, v in prior.items()}
     paths = {digest(path): path for path in e["paths"]}
     verified = confidence(e) == "verified"
     findings = {}
@@ -64,7 +73,7 @@ def compare(e, prior):
             state = "changed" if alternatives else "new"
         findings[key] = dict(path=path, state=state, replaces=alternatives if state == "changed" else [],
                              last_seen=e["observed"], source_run=e["receipt"]["run"],
-                             priority=priority(e["asset"], verified))
+                             priority=rank(key, verified, old))
     for key in prior.keys() - paths.keys():
         old = prior[key]
         if old["state"] == "removed":
@@ -78,7 +87,7 @@ def compare(e, prior):
                       and utc(old["last_seen"]) < utc(event["time"]) <= utc(r["completed"])
                       and event["edge"] not in e["inventory_edges"]), None)
         findings[key] = dict(old, state="removed" if proof else "missing", removal=proof,
-                             priority=priority(e["asset"], verified))
+                             priority=rank(key, verified, old))
     return findings
 
 
