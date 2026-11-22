@@ -56,7 +56,9 @@ def score_views(rec, episode):
 
 
 def expected_statuses(episode):
-    return {e["status"] for e in episode.get("expect") or []}
+    # expectations live in contract.expect_claims (post-run correction; the original read a
+    # non-existent top-level "expect" key and counted every refusal as false)
+    return {e["status"] for e in (episode.get("contract") or {}).get("expect_claims") or []}
 
 
 def episode_metrics(rec, episode):
