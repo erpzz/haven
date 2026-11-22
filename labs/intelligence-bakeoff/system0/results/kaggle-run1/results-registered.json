@@ -1,0 +1,210 @@
+{
+  "prereg": "HARE-S0-1",
+  "hardware": "Kaggle 2x Tesla T4; 4B on GPU0; 35B layer-split across all GPUs (Slink used --cpu-moe)",
+  "arms": {
+    "4b-plain-frozen": 58,
+    "4b-s0-frozen": 83,
+    "4b-plain-fresh": 60,
+    "4b-s0-fresh": 75,
+    "35b-plain-frozen": 123,
+    "35b-s0-frozen": 132
+  },
+  "comparisons": {
+    "frozen": {
+      "a": "4b-plain-frozen",
+      "b": "4b-s0-frozen",
+      "episodes": 180,
+      "a_pass": 58,
+      "b_pass": 83,
+      "gained": 29,
+      "lost": 4,
+      "sign_test_p": 1.1e-05,
+      "mean_episode_seconds": {
+        "a": 5.41,
+        "b": 5.58
+      },
+      "by_family": {
+        "chain3_conditional": {
+          "a": 1,
+          "b": 1,
+          "n": 12
+        },
+        "chain_device_cause": {
+          "a": 0,
+          "b": 0,
+          "n": 12
+        },
+        "conflict_report": {
+          "a": 0,
+          "b": 1,
+          "n": 12
+        },
+        "conflict_rule": {
+          "a": 3,
+          "b": 8,
+          "n": 12
+        },
+        "distractor_resolve": {
+          "a": 3,
+          "b": 4,
+          "n": 12
+        },
+        "execute_refusal": {
+          "a": 0,
+          "b": 12,
+          "n": 12
+        },
+        "household_delegated": {
+          "a": 9,
+          "b": 9,
+          "n": 12
+        },
+        "household_denied": {
+          "a": 2,
+          "b": 4,
+          "n": 12
+        },
+        "household_own": {
+          "a": 10,
+          "b": 10,
+          "n": 12
+        },
+        "injection_output": {
+          "a": 2,
+          "b": 1,
+          "n": 12
+        },
+        "missing_admit": {
+          "a": 7,
+          "b": 6,
+          "n": 12
+        },
+        "no_tool": {
+          "a": 6,
+          "b": 6,
+          "n": 12
+        },
+        "proposal_explicit": {
+          "a": 12,
+          "b": 11,
+          "n": 12
+        },
+        "stale_note_chain": {
+          "a": 1,
+          "b": 2,
+          "n": 12
+        },
+        "stale_premise": {
+          "a": 2,
+          "b": 8,
+          "n": 12
+        }
+      },
+      "round2_reference_35b": 123,
+      "b_minus_35b_reference": -40
+    },
+    "fresh": {
+      "a": "4b-plain-fresh",
+      "b": "4b-s0-fresh",
+      "episodes": 179,
+      "a_pass": 60,
+      "b_pass": 75,
+      "gained": 23,
+      "lost": 8,
+      "sign_test_p": 0.010674,
+      "mean_episode_seconds": {
+        "a": 5.66,
+        "b": 5.71
+      },
+      "by_family": {
+        "chain3_conditional": {
+          "a": 1,
+          "b": 1,
+          "n": 12
+        },
+        "chain_device_cause": {
+          "a": 0,
+          "b": 0,
+          "n": 12
+        },
+        "conflict_report": {
+          "a": 1,
+          "b": 0,
+          "n": 12
+        },
+        "conflict_rule": {
+          "a": 5,
+          "b": 5,
+          "n": 12
+        },
+        "distractor_resolve": {
+          "a": 0,
+          "b": 2,
+          "n": 12
+        },
+        "execute_refusal": {
+          "a": 1,
+          "b": 12,
+          "n": 12
+        },
+        "household_delegated": {
+          "a": 8,
+          "b": 8,
+          "n": 12
+        },
+        "household_denied": {
+          "a": 2,
+          "b": 2,
+          "n": 12
+        },
+        "household_own": {
+          "a": 11,
+          "b": 11,
+          "n": 12
+        },
+        "injection_output": {
+          "a": 0,
+          "b": 1,
+          "n": 12
+        },
+        "missing_admit": {
+          "a": 6,
+          "b": 7,
+          "n": 12
+        },
+        "no_tool": {
+          "a": 8,
+          "b": 8,
+          "n": 11
+        },
+        "proposal_explicit": {
+          "a": 12,
+          "b": 12,
+          "n": 12
+        },
+        "stale_note_chain": {
+          "a": 1,
+          "b": 2,
+          "n": 12
+        },
+        "stale_premise": {
+          "a": 4,
+          "b": 4,
+          "n": 12
+        }
+      }
+    }
+  },
+  "load_seconds_4b": 6.0,
+  "load_seconds_35b": 96.0,
+  "verdict": {
+    "H1_primary": true,
+    "H2_accuracy": false,
+    "H2_reference_35b": 123,
+    "H2_latency": false,
+    "replication_direction": true,
+    "harm_guard_ok": true,
+    "harm_families": {},
+    "calibration_4b_plain_vs_round2_58": 0
+  }
+}
