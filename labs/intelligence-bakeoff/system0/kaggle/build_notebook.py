@@ -165,8 +165,9 @@ def build_llama(tag, prefix):
         print(f"{tag} build minutes: {(time.time()-t0)/60:.1f}")
     sh("nvidia-smi --query-gpu=driver_version --format=csv,noheader | head -1", check=False)
     sh(f"ldd {os.path.dirname(engine)}/libggml-cuda.so | grep -E 'libcuda|libcudart|libcublas'", check=False)
-    out = sh(f"{engine} --version 2>&1 | tail -6", check=False)
-    if "failed to initialize CUDA" in out or "CUDA devices" not in out:
+    out = sh(f"{engine} --list-devices 2>&1", check=False)
+    import re as _re
+    if "failed to initialize CUDA" in out or not _re.search(r"^\\s*CUDA\\d+:", out, _re.M):
         raise SystemExit("llama-server cannot use the GPUs (see the libcuda lines above); stopping instead of running on CPU")
     return engine
 ENGINE = build_llama("b11146", "/tmp/llama.cpp")   # pinned engine for every Qwen arm
