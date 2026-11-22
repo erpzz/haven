@@ -75,10 +75,12 @@ def main():
     p.add_argument("--hardware", default="unknown")
     p.add_argument("--gpu-4b", default="0")
     p.add_argument("--limit", type=int, default=0, help="smoke test only")
+    p.add_argument("--arms", default="", help="comma list of 4B arms to run (default: all five)")
+    p.add_argument("--prereg", default="PREREGISTRATION_S0X.json", help="registration whose hashes must match")
     args = p.parse_args()
     out = pathlib.Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    reg = json.loads((HERE / "PREREGISTRATION_S0X.json").read_text())
+    reg = json.loads((HERE / args.prereg).read_text())
     if bench_s0.sha256_file(UNTOUCHED) != reg["episode_sets"]["untouched"]["sha256"]:
         raise SystemExit("untouched episode set changed")
     for name, h in reg["code_sha256"].items():
@@ -88,11 +90,15 @@ def main():
     sha4 = sha256(args.model_4b)
     if sha4 != reg["settings"]["4b_sha256"]:
         raise SystemExit("4B GGUF sha256 mismatch")
-    proc, _ = start_server(args.engine, args.model_4b, out / "server-4b-x.log", {"CUDA_VISIBLE_DEVICES": args.gpu_4b})
+    wanted = {a.strip() for a in args.arms.split(",") if a.strip()}
+    proc, load_s = start_server(args.engine, args.model_4b, out / "server-4b-x.log", {"CUDA_VISIBLE_DEVICES": args.gpu_4b})
+    (out / "load-seconds-4b.json").write_text(json.dumps({"cold_load_seconds": load_s}) + "\n")
     try:
         for kind, arm, label in (("s0", "plain", "4b-plain-untouched"), ("s0", "s0", "4b-s0-untouched"),
                                  ("x", "enforce", "4b-enforce-untouched"), ("x", "verify", "4b-verify-untouched"),
                                  ("x", "full", "4b-full-untouched")):
+            if wanted and label.split("-untouched")[0] not in wanted:
+                continue
             s[label] = run(kind, arm, label, out, "qwen35-4b", args.hardware, args.limit)
     finally:
         proc.terminate(); proc.wait(60)
@@ -106,6 +112,9 @@ def main():
         finally:
             proc.terminate(); proc.wait(60)
 
+    if "4b-plain-untouched" not in s:
+        print(json.dumps({k: v["summary"].get("pass") for k, v in s.items()}, indent=2))
+        return
     base = s["4b-plain-untouched"]
     res = {"prereg": reg["id"], "hardware": args.hardware, "comparisons": {}, "arms": {}}
     for label, summ in s.items():
@@ -117,7 +126,7 @@ def main():
         res["arms"][label]["mean_episode_seconds"] = summ.get("mean_episode_seconds")
         if label != "4b-plain-untouched" and label.startswith("4b"):
             res["comparisons"][f"{label} vs 4b-plain"] = bench_s0.compare(base, summ)
-    margin = reg["decision_rules"]["noninferiority_margin"]
+    margin = reg["decision_rules"].get("noninferiority_margin", 0.10)  # used only when a 35B arm ran
     if "35b-plain-untouched" in s:
         res["noninferiority_4b_full_vs_35b_plain"] = noninferiority(s["4b-full-untouched"], s["35b-plain-untouched"], margin)
         cascade, esc, secs = 0, 0, 0.0
