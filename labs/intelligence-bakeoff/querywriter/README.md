@@ -19,7 +19,10 @@ principals, roles with `active`/`eligible` assignments and scopes, ownership). S
 | owner_escalation | users who own a service principal holding a tier-0 role | set |
 | transitive_count | distinct users in group G, including nesting | int |
 
-Two arms on identical questions, same model, temperature 0, thinking off:
+Three arms on identical questions (the model arms use the same model, temperature 0, thinking off):
+- **code**: no model. A rules-only parser (family keywords plus verbatim entity match) fills the reference
+  query templates. This is the code-alone baseline from the assurance plan (issue #117, step 1). The model's
+  job is to add correct answers over it.
 - **cypher**: the model sees the schema and the question, writes one read-only query, and the embedded Kùzu
   engine (openCypher, `pip install kuzu`, no server) executes it. If the query fails, the model gets one retry
   with the error text; retries are counted.
@@ -44,6 +47,14 @@ python3 run.py eval --arm prose  --base-url http://127.0.0.1:PORT/v1 --label 4b-
   the 4B wrote a correct membership query but returned the user id instead of a boolean, and the first
   scorer counted that as "no". It is a format slip, not a reasoning error, and row existence is how a real system
   would read it.
+
+## First executed result: the development suite cannot discriminate
+
+Code-alone scores **84/84** on the development suite in essentially zero time, because the questions are
+templated and the parser was written against that wording. This is expected, and it is why the deciding test
+is the assurance lane's reserve, with analyst phrasing, paraphrase variants and graph variants. A model arm
+earns its place only by adding correct answers over code-alone on the reserve, under the 90% / 15 s p95 gates
+agreed in #117.
 
 ## Limits (stated before any result)
 

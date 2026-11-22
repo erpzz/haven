@@ -4,6 +4,8 @@
   run.py check                                   # oracle Cypher == Python gold on the whole suite
   run.py eval --arm cypher|prose --base-url http://127.0.0.1:PORT/v1 --label L --out R.jsonl [--tenants 12]
 
+code:   no model. A rules-only parser (family keywords + verbatim entity match) fills the
+        reference query templates. This is the code-alone baseline the model must beat.
 cypher: the model sees the schema and the question and writes one read-only query. The
         Kùzu engine executes it. If execution fails, the model gets one retry with the
         error text (recorded separately).
@@ -37,6 +39,35 @@ CYPHER_SYSTEM = ("You translate identity-security questions into ONE read-only K
                  "*0..10 to include the zero-hop case. Never write data.")
 PROSE_SYSTEM = ("Answer the identity-security question using only the tenant data given. Think silently, then "
                 "reply with one line of JSON: {\"answer\": <list of ids | true/false | number>}.")
+
+
+# ------------------------------------------------------------------ code-alone arm (rules only, no model)
+FAMILY_RULES = [  # first match wins; written for this suite's wording, frozen by hash before any reserve
+    ("transitive_member", r"\bis user\b.*\bmember of group\b"),
+    ("transitive_count", r"\bhow many\b.*\bmembers of group\b"),
+    ("owner_escalation", r"\bown\b.*\bservice principal\b"),
+    ("stale_privileged", r"\bdisabled\b.*\btier-0\b"),
+    ("eligible_only", r"\beligible\b.*\bnot\b.*\bactive\b"),
+    ("effective_holders", r"\busers\b.*\bactive tenant-wide\b"),
+    ("direct_holders", r"\bdirect active assignment\b"),
+]
+
+
+def parse_question(question, tenant):
+    """(family, params) or None. Entities must appear verbatim and be unique in the tenant."""
+    fam = next((f for f, pat in FAMILY_RULES if re.search(pat, question, re.I)), None)
+    if fam is None:
+        return None
+    quoted = re.findall(r"'([^']+)'", question)
+    users = {u["id"] for u in tenant["users"]}
+    groups, roles = set(tenant["groups"]), {r for r, _ in T.ROLES}
+    pick = lambda pool: next((q for q in quoted if q in pool), None)  # noqa: E731
+    params = {"role": pick(roles), "user": pick(users), "group": pick(groups)}
+    need = {"direct_holders": ["role"], "effective_holders": ["role"], "eligible_only": ["role"],
+            "transitive_member": ["user", "group"], "transitive_count": ["group"]}.get(fam, [])
+    if any(params[k] is None for k in need):
+        return None
+    return fam, {k: v for k, v in params.items() if v is not None}
 
 
 def chat(base_url, model, system, user, max_tokens):
@@ -111,7 +142,17 @@ def cmd_eval(args):
         _, conn = T.load_kuzu(t, os.path.join(tempfile.mkdtemp(), "g"))
         for q in item["questions"][: args.per_tenant or None]:
             rec = {"id": q["id"], "family": q["family"], "kind": q["kind"], "arm": args.arm, "gold": q["answer"]}
-            if args.arm == "cypher":
+            if args.arm == "code":
+                t0 = time.monotonic()
+                parsed = parse_question(q["question"], t)
+                got, cy = None, None
+                if parsed:
+                    fam, params = parsed
+                    cy = T.ORACLE_CYPHER[fam].format(**params)
+                    got = T.run_query(conn, cy, q["kind"])
+                rec.update({"query": cy, "got": got, "unsupported": parsed is None})
+                secs, usage = time.monotonic() - t0, {}
+            elif args.arm == "cypher":
                 text, usage, secs = chat(args.base_url, args.model, CYPHER_SYSTEM, q["question"], 512)
                 cy, got, err, retried = extract_cypher(text), None, None, False
                 try:
@@ -147,6 +188,7 @@ def cmd_eval(args):
                "mean_seconds": round(sum(r["seconds"] for r in rows) / max(len(rows), 1), 2),
                "query_errors_after_retry": sum(1 for r in rows if r.get("error") and r.get("got") is None),
                "retries": sum(1 for r in rows if r.get("retried")),
+               "unsupported": sum(1 for r in rows if r.get("unsupported")),
                "by_family": {f: f"{sum(r['exact'] for r in v)}/{len(v)}" for f, v in sorted(by.items())}}
     out.with_suffix(".summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary, indent=2))
@@ -159,8 +201,8 @@ def main():
     c.add_argument("--tenants", type=int, default=12)
     c.set_defaults(func=cmd_check)
     e = sub.add_parser("eval")
-    e.add_argument("--arm", choices=["cypher", "prose"], required=True)
-    e.add_argument("--base-url", required=True)
+    e.add_argument("--arm", choices=["code", "cypher", "prose"], required=True)
+    e.add_argument("--base-url", default="")
     e.add_argument("--model", default="local")
     e.add_argument("--label", required=True)
     e.add_argument("--out", required=True)

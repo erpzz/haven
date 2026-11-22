@@ -44,6 +44,14 @@ class Suite(unittest.TestCase):
         self.assertEqual(run.extract_answer('{"answer": "7"}', "int"), 7)
         self.assertEqual(run.extract_cypher("```cypher\nMATCH (n) RETURN n;\n```"), "MATCH (n) RETURN n")
 
+    def test_code_alone_parser(self):
+        item = T.make_suite(run.SUITE_SEED, 1)[0]
+        for q in item["questions"]:
+            fam, params = run.parse_question(q["question"], item["tenant"])
+            self.assertEqual(fam, q["family"], q["question"])
+            self.assertEqual({k: v for k, v in q["params"].items()}, {k: params[k] for k in q["params"]})
+        self.assertIsNone(run.parse_question("Who can reset the CFO's password?", item["tenant"]))
+
     def test_gold_is_not_trivially_empty(self):
         qs = [q for i in T.make_suite(run.SUITE_SEED, 12) for q in i["questions"]]
         nontrivial = sum(q["answer"] not in ([], False, 0) for q in qs)
