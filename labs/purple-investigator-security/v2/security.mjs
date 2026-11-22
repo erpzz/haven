@@ -2,7 +2,7 @@ import {createInvestigator} from '../boundary.mjs';
 import {deriveInvestigationPlan} from '../triage.mjs';
 import {makeLocalTransport} from '../local-transport.mjs';
 
-// Parse JSON once with explicit duplicate-key and nesting limits, including escaped keys.
+// Validate JSON with explicit duplicate-key and nesting limits, including escaped keys.
 export function strictJSON(raw, max=1048576) {
   if(typeof raw!=='string'||Buffer.byteLength(raw)>max) throw Error('json_size');
   let i=0;
@@ -12,7 +12,7 @@ export function strictJSON(raw, max=1048576) {
     if(depth>64)throw Error('json_depth');ws();const c=raw[i];
     if(c==='"')return str();
     if(c==='{'||c==='['){i++;ws();const obj=c==='{',end=obj?'}':']',seen=new Set();if(raw[i]===end){i++;return;}for(;;){ws();if(obj){if(raw[i]!=='"')throw Error('json_key');const k=str();if(seen.has(k))throw Error('duplicate_key');seen.add(k);ws();if(raw[i++]!==':')throw Error('json_colon');}value(depth+1);ws();const next=raw[i++];if(next===end)return;if(next!==',')throw Error('json_separator');}}
-    const re=/(?:true|false|null|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)/y;re.lastIndex=i;const m=re.exec(raw);if(!m)throw Error('json_value');i=re.lastIndex;
+    const re=/(?:true|false|null|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)/y;re.lastIndex=i;const m=re.exec(raw);if(!m)throw Error('json_value');if(/^[0-9-]/.test(m[0])&&!Number.isFinite(Number(m[0])))throw Error('json_nonfinite');i=re.lastIndex;
   }
   value(0);ws();if(i!==raw.length)throw Error('json_trailing');return JSON.parse(raw);
 }
@@ -27,7 +27,7 @@ export function openSession(config){
   if(config?.authorized!==true)return Object.freeze({denied:true,receipt:()=>({status:'unauthorized'}),topics:()=>[],dispatch:()=>({outcome:'denied'}),finalize:()=>({released:false,reason:'unauthorized'}),deterministic:()=>({released:false,reason:'unauthorized'})});
   const gate=createInvestigator(config);
   const coverage={};
-  for(const topic of config.topics){const records=config.evidence.filter(r=>r?.topic===topic);const selected=createInvestigator({...config,topics:[topic],evidence:records});const rejected=selected.receipt().rejected_input_records;coverage[topic]={supplied:records.length,rejected,status:rejected?'partial_or_unavailable':records.length?'observations_only':'unavailable'};}
+  for(const topic of config.topics){const records=config.evidence.filter(r=>r?.topic===topic);const selected=createInvestigator({...config,topics:[topic],evidence:records});const rejected=selected.receipt().rejected_input_records;coverage[topic]={supplied:records.length,rejected,status:records.length===rejected?'unavailable':rejected?'partial':'observations_only'};}
   const unknown=config.evidence.filter(r=>!topics.includes(r?.topic)).length;
   const wrap=r=>{if(!r.released)return r;const report={...r.report,coverage,unclassified_rejections:unknown,assessment_completeness:'not_established',limitations:[...r.report.limitations,...(gate.receipt().rejected_input_records?['records_rejected_assessment_incomplete']:[])]};const release=freeze({released:true,report});releases.add(release);return release;};
   return Object.freeze({denied:false,topics:gate.topics,receipt:gate.receipt,dispatch:raw=>{try{strictJSON(raw,2048);}catch{return gate.dispatch('invalid');}return gate.dispatch(raw);},finalize:raw=>{try{strictJSON(raw,65536);}catch{return gate.finalize('invalid');}return wrap(gate.finalize(raw));},deterministic:()=>wrap(gate.deterministic())});
@@ -39,7 +39,8 @@ export function verifiedPlan(release){
   return freeze(plan);
 }
 export const isRelease=r=>releases.has(r);
-export function localTransport(options){return makeLocalTransport({...options,decode:bytes=>{const raw=new TextDecoder('utf-8',{fatal:true}).decode(bytes);strictJSON(raw);return raw;}});}
+export class ProtocolIngressError extends Error {}
+export function localTransport(options){return makeLocalTransport({...options,decode:bytes=>{try{const raw=new TextDecoder('utf-8',{fatal:true}).decode(bytes);strictJSON(raw);return raw;}catch{throw new ProtocolIngressError('invalid_response_json');}}});}
 
 // Callback returns the parsed endpoint response. Raw ingress must use strictJSON.
 export async function investigate(config,complete,expectedModel){
@@ -52,7 +53,7 @@ export async function investigate(config,complete,expectedModel){
   const messages=[{role:'system',content:'Read each available tool once. Return only JSON {run,claims}; each claim has ref and state copied exactly. Include every reference. Run: '+run},{role:'user',content:'Review scoped observations.'}];
   for(let i=0;i<=n;i++){
     const tools=gate.topics().map(name=>({type:'function',function:{name,description:'Read scoped observations.',parameters:{type:'object',properties:{},additionalProperties:false}}}));
-    let r;calls++;const start=performance.now();try{r=await complete(JSON.parse(JSON.stringify({messages,tools})));}catch{turns.push({model:null,usage:null,wall_ms:performance.now()-start});return fail('transport_error');}
+    let r;calls++;const start=performance.now();try{r=await complete(JSON.parse(JSON.stringify({messages,tools})));}catch(e){turns.push({model:null,usage:null,wall_ms:performance.now()-start});return fail(e instanceof ProtocolIngressError?'protocol_json':'transport_error');}
     const u=r?.usage,usage=u&&['prompt_tokens','completion_tokens','total_tokens'].every(k=>int(u[k])&&u[k]<=100000000)&&u.total_tokens===u.prompt_tokens+u.completion_tokens?{prompt_tokens:u.prompt_tokens,completion_tokens:u.completion_tokens,total_tokens:u.total_tokens}:null;
     turns.push({model:id(r?.model)?r.model:null,usage,wall_ms:performance.now()-start});
     if(r?.model!==expectedModel)return fail('model_identity_mismatch');
