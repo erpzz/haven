@@ -27,7 +27,7 @@ Preregistered verdict:
 
 By S0-1's adoption rule, System 0 qualifies as an advisory layer, but the 4B does not replace the 35B.
 
-**Where the gain comes from.** `execute_refusal` went 0 → 12 on both sets; that is the request classifier. Without that family, the gain is +13 on the frozen set and **+4 on the fresh set**. The frozen gains in `stale_premise` (2→8) and `conflict_rule` (3→8) did not replicate (4→4 and 5→5 on fresh). The advisory checks mostly work through one suite-aware rule.
+**Where the gain comes from.** `execute_refusal` went 0 → 12 on the frozen set and 1 → 12 on the fresh set (corrected after assurance review; the earlier text said "0 → 12 on both sets"); that is the request classifier. Without that family, the gain is +13 on the frozen set and **+4 on the fresh set**. The frozen gains in `stale_premise` (2→8) and `conflict_rule` (3→8) did not replicate (4→4 and 5→5 on fresh). The advisory checks mostly work through one suite-aware rule.
 
 ## HARE-S0-2 (registered separately): enforcement, verification, correction (179 untouched episodes)
 
@@ -55,7 +55,7 @@ By S0-1's adoption rule, System 0 qualifies as an advisory layer, but the 4B doe
 - **4B full vs 35B plain, model-clean pass (sensitivity, stricter):** 118 vs 127, diff −0.050, bound −0.113. **Not non-inferior.**
 - **Offline cascade** (4B full, unresolved → independent 35B full; model loading excluded): 131, with 8 escalated, at 6.83 s/request. Non-inferior (bound −0.040).
 
-**Latency on this host:** every 4B arm is slower than the 35B. The 35B-A3B fully offloaded to two T4s (about 3B active parameters) decodes faster than the dense 4B here. **35B full dominates the 4B systems on both accuracy (146) and latency (4.86 s).** Slink's balance is different (35B experts on CPU at 35 tok/s vs the 4B at 94 tok/s) and has not been measured for these arms. Under the assurance rule, the latency gate is judged only on the target host.
+**Latency on this host:** every 4B arm is slower than the 35B. The hardware was not symmetric: the 4B ran on one T4, while the 35B-A3B was offloaded across two T4s (about 3B active parameters) decodes faster than the dense 4B here. **35B full dominates the 4B systems on both accuracy (146) and latency (4.86 s).** Slink's balance is different (35B experts on CPU at 35 tok/s vs the 4B at 94 tok/s) and has not been measured for these arms. Under the assurance rule, the latency gate is judged only on the target host.
 
 ## Where the gains come from (honest accounting)
 
@@ -82,7 +82,16 @@ These are the language and judgement failures (conflicting sources, admitting mi
 
 ## What I conclude
 
-- **Deterministic scaffolding around a model is the largest measured lever so far** in Haven's intelligence work, and it lifts both models: 4B 55 → 126, 35B 127 → 146.
+- **On these episodes, deterministic scaffolding is the largest lever among the comparisons run**, and it lifts both models: 4B 55 → 126, 35B 127 → 146. V6 triggered all 45 successful full-arm corrections; trigger counts cannot show whether changing only the label would have sufficed.
 - **Much of the 4B's lift is format and boundary, not reasoning.** The model-clean numbers and the V6 share say so.
 - **On this hardware, "4B plus scaffolding instead of the 35B" buys nothing:** the 35B is both better and faster. Whether the 4B system earns its place depends on the target host's latency, which must be measured there.
 - **The next research target is the epistemic failures in the table above.** That is the only place a better model, a specialist or a decision model could add value over code.
+
+## Assurance decision (issue #117, 2026-11-22)
+
+The assurance lane independently paired the public summaries and reproduced the bounds: 4B full vs 35B plain has 21 wins / 22 losses on system pass (bound −0.066) and 19 / 28 on model-clean pass (bound −0.113).
+- **Accepted:** the system-level improvement on this suite.
+- **Model-clean non-inferiority:** inconclusive.
+- **Not independently replayed:** the false-refusal correction, which is a disclosed post-run regrade from transcripts.
+- **Decision:** this GPU comparison is closed, and **35B full (146/179, 4.86 s mean) is the measured Kaggle reference**.
+- **Still open:** deployment-host p95 and accuracy on analyst questions.
