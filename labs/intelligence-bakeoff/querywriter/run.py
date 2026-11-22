@@ -88,6 +88,21 @@ def chat(base_url, model, system, user, max_tokens):
     return (msg.get("content") or ""), obj.get("usage") or {}, time.monotonic() - t0
 
 
+def safe_chat(*args):
+    """chat() that records a timeout or transport error instead of aborting the run."""
+    try:
+        text, usage, secs = chat(*args)
+        return text, usage, None
+    except Exception as e:  # noqa: BLE001 - every failure is scored as zero for this question
+        return "", {}, f"{type(e).__name__}: {str(e)[:200]}"
+
+
+def nearest_rank(values, pct):
+    import math
+    v = sorted(values)
+    return v[max(0, math.ceil(pct / 100 * len(v)) - 1)] if v else None
+
+
 def extract_cypher(text):
     m = re.search(r"```(?:cypher)?\s*(.*?)```", text, re.S | re.I)
     return (m.group(1) if m else text).strip().rstrip(";")
@@ -167,21 +182,26 @@ def cmd_eval(args):
                     got = T.normalize(T.execute(conn, cy), got_type)
                 rec.update({"query": cy, "unsupported": parsed is None})
             elif args.arm == "cypher":
-                text, usage, _ = chat(args.base_url, args.model, CYPHER_SYSTEM, q["question"], 512)
+                text, usage, call_err = safe_chat(args.base_url, args.model, CYPHER_SYSTEM, q["question"], 512)
                 cy, err, retried = extract_cypher(text), None, False
                 got_type = declared_type(text)
                 qrows = None
                 try:
-                    qrows = T.execute(conn, cy)
+                    if call_err:  # a failed model call is a zero for this question, not a retry
+                        err, cy = "model call failed: " + call_err, None
+                    else:
+                        qrows = T.execute(conn, cy)
                 except Exception as e:  # one bounded retry with the engine's error
                     err, retried = f"{type(e).__name__}: {str(e)[:300]}", True
-                    text2, usage2, _ = chat(args.base_url, args.model, CYPHER_SYSTEM,
+                    text2, usage2, call_err2 = safe_chat(args.base_url, args.model, CYPHER_SYSTEM,
                                             f"{q['question']}\n\nYour previous query:\n{cy}\nfailed with:\n{err}\n"
                                             "Write a corrected query.", 512)
                     usage = {k: usage.get(k, 0) + usage2.get(k, 0) for k in set(usage) | set(usage2)
                              if isinstance(usage.get(k, 0), int) and isinstance(usage2.get(k, 0), int)}
                     cy, got_type = extract_cypher(text2), declared_type(text2) or got_type
                     try:
+                        if call_err2:
+                            raise RuntimeError("model call failed: " + call_err2)
                         qrows, err = T.execute(conn, cy), None
                     except Exception as e2:
                         err = f"{type(e2).__name__}: {str(e2)[:300]}"
@@ -191,10 +211,10 @@ def cmd_eval(args):
                     got = T.normalize(qrows, got_type)
                 rec.update({"query": cy, "error": err, "retried": retried, "type_declared": type_declared})
             else:
-                text, usage, _ = chat(args.base_url, args.model, PROSE_SYSTEM,
-                                      T.graph_as_text(t) + "\n\nQuestion: " + q["question"], 1024)
-                got_type, got = extract_answer(text)
-                rec.update({"raw": text[-400:]})
+                text, usage, call_err = safe_chat(args.base_url, args.model, PROSE_SYSTEM,
+                                                  T.graph_as_text(t) + "\n\nQuestion: " + q["question"], 1024)
+                got_type, got = extract_answer(text) if not call_err else (None, None)
+                rec.update({"raw": text[-400:], "error": ("model call failed: " + call_err) if call_err else None})
             secs = time.monotonic() - t0
             rec.update({"got_type": got_type, "got": got})
             rec.update(score(q, got_type, got), seconds=round(secs, 3), usage=usage)
@@ -213,7 +233,8 @@ def cmd_eval(args):
                "retries": sum(1 for r in rows if r.get("retried")),
                "unsupported": sum(1 for r in rows if r.get("unsupported")),
                "type_mismatches": sum(1 for r in rows if not r["type_match"]),
-               "p95_seconds": round(sorted(r["seconds"] for r in rows)[max(0, int(0.95 * len(rows)) - 1)], 3) if rows else None,
+               "p95_seconds_nearest_rank": round(nearest_rank([r["seconds"] for r in rows], 95), 3) if rows else None,
+               "model_call_failures": sum(1 for r in rows if "model call failed" in (r.get("error") or "")),
                "by_family": {f: f"{sum(r['exact'] for r in v)}/{len(v)}" for f, v in sorted(by.items())}}
     out.with_suffix(".summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary, indent=2))

@@ -59,6 +59,39 @@ class Suite(unittest.TestCase):
         for leak in ('q["kind"]', 'q["answer"]', 'rec["gold', "gold_kind"):
             self.assertNotIn(leak, block)
 
+    def test_count_requires_one_row_one_column_genuine_int(self):
+        q = {"kind": "int", "answer": 1}
+        for rows in ([[True]], [[1.9]], [[1], [4]], [[1, 4]], [], [[None]]):
+            self.assertIsNone(T.normalize(rows, "int"), rows)
+            self.assertFalse(run.score(q, "int", T.normalize(rows, "int"))["exact"], rows)
+        self.assertEqual(T.normalize([[1]], "int"), 1)
+
+    def test_nearest_rank_p95(self):
+        self.assertEqual(run.nearest_rank(list(range(1, 21)), 95), 19)
+        self.assertEqual(run.nearest_rank(list(range(1, 22)), 95), 20)
+        self.assertEqual(run.nearest_rank([5.0], 95), 5.0)
+
+    def test_model_call_failure_scores_zero_and_run_continues(self):
+        import argparse, json as _json, tempfile as _tf
+        calls = {"n": 0}
+        def failing_chat(*a):
+            calls["n"] += 1
+            raise TimeoutError("timed out")
+        orig, run.chat = run.chat, failing_chat
+        try:
+            out = pathlib.Path(_tf.mkdtemp()) / "f.jsonl"
+            for arm in ("cypher", "prose"):
+                path = out.with_name(f"{arm}.jsonl")
+                run.cmd_eval(argparse.Namespace(arm=arm, base_url="http://127.0.0.1:1/v1", model="x", label=arm,
+                                                out=str(path), tenants=1, per_tenant=3))
+                rows = [_json.loads(l) for l in open(path)]
+                self.assertEqual(len(rows), 3)
+                self.assertTrue(all(not r["exact"] and "model call failed" in r["error"] for r in rows))
+                self.assertTrue(all(r["id"] for r in rows))
+                self.assertFalse(any(r.get("retried") for r in rows))
+        finally:
+            run.chat = orig
+
     def test_type_mismatch_scores_zero(self):
         q = {"kind": "int", "answer": 2}
         self.assertFalse(run.score(q, "set", ["a", "b"])["exact"])

@@ -227,7 +227,10 @@ def normalize(rows, kind: str):
             return rows[0][0]
         return bool([r for r in rows if r and r[0] not in (None, "", 0)])
     if kind == "int":
-        return int(rows[0][0]) if rows and rows[0] and isinstance(rows[0][0], (int, float)) else None
+        # a count is exactly one row, one column, holding a genuine integer (bool and float rejected)
+        if len(rows) == 1 and len(rows[0]) == 1 and type(rows[0][0]) is int:
+            return rows[0][0]
+        return None
     raise ValueError(kind)
 
 
