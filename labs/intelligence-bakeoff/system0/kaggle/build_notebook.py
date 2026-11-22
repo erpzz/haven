@@ -79,7 +79,7 @@ raw = base64.b64decode(BLOB)
 assert hashlib.sha256(raw).hexdigest() == "{blob_sha}", "embedded harness corrupted"
 dest = pathlib.Path("/tmp/haven/labs/intelligence-bakeoff")
 shutil.rmtree(dest / "system0", ignore_errors=True)
-tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz").extractall(dest)
+tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz").extractall(dest, filter="data")
 S0 = dest / "system0"
 sh(f"cd {{dest}} && python3 -m unittest discover -s system0/tests 2>&1 | tail -3")
 sh(f"cd {{dest}} && python3 system0/bench_s0.py check")
@@ -89,10 +89,22 @@ sh(f"cd {{dest}} && python3 system0/bench_s0.py check")
     if not os.path.exists(engine):
         sh(f"git clone -q --depth 1 --branch {tag} https://github.com/ggml-org/llama.cpp {prefix}")
         t0 = time.time()
-        sh(f"cd {prefix} && cmake -S . -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=75 -DLLAMA_CURL=OFF "
-           "-DLLAMA_USE_PREBUILT_UI=OFF -DLLAMA_BUILD_UI=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF "
-           "> /tmp/cmake.log 2>&1 || (tail -40 /tmp/cmake.log; false)")
-        sh(f"cd {prefix} && cmake --build build --target llama-server -j4 > /tmp/build.log 2>&1 || (tail -60 /tmp/build.log; false)")
+        # CUDA 13 images: CMake may not locate the driver library (CUDA::cuda_driver). Point it there.
+        cands = sh("ls /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/targets/x86_64-linux/lib/stubs/libcuda.so "
+                   "/usr/lib/x86_64-linux-gnu/libcuda.so /usr/lib/x86_64-linux-gnu/libcuda.so.1 2>/dev/null", check=False).split()
+        drv = f"-DCUDA_cuda_driver_LIBRARY={cands[0]}" if cands else ""
+        flags = (f"-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=75 {drv} -DLLAMA_CURL=OFF -DLLAMA_USE_PREBUILT_UI=OFF "
+                 "-DLLAMA_BUILD_UI=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF")
+        cmake = "cmake"
+        if subprocess.run(f"cd {prefix} && {cmake} -S . -B build {flags} > /tmp/cmake.log 2>&1", shell=True).returncode:
+            print(open("/tmp/cmake.log").read()[-2500:])
+            print("Retrying configure with a newer CMake from pip", flush=True)
+            sh("pip install -q 'cmake>=3.31,<4.2'")
+            import importlib, site
+            importlib.invalidate_caches()
+            cmake = sh("python3 -c 'import cmake,os;print(os.path.join(cmake.CMAKE_BIN_DIR,chr(99)+chr(109)+chr(97)+chr(107)+chr(101)))'").strip()
+            sh(f"rm -rf {prefix}/build && cd {prefix} && {cmake} -S . -B build {flags} > /tmp/cmake.log 2>&1 || (tail -40 /tmp/cmake.log; false)")
+        sh(f"cd {prefix} && {cmake} --build build --target llama-server -j4 > /tmp/build.log 2>&1 || (tail -60 /tmp/build.log; false)")
         print(f"{tag} build minutes: {(time.time()-t0)/60:.1f}")
     sh(f"{engine} --version 2>&1 | tail -2")
     return engine
