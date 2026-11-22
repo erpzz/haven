@@ -39,10 +39,30 @@ class Suite(unittest.TestCase):
                 T.run_query(conn, bad, "set")
 
     def test_answer_extraction(self):
-        self.assertEqual(run.extract_answer('ok {"answer": ["b", "a"]}', "set"), ["a", "b"])
-        self.assertIs(run.extract_answer('{"answer": false}', "bool"), False)
-        self.assertEqual(run.extract_answer('{"answer": "7"}', "int"), 7)
-        self.assertEqual(run.extract_cypher("```cypher\nMATCH (n) RETURN n;\n```"), "MATCH (n) RETURN n")
+        self.assertEqual(run.extract_answer('ok {"answer": ["b", "a"]}'), ("set", ["a", "b"]))
+        self.assertEqual(run.extract_answer('{"answer": false}'), ("bool", False))
+        self.assertEqual(run.extract_answer('{"answer": 7}'), ("int", 7))
+        self.assertEqual(run.extract_answer('{"answer": "7"}'), (None, None))  # a string is not a declared count
+        self.assertEqual(run.extract_cypher("TYPE: set\n```cypher\nMATCH (n) RETURN n;\n```"), "MATCH (n) RETURN n")
+        self.assertEqual(run.declared_type("TYPE: bool\n```cypher\nRETURN true\n```"), "bool")
+        self.assertIsNone(run.declared_type("```cypher\nRETURN 1\n```"))
+
+    def test_type_inference_from_result_shape(self):
+        self.assertEqual(T.infer_type([[True]]), "bool")
+        self.assertEqual(T.infer_type([[3]]), "int")
+        self.assertEqual(T.infer_type([["a"], ["b"]]), "set")
+        self.assertEqual(T.infer_type([]), "set")
+
+    def test_arms_never_read_gold_inside_the_timed_block(self):
+        src = (HERE / "run.py").read_text()
+        block = src[src.index("t0 = time.monotonic()  # one end-to-end timer"):src.index("secs = time.monotonic() - t0")]
+        for leak in ('q["kind"]', 'q["answer"]', 'rec["gold', "gold_kind"):
+            self.assertNotIn(leak, block)
+
+    def test_type_mismatch_scores_zero(self):
+        q = {"kind": "int", "answer": 2}
+        self.assertFalse(run.score(q, "set", ["a", "b"])["exact"])
+        self.assertTrue(run.score(q, "int", 2)["exact"])
 
     def test_code_alone_parser(self):
         item = T.make_suite(run.SUITE_SEED, 1)[0]

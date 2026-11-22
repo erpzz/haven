@@ -197,13 +197,28 @@ def load_kuzu(t: dict, path: str):
     return db, c
 
 
-def run_query(conn, cypher: str, kind: str, timeout_ms: int = 5000):
-    """Execute model-written Cypher read-only and normalize the result to the answer kind."""
+def execute(conn, cypher: str, timeout_ms: int = 5000):
+    """Execute model- or rule-written Cypher read-only; return raw rows."""
     lowered = cypher.casefold()
     if any(w in lowered for w in ("create ", "delete ", "set ", "merge ", "drop ", "copy ", "load ", "install ", "attach ")):
         raise ValueError("write or admin statement refused")
     conn.set_query_timeout(timeout_ms)
-    rows = conn.execute(cypher).get_all()
+    return conn.execute(cypher).get_all()
+
+
+def infer_type(rows) -> str:
+    """Answer type from the result's own shape (used only when an arm declares none)."""
+    if len(rows) == 1 and rows[0] and len(rows[0]) == 1:
+        v = rows[0][0]
+        if isinstance(v, bool):
+            return "bool"
+        if isinstance(v, int):
+            return "int"
+    return "set"
+
+
+def normalize(rows, kind: str):
+    """Rows -> answer value for the type the ARM declared (never the gold's type)."""
     if kind == "set":
         return sorted({str(r[0]) for r in rows if r and r[0] not in (None, "")})
     if kind == "bool":
@@ -212,8 +227,13 @@ def run_query(conn, cypher: str, kind: str, timeout_ms: int = 5000):
             return rows[0][0]
         return bool([r for r in rows if r and r[0] not in (None, "", 0)])
     if kind == "int":
-        return int(rows[0][0]) if rows and rows[0] else 0
+        return int(rows[0][0]) if rows and rows[0] and isinstance(rows[0][0], (int, float)) else None
     raise ValueError(kind)
+
+
+def run_query(conn, cypher: str, kind: str, timeout_ms: int = 5000):
+    """Reference path (oracle check only): execute and normalize to a known type."""
+    return normalize(execute(conn, cypher, timeout_ms), kind)
 
 
 def graph_as_text(t: dict) -> str:

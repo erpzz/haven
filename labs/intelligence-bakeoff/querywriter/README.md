@@ -41,12 +41,19 @@ python3 run.py eval --arm cypher --base-url http://127.0.0.1:PORT/v1 --label 4b-
 python3 run.py eval --arm prose  --base-url http://127.0.0.1:PORT/v1 --label 4b-prose  --out R/4b-prose.jsonl
 ```
 
-## Harness decisions made during the CPU smoke (before any real result)
+## Scoring rules
 
-- Yes/no questions: a returned boolean is used as given. Otherwise, any non-empty row means "yes". In the smoke,
-  the 4B wrote a correct membership query but returned the user id instead of a boolean, and the first
-  scorer counted that as "no". It is a format slip, not a reasoning error, and row existence is how a real system
-  would read it.
+- **Each arm declares its own answer type** before scoring. The gold type is used only by the scorer.
+  - The code arm takes its type from its parsed family.
+  - The cypher arm declares it on a `TYPE:` line; if it omits one, the type is inferred from the result's shape (`type_declared` is recorded).
+  - The prose arm's type is the JSON type of its answer.
+  - A type mismatch is wrong. A test checks that no arm reads the gold type or the gold answer inside the timed block.
+- **One end-to-end timer per question,** from request through model calls, query execution, any retry and parsing. Summaries report mean and p95.
+- **Yes/no:** when an arm declares `bool` and its query returns a non-boolean row, any non-empty row means "yes" (adopted after the CPU smoke, before any real result).
+- **Agreed with the assurance lane for the reserve (issue #117):**
+  - A clarifying question earns full credit only when the evidence leaves a material ambiguity and the question asks for the detail that would resolve it. A generic or unnecessary clarification earns zero.
+  - Either arm may abstain, but a parser miss earns zero, even when the right answer is "insufficient evidence". Earning that point requires naming the missing observation and why the source cannot settle the question.
+  - The code arm's "unsupported" output is therefore a zero.
 
 ## First executed result: the development suite cannot discriminate
 

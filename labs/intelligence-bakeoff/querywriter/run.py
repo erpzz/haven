@@ -33,7 +33,9 @@ import tenant as T  # noqa: E402
 SUITE_SEED = "dev-20261121"
 OPENER = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 CYPHER_SYSTEM = ("You translate identity-security questions into ONE read-only Kùzu Cypher query over the schema "
-                 "below. Reply with only the query inside a ```cypher code block.\n" + T.SCHEMA + "\n"
+                 "below. Reply with exactly two parts: a first line 'TYPE: set' (a list of ids or names), "
+                 "'TYPE: bool' (yes/no) or 'TYPE: int' (a count), then the query inside a ```cypher code block.\n"
+                 + T.SCHEMA + "\n"
                  "Rules: return ids (or names) in the FIRST column; for yes/no questions return one boolean; for "
                  "counts return one number. Variable-length paths are written like [:MEMBER_OF*1..10]; use "
                  "*0..10 to include the zero-hop case. Never write data.")
@@ -51,6 +53,9 @@ FAMILY_RULES = [  # first match wins; written for this suite's wording, frozen b
     ("effective_holders", r"\busers\b.*\bactive tenant-wide\b"),
     ("direct_holders", r"\bdirect active assignment\b"),
 ]
+
+
+FAMILY_TYPE = {"transitive_member": "bool", "transitive_count": "int"}  # every other family answers a set
 
 
 def parse_question(question, tenant):
@@ -88,23 +93,27 @@ def extract_cypher(text):
     return (m.group(1) if m else text).strip().rstrip(";")
 
 
-def extract_answer(text, kind):
+def declared_type(text):
+    m = re.search(r"^\s*TYPE:\s*(set|bool|int)\b", text, re.I | re.M)
+    return m.group(1).lower() if m else None
+
+
+def extract_answer(text):
+    """(type, value) from the prose arm's own JSON; the JSON value's type is its declaration."""
     m = re.search(r"\{.*\}", text, re.S)
     if not m:
-        return None
+        return None, None
     try:
         v = json.loads(m.group(0)).get("answer")
     except ValueError:
-        return None
-    if kind == "set":
-        return sorted({str(x) for x in v}) if isinstance(v, list) else None
-    if kind == "bool":
-        return v if isinstance(v, bool) else (str(v).casefold() == "true" if v is not None else None)
-    if kind == "int":
-        try:
-            return int(v)
-        except (TypeError, ValueError):
-            return None
+        return None, None
+    if isinstance(v, bool):
+        return "bool", v
+    if isinstance(v, int):
+        return "int", v
+    if isinstance(v, list):
+        return "set", sorted({str(x) for x in v})
+    return None, None
 
 
 def jaccard(a, b):
@@ -112,9 +121,12 @@ def jaccard(a, b):
     return 1.0 if not a and not b else len(a & b) / len(a | b)
 
 
-def score(q, got):
-    exact = got == q["answer"]
-    return {"exact": exact, "jaccard": jaccard(got, q["answer"]) if q["kind"] == "set" and isinstance(got, list) else float(exact)}
+def score(q, got_type, got):
+    """Exact only if the arm's own declared type AND value match the gold."""
+    exact = got_type == q["kind"] and got == q["answer"]
+    both_sets = got_type == "set" and q["kind"] == "set" and isinstance(got, list)
+    return {"exact": exact, "type_match": got_type == q["kind"],
+            "jaccard": jaccard(got, q["answer"]) if both_sets else float(exact)}
 
 
 def cmd_check(args):
@@ -141,40 +153,51 @@ def cmd_eval(args):
         t = item["tenant"]
         _, conn = T.load_kuzu(t, os.path.join(tempfile.mkdtemp(), "g"))
         for q in item["questions"][: args.per_tenant or None]:
-            rec = {"id": q["id"], "family": q["family"], "kind": q["kind"], "arm": args.arm, "gold": q["answer"]}
+            rec = {"id": q["id"], "family": q["family"], "gold_kind": q["kind"], "arm": args.arm, "gold": q["answer"]}
+            t0 = time.monotonic()  # one end-to-end timer: model calls, execution, retry, parsing
+            usage = {}
+            got_type, got = None, None
             if args.arm == "code":
-                t0 = time.monotonic()
                 parsed = parse_question(q["question"], t)
-                got, cy = None, None
+                cy = None
                 if parsed:
                     fam, params = parsed
+                    got_type = FAMILY_TYPE.get(fam, "set")
                     cy = T.ORACLE_CYPHER[fam].format(**params)
-                    got = T.run_query(conn, cy, q["kind"])
-                rec.update({"query": cy, "got": got, "unsupported": parsed is None})
-                secs, usage = time.monotonic() - t0, {}
+                    got = T.normalize(T.execute(conn, cy), got_type)
+                rec.update({"query": cy, "unsupported": parsed is None})
             elif args.arm == "cypher":
-                text, usage, secs = chat(args.base_url, args.model, CYPHER_SYSTEM, q["question"], 512)
-                cy, got, err, retried = extract_cypher(text), None, None, False
+                text, usage, _ = chat(args.base_url, args.model, CYPHER_SYSTEM, q["question"], 512)
+                cy, err, retried = extract_cypher(text), None, False
+                got_type = declared_type(text)
+                qrows = None
                 try:
-                    got = T.run_query(conn, cy, q["kind"])
+                    qrows = T.execute(conn, cy)
                 except Exception as e:  # one bounded retry with the engine's error
                     err, retried = f"{type(e).__name__}: {str(e)[:300]}", True
-                    text2, usage2, secs2 = chat(args.base_url, args.model, CYPHER_SYSTEM,
-                                                f"{q['question']}\n\nYour previous query:\n{cy}\nfailed with:\n{err}\n"
-                                                "Write a corrected query.", 512)
-                    secs += secs2
-                    cy = extract_cypher(text2)
+                    text2, usage2, _ = chat(args.base_url, args.model, CYPHER_SYSTEM,
+                                            f"{q['question']}\n\nYour previous query:\n{cy}\nfailed with:\n{err}\n"
+                                            "Write a corrected query.", 512)
+                    usage = {k: usage.get(k, 0) + usage2.get(k, 0) for k in set(usage) | set(usage2)
+                             if isinstance(usage.get(k, 0), int) and isinstance(usage2.get(k, 0), int)}
+                    cy, got_type = extract_cypher(text2), declared_type(text2) or got_type
                     try:
-                        got = T.run_query(conn, cy, q["kind"])
+                        qrows, err = T.execute(conn, cy), None
                     except Exception as e2:
                         err = f"{type(e2).__name__}: {str(e2)[:300]}"
-                rec.update({"query": cy, "got": got, "error": err, "retried": retried})
+                type_declared = got_type is not None
+                if qrows is not None:
+                    got_type = got_type or T.infer_type(qrows)
+                    got = T.normalize(qrows, got_type)
+                rec.update({"query": cy, "error": err, "retried": retried, "type_declared": type_declared})
             else:
-                text, usage, secs = chat(args.base_url, args.model, PROSE_SYSTEM,
-                                         T.graph_as_text(t) + "\n\nQuestion: " + q["question"], 1024)
-                got = extract_answer(text, q["kind"])
-                rec.update({"raw": text[-400:], "got": got})
-            rec.update(score(q, rec["got"]), seconds=round(secs, 2), usage=usage)
+                text, usage, _ = chat(args.base_url, args.model, PROSE_SYSTEM,
+                                      T.graph_as_text(t) + "\n\nQuestion: " + q["question"], 1024)
+                got_type, got = extract_answer(text)
+                rec.update({"raw": text[-400:]})
+            secs = time.monotonic() - t0
+            rec.update({"got_type": got_type, "got": got})
+            rec.update(score(q, got_type, got), seconds=round(secs, 3), usage=usage)
             rows.append(rec)
             with open(out, "a") as f:
                 f.write(json.dumps(rec) + "\n")
@@ -189,6 +212,8 @@ def cmd_eval(args):
                "query_errors_after_retry": sum(1 for r in rows if r.get("error") and r.get("got") is None),
                "retries": sum(1 for r in rows if r.get("retried")),
                "unsupported": sum(1 for r in rows if r.get("unsupported")),
+               "type_mismatches": sum(1 for r in rows if not r["type_match"]),
+               "p95_seconds": round(sorted(r["seconds"] for r in rows)[max(0, int(0.95 * len(rows)) - 1)], 3) if rows else None,
                "by_family": {f: f"{sum(r['exact'] for r in v)}/{len(v)}" for f, v in sorted(by.items())}}
     out.with_suffix(".summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary, indent=2))
