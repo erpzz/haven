@@ -1,5 +1,7 @@
 # System 0 (HARE-S0-1): deterministic checks for a small model
 
+> Extension (enforcement, verification, correction, escalation; registered separately as HARE-S0-2) and the Liquid d1-2B / LFM3-1.7B runtime probes: [README_EXTENSION.md](README_EXTENSION.md).
+
 **Status: PREREGISTERED. Harness built and smoke-tested. Experiment NOT RUN.** Base commit
 `53387e7`. Slink is offline (RAM fault), so the run is planned on a free Kaggle 2× T4
 notebook. This directory adds files only; it changes no existing file.
