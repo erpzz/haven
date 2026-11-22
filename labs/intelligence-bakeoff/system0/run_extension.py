@@ -20,7 +20,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import bench_s0  # noqa: E402
 import bench_x  # noqa: E402
-from run_arms import PORT, sha256, start_server  # noqa: E402
+from run_arms import PORT, reusable, sha256, start_server  # noqa: E402
 
 UNTOUCHED = HERE / "fresh-x-untouched.jsonl"
 
@@ -28,9 +28,12 @@ UNTOUCHED = HERE / "fresh-x-untouched.jsonl"
 def run(kind, arm, label, out, model_name, hardware, limit):
     path = out / f"{label}.jsonl"
     summary = path.with_suffix(".summary.json")
-    if summary.exists():
-        print(f"== {label}: already done", flush=True)
+    if summary.exists() and reusable(summary, UNTOUCHED, limit):
+        print(f"== {label}: complete receipt found (all expected episodes), skipping", flush=True)
         return json.loads(summary.read_text())
+    if summary.exists():
+        print(f"== {label}: receipt incomplete or for a different episode set; rerunning", flush=True)
+        summary.unlink()
     if path.exists():
         path.unlink()
     common = ["--base-url", f"http://127.0.0.1:{PORT}/v1", "--model", model_name, "--label", label,

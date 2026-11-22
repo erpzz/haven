@@ -59,12 +59,28 @@ def start_server(engine, model, log, extra_env=None, extra_args=()):
     raise SystemExit("llama-server did not become healthy in 30 minutes")
 
 
+def reusable(summary_path, episodes_path=None, limit=0):
+    """A finished arm is reused only if it scored exactly the expected episode IDs."""
+    import json as _json
+    from bench_s0 import bench as _bench
+    try:
+        scored = {s["episode"] for s in _json.loads(pathlib.Path(summary_path).read_text())["scores"]}
+    except (OSError, ValueError, KeyError):
+        return False
+    episodes = _bench.load_episodes(str(episodes_path) if episodes_path else None)
+    expected = {e["id"] for e in (episodes[:limit] if limit else episodes)}
+    return scored == expected
+
+
 def run_arm(arm, label, out_dir, episodes, model_name, hardware, gguf_sha, limit=0):
     out = out_dir / f"{label}.jsonl"
     summary = out.with_suffix(".summary.json")
-    if summary.exists():
-        print(f"== {label}: already done, skipping", flush=True)
+    if summary.exists() and reusable(summary, episodes, limit):
+        print(f"== {label}: complete receipt found (all expected episodes), skipping", flush=True)
         return json.loads(summary.read_text())
+    if summary.exists():
+        print(f"== {label}: receipt incomplete or for a different episode set; rerunning", flush=True)
+        summary.unlink()
     if out.exists():
         out.unlink()  # an interrupted arm restarts cleanly
     argv = ["eval", "--arm", arm, "--base-url", f"http://127.0.0.1:{PORT}/v1", "--model", model_name,
