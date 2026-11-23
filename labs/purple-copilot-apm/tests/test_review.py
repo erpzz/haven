@@ -51,6 +51,11 @@ class Review(unittest.TestCase):
         self.assertEqual(sorted(r["holders"]), ["G1@SAMPLE", "Z@SAMPLE"])
         r = json.loads(review.call("purple_tier_zero_search", {"platform": "ad", "target": "t0a@sample"}))
         self.assertEqual(r["holders"], ["C1@SAMPLE", "Z@SAMPLE"])
+        with patch.object(review, "COMPACT", 1):  # grouped form for large results
+            r = json.loads(review.call("purple_tier_zero_search", {"platform": "ad", "relationship": "genericall"}))
+            self.assertEqual((r["edges"], [g["holder"] for g in r["by_holder"]]), ([], ["G1@SAMPLE", "Z@SAMPLE"]))
+            self.assertEqual(r["by_holder"][0]["relationships"], {"GenericAll": 1})
+            self.assertIn("grouped by holder", r["summary"])
         gate, turn = review.Gate(), review.Turn()
         self.assertIn("unknown relationship", gate.check(turn, "purple_tier_zero_search", {"platform": "ad", "relationship": "teleport"}))
         self.assertIn("optionally", gate.check(turn, "purple_tier_zero_search", {"platform": "ad", "x": "y"}))
@@ -120,6 +125,11 @@ class Review(unittest.TestCase):
         self.assertEqual(v.problems(turn, "Three principals control Tier Zero."), ["no evidence citation"])
         self.assertIn("principals absent", v.problems(turn, good + " MALLORY@SAMPLE is exposed.")[0])
         self.assertEqual(v.problems(turn, good + " Review C1@SAMPLE."), [])
+        family = review.Turn()
+        family.results.append(("purple_tier_zero_search", json.dumps({"platform": "entra", "citation": "T0-3",
+                               "holders": ["0aa94d8a-Application.ReadWrite.All@PhantomCorp"]})))
+        self.assertEqual(v.problems(family, "Several Application.ReadWrite.All@PhantomCorp apps [T0-3]."), [])
+        self.assertIn("principals absent", v.problems(family, "Mallory@PhantomCorp [T0-3].")[0])
         self.assertEqual(v.problems(review.Turn(), "Nothing retrieved, 12 claims."), [])
         # A number that exists in the evidence, but for another principal or only as a headline, is misattributed.
         bound = review.Turn()
@@ -161,9 +171,16 @@ class Review(unittest.TestCase):
         self.assertEqual(review.Verifier().problems(turn, quoted), [])
 
     def test_fallback_passes_its_own_verifier(self):
+        with patch.object(review, "COMPACT", 1):
+            grouped = self.evidence(("purple_tier_zero_search", {"platform": "ad", "relationship": "genericall"}))
+        text = review.fallback(grouped, ["no evidence citation"])
+        self.assertIn("G1@SAMPLE (Group): 1 edges", text)
+        self.assertNotIn("no result", text)
+        self.assertEqual(review.Verifier().problems(grouped, text.split("Retrieved evidence:", 1)[1]), [])
         turn = self.evidence(("purple_tier_zero_overview", {"platform": "ad"}),
                              ("purple_tier_zero_principal", {"platform": "ad", "principal": "C1@SAMPLE"}),
-                             ("purple_tier_zero_changes", {"platform": "ad"}))
+                             ("purple_tier_zero_changes", {"platform": "ad"}),
+                             ("purple_tier_zero_search", {"platform": "ad", "relationship": "sessions"}))
         text = review.fallback(turn, ["no evidence citation", "numbers absent from evidence: 412",
                                       "principals absent from evidence: mallory@sample"])
         self.assertIn("[T0-1]", text)

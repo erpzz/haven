@@ -302,7 +302,10 @@ def changes(platform, limit=40):
     return out
 
 
-def search(platform, relationship=None, target=None, limit=60):
+COMPACT = 25
+
+
+def search(platform, relationship=None, target=None, limit=40):
     """Every live Tier Zero control edge matching a relationship (kind or category) and/or a Tier Zero target."""
     snap = latest(platform)
     if not snap or snap[2].get("unavailable"):
@@ -325,14 +328,32 @@ def search(platform, relationship=None, target=None, limit=60):
                      "state": state(f), "meaning": meaning(kind, slabel, tlabel)})
     sources = sorted({r["source"] for r in rows})
     targets = sorted({r["target"] for r in rows})
+    # Large results are grouped by holder: a truncated list of raw edges misleads small models (a first-60 slice
+    # can come entirely from one holder). Each holder row carries its own counts and one example sentence.
+    groups = {}
+    for r in rows:
+        g = groups.setdefault(r["source"], {"holder": r["source"], "holder_kind": r["source_kind"], "edges": 0,
+                                            "relationships": {}, "targets": set(), "example": r["meaning"],
+                                            "citation": r["citation"]})
+        g["edges"] += 1
+        g["relationships"][r["relationship"]] = g["relationships"].get(r["relationship"], 0) + 1
+        g["targets"].add(r["target"])
+    by_holder = sorted(groups.values(), key=lambda g: (-g["edges"], g["holder"]))
+    for g in by_holder:
+        g["tier_zero_targets"] = len(g.pop("targets"))
     what = " and ".join(x for x in (f"relationship '{relationship}'" if relationship else "",
                                     f"target '{target}'" if target else "") if x) or "any filter"
     return {"citation": f"T0-{run}", "platform": platform, "snapshot": run, "observed": observed,
             "filter": {"relationship": relationship, "target": target}, "matches_total": len(rows),
             "holders_total": len(sources), "tier_zero_targets_total": len(targets),
-            "holders": sources[:limit], "tier_zero_targets": targets[:limit], "edges": rows[:limit],
+            "holders_by_kind": dict(Counter(g["holder_kind"] for g in by_holder).most_common()),
+            "holders": sources[:limit], "tier_zero_targets": targets[:limit],
+            "by_holder": by_holder[:limit] if len(rows) > COMPACT else [],
+            "edges": rows if len(rows) <= COMPACT else [],
             "summary": (f"{len(rows)} live Tier Zero control edges match {what}: {len(sources)} non-Tier Zero "
-                        f"holders against {len(targets)} Tier Zero targets."), "confidence": "limited"}
+                        f"holders against {len(targets)} Tier Zero targets."
+                        + (f" Results are grouped by holder ({min(len(by_holder), limit)} shown), largest first."
+                           if len(rows) > COMPACT else "")), "confidence": "limited"}
 
 
 IMPLEMENTATIONS = {"purple_tier_zero_overview": overview, "purple_tier_zero_principal": principal,
@@ -348,7 +369,8 @@ SCHEMAS = {
     "purple_tier_zero_search": "Every live Tier Zero control edge matching a relationship and/or a Tier Zero target. "
                                "relationship is a BloodHound edge kind (for example HasSession, DCSync, ADCSESC1, "
                                "AZAddSecret) or a category: " + ", ".join(sorted(CATEGORIES)) + ". "
-                               "For sessions, holders are the computers and tier_zero_targets the logged-on accounts.",
+                               "For sessions, holders are the computers and tier_zero_targets the logged-on accounts. "
+                               "Large results come grouped by holder in by_holder; use holders_total for counts.",
 }
 
 
@@ -522,7 +544,11 @@ class Verifier:
         unsupported = sorted(numbers - turn.numbers(), key=lambda n: (len(n), n))
         if unsupported:
             found.append("numbers absent from evidence: " + ", ".join(unsupported[:5]))
-        names = {m.casefold() for m in PRINCIPAL.findall(text)} - turn.principals()
+        known = turn.principals()
+        # A shortened family name ("Application.ReadWrite.All@X" for "0aa94d8a-Application.ReadWrite.All@X") is a
+        # reference to real objects, not an invention.
+        names = {m.casefold() for m in PRINCIPAL.findall(text)}
+        names = {n for n in names if n not in known and not any(k.endswith("-" + n) for k in known)}
         if names:
             found.append("principals absent from evidence: " + ", ".join(sorted(names)[:5]))
         if LINK.search(answer):
@@ -578,6 +604,15 @@ def fallback(turn, problems):
             lines.append(f"- {r['platform'].upper()}: {r['summary']} {r['note']}. [{r['citation']}]")
             for edge in (r["new"] + r["changed"] + r["missing"])[:5]:
                 lines.append(f"  - {edge['meaning']}. [{edge['citation']}]")
+        elif name == "purple_tier_zero_search" and r.get("snapshot"):
+            lines.append(f"- {r['platform'].upper()}: {r['summary']} [{r['citation']}]")
+            if r.get("holders_by_kind"):
+                lines.append("  - Holders by kind: " + ", ".join(f"{k} {v}" for k, v in r["holders_by_kind"].items()) + ".")
+            for g in r.get("by_holder", [])[:8]:
+                lines.append(f"  - {g['holder']} ({g['holder_kind']}): {g['edges']} edges to {g['tier_zero_targets']} "
+                             f"Tier Zero targets, for example: {g['example']}. [{g['citation']}]")
+            for edge in r.get("edges", [])[:8]:
+                lines.append(f"  - {edge['meaning']} ({edge['state']}). [{edge['citation']}]")
         else:
             lines.append(f"- {name}: {r.get('reason', 'no result')}")
     return "\n".join(lines)
