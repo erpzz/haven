@@ -78,7 +78,10 @@ Kaggle T4 ×2, job `eval/kaggle/h2h_round3.py`, interleaved so a cut-short sessi
 
 1. 4B, repetition 1;
 2. 35B (Qwen3.6-35B-A3B UD-Q4_K_M), repetition 1;
-3. 4B, repetition 2.
+3. 4B, repetition 2;
+4. 35B, repetition 2 (added by the amendment below).
+
+**Amendment (2026-11-23, before any round 2 or round 3 result was read).** The account's weekly GPU quota is 30 hours with about 22 left, not the 6 hours read earlier from the quota API. Round 3 therefore launches now rather than after the weekly reset, and a second 35B repetition is added last, so a cut-short session loses it first. Nothing else changes.
 
 Haven rows now carry the verifier's receipt for the run: the model's own answer before the verifier, whether the verifier replaced it, and why.
 

@@ -18,6 +18,7 @@ RUNS = [  # model spec, alias, first repetition, repetitions; interleaved so a c
     (FOUR_B, "qwen3.5-4b", 1, 1),
     (BIG, "qwen3.6-35b-a3b", 1, 1),
     (FOUR_B, "qwen3.5-4b", 2, 1),
+    (BIG, "qwen3.6-35b-a3b", 2, 1),  # amendment 2026-11-23, before any result: quota allows a second 35B rep
 ]
 OUT = "/kaggle/working/h2h-round3.jsonl"
 MODELS = "/tmp/models"
