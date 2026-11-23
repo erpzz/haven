@@ -91,6 +91,10 @@ def meaning(kind, source, target):
     return MEANING.get(kind, "{source} has the BloodHound attack edge " + kind + " to {target}").format(source=source, target=target)
 
 
+def plural(n, one, many=None):
+    return f"{n} {one if n == 1 else (many or one + 's')}"
+
+
 def reach_statement(name, factors):
     return (f"{factors['users']} users, {factors['computers']} computers, {factors['workloads']} workloads and "
             f"{factors['groups']} groups can reach {name} through attack paths without passing through Tier Zero; "
@@ -149,7 +153,22 @@ def overview(platform, limit=10):
                     "tier_zero_controls_held": len(live[s]), "control_edges": kinds,
                     "summary": f"{label} ({nodes[s]['kind']}) holds {len(live[s])} Tier Zero control edges "
                                f"({', '.join(kinds)}); {reach_statement(label, factors)}."})
-    return dict(base, available=True,
+    fix_first = []
+    for i, step in enumerate(e.get("remediation") or [], 1):
+        names = [nodes[x]["label"] for x in step["sources"]]
+        shown, more = names[:5], max(0, len(names) - 5)
+        who = ", ".join(shown) + (f" and {more} more" if more else "")
+        fix_first.append({
+            "step": i, "principals": shown, "principals_count": len(names), "more_principals": more,
+            "control_edges": step["control_edges"], "identities_removed": step["identities_removed"],
+            "identities_still_exposed": step["identities_still_exposed"],
+            "citations": [short(run, x) for x in step["sources"][:5]],
+            "summary": (f"Step {i}: remove every direct Tier Zero control edge held by {who} "
+                        f"({plural(step['control_edges'], 'edge')}"
+                        + (f" across {len(names)} principals that must be fixed together" if len(names) > 1 else "")
+                        + f"). {plural(step['identities_removed'], 'identity', 'identities')} then lose every route "
+                          f"to Tier Zero and {step['identities_still_exposed']} remain exposed.")})
+    return dict(base, available=True, fix_first=fix_first,
                 principals_with_direct_control=len(ranked),
                 control_edges=sum(len(v) for v in live.values()),
                 identities_able_to_reach_tier_zero=sum(pop.get(k, 0) for k in ("users", "computers", "workloads")),
@@ -234,8 +253,9 @@ def changes(platform, limit=40):
 IMPLEMENTATIONS = {"purple_tier_zero_overview": overview, "purple_tier_zero_principal": principal,
                    "purple_tier_zero_changes": changes}
 SCHEMAS = {
-    "purple_tier_zero_overview": "Headline Tier Zero exposure and the highest-priority non-Tier Zero principals "
-                                 "for one platform. Start here.",
+    "purple_tier_zero_overview": "Headline Tier Zero exposure, the highest-priority non-Tier Zero principals and a "
+                                 "computed fix_first remediation order for one platform. Start here; for 'what should "
+                                 "I fix first' quote fix_first.",
     "purple_tier_zero_principal": "All Tier Zero control edges held by one principal named exactly as an earlier "
                                   "result showed it. Each edge has a 'meaning' sentence stating its direction; "
                                   "'reachable_from' counts who can reach this principal, not what it can access.",
@@ -310,8 +330,10 @@ class Turn:
 
         def walk(value):
             if isinstance(value, dict):
-                if isinstance(value.get("principal"), str):
-                    ints(value, index.setdefault(value["principal"].casefold(), set()))
+                names = [value["principal"]] if isinstance(value.get("principal"), str) else []
+                names += [n for n in value.get("principals") or [] if isinstance(n, str)]
+                for name in names:  # An object describing several principals is evidence for each of them.
+                    ints(value, index.setdefault(name.casefold(), set()))
                 for v in value.values():
                     walk(v)
             elif isinstance(value, list):
@@ -433,6 +455,8 @@ def fallback(turn, problems):
                          f"{r['identities_able_to_reach_tier_zero']} identities can reach Tier Zero "
                          f"({r['exposed_users']} users, {r['exposed_computers']} computers, "
                          f"{r['exposed_workloads']} workloads). Confidence {r['confidence']}. [{r['citation']}]")
+            for step in r.get("fix_first", [])[:3]:
+                lines.append(f"  - {step['summary']} [{step['citations'][0]}]")
             for p in r["top_principals"][:5]:
                 lines.append(f"  - {p['summary']} [{p['citation']}]")
         elif name == "purple_tier_zero_principal" and r.get("found"):

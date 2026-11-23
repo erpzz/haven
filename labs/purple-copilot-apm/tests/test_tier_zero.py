@@ -69,6 +69,20 @@ class TierZero(unittest.TestCase):
         self.assertEqual([tz.priority(per[s])["score"] for s in ("G1", "C1", "Z")], [2, 3, 1])
         self.assertEqual(population["users"], 3)
 
+    def test_remediation_plan_groups_shared_exposure(self):
+        # A and B expose the same identities, so fixing one of them alone removes nothing.
+        sets = {"A": frozenset({"u1", "u2", "u3"}), "B": frozenset({"u1", "u2", "u3"}), "C": frozenset({"u3", "u4"}),
+                "D": frozenset(), "E": frozenset({"u5"})}
+        plan = tz.remediation_plan(sets, {"A": 2, "B": 1, "C": 1, "D": 4, "E": 1})
+        self.assertEqual([(p["sources"], p["identities_removed"], p["identities_still_exposed"], p["control_edges"])
+                          for p in plan], [(["A", "B"], 2, 3, 3), (["C"], 2, 1, 1), (["E"], 1, 0, 1)])
+        o = tz.observe("ad", FakeCE().run)
+        sources = {s for s, _, _ in o["boundary"]}
+        plan = tz.remediation_plan(tz.identity_sets(sources, o["upstream"], o["kinds"]),
+                                   {s: 1 for s in sources})
+        self.assertEqual([(p["sources"], p["identities_removed"], p["identities_still_exposed"]) for p in plan],
+                         [(["C1"], 1, 3), (["G1"], 2, 1), (["Z"], 1, 0)])
+
     def test_expansion_never_follows_tier_zero(self):
         ce = FakeCE()
         o = tz.observe("ad", ce.run)

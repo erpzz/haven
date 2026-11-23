@@ -48,6 +48,25 @@ The upstream edges themselves are not stored, because the Entra sample alone has
 - CE's HTTP 404 for an empty result is treated as empty. Every other error propagates.
 - Archived samples always yield *limited* confidence, and a sample replay never confirms removal.
 
+## What to fix first
+
+Exposure per finding can mislead, because routes overlap. If nine principals give the same identities a route to Tier Zero, fixing any one of them removes nothing. The scan therefore computes a remediation order:
+1. **Group.** Principals that expose exactly the same identities form one step, to be fixed together.
+2. **Order.** A greedy pass orders the steps by how many identities lose *every* route to Tier Zero once that step's direct control edges are removed.
+3. **Correctness.** Upstream routes do not change when boundary edges are removed, so the counts are exact for each step in sequence.
+
+The plan is stored with the evidence. It appears on the dashboard as **Fix first** and in the Hermes overview tool as `fix_first`.
+
+On the samples, Entra exposure falls from 7,010 identities as follows:
+
+| Step | Fix | Identities left exposed |
+| --- | --- | ---: |
+| 1 | The one control edge of JohnsAutomationAccount (5,147 identities lose every route) | 1,863 |
+| 2 | ThisSPOwnsTheGAGroup | 310 |
+| 3 | MyCoolAutomationAccount | 183 |
+
+That is a 97% reduction from three edges. In AD, nine principals form the first step and must be fixed together: Everyone, Authenticated Users, Domain Users and Domain Computers (ADCS), three hosts with Tier Zero sessions, a delegation host and T1_FABIAN. Their 25 edges leave 38 of 53 identities with no route.
+
 ## Executed evidence, 2026-11-22 UTC
 
 This run used a clean Linux x86-64 container with 2 vCPUs, 7 GB of RAM and Docker 29.10. Codex's install path ran unchanged: `ops/fetch.sh`, `ops/ce.sh install` (CE 9.10.1, PostgreSQL graph driver), `apm.setup ingest` and `reader`, `apm.collect`, `apm.path_history`. It reproduced the handback: 12 AD and 1 Entra membership, 21/1/5 paths and the AD count warning. The community MCP tarball was taken from a git checkout of the same pinned commit, because this sandbox cannot download GitHub API tarballs.

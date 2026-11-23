@@ -98,6 +98,21 @@ def path_page(selected=None):
 LIVE = ("new", "persistent", "changed")
 
 
+def plan_html(e):
+    """The computed remediation order: groups that must be fixed together, and what each fix removes."""
+    items = []
+    nodes = e["nodes"]
+    for step in e.get("remediation") or []:
+        names = [nodes.get(x, {}).get("label") or x for x in step["sources"]]
+        who = ", ".join(names[:5]) + (f" and {len(names) - 5} more" if len(names) > 5 else "")
+        together = " (fix together)" if len(names) > 1 else ""
+        edges = "edge" if step["control_edges"] == 1 else "edges"
+        items.append(f"<li><b>{h(who)}</b> — {h(step['control_edges'])} {edges}{together}; "
+                     f"{h(step['identities_removed'])} {'identity loses' if step['identities_removed'] == 1 else 'identities lose'} every route, "
+                     f"{h(step['identities_still_exposed'])} remain</li>")
+    return f"<h3>Fix first</h3><ol class=\"plan\">{''.join(items)}</ol>" if items else ""
+
+
 def tier_zero_page(selected=None):
     """Tier Zero control findings grouped by the non-Tier Zero principal that holds them."""
     with closing(database(True)) as db:
@@ -147,6 +162,7 @@ def tier_zero_page(selected=None):
 <p><b>{live_count}</b> control edges · <b>{identities}</b> identities can reach Tier Zero
 ({h(pop.get('users', 0))} users, {h(pop.get('computers', 0))} computers, {h(pop.get('workloads', 0))} workloads)</p>
 <p><b>Collection</b> · {h(health)} Confidence is limited: an archived sample cannot attest a fresh collection.</p>
+{plan_html(e)}
 <details><summary>Queries and receipts</summary><pre>{h(json.dumps({k: e.get(k) for k in ('query', 'expansion', 'upstream', 'receipt', 'issues', 'notes')}, indent=2))}</pre></details>
 <div class="scroll"><table class="t0"><thead><tr><th>Non-Tier Zero principal</th><th>Identities able to gain it</th><th>Control edges</th><th>State</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table></div></section>""")

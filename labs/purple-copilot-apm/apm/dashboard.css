@@ -14,7 +14,7 @@ td:first-child{font-family:"IBM Plex Mono",monospace;overflow-wrap:anywhere}th{c
 @media(max-width:720px){.cards,.layout{grid-template-columns:1fr}main{padding:20px 14px}}
 article{min-width:0}
 
-.t0 li { overflow-wrap: anywhere; }
+.t0 li, .plan li, h2, p { overflow-wrap: anywhere; }
 @media (max-width: 640px) {
   .t0 thead { display: none; }
   .t0, .t0 tbody, .t0 tr, .t0 td { display: block; width: auto; }

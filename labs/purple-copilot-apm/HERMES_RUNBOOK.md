@@ -17,7 +17,7 @@ Hermes's `pre_verify` hook fires only after file edits, so a read-only review re
 
 | Tool | Returns |
 | --- | --- |
-| `purple_tier_zero_overview(platform)` | Headline exposure and the ten highest-priority non-Tier Zero principals for `ad` or `entra`. |
+| `purple_tier_zero_overview(platform)` | Headline exposure, the computed `fix_first` remediation order and the ten highest-priority non-Tier Zero principals for `ad` or `entra`. |
 | `purple_tier_zero_principal(platform, principal)` | Every control edge one principal holds, its state and the identities able to gain it. |
 | `purple_tier_zero_changes(platform)` | New, changed and missing edges at the latest snapshot. A missing edge keeps its last observed labels. |
 

@@ -33,6 +33,8 @@ class Review(unittest.TestCase):
         self.assertEqual((p["tier_zero_controls_held"], p["edges"][0]["relationship"], p["reachable_from"]["users"]), (1, "GenericAll", 2))
         self.assertEqual(p["edges"][0]["meaning"], "G1@SAMPLE has full control of T0B@SAMPLE")
         self.assertTrue(p["edges"][0]["citation"].startswith("F-1-"))
+        self.assertEqual([step["identities_removed"] for step in o["fix_first"]], [1, 2, 1])
+        self.assertTrue(o["fix_first"][0]["summary"].startswith("Step 1: remove every direct Tier Zero control edge held by C1@SAMPLE"))
         self.assertFalse(json.loads(review.call("purple_tier_zero_overview", {"platform": "entra"}))["available"])
         self.ce.edges.remove(("C1", "HasSession", "T0A"))
         record_paths(tz.evidence("ad", self.ce.run))

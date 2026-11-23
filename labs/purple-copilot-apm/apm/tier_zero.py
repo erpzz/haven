@@ -145,6 +145,53 @@ def exposure(sources, upstream, kinds):
     return result, {name: population.get(name, 0) for name in (*CLASSES, "other")}
 
 
+def identity_sets(sources, upstream, kinds):
+    """For each source, the identities (including itself) that can gain its Tier Zero control."""
+    incoming = defaultdict(set)
+    for s, _, t in upstream:
+        incoming[t].add(s)
+    out = {}
+    for source in sorted(sources):
+        reached, queue = set(), deque([source])
+        while queue:
+            for parent in incoming[queue.popleft()] - reached - {source}:
+                reached.add(parent)
+                queue.append(parent)
+        out[source] = frozenset(x for x in reached | {source} if classify(kinds.get(x)) in IDENTITY)
+    return out
+
+
+def remediation_plan(sets, edges_by_source, steps=10):
+    """Greedy order of fixes that cuts identity exposure fastest.
+
+    Sources that expose exactly the same identities form one step: fixing only some of them removes
+    nothing, because the identities keep a route through the rest. Each step removes every direct
+    Tier Zero control edge of its sources. Identities removed are those left with no route at all.
+    """
+    groups = defaultdict(list)
+    for source, ids in sets.items():
+        if ids:
+            groups[ids].append(source)
+    remaining = {ids: sorted(srcs) for ids, srcs in groups.items()}
+    exposed = set().union(*remaining) if remaining else set()
+    plan = []
+    while remaining and exposed and len(plan) < steps:
+        def after(ids):
+            return set().union(*(other for other in remaining if other != ids)) if len(remaining) > 1 else set()
+        ranked = sorted(remaining, key=lambda ids: (-len(exposed - after(ids)),
+                                                    sum(edges_by_source[x] for x in remaining[ids]), remaining[ids]))
+        best = ranked[0]
+        left = after(best)
+        removed = len(exposed - left)
+        if removed == 0:
+            break
+        plan.append({"sources": remaining.pop(best), "identities_removed": removed,
+                     "identities_still_exposed": len(left),
+                     "control_edges": sum(edges_by_source[x] for x in groups[best])})
+        exposed = left
+    return plan
+
+
 def priority(factors):
     score = sum(factors[name] for name in IDENTITY) + int(factors["source_is_identity"])
     return {"score": score, "basis": "identities able to gain this Tier Zero control", "factors": factors}
@@ -163,7 +210,10 @@ def evidence(platform, run=cypher):
     issues, status = ingest_issues()
     verify_reader()
     o = observe(platform, run)
-    per_source, population = exposure({s for s, _, _ in o["boundary"]}, o["upstream"], o["kinds"])
+    sources = {s for s, _, _ in o["boundary"]}
+    per_source, population = exposure(sources, o["upstream"], o["kinds"])
+    edges_by_source = Counter(s for s, _, _ in o["boundary"])
+    plan = remediation_plan(identity_sets(sources, o["upstream"], o["kinds"]), edges_by_source)
     paths = [[list(edge)] for edge in o["boundary"]]
     involved = {oid for edge in o["boundary"] for oid in (edge[0], edge[2])}
     unresolved = sorted(s for s in per_source if o["kinds"].get(s) == "Base")
@@ -172,7 +222,7 @@ def evidence(platform, run=cypher):
         query=boundary_query(platform), expansion=expansion_query(platform, ["OBJECT-ID"]),
         nodes={oid: {"label": o["nodes"][oid].get("label"), "kind": o["nodes"][oid].get("kind"),
                      "tier_zero": bool(o["nodes"][oid].get("isTierZero"))} for oid in sorted(involved)},
-        exposure=per_source, population=population,
+        exposure=per_source, population=population, remediation=plan,
         upstream={"edges": len(o["upstream"]), "objects": len({s for s, _, _ in o["upstream"]}),
                   "digest": hashlib.sha256(json.dumps(o["upstream"]).encode()).hexdigest(),
                   "calls": o["calls"], "seconds": o["seconds"]},
