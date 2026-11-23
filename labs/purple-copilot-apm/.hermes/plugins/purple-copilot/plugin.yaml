@@ -5,6 +5,7 @@ provides_tools:
   - purple_tier_zero_overview
   - purple_tier_zero_principal
   - purple_tier_zero_changes
+  - purple_tier_zero_search
 provides_hooks:
   - pre_llm_call
   - pre_tool_call

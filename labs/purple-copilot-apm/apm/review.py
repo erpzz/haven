@@ -19,11 +19,43 @@ from .store import database
 
 PLATFORMS = ("ad", "entra")
 LIVE = ("new", "persistent", "changed")
-TOOLS = {
+TOOLS = {  # required arguments
     "purple_tier_zero_overview": ("platform",),
     "purple_tier_zero_principal": ("platform", "principal"),
     "purple_tier_zero_changes": ("platform",),
+    "purple_tier_zero_search": ("platform",),
 }
+OPTIONAL = {"purple_tier_zero_search": ("relationship", "target")}
+CATEGORIES = {  # analyst vocabulary for groups of BloodHound attack edges
+    "sessions": {"HasSession"},
+    "dcsync": {"DCSync", "GetChanges", "GetChangesAll", "GetChangesInFilteredSet"},
+    "certificates": {"ManageCA", "ManageCertificates", "GoldenCert", "Enroll"},  # plus every ADCSESC* edge
+    "delegation": {"AllowedToDelegate", "AllowedToAct", "AddAllowedToAct", "CoerceToTGT", "WriteAccountRestrictions"},
+    "acl-control": {"GenericAll", "GenericWrite", "WriteDacl", "WriteOwner", "Owns", "AllExtendedRights", "AddMember",
+                    "AddSelf", "ForceChangePassword", "AddKeyCredentialLink", "WriteSPN"},
+    "admin": {"AdminTo", "CanRDP", "CanPSRemote", "ExecuteDCOM", "SQLAdmin"},
+    "passwords": {"ReadGMSAPassword", "ReadLAPSPassword", "SyncLAPSPassword", "DumpSMSAPassword"},
+    "app-credentials": {"AZAddSecret", "AZMGAddSecret"},
+    "ownership": {"AZAddOwner", "AZMGAddOwner", "AZOwns", "AZOwner"},
+    "roles": {"AZMGGrantRole", "AZMGGrantAppRoles", "AZHasRole", "AZGlobalAdmin", "AZPrivilegedRoleAdmin",
+              "AZPrivilegedAuthAdmin", "AZCloudAppAdmin", "AZUserAccessAdministrator"},
+    "managed-identity": {"AZManagedIdentity"},
+    "membership": {"MemberOf", "AZMemberOf", "AZAddMembers", "AZMGAddMember"},
+    "containment": {"Contains", "GPLink", "AZContains"},
+}
+
+
+def relationship_matches(query, kind):
+    q = query.strip()
+    if q.casefold() in CATEGORIES:
+        name = q.casefold()
+        return kind in CATEGORIES[name] or (name == "certificates" and kind.startswith("ADCSESC"))
+    return q.casefold() == kind.casefold()
+
+
+def known_relationship(query, kinds):
+    q = query.strip().casefold()
+    return q in CATEGORIES or any(q == k.casefold() for k in kinds)
 MAX_CALLS = 6
 # Anything shaped like a citation must be one the tools returned, so malformed or invented tokens are caught.
 CITATION = re.compile(r"\[(?:citation:\s*)?((?:T0|P|F)-[^\]\s,;]+)\]")
@@ -250,8 +282,41 @@ def changes(platform, limit=40):
     return out
 
 
+def search(platform, relationship=None, target=None, limit=60):
+    """Every live Tier Zero control edge matching a relationship (kind or category) and/or a Tier Zero target."""
+    snap = latest(platform)
+    if not snap or snap[2].get("unavailable"):
+        return {"platform": platform, "available": False, "reason": "No available Tier Zero snapshot"}
+    run, observed, e, findings = snap
+    nodes = e["nodes"]
+    rows = []
+    for k, f in sorted(findings.items(), key=lambda kf: (kf[1]["path"][0][1], kf[1]["path"][0][0])):
+        source, kind, tgt = f["path"][0]
+        if state(f) not in LIVE:
+            continue
+        if relationship and not relationship_matches(relationship, kind):
+            continue
+        tlabel = nodes.get(tgt, {}).get("label") or tgt
+        if target and target.strip().casefold() not in (tlabel.casefold(), tgt.casefold()):
+            continue
+        slabel = nodes.get(source, {}).get("label") or source
+        rows.append({"citation": f"F-{run}-{k[:12]}", "source": slabel, "source_kind": nodes.get(source, {}).get("kind"),
+                     "relationship": kind, "target": tlabel, "target_kind": nodes.get(tgt, {}).get("kind"),
+                     "state": state(f), "meaning": meaning(kind, slabel, tlabel)})
+    sources = sorted({r["source"] for r in rows})
+    targets = sorted({r["target"] for r in rows})
+    what = " and ".join(x for x in (f"relationship '{relationship}'" if relationship else "",
+                                    f"target '{target}'" if target else "") if x) or "any filter"
+    return {"citation": f"T0-{run}", "platform": platform, "snapshot": run, "observed": observed,
+            "filter": {"relationship": relationship, "target": target}, "matches_total": len(rows),
+            "holders_total": len(sources), "tier_zero_targets_total": len(targets),
+            "holders": sources[:limit], "tier_zero_targets": targets[:limit], "edges": rows[:limit],
+            "summary": (f"{len(rows)} live Tier Zero control edges match {what}: {len(sources)} non-Tier Zero "
+                        f"holders against {len(targets)} Tier Zero targets."), "confidence": "limited"}
+
+
 IMPLEMENTATIONS = {"purple_tier_zero_overview": overview, "purple_tier_zero_principal": principal,
-                   "purple_tier_zero_changes": changes}
+                   "purple_tier_zero_changes": changes, "purple_tier_zero_search": search}
 SCHEMAS = {
     "purple_tier_zero_overview": "Headline Tier Zero exposure, the highest-priority non-Tier Zero principals and a "
                                  "computed fix_first remediation order for one platform. Start here; for 'what should "
@@ -260,6 +325,10 @@ SCHEMAS = {
                                   "result showed it. Each edge has a 'meaning' sentence stating its direction; "
                                   "'reachable_from' counts who can reach this principal, not what it can access.",
     "purple_tier_zero_changes": "Tier Zero control edges that are new, changed or missing at the latest snapshot.",
+    "purple_tier_zero_search": "Every live Tier Zero control edge matching a relationship and/or a Tier Zero target. "
+                               "relationship is a BloodHound edge kind (for example HasSession, DCSync, ADCSESC1, "
+                               "AZAddSecret) or a category: " + ", ".join(sorted(CATEGORIES)) + ". "
+                               "For sessions, holders are the computers and tier_zero_targets the logged-on accounts.",
 }
 
 
@@ -267,6 +336,9 @@ def schema(name):
     props = {"platform": {"type": "string", "enum": list(PLATFORMS), "description": "ad or entra"}}
     if name == "purple_tier_zero_principal":
         props["principal"] = {"type": "string", "description": "Exact principal label or object ID from an earlier result"}
+    if name == "purple_tier_zero_search":
+        props["relationship"] = {"type": "string", "description": "Edge kind or category, e.g. sessions, dcsync"}
+        props["target"] = {"type": "string", "description": "Optional exact Tier Zero target label"}
     return {"name": name, "description": SCHEMAS[name] + " Prefer the result's own summary and meaning sentences. "
                                                        "Cite each claim with its [citation] token.",
             "parameters": {"type": "object", "properties": props, "required": list(TOOLS[name]),
@@ -274,7 +346,8 @@ def schema(name):
 
 
 def call(name, args):
-    return json.dumps(IMPLEMENTATIONS[name](**{k: args[k] for k in TOOLS[name]}), sort_keys=True)
+    keys = TOOLS[name] + OPTIONAL.get(name, ())
+    return json.dumps(IMPLEMENTATIONS[name](**{k: args[k] for k in keys if k in args}), sort_keys=True)
 
 
 class Turn:
@@ -356,10 +429,23 @@ class Gate:
                 return ("Blocked: this Purple Copilot review permits only the read-only purple_tier_zero_* "
                         "evidence tools.")
             return None
-        if not isinstance(args, dict) or set(args) != set(TOOLS[tool_name]):
-            return f"Blocked: {tool_name} takes exactly {', '.join(TOOLS[tool_name])}."
+        allowed = set(TOOLS[tool_name]) | set(OPTIONAL.get(tool_name, ()))
+        if not isinstance(args, dict) or not set(TOOLS[tool_name]) <= set(args) <= allowed:
+            return f"Blocked: {tool_name} takes {', '.join(TOOLS[tool_name])}" + (
+                f" and optionally {', '.join(OPTIONAL[tool_name])}." if tool_name in OPTIONAL else ".")
         if args["platform"] not in PLATFORMS:
             return "Blocked: platform must be ad or entra."
+        if tool_name == "purple_tier_zero_search":
+            rel, tgt = args.get("relationship"), args.get("target")
+            if rel is not None and (not isinstance(rel, str) or len(rel) > 60):
+                return "Blocked: relationship must be a short edge kind or category name."
+            if tgt is not None and (not isinstance(tgt, str) or not 0 < len(tgt) <= 400):
+                return "Blocked: target must be a Tier Zero object name of at most 400 characters."
+            snap = latest(args["platform"])
+            kinds = {f["path"][0][1] for f in snap[3].values()} if snap else set()
+            if rel and not known_relationship(rel, kinds):
+                return ("Blocked: unknown relationship. Use a BloodHound edge kind present in the findings or one of: "
+                        + ", ".join(sorted(CATEGORIES)) + ".")
         if tool_name == "purple_tier_zero_principal":
             name = args["principal"]
             if not isinstance(name, str) or not 0 < len(name) <= 400:

@@ -43,11 +43,27 @@ class Review(unittest.TestCase):
         self.assertTrue(c["summary"].startswith("At snapshot 2, 0 Tier Zero control edges are new, 0 changed route and 1 are missing"))
         self.assertEqual(c["missing"][0]["principal"], "C1@SAMPLE")
 
+    def test_search(self):
+        r = json.loads(review.call("purple_tier_zero_search", {"platform": "ad", "relationship": "sessions"}))
+        self.assertEqual((r["matches_total"], r["holders"], r["tier_zero_targets"]), (1, ["C1@SAMPLE"], ["T0A@SAMPLE"]))
+        self.assertIn("harvest T0A@SAMPLE's credentials", r["edges"][0]["meaning"])
+        r = json.loads(review.call("purple_tier_zero_search", {"platform": "ad", "relationship": "genericall"}))
+        self.assertEqual(sorted(r["holders"]), ["G1@SAMPLE", "Z@SAMPLE"])
+        r = json.loads(review.call("purple_tier_zero_search", {"platform": "ad", "target": "t0a@sample"}))
+        self.assertEqual(r["holders"], ["C1@SAMPLE", "Z@SAMPLE"])
+        gate, turn = review.Gate(), review.Turn()
+        self.assertIn("unknown relationship", gate.check(turn, "purple_tier_zero_search", {"platform": "ad", "relationship": "teleport"}))
+        self.assertIn("optionally", gate.check(turn, "purple_tier_zero_search", {"platform": "ad", "x": "y"}))
+        self.assertIsNone(gate.check(turn, "purple_tier_zero_search", {"platform": "ad", "relationship": "sessions"}))
+        turn.results.append(("purple_tier_zero_search", review.call("purple_tier_zero_search", {"platform": "ad", "relationship": "sessions"})))
+        quoted = json.loads(turn.results[0][1])
+        self.assertEqual(review.Verifier().problems(turn, quoted["summary"] + " " + quoted["edges"][0]["meaning"] + " [T0-1]"), [])
+
     def test_gate(self):
         strict, turn = review.Gate(strict=True), review.Turn()
         self.assertIn("only the read-only", strict.check(turn, "terminal", {"command": "id"}))
         self.assertIsNone(review.Gate(strict=False).check(turn, "terminal", {"command": "id"}))
-        self.assertIn("exactly", strict.check(turn, "purple_tier_zero_overview", {"platform": "ad", "x": 1}))
+        self.assertIn("takes platform", strict.check(turn, "purple_tier_zero_overview", {"platform": "ad", "x": 1}))
         self.assertIn("platform", strict.check(turn, "purple_tier_zero_overview", {"platform": "gcp"}))
         self.assertIn("no recorded", strict.check(turn, "purple_tier_zero_principal",
                                                   {"platform": "ad", "principal": "T0A@SAMPLE"}))
