@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:experiment:1",
+  "title": "experiment — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "experiment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requirement_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "hypothesis": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baseline": {
+      "type": "string",
+      "minLength": 1
+    },
+    "independent_variable": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outcome_metrics": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "ground_truth_method": {
+      "type": "string",
+      "minLength": 1
+    },
+    "max_trials": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "stop_condition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "state": {
+      "type": "string",
+      "const": "PROPOSED_NOT_RUN"
+    },
+    "physical_permission": {
+      "type": "string",
+      "const": "NOT_GRANTED"
+    }
+  },
+  "required": [
+    "schema_version",
+    "experiment_id",
+    "owner_id",
+    "requirement_ids",
+    "hypothesis",
+    "baseline",
+    "independent_variable",
+    "outcome_metrics",
+    "ground_truth_method",
+    "max_trials",
+    "stop_condition",
+    "artifact_ids",
+    "state",
+    "physical_permission"
+  ],
+  "additionalProperties": false
+}

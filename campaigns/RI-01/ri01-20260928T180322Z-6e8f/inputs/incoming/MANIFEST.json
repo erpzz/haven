@@ -1,0 +1,322 @@
+[
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/ARTIFACT_CHECKS.json",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/ARTIFACT_CHECKS.json",
+    "sha256": "089d2a1171c1398e76a987b2e94178f7de115701a959f348475e9a24980ff9aa",
+    "bytes": 1353,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/BENCHMARK_AND_EXPERIMENTS.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+    "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+    "bytes": 20784,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/CONTRACT_DESIGN.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/CONTRACT_DESIGN.md",
+    "sha256": "9cc1ce4ce5d2d240b244513aa7680ba0015d86829216497877f3f90cd51856d7",
+    "bytes": 20850,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/INPUT_AUDIT.json",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/INPUT_AUDIT.json",
+    "sha256": "55dba1e5603f3e1aca31e6de40a64fcd5eb428fc7e080bf44012531f0ab5f4d7",
+    "bytes": 8633,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/INTEGRATION_AND_PACKAGES.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/INTEGRATION_AND_PACKAGES.md",
+    "sha256": "f8da2b37bd1310b56aebc0887296c938b2a5e3586af5bed4bef4511c18d4471a",
+    "bytes": 11581,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/INTEGRATION_SUMMARY.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/INTEGRATION_SUMMARY.md",
+    "sha256": "fd271448a08ecaa8f8300b4d3e33fc1970c13db5e6be0a85db5c0b4bab7d02f1",
+    "bytes": 3574,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/MANIFEST.sha256",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/MANIFEST.sha256",
+    "sha256": "208216b9bcac32c9e658bbfb3279d625f4451c8f571e5916147aa15b55974cd0",
+    "bytes": 767,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/PUBLICATION_RECEIPT.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/PUBLICATION_RECEIPT.md",
+    "sha256": "600f21bd3befa6c2aec64116b25217a2ed9b3f822c333df05d020aef6aa256c2",
+    "bytes": 6021,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/PUBLICATION_SOURCE_AUDIT.json",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/PUBLICATION_SOURCE_AUDIT.json",
+    "sha256": "b0f2a877d66ee9bf3df0d7ad6f3d90b97eeaf2e6664a80708285ea6726780225",
+    "bytes": 5243,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/R02_HANDOFF.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/R02_HANDOFF.md",
+    "sha256": "c44552107a9e1130d4dd977d2130a1a81a9b6d8308fa939b27f352ad8b4f115f",
+    "bytes": 36835,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/README.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/README.md",
+    "sha256": "1162aad578dc5109b2d6ca74ac16e93d3b5ab4f31002c37c81fececfacef01ae",
+    "bytes": 2408,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R02",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+    "source_path": "design/H02/R02/v2/SOURCES.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/SOURCES.md",
+    "sha256": "05d2e874c971dc21952fecb0cbbee6d25051173e432382ed8f33ed9b0afa9afa",
+    "bytes": 16354,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/GITHUB_IMPORT_NOTE.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/GITHUB_IMPORT_NOTE.md",
+    "sha256": "bd828d38868be7d62e07d544e79c908980a16053c226f63b06cdaf989492551f",
+    "bytes": 2037,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/MANIFEST.sha256",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/MANIFEST.sha256",
+    "sha256": "8ca9c6ff41c723e010266f018774cc4eec167524ada23812bcf06e6ee9b8bf78",
+    "bytes": 1033,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/README.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/README.md",
+    "sha256": "e09fe88738ab36473dfda4dd3526558d9b9ac8df9269d0eca2b0096ee6dd5102",
+    "bytes": 2113,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/design/H08/ARCHITECTURE.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/ARCHITECTURE.md",
+    "sha256": "49a0f85f38fc41b0f538b5d519f966b5cc4cad9aaad51af913795aa9465e180e",
+    "bytes": 23197,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/design/H08/CONTRACT_PROPOSALS.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/CONTRACT_PROPOSALS.md",
+    "sha256": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13",
+    "bytes": 21330,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/design/H08/EVIDENCE_REGISTER.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/EVIDENCE_REGISTER.md",
+    "sha256": "5b5ac17b04d511933e6ff216cf42dc79148a4c555ee14b2b62febb5a5561e9be",
+    "bytes": 17446,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/design/H08/EXPERIMENTS.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/EXPERIMENTS.md",
+    "sha256": "f451458d9116b7e36fe17c61b72fcd83e788b472718e54db406f1a085013369f",
+    "bytes": 17951,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/design/H08/INPUT_AUDIT.json",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/INPUT_AUDIT.json",
+    "sha256": "71f033d2c7a108c1202ab42c3d1b5a477a2a8c16d4e71a144002e0557a56f652",
+    "bytes": 43449,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/design/H08/INTEGRATION_AND_PACKAGES.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/INTEGRATION_AND_PACKAGES.md",
+    "sha256": "1864c003e4fbc877a9d390cd5efa6a3ee1b8e2ce592f1e2248446d1b890e0585",
+    "bytes": 11410,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/design/H08/INTEGRATION_SUMMARY.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/INTEGRATION_SUMMARY.md",
+    "sha256": "05a160e6f743755c4b5d646242c74023d5d2f98e762f8add9245919b4640fcd6",
+    "bytes": 3751,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/design/H08/R06_HANDOFF.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/R06_HANDOFF.md",
+    "sha256": "68564fa9c44ea87b41467e4ae22ba2f5f653623d1f0340653dcb29532809ba40",
+    "bytes": 11980,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/design/H08/VALIDATION.json",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/VALIDATION.json",
+    "sha256": "44a0faea61aa750738555041c85b176b41cd9af5d7cee8747992ca39adfdcc92",
+    "bytes": 3408,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R06",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5b85aa0e9106a484e4b5c571460c2d0010ce1eeb",
+    "source_path": "design/H08/R06/v1/design/H08/VALIDATION.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/VALIDATION.md",
+    "sha256": "f44297e45a43b05f3aa63818d75b71c88987c7c8f3aae93310abff3723732916",
+    "bytes": 7600,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R08",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+    "source_path": "design/H09/R08/v1/EXPERIMENTS_AND_ACCEPTANCE.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/EXPERIMENTS_AND_ACCEPTANCE.md",
+    "sha256": "bfeff2b9e890c5e1e30833c748ea15b68567a9775e8ac062cb3ac6f716da60c8",
+    "bytes": 18641,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R08",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+    "source_path": "design/H09/R08/v1/INTEGRATION_AND_PACKAGES.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/INTEGRATION_AND_PACKAGES.md",
+    "sha256": "d088259de75b7aebe51c1a5e666051572ba653ccee93b664ac62434630fc456e",
+    "bytes": 4334,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R08",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+    "source_path": "design/H09/R08/v1/INTEGRATION_SUMMARY.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/INTEGRATION_SUMMARY.md",
+    "sha256": "4bb42851a887857f7e51b558ddab89d5099ee4b332e03f14b90baa57d10f004e",
+    "bytes": 3290,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R08",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+    "source_path": "design/H09/R08/v1/INTERFACES_AND_CONTRACTS.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/INTERFACES_AND_CONTRACTS.md",
+    "sha256": "01ed60d55591b3d4a2a03cafaf4c299d24c1c9f47d406d68bd3dd2bac6d02f03",
+    "bytes": 20270,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R08",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+    "source_path": "design/H09/R08/v1/R08_HANDOFF.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/R08_HANDOFF.md",
+    "sha256": "40e4315fba2e26c9ab89daf81e2f1c18445c85ee25a5b3a5d15870d1660e4a43",
+    "bytes": 28816,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R08",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+    "source_path": "design/H09/R08/v1/README.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/README.md",
+    "sha256": "cf6733d7aa0916d6260628ca9e66dcb7be5f3c0039fcf8db7bebf6430f3782e1",
+    "bytes": 1404,
+    "status": "EXACT_GIT_BLOB_COPY"
+  },
+  {
+    "lane": "R08",
+    "repo": "https://github.com/erpzz/haven",
+    "commit": "5be0910420a9afd786d2ffd65054e5c4830ba714",
+    "source_path": "design/H09/R08/v1/SOURCES.md",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/SOURCES.md",
+    "sha256": "715c088178c56f692a371d71878e008156eb48ff2a3f328c7a2d69ce0898c73d",
+    "bytes": 9350,
+    "status": "EXACT_GIT_BLOB_COPY"
+  }
+]

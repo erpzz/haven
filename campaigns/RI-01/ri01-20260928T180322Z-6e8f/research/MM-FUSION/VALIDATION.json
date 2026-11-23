@@ -1,0 +1,325 @@
+{
+  "task": "MM-FUSION",
+  "checked_utc": "2026-09-29T00:48:01.2659877Z",
+  "scope": "DOCUMENTARY_STRUCTURAL_AND_BYTE_VALIDATION_ONLY",
+  "application_model_native_tests_executed": false,
+  "input_use_count": 50,
+  "input_use_hash_checks": [
+    {
+      "path": ".codex/agents/haven_sensor_fusion.toml",
+      "matches": true,
+      "actual": "8791b6088203e56f43c100645675a819cce6c57ae7adca93a4df2fa752e88713"
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "matches": true,
+      "actual": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f"
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "matches": true,
+      "actual": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92"
+    },
+    {
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "matches": true,
+      "actual": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a"
+    },
+    {
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "matches": true,
+      "actual": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a"
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "matches": true,
+      "actual": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0"
+    },
+    {
+      "path": "AGENTS.md",
+      "matches": true,
+      "actual": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281"
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "matches": true,
+      "actual": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc"
+    },
+    {
+      "path": "coordination/HANDBACK_METADATA.md",
+      "matches": true,
+      "actual": "27a8d0b5bc8aec1eeeb5c7fc178b7a977016e96aaf69f5f62f63a39a3731c3a7"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/ACCEPTED_INPUT_SNAPSHOT.json",
+      "matches": true,
+      "actual": "2f10a519b24e160d0e8a9547376d2d0d5810ed1f7a66ffa1c5fed660c1bd88e9"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "matches": true,
+      "actual": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "matches": true,
+      "actual": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "matches": true,
+      "actual": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/DEPENDENCIES.json",
+      "matches": true,
+      "actual": "ee5830be9f29115f0ee41b9f596d303adf895a1ec37380d33e866cdfb80a6c52"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "matches": true,
+      "actual": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/HANDOFF_MANIFEST.json",
+      "matches": true,
+      "actual": "2db5745bfc5626f38542b1b4608e63b00458b21f4a38c1b05f2437414cf9bfc8"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONTRACTS.md",
+      "matches": true,
+      "actual": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R07/REVIEW.md",
+      "matches": true,
+      "actual": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/HANDOFF_MANIFEST.json",
+      "matches": true,
+      "actual": "8e9cdac5e012c2fa76cd27b29204158719cee95b2cc7d0663382d003d5b80703"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/CONTRACTS.md",
+      "matches": true,
+      "actual": "97a6a0ab83297bbe30905d0b22b4f45bd9caf1fb7092d8f98b4eb25a27268038"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/REPORT.md",
+      "matches": true,
+      "actual": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/SHORTLIST.md",
+      "matches": true,
+      "actual": "91cdf5de90a2f87bb53a4ccb604b5d2d015db15848be20ffd814833bf30cd13e"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/NEXT_PACKAGE.md",
+      "matches": true,
+      "actual": "7782c9f7d43a2df2c64682e9b81929cc9e3498715cb44ed5ec6b2f9ca469ece4"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-VISION/REVIEW.md",
+      "matches": true,
+      "actual": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/HANDOFF_MANIFEST.json",
+      "matches": true,
+      "actual": "1cb85927411aefaf3ba16a39e4b2465b53ee12dfd5f7d240da3112128d19cc64"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/CONTRACTS.md",
+      "matches": true,
+      "actual": "4a7d03dbc7bf164f0de2e1f6febf5bb91d6813b652c52c1bd5ae96dc39c95fd7"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/CANDIDATES.md",
+      "matches": true,
+      "actual": "6b618b483ef35043771d440cdb62c6c4c16d841a3e4962d58833be399049deb0"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/NEXT_PACKAGE.md",
+      "matches": true,
+      "actual": "1f3dd480a89e31d529e92fe69b83ba799f62bfcfb4ebb7a435d0d0756986bbc2"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-AV/REVIEW.md",
+      "matches": true,
+      "actual": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+      "matches": true,
+      "actual": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/HANDOFF_MANIFEST.json",
+      "matches": true,
+      "actual": "e99367a0d96ae3398b02821752c9256b705d6931050a9c7dfcca5ec10f25ac79"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/R14_HANDOFF.md",
+      "matches": true,
+      "actual": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/EXPERIMENTS_AND_INTERFACES.md",
+      "matches": true,
+      "actual": "b556b10603d2a7de884fb1ea4c0f89880c3db676f3d8be282e48d92968129149"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R14/REVIEW.md",
+      "matches": true,
+      "actual": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CONTRACT_DELTA.md",
+      "matches": true,
+      "actual": "642ea41d2a218ab018b62d1edc92e317c4edd72c972a80a258fd71d556f8045a"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R08-P00/REVIEW.md",
+      "matches": true,
+      "actual": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CONTRACTS.md",
+      "matches": true,
+      "actual": "985b53bab11cc9b581e3242429f73be87d41b8d4b55de2069fe64b4317d0b7a2"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/CONTRACTS.md",
+      "matches": true,
+      "actual": "854d05a470581289537df387a959c817cf9be6b05d46c0686f93a6f82aa948a1"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R09/REVIEW.md",
+      "matches": true,
+      "actual": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81"
+    },
+    {
+      "path": "baseline/cumulative-v1.0/docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "matches": true,
+      "actual": "0cab226c8382f240f6488fd33818ee8c4afd01fe9627e1beda2bd0222b824cae"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/SOURCE_AUDIT.md",
+      "matches": true,
+      "actual": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/HANDOFF_MANIFEST.json",
+      "matches": true,
+      "actual": "8c4f261598a01bb4971756f0d8fba0746425c10ebf4203721fb0b3c6268300ca"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/REPORT.md",
+      "matches": true,
+      "actual": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R11/REVIEW.md",
+      "matches": true,
+      "actual": "14177bacc25927e6ac0969f3e5c52268ce31ddf80f95407a39e1907f92043602"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R11/CLOSURE-1.md",
+      "matches": true,
+      "actual": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "matches": true,
+      "actual": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "matches": true,
+      "actual": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "matches": true,
+      "actual": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "matches": true,
+      "actual": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f"
+    },
+    {
+      "path": "baseline/cumulative-v1.0/agents/HANDOFF_TEMPLATE.md",
+      "matches": true,
+      "actual": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc"
+    }
+  ],
+  "all_input_use_hashes_match": true,
+  "requirements_count": 102,
+  "acceptance_count": 102,
+  "experiments_count": 32,
+  "all_original_requirement_records_preserved": true,
+  "all_original_acceptance_records_preserved": true,
+  "all_original_experiment_records_preserved": true,
+  "proposed_case_ids": [
+    "MF01",
+    "MF02",
+    "MF03",
+    "MF04",
+    "MF05",
+    "MF06",
+    "MF07",
+    "MF08",
+    "MF09",
+    "MF10",
+    "MF11",
+    "MF12",
+    "MF13",
+    "MF14",
+    "MF15",
+    "MF16",
+    "MF17",
+    "MF18",
+    "MF19",
+    "MF20",
+    "MF21",
+    "MF22",
+    "MF23",
+    "MF24",
+    "MF25",
+    "MF26",
+    "MF27",
+    "MF28",
+    "MF29",
+    "MF30",
+    "MF31",
+    "MF32",
+    "MF33",
+    "MF34",
+    "MF35",
+    "MF36"
+  ],
+  "proposed_case_count": 36,
+  "unique_case_count": 36,
+  "proposed_packages_count": 3,
+  "hard_payload_members": 57,
+  "public_soft_payload_members": 14,
+  "all_upstream_payload_hashes_match": true,
+  "host_path_pattern_hits": [
+    {
+      "file": "MODALITY_REGISTRY.md",
+      "line": 19
+    }
+  ],
+  "independent_review": "NOT_YET_PERFORMED",
+  "runtime_qualification": "NOT_CLAIMED",
+  "host_path_review": "Single regex hit MODALITY_REGISTRY line 19 is the literal scientific datum list AMSL/ellipsoid/home/UNKNOWN, not a filesystem path. No local host or private provenance exposed by this scan.",
+  "executed_documentary_commands": [
+    "PowerShell Get-Content -Raw | ConvertFrom-Json for assigned documentary inputs",
+    "PowerShell Get-FileHash -Algorithm SHA256 for all INPUT_USE paths and upstream manifest members",
+    "PowerShell ConvertTo-Json -Depth 40 -Compress record equality for full original REQ/AT/EX arrays",
+    "Regex enumeration of MF case IDs and MF-P package headings; host-path-pattern scan with manual adjudication"
+  ]
+}

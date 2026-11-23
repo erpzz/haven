@@ -1,0 +1,8 @@
+{
+  "checked_at": "2026-09-28T20:45:23.667078+00:00",
+  "method": "Read each frozen intake manifest payload and compare SHA256 without normalization",
+  "checked": 39,
+  "missing": [],
+  "mismatches": [],
+  "scope": "Frozen intake source identity only, not scientific correctness or entire campaign acceptance"
+}

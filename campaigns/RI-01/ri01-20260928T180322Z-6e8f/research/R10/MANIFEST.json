@@ -1,0 +1,70 @@
+{
+  "task_id": "R10",
+  "author_agent": "/root/ri01_privacy",
+  "role": "haven_researcher",
+  "created_at_utc": "2026-09-28T19:32:25Z",
+  "base_commit": "376031e182c57495912baf6727093b0b188da568",
+  "base_status": "SUPERVISOR_REPORTED",
+  "disposition": "DRAFT_READY_REVIEW_REQUIRED",
+  "publication": "NOT_UPLOADED_BY_AUTHOR",
+  "files": [
+    {
+      "path": "COMPATIBILITY.md",
+      "bytes": 8221,
+      "sha256": "fe4b60387975e7b919bbea84b90bc365e4323420b7d4205c65fc7a604a0f74f6"
+    },
+    {
+      "path": "CONSULTATIONS_AND_CHECKIN.md",
+      "bytes": 3549,
+      "sha256": "0f4b9a4d9e80b4452d22252728e8ba34c1373be79197b9a534fe7f91fffa06fe"
+    },
+    {
+      "path": "COSTS.md",
+      "bytes": 5626,
+      "sha256": "e1a25c3947feed2728a44421098ad9457592a663a3225d7c0d3497b8fc3be6d3"
+    },
+    {
+      "path": "EXPERIMENTS_AND_PACKAGE.md",
+      "bytes": 13824,
+      "sha256": "e3a0ea372287ab6d9b43c57310b3bb3ff92e82d99fcc38dd20c623edd823a01c"
+    },
+    {
+      "path": "INPUT_RECEIPT.md",
+      "bytes": 1792,
+      "sha256": "4a0366decb919b0a6a910bc121482ae4bd6ab7f1af01e4a8497fd4b0dfb5f4d3"
+    },
+    {
+      "path": "INPUT_USE.json",
+      "bytes": 13528,
+      "sha256": "fce32febcb869f705d4e3333016ab3c88b8e7248dfc39563671fb614969c7250"
+    },
+    {
+      "path": "modality-smoke.png",
+      "bytes": 1130,
+      "sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f"
+    },
+    {
+      "path": "MODALITY.md",
+      "bytes": 2214,
+      "sha256": "c2e70b2403390a05c244ceb64de4d04f02bf738dcd85835bdead20a304f0e097"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 20379,
+      "sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90"
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 9332,
+      "sha256": "1080c49714a48b8a8298787b701f479aaa2eabe576362bc5b48b3e7a85eaf3f4"
+    },
+    {
+      "path": "VALIDATION.md",
+      "bytes": 2231,
+      "sha256": "db26144c599139c4ef45d064a8d149e59268cd709f766d0aea64b38b24c3e285"
+    }
+  ],
+  "exclusions": [
+    "MANIFEST.json self-hash"
+  ]
+}

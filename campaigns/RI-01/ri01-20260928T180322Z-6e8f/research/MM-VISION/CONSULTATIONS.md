@@ -1,0 +1,17 @@
+# Actual consultations and normal handback check-in
+
+2026-09-28, native message tools; no GitHub issue/comment sent by this worker. Root owns routing/publication.
+
+Q-MV-01 to root: confirm source/crop/track lineage, correlation, calibration and current-audience seam with R07/MM-FUSION. Root replied as integration interpretation that accepted R07 fields are consistent, but full CORE authority vector and influence closure are required, including uncited context/crops/embeddings/track/model-prior dependencies. Anonymous IDs are not principals and shared frame/track derivatives are not independent witnesses. Root explicitly stated no active R07 author/MM-FUSION respondent, so no specialist endorsement is recorded. CONTRACTS C1–C3 incorporates this correction.
+
+R04 notice: root explicitly accepted original R04 source HASHES `90c2d832f126b0111d0726f75f1d8eb5f36bb040fbd82ce154a5b5e016a0eef0` through independent review `4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956`, retaining native evidence, access withdrawal, output accounting, path/inference and SDK cost/rights gates. Initial assignment's soft-input status was superseded by that actual root notice, not inferred from index recency.
+
+Q-MMV-AV-01: actual `/root/ri01_mmav` advice delivered through root: retain source asset/revision, stream/shared-capture correlation, native timebase/per-frame PTS, mapped capture interval and clock/offset/drift uncertainty, exposure/duration when known, selected window and all sampled PTS, decode/edit/resampling, audio rates/channels/sample intervals, missing spans, AV alignment method/uncertainty, receipt/processing and full closure. Time-overlap uncertainty forbids strict order; IDs do not become identity.
+
+Q-MMAV-01 reciprocal actual answer sent to root: MM-VISION confirms exact PTS and uncovered intervals rather than nominal cadence. Rich clip reasoning emits UNKNOWN_VISUAL_BETWEEN_SAMPLES even if audio supports an event hypothesis. Keep observed-at-frame and inferred-between claims separate, each with temporal support and dependence. This is real peer consultation between MM specialists, not execution or future MM-FUSION acceptance.
+
+License discovery notice to root: original Qwen2.5-VL-3B card links Qwen Research License; exact M4 quantized/redistributed chain remains unknown. Root replied to retain original baseline and include primary URL/license edition plus downstream pilot gates; model-free replay/UI proposals remain unblocked. SHORTLIST/SOURCES/NEXT_PACKAGE implement that direction without changing settled P01 boundaries.
+
+## PEER-CHECKIN-01 — author's normal handback
+
+Strength observed: independent role boundaries and actual routed MM-AV exchange exposed the exact-timebase and audio-only inference seam early; the image path remains useful without a global map. Weakness: no real candidate model or host resource measurements; the synthetic PNG establishes only developer image viewing, and mutable external source tables are not artifact pins. Primary risk: future adapters flatten full influence, metric/relative state, time gaps or four output records into convenient Booleans, or call an anonymous ID a person. Confidence high in local file identity and design separation, medium in shortlist suitability, unestablished in deployed quality/latency. Request independent review of license/source attribution, current-vector closure, proposed thresholds and protected evaluator separation. No self-approval or fabricated peer validation. This check-in is sent at normal handback, not a parallel review claim.

@@ -1,0 +1,866 @@
+{
+  "generated_at": "2026-09-29T01:12:46.612215+00:00",
+  "meaning": "Scoped documentary/design dispositions, not experimental acceptance or execution permission; read amendments and retained gates.",
+  "entries": [
+    {
+      "task_id": "INTAKE",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "inputs/INTAKE/INVENTORY.md",
+          "sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "VISION-0",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_vision",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/VISION-0/CLOSURE-1.md",
+          "sha256": "151e22a9030be0d50643261dbec081f12f343460b790ec15839e30381f5aeabf"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REV-R02",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REV-R02/REVIEW.md",
+          "sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REV-R06",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_vision",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REV-R06/REVIEW.md",
+          "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REV-R08",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REV-R08/REVIEW.md",
+          "sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "CODE-0",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_code_review",
+      "scope": null,
+      "disposition": "Static historical review only; CODE-H1-H2 and CODE-M1-M5 remain implementation gaps; final candidate review still required.",
+      "artifacts": [
+        {
+          "path": "reviews/CODE-0/REVIEW.md",
+          "sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "R01",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_daily",
+      "scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R01/REPORT.md",
+          "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283"
+        },
+        {
+          "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        },
+        {
+          "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "R02-P01",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": "Composite v1 plus amendment1; P01 M1/L1 closed; parent-death and downstream R03/CORE implementation gates remain",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R02-P01/REPORT.md",
+          "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7"
+        },
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        },
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "R03",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R03/REPORT.md",
+          "sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d"
+        },
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        },
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "CORE",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/night01_review",
+      "scope": "First architecture and downstream research only; VA01 must close before P03 freeze, no application qualification",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82"
+        },
+        {
+          "path": "reviews/VISION-ARCH/REVIEW.md",
+          "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        }
+      ],
+      "open_findings": [
+        "VA-01_P03_FREEZE_ONLY",
+        "VA-02_LATER_RECEIPTS"
+      ]
+    },
+    {
+      "task_id": "R10",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Documentary/design subset; no aircraft/schema/cost/operation qualification",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R10/REPORT.md",
+          "sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90"
+        },
+        {
+          "path": "reviews/REVIEW-R10/REVIEW.md",
+          "sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "R12",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_p01",
+      "scope": "Finite frontier research; source-index and exact-license conditions retained",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R12/REPORT.md",
+          "sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5"
+        },
+        {
+          "path": "reviews/REVIEW-R12/REVIEW.md",
+          "sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "R04",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Bounded documentation/contracts/proposed experiments. No mandatory source amendment; exact native tuple/access ambiguity/output accounting/application path/inference/SDK cost-rights promotion gates retained.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R04/REPORT.md",
+          "sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479"
+        },
+        {
+          "path": "reviews/REVIEW-R04/REVIEW.md",
+          "sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956"
+        }
+      ],
+      "open_findings": [
+        "R04-G1_NATIVE_EVIDENCE",
+        "R04-G2_ACCESS_WITHDRAWAL",
+        "R04-G3_OUTPUT_ACCOUNTING",
+        "R04-G4_PATH_INFERENCE",
+        "R04-G5_RIGHTS_COSTS"
+      ]
+    },
+    {
+      "task_id": "R05",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_daily",
+      "scope": "ACCEPT_FOR_SYNTHESIS: documentary personal-tools/scheduling design, proposed tests unexecuted, no account or implementation authority.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R05/REPORT.md",
+          "sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1"
+        },
+        {
+          "path": "reviews/REVIEW-R05/REPORT.md",
+          "sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7"
+        }
+      ],
+      "open_findings": [
+        "LOW L01: AT-DAILY-08 cross-device task resume remains partial; account switching/A08/C09 are not equivalent. Add explicit mandatory device-handoff assertion in versioned future package before AT acceptance.",
+        "Q-R05-01 restart/restore clarification is root interpretation, not fresh upstream author assent."
+      ]
+    },
+    {
+      "task_id": "R07",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_world",
+      "scope": "Bounded typed evidence/world-model documentary design; no runtime or physical qualification. E07-B separately versioned experiment before freeze; E07-A/P0 and downstream research unblocked.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0"
+        },
+        {
+          "path": "reviews/REVIEW-R07/REVIEW.md",
+          "sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        }
+      ],
+      "open_findings": [
+        "R07-L01_EXPERIMENT_VARIANT_BEFORE_FREEZE",
+        "R07-L02_ADOPTION_GATES"
+      ]
+    },
+    {
+      "task_id": "R08-P00",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": "Bounded reconciliation and inert scalar/correction design. No mandatory amendment. E01 method/estimand/interval/uncertainty freeze, physical inputs and independent implementation acceptance remain unqualified.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R08-P00/REPORT.md",
+          "sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7"
+        },
+        {
+          "path": "reviews/REVIEW-R08-P00/REVIEW.md",
+          "sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+        }
+      ],
+      "open_findings": [
+        "R08P00-G1_E01_METHOD_FREEZE",
+        "R08P00-G2_PHYSICAL_METROLOGY",
+        "R08P00-G3_IMPLEMENTATION_ACCEPTANCE"
+      ]
+    },
+    {
+      "task_id": "MM-VISION",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_mmvision",
+      "scope": "Exact documentary design, shortlist and proposed evaluations; no mandatory source amendment. Rights, lifecycle/decoder, independent oracle, route/attempt denominator and metric/native/human gates retained.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/MM-VISION/REPORT.md",
+          "sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd"
+        },
+        {
+          "path": "reviews/REVIEW-MM-VISION/REVIEW.md",
+          "sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660"
+        }
+      ],
+      "open_findings": [
+        "MV-G1_ARTIFACT_RIGHTS",
+        "MV-G2_LIFECYCLE_DECODER_NATIVE",
+        "MV-G3_ORACLE_SEMANTIC_UTILITY",
+        "MV-G4_ROUTE_ATTEMPT_DENOMINATORS",
+        "MV-G5_METRIC_TEMPORAL_HUMAN"
+      ]
+    },
+    {
+      "task_id": "MM-AV",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_mmav",
+      "scope": "ACCEPT_FOR_SYNTHESIS: documentary multimodal audio/video design only; no execution qualification or permission.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/MM-AV/REPORT.md",
+          "sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0"
+        },
+        {
+          "path": "reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+          "sha256": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593"
+        },
+        {
+          "path": "reviews/REVIEW-MM-AV/REVIEW.md",
+          "sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025"
+        }
+      ],
+      "open_findings": [
+        "H06 protocol freeze and all exact model/runtime/host/authorization prerequisites remain.",
+        "R12 review read-scope addendum retained in original MM-AV review."
+      ]
+    },
+    {
+      "task_id": "R09",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_world",
+      "scope": "ACCEPT_FOR_SYNTHESIS: bounded robotics research/contracts/inert evaluation; no physical/model/runtime qualification or implementation authorization.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R09/REPORT.md",
+          "sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb"
+        },
+        {
+          "path": "reviews/REVIEW-R09/REVIEW.md",
+          "sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81"
+        }
+      ],
+      "open_findings": [
+        "LOW R09-L01: recovered-copy absence only; canonical robotics chapter exists, reviewer read it, original author consumption UNKNOWN. Add exact canonical input to synthesis without backfilling original38pins.",
+        "LOW R09-L02: leader/follower gearing differs; supply is motor/variant-specific, unresolved electrical compatibility remains adoption gate."
+      ]
+    },
+    {
+      "task_id": "R11",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "ACCEPT_FOR_SYNTHESIS public variant only, with substantive REVIEW.md14177bacc... and closure; original remains AMEND/private/publication-held. Documentary research only.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R11-public-v1/REPORT.md",
+          "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165"
+        },
+        {
+          "path": "reviews/REVIEW-R11/CLOSURE-1.md",
+          "sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef"
+        }
+      ],
+      "open_findings": [
+        "Retain G1-G5 independentoracle, exactdevice/provider/region/SDK, currentauthority, receipt, rights/cost/physical gates; all32casesNOT_EXECUTED."
+      ]
+    },
+    {
+      "task_id": "R14",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_mmav",
+      "scope": "ACCEPT_FOR_SYNTHESIS: bounded augmentation public research/interfaces/proposed experiments; no implementation, native, human-study or physical qualification.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R14/R14_HANDOFF.md",
+          "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544"
+        },
+        {
+          "path": "reviews/REVIEW-R14/REVIEW.md",
+          "sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
+        }
+      ],
+      "open_findings": [
+        "E07 exact-person/checkpoint exposure and person/session independence, idle-data feasibility must be frozen before study;12heldoutfamilies are not12new people.",
+        "Exact artifact rights/access, native/human-study/clinical/physical and ordinary-baseline benefit gates remain."
+      ]
+    },
+    {
+      "task_id": "MM-FUSION",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_world",
+      "scope": "ACCEPT_FOR_SYNTHESIS exact frozen documentary composition; no CORE semantic change or implementation/native/physical qualification.16payloads50inputs71predecessor hashes verified, full102REQ102AT32EX unchanged.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/MM-FUSION/REPORT.md",
+          "sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3"
+        },
+        {
+          "path": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+          "sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd"
+        }
+      ],
+      "open_findings": [
+        {
+          "id": "MF-L01",
+          "severity": "LOW",
+          "disposition": "Future MF-P0 oracle/protocol freeze must explicitly cover missing/mismatched digest-bound sidecar, essential metadata loss and changed-authority reimport within76invocations or separately versioned allocation; not current execution or mandatory source amendment."
+        }
+      ]
+    },
+    {
+      "task_id": "R15",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": "ACCEPT_FOR_SYNTHESIS frozen full R15 plus corrected R15-AUDIT composite.14payloads37inputs241cachedsourceidentities and102REQ102AT32EX preserved. NO_APPLICATION_CODE_CHANGED; no execution or implementation authorization.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R15/INTEGRATION_SUMMARY.md",
+          "sha256": "b4a58e054c6304ed1c6fd7c83a2fe12eec89fb85fd516ec3ec53334b39b9bc12"
+        },
+        {
+          "path": "reviews/REVIEW-R15/REVIEW.md",
+          "sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6"
+        }
+      ],
+      "open_findings": [
+        {
+          "id": "R15-C01",
+          "severity": "SOURCE_CORRECTION",
+          "disposition": "CLOSED only by consuming R15/AUDIT_CORRECTIONS.md with immutable preliminary audit; original A02 alone remains inaccurate."
+        },
+        {
+          "id": "R15-PRE-RUN",
+          "disposition": "Exact dependency/asset rights, lifecycle/zero-egress proof, independent oracle, current authority, bounded adapter, F08/MF-L01 and actual-code review remain future gates."
+        }
+      ]
+    },
+    {
+      "task_id": "EVIDENCE-0",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": "CHANGES_REQUIRED for unrestricted claims; scoped historical use supported",
+      "artifacts": [
+        {
+          "path": "reviews/EVIDENCE-0/REVIEW.md",
+          "sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d"
+        }
+      ],
+      "open_findings": [
+        "E0-H1",
+        "E0-M1",
+        "E0-M2",
+        "E0-L1"
+      ]
+    },
+    {
+      "task_id": "REVIEW-R02-P01",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_p01",
+      "scope": null,
+      "disposition": "AMEND M1 before contract freeze; historical crosswalk/evidence and other specified subsets accepted",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R02-P01/REVIEW.md",
+          "sha256": "1634b53af3fe0799bcabd5adfbef5658d64812e9d2425c457bc09f3e7faa8589"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R03",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "AMEND finite-use semantics before freeze; bounded identity/lineage/deletion/release architecture accepted",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R03/REVIEW.md",
+          "sha256": "cc393683b0db1ff0723cc6688196bfe11871b6844019cf2d3ecd4b29ab330952"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "R02-P01-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": "Composite v1 plus amendment1; P01 M1/L1 closed; parent-death and downstream R03/CORE implementation gates remain",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R02-P01/amendment-1/AMENDMENT.md",
+          "sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605"
+        },
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "R03-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R03/amendment-1/AMENDMENT.md",
+          "sha256": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667"
+        },
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "RECHECK-R02-P01-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_p01",
+      "scope": "Composite v1 plus amendment1; P01 M1/L1 closed; parent-death and downstream R03/CORE implementation gates remain",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md",
+          "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "REVIEW-R01",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "AMEND localized receipt precondition; scenarios/coverage/experiments accepted bounded",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R01/REVIEW.md",
+          "sha256": "27503c8aceb2ef43afc35fe4d3ffa352f9df4fbe3482f3562c825ff59990839b"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "RECHECK-R03-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": "Composite original11files plus amendment1 fivefiles, exact limitedsupersession; designonly, noimplementationauthorization",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R03/CLOSURE-1.md",
+          "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "R01-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_daily",
+      "scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R01/amendment-1/AMENDMENT.md",
+          "sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535"
+        },
+        {
+          "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "RECHECK-R01-A1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": "Six original plus six amendment1 files, limited supersession; design coherence only, no executed acceptance",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R01/CLOSURE-1.md",
+          "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "REVIEW-R12",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "Finite frontier research; source-index and exact-license conditions retained",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R12/REVIEW.md",
+          "sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "VISION-ARCH",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_vision",
+      "scope": null,
+      "disposition": "First architecture and downstream research only; VA01 must close before P03 freeze, no application qualification",
+      "artifacts": [
+        {
+          "path": "reviews/VISION-ARCH/REVIEW.md",
+          "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R10",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": "Documentary/design subset; no aircraft/schema/cost/operation qualification",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R10/REVIEW.md",
+          "sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "PEER-CHECKIN-01-CODE",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_code_review",
+      "scope": null,
+      "disposition": null,
+      "artifacts": [],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R07",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_vision",
+      "scope": null,
+      "disposition": "Bounded typed evidence/world-model documentary design; no runtime or physical qualification. E07-B separately versioned experiment before freeze; E07-A/P0 and downstream research unblocked.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R07/REVIEW.md",
+          "sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R04",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": "Bounded documentation/contracts/proposed experiments. No mandatory source amendment; exact native tuple/access ambiguity/output accounting/application path/inference/SDK cost-rights promotion gates retained.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R04/REVIEW.md",
+          "sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R08-P00",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": "Bounded reconciliation and inert scalar/correction design. No mandatory amendment. E01 method/estimand/interval/uncertainty freeze, physical inputs and independent implementation acceptance remain unqualified.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R08-P00/REVIEW.md",
+          "sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-MM-VISION",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_p01",
+      "scope": null,
+      "disposition": "Exact documentary design, shortlist and proposed evaluations; no mandatory source amendment. Rights, lifecycle/decoder, independent oracle, route/attempt denominator and metric/native/human gates retained.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-MM-VISION/REVIEW.md",
+          "sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-MM-AV",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS: documentary multimodal audio/video design only; no execution qualification or permission.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-MM-AV/REVIEW.md",
+          "sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R05",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS: documentary personal-tools/scheduling design, proposed tests unexecuted, no account or implementation authority.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R05/REPORT.md",
+          "sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R09",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_daily",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS: bounded robotics research/contracts/inert evaluation; no physical/model/runtime qualification or implementation authorization.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R09/REVIEW.md",
+          "sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "R15-AUDIT",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": "ACCEPT_FOR_SYNTHESIS ONLY AS CORRECTED COMPOSITE: original audit plus research/R15/AUDIT_CORRECTIONS.md and GEV_AUDIT.md. Original A02 reverse-order claim superseded; no original-byte rewrite or standalone accuracy acceptance.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R15-AUDIT/SOURCE_AUDIT.md",
+          "sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74"
+        },
+        {
+          "path": "research/R15/AUDIT_CORRECTIONS.md",
+          "sha256": "523e1e24632021f9afc892d479399d69b2959d5e2125aa260752855d6f9c3a09"
+        },
+        {
+          "path": "reviews/REVIEW-R15/REVIEW.md",
+          "sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "REVIEW-R14",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS: bounded augmentation public research/interfaces/proposed experiments; no implementation, native, human-study or physical qualification.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R14/REVIEW.md",
+          "sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R11",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_evidence",
+      "scope": null,
+      "disposition": "Independent closure of deterministic32repo-field redaction in public variant, together with bounded substantive R11 acceptance; original not authorized for publication.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R11/CLOSURE-1.md",
+          "sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "R11-PUBLIC-1",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Independent closure of deterministic32repo-field redaction in public variant, together with bounded substantive R11 acceptance; original not authorized for publication.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R11-public-v1/REDACTION_RECEIPT.json",
+          "sha256": "d9b4a1a1f0332c8cb448fa3444d0db6d5ecf41c0e3bcbabd366dec2b1c1c648e"
+        },
+        {
+          "path": "reviews/REVIEW-R11/CLOSURE-1.md",
+          "sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef"
+        }
+      ],
+      "open_findings": []
+    },
+    {
+      "task_id": "REVIEW-MM-FUSION",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_review_privacy",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS exact frozen documentary composition; no CORE semantic change or implementation/native/physical qualification.16payloads50inputs71predecessor hashes verified, full102REQ102AT32EX unchanged.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-MM-FUSION/REVIEW.md",
+          "sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd"
+        }
+      ],
+      "open_findings": null
+    },
+    {
+      "task_id": "REVIEW-R15",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_code_review",
+      "scope": null,
+      "disposition": "ACCEPT_FOR_SYNTHESIS ONLY AS CORRECTED COMPOSITE: original audit plus research/R15/AUDIT_CORRECTIONS.md and GEV_AUDIT.md. Original A02 reverse-order claim superseded; no original-byte rewrite or standalone accuracy acceptance.",
+      "artifacts": [
+        {
+          "path": "reviews/REVIEW-R15/REVIEW.md",
+          "sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6"
+        }
+      ],
+      "open_findings": null
+    }
+  ]
+}

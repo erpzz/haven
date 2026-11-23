@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:evidence:1",
+  "title": "evidence — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_scope": {
+      "type": "string",
+      "enum": [
+        "PERSONAL_A",
+        "PERSONAL_B",
+        "HOUSEHOLD_SHARED",
+        "RESEARCH_SYNTHETIC"
+      ]
+    },
+    "origin": {
+      "type": "string",
+      "enum": [
+        "SIMULATED",
+        "PRERECORDED",
+        "MANUAL",
+        "LIVE_DEVICE"
+      ]
+    },
+    "claim_class": {
+      "type": "string",
+      "enum": [
+        "OBSERVED_FACT",
+        "SENSOR_MEASUREMENT",
+        "MODEL_INFERENCE",
+        "EXTERNAL_DATA",
+        "USER_STATEMENT",
+        "ASSUMPTION"
+      ]
+    },
+    "captured_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "received_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "producer_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "producer_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "calibration_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "frame_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "content_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "parent_evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "freshness": {
+      "type": "string",
+      "enum": [
+        "CURRENT",
+        "STALE",
+        "UNKNOWN"
+      ]
+    },
+    "payload_kind": {
+      "type": "string",
+      "enum": [
+        "MEASUREMENT",
+        "MEDIA_REFERENCE",
+        "TEXT_INTERPRETATION",
+        "GEOMETRY"
+      ]
+    },
+    "qualified_for_physical_action": {
+      "type": "boolean",
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "owner_scope",
+    "origin",
+    "claim_class",
+    "captured_at",
+    "received_at",
+    "producer_id",
+    "producer_version",
+    "calibration_id",
+    "frame_id",
+    "content_sha256",
+    "parent_evidence_ids",
+    "freshness",
+    "payload_kind",
+    "qualified_for_physical_action"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,1701 @@
+{
+  "author": "/root/ri01_vision",
+  "transcription": "Root mechanically transcribed actual reviewer mapping; pending reviewer readback",
+  "requirements_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+  "rows": [
+    {
+      "requirement_id": "REQ-CORE-01",
+      "original_owner": "H00",
+      "original_acceptance_tests": [
+        "AT-CORE-01"
+      ],
+      "anchors": [
+        "V16",
+        "V15"
+      ],
+      "near_step_ref": "V16",
+      "deferral_reentry_ref": "V16",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-CORE-02",
+      "original_owner": "H00",
+      "original_acceptance_tests": [
+        "AT-CORE-02"
+      ],
+      "anchors": [
+        "V01",
+        "V16"
+      ],
+      "near_step_ref": "V01",
+      "deferral_reentry_ref": "V01",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-CORE-03",
+      "original_owner": "H00",
+      "original_acceptance_tests": [
+        "AT-CORE-03"
+      ],
+      "anchors": [
+        "V16"
+      ],
+      "near_step_ref": "V16",
+      "deferral_reentry_ref": "V16",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-CORE-04",
+      "original_owner": "H00",
+      "original_acceptance_tests": [
+        "AT-CORE-04"
+      ],
+      "anchors": [
+        "V15",
+        "V01",
+        "V16"
+      ],
+      "near_step_ref": "V15",
+      "deferral_reentry_ref": "V15",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-CORE-05",
+      "original_owner": "H00",
+      "original_acceptance_tests": [
+        "AT-CORE-05"
+      ],
+      "anchors": [
+        "V03",
+        "V16"
+      ],
+      "near_step_ref": "V03",
+      "deferral_reentry_ref": "V03",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-CORE-06",
+      "original_owner": "H00",
+      "original_acceptance_tests": [
+        "AT-CORE-06"
+      ],
+      "anchors": [
+        "V16"
+      ],
+      "near_step_ref": "V16",
+      "deferral_reentry_ref": "V16",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-CORE-07",
+      "original_owner": "H00",
+      "original_acceptance_tests": [
+        "AT-CORE-07"
+      ],
+      "anchors": [
+        "V01",
+        "V15"
+      ],
+      "near_step_ref": "V01",
+      "deferral_reentry_ref": "V01",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DAILY-01",
+      "original_owner": "H01",
+      "original_acceptance_tests": [
+        "AT-DAILY-01"
+      ],
+      "anchors": [
+        "V01"
+      ],
+      "near_step_ref": "V01",
+      "deferral_reentry_ref": "V01",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DAILY-02",
+      "original_owner": "H01",
+      "original_acceptance_tests": [
+        "AT-DAILY-02"
+      ],
+      "anchors": [
+        "V01"
+      ],
+      "near_step_ref": "V01",
+      "deferral_reentry_ref": "V01",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DAILY-03",
+      "original_owner": "H01",
+      "original_acceptance_tests": [
+        "AT-DAILY-03"
+      ],
+      "anchors": [
+        "V01"
+      ],
+      "near_step_ref": "V01",
+      "deferral_reentry_ref": "V01",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DAILY-04",
+      "original_owner": "H01",
+      "original_acceptance_tests": [
+        "AT-DAILY-04"
+      ],
+      "anchors": [
+        "V01"
+      ],
+      "near_step_ref": "V01",
+      "deferral_reentry_ref": "V01",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DAILY-05",
+      "original_owner": "H01",
+      "original_acceptance_tests": [
+        "AT-DAILY-05"
+      ],
+      "anchors": [
+        "V01"
+      ],
+      "near_step_ref": "V01",
+      "deferral_reentry_ref": "V01",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DAILY-06",
+      "original_owner": "H01",
+      "original_acceptance_tests": [
+        "AT-DAILY-06"
+      ],
+      "anchors": [
+        "V01"
+      ],
+      "near_step_ref": "V01",
+      "deferral_reentry_ref": "V01",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DAILY-07",
+      "original_owner": "H01",
+      "original_acceptance_tests": [
+        "AT-DAILY-07"
+      ],
+      "anchors": [
+        "V01"
+      ],
+      "near_step_ref": "V01",
+      "deferral_reentry_ref": "V01",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DAILY-08",
+      "original_owner": "H01",
+      "original_acceptance_tests": [
+        "AT-DAILY-08"
+      ],
+      "anchors": [
+        "V05",
+        "V01",
+        "V02"
+      ],
+      "near_step_ref": "V05",
+      "deferral_reentry_ref": "V05",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DAILY-09",
+      "original_owner": "H01",
+      "original_acceptance_tests": [
+        "AT-DAILY-09"
+      ],
+      "anchors": [
+        "V04",
+        "V01"
+      ],
+      "near_step_ref": "V04",
+      "deferral_reentry_ref": "V04",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DAILY-10",
+      "original_owner": "H01",
+      "original_acceptance_tests": [
+        "AT-DAILY-10"
+      ],
+      "anchors": [
+        "V01",
+        "V10"
+      ],
+      "near_step_ref": "V01",
+      "deferral_reentry_ref": "V01",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-PRIV-01",
+      "original_owner": "H04",
+      "original_acceptance_tests": [
+        "AT-PRIV-01"
+      ],
+      "anchors": [
+        "V02"
+      ],
+      "near_step_ref": "V02",
+      "deferral_reentry_ref": "V02",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-PRIV-02",
+      "original_owner": "H04",
+      "original_acceptance_tests": [
+        "AT-PRIV-02"
+      ],
+      "anchors": [
+        "V02"
+      ],
+      "near_step_ref": "V02",
+      "deferral_reentry_ref": "V02",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-PRIV-03",
+      "original_owner": "H04",
+      "original_acceptance_tests": [
+        "AT-PRIV-03"
+      ],
+      "anchors": [
+        "V02"
+      ],
+      "near_step_ref": "V02",
+      "deferral_reentry_ref": "V02",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-PRIV-04",
+      "original_owner": "H04",
+      "original_acceptance_tests": [
+        "AT-PRIV-04"
+      ],
+      "anchors": [
+        "V02"
+      ],
+      "near_step_ref": "V02",
+      "deferral_reentry_ref": "V02",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-PRIV-05",
+      "original_owner": "H04",
+      "original_acceptance_tests": [
+        "AT-PRIV-05"
+      ],
+      "anchors": [
+        "V02"
+      ],
+      "near_step_ref": "V02",
+      "deferral_reentry_ref": "V02",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-PRIV-06",
+      "original_owner": "H04",
+      "original_acceptance_tests": [
+        "AT-PRIV-06"
+      ],
+      "anchors": [
+        "V02"
+      ],
+      "near_step_ref": "V02",
+      "deferral_reentry_ref": "V02",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-PRIV-07",
+      "original_owner": "H04",
+      "original_acceptance_tests": [
+        "AT-PRIV-07"
+      ],
+      "anchors": [
+        "V02"
+      ],
+      "near_step_ref": "V02",
+      "deferral_reentry_ref": "V02",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-PRIV-08",
+      "original_owner": "H04",
+      "original_acceptance_tests": [
+        "AT-PRIV-08"
+      ],
+      "anchors": [
+        "V02",
+        "V04"
+      ],
+      "near_step_ref": "V02",
+      "deferral_reentry_ref": "V02",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-PRIV-09",
+      "original_owner": "H04",
+      "original_acceptance_tests": [
+        "AT-PRIV-09"
+      ],
+      "anchors": [
+        "V02"
+      ],
+      "near_step_ref": "V02",
+      "deferral_reentry_ref": "V02",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-AI-01",
+      "original_owner": "H02",
+      "original_acceptance_tests": [
+        "AT-AI-01"
+      ],
+      "anchors": [
+        "V03"
+      ],
+      "near_step_ref": "V03",
+      "deferral_reentry_ref": "V03",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-AI-02",
+      "original_owner": "H02",
+      "original_acceptance_tests": [
+        "AT-AI-02"
+      ],
+      "anchors": [
+        "V03"
+      ],
+      "near_step_ref": "V03",
+      "deferral_reentry_ref": "V03",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-AI-03",
+      "original_owner": "H02",
+      "original_acceptance_tests": [
+        "AT-AI-03"
+      ],
+      "anchors": [
+        "V16",
+        "V03"
+      ],
+      "near_step_ref": "V16",
+      "deferral_reentry_ref": "V16",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-AI-04",
+      "original_owner": "H02",
+      "original_acceptance_tests": [
+        "AT-AI-04"
+      ],
+      "anchors": [
+        "V03",
+        "V16"
+      ],
+      "near_step_ref": "V03",
+      "deferral_reentry_ref": "V03",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-AI-05",
+      "original_owner": "H02",
+      "original_acceptance_tests": [
+        "AT-AI-05"
+      ],
+      "anchors": [
+        "V03",
+        "V02",
+        "V12"
+      ],
+      "near_step_ref": "V03",
+      "deferral_reentry_ref": "V03",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-AI-06",
+      "original_owner": "H02",
+      "original_acceptance_tests": [
+        "AT-AI-06"
+      ],
+      "anchors": [
+        "V03",
+        "V12"
+      ],
+      "near_step_ref": "V03",
+      "deferral_reentry_ref": "V03",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-AI-07",
+      "original_owner": "H02",
+      "original_acceptance_tests": [
+        "AT-AI-07"
+      ],
+      "anchors": [
+        "V03",
+        "V04",
+        "V15"
+      ],
+      "near_step_ref": "V03",
+      "deferral_reentry_ref": "V03",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-AI-08",
+      "original_owner": "H02",
+      "original_acceptance_tests": [
+        "AT-AI-08"
+      ],
+      "anchors": [
+        "V04",
+        "V03"
+      ],
+      "near_step_ref": "V04",
+      "deferral_reentry_ref": "V04",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-AI-09",
+      "original_owner": "H02",
+      "original_acceptance_tests": [
+        "AT-AI-09"
+      ],
+      "anchors": [
+        "V03",
+        "V15",
+        "V16"
+      ],
+      "near_step_ref": "V03",
+      "deferral_reentry_ref": "V03",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-WEAR-01",
+      "original_owner": "H07",
+      "original_acceptance_tests": [
+        "AT-WEAR-01"
+      ],
+      "anchors": [
+        "V05"
+      ],
+      "near_step_ref": "V05",
+      "deferral_reentry_ref": "V05",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-WEAR-02",
+      "original_owner": "H07",
+      "original_acceptance_tests": [
+        "AT-WEAR-02"
+      ],
+      "anchors": [
+        "V05"
+      ],
+      "near_step_ref": "V05",
+      "deferral_reentry_ref": "V05",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-WEAR-03",
+      "original_owner": "H07",
+      "original_acceptance_tests": [
+        "AT-WEAR-03"
+      ],
+      "anchors": [
+        "V05"
+      ],
+      "near_step_ref": "V05",
+      "deferral_reentry_ref": "V05",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-WEAR-04",
+      "original_owner": "H07",
+      "original_acceptance_tests": [
+        "AT-WEAR-04"
+      ],
+      "anchors": [
+        "V05",
+        "V16"
+      ],
+      "near_step_ref": "V05",
+      "deferral_reentry_ref": "V05",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-WEAR-05",
+      "original_owner": "H07",
+      "original_acceptance_tests": [
+        "AT-WEAR-05"
+      ],
+      "anchors": [
+        "V05"
+      ],
+      "near_step_ref": "V05",
+      "deferral_reentry_ref": "V05",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-WEAR-06",
+      "original_owner": "H07",
+      "original_acceptance_tests": [
+        "AT-WEAR-06"
+      ],
+      "anchors": [
+        "V05",
+        "V04",
+        "V02"
+      ],
+      "near_step_ref": "V05",
+      "deferral_reentry_ref": "V05",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-WEAR-07",
+      "original_owner": "H07",
+      "original_acceptance_tests": [
+        "AT-WEAR-07"
+      ],
+      "anchors": [
+        "V05",
+        "V02"
+      ],
+      "near_step_ref": "V05",
+      "deferral_reentry_ref": "V05",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-WEAR-08",
+      "original_owner": "H07",
+      "original_acceptance_tests": [
+        "AT-WEAR-08"
+      ],
+      "anchors": [
+        "V05",
+        "V15"
+      ],
+      "near_step_ref": "V05",
+      "deferral_reentry_ref": "V05",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RF-01",
+      "original_owner": "H08",
+      "original_acceptance_tests": [
+        "AT-RF-01"
+      ],
+      "anchors": [
+        "V06"
+      ],
+      "near_step_ref": "V06",
+      "deferral_reentry_ref": "V06",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RF-02",
+      "original_owner": "H08",
+      "original_acceptance_tests": [
+        "AT-RF-02"
+      ],
+      "anchors": [
+        "V06"
+      ],
+      "near_step_ref": "V06",
+      "deferral_reentry_ref": "V06",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RF-03",
+      "original_owner": "H08",
+      "original_acceptance_tests": [
+        "AT-RF-03"
+      ],
+      "anchors": [
+        "V06"
+      ],
+      "near_step_ref": "V06",
+      "deferral_reentry_ref": "V06",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RF-04",
+      "original_owner": "H08",
+      "original_acceptance_tests": [
+        "AT-RF-04"
+      ],
+      "anchors": [
+        "V06"
+      ],
+      "near_step_ref": "V06",
+      "deferral_reentry_ref": "V06",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RF-05",
+      "original_owner": "H08",
+      "original_acceptance_tests": [
+        "AT-RF-05"
+      ],
+      "anchors": [
+        "V06"
+      ],
+      "near_step_ref": "V06",
+      "deferral_reentry_ref": "V06",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RF-06",
+      "original_owner": "H08",
+      "original_acceptance_tests": [
+        "AT-RF-06"
+      ],
+      "anchors": [
+        "V06",
+        "V07",
+        "V08",
+        "V09"
+      ],
+      "near_step_ref": "V06",
+      "deferral_reentry_ref": "V06",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RF-07",
+      "original_owner": "H08",
+      "original_acceptance_tests": [
+        "AT-RF-07"
+      ],
+      "anchors": [
+        "V07",
+        "V06",
+        "V13"
+      ],
+      "near_step_ref": "V07",
+      "deferral_reentry_ref": "V07",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RF-08",
+      "original_owner": "H08",
+      "original_acceptance_tests": [
+        "AT-RF-08"
+      ],
+      "anchors": [
+        "V07",
+        "V04"
+      ],
+      "near_step_ref": "V07",
+      "deferral_reentry_ref": "V07",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RF-09",
+      "original_owner": "H08",
+      "original_acceptance_tests": [
+        "AT-RF-09"
+      ],
+      "anchors": [
+        "V07",
+        "V06",
+        "V12"
+      ],
+      "near_step_ref": "V07",
+      "deferral_reentry_ref": "V07",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RF-10",
+      "original_owner": "H08",
+      "original_acceptance_tests": [
+        "AT-RF-10"
+      ],
+      "anchors": [
+        "V06",
+        "V02",
+        "V15"
+      ],
+      "near_step_ref": "V06",
+      "deferral_reentry_ref": "V06",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-01",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-01"
+      ],
+      "anchors": [
+        "V08"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-02",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-02"
+      ],
+      "anchors": [
+        "V08"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-03",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-03"
+      ],
+      "anchors": [
+        "V08"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-04",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-04"
+      ],
+      "anchors": [
+        "V08"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-05",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-05"
+      ],
+      "anchors": [
+        "V08"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-06",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-06"
+      ],
+      "anchors": [
+        "V08"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-07",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-07"
+      ],
+      "anchors": [
+        "V08"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-08",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-08"
+      ],
+      "anchors": [
+        "V08"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-09",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-09"
+      ],
+      "anchors": [
+        "V08"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-10",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-10"
+      ],
+      "anchors": [
+        "V08",
+        "V09",
+        "V10"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-11",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-11"
+      ],
+      "anchors": [
+        "V08"
+      ],
+      "near_step_ref": "V08",
+      "deferral_reentry_ref": "V08",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-DRONE-12",
+      "original_owner": "H05",
+      "original_acceptance_tests": [
+        "AT-DRONE-12"
+      ],
+      "anchors": [
+        "V16",
+        "V08"
+      ],
+      "near_step_ref": "V16",
+      "deferral_reentry_ref": "V16",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-COMMS-01",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-COMMS-01"
+      ],
+      "anchors": [
+        "V10"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-COMMS-02",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-COMMS-02"
+      ],
+      "anchors": [
+        "V10"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-COMMS-03",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-COMMS-03"
+      ],
+      "anchors": [
+        "V10"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-COMMS-04",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-COMMS-04"
+      ],
+      "anchors": [
+        "V10"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-COMMS-05",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-COMMS-05"
+      ],
+      "anchors": [
+        "V10"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-COMMS-06",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-COMMS-06"
+      ],
+      "anchors": [
+        "V10"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-COMMS-07",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-COMMS-07"
+      ],
+      "anchors": [
+        "V10"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-COMMS-08",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-COMMS-08"
+      ],
+      "anchors": [
+        "V10",
+        "V02",
+        "V14"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-EMERG-01",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-EMERG-01"
+      ],
+      "anchors": [
+        "V10"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-EMERG-02",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-EMERG-02"
+      ],
+      "anchors": [
+        "V10",
+        "V08",
+        "V16"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-EMERG-03",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-EMERG-03"
+      ],
+      "anchors": [
+        "V10",
+        "V02",
+        "V05"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-EMERG-04",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-EMERG-04"
+      ],
+      "anchors": [
+        "V10",
+        "V08",
+        "V09"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-EMERG-05",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-EMERG-05"
+      ],
+      "anchors": [
+        "V10",
+        "V04",
+        "V08",
+        "V09"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-EMERG-06",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-EMERG-06"
+      ],
+      "anchors": [
+        "V10"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-EMERG-07",
+      "original_owner": "H11",
+      "original_acceptance_tests": [
+        "AT-EMERG-07"
+      ],
+      "anchors": [
+        "V10",
+        "V11",
+        "V12"
+      ],
+      "near_step_ref": "V10",
+      "deferral_reentry_ref": "V10",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ROBOT-01",
+      "original_owner": "H10",
+      "original_acceptance_tests": [
+        "AT-ROBOT-01"
+      ],
+      "anchors": [
+        "V09"
+      ],
+      "near_step_ref": "V09",
+      "deferral_reentry_ref": "V09",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ROBOT-02",
+      "original_owner": "H10",
+      "original_acceptance_tests": [
+        "AT-ROBOT-02"
+      ],
+      "anchors": [
+        "V09"
+      ],
+      "near_step_ref": "V09",
+      "deferral_reentry_ref": "V09",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ROBOT-03",
+      "original_owner": "H10",
+      "original_acceptance_tests": [
+        "AT-ROBOT-03"
+      ],
+      "anchors": [
+        "V09"
+      ],
+      "near_step_ref": "V09",
+      "deferral_reentry_ref": "V09",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ROBOT-04",
+      "original_owner": "H10",
+      "original_acceptance_tests": [
+        "AT-ROBOT-04"
+      ],
+      "anchors": [
+        "V09"
+      ],
+      "near_step_ref": "V09",
+      "deferral_reentry_ref": "V09",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ROBOT-05",
+      "original_owner": "H10",
+      "original_acceptance_tests": [
+        "AT-ROBOT-05"
+      ],
+      "anchors": [
+        "V09",
+        "V04",
+        "V15"
+      ],
+      "near_step_ref": "V09",
+      "deferral_reentry_ref": "V09",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ENG-01",
+      "original_owner": "H09",
+      "original_acceptance_tests": [
+        "AT-ENG-01"
+      ],
+      "anchors": [
+        "V11"
+      ],
+      "near_step_ref": "V11",
+      "deferral_reentry_ref": "V11",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ENG-02",
+      "original_owner": "H09",
+      "original_acceptance_tests": [
+        "AT-ENG-02"
+      ],
+      "anchors": [
+        "V11"
+      ],
+      "near_step_ref": "V11",
+      "deferral_reentry_ref": "V11",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ENG-03",
+      "original_owner": "H09",
+      "original_acceptance_tests": [
+        "AT-ENG-03"
+      ],
+      "anchors": [
+        "V11",
+        "V15"
+      ],
+      "near_step_ref": "V11",
+      "deferral_reentry_ref": "V11",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ENG-04",
+      "original_owner": "H09",
+      "original_acceptance_tests": [
+        "AT-ENG-04"
+      ],
+      "anchors": [
+        "V11",
+        "V15"
+      ],
+      "near_step_ref": "V11",
+      "deferral_reentry_ref": "V11",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ENG-05",
+      "original_owner": "H09",
+      "original_acceptance_tests": [
+        "AT-ENG-05"
+      ],
+      "anchors": [
+        "V11"
+      ],
+      "near_step_ref": "V11",
+      "deferral_reentry_ref": "V11",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ENG-06",
+      "original_owner": "H09",
+      "original_acceptance_tests": [
+        "AT-ENG-06"
+      ],
+      "anchors": [
+        "V11"
+      ],
+      "near_step_ref": "V11",
+      "deferral_reentry_ref": "V11",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ENG-07",
+      "original_owner": "H09",
+      "original_acceptance_tests": [
+        "AT-ENG-07"
+      ],
+      "anchors": [
+        "V11"
+      ],
+      "near_step_ref": "V11",
+      "deferral_reentry_ref": "V11",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ENG-08",
+      "original_owner": "H09",
+      "original_acceptance_tests": [
+        "AT-ENG-08"
+      ],
+      "anchors": [
+        "V11",
+        "V07",
+        "V13"
+      ],
+      "near_step_ref": "V11",
+      "deferral_reentry_ref": "V11",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ENG-09",
+      "original_owner": "H09",
+      "original_acceptance_tests": [
+        "AT-ENG-09"
+      ],
+      "anchors": [
+        "V11",
+        "V12"
+      ],
+      "near_step_ref": "V11",
+      "deferral_reentry_ref": "V11",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-ENG-10",
+      "original_owner": "H09",
+      "original_acceptance_tests": [
+        "AT-ENG-10"
+      ],
+      "anchors": [
+        "V11"
+      ],
+      "near_step_ref": "V11",
+      "deferral_reentry_ref": "V11",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RESEARCH-01",
+      "original_owner": "H12",
+      "original_acceptance_tests": [
+        "AT-RESEARCH-01"
+      ],
+      "anchors": [
+        "V15"
+      ],
+      "near_step_ref": "V15",
+      "deferral_reentry_ref": "V15",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RESEARCH-02",
+      "original_owner": "H12",
+      "original_acceptance_tests": [
+        "AT-RESEARCH-02"
+      ],
+      "anchors": [
+        "V12",
+        "V15"
+      ],
+      "near_step_ref": "V12",
+      "deferral_reentry_ref": "V12",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RESEARCH-03",
+      "original_owner": "H12",
+      "original_acceptance_tests": [
+        "AT-RESEARCH-03"
+      ],
+      "anchors": [
+        "V12",
+        "V16"
+      ],
+      "near_step_ref": "V12",
+      "deferral_reentry_ref": "V12",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RESEARCH-04",
+      "original_owner": "H12",
+      "original_acceptance_tests": [
+        "AT-RESEARCH-04"
+      ],
+      "anchors": [
+        "V15"
+      ],
+      "near_step_ref": "V15",
+      "deferral_reentry_ref": "V15",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RESEARCH-05",
+      "original_owner": "H12",
+      "original_acceptance_tests": [
+        "AT-RESEARCH-05"
+      ],
+      "anchors": [
+        "V15"
+      ],
+      "near_step_ref": "V15",
+      "deferral_reentry_ref": "V15",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RESEARCH-06",
+      "original_owner": "H12",
+      "original_acceptance_tests": [
+        "AT-RESEARCH-06"
+      ],
+      "anchors": [
+        "V15"
+      ],
+      "near_step_ref": "V15",
+      "deferral_reentry_ref": "V15",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    },
+    {
+      "requirement_id": "REQ-RESEARCH-07",
+      "original_owner": "H12",
+      "original_acceptance_tests": [
+        "AT-RESEARCH-07"
+      ],
+      "anchors": [
+        "V16",
+        "V15"
+      ],
+      "near_step_ref": "V16",
+      "deferral_reentry_ref": "V16",
+      "status": "SOURCE_COVERAGE_ONLY",
+      "implementation": "NOT_CLAIMED",
+      "acceptance": "NOT_EXECUTED",
+      "note": "Original statement and exact AT expected_result remain authoritative; identity/scope preservation is immediate, not deferred"
+    }
+  ]
+}

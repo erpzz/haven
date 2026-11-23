@@ -1,0 +1,73 @@
+{
+  "task": "R07",
+  "revision": 1,
+  "author": "/root/ri01_world",
+  "status": "DRAFT_READY_FOR_INDEPENDENT_REVIEW",
+  "created_at": "2026-09-28T19:59:59.0566668Z",
+  "files": [
+    {
+      "path": "CONSULTATIONS_AND_CHECKIN.md",
+      "sha256": "a04ecee1f60428d565028b8405bd260a3e90aab75e7ca31dccbc544c509b287f",
+      "bytes": 2808
+    },
+    {
+      "path": "CONTRACTS.md",
+      "sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+      "bytes": 12240
+    },
+    {
+      "path": "EXPERIMENTS.md",
+      "sha256": "dd457288976f87441c02f64dd6ccbb2c67b7e3ac445e311d07df5a6d358e9ac0",
+      "bytes": 9334
+    },
+    {
+      "path": "INPUT_RECEIPT.md",
+      "sha256": "6958b937bc35b52f9a439dfb6b518f4f7d403343caedc5c80bb7a0680576215f",
+      "bytes": 2770
+    },
+    {
+      "path": "INPUT_USE.json",
+      "sha256": "12d61d84351d65b368daadbca9119b22f01e0a9d68ca70e72bd986d72ab9a2ba",
+      "bytes": 11633
+    },
+    {
+      "path": "INTEGRATION_SUMMARY.md",
+      "sha256": "7081b28fac8a5a8478f59c674b8967ecf18efb3a17000e0d5c92bfe7845e75de",
+      "bytes": 2425
+    },
+    {
+      "path": "MODALITY.json",
+      "sha256": "a2eb5d095426fc50ca8b693e35dda8adea6cc90faecdb2f3de51168e5688aaba",
+      "bytes": 1664
+    },
+    {
+      "path": "NEXT_PACKAGE.md",
+      "sha256": "71194cf3ab940abd7e632e0a1691af98c908f8fc778341a12b33274602fe1cde",
+      "bytes": 2891
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+      "bytes": 21375
+    },
+    {
+      "path": "REQUIREMENT_MAP.json",
+      "sha256": "16c2b017c53dae7b2b8bcd3f7b9e62dd798fa136e844db8a18103c5d93fe36fa",
+      "bytes": 8815
+    },
+    {
+      "path": "SOURCES.md",
+      "sha256": "7b4a2923868cc1594a8f2b3ab93e43525858bb85fafafa64a26742147534290c",
+      "bytes": 5920
+    },
+    {
+      "path": "VALIDATION.json",
+      "sha256": "c2f02c4075e72421bd348474fad17273d9c5758b017dad9bc9d3c59dd8019de3",
+      "bytes": 7914
+    }
+  ],
+  "scientific_tests": "NOT_EXECUTED",
+  "application_changes": "NONE",
+  "publication": "NOT_UPLOADED_BY_AUTHOR",
+  "manifest_self_hash": "Supplied separately in handback; no recursive self hash"
+}

@@ -1,0 +1,514 @@
+[
+  {
+    "upstream_task": "CORE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+    "finding": "Logical modules and useful positive slices; no new top-level H11 service",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §1,7; CONTRACTS",
+    "design_effect": "Domain proposals reuse accepted architecture",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Hard accepted; current documentary input, no runtime qualification"
+  },
+  {
+    "upstream_task": "CORE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+    "finding": "I01 full closure; I02 deletion/restore; I04 unknown replay; I05 resources; I06 four records/one-use; I07 domains",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS CR01–07",
+    "design_effect": "No offline bearer, finite-use remint, silent route change or receipt inflation",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Hard accepted via core-v1; full fresh contract read"
+  },
+  {
+    "upstream_task": "VISION-ARCH",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+    "finding": "Scoped PASS with VA01 before inference freeze and VA02 later input receipts",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §7; EXPERIMENTS final paragraph",
+    "design_effect": "Preserve lifecycle prerequisite without blocking no-model research",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Full independent review read; acceptance does not authorize code"
+  },
+  {
+    "upstream_task": "R04",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/REPORT.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+    "finding": "Independent two-user enrollment, selected capture/output, health freshness and native unknown tuple",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §1–2; PATHWAYS",
+    "design_effect": "Phone-first; missing health data does not establish incapacity",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Hard accepted; own prior authorship reused plus final targeted reread; independent review separate"
+  },
+  {
+    "upstream_task": "R04",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CONTRACTS.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "985b53bab11cc9b581e3242429f73be87d41b8d4b55de2069fe64b4317d0b7a2",
+    "finding": "Native grant visibility, audience/route checks and source-time continuity",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS CR01,05",
+    "design_effect": "Do not infer live measurement or route consent from OS/tool visibility",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Own full prior read with relevant final contract reread"
+  },
+  {
+    "upstream_task": "R04",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CAPABILITIES.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "c3663b8e72513feb50be22063a3da5964f20def7c34b3bf31a25e12fdb8489eb",
+    "finding": "Exact device/OS/entitlement constraints; no generic Watch/glasses SDK assumption",
+    "disposition": "REUSED",
+    "downstream_section": "PATHWAYS; P11-03",
+    "design_effect": "Native tuple must be verified separately; hardware not inventoried",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Accepted documentary capability comparison"
+  },
+  {
+    "upstream_task": "REVIEW-R04",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R04/REVIEW.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956",
+    "finding": "G1 native tuple; G2 access withdrawal; G3 output accounting; G4 path/inference; G5 rights/cost",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT gates; P11-03",
+    "design_effect": "Native/rights/cost gates remain despite author reuse",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Full independent review read"
+  },
+  {
+    "upstream_task": "R07",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/REPORT.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+    "finding": "Historical/inferred/observed layers; time/frame/lineage; no map-as-safe-route",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §2; CONTRACTS CR01",
+    "design_effect": "Keep old/conflicting locations useful but qualified",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Hard accepted; report read with targeted continuation for truncated sections"
+  },
+  {
+    "upstream_task": "R07",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONTRACTS.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+    "finding": "Spatial semantics, transform/map identity, correlated observations and tombstones",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS CR01,07",
+    "design_effect": "No floor/AMSL/current-position inference from unsupported mapping",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Relevant contract content read; accepted profile retained"
+  },
+  {
+    "upstream_task": "REVIEW-R07",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R07/REVIEW.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+    "finding": "L01 E07-B separately versioned; L02 adoption licenses/artifacts",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §7; P11-03",
+    "design_effect": "No pooling into R06 or transfer of unexecuted metrology",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Full independent review read"
+  },
+  {
+    "upstream_task": "R10",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/REPORT.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+    "finding": "Four links, EC120 unknown, ground-first output, M0–M6 and later S2",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §3,5; PATHWAYS",
+    "design_effect": "Help independent of aircraft and flight authority distinct",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Own prior authorship plus final relevant reread; hard accepted"
+  },
+  {
+    "upstream_task": "REVIEW-R10",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R10/REVIEW.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+    "finding": "Operational/schema/license/cost/jurisdiction gates",
+    "disposition": "REUSED",
+    "downstream_section": "PATHWAYS; P11-03",
+    "design_effect": "Vendor payload capability is not owned-carrier or mission qualification",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Full independent review read"
+  },
+  {
+    "upstream_task": "MM-AV",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/REPORT.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0",
+    "finding": "Critical-token uncertainty, original language, typed fallback and output-route boundary",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §2; C13–14,28–31",
+    "design_effect": "Media fixtures stay metadata until licensed modality qualification",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Soft accepted; relevant report sections and independent review read, no full fresh artifact audit"
+  },
+  {
+    "upstream_task": "REVIEW-MM-AV",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-AV/REVIEW.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025",
+    "finding": "Four output records, model/native distinction and original L01 ambiguity",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §2; EXPERIMENTS",
+    "design_effect": "No generic listening/ASR/native qualification",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Full review content inspected with targeted sections; original L01 superseded below"
+  },
+  {
+    "upstream_task": "REVIEW-MM-AV",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593",
+    "finding": "Material ASR override:12+12 families,6+6 strata,48 inclusive attempts,5/6 useful plus6/6 protected per route",
+    "disposition": "AMENDED",
+    "downstream_section": "REPORT §2; EXPERIMENTS",
+    "design_effect": "Do not copy old10/12 criterion or allocate hidden R11 model runs",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Full accepted addendum read; explicit supersession only for that study"
+  },
+  {
+    "upstream_task": "R12",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+    "finding": "O08 BPv7 application-agent receipt, RFC9713, exact ION license and E08 proposal",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §4; SOURCES S13–15; E11-B",
+    "design_effect": "Layered synthetic transport study; primary sources freshly verified",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Only O08 consumed; new E11-B is separate variant, not E08 execution"
+  },
+  {
+    "upstream_task": "REVIEW-R12",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R12/REVIEW.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+    "finding": "Documentary acceptance with source-index/exact-license conditions",
+    "disposition": "REUSED",
+    "downstream_section": "SOURCES; PATHWAYS rights",
+    "design_effect": "Exact ION implementation remains unselected; no empirical capability transfer",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Previously read review reused; MM-AV read-scope addendum retained"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "baseline/cumulative-v1.0/docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "017fa332017b2bf62ffcbc3c705448d103e4080d76ee3db6582cde1bb827857c",
+    "finding": "Three services, isolated guest resources, relay/ferry and honest message state",
+    "disposition": "AMENDED",
+    "downstream_section": "REPORT §3–4; CONTRACTS CR02–04",
+    "design_effect": "Preserve utility while replace flat message-state interpretation with CORE orthogonal observations",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Full original chapter read; four-record refinement, no deletion of target"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "baseline/cumulative-v1.0/docs/10_EMERGENCY_SUPPORT.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "919d25acd7183cfb9953f9b4c460ad4480c86355a8b8f77491fae2357bbf1a14",
+    "finding": "Independent help, private facts, kit readiness, ground output and professional gates",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §1,5; CR05–06",
+    "design_effect": "Ordinary help and readiness remain ahead of optional aircraft",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Full original chapter read"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+    "finding": "102 canonical requirements;15 direct H11 plus selected cross-domain obligations",
+    "disposition": "REUSED",
+    "downstream_section": "REQUIREMENT_MAP.json",
+    "design_effect": "Preserve exact ID/text/owner/AT arrays; no implementation claims",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Canonical JSON extracted; immutable recovered input"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+    "finding": "AT-COMMS01–08 andAT-EMERG01–07 exact setup/expected/status",
+    "disposition": "REUSED",
+    "downstream_section": "REQUIREMENT_MAP.json; EXPERIMENTS",
+    "design_effect": "All15 remain NOT_EXECUTED; mock/native classes separate",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Selected15 full records read"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/ACCEPTANCE_CATALOG.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "abb6deaf4d945c3f6daafc86d5107ac28a9953fcde5ea26c5430a536eb87e387",
+    "finding": "Human-readable same15 future acceptance cases",
+    "disposition": "REUSED",
+    "downstream_section": "EXPERIMENTS; REPORT acceptance",
+    "design_effect": "No reported native/physical pass from fixture checks",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Relevant15 sections read"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/EXPERIMENTS.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521",
+    "finding": "EX21 independent help;EX22 ground output;EX23 portal;EX24 relay;EX32 restore remainsH06",
+    "disposition": "REUSED",
+    "downstream_section": "EXPERIMENTS; REQUIREMENT_MAP",
+    "design_effect": "E11 variants preserve original symbols and ownership",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Relevant EX21–24/32 read; no equivalence claim"
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/baseline/PROJECT_ASTRA_Generation_0_Implementation_Validation_Plan.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771",
+    "finding": "M0–M6; later S2/T33–35 test policy,15second fixture, independent mock help",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT §5; CR05; C11–12",
+    "design_effect": "No real destination, diagnosis or incidental missed notification becomes dispatch",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Prior full reading reused plus fresh exact S2/T33–35 excerpts"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/state/ACCEPTED_INPUTS.json",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "b76218e20531d3e6e2e60dd74812e99ef601f88d1b0722f9995d75c939960e70",
+    "finding": "Supervisor accepted-input index at observed snapshot",
+    "disposition": "REUSED",
+    "downstream_section": "INPUT_RECEIPT; hard/soft selection",
+    "design_effect": "Select accepted composites with full retained reviews",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Mutable registry snapshot hash only; later changes do not alter consumed file pins"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": ".codex/agents/haven_researcher.toml",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "877878aedac04b2e8b599c0968de95d755abecc60032ad77a11b8585d9e09c6f",
+    "finding": "Actual role/path/research-only constraints",
+    "disposition": "REUSED",
+    "downstream_section": "All R11 files",
+    "design_effect": "Only R11 writes; no Git/apps/devices/children",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Exact role reread"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+    "finding": "Actual R11 task card governs when historical prompt unavailable",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT metadata",
+    "design_effect": "Perform current finite public research instead of fabricating missing prompt",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Exact R11 card read"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+    "finding": "24+ cases and actual modality separation",
+    "disposition": "REUSED",
+    "downstream_section": "C01–32; MODALITY.json",
+    "design_effect": "32 proposed cases and direct static-image smoke only",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Full earlier session reading and relevant current reread"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/VISION.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+    "finding": "Retained human-first full ambition with affordable first slices",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT; maturity; packages",
+    "design_effect": "Useful phone/ground baseline preserves later richer ambition",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Full earlier session reading reused"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+    "finding": "Public research/documentation authorization and exclusions",
+    "disposition": "REUSED",
+    "downstream_section": "All R11 work",
+    "design_effect": "No scope expansion into implementation or external action",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Read"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+    "finding": "Evidence/review/path ownership",
+    "disposition": "REUSED",
+    "downstream_section": "Handback and hashes",
+    "design_effect": "Independent review required; shared state not edited",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Read"
+  },
+  {
+    "upstream_task": "GOVERNANCE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/TEMPLATES.md",
+      "revision_kind": "WORKING_TREE_SNAPSHOT_AT_SUPERVISOR_REPORTED_BASE_NOT_PROVEN_COMMIT_MEMBER"
+    },
+    "artifact_sha256": "7296a0c3b73437cae992788eea49bc6de1f693dc2198147a38fb729861529ae2",
+    "finding": "Input-use, modality and handback/package fields",
+    "disposition": "REUSED",
+    "downstream_section": "Records and packages",
+    "design_effect": "Explicit not-executed and exact file pins",
+    "reason": "Preserve exact consumed evidence and limit downstream claims.",
+    "review_state": "Fresh full read"
+  }
+]

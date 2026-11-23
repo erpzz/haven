@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "experiment_id": "experiment-fixture01",
+  "owner_id": "H09",
+  "requirement_ids": [
+    "REQ-ENG-03"
+  ],
+  "hypothesis": "A repeatable holder reduces placement variation",
+  "baseline": "Current holder specification",
+  "independent_variable": "Holder geometry",
+  "outcome_metrics": [
+    "placement_error_mm",
+    "repeatability_mm"
+  ],
+  "ground_truth_method": "Future independently measured reference; not yet collected",
+  "max_trials": 10,
+  "stop_condition": "Budget reached, unsafe setup or no valid measurements",
+  "artifact_ids": [
+    "design-fixture01"
+  ],
+  "state": "PROPOSED_NOT_RUN",
+  "physical_permission": "NOT_GRANTED"
+}

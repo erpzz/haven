@@ -1,0 +1,96 @@
+{
+  "schema": "ri01.r15.handoff-manifest.v1",
+  "task": "R15",
+  "status": "DRAFT_READY_FOR_INDEPENDENT_REVIEW",
+  "author_native_handle": "/root/ri01_runtime_probe",
+  "repository": "https://github.com/erpzz/haven",
+  "base_commit": "376031e182c57495912baf6727093b0b188da568",
+  "campaign": "campaigns/RI-01/ri01-20260928T180322Z-6e8f",
+  "frozen_utc": "2026-09-29T01:02:54.0372106Z",
+  "hash_scope": "All14payload files below; manifest excludes its own hash. Root final receipt records manifest SHA256.",
+  "payload_count": 14,
+  "payload_bytes": 474370.0,
+  "hard_input_state": "CORE/R01-composite/R07/MM-FUSION independently accepted before freeze",
+  "mmf_manifest_sha256": "c5fd20410d718bea5a1e02141b53ef925cfec0948e7e73be0a1f0045142ce7a9",
+  "mmf_review_sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd",
+  "audit_composite": {
+    "manifest_sha256": "f29e746157d7d04f5c0c9cf38210872a84ace1351b5cc63b1600c1f70eb71a1a",
+    "correction": "research/R15/AUDIT_CORRECTIONS.md",
+    "review_state": "Full composite submitted to independent R15 reviewer",
+    "source_audit_sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74"
+  },
+  "core_delta": "NO_CORE_SEMANTIC_CHANGE",
+  "implementation": "AUTHORIZATION_REQUIRED; NOT_EXECUTED",
+  "payloads": [
+    {
+      "path": "research/R15/AUDIT_CORRECTIONS.md",
+      "bytes": 1323,
+      "sha256": "523e1e24632021f9afc892d479399d69b2959d5e2125aa260752855d6f9c3a09"
+    },
+    {
+      "path": "research/R15/CONTRACTS_AND_TRUST.md",
+      "bytes": 20293,
+      "sha256": "ac0359b10b2751094996ed8e10893c70f0b884afe698808b18306dd53f8ad522"
+    },
+    {
+      "path": "research/R15/EXPERIMENTS_AND_ROADMAP.md",
+      "bytes": 19113,
+      "sha256": "37ac2aca4c5b3fe3b52c185f0965e61be3cd4d73857f0b0c68e7303a636585dd"
+    },
+    {
+      "path": "research/R15/GEV_AUDIT.md",
+      "bytes": 8015,
+      "sha256": "80c38a048b9cc5b7f77dacb49782117a0a89dee749d4aeff8ad2d002d7464384"
+    },
+    {
+      "path": "research/R15/HANDOFF.md",
+      "bytes": 4469,
+      "sha256": "7a21cb42c21c81fcb7e6706527f6bd69284f23691cf7b8796239549dd2cd014e"
+    },
+    {
+      "path": "research/R15/INPUT_AUDIT.json",
+      "bytes": 97409,
+      "sha256": "3f319bb0a98be429f64c6a9ee4122aeb701237eedd0e4bca3776590857f09c9c"
+    },
+    {
+      "path": "research/R15/INPUT_USE.json",
+      "bytes": 31376,
+      "sha256": "1e45e269961cc6b14fd2b8e4048dfa5a14811f6a41b1d88e7adfb11356ea271b"
+    },
+    {
+      "path": "research/R15/INTEGRATION_SUMMARY.md",
+      "bytes": 5500,
+      "sha256": "b4a58e054c6304ed1c6fd7c83a2fe12eec89fb85fd516ec3ec53334b39b9bc12"
+    },
+    {
+      "path": "research/R15/MODALITY.json",
+      "bytes": 8998,
+      "sha256": "e84ea8ea9c0679088f1a618f77ff6b3a4db5e9f6e61afbac6d45abe31af45221"
+    },
+    {
+      "path": "research/R15/OBSERVATORY_DESIGN.md",
+      "bytes": 26122,
+      "sha256": "14b98b7cf16172a0fe6912d54c110190bcb9dde366935c955fd375a7d1fc2721"
+    },
+    {
+      "path": "research/R15/REQUIREMENT_MAP.json",
+      "bytes": 224341,
+      "sha256": "0b6313fdb57c53c0bcd39f2a7f97d094459f3f9b361bb84c4bba34463c5583a3"
+    },
+    {
+      "path": "research/R15/SOURCES_AND_COSTS.md",
+      "bytes": 17405,
+      "sha256": "b4631a6a7dc2c5b17c9bf86c77491c07f75d9246d54bd44263a021a1fa3a8d4f"
+    },
+    {
+      "path": "research/R15/THREAD_PROMPTS.md",
+      "bytes": 6686,
+      "sha256": "891baff4db2046676e7a8b63b3e0f75199761a659907426a46edf89e76f8cf95"
+    },
+    {
+      "path": "research/R15/VALIDATION.json",
+      "bytes": 3320,
+      "sha256": "24f93c4d3f8f663ac2f87f00b8e31c8da004f92e9a4f44504fa756d515fedc8f"
+    }
+  ]
+}

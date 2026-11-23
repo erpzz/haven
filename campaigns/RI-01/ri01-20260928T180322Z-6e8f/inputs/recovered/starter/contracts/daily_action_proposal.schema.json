@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:daily_action_proposal:1",
+  "title": "daily_action_proposal — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "action_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "principal_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "DRAFT_MESSAGE",
+        "PROPOSE_CALENDAR_EDIT",
+        "PROPOSE_REMINDER",
+        "READ_SCOPED_SOURCE"
+      ]
+    },
+    "resource_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recipient_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "payload_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "timezone": {
+      "type": "string",
+      "minLength": 1
+    },
+    "desired_local_time": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "state": {
+      "type": "string",
+      "const": "PROPOSED"
+    },
+    "execution_enabled": {
+      "type": "boolean",
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "action_id",
+    "principal_id",
+    "kind",
+    "resource_id",
+    "recipient_ids",
+    "payload_sha256",
+    "timezone",
+    "desired_local_time",
+    "state",
+    "execution_enabled"
+  ],
+  "additionalProperties": false
+}

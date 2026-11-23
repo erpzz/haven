@@ -1,0 +1,174 @@
+{
+  "task": "R11",
+  "variant": "R11-public-v1",
+  "revision": 1,
+  "author": "/root/ri01_privacy",
+  "recorded_at_utc": "2026-09-28T21:18:55.0354830Z",
+  "canonical_repository": "https://github.com/erpzz/haven",
+  "public_output_prefix": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/",
+  "reason": "Independent reviewer identified absolute local workspace identities in all 32 original source_ref.repo fields. Original packet was unpublished and remains frozen. Supervisor owns exclusion/publication.",
+  "transformation": {
+    "host_identity_policy": "No removed host identifier or absolute workspace path reproduced",
+    "other_input_record_field_differences": 0,
+    "public_input_use_sha256": "2ed564b989bf0665eb8e813b944939b5d392ecb3c9034ad260d3b49e55e8990c",
+    "format": "Raw textual field replacement; existing encoding and line endings preserved",
+    "operation": "Replace only each source_ref.repo JSON string value with canonical repository URL",
+    "original_input_use_sha256": "4017a394bf0030be6b215c8aaf4d5b6ddf3b98a95170ab903d5bcd66c1f7d308",
+    "replacement_count": 32
+  },
+  "source_identity_history": {
+    "meaning": "Hashes identify the frozen unpublished original, not a public navigation target. Original authoring scope and timestamps remain historical; current publication identity is this variant.",
+    "original_manifest_sha256": "ae2f3e7193e49db10e8fa6b707878428d0b2f9a84ed734923cbc14846773f7bb",
+    "original_files": [
+      {
+        "file": "CONSULTATIONS.md",
+        "sha256": "4fd627670707f130ab913dde9881faa430c98268bb5893424ce7e60c7dbe693a",
+        "bytes": 4279
+      },
+      {
+        "file": "CONTRACTS.md",
+        "sha256": "5295c4836f524748d25b0e76b06c7db6330c4c7c36ec82ac28f2a8a8f2101baa",
+        "bytes": 13340
+      },
+      {
+        "file": "EXPERIMENTS_AND_PACKAGES.md",
+        "sha256": "27b5239458f2fc644071bef9b060ac8fec834ff015f77c8a66a4938b4f991122",
+        "bytes": 16632
+      },
+      {
+        "file": "HANDOFF_MANIFEST.json",
+        "sha256": "ae2f3e7193e49db10e8fa6b707878428d0b2f9a84ed734923cbc14846773f7bb",
+        "bytes": 3297
+      },
+      {
+        "file": "HANDOFF.md",
+        "sha256": "e039b7c689e277765692b012119503cb7a974f273eba8dc91b48a1fc351585a9",
+        "bytes": 5455
+      },
+      {
+        "file": "INPUT_PIN_CHECKS.json",
+        "sha256": "17e3644c12ea9f42cc164c62030a4556fafd4471fd4aa4176b27dbde8522a9de",
+        "bytes": 3420
+      },
+      {
+        "file": "INPUT_RECEIPT.md",
+        "sha256": "6bea2fc7fb170a8b54fd4535269900ec80081cad9cd4c812410b915080ef0fb1",
+        "bytes": 2208
+      },
+      {
+        "file": "INPUT_USE.json",
+        "sha256": "4017a394bf0030be6b215c8aaf4d5b6ddf3b98a95170ab903d5bcd66c1f7d308",
+        "bytes": 30633
+      },
+      {
+        "file": "MODALITY.json",
+        "sha256": "318c2453b721c7d80f7f89253a0c5af520144071f18e1d71fdb830cf06f4efbc",
+        "bytes": 3470
+      },
+      {
+        "file": "PATHWAYS_AND_COSTS.md",
+        "sha256": "40060f058c9f47e49c7dae7a060b1d1922b0ab7487ace9aedb10efda72a4908b",
+        "bytes": 10046
+      },
+      {
+        "file": "REPORT.md",
+        "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+        "bytes": 17433
+      },
+      {
+        "file": "REQUIREMENT_MAP.json",
+        "sha256": "5e5d9c5fd97605ac7b3974be7d068a439dd8029f02ad405ab60d301defd2d0c8",
+        "bytes": 31754
+      },
+      {
+        "file": "SOURCES.md",
+        "sha256": "c2c2841312a204c59ebca8dd1edc13a6658cf6644c3bb2f62d28a1d05951b6bb",
+        "bytes": 9958
+      },
+      {
+        "file": "VALIDATION.json",
+        "sha256": "b9457e9aeca3ab8f4ef6749b3e5cb23e0b7254b9fad1a31f94cb62a138c62b51",
+        "bytes": 14524
+      }
+    ]
+  },
+  "retained_source_metadata": "Relative source paths, exact content hashes, commit context, findings, dispositions and read scopes are unchanged.",
+  "changed_from_original": [
+    "INPUT_USE.json",
+    "VALIDATION.json",
+    "HANDOFF_MANIFEST.json"
+  ],
+  "added": [
+    "REDACTION_RECEIPT.json"
+  ],
+  "byte_preserved_files": [
+    {
+      "file": "CONSULTATIONS.md",
+      "original_sha256": "4fd627670707f130ab913dde9881faa430c98268bb5893424ce7e60c7dbe693a",
+      "public_sha256": "4fd627670707f130ab913dde9881faa430c98268bb5893424ce7e60c7dbe693a",
+      "byte_identical": true
+    },
+    {
+      "file": "CONTRACTS.md",
+      "original_sha256": "5295c4836f524748d25b0e76b06c7db6330c4c7c36ec82ac28f2a8a8f2101baa",
+      "public_sha256": "5295c4836f524748d25b0e76b06c7db6330c4c7c36ec82ac28f2a8a8f2101baa",
+      "byte_identical": true
+    },
+    {
+      "file": "EXPERIMENTS_AND_PACKAGES.md",
+      "original_sha256": "27b5239458f2fc644071bef9b060ac8fec834ff015f77c8a66a4938b4f991122",
+      "public_sha256": "27b5239458f2fc644071bef9b060ac8fec834ff015f77c8a66a4938b4f991122",
+      "byte_identical": true
+    },
+    {
+      "file": "HANDOFF.md",
+      "original_sha256": "e039b7c689e277765692b012119503cb7a974f273eba8dc91b48a1fc351585a9",
+      "public_sha256": "e039b7c689e277765692b012119503cb7a974f273eba8dc91b48a1fc351585a9",
+      "byte_identical": true
+    },
+    {
+      "file": "INPUT_PIN_CHECKS.json",
+      "original_sha256": "17e3644c12ea9f42cc164c62030a4556fafd4471fd4aa4176b27dbde8522a9de",
+      "public_sha256": "17e3644c12ea9f42cc164c62030a4556fafd4471fd4aa4176b27dbde8522a9de",
+      "byte_identical": true
+    },
+    {
+      "file": "INPUT_RECEIPT.md",
+      "original_sha256": "6bea2fc7fb170a8b54fd4535269900ec80081cad9cd4c812410b915080ef0fb1",
+      "public_sha256": "6bea2fc7fb170a8b54fd4535269900ec80081cad9cd4c812410b915080ef0fb1",
+      "byte_identical": true
+    },
+    {
+      "file": "MODALITY.json",
+      "original_sha256": "318c2453b721c7d80f7f89253a0c5af520144071f18e1d71fdb830cf06f4efbc",
+      "public_sha256": "318c2453b721c7d80f7f89253a0c5af520144071f18e1d71fdb830cf06f4efbc",
+      "byte_identical": true
+    },
+    {
+      "file": "PATHWAYS_AND_COSTS.md",
+      "original_sha256": "40060f058c9f47e49c7dae7a060b1d1922b0ab7487ace9aedb10efda72a4908b",
+      "public_sha256": "40060f058c9f47e49c7dae7a060b1d1922b0ab7487ace9aedb10efda72a4908b",
+      "byte_identical": true
+    },
+    {
+      "file": "REPORT.md",
+      "original_sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+      "public_sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+      "byte_identical": true
+    },
+    {
+      "file": "REQUIREMENT_MAP.json",
+      "original_sha256": "5e5d9c5fd97605ac7b3974be7d068a439dd8029f02ad405ab60d301defd2d0c8",
+      "public_sha256": "5e5d9c5fd97605ac7b3974be7d068a439dd8029f02ad405ab60d301defd2d0c8",
+      "byte_identical": true
+    },
+    {
+      "file": "SOURCES.md",
+      "original_sha256": "c2c2841312a204c59ebca8dd1edc13a6658cf6644c3bb2f62d28a1d05951b6bb",
+      "public_sha256": "c2c2841312a204c59ebca8dd1edc13a6658cf6644c3bb2f62d28a1d05951b6bb",
+      "byte_identical": true
+    }
+  ],
+  "substantive_scope": "No new research, report rewriting, experimental scope change, implementation, acceptance or operational qualification.",
+  "validation_policy": "Original validation is explicitly historical; fresh public validation and manifest identify this corrected variant. Independent reviewer must check corrected bytes before acceptance."
+}

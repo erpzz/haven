@@ -1,0 +1,36 @@
+{
+  "task": "R05",
+  "recorded_at_utc": "2026-09-28T20:36:42.1228713Z",
+  "actual_checks": [
+    {
+      "hash_mismatches": 0,
+      "kind": "INPUT_USE JSON parse and pinned-source reread",
+      "records": 26,
+      "result": "PASS_DOCUMENT_CHECK"
+    },
+    {
+      "result": "PASS_DOCUMENT_CHECK",
+      "kind": "Proposed case row count",
+      "expected": 32,
+      "actual": 32
+    },
+    {
+      "result": "PASS_DOCUMENT_CHECK",
+      "kind": "Hard input CORE manifest pin",
+      "expected": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "actual": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2"
+    },
+    {
+      "result": "PASS_DOCUMENT_CHECK",
+      "kind": "Hard input R01 independent closure pin",
+      "expected": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
+      "actual": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032"
+    }
+  ],
+  "tests": "NOT_EXECUTED",
+  "application_code": "NO_APPLICATION_CODE_CHANGED",
+  "git": "NOT_RUN",
+  "private_accounts_devices": "NOT_ACCESSED",
+  "publication": "NOT_UPLOADED_BY_AUTHOR",
+  "owned_prefix": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05"
+}

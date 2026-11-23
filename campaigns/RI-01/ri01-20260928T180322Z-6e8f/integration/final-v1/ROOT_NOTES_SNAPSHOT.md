@@ -1,0 +1,49 @@
+# Root routing notes for final synthesis
+
+Status: integration guidance, not a replacement for independently reviewed source files. Prepared 2026-09-28 during the running campaign. Exact accepted revisions and their review scopes are in state/ACCEPTED_INPUTS.json; read full payload manifests and amendment closures. Never treat an original report as the complete accepted composite when its closure includes an amendment.
+
+## Scope and useful result
+
+RI-01 is public research, documentary integration and a proposed implementation queue. No product code, model install, device activation, private accounts, physical operation, deployment, main merge or new paid provider calls. Preserve all102REQ/AT,32EX,16vision anchors and5journeys using actual canonical files, not regenerated claims. Architecture acceptance is not experimental acceptance. Historical N1/N2 logs are historical; available source is not current M0/R1. Current M0/R1 code unavailable remains explicit.
+
+Final manager must write ARCHITECTURE, CONTRACT_CROSSWALK, DECISIONS, VISION_COVERAGE, MODALITY_MATRIX, MULTIMODAL, EVALUATION_PLAN, IMPLEMENTATION_QUEUE, RISKS_AND_DISSENT, SOURCE_USE_INDEX.json and DEPENDENCIES.json in a new final prefix, preserving core-v1. Include useful ordinary positive paths and ambitious research, not an endless authority checklist. Every future package is AUTHORIZATION_REQUIRED with owner, benefit, exact inputs, allowed paths, boundaries, prerequisites, tests, budget, stop, reviewer and ready coding prompt.
+
+## Retained cross-cutting dispositions
+
+- P01 composite: release authorization, consumed permit, append-only delivery history and current eligibility are distinct. Lost acknowledgement remains unknown even after revocation; historical receipts remain. P01-F05/VA01: independent lifecycle cleanup and exact adapter containment are prerequisites before inference pilot. Every repeat must satisfy its case disposition; repeated trials are not independent families.
+- R03 composite: GrantUseClaim charged once on committed release, no repeated quota debit at consumption, fresh authority vector required. Lost/unknown/abandoned output gives no automatic refund/remint. First finite profile ONE_RELEASE_ONE_DESTINATION_WHOLE_OUTPUT. Streams, multiple outputs/destinations and bounded recurring profiles need separately versioned authority semantics.
+- R01 composite: only authoritative positive no-dispatch evidence supports not-sent. Missing ACK is not proof of no delivery. Lookup errors preserve unknown request outcome and never silently auto-resend.
+- CORE has seven minimum interfaces, all twelve original proposed contracts retained through mapping. Full AuthorityVector, not audience-only fencing. Restored backups/history replay require current authority; deny tombstones are not proof of erasure. Linkable hashes/metadata are not blanket permission to retain personal audit data.
+- CODE-0 static gaps remain: parent-death cleanup lacks independent qualification, read-check differs from release/delivery fencing, quote matching differs from semantic grounding, raw context/rejected output/metadata retention, concurrency/crash/migration gaps. N2 arithmetic is not protected evaluation; role text is not OS isolation. Documentary contracts do not close code findings.
+
+## Exact experimental distinctions
+
+- R06 original E0 has60episodes:20initial/10tune/30heldout,16candidate views,60-second total task budget/8attempts. R07 E07-B deliberately proposes20/20/20 and8candidate views under same total episode/time/attempt totals. These are DIFFERENT protocols. Actual R07 author rationale: smaller catalogue reduces selector-fixture complexity; balanced split is new allocation, not demonstrated methodological improvement. Exact replication retains original R06 protocol; no pooled/equivalent result claim.
+- R08-P00 E01: overall SD across20paired remounts uses denominator19; within-session SD diagnostic only. Proposed10k paired bootstrap within fixed two sessions of10pairs each has9500th ratio endpoint. Before experiment freeze state conditional estimand, exchangeability/serial drift/reference uncertainty, interval suitability, frozen draws and baseline floor. No guaranteed95percent coverage or future operator/specimen generalization. R02 20percent alignment, R08 30percent SD, R06 20percent acquisitions and N2 synthetic arithmetic are separate claims. Physical metrology/tolerance acceptance unapproved.
+- MM-VISION MV-P1: two routes x24independent source groups=48first attempts; retries cannot expand inclusive cap. Route/retry allocation must freeze before outcomes. Anonymous tracks are not principals. No metric scale from an unqualified model. Dropped/unknown intervals and exact transformations survive downstream fusion.
+- MM-AV original LOW Q-MMAV-EVAL-01 denominator ambiguity has actual author clarification in consultations.jsonl and independent addendum requested. It is a MATERIAL versioned allocation/threshold amendment, not an equivalent editorial repair. Proposed first study only ASR: Whisper small/int8 CPU versus medium/int8 CPU through faster-whisper1.2.1/beam5;12dev+12heldout families, each6answerable+6protectednegative.48total inclusive both routes/splits, zero planned same-route repeats; all admitted/failed/partial/retry/tuning calls consume cap and may leave incomplete coverage. Proposed success>=5/6answerable heldout per route plus6/6protectednegative correct and zero escapes. Original10/12answerable threshold replaced explicitly. Video/omni/TTS separately versioned. Do not freeze until independent review result is consumed; no test executed.
+- R05 restart question Q-R05-01 is supervisor interpretation, not new CORE/R03 author assent: process restart with intact current DB may retain committed schedule facts, with fresh authority/time/lease checks for each occurrence. Backup/import/rollback goes new epoch review-only. If intact versus rolledback cannot be established, quarantine/reconcile. Each recurrence needs fresh release under a separately approved bounded recurring profile; no reuse of consumed one-use claim or retry unknown provider writes. R05 reviewer Q-R05-MAP-01 cross-device AT-DAILY-08 coverage concern remains pending actual author/review disposition; don't silently count account-switch tests as cross-device task resume.
+
+## Domain and source constraints
+
+R04: HealthKit read permission opaque; Settings withdrawal is not a reliable directly observed signal. Haven grant withdrawal fences its own authority immediately; imported history is separate. Watch haptics foreground/workout exception may interrupt heart-rate collection. Meta DAT1.0 experimental APIs not assumed publishable; camera/audio/display separate capabilities. Exact native tuple pending operator qualification. Useful selected image/private output path remains.
+
+R10: exact DJI model/SDK/firmware support must be established; broad current model list is not old tuple compatibility. Mini virtual-stick obstacle avoidance unqualified. EC120 unknown. Component prices not complete system cost; physical/legal/SDK rights gates retain. Gen0/S1/S2 and REQ/EX remain NOT_EXECUTED here.
+
+R12: missing card links for S21 inherited weights/S22 dataset/S23 RFC9713 must be explicitly mapped in final SOURCE_USE_INDEX, preserving original source. Qwen2.5-Omni3B research license and BF16/FA2 theory18.38/22.43/28.22GB15/30/60seconds, actual>=1.2times, are source examples not host measurements. A-Lab correction36/40confirmed4inconclusive, new-to-platform not necessarily new science. Neuromotor README CCBYNC4 differs original paper CCBYNCSA edition, exact checkpoint terms unknown.
+
+MM-VISION current candidates SAM2.1, RT-DETRv4, PP-OCRv6/Paddle3.7, Qwen2.5VL3B licensing differs Qwen3VL4B comparator. Exact historical M4 qwen2.5vl:3b remains, redistributed quantized rights unresolved. HTTP source fetch hashes refer decoded UTF8 text, not raw response bytes/model weight hashes.
+
+MM-AV: original assets/stream PTS/rational timebase/sample ranges/transforms/gaps remain; DTS separate. Clock uncertainty may preclude order. Audio does not establish unseen visual events. Separate capture/compute/playback/scheduling/physical stop. Pyannote Community1 gated download/contact/token not acquired, Piper GPL3 engine voice/data terms separate, Whisper MIT code/weights, Silero MIT, YAMNet exact artifact terms unresolved. No direct audio/video inspection was possible here.
+
+## Review provenance precision
+
+VISION-ARCH read scope addendum is in REVIEW-R07: guardian read all CORE plus REQ/AT, targeted P01/R03 load-bearing sections and32EX identity/owner links, not a fresh full review of every upstream body.
+
+R12 review read scope addendum is in REVIEW-MM-AV: reviewer rehashed same synthetic PNG and reused earlier REVIEW-R01 direct-image observation; did not newly view pixels in R12. Eleven hashed inputs received targeted content/prior-reading reuse, not a fresh full-body read of all inputs or fetch of all24external sources. Original verdict unchanged, but final provenance must not repeat the overbroad shorthand.
+
+Actual image inspection occurred on named synthetic PNGs and rendered eligible PDF pages. Web PDF screenshot calls that returned textual references did not produce inspected pixels. Audio/video tools unavailable; decoder binaries discovered but decoding not exercised. No listening, playback, waveform/physical qualification. Generation is not observation. Future Haven modalities remain distinct from tools exercised by these agents.
+
+## Pending path through final gate
+
+R09/R11/R14 and MM-FUSION/R15 must complete and independently pass documentary review before final synthesis. Root owns dispatch/state/Git, manager owns new final synthesis files, three separate final reviewers challenge the same frozen candidate. Preserve unresolved dissent and consequential operator decisions. One campaign PR; do not merge or begin implementation.

@@ -1,0 +1,73 @@
+{
+  "label": "TEST DOUBLE / NOT LIVE AI",
+  "n1_log": "logs/n1-20260928T032012Z-94d095.json",
+  "n2_log": "logs/n2-20260928T032102Z-341135.json",
+  "mapping": {
+    "N0 integrity and complete coverage": [
+      "logs/package-validator.json",
+      "logs/package-unit-tests.json",
+      "PRESERVATION_FINAL.json",
+      "REQUIREMENT_COVERAGE.json"
+    ],
+    "N1 private/shared and cross-user isolation": [
+      "test_private_shared_context_and_traceable_answer",
+      "test_cross_user_read_denied_without_presence_disclosure"
+    ],
+    "N1 grants and forged test principal": [
+      "test_revoked_grant_rechecked_before_selection",
+      "test_revoked_during_job_cannot_deliver",
+      "test_revocation_invalidates_cached_read_and_idempotent_replay",
+      "test_grant_owner_and_purpose_are_enforced",
+      "test_expired_grant_is_not_context",
+      "test_forged_actor_and_boundary_rejected"
+    ],
+    "N1 grounded evidence, source injection and forbidden authority": [
+      "test_invalid_evidence_reference_rejected",
+      "test_unsupported_fact_is_not_grounded_by_valid_id",
+      "test_source_injection_remains_quoted_data",
+      "test_model_cannot_request_private_data_permissions_or_tools",
+      "test_physical_emergency_printer_actions_denied",
+      "test_proposal_is_inert_and_cannot_be_enabled",
+      "test_empty_grounded_claims_cannot_be_success"
+    ],
+    "N1 timeouts/retries/zero budget": [
+      "test_real_timeout_is_bounded_and_never_success",
+      "test_retry_once_then_success_and_replay_does_not_retry",
+      "test_backend_failure_bounded_and_invalid_output_not_retried",
+      "test_zero_external_budget_and_hard_caps",
+      "test_output_and_context_size_caps",
+      "test_final_context_including_backend_metadata_obeys_budget"
+    ],
+    "N1 persistence/errors/isolation/read-only": [
+      "test_restart_and_separate_process_persistence",
+      "test_conflicting_request_reuse_never_changes_history",
+      "test_isolated_runs_and_m0_path_cannot_open",
+      "test_read_export_do_not_modify_database",
+      "test_connection_settings_version_and_database_errors",
+      "test_incomplete_job_returns_unknown_without_resume",
+      "test_initialization_checks_durability_before_schema_transaction"
+    ],
+    "N1 metadata and no live adapters": [
+      "test_metadata_classes_and_render_escape_preserved",
+      "test_fixture_metadata_strictness_regression",
+      "test_no_evidence_is_unavailable_and_no_backend_attempt",
+      "test_runner_has_no_adapter_import_or_provider_selector",
+      "test_executed_flow_under_network_and_shell_audit_denial"
+    ],
+    "N2 fixed metric, bounds, inputs, negatives and safe stop": [
+      "test_fixed_objective_expected_values_and_selection",
+      "test_negatives_rejections_and_original_inputs_retained",
+      "test_max_five_and_metric_cannot_change",
+      "test_no_improvement_stops",
+      "test_bad_dimensions_and_execution_fields_denied",
+      "test_provenance_and_metadata",
+      "test_design_identifiers_cannot_escape_artifact_directory"
+    ],
+    "N2 no promotion/fabrication; only after N1": [
+      "test_missing_rejected_and_mismatched_evaluation_never_accepted",
+      "test_even_passing_synthetic_check_cannot_fabricate_or_accept",
+      "test_n1_executed_gate_matches_source",
+      "test_n1_gate_rejects_failed_or_incomplete_evidence"
+    ]
+  }
+}

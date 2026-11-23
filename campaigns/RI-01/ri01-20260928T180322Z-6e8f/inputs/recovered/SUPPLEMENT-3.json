@@ -1,0 +1,14 @@
+{
+  "files": [
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/REDACTION_MANIFEST.json",
+      "path": "inputs/recovered/night01/REDACTION_MANIFEST.json",
+      "sha256": "a662d067ee7723b123ceb617bf6e529726787fd3bbd42e66747be5722e94aca0",
+      "bytes": 3211,
+      "status": "EXACT_BYTES_RECOVERED"
+    }
+  ],
+  "note": "Producer-authored explicit private-to-review hash mapping; preserves gate provenance without republishing private original paths. Independent audit required."
+}

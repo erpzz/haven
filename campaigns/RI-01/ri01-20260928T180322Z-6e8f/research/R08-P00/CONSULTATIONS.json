@@ -1,0 +1,39 @@
+{
+  "task": "R08-P00",
+  "actual_agent": "/root/ri01_runtime_probe",
+  "date_utc": "2026-09-28",
+  "records": [
+    {
+      "question_id": "Q-CORE-04",
+      "kind": "ACTUAL_PRIOR_REVIEWER_ANSWER_ROUTED_BY_ROOT",
+      "answering_agent": "/root/ri01_evidence",
+      "source_sha256": "01ed60d55591b3d4a2a03cafaf4c299d24c1c9f47d406d68bd3dd2bac6d02f03",
+      "answer": "C02 seconds budget to integer milliseconds only finite nonnegative exactly representable/rangechecked; reject sub-ms/overflow/NaN/Inf/UNKNOWN rather than round up. C07 clock uncertainty is distinct from UTC instant/duration. mm to m only declared length; uncertainty x1e-3, translation covariance x1e-6, translation-angle x1e-3; angles/quaternions/coverage factors separate. Reject ambiguous frame/datum/precision. R08 allocation references parent reservation/lease/attempt/revision; no second ledger.",
+      "limit": "Review advice, not schema-owner signoff; target numeric range and P00 subset owned by this author proposal.",
+      "effect": "CONTRACT_DELTA exact scalar, seconds and unsupported-pose profile."
+    },
+    {
+      "question_id": "Q-R08P00-R07-01",
+      "kind": "ACTUAL_AUTHOR_CONSULTATION",
+      "from_agent": "/root/ri01_runtime_probe",
+      "via": "/root",
+      "answering_agent": "/root/ri01_world",
+      "question": "Does scalar-only raw-mm/exact-m plus UNKNOWN-ineligible calibration/uncertainty and explicit fixture/frame/calibration revisions preserve R07 seam while full PoseMeasurement/covariance rejects UNSUPPORTED_PROFILE? What minimum invalidation metadata prevents reseating from implying sensor benefit?",
+      "answer": "Scalar-only preserves seam with dimension/frame axis/direction, raw value/unit and exact scale/offset/canonical m. Unknown calibration/uncertainty blocks promotion. Full pose unsupported; reseating cannot emit6DoF/RF-neutrality evidence. Minimum dependencies: fixture id/revision; enclosure id/revision/material/process/assembly; sensor/acquisition-profile/hardware/firmware; extrinsic/frame/map revision; calibration id/method/reference uncertainty/valid interval/reviewer state; environmental ranges/invalidation causes (moved/reseated/impact/temp/out-of-range/config); baseline enclosure state; separate held-out modality-specific sensor-effect ref. Unmeasured effect UNKNOWN; relevant change requires requalification.",
+      "review_scope": "Initial answer consumed REV-R06 Q-R08-01 but not exact R08 C07/M2/M3. Root later routed that R07 author read M2/M3/Q-R08-01 and agreed. Bounded author advice, not broader R08 independent review.",
+      "effect": "CONTRACT_DELTA invalidation; MEASUREMENT_PLAN sensor-effect separation."
+    },
+    {
+      "question_id": "Q-R08P00-H06-02",
+      "kind": "ACTUAL_QUESTION_PENDING_INDEPENDENT_REVIEW",
+      "from_agent": "/root/ri01_runtime_probe",
+      "via": "/root",
+      "question": "Keep original overall sample SD over20 paired remounts as primary; report within-session SD/drift;10,000 paired resamples within each fixed10-pair session, nearest-rank9500th ratio upper bound; missing pair/undefined ratio/unresolved reference uncertainty makes confirmation INCONCLUSIVE. Any methodological objection before review?",
+      "answer": null,
+      "root_routing": "All slots active; route load-bearing question to independent evidence/evaluation reviewer at handback. Preserve conditional population/estimand and unknown generalization across days/operators/apparatus. Quantile is proposed, not guaranteed coverage; no numeric threshold approval.",
+      "state": "PROPOSED_NOT_VALIDATED",
+      "effect": "Explicit prerequisite in MEASUREMENT_PLAN and NEXT_PACKAGE; no fabricated consultation acceptance."
+    }
+  ]
+}
+

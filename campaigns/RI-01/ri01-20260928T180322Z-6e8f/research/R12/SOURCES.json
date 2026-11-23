@@ -1,0 +1,247 @@
+{
+  "task": "R12",
+  "checked_date": "2026-09-28",
+  "verification": "Primary project/repository/paper/standard text only. Source claims remain author-reported. No source code, models or instruments executed. Mutable source byte hashes and commit IDs NOT_CAPTURED; exact selected revisions must be frozen before implementation.",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "OpenVLA-OFT project, paper and artifact links",
+      "url": "https://openvla-oft.github.io/",
+      "edition": "2025 / arXiv:2502.19645",
+      "supports": "O01 architecture/released research lead; author benchmark scope only",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S02",
+      "title": "OpenVLA-OFT repository",
+      "url": "https://github.com/moojink/openvla-oft",
+      "edition": "Mutable main README, accessed 2026-09-28",
+      "supports": "O01 MIT code declaration, inference/training resource profiles; exact checkpoint license still needs its own audit",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S03",
+      "title": "SAM 2 official repository",
+      "url": "https://github.com/facebookresearch/sam2",
+      "edition": "SAM 2.1 release 2024-09-30; predictor update 2024-12-11",
+      "supports": "O02 image/video segmentation, per-object predictor, code/checkpoint Apache-2.0 declaration; optional component terms differ",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S04",
+      "title": "VGGT official README",
+      "url": "https://raw.githubusercontent.com/facebookresearch/vggt/main/README.md",
+      "edition": "Current README accessed 2026-09-28; licensing update 2025-07-29",
+      "supports": "O03 camera convention, prediction outputs, code/checkpoint separation; VGGT-Omega May 2026 mention retained only as backlog",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S05",
+      "title": "VGGT exact custom license",
+      "url": "https://raw.githubusercontent.com/facebookresearch/vggt/main/LICENSE.txt",
+      "edition": "VGGT License version July 29, 2025",
+      "supports": "O03 software terms/use restrictions; not permission for an arbitrary checkpoint or physical deployment",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S06",
+      "title": "VGGT original paper",
+      "url": "https://arxiv.org/abs/2503.11651",
+      "edition": "arXiv:2503.11651 / CVPR 2025; exact PDF revision not frozen",
+      "supports": "O03 learned geometry paper; text/PDF available; figure rendering attempt did not expose image pixels in this tool path",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S07",
+      "title": "ActiveSplat author project",
+      "url": "https://li-yuetao.github.io/ActiveSplat/",
+      "edition": "arXiv:2410.21955; RA-L 2025",
+      "supports": "O04 Gaussian/visibility/topological active exploration; author-described simulation/robot evidence, no video watched",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S08",
+      "title": "ActiveSplat exact license",
+      "url": "https://raw.githubusercontent.com/Li-Yuetao/ActiveSplat/main/LICENSE",
+      "edition": "2025 copyright; mutable main accessed 2026-09-28",
+      "supports": "O04 MIT code; dataset and dependent model rights not implied",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S09",
+      "title": "Mini Differentiable RF Digital Twin author README",
+      "url": "https://raw.githubusercontent.com/Asixa/Mini-Differentiable-RF-Digital-Twin/main/README.md",
+      "edition": "Author citation MobiCom 2026 DOI 10.1145/3795866.3796686; mutable README",
+      "supports": "O05 minimal conceptual release, full simulator forthcoming, notebooks/backend/CUDA prerequisites; complete published performance not reproduced",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S10",
+      "title": "A-Lab original article, corrected edition",
+      "url": "https://www.nature.com/articles/s41586-023-06734-w",
+      "edition": "Original November 29, 2023; corrected 2026",
+      "supports": "O06 autonomous materials lab and linked component/data artifacts; no assumption all artifacts share article rights",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S11",
+      "title": "A-Lab author correction",
+      "url": "https://doi.org/10.1038/s41586-025-09992-y",
+      "edition": "January 19, 2026",
+      "supports": "O06 novelty correction, 36/40 confirmed and four inconclusive, training-contaminated compound removal; direct Nature cookie/error route supplemented by primary indexed correction text",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S12",
+      "title": "Text2CAD author repository",
+      "url": "https://github.com/SadilKhan/Text2CAD",
+      "edition": "NeurIPS 2024 / arXiv:2409.17106; v1 artifact links",
+      "supports": "O07 sequential sketch/extrusion representation and released code/model/data links",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S13",
+      "title": "Text2CAD exact repository license",
+      "url": "https://raw.githubusercontent.com/SadilKhan/Text2CAD/main/LICENSE",
+      "edition": "Community License, accessed 2026-09-28",
+      "supports": "O07 CC BY-NC-SA 4.0 repository terms; exact model checkpoint terms not separately established",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S14",
+      "title": "RFC 9171 Bundle Protocol version 7",
+      "url": "https://www.rfc-editor.org/rfc/rfc9171.html",
+      "edition": "January 2022; sections 4.3.1, 5.5, 5.7 and 6.1",
+      "supports": "O08 bundle lifetime/expiry and delivery to application agent, not processing; normative source",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S15",
+      "title": "NASA/JPL ION-DTN",
+      "url": "https://github.com/nasa-jpl/ION-DTN",
+      "edition": "Current branch inspected 2026-09-28; no immutable release selected",
+      "supports": "O08 available implementation; module maturity/platform qualification remains deployment-specific",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S16",
+      "title": "ION exact license",
+      "url": "https://raw.githubusercontent.com/nasa-jpl/ION-DTN/current/license.txt",
+      "edition": "2002-2011 copyright; current branch accessed 2026-09-28",
+      "supports": "O08 redistribution/attribution/non-endorsement conditions; software and RFC text rights separate",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S17",
+      "title": "A generic non-invasive neuromotor interface for human-computer interaction",
+      "url": "https://www.nature.com/articles/s41586-025-09255-w",
+      "edition": "July 23, 2025",
+      "supports": "O09 surface-EMG deliberate motor-interface experiments; data availability distinguishes released training users from evaluation users",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S18",
+      "title": "Generic neuromotor interface release referenced by primary paper",
+      "url": "https://raw.githubusercontent.com/facebookresearch/generic-neuromotor-interface-data/main/README.md",
+      "edition": "Current official README inspected 2026-09-28; differs from paper data-availability text",
+      "supports": "O09 current pretrained-checkpoint links, 80/10/10 participants per task, subsampling caveat and CC BY-NC 4.0 code/data declaration. This supersedes using paper-era availability as the current release description.",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S19",
+      "title": "Qwen2.5-Omni-3B exact model card",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-Omni-3B",
+      "edition": "3B card accessed September 28, 2026",
+      "supports": "O10 qwen-research license declaration, input/output modalities and author BF16 memory table, actual-use multiplier warning",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S20",
+      "title": "Qwen2.5-Omni official README",
+      "url": "https://raw.githubusercontent.com/QwenLM/Qwen2.5-Omni/main/README.md",
+      "edition": "arXiv:2503.20215 / 2025; mutable README",
+      "supports": "O10 architecture/runtime lead; not a rights grant for all code dependencies or guarantee of timing correctness",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S21",
+      "title": "Original OpenVLA repository",
+      "url": "https://github.com/openvla/openvla",
+      "edition": "Public README accessed 2026-09-28",
+      "supports": "O01 inherited Llama 2 weight-license caution; code and weights distinguished",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S22",
+      "title": "Text2CAD.v1 dataset card",
+      "url": "https://huggingface.co/datasets/SadilKhan/Text2CAD/blob/main/README.md",
+      "edition": "v1, accessed 2026-09-28",
+      "supports": "O07 dataset CC BY-NC-SA 4.0; does not resolve every upstream provenance question",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S23",
+      "title": "RFC 9713 BPv7 administrative records",
+      "url": "https://www.rfc-editor.org/rfc/rfc9713.html",
+      "edition": "January 2025",
+      "supports": "O08 update lead identified; no new implementation requirement inferred without profile review",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "See individual opportunity; reading does not confer artifact reuse rights"
+    },
+    {
+      "source_id": "S24",
+      "title": "Generic neuromotor interface current exact license",
+      "url": "https://raw.githubusercontent.com/facebookresearch/generic-neuromotor-interface-data/main/LICENSE",
+      "edition": "Current main inspected 2026-09-28",
+      "supports": "O09 CC BY-NC 4.0 current release terms; article-era CC BY-NC-SA is not silently substituted",
+      "inspection_mode": "DOCUMENTATION_ONLY",
+      "sha256": "NOT_CAPTURED_NO_BINARY_DOWNLOAD",
+      "rights_scope": "Current repository code/data scope; exact downloaded checkpoint rights require own verification"
+    }
+  ]
+}

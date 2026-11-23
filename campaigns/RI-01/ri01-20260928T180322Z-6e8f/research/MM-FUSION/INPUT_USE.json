@@ -1,0 +1,515 @@
+{
+  "schema": "ri01.input-use.v1",
+  "task": "MM-FUSION",
+  "repository": "https://github.com/erpzz/haven",
+  "frozen_utc": "2026-09-29T00:42:18Z",
+  "rows": [
+    {
+      "path": ".codex/agents/haven_sensor_fusion.toml",
+      "sha256": "8791b6088203e56f43c100645675a819cce6c57ae7adca93a4df2fa752e88713",
+      "read_scope": "Whole file",
+      "upstream_section": "Whole role profile",
+      "finding": "Typed multimodal fusion/output specialist; owned documentation only",
+      "downstream_section": "REPORT; all packet",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "read_scope": "Whole file retained prior reading; required sections reread",
+      "upstream_section": "A-F",
+      "finding": "Actual mode versus future architecture; minimum category coverage and useful image path",
+      "downstream_section": "MODALITY_REGISTRY; EVALUATION; MODALITY",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "read_scope": "Retained exact earlier reading, rehashed",
+      "upstream_section": "V01-V16; anti-drift",
+      "finding": "Multimodal ambition with affordable useful paths and original ownership",
+      "downstream_section": "REPORT; REQUIREMENT_MAP",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "MM-FUSION cross-cutting task; R15/R14/R07",
+      "finding": "Compose accepted modality outputs without replacing owners",
+      "downstream_section": "REPORT; DELTAS",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+      "read_scope": "Retained exact earlier reading, rehashed",
+      "upstream_section": "Bounded public research exclusions",
+      "finding": "No runtime/model/private/physical authority",
+      "downstream_section": "INPUT_RECEIPT; NEXT_PACKAGES",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+      "read_scope": "Retained exact earlier reading, rehashed",
+      "upstream_section": "Freeze; consultation; independent review",
+      "finding": "Actual replies and exact predecessor mapping",
+      "downstream_section": "CONSULTATIONS; INPUT_USE",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281",
+      "read_scope": "Retained exact earlier reading, rehashed",
+      "upstream_section": "Authority and RI exception",
+      "finding": "Only assigned paths; preserve originals; root publishes",
+      "downstream_section": "REPORT; INPUT_RECEIPT",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "sha256": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc",
+      "read_scope": "Retained exact earlier reading, rehashed",
+      "upstream_section": "Current assignment and preservation",
+      "finding": "No old source instruction launches work",
+      "downstream_section": "NEXT_PACKAGES",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "coordination/HANDBACK_METADATA.md",
+      "sha256": "27a8d0b5bc8aec1eeeb5c7fc178b7a977016e96aaf69f5f62f63a39a3731c3a7",
+      "read_scope": "Retained exact earlier reading, rehashed",
+      "upstream_section": "Handback metadata",
+      "finding": "Exact actual/proposed and review/publication distinctions",
+      "downstream_section": "REPORT; VALIDATION",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/ACCEPTED_INPUT_SNAPSHOT.json",
+      "sha256": "2f10a519b24e160d0e8a9547376d2d0d5810ed1f7a66ffa1c5fed660c1bd88e9",
+      "read_scope": "Read original state; snapshot is derived receipt",
+      "upstream_section": "Selected accepted task records",
+      "finding": "Frozen acceptance state plus explicit later R11 public closure",
+      "downstream_section": "INPUT_RECEIPT; INTEGRITY",
+      "decision": "ACCEPTED_SCOPED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "read_scope": "Manifest and all member hashes",
+      "upstream_section": "All10 payload members",
+      "finding": "Complete accepted CORE byte identity",
+      "downstream_section": "INTEGRITY; REPORT",
+      "decision": "ACCEPTED_IDENTITY",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "I01-I07 and spatial adapters",
+      "finding": "Full closure; four records; parent budgets; separate physical authority",
+      "downstream_section": "CONTRACTS F01-F08",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "read_scope": "Retained earlier relevant reading, rehashed",
+      "upstream_section": "Layering and existing owners",
+      "finding": "No new all-powerful fusion service",
+      "downstream_section": "REPORT MF-D4; DELTAS",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/DEPENDENCIES.json",
+      "sha256": "ee5830be9f29115f0ee41b9f596d303adf895a1ec37380d33e866cdfb80a6c52",
+      "read_scope": "Identity and source-preservation closure; full raw originals separately parsed",
+      "upstream_section": "retained_scope and ownership",
+      "finding": "102 REQ/AT and32 EX kept through owners",
+      "downstream_section": "REQUIREMENT_MAP",
+      "decision": "ACCEPTED_IDENTITY",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "VA01/VA02; source-preservation matrix; output semantics",
+      "finding": "Downstream research accepted; inference containment gate before pilot",
+      "downstream_section": "REPORT; NEXT_PACKAGES; EVALUATION",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/HANDOFF_MANIFEST.json",
+      "sha256": "2db5745bfc5626f38542b1b4608e63b00458b21f4a38c1b05f2437414cf9bfc8",
+      "read_scope": "Manifest/member hashes",
+      "upstream_section": "All12 payload members",
+      "finding": "Accepted exact packet",
+      "downstream_section": "INTEGRITY",
+      "decision": "ACCEPTED_IDENTITY",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONTRACTS.md",
+      "sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+      "read_scope": "Full contract retained prior authored/read version, rehashed",
+      "upstream_section": "CR-R07-01..04",
+      "finding": "Support/frame/covariance/time/correlation/lineage/current replay and separate motion",
+      "downstream_section": "CONTRACTS F01-F05,F08",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R07/REVIEW.md",
+      "sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+      "read_scope": "Relevant earlier review reading retained, rehashed",
+      "upstream_section": "L01/L02 and bounded acceptance",
+      "finding": "E07-B is separate20/20/20/eight variant; exact adoption gates",
+      "downstream_section": "EVALUATION upstream protocols; INPUT_RECEIPT",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/HANDOFF_MANIFEST.json",
+      "sha256": "8e9cdac5e012c2fa76cd27b29204158719cee95b2cc7d0663382d003d5b80703",
+      "read_scope": "Manifest/member hashes",
+      "upstream_section": "All13 payload members",
+      "finding": "Full accepted exact packet identity",
+      "downstream_section": "INTEGRITY",
+      "decision": "ACCEPTED_IDENTITY",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/CONTRACTS.md",
+      "sha256": "97a6a0ab83297bbe30905d0b22b4f45bd9caf1fb7092d8f98b4eb25a27268038",
+      "read_scope": "Relevant full contract reading retained, rehashed",
+      "upstream_section": "MV-C1-C4",
+      "finding": "Pixels/PTS/transform/correlation; anonymous track; metric/native exclusion",
+      "downstream_section": "CONTRACTS F01-F03,F08; registry M04-M08",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/REPORT.md",
+      "sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "MV01-MV05 and Acceptance",
+      "finding": "Useful image first; exact task route; unchanged M4",
+      "downstream_section": "REPORT D1-D3",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/SHORTLIST.md",
+      "sha256": "91cdf5de90a2f87bb53a4ccb604b5d2d015db15848be20ffd814833bf30cd13e",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "Operation choices; rights; economics",
+      "finding": "Task models/general escalation remain uninstalled candidates with separate licenses",
+      "downstream_section": "MODALITY_REGISTRY route comparison; SOURCES",
+      "decision": "ACCEPTED_DATED_RESEARCH",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/NEXT_PACKAGE.md",
+      "sha256": "7782c9f7d43a2df2c64682e9b81929cc9e3498715cb44ed5ec6b2f9ca469ece4",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "MV-P0/MV-P1",
+      "finding": "Two routes48 cap; visual/resource/artifact/containment gates",
+      "downstream_section": "NEXT_PACKAGES MF-P1; EVALUATION",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-VISION/REVIEW.md",
+      "sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "MV-G1..G5",
+      "finding": "No semantic utility from citation-only oracle; exact48 route denominator; native/metric unqualified",
+      "downstream_section": "EVALUATION upstream; NEXT_PACKAGES MF-P1",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/HANDOFF_MANIFEST.json",
+      "sha256": "1cb85927411aefaf3ba16a39e4b2465b53ee12dfd5f7d240da3112128d19cc64",
+      "read_scope": "Manifest/member hashes",
+      "upstream_section": "All13 payload members",
+      "finding": "Original accepted packet consumed with reviewer addendum",
+      "downstream_section": "INTEGRITY; INPUT_RECEIPT",
+      "decision": "ACCEPTED_COMPOSITE",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/CONTRACTS.md",
+      "sha256": "4a7d03dbc7bf164f0de2e1f6febf5bb91d6813b652c52c1bd5ae96dc39c95fd7",
+      "read_scope": "Full contracts read",
+      "upstream_section": "AV01-AV05 and errors",
+      "finding": "Samples/PTS/clock uncertainty; lexical versus acoustic; whole-output bytes and separate stops",
+      "downstream_section": "CONTRACTS F01-F06; registry M08-M11/O04",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/CANDIDATES.md",
+      "sha256": "6b618b483ef35043771d440cdb62c6c4c16d841a3e4962d58833be399049deb0",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "Task matrix and economics",
+      "finding": "ASR/DSP/diarization/TTS/omni licensing/host gaps distinct",
+      "downstream_section": "MODALITY_REGISTRY comparison; SOURCES",
+      "decision": "ACCEPTED_DATED_RESEARCH",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/NEXT_PACKAGE.md",
+      "sha256": "1f3dd480a89e31d529e92fe69b83ba799f62bfcfb4ebb7a435d0d0756986bbc2",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "P01/P02 and re-entry",
+      "finding": "Original broader pilot narrowed by material addendum; no hidden video/TTS allocation",
+      "downstream_section": "NEXT_PACKAGES MF-P2",
+      "decision": "AMENDED_BY_ADDENDUM1",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-AV/REVIEW.md",
+      "sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "Acceptance and temporal/output assessment",
+      "finding": "Original documentation only; no native qualification",
+      "downstream_section": "REPORT; CONTRACTS",
+      "decision": "ACCEPTED_COMPOSITE",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+      "sha256": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593",
+      "read_scope": "Whole file",
+      "upstream_section": "Whole material amendment",
+      "finding": "24families12dev12heldout,6positive6negative each;2routes48inclusive;5/6 and6/6 perroute",
+      "downstream_section": "EVALUATION upstream; NEXT_PACKAGES MF-P2",
+      "decision": "ACCEPTED_MATERIAL_OVERRIDE",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/HANDOFF_MANIFEST.json",
+      "sha256": "e99367a0d96ae3398b02821752c9256b705d6931050a9c7dfcca5ec10f25ac79",
+      "read_scope": "Manifest/member hashes",
+      "upstream_section": "All9 payload members",
+      "finding": "Accepted exact R14 identity",
+      "downstream_section": "INTEGRITY",
+      "decision": "ACCEPTED_IDENTITY",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/R14_HANDOFF.md",
+      "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "Decisions and relevant propositions",
+      "finding": "Finite deliberate intent/private cue rather than mind reading or clinical utility",
+      "downstream_section": "REPORT richer journey; registry M17/O05",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/EXPERIMENTS_AND_INTERFACES.md",
+      "sha256": "b556b10603d2a7de884fb1ea4c0f89880c3db676f3d8be282e48d92968129149",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "I01-I07; E01-E03/E07 accounting; actual R09 consultation",
+      "finding": "Intent not auth; cues not perception; exact signal/time/fit and independent controls",
+      "downstream_section": "CONTRACTS F01,F05,F06; EVALUATION",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R14/REVIEW.md",
+      "sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "E07 gate and ownership",
+      "finding": "Person/session families not independent people; exact checkpoint exposure and idle feasibility",
+      "downstream_section": "EVALUATION upstream; REPORT D6",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CONTRACT_DELTA.md",
+      "sha256": "642ea41d2a218ab018b62d1edc92e317c4edd72c972a80a258fd71d556f8045a",
+      "read_scope": "Relevant reading retained from R09, rehashed",
+      "upstream_section": "Inert scalar profile and invalidation",
+      "finding": "No full pose/force/sensor benefit from scalar repeatability",
+      "downstream_section": "CONTRACTS F02; MF25",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R08-P00/REVIEW.md",
+      "sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0",
+      "read_scope": "Relevant reading retained from R09, rehashed",
+      "upstream_section": "E01 method/estimand/uncertainty gates",
+      "finding": "Physical methods unresolved before E01 freeze",
+      "downstream_section": "REPORT D6; EVALUATION",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CONTRACTS.md",
+      "sha256": "985b53bab11cc9b581e3242429f73be87d41b8d4b55de2069fe64b4317d0b7a2",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "W01-W03",
+      "finding": "Exact native tuple and permission/withdrawal/capture state remain separate",
+      "downstream_section": "registry M16; CONTRACTS F05/F06",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/CONTRACTS.md",
+      "sha256": "854d05a470581289537df387a959c817cf9be6b05d46c0686f93a6f82aa948a1",
+      "read_scope": "Prior authored exact version retained, rehashed",
+      "upstream_section": "C01-C06",
+      "finding": "Task-qualified proposal, independent recovery and unknown physical exclusion",
+      "downstream_section": "CONTRACTS F05; DELTAS",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R09/REVIEW.md",
+      "sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "L01/L02 and accepted bounded scope",
+      "finding": "Canonical source gap accurately scoped; supplies variant-specific",
+      "downstream_section": "INPUT_RECEIPT; CONSULTATIONS",
+      "decision": "ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "baseline/cumulative-v1.0/docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "sha256": "0cab226c8382f240f6488fd33818ee8c4afd01fe9627e1beda2bd0222b824cae",
+      "read_scope": "Whole file read now; not consumed during R09",
+      "upstream_section": "Whole canonical chapter; B0-B6",
+      "finding": "Ground/bench useful roles, social scope, device-specific recovery and observed completion",
+      "downstream_section": "REPORT; CONTRACTS F05; REQUIREMENT_MAP",
+      "decision": "NEWLY_CONSUMED_FOR_MMF_ONLY",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/SOURCE_AUDIT.md",
+      "sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74",
+      "read_scope": "Targeted findings, not complete code audit",
+      "upstream_section": "A05,A06,A08,A09",
+      "finding": "Effects/cancellation; import presentation not grants; simulated/stylized layers; asset terms",
+      "downstream_section": "CONTRACTS F08; MF16/MF32/MF35",
+      "decision": "SOFT_PRELIMINARY_NOT_ACCEPTED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/HANDOFF_MANIFEST.json",
+      "sha256": "8c4f261598a01bb4971756f0d8fba0746425c10ebf4203721fb0b3c6268300ca",
+      "read_scope": "Manifest/member hash checks",
+      "upstream_section": "Public variant identity",
+      "finding": "Only independently closed public variant eligible",
+      "downstream_section": "INTEGRITY; INPUT_RECEIPT",
+      "decision": "ACCEPTED_PUBLIC_VARIANT_ONLY",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/REPORT.md",
+      "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "D11-02,D11-03,D11-06 and offline distinctions",
+      "finding": "Public utility remains; complete local verifier may work without Internet; receipt levels distinct",
+      "downstream_section": "CONTRACTS R11 clarification; REPORT; MF23/MF34",
+      "decision": "ACCEPTED_PUBLIC_VARIANT_ONLY",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R11/REVIEW.md",
+      "sha256": "14177bacc25927e6ac0969f3e5c52268ce31ddf80f95407a39e1907f92043602",
+      "read_scope": "Targeted relevant sections",
+      "upstream_section": "Substantive G1-G5 and CR04/CR07",
+      "finding": "Current closure/no private offline exception; transport not human;32cases unexecuted",
+      "downstream_section": "CONTRACTS clarification; SOURCES",
+      "decision": "ACCEPTED_WITH_CLOSURE1",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R11/CLOSURE-1.md",
+      "sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef",
+      "read_scope": "Whole closure read",
+      "upstream_section": "Whole public correction/acceptance scope",
+      "finding": "Public metadata repaired,11substantivefiles unchanged; original held",
+      "downstream_section": "INPUT_RECEIPT; INTEGRITY",
+      "decision": "ACCEPTED_PUBLIC_VARIANT_ONLY",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "read_scope": "Full array parsed and copied",
+      "upstream_section": "All102 rows",
+      "finding": "IDs/statements/owner/AT mapping preserved",
+      "downstream_section": "REQUIREMENT_MAP",
+      "decision": "ACCEPTED_UNCHANGED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "read_scope": "Full array parsed and copied",
+      "upstream_section": "All102 records",
+      "finding": "Original setup/expectations/status/owners untouched",
+      "downstream_section": "REQUIREMENT_MAP",
+      "decision": "ACCEPTED_UNCHANGED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "read_scope": "Full array parsed and copied",
+      "upstream_section": "All32 records",
+      "finding": "EX05/17/29/31/32 and all others preserve owners/status",
+      "downstream_section": "REQUIREMENT_MAP",
+      "decision": "ACCEPTED_UNCHANGED",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "read_scope": "DIRECT_IMAGE, no transform",
+      "upstream_section": "Whole240x120 still",
+      "finding": "Direct red square/blue circle/black diagonal inspection",
+      "downstream_section": "MODALITY",
+      "decision": "ACCEPTED_LIMITED_INSPECTION",
+      "reason": "Preserve exact predecessor scope and qualification limits; no execution or semantic upgrade"
+    },
+    {
+      "path": "baseline/cumulative-v1.0/agents/HANDOFF_TEMPLATE.md",
+      "sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+      "read_scope": "Whole file",
+      "upstream_section": "All required headings",
+      "finding": "Specialist handback structure and no self-qualification",
+      "downstream_section": "HANDOFF.md",
+      "decision": "ACCEPTED",
+      "reason": "Preserve required original handback headings"
+    }
+  ],
+  "source_gaps": {
+    "R11_private_original": "NOT_CONSUMED_NOT_FOR_PUBLICATION",
+    "R09_canonical_read": "Not consumed in R09; newly consumed here",
+    "runtime_native_evidence": "NOT_EXECUTED",
+    "original_R09_prompt": "SOURCE_UNAVAILABLE; not recreated"
+  },
+  "scope_note": "Full hard manifests verified; semantic reading is the explicit per-row scope, not every member"
+}

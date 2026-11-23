@@ -1,0 +1,132 @@
+{
+  "task": "MM-VISION",
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://raw.githubusercontent.com/facebookresearch/sam2/main/README.md",
+      "received_at": "2026-09-28T20:19:03.5700675Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 16249,
+      "sha256": "eea69ee1042fb30933c5ca5019fbf0f6f9366cec5e792109281b5023a4f1589c",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    },
+    {
+      "id": "S02",
+      "url": "https://raw.githubusercontent.com/lyuwenyu/RT-DETR/main/README.md",
+      "received_at": "2026-09-28T20:19:03.6855883Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 8247,
+      "sha256": "599e90b38354c7c5cb7f7f1679454fd0537a608b5feab5703210ba79353f30c9",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    },
+    {
+      "id": "S03",
+      "url": "https://raw.githubusercontent.com/RT-DETRs/RT-DETRv4/main/README.md",
+      "received_at": "2026-09-28T20:19:03.7800908Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 13592,
+      "sha256": "45a9811942cd4021030a419a5a172557a59968e5802cd96961330e8d68127742",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    },
+    {
+      "id": "S04",
+      "url": "https://raw.githubusercontent.com/IDEA-Research/GroundingDINO/main/README.md",
+      "received_at": "2026-09-28T20:19:03.8594868Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 19492,
+      "sha256": "d69cf3fd022661e6be19c56a421020f3ee9e027375020ef6a3def0149ddf9595",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    },
+    {
+      "id": "S05",
+      "url": "https://raw.githubusercontent.com/FoundationVision/ByteTrack/main/README.md",
+      "received_at": "2026-09-28T20:19:03.9389973Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 15448,
+      "sha256": "126d307a421e4421aa9d3917e7849d1cf63c95f7b36864e1ca92a9d1a451c247",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    },
+    {
+      "id": "S06",
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleOCR/main/README.md",
+      "received_at": "2026-09-28T20:19:04.1675591Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 25918,
+      "sha256": "63d76041f1dcb84e1dd141d45dc8dec5d86a3e357fe98bf8432ad2721c0ced90",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    },
+    {
+      "id": "S08",
+      "url": "https://raw.githubusercontent.com/DepthAnything/Depth-Anything-V2/main/README.md",
+      "received_at": "2026-09-28T20:19:04.2634656Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 9904,
+      "sha256": "987d1ab991c1b149276a0426bec7d8f3472d85c29ec976d96ea657aa960fad50",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    },
+    {
+      "id": "S10",
+      "url": "https://raw.githubusercontent.com/mlfoundations/open_clip/main/README.md",
+      "received_at": "2026-09-28T20:19:04.3914837Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 51339,
+      "sha256": "1161fd4bd0a9c5588eab7fd6d62023a1c04a7d175b772fccb30711c422efefaf",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    },
+    {
+      "id": "S11_CARD",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct/raw/main/README.md",
+      "received_at": "2026-09-28T20:19:04.4503686Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 18276,
+      "sha256": "0b6da5a154b923da4dc66e416140c9b7f235f9b08fbbcc27fd9df7b586e3150d",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    },
+    {
+      "id": "S11_LICENSE",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct/raw/main/LICENSE",
+      "received_at": "2026-09-28T20:19:04.4956665Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 7387,
+      "sha256": "b5c0e5cf74cf51af1ecbc4af597cfcd13fd9925611838884a681070838a14a50",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    },
+    {
+      "id": "S12",
+      "url": "https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct/raw/main/README.md",
+      "received_at": "2026-09-28T20:19:04.5407191Z",
+      "status": "FETCHED_TEXT",
+      "representation": "UTF8 encoding of decoded HTTP text content, not raw wire bytes",
+      "bytes": 7133,
+      "sha256": "a884e5e78f7d6f7bfe237f909dbc41a126542e259dc79d8ab33cc8980580ff79",
+      "retained_original": false,
+      "claim_use": "Fingerprint only; web.run independently supplied claim-reading text; no executable or weights fetched"
+    }
+  ],
+  "unhashed": [
+    "S07 official HTML docs",
+    "S09 official HTML tutorial",
+    "Supplementary code license pages read via web.run"
+  ],
+  "limit": "Mutable source response identities, not implementation artifact pins. No third-party source text redistributed."
+}

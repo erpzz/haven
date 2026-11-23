@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:physical_action_proposal:1",
+  "title": "physical_action_proposal — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "proposal_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "principal_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "FLIGHT",
+        "ROBOT",
+        "FABRICATION",
+        "RELAY"
+      ]
+    },
+    "logical_resource_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "template_or_skill_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "configuration_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "payload_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "requested_duration_seconds": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "state": {
+      "type": "string",
+      "const": "PROPOSED_NOT_AUTHORIZED"
+    },
+    "execution_enabled": {
+      "type": "boolean",
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "proposal_id",
+    "principal_id",
+    "domain",
+    "logical_resource_id",
+    "template_or_skill_id",
+    "configuration_revision",
+    "evidence_ids",
+    "payload_sha256",
+    "requested_duration_seconds",
+    "state",
+    "execution_enabled"
+  ],
+  "additionalProperties": false
+}

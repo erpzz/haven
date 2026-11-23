@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "artifact_id": "design-fixture01",
+  "experiment_id": "experiment-fixture01",
+  "artifact_type": "REQUIREMENT_SPEC",
+  "relative_path": "fixtures/designs/sensor_fixture_spec.json",
+  "sha256": "e5097349df3eafde93fb752333d7325eaa3708d092fb38b5f58db581aef1be54",
+  "unit": "mm",
+  "revision": 1,
+  "parent_artifact_ids": [],
+  "qualification_state": "UNQUALIFIED",
+  "material_profile": null,
+  "machine_profile": null
+}

@@ -1,0 +1,15 @@
+{
+  "checked_at_utc": "2026-09-28T18:56:15.7151566Z",
+  "checks": "Document integrity/structure only; no application tests",
+  "input_use_json_records": 25,
+  "input_file_hash_mismatches": 0,
+  "cr_disposition_rows": 15,
+  "proposed_case_families": 24,
+  "canonical_requirements_count": 102,
+  "application_tests": "NOT_EXECUTED",
+  "physical_tests": "NOT_EXECUTED",
+  "code_changed": "NO_APPLICATION_CODE_CHANGED",
+  "private_data_access": "NONE",
+  "publication": "NOT_UPLOADED_BY_CHILD",
+  "command_summary": "Get-FileHash; ConvertFrom-Json; document regex completeness checks"
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "name": "INPUT_RECEIPT.md",
+    "sha256": "853e32ebfe1890a35371e2d6d6a1d136198f60f6501d2ddbd55fe5b82ff1eac0",
+    "bytes": 1453
+  },
+  {
+    "name": "INPUT_USE.json",
+    "sha256": "355b5b220bfd1eb8d03a7cfc9dee045e91f09994c0fd801c2265d15ab224d17a",
+    "bytes": 16985
+  },
+  {
+    "name": "REPORT.md",
+    "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+    "bytes": 41526
+  },
+  {
+    "name": "SHA256SUMS.json",
+    "sha256": "504b9aed17e60faa81d35ce0ee2ea340b7731ce2bddd09fa1d6e28f8b20100be",
+    "bytes": 999
+  },
+  {
+    "name": "SOURCES.md",
+    "sha256": "b8e0dc7231080a32b2ca0eadbb7acd399444ea288400d8b3cfc550c3c1502859",
+    "bytes": 7271
+  },
+  {
+    "name": "VALIDATION.md",
+    "sha256": "20a3eb4cd665d7b4939e3508a75d8b83a99d8df886338edbf2b327123070210a",
+    "bytes": 2117
+  }
+]

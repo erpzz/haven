@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:spatial_estimate:1",
+  "title": "spatial_estimate \u2014 design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "estimate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "map_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_scope": {
+      "type": "string",
+      "enum": [
+        "PERSONAL_A",
+        "PERSONAL_B",
+        "HOUSEHOLD_SHARED",
+        "RESEARCH_SYNTHETIC"
+      ]
+    },
+    "frame_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "frame_calibration_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "unit": {
+      "type": "string",
+      "const": "m"
+    },
+    "origin": {
+      "type": "string",
+      "enum": [
+        "SIMULATED",
+        "PRERECORDED",
+        "MANUAL",
+        "LIVE_DEVICE"
+      ]
+    },
+    "estimate_kind": {
+      "type": "string",
+      "enum": [
+        "PRESENCE_REGION",
+        "POSITION",
+        "EDGE_SET",
+        "OCCUPANCY",
+        "SEMANTIC_HYPOTHESIS"
+      ]
+    },
+    "geometry": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 3,
+        "maxItems": 3
+      },
+      "minItems": 0
+    },
+    "uncertainty_kind": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "BOUNDS",
+        "COVARIANCE",
+        "CALIBRATED_REGION"
+      ]
+    },
+    "uncertainty_parameters": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 0
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "method_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_interval_start": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "observed_interval_end": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "supports_safe_route_claim": {
+      "type": "boolean",
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "estimate_id",
+    "map_revision",
+    "owner_scope",
+    "frame_id",
+    "frame_calibration_revision",
+    "unit",
+    "origin",
+    "estimate_kind",
+    "geometry",
+    "uncertainty_kind",
+    "uncertainty_parameters",
+    "evidence_ids",
+    "method_version",
+    "observed_interval_start",
+    "observed_interval_end",
+    "supports_safe_route_claim"
+  ],
+  "additionalProperties": false
+}

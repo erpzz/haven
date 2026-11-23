@@ -1,0 +1,61 @@
+{
+  "scope": "New report/log local paths and host identifiers redacted. Original supplied reference bytes/authorship retained. Runtime databases, credentials and keys excluded.",
+  "changed_files": [
+    {
+      "path": "outputs/MORNING_REPORT.md",
+      "local_sha256": "e9f4b274107ebd7c09577e83e96134ff4374cdd1a8580c0fab132b6fc4f7f052",
+      "review_sha256": "de88dc02093282333d4d5fa4d17133cf3e2d260d7f79949998be59fd2cbe08c7",
+      "reason": "local account path/host identifier redaction"
+    },
+    {
+      "path": "outputs/N1_GATE.json",
+      "local_sha256": "f2b62ee7cdb926032b6d846c6adb91f990179e94c06b71782ffe8c7113a63019",
+      "review_sha256": "d1e330280582a181a5a7750b24ff56b12ad9740b12a09d47e3adc1d9749da66c",
+      "reason": "local account path/host identifier redaction"
+    },
+    {
+      "path": "outputs/N1_GATE_INITIAL.json",
+      "local_sha256": "b0e55b33e7fd27b7bca14a8b85f5b1b2fec46cfa244060674750ed427834f353",
+      "review_sha256": "cffea842d61d30b68538752a888b0c53fc313d76c985996981e0ff5cfa20895f",
+      "reason": "local account path/host identifier redaction"
+    },
+    {
+      "path": "outputs/N1_GATE_PRE_DURABILITY_CHECK.json",
+      "local_sha256": "361ad36232e73cbd0cf8ba738cad1358d25b705c51245cba4ede1480b7c4a0e6",
+      "review_sha256": "180e847aad5e4b76001dc7d471ce07305fc2869e8e8895b116e1254f5fd69788",
+      "reason": "local account path/host identifier redaction"
+    },
+    {
+      "path": "outputs/N1_SAMPLE_RUN.json",
+      "local_sha256": "eee85c015611f6605b0358c497b0dfad04e3da1360860e834094256c29d3d315",
+      "review_sha256": "0a9c1b9d39aa0795f0569aca394aa480d80f0781acc5745d7e9bbd59522f485c",
+      "reason": "local account path/host identifier redaction"
+    },
+    {
+      "path": "outputs/PC_PREFLIGHT.md",
+      "local_sha256": "cb7bf1a7dae4b04e13ef170d0ceb884b7feda53772800b4d737257d8164c0fc9",
+      "review_sha256": "74f6e8113df0a8153d21149e4cdc485f881a25aa2f6a658e8b61ebaff031947c",
+      "reason": "local account path/host identifier redaction"
+    },
+    {
+      "path": "outputs/TRANSFER_VERIFICATION.json",
+      "local_sha256": "d8675dd5e8967dfad65015adddd3d7ac0fa93826c01a8d49f37fab883127f869",
+      "review_sha256": "580c01a3c9257067fa77247bd755d3ba3cddc2a813257a0f6758ff98a0c7912f",
+      "reason": "local account path/host identifier redaction"
+    },
+    {
+      "path": "outputs/logs/final-cli-and-n2.json",
+      "local_sha256": "0509d0a8fa1ad9c7c2945bf5b0922c82370c3fabc1e745e4b8d2ff42e9c9c6b3",
+      "review_sha256": "3014078cd9504fd1515f182ec8704fc4b4951e2328f214dc57dd77ff554f743d",
+      "reason": "local account path/host identifier redaction"
+    },
+    {
+      "path": "outputs/logs/n1-run-01.json",
+      "local_sha256": "f010246f667465fd682d110b3e48ecddcddec3f299eaed8b56a0cf75f2d0c65d",
+      "review_sha256": "38e8c2c0d4d0a76a59f9aa73d39dc8c7d0dbf762c15bc829a379cc6af87a98a1",
+      "reason": "local account path/host identifier redaction"
+    }
+  ],
+  "original_release_manifests": "Preserved byte-for-byte; unchanged files are referenced by their original hashes.",
+  "history_note": "Historical run hashes describe the original executed local evidence. Changed review copies are mapped above; redaction is not a rerun."
+}

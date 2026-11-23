@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "qualification_id": "qual-fixture01",
+  "logical_device_id": "mock-node",
+  "capability": "presence_estimation",
+  "hardware_revision": "no-physical-hardware",
+  "software_revision": "design-only",
+  "calibration_revision": null,
+  "source_ids": [
+    "R04"
+  ],
+  "test_result_ids": [],
+  "state": "DOCUMENTED_NOT_TESTED",
+  "real_world_execution_eligible": false
+}

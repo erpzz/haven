@@ -1,0 +1,22 @@
+{
+  "schema": "ri01.code-final.manifest.v1",
+  "reviewer": "/root/ri01_code_review",
+  "frozen_utc": "2026-09-29T01:29:04.5092757Z",
+  "candidate_commit_root_reported": "c087bf9c00cb9213dc3225852fb7385ba0eb9aef",
+  "candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+  "disposition": "PASS",
+  "scope": "Research candidate only; no application/runtime/physical acceptance or execution authority",
+  "payloads": [
+    {
+      "path": "reviews/CODE-FINAL/REVIEW.md",
+      "bytes": 18251,
+      "sha256": "e5b2d50843cfa9bcc265d07546c704d59b021da57a98f11f40da9f5e09d3dde9"
+    },
+    {
+      "path": "reviews/CODE-FINAL/CHECKS.json",
+      "bytes": 20973,
+      "sha256": "ba40e51f1aadcd9837b5baf5e18afe61d08223dcb58012b44937118d7856d1d0"
+    }
+  ],
+  "self_hash": "Excluded; root final receipt records it"
+}

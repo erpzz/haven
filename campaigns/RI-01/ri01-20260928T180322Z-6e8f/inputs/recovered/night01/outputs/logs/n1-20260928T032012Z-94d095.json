@@ -1,0 +1,304 @@
+{
+  "label": "TEST DOUBLE / NOT LIVE AI",
+  "scope": "SYNTHETIC_LAB_ONLY",
+  "suite": "n1",
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "run_checks.py",
+    "n1"
+  ],
+  "started_at": "2026-09-28T03:20:09.598435+00:00",
+  "ended_at": "2026-09-28T03:20:12.063220+00:00",
+  "exit_code": 0,
+  "tests_run": 33,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "tests": [
+    {
+      "id": "test_n1.N1Tests.test_backend_failure_bounded_and_invalid_output_not_retried",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:09.598518+00:00",
+      "ended_at": "2026-09-28T03:20:09.676214+00:00",
+      "elapsed_seconds": 0.077695,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_conflicting_request_reuse_never_changes_history",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:09.676269+00:00",
+      "ended_at": "2026-09-28T03:20:09.715804+00:00",
+      "elapsed_seconds": 0.039533,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_connection_settings_version_and_database_errors",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:09.715843+00:00",
+      "ended_at": "2026-09-28T03:20:10.264565+00:00",
+      "elapsed_seconds": 0.548722,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_cross_user_read_denied_without_presence_disclosure",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.264607+00:00",
+      "ended_at": "2026-09-28T03:20:10.302117+00:00",
+      "elapsed_seconds": 0.03751,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_empty_grounded_claims_cannot_be_success",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.302151+00:00",
+      "ended_at": "2026-09-28T03:20:10.360474+00:00",
+      "elapsed_seconds": 0.058323,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_executed_flow_under_network_and_shell_audit_denial",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.360516+00:00",
+      "ended_at": "2026-09-28T03:20:10.477143+00:00",
+      "elapsed_seconds": 0.116627,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_expired_grant_is_not_context",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.477171+00:00",
+      "ended_at": "2026-09-28T03:20:10.519728+00:00",
+      "elapsed_seconds": 0.042556,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_final_context_including_backend_metadata_obeys_budget",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.519768+00:00",
+      "ended_at": "2026-09-28T03:20:10.534932+00:00",
+      "elapsed_seconds": 0.015163,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_fixture_metadata_strictness_regression",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.534951+00:00",
+      "ended_at": "2026-09-28T03:20:10.548883+00:00",
+      "elapsed_seconds": 0.013933,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_forged_actor_and_boundary_rejected",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.548905+00:00",
+      "ended_at": "2026-09-28T03:20:10.562886+00:00",
+      "elapsed_seconds": 0.013981,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_grant_owner_and_purpose_are_enforced",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.562910+00:00",
+      "ended_at": "2026-09-28T03:20:10.604209+00:00",
+      "elapsed_seconds": 0.041299,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_incomplete_job_returns_unknown_without_resume",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.604251+00:00",
+      "ended_at": "2026-09-28T03:20:10.649750+00:00",
+      "elapsed_seconds": 0.045496,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_initialization_checks_durability_before_schema_transaction",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.649787+00:00",
+      "ended_at": "2026-09-28T03:20:10.694474+00:00",
+      "elapsed_seconds": 0.044687,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_invalid_evidence_reference_rejected",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.694499+00:00",
+      "ended_at": "2026-09-28T03:20:10.731223+00:00",
+      "elapsed_seconds": 0.036724,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_isolated_runs_and_m0_path_cannot_open",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.731262+00:00",
+      "ended_at": "2026-09-28T03:20:10.785919+00:00",
+      "elapsed_seconds": 0.054658,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_metadata_classes_and_render_escape_preserved",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.785956+00:00",
+      "ended_at": "2026-09-28T03:20:10.838857+00:00",
+      "elapsed_seconds": 0.052901,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_model_cannot_request_private_data_permissions_or_tools",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.838894+00:00",
+      "ended_at": "2026-09-28T03:20:10.939010+00:00",
+      "elapsed_seconds": 0.100117,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_no_evidence_is_unavailable_and_no_backend_attempt",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.939054+00:00",
+      "ended_at": "2026-09-28T03:20:10.960974+00:00",
+      "elapsed_seconds": 0.02192,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_output_and_context_size_caps",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.960997+00:00",
+      "ended_at": "2026-09-28T03:20:10.992964+00:00",
+      "elapsed_seconds": 0.031967,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_physical_emergency_printer_actions_denied",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:10.993053+00:00",
+      "ended_at": "2026-09-28T03:20:11.113164+00:00",
+      "elapsed_seconds": 0.120109,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_private_shared_context_and_traceable_answer",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.113255+00:00",
+      "ended_at": "2026-09-28T03:20:11.165316+00:00",
+      "elapsed_seconds": 0.052059,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_proposal_is_inert_and_cannot_be_enabled",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.165356+00:00",
+      "ended_at": "2026-09-28T03:20:11.220090+00:00",
+      "elapsed_seconds": 0.054733,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_read_export_do_not_modify_database",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.220133+00:00",
+      "ended_at": "2026-09-28T03:20:11.256454+00:00",
+      "elapsed_seconds": 0.036319,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_real_timeout_is_bounded_and_never_success",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.256504+00:00",
+      "ended_at": "2026-09-28T03:20:11.503364+00:00",
+      "elapsed_seconds": 0.246858,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_restart_and_separate_process_persistence",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.503410+00:00",
+      "ended_at": "2026-09-28T03:20:11.596450+00:00",
+      "elapsed_seconds": 0.09304,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_retry_once_then_success_and_replay_does_not_retry",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.596504+00:00",
+      "ended_at": "2026-09-28T03:20:11.753301+00:00",
+      "elapsed_seconds": 0.156794,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_revocation_invalidates_cached_read_and_idempotent_replay",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.753346+00:00",
+      "ended_at": "2026-09-28T03:20:11.794593+00:00",
+      "elapsed_seconds": 0.04125,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_revoked_during_job_cannot_deliver",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.794635+00:00",
+      "ended_at": "2026-09-28T03:20:11.834548+00:00",
+      "elapsed_seconds": 0.039914,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_revoked_grant_rechecked_before_selection",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.834588+00:00",
+      "ended_at": "2026-09-28T03:20:11.872470+00:00",
+      "elapsed_seconds": 0.037883,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_runner_has_no_adapter_import_or_provider_selector",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.872516+00:00",
+      "ended_at": "2026-09-28T03:20:11.957998+00:00",
+      "elapsed_seconds": 0.085481,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_source_injection_remains_quoted_data",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.958030+00:00",
+      "ended_at": "2026-09-28T03:20:11.995237+00:00",
+      "elapsed_seconds": 0.037207,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_unsupported_fact_is_not_grounded_by_valid_id",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:11.995282+00:00",
+      "ended_at": "2026-09-28T03:20:12.028953+00:00",
+      "elapsed_seconds": 0.033674,
+      "detail": null
+    },
+    {
+      "id": "test_n1.N1Tests.test_zero_external_budget_and_hard_caps",
+      "status": "EXECUTED_PASS",
+      "started_at": "2026-09-28T03:20:12.028999+00:00",
+      "ended_at": "2026-09-28T03:20:12.063088+00:00",
+      "elapsed_seconds": 0.034091,
+      "detail": null
+    }
+  ],
+  "log": "test_backend_failure_bounded_and_invalid_output_not_retried (test_n1.N1Tests.test_backend_failure_bounded_and_invalid_output_not_retried) ... ok\ntest_conflicting_request_reuse_never_changes_history (test_n1.N1Tests.test_conflicting_request_reuse_never_changes_history) ... ok\ntest_connection_settings_version_and_database_errors (test_n1.N1Tests.test_connection_settings_version_and_database_errors) ... ok\ntest_cross_user_read_denied_without_presence_disclosure (test_n1.N1Tests.test_cross_user_read_denied_without_presence_disclosure) ... ok\ntest_empty_grounded_claims_cannot_be_success (test_n1.N1Tests.test_empty_grounded_claims_cannot_be_success) ... ok\ntest_executed_flow_under_network_and_shell_audit_denial (test_n1.N1Tests.test_executed_flow_under_network_and_shell_audit_denial) ... ok\ntest_expired_grant_is_not_context (test_n1.N1Tests.test_expired_grant_is_not_context) ... ok\ntest_final_context_including_backend_metadata_obeys_budget (test_n1.N1Tests.test_final_context_including_backend_metadata_obeys_budget) ... ok\ntest_fixture_metadata_strictness_regression (test_n1.N1Tests.test_fixture_metadata_strictness_regression) ... ok\ntest_forged_actor_and_boundary_rejected (test_n1.N1Tests.test_forged_actor_and_boundary_rejected) ... ok\ntest_grant_owner_and_purpose_are_enforced (test_n1.N1Tests.test_grant_owner_and_purpose_are_enforced) ... ok\ntest_incomplete_job_returns_unknown_without_resume (test_n1.N1Tests.test_incomplete_job_returns_unknown_without_resume) ... ok\ntest_initialization_checks_durability_before_schema_transaction (test_n1.N1Tests.test_initialization_checks_durability_before_schema_transaction) ... ok\ntest_invalid_evidence_reference_rejected (test_n1.N1Tests.test_invalid_evidence_reference_rejected) ... ok\ntest_isolated_runs_and_m0_path_cannot_open (test_n1.N1Tests.test_isolated_runs_and_m0_path_cannot_open) ... ok\ntest_metadata_classes_and_render_escape_preserved (test_n1.N1Tests.test_metadata_classes_and_render_escape_preserved) ... ok\ntest_model_cannot_request_private_data_permissions_or_tools (test_n1.N1Tests.test_model_cannot_request_private_data_permissions_or_tools) ... ok\ntest_no_evidence_is_unavailable_and_no_backend_attempt (test_n1.N1Tests.test_no_evidence_is_unavailable_and_no_backend_attempt) ... ok\ntest_output_and_context_size_caps (test_n1.N1Tests.test_output_and_context_size_caps) ... ok\ntest_physical_emergency_printer_actions_denied (test_n1.N1Tests.test_physical_emergency_printer_actions_denied) ... ok\ntest_private_shared_context_and_traceable_answer (test_n1.N1Tests.test_private_shared_context_and_traceable_answer) ... ok\ntest_proposal_is_inert_and_cannot_be_enabled (test_n1.N1Tests.test_proposal_is_inert_and_cannot_be_enabled) ... ok\ntest_read_export_do_not_modify_database (test_n1.N1Tests.test_read_export_do_not_modify_database) ... ok\ntest_real_timeout_is_bounded_and_never_success (test_n1.N1Tests.test_real_timeout_is_bounded_and_never_success) ... ok\ntest_restart_and_separate_process_persistence (test_n1.N1Tests.test_restart_and_separate_process_persistence) ... ok\ntest_retry_once_then_success_and_replay_does_not_retry (test_n1.N1Tests.test_retry_once_then_success_and_replay_does_not_retry) ... ok\ntest_revocation_invalidates_cached_read_and_idempotent_replay (test_n1.N1Tests.test_revocation_invalidates_cached_read_and_idempotent_replay) ... ok\ntest_revoked_during_job_cannot_deliver (test_n1.N1Tests.test_revoked_during_job_cannot_deliver) ... ok\ntest_revoked_grant_rechecked_before_selection (test_n1.N1Tests.test_revoked_grant_rechecked_before_selection) ... ok\ntest_runner_has_no_adapter_import_or_provider_selector (test_n1.N1Tests.test_runner_has_no_adapter_import_or_provider_selector) ... ok\ntest_source_injection_remains_quoted_data (test_n1.N1Tests.test_source_injection_remains_quoted_data) ... ok\ntest_unsupported_fact_is_not_grounded_by_valid_id (test_n1.N1Tests.test_unsupported_fact_is_not_grounded_by_valid_id) ... ok\ntest_zero_external_budget_and_hard_caps (test_n1.N1Tests.test_zero_external_budget_and_hard_caps) ... ok\n\n----------------------------------------------------------------------\nRan 33 tests in 2.465s\n\nOK\n",
+  "source_sha256": {
+    "haven_lab/__init__.py": "16c4d5c0b3499ebaf385aa52b5edf573d50d57b8c8ff3f9104902763ab00b523",
+    "haven_lab/__main__.py": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+    "haven_lab/backend.py": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+    "haven_lab/cli.py": "9f72fe8ebd03e524711747ac2a1eb2bcff690197bfaa5f3631494eb621e19237",
+    "haven_lab/context.py": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+    "haven_lab/coordinator.py": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+    "haven_lab/design_check.py": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+    "haven_lab/notebook.py": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+    "haven_lab/render.py": "dae6b79597220dea72a661684b926d47d75f867ff738e36102bf0f3ccc05dd93",
+    "haven_lab/store.py": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+    "haven_lab/synthetic_score.py": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+    "haven_lab/types.py": "1830730ea641cc9d4b1997113816f293c12f40d5593b91da22f23058eb01b955",
+    "haven_lab/validation.py": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+    "tests/test_n1.py": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+    "tests/test_n2.py": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+    "fixtures/context.json": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+    "fixtures/engineering.json": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64"
+  }
+}

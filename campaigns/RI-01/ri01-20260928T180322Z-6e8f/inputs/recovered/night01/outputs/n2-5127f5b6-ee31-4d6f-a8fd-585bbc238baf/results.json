@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "label": "TEST DOUBLE / NOT LIVE AI",
+  "synthetic_objective_only": true,
+  "hypothesis": "A height closer to the fixed synthetic 40 mm target can lower the arithmetic score while satisfying the separately coded synthetic fit/aspect checks. This predicts no physical performance.",
+  "original_inputs": {
+    "schema_version": 1,
+    "label": "TEST DOUBLE / NOT LIVE AI",
+    "hypothesis": "A height closer to the fixed synthetic 40 mm target can lower the arithmetic score while satisfying the separately coded synthetic fit/aspect checks. This predicts no physical performance.",
+    "baseline": {
+      "artifact_id": "BASELINE",
+      "revision": 1,
+      "parent_artifact_ids": [],
+      "units": "mm",
+      "dimensions": {
+        "height_mm": 50,
+        "base_mm": 36,
+        "depth_mm": 24,
+        "thickness_mm": 4,
+        "slot_mm": 20
+      },
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false,
+      "synthetic": true,
+      "artifact_kind": "INERT_JSON_DIMENSIONS"
+    },
+    "candidates": [
+      {
+        "artifact_id": "CANDIDATE_1",
+        "revision": 2,
+        "parent_artifact_ids": [
+          "BASELINE"
+        ],
+        "units": "mm",
+        "dimensions": {
+          "height_mm": 45,
+          "base_mm": 32,
+          "depth_mm": 24,
+          "thickness_mm": 4,
+          "slot_mm": 20
+        },
+        "qualification_state": "UNQUALIFIED",
+        "fabrication_enabled": false,
+        "synthetic": true,
+        "artifact_kind": "INERT_JSON_DIMENSIONS"
+      },
+      {
+        "artifact_id": "CANDIDATE_2",
+        "revision": 3,
+        "parent_artifact_ids": [
+          "BASELINE"
+        ],
+        "units": "mm",
+        "dimensions": {
+          "height_mm": 40,
+          "base_mm": 16,
+          "depth_mm": 24,
+          "thickness_mm": 4,
+          "slot_mm": 20
+        },
+        "qualification_state": "UNQUALIFIED",
+        "fabrication_enabled": false,
+        "synthetic": true,
+        "artifact_kind": "INERT_JSON_DIMENSIONS"
+      },
+      {
+        "artifact_id": "CANDIDATE_3",
+        "revision": 4,
+        "parent_artifact_ids": [
+          "BASELINE"
+        ],
+        "units": "mm",
+        "dimensions": {
+          "height_mm": 40,
+          "base_mm": 26,
+          "depth_mm": 24,
+          "thickness_mm": 4,
+          "slot_mm": 20
+        },
+        "qualification_state": "UNQUALIFIED",
+        "fabrication_enabled": false,
+        "synthetic": true,
+        "artifact_kind": "INERT_JSON_DIMENSIONS"
+      },
+      {
+        "artifact_id": "CANDIDATE_4",
+        "revision": 5,
+        "parent_artifact_ids": [
+          "BASELINE"
+        ],
+        "units": "mm",
+        "dimensions": {
+          "height_mm": 40,
+          "base_mm": 30,
+          "depth_mm": 24,
+          "thickness_mm": 4,
+          "slot_mm": 20
+        },
+        "qualification_state": "UNQUALIFIED",
+        "fabrication_enabled": false,
+        "synthetic": true,
+        "artifact_kind": "INERT_JSON_DIMENSIONS"
+      },
+      {
+        "artifact_id": "CANDIDATE_5",
+        "revision": 6,
+        "parent_artifact_ids": [
+          "BASELINE"
+        ],
+        "units": "mm",
+        "dimensions": {
+          "height_mm": 55,
+          "base_mm": 40,
+          "depth_mm": 24,
+          "thickness_mm": 4,
+          "slot_mm": 20
+        },
+        "qualification_state": "UNQUALIFIED",
+        "fabrication_enabled": false,
+        "synthetic": true,
+        "artifact_kind": "INERT_JSON_DIMENSIONS"
+      }
+    ],
+    "max_iterations": 5,
+    "metric_version": "synthetic-fit-score-1"
+  },
+  "input_sha256": "2ce4564dffe0ca850d66d50e03d72043b70c3616a29170ff2898205f2a6a64c0",
+  "metric": {
+    "version": "synthetic-fit-score-1",
+    "formula": "abs(height_mm-40)+2*abs(slot_mm-20)+(base_mm*depth_mm*thickness_mm)/10000",
+    "direction": "MINIMIZE"
+  },
+  "checker": "synthetic-holdout-check-1",
+  "baseline": {
+    "design": {
+      "artifact_id": "BASELINE",
+      "revision": 1,
+      "parent_artifact_ids": [],
+      "units": "mm",
+      "dimensions": {
+        "height_mm": 50,
+        "base_mm": 36,
+        "depth_mm": 24,
+        "thickness_mm": 4,
+        "slot_mm": 20
+      },
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false,
+      "synthetic": true,
+      "artifact_kind": "INERT_JSON_DIMENSIONS"
+    },
+    "design_sha256": "e6163e51f1ae6089544a1f6db0f5a768cd476b825c8dae3dd99f29c610ac5221",
+    "score": 10.3456,
+    "evaluation": {
+      "checker": "synthetic-holdout-check-1",
+      "design_sha256": "e6163e51f1ae6089544a1f6db0f5a768cd476b825c8dae3dd99f29c610ac5221",
+      "status": "PASS",
+      "checks": {
+        "slot_fits": true,
+        "synthetic_aspect_ratio": true,
+        "synthetic_depth": true
+      },
+      "physical_measurement": false,
+      "qualification_state": "UNQUALIFIED"
+    }
+  },
+  "results": [
+    {
+      "design": {
+        "artifact_id": "CANDIDATE_1",
+        "revision": 2,
+        "parent_artifact_ids": [
+          "BASELINE"
+        ],
+        "units": "mm",
+        "dimensions": {
+          "height_mm": 45,
+          "base_mm": 32,
+          "depth_mm": 24,
+          "thickness_mm": 4,
+          "slot_mm": 20
+        },
+        "qualification_state": "UNQUALIFIED",
+        "fabrication_enabled": false,
+        "synthetic": true,
+        "artifact_kind": "INERT_JSON_DIMENSIONS"
+      },
+      "design_sha256": "598cd5f2c633015e6952cdb14165fe4b3eaed3a9fc07faff3666f2d98dadcd1a",
+      "score": 5.3072,
+      "delta_from_baseline": -5.0384,
+      "evaluation": {
+        "checker": "synthetic-holdout-check-1",
+        "design_sha256": "598cd5f2c633015e6952cdb14165fe4b3eaed3a9fc07faff3666f2d98dadcd1a",
+        "status": "PASS",
+        "checks": {
+          "slot_fits": true,
+          "synthetic_aspect_ratio": true,
+          "synthetic_depth": true
+        },
+        "physical_measurement": false,
+        "qualification_state": "UNQUALIFIED"
+      },
+      "outcome": "SYNTHETIC_IMPROVEMENT",
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false
+    },
+    {
+      "design": {
+        "artifact_id": "CANDIDATE_2",
+        "revision": 3,
+        "parent_artifact_ids": [
+          "BASELINE"
+        ],
+        "units": "mm",
+        "dimensions": {
+          "height_mm": 40,
+          "base_mm": 16,
+          "depth_mm": 24,
+          "thickness_mm": 4,
+          "slot_mm": 20
+        },
+        "qualification_state": "UNQUALIFIED",
+        "fabrication_enabled": false,
+        "synthetic": true,
+        "artifact_kind": "INERT_JSON_DIMENSIONS"
+      },
+      "design_sha256": "7ad2c9be9e9429c1bdf15bbc184e926941d23be4b2adbaae6fa89530ad5734d7",
+      "score": 0.1536,
+      "delta_from_baseline": -10.192,
+      "evaluation": {
+        "checker": "synthetic-holdout-check-1",
+        "design_sha256": "7ad2c9be9e9429c1bdf15bbc184e926941d23be4b2adbaae6fa89530ad5734d7",
+        "status": "REJECTED",
+        "checks": {
+          "slot_fits": false,
+          "synthetic_aspect_ratio": false,
+          "synthetic_depth": true
+        },
+        "physical_measurement": false,
+        "qualification_state": "UNQUALIFIED"
+      },
+      "outcome": "CHECK_REJECTED",
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false
+    },
+    {
+      "design": {
+        "artifact_id": "CANDIDATE_3",
+        "revision": 4,
+        "parent_artifact_ids": [
+          "BASELINE"
+        ],
+        "units": "mm",
+        "dimensions": {
+          "height_mm": 40,
+          "base_mm": 26,
+          "depth_mm": 24,
+          "thickness_mm": 4,
+          "slot_mm": 20
+        },
+        "qualification_state": "UNQUALIFIED",
+        "fabrication_enabled": false,
+        "synthetic": true,
+        "artifact_kind": "INERT_JSON_DIMENSIONS"
+      },
+      "design_sha256": "9af15c806027965a0ec21dbc9a40f020c05c52322ef2b8046bd19f2461f32da2",
+      "score": 0.2496,
+      "delta_from_baseline": -10.096,
+      "evaluation": {
+        "checker": "synthetic-holdout-check-1",
+        "design_sha256": "9af15c806027965a0ec21dbc9a40f020c05c52322ef2b8046bd19f2461f32da2",
+        "status": "REJECTED",
+        "checks": {
+          "slot_fits": true,
+          "synthetic_aspect_ratio": false,
+          "synthetic_depth": true
+        },
+        "physical_measurement": false,
+        "qualification_state": "UNQUALIFIED"
+      },
+      "outcome": "CHECK_REJECTED",
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false
+    },
+    {
+      "design": {
+        "artifact_id": "CANDIDATE_4",
+        "revision": 5,
+        "parent_artifact_ids": [
+          "BASELINE"
+        ],
+        "units": "mm",
+        "dimensions": {
+          "height_mm": 40,
+          "base_mm": 30,
+          "depth_mm": 24,
+          "thickness_mm": 4,
+          "slot_mm": 20
+        },
+        "qualification_state": "UNQUALIFIED",
+        "fabrication_enabled": false,
+        "synthetic": true,
+        "artifact_kind": "INERT_JSON_DIMENSIONS"
+      },
+      "design_sha256": "8414d26bf8bb19a00f83382b317bf4c325e65af0949812e0b2764daf028b0874",
+      "score": 0.288,
+      "delta_from_baseline": -10.0576,
+      "evaluation": {
+        "checker": "synthetic-holdout-check-1",
+        "design_sha256": "8414d26bf8bb19a00f83382b317bf4c325e65af0949812e0b2764daf028b0874",
+        "status": "PASS",
+        "checks": {
+          "slot_fits": true,
+          "synthetic_aspect_ratio": true,
+          "synthetic_depth": true
+        },
+        "physical_measurement": false,
+        "qualification_state": "UNQUALIFIED"
+      },
+      "outcome": "SYNTHETIC_IMPROVEMENT",
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false
+    },
+    {
+      "design": {
+        "artifact_id": "CANDIDATE_5",
+        "revision": 6,
+        "parent_artifact_ids": [
+          "BASELINE"
+        ],
+        "units": "mm",
+        "dimensions": {
+          "height_mm": 55,
+          "base_mm": 40,
+          "depth_mm": 24,
+          "thickness_mm": 4,
+          "slot_mm": 20
+        },
+        "qualification_state": "UNQUALIFIED",
+        "fabrication_enabled": false,
+        "synthetic": true,
+        "artifact_kind": "INERT_JSON_DIMENSIONS"
+      },
+      "design_sha256": "31aa6391864bad34319531d9b5d9a21d6db96c23aa5ad2a1936b5f6d6fdf9532",
+      "score": 15.384,
+      "delta_from_baseline": 5.0384,
+      "evaluation": {
+        "checker": "synthetic-holdout-check-1",
+        "design_sha256": "31aa6391864bad34319531d9b5d9a21d6db96c23aa5ad2a1936b5f6d6fdf9532",
+        "status": "PASS",
+        "checks": {
+          "slot_fits": true,
+          "synthetic_aspect_ratio": true,
+          "synthetic_depth": true
+        },
+        "physical_measurement": false,
+        "qualification_state": "UNQUALIFIED"
+      },
+      "outcome": "NO_IMPROVEMENT",
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false
+    }
+  ],
+  "iterations": 5,
+  "max_iterations": 5,
+  "decision": "PROPOSE_NEXT_FOR_REVIEW",
+  "next_candidate": "CANDIDATE_4",
+  "physical_measurements": 0,
+  "physical_permission": "NOT_GRANTED",
+  "fabrication_enabled": false,
+  "qualification_state": "UNQUALIFIED",
+  "limits": "Arithmetic fixture objective; not structural validation, physical performance, AI-discovered invention or autonomous engineering qualification.",
+  "run_id": "n2-5127f5b6-ee31-4d6f-a8fd-585bbc238baf",
+  "executed_at": "2026-09-28T03:10:47.930549+00:00",
+  "n1_gate_sha256": "361ad36232e73cbd0cf8ba738cad1358d25b705c51245cba4ede1480b7c4a0e6",
+  "source_sha256": {
+    "notebook.py": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+    "synthetic_score.py": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+    "design_check.py": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4"
+  }
+}

@@ -1,0 +1,2451 @@
+{
+  "task": "R02-P01",
+  "author_agent": "/root/ri01_runtime_probe",
+  "created_date": "2026-09-28",
+  "scope": "Exact historical subset mapping, not application execution or acceptance of original AT/EX",
+  "input_review": {
+    "path": "reviews/REV-R02/REVIEW.md",
+    "sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "bytes": 9182,
+    "locator": "F01-F06"
+  },
+  "source_register": [
+    {
+      "path": "inputs/recovered/night01/lab/CONTRACT_MAPPING.json",
+      "sha256": "7cfadceae9a30c8f56df7d13a872dbd836bf76c7f8aa81b6435eb42e5e5d6790",
+      "bytes": 2327
+    },
+    {
+      "path": "inputs/recovered/night01/lab/README.md",
+      "sha256": "1a9ac8ce41cef3cb3c13d0047ca26e8fd2fd642fd1d62c112203b221f287b847",
+      "bytes": 4925
+    },
+    {
+      "path": "inputs/recovered/night01/lab/requirements.txt",
+      "sha256": "64e075e72257bd94140f25d25b9ed05e0997323f50094293780f664b975930b9",
+      "bytes": 178
+    },
+    {
+      "path": "inputs/recovered/night01/lab/run_checks.py",
+      "sha256": "0046d02c4fcf90a3e4ecdf586180c2fc77b91bb1152940aa7ac64a3a6557e412",
+      "bytes": 3267
+    },
+    {
+      "path": "inputs/recovered/night01/lab/fixtures/context.json",
+      "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+      "bytes": 3976
+    },
+    {
+      "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+      "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+      "bytes": 3037
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/__init__.py",
+      "sha256": "16c4d5c0b3499ebaf385aa52b5edf573d50d57b8c8ff3f9104902763ab00b523",
+      "bytes": 127
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/__main__.py",
+      "sha256": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+      "bytes": 47
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/backend.py",
+      "sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+      "bytes": 2643
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/cli.py",
+      "sha256": "9f72fe8ebd03e524711747ac2a1eb2bcff690197bfaa5f3631494eb621e19237",
+      "bytes": 3009
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/context.py",
+      "sha256": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+      "bytes": 1227
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+      "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+      "bytes": 5970
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+      "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+      "bytes": 794
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+      "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+      "bytes": 10793
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/render.py",
+      "sha256": "dae6b79597220dea72a661684b926d47d75f867ff738e36102bf0f3ccc05dd93",
+      "bytes": 2054
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+      "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+      "bytes": 11897
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+      "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+      "bytes": 465
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/types.py",
+      "sha256": "1830730ea641cc9d4b1997113816f293c12f40d5593b91da22f23058eb01b955",
+      "bytes": 3182
+    },
+    {
+      "path": "inputs/recovered/night01/lab/haven_lab/validation.py",
+      "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+      "bytes": 2036
+    },
+    {
+      "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+      "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+      "bytes": 19763
+    },
+    {
+      "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+      "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+      "bytes": 4961
+    },
+    {
+      "path": "reviews/REV-R02/REVIEW.md",
+      "sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+      "bytes": 9182
+    },
+    {
+      "path": "reviews/EVIDENCE-0/REVIEW.md",
+      "sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d",
+      "bytes": 9770
+    },
+    {
+      "path": "inputs/recovered/PROVENANCE.json",
+      "sha256": "1d60bb74ab3e6de17274009a66d157b4a5edf59654f6e7ee6ea2dba0db3beb7d",
+      "bytes": 85713
+    },
+    {
+      "path": "inputs/recovered/SUPPLEMENT-1.json",
+      "sha256": "64856c4902836ef94e7f13235abd75c164f741f3b27f9e1988dc1f63a77e6811",
+      "bytes": 1248
+    },
+    {
+      "path": "inputs/recovered/SUPPLEMENT-2.json",
+      "sha256": "7e5f84fab9a6ef137e60db1ffa4f3fbe0e5c06686a90bd8cc1036812f5987a09",
+      "bytes": 4763
+    },
+    {
+      "path": "inputs/recovered/SUPPLEMENT-3.json",
+      "sha256": "abc7ccb96dd3e64d97f10263b44a3bf3e6b3febb363d71a51b9e233861f8d80e",
+      "bytes": 617
+    },
+    {
+      "path": "inputs/recovered/night01/REDACTION_MANIFEST.json",
+      "sha256": "a662d067ee7723b123ceb617bf6e529726787fd3bbd42e66747be5722e94aca0",
+      "bytes": 3211
+    },
+    {
+      "path": "inputs/recovered/night01/outputs/N1_GATE.json",
+      "sha256": "d1e330280582a181a5a7750b24ff56b12ad9740b12a09d47e3adc1d9749da66c",
+      "bytes": 1709
+    },
+    {
+      "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+      "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+      "bytes": 15847
+    },
+    {
+      "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+      "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+      "bytes": 6673
+    },
+    {
+      "path": "inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/results.json",
+      "sha256": "580cc97ba33a1f4c4a6ec3b1a0a0942e713b9175bc46771ca0a248d2846b6aa0",
+      "bytes": 11826
+    },
+    {
+      "path": "inputs/incoming/R02/ARTIFACT_CHECKS.json",
+      "sha256": "089d2a1171c1398e76a987b2e94178f7de115701a959f348475e9a24980ff9aa",
+      "bytes": 1353
+    },
+    {
+      "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+      "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+      "bytes": 20784
+    },
+    {
+      "path": "inputs/incoming/R02/CONTRACT_DESIGN.md",
+      "sha256": "9cc1ce4ce5d2d240b244513aa7680ba0015d86829216497877f3f90cd51856d7",
+      "bytes": 20850
+    },
+    {
+      "path": "inputs/incoming/R02/INPUT_AUDIT.json",
+      "sha256": "55dba1e5603f3e1aca31e6de40a64fcd5eb428fc7e080bf44012531f0ab5f4d7",
+      "bytes": 8633
+    },
+    {
+      "path": "inputs/incoming/R02/INTEGRATION_AND_PACKAGES.md",
+      "sha256": "f8da2b37bd1310b56aebc0887296c938b2a5e3586af5bed4bef4511c18d4471a",
+      "bytes": 11581
+    },
+    {
+      "path": "inputs/incoming/R02/INTEGRATION_SUMMARY.md",
+      "sha256": "fd271448a08ecaa8f8300b4d3e33fc1970c13db5e6be0a85db5c0b4bab7d02f1",
+      "bytes": 3574
+    },
+    {
+      "path": "inputs/incoming/R02/MANIFEST.sha256",
+      "sha256": "208216b9bcac32c9e658bbfb3279d625f4451c8f571e5916147aa15b55974cd0",
+      "bytes": 767
+    },
+    {
+      "path": "inputs/incoming/R02/PUBLICATION_RECEIPT.md",
+      "sha256": "600f21bd3befa6c2aec64116b25217a2ed9b3f822c333df05d020aef6aa256c2",
+      "bytes": 6021
+    },
+    {
+      "path": "inputs/incoming/R02/PUBLICATION_SOURCE_AUDIT.json",
+      "sha256": "b0f2a877d66ee9bf3df0d7ad6f3d90b97eeaf2e6664a80708285ea6726780225",
+      "bytes": 5243
+    },
+    {
+      "path": "inputs/incoming/R02/R02_HANDOFF.md",
+      "sha256": "c44552107a9e1130d4dd977d2130a1a81a9b6d8308fa939b27f352ad8b4f115f",
+      "bytes": 36835
+    },
+    {
+      "path": "inputs/incoming/R02/README.md",
+      "sha256": "1162aad578dc5109b2d6ca74ac16e93d3b5ab4f31002c37c81fececfacef01ae",
+      "bytes": 2408
+    },
+    {
+      "path": "inputs/incoming/R02/SOURCES.md",
+      "sha256": "05d2e874c971dc21952fecb0cbbee6d25051173e432382ed8f33ed9b0afa9afa",
+      "bytes": 16354
+    },
+    {
+      "path": "inputs/recovered/starter/scope/requirements.json",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "bytes": 54675
+    },
+    {
+      "path": "inputs/recovered/starter/tests/acceptance_catalog.json",
+      "sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "bytes": 90815
+    },
+    {
+      "path": "inputs/recovered/night01/outputs/REVIEW_FINDINGS.md",
+      "sha256": "be0b48a67523a38935fd55cc61967332774dbb53d52ec0c942cf26b1eeefdede",
+      "bytes": 2490
+    }
+  ],
+  "historical_log_checks": [
+    {
+      "suite": "n1",
+      "tests_run": 33,
+      "all_pass": true,
+      "source_count": 17,
+      "source_mismatches": 0,
+      "test_ids": [
+        "test_n1.N1Tests.test_backend_failure_bounded_and_invalid_output_not_retried",
+        "test_n1.N1Tests.test_conflicting_request_reuse_never_changes_history",
+        "test_n1.N1Tests.test_connection_settings_version_and_database_errors",
+        "test_n1.N1Tests.test_cross_user_read_denied_without_presence_disclosure",
+        "test_n1.N1Tests.test_empty_grounded_claims_cannot_be_success",
+        "test_n1.N1Tests.test_executed_flow_under_network_and_shell_audit_denial",
+        "test_n1.N1Tests.test_expired_grant_is_not_context",
+        "test_n1.N1Tests.test_final_context_including_backend_metadata_obeys_budget",
+        "test_n1.N1Tests.test_fixture_metadata_strictness_regression",
+        "test_n1.N1Tests.test_forged_actor_and_boundary_rejected",
+        "test_n1.N1Tests.test_grant_owner_and_purpose_are_enforced",
+        "test_n1.N1Tests.test_incomplete_job_returns_unknown_without_resume",
+        "test_n1.N1Tests.test_initialization_checks_durability_before_schema_transaction",
+        "test_n1.N1Tests.test_invalid_evidence_reference_rejected",
+        "test_n1.N1Tests.test_isolated_runs_and_m0_path_cannot_open",
+        "test_n1.N1Tests.test_metadata_classes_and_render_escape_preserved",
+        "test_n1.N1Tests.test_model_cannot_request_private_data_permissions_or_tools",
+        "test_n1.N1Tests.test_no_evidence_is_unavailable_and_no_backend_attempt",
+        "test_n1.N1Tests.test_output_and_context_size_caps",
+        "test_n1.N1Tests.test_physical_emergency_printer_actions_denied",
+        "test_n1.N1Tests.test_private_shared_context_and_traceable_answer",
+        "test_n1.N1Tests.test_proposal_is_inert_and_cannot_be_enabled",
+        "test_n1.N1Tests.test_read_export_do_not_modify_database",
+        "test_n1.N1Tests.test_real_timeout_is_bounded_and_never_success",
+        "test_n1.N1Tests.test_restart_and_separate_process_persistence",
+        "test_n1.N1Tests.test_retry_once_then_success_and_replay_does_not_retry",
+        "test_n1.N1Tests.test_revocation_invalidates_cached_read_and_idempotent_replay",
+        "test_n1.N1Tests.test_revoked_during_job_cannot_deliver",
+        "test_n1.N1Tests.test_revoked_grant_rechecked_before_selection",
+        "test_n1.N1Tests.test_runner_has_no_adapter_import_or_provider_selector",
+        "test_n1.N1Tests.test_source_injection_remains_quoted_data",
+        "test_n1.N1Tests.test_unsupported_fact_is_not_grounded_by_valid_id",
+        "test_n1.N1Tests.test_zero_external_budget_and_hard_caps"
+      ]
+    },
+    {
+      "suite": "n2",
+      "tests_run": 11,
+      "all_pass": true,
+      "source_count": 17,
+      "source_mismatches": 0,
+      "test_ids": [
+        "test_n2.N2Tests.test_bad_dimensions_and_execution_fields_denied",
+        "test_n2.N2Tests.test_design_identifiers_cannot_escape_artifact_directory",
+        "test_n2.N2Tests.test_even_passing_synthetic_check_cannot_fabricate_or_accept",
+        "test_n2.N2Tests.test_fixed_objective_expected_values_and_selection",
+        "test_n2.N2Tests.test_max_five_and_metric_cannot_change",
+        "test_n2.N2Tests.test_missing_rejected_and_mismatched_evaluation_never_accepted",
+        "test_n2.N2Tests.test_n1_executed_gate_matches_source",
+        "test_n2.N2Tests.test_n1_gate_rejects_failed_or_incomplete_evidence",
+        "test_n2.N2Tests.test_negatives_rejections_and_original_inputs_retained",
+        "test_n2.N2Tests.test_no_improvement_stops",
+        "test_n2.N2Tests.test_provenance_and_metadata"
+      ]
+    }
+  ],
+  "r02_cases": [
+    {
+      "r02_test_id": "R02-T01",
+      "boundary": "Wrong-user/private/shared/joint-source retrieval",
+      "original_mapping": [
+        "AT-PRIV-01",
+        "AT-PRIV-02",
+        "EX02"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [
+        "P01-N1-01",
+        "P01-N1-02",
+        "P01-N1-06",
+        "P01-N1-07",
+        "P01-N1-08",
+        "P01-N1-22"
+      ],
+      "precise_remaining_gap": "Injected fixture identities and single-owner grants only. No real authentication, multiple-subject consent lattice, private index side-channel proof or joint-source policy tests.",
+      "proposed_acceptance": "Construct joint A+B source requiring both grants; deny after either revision changes; distinguish owner/subject/audience; no existence leakage.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T01"
+      }
+    },
+    {
+      "r02_test_id": "R02-T02",
+      "boundary": "Correction/revocation across derivatives and restore",
+      "original_mapping": [
+        "AT-PRIV-04",
+        "AT-DAILY-06",
+        "EX32"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [
+        "P01-N1-03",
+        "P01-N1-04",
+        "P01-N1-05",
+        "P01-N1-20",
+        "P01-N1-23",
+        "P01-N1-24",
+        "P01-N1-33"
+      ],
+      "precise_remaining_gap": "Digest comparison detects changed source at read but no correction/CAS/delete/tombstone API, summary/embedding lineage, queued publication or restore replay. Reopening one DB is not restoring a stale backup. Rejected/revoked raw attempt output remains in coordinator.py63-66; README documents retained synthetic audit history. Withholding is not erasure.",
+      "proposed_acceptance": "Add source revision+dependency invalidation transaction and stale-snapshot/tombstone merge-before-serve case; distinguish retention receipt from actual third-party deletion.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T02"
+      }
+    },
+    {
+      "r02_test_id": "R02-T03",
+      "boundary": "No-model readiness/freshness/receipts",
+      "original_mapping": [
+        "AT-AI-01",
+        "AT-EMERG-07",
+        "EX29"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [
+        "P01-N1-27"
+      ],
+      "precise_remaining_gap": "No evidence returns unavailable without backend; no domain readiness snapshot, calibration expiry/UNKNOWN capture or receipt service. CURRENT_STATE label alone is not freshness evaluation.",
+      "proposed_acceptance": "Use injected clock and synthetic readiness profile; expired calibration remains unavailable with inference down; preserve independent reminders/recovery.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T03"
+      }
+    },
+    {
+      "r02_test_id": "R02-T04",
+      "boundary": "Routing and forbidden egress",
+      "original_mapping": [
+        "AT-AI-02",
+        "AT-AI-07",
+        "EX03"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [
+        "P01-N1-19",
+        "P01-N1-28",
+        "P01-N1-29",
+        "P01-N1-31"
+      ],
+      "precise_remaining_gap": "Empty allowlists and absent adapters are inert baseline, not tested multi-route router or OS isolation. Byte caps not token/media accounting.",
+      "proposed_acceptance": "Eligibility precedes cost; forbidden provider cannot receive any bytes; missing evidence cannot trigger stronger model; manifest deterministic omissions; actual adapter tokenization test after approval.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T04"
+      }
+    },
+    {
+      "r02_test_id": "R02-T05",
+      "boundary": "Atomic budget/retry/unknown billing/crash",
+      "original_mapping": [
+        "AT-AI-06",
+        "EX03"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [
+        "P01-N1-18"
+      ],
+      "precise_remaining_gap": "Zero-spend guard and two-attempt cap only; no monetary reservation, invoice, parent-child budget or crash recovery ledger.",
+      "proposed_acceptance": "Race two admissions against shared allowance; mark admitted before dispatch; timeout/restart/expiry retains exposure; duplicate settlement applies once; rate mismatch stops admission.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T05"
+      }
+    },
+    {
+      "r02_test_id": "R02-T06",
+      "boundary": "Cancel/fence/duplicate/unknown outcome",
+      "original_mapping": [
+        "AT-DAILY-09",
+        "AT-DRONE-06",
+        "EX32"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [
+        "P01-N1-13",
+        "P01-N1-14",
+        "P01-N1-15",
+        "P01-N1-16",
+        "P01-N1-17",
+        "P01-N1-21",
+        "P01-N1-25"
+      ],
+      "precise_remaining_gap": "No cancel API/epoch/lease or independently supervised parent-death stop. No external writes, so no actual digital/physical reconciliation. Manual RUNNING mutation not crash experiment. Child.start/send.close precede the cleanup try; startup/pipe failure needs coverage. read79-101 then cli52-56/render4-31 has a delayed-release window not exercised by the fresh-read test.",
+      "proposed_acceptance": "Actual coordinator-kill and stale worker tests under independent supervisor; publication suppression and compute stop separately observed; unknown effects never replay; mocked broker reconciliation only.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T06"
+      }
+    },
+    {
+      "r02_test_id": "R02-T07",
+      "boundary": "Two-user fairness/background contention",
+      "original_mapping": [
+        "AT-AI-05",
+        "EX03"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [],
+      "precise_remaining_gap": "No scheduler, resource lease, occupied-service-time ledger or concurrency fairness tests.",
+      "proposed_acceptance": "Deterministic two-user queue with controlled worker durations; one accelerator holder; bounded background quantum; no starvation; cancellation/control-plane independent of accelerator.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T07"
+      }
+    },
+    {
+      "r02_test_id": "R02-T08",
+      "boundary": "Framework hidden calls/context/tools",
+      "original_mapping": [
+        "AT-AI-04",
+        "EX04"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [
+        "P01-N1-11",
+        "P01-N1-12"
+      ],
+      "precise_remaining_gap": "Fixture injection/tool guards are real narrower tests; no Hermes/OpenClaw run or audit of background memory/review/scheduler/plugin calls.",
+      "proposed_acceptance": "Keep framework absent first; if later approved, exact config/tool digest and every auxiliary call counted, memory/skills/shell/browser/scheduler/delegation disabled and verified.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T08"
+      }
+    },
+    {
+      "r02_test_id": "R02-T09",
+      "boundary": "Vision/provenance/stale frames/injection",
+      "original_mapping": [
+        "AT-AI-07",
+        "AT-RF-07",
+        "AT-RF-08"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [
+        "P01-N1-09",
+        "P01-N1-10",
+        "P01-N1-26",
+        "P01-N1-30",
+        "P01-N1-32"
+      ],
+      "precise_remaining_gap": "Text fixture IDs/hash/category/render tests only; no image decoding, vision input, OCR, capture freshness or temporal frames. Exact quote equality not entailment.",
+      "proposed_acceptance": "Use licensed/synthetic selected images with region labels and UNKNOWN timestamps; trace original/crop hash; semantic relevance and wrong-object/occlusion/injection cases; no unseen-scene claim.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T09"
+      }
+    },
+    {
+      "r02_test_id": "R02-T10",
+      "boundary": "Speech/identity/audience/stops",
+      "original_mapping": [
+        "AT-AI-08",
+        "AT-DAILY-09",
+        "EX06"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [],
+      "precise_remaining_gap": "No audio fixtures, ASR/TTS, playback, recipient resolution, diarization or stop channels.",
+      "proposed_acceptance": "Separate stop playback/reasoning/schedule/domain recovery; ambiguous names/numbers/recipient requires clarification; authenticated device, never voice authentication; private-output audience recheck.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T10"
+      }
+    },
+    {
+      "r02_test_id": "R02-T11",
+      "boundary": "Provider conformance and drift",
+      "original_mapping": [
+        "AT-AI-09",
+        "EX03"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [],
+      "precise_remaining_gap": "ModelBackend protocol+fixture name/version only; no real provider protocol, normalized billing, refusals/media schemas or drift evaluation.",
+      "proposed_acceptance": "Freeze actual model/runtime/tokenizer/template/preprocessing/tool/dataset versions; unsupported feature fails closed; test aliases/usage categories/refusals/cancel and exact-schema support per route.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T11"
+      }
+    },
+    {
+      "r02_test_id": "R02-T12",
+      "boundary": "Finite engineering/independent acceptance",
+      "original_mapping": [
+        "AT-ENG-04",
+        "AT-ENG-09",
+        "EX28"
+      ],
+      "status": "NOT_EXECUTED_AS_SPECIFIED",
+      "mapped_subset_case_ids": [
+        "P01-N2-01",
+        "P01-N2-02",
+        "P01-N2-03",
+        "P01-N2-04",
+        "P01-N2-05",
+        "P01-N2-06",
+        "P01-N2-07",
+        "P01-N2-08",
+        "P01-N2-09",
+        "P01-N2-10",
+        "P01-N2-11"
+      ],
+      "precise_remaining_gap": "Five-candidate arithmetic and promotion denial evidenced; same writer authored evaluator; no physical measurements, independent metrology, held-out physical conditions or simultaneous household operation.",
+      "proposed_acceptance": "Retain fixed scores and rejected candidates; separate independent evaluator/dataset owner; simulation/replay first; later individually authorized measurements and fabrication; no safety claim.",
+      "new_execution": false,
+      "original_proposal_ref": {
+        "path": "inputs/incoming/R02/BENCHMARK_AND_EXPERIMENTS.md",
+        "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+        "bytes": 20784,
+        "commit": "d9bc23e848be9af44b6d07f9526f7badf7245b52",
+        "locator": "section7 R02-T12"
+      }
+    }
+  ],
+  "historical_assertions": [
+    {
+      "case_id": "P01-N1-01",
+      "r02_test_id": "R02-T01",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_private_shared_context_and_traceable_answer",
+        "line": 69,
+        "id": "test_n1.N1Tests.test_private_shared_context_and_traceable_answer"
+      },
+      "implementation": "context.py:build_context; store.py:permitted",
+      "assertion": "A_DECISION and SHARED_DECISION included; B_PRIVATE excluded for A; B sees exactly B_PRIVATE and SHARED_DECISION; claims count equals selected IDs; zero spend/actions",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "A_DECISION, SHARED_DECISION, B_PRIVATE"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_private_shared_context_and_traceable_answer]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/context.py",
+          "sha256": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+          "bytes": 1227,
+          "locator": "context.py:build_context; store.py:permitted"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "context.py:build_context; store.py:permitted"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-02",
+      "r02_test_id": "R02-T01",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_cross_user_read_denied_without_presence_disclosure",
+        "line": 81,
+        "id": "test_n1.N1Tests.test_cross_user_read_denied_without_presence_disclosure"
+      },
+      "implementation": "coordinator.py:read",
+      "assertion": "Both existing and unknown request IDs raise REQUEST_NOT_ACCESSIBLE for B",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "request(A), random UUID"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_cross_user_read_denied_without_presence_disclosure]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:read"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-03",
+      "r02_test_id": "R02-T02",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_revoked_grant_rechecked_before_selection",
+        "line": 87,
+        "id": "test_n1.N1Tests.test_revoked_grant_rechecked_before_selection"
+      },
+      "implementation": "store.py:revoke; context.py:build_context",
+      "assertion": "SHARED_DECISION absent after B revokes A's grant",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "SHARED_DECISION grant revision1"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_revoked_grant_rechecked_before_selection]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "store.py:revoke; context.py:build_context"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/context.py",
+          "sha256": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+          "bytes": 1227,
+          "locator": "store.py:revoke; context.py:build_context"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-04",
+      "r02_test_id": "R02-T02",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_revoked_during_job_cannot_deliver",
+        "line": 92,
+        "id": "test_n1.N1Tests.test_revoked_during_job_cannot_deliver"
+      },
+      "implementation": "coordinator.py:submit/read; store.py:context_still_permitted",
+      "assertion": "RevokingBackend makes WITHHELD, result/context null and durable request REJECTED",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "RevokingBackend"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_revoked_during_job_cannot_deliver]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:submit/read; store.py:context_still_permitted"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "coordinator.py:submit/read; store.py:context_still_permitted"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-05",
+      "r02_test_id": "R02-T02",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_revocation_invalidates_cached_read_and_idempotent_replay",
+        "line": 99,
+        "id": "test_n1.N1Tests.test_revocation_invalidates_cached_read_and_idempotent_replay"
+      },
+      "implementation": "coordinator.py:read/submit",
+      "assertion": "read and replay return WITHHELD/null; database bytes unchanged by those reads",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "completed request then revoked SHARED_DECISION"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_revocation_invalidates_cached_read_and_idempotent_replay]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:read/submit"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-06",
+      "r02_test_id": "R02-T01",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_grant_owner_and_purpose_are_enforced",
+        "line": 107,
+        "id": "test_n1.N1Tests.test_grant_owner_and_purpose_are_enforced"
+      },
+      "implementation": "store.py:revoke/access_revision",
+      "assertion": "A cannot revoke B-owned item; cloud.transmit grant does not enter assistant.context",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "SHARED_DECISION; SQL purpose mutation"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_grant_owner_and_purpose_are_enforced]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "store.py:revoke/access_revision"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-07",
+      "r02_test_id": "R02-T01",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_expired_grant_is_not_context",
+        "line": 114,
+        "id": "test_n1.N1Tests.test_expired_grant_is_not_context"
+      },
+      "implementation": "store.py:access_revision",
+      "assertion": "expired SHARED_DECISION excluded",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "expires_at changed to year2000"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_expired_grant_is_not_context]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "store.py:access_revision"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-08",
+      "r02_test_id": "R02-T01",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_forged_actor_and_boundary_rejected",
+        "line": 119,
+        "id": "test_n1.N1Tests.test_forged_actor_and_boundary_rejected"
+      },
+      "implementation": "types.py:TestPrincipal.check/check_request",
+      "assertion": "forged actor/boundary/unknown user/extra permissions denied; zero requests inserted",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "four principal/request mutations"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_forged_actor_and_boundary_rejected]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/types.py",
+          "sha256": "1830730ea641cc9d4b1997113816f293c12f40d5593b91da22f23058eb01b955",
+          "bytes": 3182,
+          "locator": "types.py:TestPrincipal.check/check_request"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-09",
+      "r02_test_id": "R02-T09",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_invalid_evidence_reference_rejected",
+        "line": 125,
+        "id": "test_n1.N1Tests.test_invalid_evidence_reference_rejected"
+      },
+      "implementation": "validation.py:validate_output",
+      "assertion": "B_PRIVATE claim yields REJECTED/EVIDENCE_NOT_SELECTED",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "MutatedBackend evidence_id"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_invalid_evidence_reference_rejected]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/validation.py",
+          "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+          "bytes": 2036,
+          "locator": "validation.py:validate_output"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-10",
+      "r02_test_id": "R02-T09",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_unsupported_fact_is_not_grounded_by_valid_id",
+        "line": 129,
+        "id": "test_n1.N1Tests.test_unsupported_fact_is_not_grounded_by_valid_id"
+      },
+      "implementation": "validation.py:validate_output",
+      "assertion": "changed quote yields UNGROUNDED_QUOTE/null; checks equality, not semantic entailment",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "MutatedBackend quote=Invented measurement"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_unsupported_fact_is_not_grounded_by_valid_id]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/validation.py",
+          "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+          "bytes": 2036,
+          "locator": "validation.py:validate_output"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-11",
+      "r02_test_id": "R02-T08",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_source_injection_remains_quoted_data",
+        "line": 133,
+        "id": "test_n1.N1Tests.test_source_injection_remains_quoted_data"
+      },
+      "implementation": "backend.py:FixtureQuoteBackend.generate; validation.py:validate_output",
+      "assertion": "injection text retained as quote; capabilities empty, tools0, proposal null, B_PRIVATE excluded",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "A_UNTRUSTED"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_source_injection_remains_quoted_data]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/backend.py",
+          "sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+          "bytes": 2643,
+          "locator": "backend.py:FixtureQuoteBackend.generate; validation.py:validate_output"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/validation.py",
+          "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+          "bytes": 2036,
+          "locator": "backend.py:FixtureQuoteBackend.generate; validation.py:validate_output"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-12",
+      "r02_test_id": "R02-T08",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_model_cannot_request_private_data_permissions_or_tools",
+        "line": 142,
+        "id": "test_n1.N1Tests.test_model_cannot_request_private_data_permissions_or_tools"
+      },
+      "implementation": "validation.py:validate_output",
+      "assertion": "extra private-data/permission/command/tools fields REJECTED with null result",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "four mutated outputs"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_model_cannot_request_private_data_permissions_or_tools]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/validation.py",
+          "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+          "bytes": 2036,
+          "locator": "validation.py:validate_output"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-13",
+      "r02_test_id": "R02-T06",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_physical_emergency_printer_actions_denied",
+        "line": 149,
+        "id": "test_n1.N1Tests.test_physical_emergency_printer_actions_denied"
+      },
+      "implementation": "types.py:check_request; validation.py:validate_output",
+      "assertion": "five consequential request kinds denied; mutated output kinds rejected",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "FLIGHT_EXECUTE, EMERGENCY_DISPATCH, PRINTER_START, OUTSIDE_CHECK, PRIVATE_DATA_REQUEST"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_physical_emergency_printer_actions_denied]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/types.py",
+          "sha256": "1830730ea641cc9d4b1997113816f293c12f40d5593b91da22f23058eb01b955",
+          "bytes": 3182,
+          "locator": "types.py:check_request; validation.py:validate_output"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/validation.py",
+          "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+          "bytes": 2036,
+          "locator": "types.py:check_request; validation.py:validate_output"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-14",
+      "r02_test_id": "R02-T06",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_proposal_is_inert_and_cannot_be_enabled",
+        "line": 156,
+        "id": "test_n1.N1Tests.test_proposal_is_inert_and_cannot_be_enabled"
+      },
+      "implementation": "validation.py:validate_output",
+      "assertion": "DRAFT_NOTE PROPOSAL_READY with execution_enabled false; true mutation rejected",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "DRAFT_NOTE"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_proposal_is_inert_and_cannot_be_enabled]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/validation.py",
+          "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+          "bytes": 2036,
+          "locator": "validation.py:validate_output"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-15",
+      "r02_test_id": "R02-T06",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_real_timeout_is_bounded_and_never_success",
+        "line": 162,
+        "id": "test_n1.N1Tests.test_real_timeout_is_bounded_and_never_success"
+      },
+      "implementation": "backend.py:bounded_call; coordinator.py:submit",
+      "assertion": "elapsed<2s; UNAVAILABLE, two TIMEOUT attempts, null result; active child PID set same as before",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "SlowBackend sleep0.3s; timeout0.05s"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_real_timeout_is_bounded_and_never_success]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/backend.py",
+          "sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+          "bytes": 2643,
+          "locator": "backend.py:bounded_call; coordinator.py:submit"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "backend.py:bounded_call; coordinator.py:submit"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-16",
+      "r02_test_id": "R02-T06",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_retry_once_then_success_and_replay_does_not_retry",
+        "line": 171,
+        "id": "test_n1.N1Tests.test_retry_once_then_success_and_replay_does_not_retry"
+      },
+      "implementation": "coordinator.py:submit",
+      "assertion": "first timeout then answer; calls2; idempotent replay leaves calls2",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "OnceSlowBackend"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_retry_once_then_success_and_replay_does_not_retry]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:submit"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-17",
+      "r02_test_id": "R02-T06",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_backend_failure_bounded_and_invalid_output_not_retried",
+        "line": 177,
+        "id": "test_n1.N1Tests.test_backend_failure_bounded_and_invalid_output_not_retried"
+      },
+      "implementation": "coordinator.py:submit",
+      "assertion": "exception gets two attempts/UNAVAILABLE; bad label one attempt/REJECTED",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "ErrorBackend; LIVE AI label mutation"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_backend_failure_bounded_and_invalid_output_not_retried]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:submit"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-18",
+      "r02_test_id": "R02-T05",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_zero_external_budget_and_hard_caps",
+        "line": 183,
+        "id": "test_n1.N1Tests.test_zero_external_budget_and_hard_caps"
+      },
+      "implementation": "types.py:Budget.check; validation.py:validate_output",
+      "assertion": "positive/NaN spend, tools, >2 or bool attempts, infinite timeout denied; output spend1 rejected",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "Budget mutations; MutatedBackend"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_zero_external_budget_and_hard_caps]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/types.py",
+          "sha256": "1830730ea641cc9d4b1997113816f293c12f40d5593b91da22f23058eb01b955",
+          "bytes": 3182,
+          "locator": "types.py:Budget.check; validation.py:validate_output"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/validation.py",
+          "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+          "bytes": 2036,
+          "locator": "types.py:Budget.check; validation.py:validate_output"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-19",
+      "r02_test_id": "R02-T04",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_output_and_context_size_caps",
+        "line": 190,
+        "id": "test_n1.N1Tests.test_output_and_context_size_caps"
+      },
+      "implementation": "backend.py:_child; context.py:build_context",
+      "assertion": "40k extra output -> OUTPUT_BUDGET/UNAVAILABLE; context256byte budget denied",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "oversized output and context"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_output_and_context_size_caps]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/backend.py",
+          "sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+          "bytes": 2643,
+          "locator": "backend.py:_child; context.py:build_context"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/context.py",
+          "sha256": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+          "bytes": 1227,
+          "locator": "backend.py:_child; context.py:build_context"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-20",
+      "r02_test_id": "R02-T02",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_restart_and_separate_process_persistence",
+        "line": 195,
+        "id": "test_n1.N1Tests.test_restart_and_separate_process_persistence"
+      },
+      "implementation": "coordinator.py:read; store.py:Ledger.connect",
+      "assertion": "reopened Coordinator output identical; separate export process exit0 and JSON identical",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "same run/request"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_restart_and_separate_process_persistence]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:read; store.py:Ledger.connect"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "coordinator.py:read; store.py:Ledger.connect"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-21",
+      "r02_test_id": "R02-T06",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_conflicting_request_reuse_never_changes_history",
+        "line": 204,
+        "id": "test_n1.N1Tests.test_conflicting_request_reuse_never_changes_history"
+      },
+      "implementation": "coordinator.py:submit",
+      "assertion": "same ID/different question conflicts; DB unchanged; identical request returns original",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "request question mutation"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_conflicting_request_reuse_never_changes_history]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:submit"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-22",
+      "r02_test_id": "R02-T01",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_isolated_runs_and_m0_path_cannot_open",
+        "line": 210,
+        "id": "test_n1.N1Tests.test_isolated_runs_and_m0_path_cannot_open"
+      },
+      "implementation": "store.py:Ledger.__init__",
+      "assertion": "separate run paths; request inaccessible in other run; project-astra path denied",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "second lab run; constructed M0 path"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_isolated_runs_and_m0_path_cannot_open]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "store.py:Ledger.__init__"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-23",
+      "r02_test_id": "R02-T02",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_read_export_do_not_modify_database",
+        "line": 216,
+        "id": "test_n1.N1Tests.test_read_export_do_not_modify_database"
+      },
+      "implementation": "store.py:Ledger.connect; coordinator.py:read",
+      "assertion": "three rendered reads keep DB bytes; DELETE on read connection raises OperationalError",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "completed request"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_read_export_do_not_modify_database]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "store.py:Ledger.connect; coordinator.py:read"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "store.py:Ledger.connect; coordinator.py:read"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-24",
+      "r02_test_id": "R02-T02",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_connection_settings_version_and_database_errors",
+        "line": 223,
+        "id": "test_n1.N1Tests.test_connection_settings_version_and_database_errors"
+      },
+      "implementation": "store.py:Ledger.connect",
+      "assertion": "DELETE/FULL/FK/busy500 settings; held lock and user_version99 unavailable; invalid-version read leaves bytes unchanged",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "SQLite connection/version/lock mutations"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_connection_settings_version_and_database_errors]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "store.py:Ledger.connect"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-25",
+      "r02_test_id": "R02-T06",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_incomplete_job_returns_unknown_without_resume",
+        "line": 237,
+        "id": "test_n1.N1Tests.test_incomplete_job_returns_unknown_without_resume"
+      },
+      "implementation": "coordinator.py:read",
+      "assertion": "manually changed RUNNING row yields OUTCOME_UNKNOWN/null; DB unchanged",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "SQL update after completed job; no actual coordinator crash"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_incomplete_job_returns_unknown_without_resume]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:read"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-26",
+      "r02_test_id": "R02-T09",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_metadata_classes_and_render_escape_preserved",
+        "line": 246,
+        "id": "test_n1.N1Tests.test_metadata_classes_and_render_escape_preserved"
+      },
+      "implementation": "render.py:html_transcript; context.py:build_context",
+      "assertion": "four category classes retained; script escaped; synthetic IDs/capture times visible",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "context.json first text modified to script"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_metadata_classes_and_render_escape_preserved]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/render.py",
+          "sha256": "dae6b79597220dea72a661684b926d47d75f867ff738e36102bf0f3ccc05dd93",
+          "bytes": 2054,
+          "locator": "render.py:html_transcript; context.py:build_context"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/context.py",
+          "sha256": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+          "bytes": 1227,
+          "locator": "render.py:html_transcript; context.py:build_context"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-27",
+      "r02_test_id": "R02-T03",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_no_evidence_is_unavailable_and_no_backend_attempt",
+        "line": 256,
+        "id": "test_n1.N1Tests.test_no_evidence_is_unavailable_and_no_backend_attempt"
+      },
+      "implementation": "coordinator.py:submit",
+      "assertion": "MISSING_TOPIC -> UNAVAILABLE/NO_PERMITTED_EVIDENCE and attempts[]",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "request topic=MISSING_TOPIC"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_no_evidence_is_unavailable_and_no_backend_attempt]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:submit"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-28",
+      "r02_test_id": "R02-T04",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_runner_has_no_adapter_import_or_provider_selector",
+        "line": 261,
+        "id": "test_n1.N1Tests.test_runner_has_no_adapter_import_or_provider_selector"
+      },
+      "implementation": "cli.py:main; haven_lab import statements",
+      "assertion": "forbidden imports absent; --backend live command nonzero",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "AST import scan; unsupported CLI option"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_runner_has_no_adapter_import_or_provider_selector]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/cli.py",
+          "sha256": "9f72fe8ebd03e524711747ac2a1eb2bcff690197bfaa5f3631494eb621e19237",
+          "bytes": 3009,
+          "locator": "cli.py:main; haven_lab import statements"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-29",
+      "r02_test_id": "R02-T04",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_executed_flow_under_network_and_shell_audit_denial",
+        "line": 273,
+        "id": "test_n1.N1Tests.test_executed_flow_under_network_and_shell_audit_denial"
+      },
+      "implementation": "coordinator.py:submit; test-defined audit guard",
+      "assertion": "successful synthetic flow with blocked event list empty; explicitly not OS-level containment",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "fresh child Python audit hook"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_executed_flow_under_network_and_shell_audit_denial]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:submit; test-defined audit guard"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-30",
+      "r02_test_id": "R02-T09",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_fixture_metadata_strictness_regression",
+        "line": 295,
+        "id": "test_n1.N1Tests.test_fixture_metadata_strictness_regression"
+      },
+      "implementation": "store.py:validate_fixture",
+      "assertion": "invalid version/type/class/identifier/time and duplicate grant rejected",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "context.json mutations"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_fixture_metadata_strictness_regression]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "store.py:validate_fixture"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-31",
+      "r02_test_id": "R02-T04",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_final_context_including_backend_metadata_obeys_budget",
+        "line": 308,
+        "id": "test_n1.N1Tests.test_final_context_including_backend_metadata_obeys_budget"
+      },
+      "implementation": "coordinator.py:submit",
+      "assertion": "narrow limit rejects final packet including added metadata; requests count0",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "build_context size +20bytes"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_final_context_including_backend_metadata_obeys_budget]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "locator": "coordinator.py:submit"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-32",
+      "r02_test_id": "R02-T09",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_empty_grounded_claims_cannot_be_success",
+        "line": 318,
+        "id": "test_n1.N1Tests.test_empty_grounded_claims_cannot_be_success"
+      },
+      "implementation": "validation.py:validate_output",
+      "assertion": "empty claims reject both answer and inert proposal",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "MutatedBackend claims[]"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_empty_grounded_claims_cannot_be_success]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/validation.py",
+          "sha256": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+          "bytes": 2036,
+          "locator": "validation.py:validate_output"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N1-33",
+      "r02_test_id": "R02-T02",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "locator": "N1Tests.test_initialization_checks_durability_before_schema_transaction",
+        "line": 323,
+        "id": "test_n1.N1Tests.test_initialization_checks_durability_before_schema_transaction"
+      },
+      "implementation": "store.py:Ledger.create/connect",
+      "assertion": "settings corrected before schema executes; no active transaction at check; FULL/FK on read",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/context.json",
+        "sha256": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+        "bytes": 3976,
+        "locator": "patched sqlite connection; source test only"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n1-20260928T032012Z-94d095.json",
+        "sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+        "bytes": 15847,
+        "locator": "tests[id=test_n1.N1Tests.test_initialization_checks_durability_before_schema_transaction]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/store.py",
+          "sha256": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+          "bytes": 11897,
+          "locator": "store.py:Ledger.create/connect"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-01",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_fixed_objective_expected_values_and_selection",
+        "line": 10,
+        "id": "test_n2.N2Tests.test_fixed_objective_expected_values_and_selection"
+      },
+      "implementation": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "baseline10.3456; scores[5.3072,0.1536,0.2496,0.288,15.384]; CANDIDATE_4; PROPOSE_NEXT_FOR_REVIEW; UNQUALIFIED",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_fixed_objective_expected_values_and_selection]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-02",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_negatives_rejections_and_original_inputs_retained",
+        "line": 17,
+        "id": "test_n2.N2Tests.test_negatives_rejections_and_original_inputs_retained"
+      },
+      "implementation": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "originals unchanged; outcomes improvement,rejected,rejected,improvement,no-improvement; iterations5; design/input hashes retained",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_negatives_rejections_and_original_inputs_retained]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-03",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_missing_rejected_and_mismatched_evaluation_never_accepted",
+        "line": 24,
+        "id": "test_n2.N2Tests.test_missing_rejected_and_mismatched_evaluation_never_accepted"
+      },
+      "implementation": "notebook.py:promote; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "None/rejected/mismatched evaluation denied for ACCEPTED and FABRICATION",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_missing_rejected_and_mismatched_evaluation_never_accepted]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:promote; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:promote; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:promote; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-04",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_even_passing_synthetic_check_cannot_fabricate_or_accept",
+        "line": 30,
+        "id": "test_n2.N2Tests.test_even_passing_synthetic_check_cannot_fabricate_or_accept"
+      },
+      "implementation": "notebook.py:promote; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "passing synthetic check still NOT_AUTHORIZED; fabrication false",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_even_passing_synthetic_check_cannot_fabricate_or_accept]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:promote; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:promote; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:promote; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-05",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_max_five_and_metric_cannot_change",
+        "line": 34,
+        "id": "test_n2.N2Tests.test_max_five_and_metric_cannot_change"
+      },
+      "implementation": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "max6/bool/changed metric or sixth candidate denied",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_max_five_and_metric_cannot_change]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-06",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_no_improvement_stops",
+        "line": 40,
+        "id": "test_n2.N2Tests.test_no_improvement_stops"
+      },
+      "implementation": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "only negative candidate -> STOP_NO_ELIGIBLE_IMPROVEMENT and no next candidate",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_no_improvement_stops]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-07",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_bad_dimensions_and_execution_fields_denied",
+        "line": 44,
+        "id": "test_n2.N2Tests.test_bad_dimensions_and_execution_fields_denied"
+      },
+      "implementation": "notebook.py:check_design/campaign; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "NaN/infinity/bool/out-of-range dimensions and fabrication true denied",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_bad_dimensions_and_execution_fields_denied]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:check_design/campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:check_design/campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:check_design/campaign; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-08",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_provenance_and_metadata",
+        "line": 50,
+        "id": "test_n2.N2Tests.test_provenance_and_metadata"
+      },
+      "implementation": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "UNKNOWN parent denied",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_provenance_and_metadata]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:campaign; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-09",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_n1_executed_gate_matches_source",
+        "line": 53,
+        "id": "test_n2.N2Tests.test_n1_executed_gate_matches_source"
+      },
+      "implementation": "notebook.py:verify_n1_gate; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "verified gate digest length64; historical pre-redaction context",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_n1_executed_gate_matches_source]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:verify_n1_gate; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:verify_n1_gate; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:verify_n1_gate; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-10",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_n1_gate_rejects_failed_or_incomplete_evidence",
+        "line": 56,
+        "id": "test_n2.N2Tests.test_n1_gate_rejects_failed_or_incomplete_evidence"
+      },
+      "implementation": "notebook.py:check_gate_evidence; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "failed/errors/skips/zero-tests/wrong-suite/empty-hashes/duplicate-ID/fail-row/bad-gate rejected",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_n1_gate_rejects_failed_or_incomplete_evidence]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:check_gate_evidence; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:check_gate_evidence; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:check_gate_evidence; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    },
+    {
+      "case_id": "P01-N2-11",
+      "r02_test_id": "R02-T12",
+      "status": "HISTORICAL_SYNTHETIC_SUBSET",
+      "test": {
+        "path": "inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "locator": "N2Tests.test_design_identifiers_cannot_escape_artifact_directory",
+        "line": 71,
+        "id": "test_n2.N2Tests.test_design_identifiers_cannot_escape_artifact_directory"
+      },
+      "implementation": "notebook.py:check_design; synthetic_score.py:score; design_check.py:evaluate",
+      "assertion": "relative escape/absolute/non-string/empty artifact IDs denied",
+      "fixture": {
+        "path": "inputs/recovered/night01/lab/fixtures/engineering.json",
+        "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+        "bytes": 3037,
+        "locator": "BASELINE,CANDIDATE_1..5"
+      },
+      "execution_evidence": {
+        "path": "inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "locator": "tests[id=test_n2.N2Tests.test_design_identifiers_cannot_escape_artifact_directory]"
+      },
+      "new_execution": false,
+      "not_equivalent_to_full_r02_case": true,
+      "implementation_refs": [
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "locator": "notebook.py:check_design; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/synthetic_score.py",
+          "sha256": "f1927882db9174b10da7e96cb9850c451d9884f990155d642e96a34edbf85721",
+          "bytes": 465,
+          "locator": "notebook.py:check_design; synthetic_score.py:score; design_check.py:evaluate"
+        },
+        {
+          "path": "inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "locator": "notebook.py:check_design; synthetic_score.py:score; design_check.py:evaluate"
+        }
+      ]
+    }
+  ],
+  "global_limits": [
+    "All twelve R02 tests remain NOT_EXECUTED as specified.",
+    "All102 original AT remain NOT_EXECUTED; all32 EX remain proposed, as EVIDENCE-0 records.",
+    "Line numbers identify exact pinned files; function locators disambiguate changes.",
+    "Historical N1/N2 logs checked by data parsing/hash comparison only; no application code was executed.",
+    "N2 final gate private-to-review hash transformation is producer-authored provenance, not independently reproduced private bytes."
+  ]
+}

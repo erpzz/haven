@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:health_observation:1",
+  "title": "health_observation — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "observation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subject_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_device_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_scope": {
+      "type": "string",
+      "enum": [
+        "PERSONAL_A",
+        "PERSONAL_B",
+        "HOUSEHOLD_SHARED",
+        "RESEARCH_SYNTHETIC"
+      ]
+    },
+    "measurement_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "value": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "unit": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sample_start": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sample_end": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "received_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "availability": {
+      "type": "string",
+      "enum": [
+        "AVAILABLE",
+        "UNKNOWN",
+        "PROVIDER_ERROR"
+      ]
+    },
+    "source_record_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "origin": {
+      "type": "string",
+      "enum": [
+        "SIMULATED",
+        "PRERECORDED",
+        "MANUAL",
+        "LIVE_DEVICE"
+      ]
+    },
+    "sharing_grant_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "clinical_status": {
+      "type": "string",
+      "const": "NOT_A_DIAGNOSIS"
+    }
+  },
+  "required": [
+    "schema_version",
+    "observation_id",
+    "subject_id",
+    "source_device_id",
+    "owner_scope",
+    "measurement_type",
+    "value",
+    "unit",
+    "sample_start",
+    "sample_end",
+    "received_at",
+    "availability",
+    "source_record_id",
+    "origin",
+    "sharing_grant_ids",
+    "clinical_status"
+  ],
+  "additionalProperties": false
+}

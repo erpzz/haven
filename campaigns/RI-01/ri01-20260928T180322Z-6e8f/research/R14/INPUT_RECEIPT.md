@@ -1,0 +1,29 @@
+# R14 consolidated input receipt and author clarification
+
+Task R14; actual author `/root/ri01_mmav`, existing child resumed as `haven_researcher`. The exact researcher TOML was read and followed as **CUSTOM_PROFILE_FALLBACK**; native spawning did not prove a custom profile was automatically loaded. Effective filesystem permissions are unrestricted. Only `campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14` was written. No child agents, Git, shared state, accounts, packages, application execution, signal acquisition, models or paid provider calls were used.
+
+Repository `erpzz/haven` in root's designated RI-01 working tree. Base commit `376031e182c57495912baf6727093b0b188da568` is root-provided campaign context, not a child Git observation. The actual dependency bytes are identified in INPUT_USE.json. This receipt consolidates the actual reads at handback; it is not a fabricated earlier timestamp or claim of independent input approval.
+
+Owner-authorized output revision: R14 v1, documentary/public-safe. Root is sole publisher. **NOT_UPLOADED_BY_CHILD**; no child commit or PR exists. Current scoped assignment overrides the imported prompt's suggested `design/H12/R14/v1` destination and branch/PR instructions. Actual handoff template and metadata were read; original headings appear in R14_HANDOFF.md. Originals, frozen MM-AV and other workers' files remain untouched.
+
+Hard dependencies: accepted CORE and its independent review, accepted R04 and independent review, accepted MM-AV and independent review/addendum. Exact supplied composite anchors checked in VALIDATION.json. Soft dependencies: accepted MM-VISION, accepted R12 O09, retained accepted R07 timing semantics. The R09 author consultation occurred while its contracts were a frozen draft. Before R14 freeze, the exact contract received independent **ACCEPT_FOR_SYNTHESIS** through REVIEW-R09 SHA256 `1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81`; this later receipt supports documentary use only and retains R09-L01/L02 and physical/model gates. Later R11/R13 results remain reconciliation inputs. Mutable accepted-input state is navigation, not the immutable evidence anchor.
+
+Read scope is explicit in INPUT_USE: governing documents and prompt were read; some source contracts were already read in this same child's prior MM-AV assignment and retained, with targeted R14 refreshes. Hashing every manifest member proves identity, not that every member was reread or independently checked. The exact recovered starter design directory was absent and was not repaired; canonical baseline chapters exist and four were directly read before freeze. Absence is not generalized to the canonical repository. Original IDs come from recovered canonical requirements, acceptance and experiments; no inherited status is upgraded.
+
+## Actual Q-MMAV-EVAL-01 author response
+
+Before R14 drafting, this actual MM-AV author answered root's question about the frozen prior study. The response is a **material protocol clarification/amendment for synthesis**, not a claim that old wording was already equivalent and not an executed result. Root retained the correspondence; the distinct reviewer evaluated it in `reviews/REVIEW-MM-AV/ADDENDUM-1.md`, SHA-256 `8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593`.
+
+Selected study: final ASR on selected speech/silence; faster-whisper 1.2.1, Whisper small/int8 CPU versus medium/int8 CPU, beam 5, identical declared preprocessing. Exact checkpoint/runtime/host hashes and qualification remain prerequisites. There are 12 development and 12 held-out independent source families. Each split contains six answerable positive and six protected negative/uncertain families. One planned inference per family per route makes 48 total attempts, inclusive of both routes and both splits. There are zero planned same-route repeats; the former at-most-two-repeat ceiling creates no additional slots.
+
+All admitted/failed/partial attempts, retries and tuning consume that 48-attempt ceiling. Extra runs replace slots; if required case/route coverage is missing, the study is incomplete/inconclusive. Denominators and required coverage cannot shrink. The former 10/12 answerable threshold is explicitly superseded by at least 5/6 held-out positives **per route**, plus 6/6 protected negatives **per route**, critical tokens correct or explicitly unresolved, and zero authority/privacy escapes. This is 24 independent families overall, not 48 independent observations. Video/omni/TTS receive no hidden allocation. H06 must freeze actual families, oracles, artifacts, preprocessing and budgets before any execution.
+
+The addendum closes the research ambiguity for synthesis while retaining execution gates. R14 does not change frozen MM-AV, independently approve itself, reallocate the prior study budget or claim listening/model performance.
+
+## Reused, changed, rejected and unresolved
+
+Reused: CORE authority/lifecycle/output boundaries; R04 wearer/native ambiguity; MM-AV timing/derived evidence/stop semantics; MM-VISION region/metric limits; R12 O09 license edition; original REQ/AT/EX relationships. Changed: sixteen new integration hypotheses, explicit ordinary baselines, three unusual combinations and eight separately bounded experiments. Rejected: silent consent from signals, thought-reading extrapolation, generic component-price affordability, and automatic powered escalation. Unresolved: exact access/rights/hardware fit, longitudinal utility, source replication, total measured costs, clinical/physical qualification and independent R14 review.
+
+Actual tests were documentary structure/JSON/hash/ID/count checks only, retained in VALIDATION.json. Every proposed experiment remains NOT_EXECUTED. Scientific figures, audio/video and biosignals were not directly inspected in R14; MODALITY.json records the actual tool boundary.
+
+

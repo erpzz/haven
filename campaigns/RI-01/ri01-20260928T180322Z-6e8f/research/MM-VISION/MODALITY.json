@@ -1,0 +1,46 @@
+{
+  "task": "MM-VISION",
+  "agent": "/root/ri01_mmvision",
+  "date": "2026-09-28",
+  "actual": [
+    {
+      "rights": "Existing campaign-authored synthetic fixture, scoped authorized inspection; no third-party media republished",
+      "received_and_inspected_date": "2026-09-28",
+      "transform": "NONE requested; tool displayed original-sized raster",
+      "uncertainty": "Qualitative tool observation only; exact pixel boundaries not measured",
+      "region": "Whole original 240x120 PNG",
+      "tool": "tools.view_image",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "capture_time": "UNKNOWN synthetic creation timestamp not inspected",
+      "claim_limit": "Development image access, not Haven model accuracy or physical sensing",
+      "sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "mode": "DIRECT_IMAGE",
+      "observations": [
+        "White background",
+        "Red square left",
+        "Blue circle near center",
+        "Thin black line descending to right",
+        "No visible text"
+      ]
+    }
+  ],
+  "capability_matrix": {
+    "text": "USED",
+    "image": "DIRECT_IMAGE_USED",
+    "generated_media": "NOT_USED",
+    "audio": "TOOL_UNAVAILABLE_FOR_DIRECT_LISTENING_NOT_ATTEMPTED",
+    "browser_screenshots": "NOT_USED",
+    "pdf_figures": "NOT_INSPECTED",
+    "model_inference": "NOT_EXECUTED",
+    "spatial": "DOCUMENTATION_ONLY",
+    "waveform": "NOT_USED",
+    "sampled_frames": "NOT_EXECUTED_NO_VIDEO_ASSET",
+    "video": "TOOL_UNAVAILABLE_FOR_DIRECT_PLAYBACK_NOT_ATTEMPTED"
+  },
+  "limits": [
+    "No pixels claimed from web parsed text",
+    "Existing RF PDF render inventory viewed as filenames only",
+    "No camera microphone sensor acquisition",
+    "No scientific test executed"
+  ]
+}

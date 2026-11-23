@@ -1,0 +1,262 @@
+{
+  "task": "R13",
+  "reviewer": "/root/ri01_evidence",
+  "checked_at_utc": "2026-09-29T01:29:48.8519784Z",
+  "candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+  "payload_checks": [
+    {
+      "path": "ACCEPTED_INPUTS_SNAPSHOT.json",
+      "expected": "dd42866890a719008b5654e1d7d7045ed6a12840b680e272d6948bb02fd0fa47",
+      "observed": "dd42866890a719008b5654e1d7d7045ed6a12840b680e272d6948bb02fd0fa47",
+      "bytes": 34472,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "expected": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
+      "observed": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
+      "bytes": 11436,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "CONSULTATIONS_SNAPSHOT.jsonl",
+      "expected": "439fa5643a168235a91c65e14b29eb18e71a74375d2d57962c5ac6a3e9952675",
+      "observed": "439fa5643a168235a91c65e14b29eb18e71a74375d2d57962c5ac6a3e9952675",
+      "bytes": 45327,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "CONTRACT_CROSSWALK.md",
+      "expected": "0ee3d9eb32f8d87f6d3d8b74cf310f0c4f7632f695f8f15a4b09776792584ea8",
+      "observed": "0ee3d9eb32f8d87f6d3d8b74cf310f0c4f7632f695f8f15a4b09776792584ea8",
+      "bytes": 5794,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "CONTRACTS.md",
+      "expected": "cb6cea47fb00aba89da234da620b3fb3bd240c2a10e314bcc81cbfa647cc4be7",
+      "observed": "cb6cea47fb00aba89da234da620b3fb3bd240c2a10e314bcc81cbfa647cc4be7",
+      "bytes": 20609,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "DECISIONS.md",
+      "expected": "2d663245e1746df508f4e9334f8c1a57539cf9d45a001c5b0e36981d16e71f76",
+      "observed": "2d663245e1746df508f4e9334f8c1a57539cf9d45a001c5b0e36981d16e71f76",
+      "bytes": 7349,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "expected": "1cbae2c5c3e1ebb454162e3bf9254358c91d918504bbd0c445c1fef11c81ed45",
+      "observed": "1cbae2c5c3e1ebb454162e3bf9254358c91d918504bbd0c445c1fef11c81ed45",
+      "bytes": 18157,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "EVALUATION_PLAN.md",
+      "expected": "fedcb2f515abeed39e977c851188876902ef57f3e4ff6c683f28d248bbb3ab59",
+      "observed": "fedcb2f515abeed39e977c851188876902ef57f3e4ff6c683f28d248bbb3ab59",
+      "bytes": 8388,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "IMPLEMENTATION_QUEUE.md",
+      "expected": "aca2b175bcd564c8c497b12b850ff6d33ebfd7233c1dc85cb123574667f7f7ed",
+      "observed": "aca2b175bcd564c8c497b12b850ff6d33ebfd7233c1dc85cb123574667f7f7ed",
+      "bytes": 6869,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "INPUT_USE.json",
+      "expected": "7c67866d5658526ff86533d8b56c1e2174f345b4c6a5ac4b870d465b39ea3a25",
+      "observed": "7c67866d5658526ff86533d8b56c1e2174f345b4c6a5ac4b870d465b39ea3a25",
+      "bytes": 186592,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "MANAGER_HANDBACK.md",
+      "expected": "2948c7601730b03e66d830f959ad648ab28df06cbc1ffdcff182f7639238b695",
+      "observed": "2948c7601730b03e66d830f959ad648ab28df06cbc1ffdcff182f7639238b695",
+      "bytes": 4109,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "MANAGER_STATE.md",
+      "expected": "7b4072e995d584a6c250d5cf348b6db935b80bb2dc893008deb3c05c2210269a",
+      "observed": "7b4072e995d584a6c250d5cf348b6db935b80bb2dc893008deb3c05c2210269a",
+      "bytes": 3997,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "MODALITY_MATRIX.md",
+      "expected": "e272f7b1690c7676258adbeef8b89773c12559fac84600b627af2515190f3329",
+      "observed": "e272f7b1690c7676258adbeef8b89773c12559fac84600b627af2515190f3329",
+      "bytes": 5488,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "MULTIMODAL_CASES.json",
+      "expected": "8a17c1a46fd858af562b7891f9bbfcb2caac7003ebb34e1dc9177f23623cd52b",
+      "observed": "8a17c1a46fd858af562b7891f9bbfcb2caac7003ebb34e1dc9177f23623cd52b",
+      "bytes": 49874,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "MULTIMODAL.md",
+      "expected": "d1e954738d8c2d5e6361b5328dce15f787b933e09bbf8b15b77d1400a1b47bc7",
+      "observed": "d1e954738d8c2d5e6361b5328dce15f787b933e09bbf8b15b77d1400a1b47bc7",
+      "bytes": 10774,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "RETAINED_SCOPE.json",
+      "expected": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116",
+      "observed": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116",
+      "bytes": 492384,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "RISKS_AND_DISSENT.md",
+      "expected": "6fbf57d1c98d5d8d7a190d40d1e7170dfd16bbf4a25fbe482c0c4d6ac3a94241",
+      "observed": "6fbf57d1c98d5d8d7a190d40d1e7170dfd16bbf4a25fbe482c0c4d6ac3a94241",
+      "bytes": 4403,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ROOT_NOTES_SNAPSHOT.md",
+      "expected": "1e14c09fd4729cade42316ad09403e43ed02e81c41f380cb508f186db4136823",
+      "observed": "1e14c09fd4729cade42316ad09403e43ed02e81c41f380cb508f186db4136823",
+      "bytes": 9957,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ROOT_UPDATES_SNAPSHOT.jsonl",
+      "expected": "1d90c95503a1bffb87be80604dd55d4dcacc67f0624e825ee0b22ae3e6588c02",
+      "observed": "1d90c95503a1bffb87be80604dd55d4dcacc67f0624e825ee0b22ae3e6588c02",
+      "bytes": 2174,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "SOURCE_USE_INDEX.json",
+      "expected": "8f113635a791d21817f134147d8933fb5164cf4dc2f7ab3f63884bc62452f9d1",
+      "observed": "8f113635a791d21817f134147d8933fb5164cf4dc2f7ab3f63884bc62452f9d1",
+      "bytes": 52391,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "VALIDATION.json",
+      "expected": "73b6bb198200745d5e3417cd4fe5d982b8ec92867495799b42b50d1e5c7dd10e",
+      "observed": "73b6bb198200745d5e3417cd4fe5d982b8ec92867495799b42b50d1e5c7dd10e",
+      "bytes": 1099,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "VISION_COVERAGE.md",
+      "expected": "a19dc834e0a043f985cb7dc010775a7c1a637d964175a08e5d068fcda37317c1",
+      "observed": "a19dc834e0a043f985cb7dc010775a7c1a637d964175a08e5d068fcda37317c1",
+      "bytes": 7814,
+      "hash_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "WORK_PACKAGES.json",
+      "expected": "d7b46b4f14165d7634fa1931c772c026a2b14d49cd607faee27fa91d3a9e6500",
+      "observed": "d7b46b4f14165d7634fa1931c772c026a2b14d49cd607faee27fa91d3a9e6500",
+      "bytes": 139651,
+      "hash_match": true,
+      "bytes_match": true
+    }
+  ],
+  "input_members_checked": 311,
+  "input_member_mismatches": [],
+  "accepted_snapshot_pins_checked": 76,
+  "accepted_snapshot_pin_mismatches": [],
+  "source_use_records_checked": 39,
+  "source_use_mismatches": [],
+  "package_input_occurrences_checked": 448,
+  "package_input_mismatches": [],
+  "coordination_snapshots": [
+    {
+      "snapshot_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/ACCEPTED_INPUTS_SNAPSHOT.json",
+      "snapshot_expected": "dd42866890a719008b5654e1d7d7045ed6a12840b680e272d6948bb02fd0fa47",
+      "snapshot_observed": "dd42866890a719008b5654e1d7d7045ed6a12840b680e272d6948bb02fd0fa47",
+      "mutable_source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/state/ACCEPTED_INPUTS.json",
+      "live_hash_at_check": "a494670fb7d94d2d93689cbb268b82707288acb8fd8aa224636f6415b8b86298",
+      "rule": "Live ledger need not retain snapshot hash; no source substitution"
+    },
+    {
+      "snapshot_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/CONSULTATIONS_SNAPSHOT.jsonl",
+      "snapshot_expected": "439fa5643a168235a91c65e14b29eb18e71a74375d2d57962c5ac6a3e9952675",
+      "snapshot_observed": "439fa5643a168235a91c65e14b29eb18e71a74375d2d57962c5ac6a3e9952675",
+      "mutable_source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/consultations.jsonl",
+      "live_hash_at_check": "057527bd4e130dc6acf33815183ce854920dac4ecd2e2bee1ab8c3f1cc4469e3",
+      "rule": "Live ledger need not retain snapshot hash; no source substitution"
+    },
+    {
+      "snapshot_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/ROOT_NOTES_SNAPSHOT.md",
+      "snapshot_expected": "1e14c09fd4729cade42316ad09403e43ed02e81c41f380cb508f186db4136823",
+      "snapshot_observed": "1e14c09fd4729cade42316ad09403e43ed02e81c41f380cb508f186db4136823",
+      "mutable_source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/ROOT_RECONCILIATION_NOTES.md",
+      "live_hash_at_check": "1e14c09fd4729cade42316ad09403e43ed02e81c41f380cb508f186db4136823",
+      "rule": "Live ledger need not retain snapshot hash; no source substitution"
+    },
+    {
+      "snapshot_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/final-v1/ROOT_UPDATES_SNAPSHOT.jsonl",
+      "snapshot_expected": "1d90c95503a1bffb87be80604dd55d4dcacc67f0624e825ee0b22ae3e6588c02",
+      "snapshot_observed": "1d90c95503a1bffb87be80604dd55d4dcacc67f0624e825ee0b22ae3e6588c02",
+      "mutable_source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/ROOT_RECONCILIATION_UPDATES.jsonl",
+      "live_hash_at_check": "1d90c95503a1bffb87be80604dd55d4dcacc67f0624e825ee0b22ae3e6588c02",
+      "rule": "Live ledger need not retain snapshot hash; no source substitution"
+    }
+  ],
+  "earlier_structural_comparison": {
+    "requirements": 102,
+    "acceptance_in_requirement_rows": 102,
+    "canonical_acceptance_array": 102,
+    "experiments": 32,
+    "complete_object_differences": 0,
+    "gen0_literal_rows": 36,
+    "gen0_row_differences": 0,
+    "anchors": 16,
+    "journeys": 5,
+    "missing_requirement_nextwork_or_gap": 0
+  },
+  "case_families": 36,
+  "future_packages": 14,
+  "private_original_R11_input_members": 0,
+  "bounded_candidate_host_path_pattern_hits": 0,
+  "json_parse_errors": 0,
+  "executed_application_tests": 0,
+  "application_code_changed": false,
+  "historical_lab_rerun": false,
+  "new_direct_media_inspection": false,
+  "scope": "Document JSON/byte/hash/structural checks only; semantic reading scope separately stated in REVIEW.md",
+  "crossmodal_verbatim_source_comparison": {
+    "source": "research/MM-FUSION/EVALUATION.md",
+    "source_sha256": "610aac480e3e4bd562f25df62a2c6be3ccd384e872f83ffae618fb325cbec7dd",
+    "case_count": 36,
+    "missing_input_or_outcome_descriptions": 0
+  }
+}

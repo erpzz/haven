@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:design_artifact:1",
+  "title": "design_artifact — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "artifact_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "experiment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_type": {
+      "type": "string",
+      "enum": [
+        "REQUIREMENT_SPEC",
+        "PARAMETRIC_CAD",
+        "GEOMETRY_EXPORT",
+        "TOOLPATH",
+        "INSPECTION",
+        "ANALYSIS"
+      ]
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "unit": {
+      "type": "string",
+      "enum": [
+        "mm",
+        "m",
+        "not_applicable"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "parent_artifact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "qualification_state": {
+      "type": "string",
+      "const": "UNQUALIFIED"
+    },
+    "material_profile": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "machine_profile": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "artifact_id",
+    "experiment_id",
+    "artifact_type",
+    "relative_path",
+    "sha256",
+    "unit",
+    "revision",
+    "parent_artifact_ids",
+    "qualification_state",
+    "material_profile",
+    "machine_profile"
+  ],
+  "additionalProperties": false
+}

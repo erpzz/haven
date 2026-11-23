@@ -1,0 +1,64 @@
+{
+  "task": "R14",
+  "revision": 1,
+  "author": "/root/ri01_mmav",
+  "role": "haven_researcher",
+  "profile_loading": "CUSTOM_PROFILE_FALLBACK",
+  "status": "DRAFT_READY_FOR_INDEPENDENT_REVIEW",
+  "frozen_at_utc": "2026-09-28T21:05:35.6259149Z",
+  "base_commit": "376031e182c57495912baf6727093b0b188da568",
+  "base_commit_source": "Root campaign metadata; child did not run Git",
+  "owned_prefix": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14",
+  "publication": "PUBLIC_SAFE; NOT_UPLOADED_BY_CHILD",
+  "actual": "Documentation/public primary-source research, actual peer consultation and standard structural/hash checks only",
+  "experiments": "ALL_NOT_EXECUTED",
+  "independent_review": "REQUESTED_NOT_SELF_APPROVED",
+  "files": [
+    {
+      "path": "EXPERIMENTS_AND_INTERFACES.md",
+      "bytes": 30350,
+      "sha256": "b556b10603d2a7de884fb1ea4c0f89880c3db676f3d8be282e48d92968129149"
+    },
+    {
+      "path": "INPUT_RECEIPT.md",
+      "bytes": 5879,
+      "sha256": "a69b72381b7ed954c3ccec6f688540740bb050d4b3255937a6143030674c6469"
+    },
+    {
+      "path": "INPUT_USE.json",
+      "bytes": 35459,
+      "sha256": "94ba79b06af72f721bbfe9a7c7d13a8cc3adac676c6a97293e572765ce9661c4"
+    },
+    {
+      "path": "INTEGRATION_SUMMARY.md",
+      "bytes": 4964,
+      "sha256": "de71f9806644efde6b964f0aa87fabf794e43bb7021d406316cc308e4e10aeba"
+    },
+    {
+      "path": "MODALITY.json",
+      "bytes": 1995,
+      "sha256": "cbec8086c12bdfd39288ebd6501b0aee2bf41f746f8656534035e96ff3c34f7e"
+    },
+    {
+      "path": "R14_HANDOFF.md",
+      "bytes": 37037,
+      "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544"
+    },
+    {
+      "path": "REQUIREMENT_MAP.json",
+      "bytes": 48713,
+      "sha256": "8832a55c3e7ec39fa857d4e6a0d294d51869bb3232cc6e3fbb120f0cb08ae002"
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 15859,
+      "sha256": "00f2cf2b1aeed0f2d3985cffd1afcc038ca8e3dc698d006168498512100929a8"
+    },
+    {
+      "path": "VALIDATION.json",
+      "bytes": 7379,
+      "sha256": "4cfed601d2086fbb2f6c454d05df2e4c97352de1c2017ced1b3ed7f7713a0dcc"
+    }
+  ],
+  "self_excluded": true
+}

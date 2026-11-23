@@ -1,0 +1,62 @@
+[
+  {
+    "asset_id": "R04-DEV-IMAGE-SMOKE-01",
+    "source": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+    "sha256_or_source_version": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+    "rights": "Synthetic geometric asset created earlier by this author within authorized R10 documentation; reused read-only.",
+    "original_or_derived": "original synthetic asset; not a camera observation",
+    "parent_asset": null,
+    "transforms": [],
+    "inspection_mode": "DIRECT_IMAGE",
+    "tool_and_model_if_exposed": "functions tools.view_image and native image channel; image model/version not exposed",
+    "page_frame_or_interval": "Entire 240x120 image, directly viewed again during R04",
+    "observations": "Red filled square at left, blue filled circle near center, thin black descending diagonal at right on white background.",
+    "uncertainties": "No OCR, camera, health, native wearable, timing, perception accuracy or Haven runtime qualification.",
+    "status": "INSPECTED"
+  },
+  {
+    "asset_id": "R04-APPLE-PHOTO-PICKER-TRANSCRIPT",
+    "source": "https://developer.apple.com/videos/play/wwdc2023/10053/",
+    "sha256_or_source_version": "WWDC2023 session 10053; current transcript read 2026-09-28; response bytes not captured",
+    "rights": "Public Apple documentation; bounded paraphrase, no media redistribution",
+    "original_or_derived": "provider transcript",
+    "parent_asset": "WWDC2023 video 10053",
+    "transforms": ["web.run text extraction of provider transcript"],
+    "inspection_mode": "TRANSCRIPT_ONLY",
+    "tool_and_model_if_exposed": "web.run",
+    "page_frame_or_interval": "Selected-media privacy discussion; no audiovisual interval inspected",
+    "observations": "System picker supports explicit media selection without granting arbitrary full-library access.",
+    "uncertainties": "No direct video, prosody, timing or displayed UI inspection claimed.",
+    "status": "INSPECTED"
+  },
+  {
+    "asset_id": "R04-PUBLIC-SDK-DOCUMENTATION",
+    "source": "SOURCES.md S01-S32 and S34-S35",
+    "sha256_or_source_version": "Dated source editions in SOURCES.md; volatile pages not hash-pinned",
+    "rights": "Public primary documentation; bounded source-attributed research",
+    "original_or_derived": "parsed documentation/source text",
+    "parent_asset": null,
+    "transforms": ["web.run text/search extraction"],
+    "inspection_mode": "DOCUMENTATION_ONLY",
+    "tool_and_model_if_exposed": "web.run",
+    "page_frame_or_interval": "API/release/permission/license passages only",
+    "observations": "Documented capability and version distinctions recorded in CAPABILITIES.md.",
+    "uncertainties": "Linked figures and physical behavior not inspected; no native package executed.",
+    "status": "DOCUMENTATION_ONLY"
+  },
+  {
+    "asset_id": "R04-NOT-EXERCISED-MODALITIES",
+    "source": "R04 bounded documentation task",
+    "sha256_or_source_version": "2026-09-28 task scope",
+    "rights": "No private signals or new human assets authorized",
+    "original_or_derived": "no asset collected",
+    "parent_asset": null,
+    "transforms": [],
+    "inspection_mode": "METADATA_ONLY",
+    "tool_and_model_if_exposed": "No audio playback, video playback, PDF page image, waveform, spatial render, EMG or native SDK tool exercised",
+    "page_frame_or_interval": "Not applicable",
+    "observations": "Only text/documentation and benign image input exercised in R04.",
+    "uncertainties": "An unexercised tool is not declared unavailable solely because it was unused; eventual runtime modalities remain unqualified.",
+    "status": "DOCUMENTATION_ONLY"
+  }
+]

@@ -1,0 +1,86 @@
+{
+  "files": [
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/BASELINE.json",
+      "sha256": "c04fc5d75636cac5ab4eb1d6f427e58155f591668ebee1b593461e927cb8729f",
+      "bytes": 286,
+      "path": "inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/BASELINE.json",
+      "status": "EXACT_BYTES_RECOVERED"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/CANDIDATE_1.json",
+      "sha256": "c8e486b2b9341b6ad591189fa8d01093e88bd3a7f8168e296c6918ea6512a976",
+      "bytes": 299,
+      "path": "inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/CANDIDATE_1.json",
+      "status": "EXACT_BYTES_RECOVERED"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/CANDIDATE_2.json",
+      "sha256": "82fa6690ae7fb0aa98c2bc14bcdd93596dd04a5df960443af70562e3b0d25604",
+      "bytes": 299,
+      "path": "inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/CANDIDATE_2.json",
+      "status": "EXACT_BYTES_RECOVERED"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/CANDIDATE_3.json",
+      "sha256": "897e2048a70680595a22e1b2d7711511e8dea3016094ba1272d39f4a008fd024",
+      "bytes": 299,
+      "path": "inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/CANDIDATE_3.json",
+      "status": "EXACT_BYTES_RECOVERED"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/CANDIDATE_4.json",
+      "sha256": "0caaf69185fdaa5fbb6adbc9538e231a9221aa6158798e86ec6d70a0c4122a4d",
+      "bytes": 299,
+      "path": "inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/CANDIDATE_4.json",
+      "status": "EXACT_BYTES_RECOVERED"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/CANDIDATE_5.json",
+      "sha256": "4af35d665676b1f2de25b6f4314b52137516c34a3e214e45668bbae76b49e951",
+      "bytes": 299,
+      "path": "inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/CANDIDATE_5.json",
+      "status": "EXACT_BYTES_RECOVERED"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/REPORT.md",
+      "sha256": "206f7500a441793c8bd3ff5fbc826ee3f8505cc2d4f2cf766709ee211b3eca22",
+      "bytes": 1190,
+      "path": "inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/REPORT.md",
+      "status": "EXACT_BYTES_RECOVERED"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/original_inputs.json",
+      "sha256": "a25de0ebb56447ff6f0423c78bd4aa0c854bd7dfd223f0b4965038b046d66b64",
+      "bytes": 3037,
+      "path": "inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/original_inputs.json",
+      "status": "EXACT_BYTES_RECOVERED"
+    },
+    {
+      "archive": "HAVEN_NIGHT_01_Review.zip",
+      "archive_sha256": "4bea43265cbc4f7cbe45c31fb76ad2368aa7bc1802bf3f4bdb95a1e7ec5cb67b",
+      "member": "haven-night01-review/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/results.json",
+      "sha256": "580cc97ba33a1f4c4a6ec3b1a0a0942e713b9175bc46771ca0a248d2846b6aa0",
+      "bytes": 11826,
+      "path": "inputs/recovered/night01/outputs/n2-fe154a18-0dd5-48f7-a9da-afc9842414d3/results.json",
+      "status": "EXACT_BYTES_RECOVERED"
+    }
+  ],
+  "reason": "Recover final N2 gate-linked replay separately; retain earlier historical run unchanged. Gate identifier semantics require code inspection, not raw-file SHA equivalence assumption."
+}

@@ -1,0 +1,34 @@
+{
+  "task": "CORE",
+  "candidate": 1,
+  "checked_at_utc": "2026-09-28T19:30:44.2321914Z",
+  "check_kind": "DOCUMENT_INTEGRITY_ONLY",
+  "reviewer": "AUTHOR_CHECK_NOT_INDEPENDENT_ACCEPTANCE",
+  "checks": {
+    "requirements": 102,
+    "retained_scope_exactly_equal_to_core_pre": true,
+    "vision_anchors": 16,
+    "multimodal_baseline_cases": 24,
+    "r03_manifest_entries_verified": 14,
+    "json_parse": true,
+    "frozen_contract_crosswalk_rows": 12,
+    "input_hashes_verified_excluding_append_only_consultation_snapshot": 77,
+    "pinned_inputs_and_immutable_core_pre": 9,
+    "experiments": 32
+  },
+  "execution": {
+    "application_tests": "NOT_RUN",
+    "network": "NOT_USED",
+    "git": "NOT_RUN",
+    "original_AT": "NOT_EXECUTED",
+    "models_media_devices": "NOT_RUN",
+    "original_EX": "PROPOSED_NOT_EXECUTED"
+  },
+  "limitations": [
+    "No active R1/M0 inspection",
+    "No production authority or worker lifecycle qualification",
+    "No source-owner Q-CORE-04 reply",
+    "R01 amendment and R12 independent review pending",
+    "Full specialist multimodal synthesis remains later"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "ri01.handoff-manifest.v1",
+  "task": "R09",
+  "author": "/root/ri01_world",
+  "role": "haven_researcher",
+  "status": "DRAFT_READY_INDEPENDENT_REVIEW_REQUESTED",
+  "classification": "PUBLIC_SAFE_DOCUMENTARY_PROPOSAL",
+  "frozen_utc": "2026-09-28T20:50:10Z",
+  "base_commit_reported_by_root": "376031e182c57495912baf6727093b0b188da568",
+  "application_code_changed": false,
+  "runtime_tests_executed": false,
+  "physical_activity": false,
+  "publication": "NOT_UPLOADED_BY_AUTHOR",
+  "files": [
+    {
+      "path": "CONSULTATIONS.md",
+      "bytes": 5132,
+      "sha256": "e80432c7f0076796de0b1a7b3f393598601ca86365a4970a0f3ce8d6e59dca6e"
+    },
+    {
+      "path": "CONTRACTS.md",
+      "bytes": 12012,
+      "sha256": "854d05a470581289537df387a959c817cf9be6b05d46c0686f93a6f82aa948a1"
+    },
+    {
+      "path": "EXPERIMENTS.md",
+      "bytes": 10361,
+      "sha256": "1ae38826040db0b9202f89dd6c2097ed9b2fc822edc783092ed267bbf1827d9d"
+    },
+    {
+      "path": "INPUT_RECEIPT.md",
+      "bytes": 4163,
+      "sha256": "37616fbc8f219ac359f3c00bdcd9e68f27b8a4eceeeff1899bfa120b9853e042"
+    },
+    {
+      "path": "INPUT_USE.json",
+      "bytes": 18888,
+      "sha256": "7106289e929d3ffe1183b28d01dabd5ca0850d29d5cb95cdfe16880ae5076719"
+    },
+    {
+      "path": "MODALITY.md",
+      "bytes": 2170,
+      "sha256": "6ce8b290a590533cfa84e27b92546cd66bd64bb0adfd7838516c3da10842e10a"
+    },
+    {
+      "path": "NEXT_PACKAGE.md",
+      "bytes": 4212,
+      "sha256": "ca701c590d12eafe42f810ce67b3766bf7a9dc7aa3869da070a7ad88b6f94084"
+    },
+    {
+      "path": "PLATFORMS.md",
+      "bytes": 11868,
+      "sha256": "d058e034a7da9543653eb9a5c64fc520eb0a64c829652cf5903d4f7b0a88554e"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 8336,
+      "sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb"
+    },
+    {
+      "path": "REQUIREMENTS.json",
+      "bytes": 17271,
+      "sha256": "75747451c1513c81fad99012b4819686e40298447788e316eae900ad6dd45970"
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 7996,
+      "sha256": "00976279e8e6fd8795f0af5627f1ecdf60e59483b6695290c2cac3db972b5fde"
+    },
+    {
+      "path": "VALIDATION.md",
+      "bytes": 3301,
+      "sha256": "e8ef692e03ba9938af09e29cffbf40133f6d40882b5c7dde16b4453b6ced6628"
+    }
+  ]
+}

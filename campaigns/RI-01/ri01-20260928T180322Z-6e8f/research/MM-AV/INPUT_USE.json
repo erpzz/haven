@@ -1,0 +1,217 @@
+{
+  "task": "MM-AV",
+  "revision": 1,
+  "base_commit": "376031e182c57495912baf6727093b0b188da568",
+  "base_commit_verification": "Root run metadata; no child Git",
+  "local_inputs": [
+    {
+      "source_path": ".codex/agents/haven_audio_video.toml",
+      "sha256": "a46696a2ecfae1ef14d036df97c2d54779675a4ded82464a6e84844972597e4e",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Exact role: honest modality access, no model/device/code execution, own report only",
+      "downstream_section": "REPORT.md preamble; MODALITY.json",
+      "disposition": "ACCEPTED",
+      "reason": "Applied scoped native-profile fallback and no child spawning"
+    },
+    {
+      "source_path": "orchestration/RI-01/AUTHORIZATION.md",
+      "sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Bounded public research and existing media tools allowed; product/device/model/paid activity excluded",
+      "downstream_section": "REPORT.md actual work; NEXT_PACKAGE.md",
+      "disposition": "ACCEPTED",
+      "reason": "Documentation-only package and no automatic next-package execution"
+    },
+    {
+      "source_path": "orchestration/RI-01/MULTIMODAL.md",
+      "sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Separate agent and Haven matrices; original and derived evidence; full AV and 24-case minimum",
+      "downstream_section": "MODALITY.json; REPORT.md D1-D6; EVALUATION.md",
+      "disposition": "ACCEPTED",
+      "reason": "32 proposed cases plus actual image smoke and explicit unavailable modalities"
+    },
+    {
+      "source_path": "orchestration/RI-01/VISION.md",
+      "sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "V01-V16 cumulative ambition and five integrated journeys",
+      "downstream_section": "REPORT.md D6; REQUIREMENT_MAP.json",
+      "disposition": "ACCEPTED",
+      "reason": "Ordinary selected media plus richer simultaneous scenario retained"
+    },
+    {
+      "source_path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "MM-AV contracts, source/model/resource shortlist, exact input usage and bounded package",
+      "downstream_section": "REPORT.md; CANDIDATES.md; NEXT_PACKAGE.md",
+      "disposition": "ACCEPTED",
+      "reason": "Finite specialist handback with no ownership replacement"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Root supplied accepted CORE composite identity",
+      "downstream_section": "REPORT.md input anchors; VALIDATION.json",
+      "disposition": "ACCEPTED",
+      "reason": "Exact supplied digest matched; member identities checked without claiming every member content read"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "I01 full authority/influence closure, I02 lineage/time, I04 lifecycle, I05 reservations, I06 four records and finite P0, I07 separate physical authority",
+      "downstream_section": "CONTRACTS.md AV01-AV05; REPORT.md D2-D5; EVALUATION.md C09-C16/C24/C27-C29",
+      "disposition": "ACCEPTED",
+      "reason": "No transcript/frame/voice declassification; whole-output single destination; distinct stop axes"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MULTIMODAL.md",
+      "sha256": "43ec2f49d6062d7a758aa283c6d95158f6954187b065681c109e268dc02b8366",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Agent-tool distinction, AV clock/coverage, 24 baseline failures, simultaneous scenario",
+      "downstream_section": "MODALITY.json; EVALUATION.md; REPORT.md D6",
+      "disposition": "ACCEPTED",
+      "reason": "Coverage preserved with typed task-specific comparisons"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/IMPLEMENTATION_QUEUE.md",
+      "sha256": "133b25824c606fcb68a2b6f393a42691835afd0e4b19f3ee7fa1511396c509c6",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "All coding packages require separate explicit grant and exact paths; inference not authorized here",
+      "downstream_section": "NEXT_PACKAGE.md",
+      "disposition": "ACCEPTED",
+      "reason": "P-MMAV-01 inert package, no active M0/M4 change"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/HASHES.json",
+      "sha256": "90c2d832f126b0111d0726f75f1d8eb5f36bb040fbd82ce154a5b5e016a0eef0",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Accepted R04 hard composite identity",
+      "downstream_section": "REPORT.md input anchors; VALIDATION.json",
+      "disposition": "ACCEPTED",
+      "reason": "Exact hash and listed member identities verified"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CONTRACTS.md",
+      "sha256": "985b53bab11cc9b581e3242429f73be87d41b8d4b55de2069fe64b4317d0b7a2",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "W01 exact capability tuple, W02 HealthKit/Haven withdrawal distinction, W03 capture, W04-W05 output route and finite-use, W06 retention",
+      "downstream_section": "REPORT.md D5; CONTRACTS.md AV01/AV04/AV05",
+      "disposition": "ACCEPTED",
+      "reason": "No device capability inferred from product or permission labels; no speaker fallback"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CAPABILITIES.md",
+      "sha256": "c3663b8e72513feb50be22063a3da5964f20def7c34b3bf31a25e12fdb8489eb",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Watch haptic foreground/workout and HR acquisition limits; Meta DAT 1.0 experimental publication restriction; owned tuples unknown",
+      "downstream_section": "REPORT.md D5; NEXT_PACKAGE.md P-MMAV-03",
+      "disposition": "ACCEPTED",
+      "reason": "Native qualifications remain separate; no API/version-as-capability shortcut"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R04/REVIEW.md",
+      "sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Independent acceptance bounded by G1-G5; VA-01 lifecycle/containment and native/privacy/finite-profile gates",
+      "downstream_section": "REPORT.md risks; CONTRACTS.md AV04; NEXT_PACKAGE.md prerequisites",
+      "disposition": "ACCEPTED",
+      "reason": "Research acceptance not inference/device authorization; explicit gate retained"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONTRACTS.md",
+      "sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "ObservationEnvelope temporal fields, same-capture correlation, unknown mapping and current replay eligibility",
+      "downstream_section": "CONTRACTS.md AV01-AV03; EVALUATION.md C19-C29",
+      "disposition": "ACCEPTED_SOFT_INPUT",
+      "reason": "Shared temporal/lineage seam reused without spatial/physical claims"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "O10 exact Qwen2.5-Omni-3B research-license and BF16 memory/overhead routing",
+      "downstream_section": "CANDIDATES.md audiovisual row; SOURCES.md S08; REPORT.md D4",
+      "disposition": "ACCEPTED",
+      "reason": "Independently checked exact card/license; no permissive/host-fit or generic family claim"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/REPORT.md",
+      "sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Finite scout preserves baseline and model/license/resource distinction",
+      "downstream_section": "REPORT.md D4; CANDIDATES.md",
+      "disposition": "ACCEPTED",
+      "reason": "M4 unchanged; ASR plus selected frames remains comparison baseline"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/COVERAGE.md",
+      "sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Canonical original REQ to AT mappings and ownership",
+      "downstream_section": "REQUIREMENT_MAP.json; REPORT.md preamble",
+      "disposition": "ACCEPTED",
+      "reason": "Recovered exact source used after legacy scope path was absent; no IDs invented"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Exact retained requirement records and acceptance_tests arrays",
+      "downstream_section": "REQUIREMENT_MAP.json",
+      "disposition": "ACCEPTED",
+      "reason": "Relevant IDs/statements/AT names copied as data, satisfaction unchanged"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "EX03 economics, EX06 voice uncertainty, EX17 multimodal degradation",
+      "downstream_section": "EVALUATION.md; NEXT_PACKAGE.md",
+      "disposition": "ACCEPTED",
+      "reason": "Original experiment IDs and proposed status retained"
+    },
+    {
+      "source_path": "baseline/cumulative-v1.0/docs/02_DAILY_ASSISTANT.md",
+      "sha256": "7db327e61411afb580a5e4a27e6e62d71327941a50685b2c14e3c2559438ed79",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Foreground voice, push-to-talk, attention, separate cancellation semantics",
+      "downstream_section": "REPORT.md D1/D2/D5; CONTRACTS.md AV04",
+      "disposition": "ACCEPTED",
+      "reason": "Daily value and manual/typed accessible alternatives"
+    },
+    {
+      "source_path": "baseline/cumulative-v1.0/docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+      "sha256": "fb4d50536752fe7d993be43e279b8ae34e7414ab57aa4b947eeb6c9a259eca26",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Phone-first two-person enrollment and separately qualified native progression",
+      "downstream_section": "REPORT.md D5; NEXT_PACKAGE.md",
+      "disposition": "ACCEPTED",
+      "reason": "No continuous native sensing or medical inference"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/runtime/synthetic-vision-probe.png",
+      "sha256": "12a1ed92fe078247281f01f05edbde362110a562cd759e2f8f7f7244bd66e837",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Existing campaign-authored benign image",
+      "downstream_section": "MODALITY.json; REPORT.md Evidence; EVALUATION.md actual checks",
+      "disposition": "ACCEPTED",
+      "reason": "Direct static image smoke only; no AV qualification"
+    },
+    {
+      "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/runtime/ROOT_IMAGE_PROBE.json",
+      "sha256": "8658446950e00cd82ddd077f000b12e608e7aa532ba6fd5c4cf8e0203f37db54",
+      "version": "Exact working-tree bytes at MM-AV intake 2026-09-28; campaign base reported by root",
+      "upstream_finding": "Fixture identity/dimensions/original rights context",
+      "downstream_section": "MODALITY.json inspection",
+      "disposition": "ACCEPTED",
+      "reason": "This child independently viewed the image; root observation not substituted for own inspection"
+    }
+  ],
+  "consultation_input": "Actual native root-routed Q-MMV-AV-01 and Q-MMAV-01 exchange; see CONSULTATIONS_AND_CHECKIN.md; no invented artifact hash",
+  "external_sources": "SOURCES.md URL/version/date; remote response byte hashes not captured"
+}

@@ -1,0 +1,207 @@
+{
+  "schema": "ri01.r15.modality.v1",
+  "task": "R15",
+  "actual_inspection": [
+    {
+      "asset_id": "pinned-source-and-doc-text",
+      "source": "INPUT_AUDIT exact file and primary URL register",
+      "sha256_or_source_version": "per-source SHA256 or queried release/commit; external HTTP byte hash not captured",
+      "rights": "Text read for research; no third-party source copies published",
+      "original_or_derived": "Original source text inspected; original research reports authored",
+      "parent_asset": null,
+      "transforms": [
+        "text extraction/read; no media transformation"
+      ],
+      "inspection_mode": "SOURCE_TEXT_AND_DOCUMENTATION_ONLY",
+      "tool_and_model_if_exposed": "exec read-only file/HTTP utilities; web primary-page search/open; model NOT_EXPOSED",
+      "page_frame_or_interval": "per-source actual read extents in INPUT_AUDIT",
+      "observations": "55 pinned code/doc identities include50 reused prework and5 newly fully read search files; no image/audio/video/pointcloud/waveform/UI directly viewed",
+      "uncertainties": "Static text cannot establish runtime, perception, UX, measurement or physical capability",
+      "status": "INSPECTED"
+    }
+  ],
+  "accepted_registry": "MM-FUSION MODALITY_REGISTRY.md frozen candidate then independently accepted; all18input and6output families mapped below",
+  "input_families": [
+    {
+      "family": "M01",
+      "name": "text",
+      "r15_effect": "Canonical source-linked note; retained structured provenance",
+      "current_status": "TEXT_DOCUMENTATION_INSPECTED; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M02",
+      "name": "code",
+      "r15_effect": "Inspectable versioned analysis, never execute imported code",
+      "current_status": "TEXT_DOCUMENTATION_INSPECTED; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M03",
+      "name": "documents/PDF/tables",
+      "r15_effect": "Preserve source table/page locator; no unseen figure evidence",
+      "current_status": "TEXT_DOCUMENTATION_INSPECTED; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M04",
+      "name": "RGB/still image",
+      "r15_effect": "Selected image grounding later qualified MM-VISION route; no image inspected in R15",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M05",
+      "name": "OCR",
+      "r15_effect": "OCR inherits parent image and error uncertainty, not a second witness",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M06",
+      "name": "segmentation/support masks",
+      "r15_effect": "Observed/free/occluded/unobserved/conflict preserved in fog layer",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M07",
+      "name": "anonymous object tracks",
+      "r15_effect": "Anonymous track is not named-person authentication",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M08",
+      "name": "video/native PTS",
+      "r15_effect": "Native time/PTS/gaps and clock support; replay not simultaneous truth",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M09",
+      "name": "ASR",
+      "r15_effect": "Transcript critical tokens/source intervals; no prosody inference",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M10",
+      "name": "diarization",
+      "r15_effect": "Speaker partition not identity or private-data entitlement",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M11",
+      "name": "acoustic events",
+      "r15_effect": "Event hypothesis not calibrated acoustic measurement",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M12",
+      "name": "depth/pose/spatial",
+      "r15_effect": "Exact frame/map/scale/calibration/covariance; unsupported metric claim table-only",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M13",
+      "name": "geographic",
+      "r15_effect": "CRS/datum/time/footprint preserved; coarse cell not exact address",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M14",
+      "name": "RF",
+      "r15_effect": "Native measurement/clock/device/profile; depiction not authorization to collect",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M15",
+      "name": "telemetry/IMU",
+      "r15_effect": "Native units/boot/rate/gaps and calibration; no invented route readiness",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M16",
+      "name": "health-adjacent",
+      "r15_effect": "Sensitive inference separately qualified and minimized; no diagnosis profile",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M17",
+      "name": "biosignal intent",
+      "r15_effect": "Decoded intent is inert uncertain proposal, not identity/consent",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    },
+    {
+      "family": "M18",
+      "name": "tactile/contact",
+      "r15_effect": "Force/contact requires calibrated context and domain safety; scalar not6DoF",
+      "current_status": "DOCUMENTATION_ONLY; CAPABILITY_NOT_QUALIFIED",
+      "downstream": "CONTRACTS_AND_TRUST; OBSERVATORY_DESIGN"
+    }
+  ],
+  "output_families": [
+    {
+      "family": "O01",
+      "name": "text/source links",
+      "status": "PROPOSED_P0_DOCUMENTARY; NOT_RENDERED_OR_EXECUTED",
+      "conservation": "Current full I01/I06 admission; whole-output digest/one destination; route and delivery observations separate",
+      "boundary": "No multi-output or streaming quota expansion"
+    },
+    {
+      "family": "O02",
+      "name": "plots/diagrams",
+      "status": "PROPOSED_P0_DOCUMENTARY; NOT_RENDERED_OR_EXECUTED",
+      "conservation": "Current full I01/I06 admission; whole-output digest/one destination; route and delivery observations separate",
+      "boundary": "No multi-output or streaming quota expansion"
+    },
+    {
+      "family": "O03",
+      "name": "map/3D/AR",
+      "status": "PROPOSED_P0_DOCUMENTARY; NOT_RENDERED_OR_EXECUTED",
+      "conservation": "Current full I01/I06 admission; whole-output digest/one destination; route and delivery observations separate",
+      "boundary": "No multi-output or streaming quota expansion"
+    },
+    {
+      "family": "O04",
+      "name": "private TTS",
+      "status": "LATER_QUALIFIED_ROUTE_ONLY",
+      "conservation": "Current full I01/I06 admission; whole-output digest/one destination; route and delivery observations separate",
+      "boundary": "No multi-output or streaming quota expansion"
+    },
+    {
+      "family": "O05",
+      "name": "haptics",
+      "status": "LATER_QUALIFIED_ROUTE_ONLY",
+      "conservation": "Current full I01/I06 admission; whole-output digest/one destination; route and delivery observations separate",
+      "boundary": "No multi-output or streaming quota expansion"
+    },
+    {
+      "family": "O06",
+      "name": "typed digital/physical proposal",
+      "status": "LATER_QUALIFIED_ROUTE_ONLY",
+      "conservation": "Current full I01/I06 admission; whole-output digest/one destination; route and delivery observations separate",
+      "boundary": "Inert proposal cannot execute domain action"
+    }
+  ],
+  "not_exercised": [
+    "Images/screenshots",
+    "Audio/listening",
+    "Video/frame sampling",
+    "3D rendering",
+    "Native/sensor signals",
+    "Models",
+    "Devices",
+    "Application/UI"
+  ],
+  "no_borrowed_evidence": "MM-FUSION author/reviewer image smoke and archived N1/N2 synthetic tests are not R15 inspection or experiment receipts"
+}

@@ -1,0 +1,40 @@
+{
+  "task": "R07",
+  "author": "/root/ri01_world",
+  "date": "2026-09-28",
+  "model": "NOT_EXPOSED",
+  "text_code": "EXERCISED_DOCUMENT_READING_ONLY",
+  "image": "DIRECT_IMAGE_EXERCISED",
+  "pdf_figures": "NOT_EXERCISED",
+  "browser_screenshot": "NOT_EXERCISED",
+  "audio_listening": "NOT_EXERCISED_NO_AUDIO_INSPECTION_TOOL_USED",
+  "video_playback": "NOT_EXERCISED",
+  "sampled_video_frames": "NOT_EXERCISED",
+  "waveform": "NOT_EXERCISED",
+  "spatial_arrays": "NOT_EXERCISED_STRUCTURED_SCHEMA_TEXT_ONLY",
+  "generation": "NOT_EXERCISED",
+  "runtime_qualification": "NOT_EXECUTED",
+  "inspections": [
+    {
+      "asset_id": "R10-SMOKE-01",
+      "path": "../R10/modality-smoke.png",
+      "sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "rights": "R10 original synthetic document fixture, public-safe, creation attributed to R10",
+      "mode": "DIRECT_IMAGE",
+      "region": "whole240x120image",
+      "transform": "none; local original PNG to view_image",
+      "tool": "view_image",
+      "observation": "Red filled square left, blue filled circle center, thin black line descending to right, white background",
+      "limitations": "Tool-path smoke only; no Haven model/camera/geometry/video/runtime performance"
+    }
+  ],
+  "failed_visual_attempts": [
+    {
+      "asset": "https://li-yuetao.github.io/ActiveSplat/media/figures/system-overview.png",
+      "mode": "DOCUMENTATION_ONLY",
+      "result": "web returned textual image reference only; no inspected pixels",
+      "rights": "thirdparty rights not established; no media copied",
+      "hash": "NOT_CAPTURED"
+    }
+  ]
+}

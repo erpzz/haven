@@ -1,0 +1,914 @@
+{
+  "task": "R08-P00",
+  "status": "SUBMITTED_FOR_REVIEW",
+  "classification_semantics": {
+    "COVERED_BY_EQUIVALENT_EVIDENCE": "Exact unchanged historical synthetic assertion only; no fresh run or whole R08 qualification.",
+    "PARTIALLY_COVERED": "An actual narrower assertion exists; required stronger semantics remain open.",
+    "NEW_GAP": "Required proposed inert evidence semantics have no actual implementation/test.",
+    "NEEDS_OWNER_DECISION": "Concrete missing apparatus/application or authority input prevents acceptance.",
+    "NOT_IN_THIS_SLICE": "Retained future requirement outside scalar/no-worker/no-device package, with explicit prerequisite."
+  },
+  "source_scope": "Exact incoming R08 + recovered NIGHT-01; no current M0/R1 code",
+  "r08_cases": [
+    {
+      "id": "R08-T01",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Review-to-use digest binding",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_missing_rejected_and_mismatched_evaluation_never_accepted,24-29"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "anchor": "promote,87-92"
+        }
+      ],
+      "gap": "Synthetic design/evaluation hash comparison is not immutable CAD/export review or dispatch binding.",
+      "next_closure": "Inert mismatch fixture for template/parameters/output; later recheck exact sealed CAD/toolpath at authority ordering.",
+      "owners": [
+        "H09",
+        "H06",
+        "H04"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-02",
+        "AT-ENG-05",
+        "AT-ENG-08"
+      ]
+    },
+    {
+      "id": "R08-T02",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Independent physical acceptance",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_even_passing_synthetic_check_cannot_fabricate_or_accept,30-33"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "anchor": "same-author checks,1-18"
+        }
+      ],
+      "gap": "All promotion denied; no positive authenticated independent evaluator path.",
+      "next_closure": "Test synthetic proposer-denied/reviewer-only simulated analysis; physical acceptance remains unavailable.",
+      "owners": [
+        "H06",
+        "H04",
+        "H09"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-04"
+      ]
+    },
+    {
+      "id": "R08-T03",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Protocol immutable before outcome access",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_max_five_and_metric_cannot_change,34-39"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "anchor": "campaign,94-136"
+        }
+      ],
+      "gap": "Fixed literal score is not locked protocol revisions, threshold ownership or outcome-dependent edits.",
+      "next_closure": "Hash ProtocolSnapshot; editing threshold creates new campaign/proposal; preserve old analysis binding.",
+      "owners": [
+        "H06",
+        "H09"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-04",
+        "AT-ENG-09"
+      ]
+    },
+    {
+      "id": "R08-T04",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Declared dimension and exact conversion",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_bad_dimensions_and_execution_fields_denied,44-49"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "anchor": "check_design,67-85"
+        }
+      ],
+      "gap": "N2 admits units mm and finite dimensions; no raw/canonical conversion, uncertainty scaling or dimensional mismatch cases.",
+      "next_closure": "Exact scalar profile in CONTRACT_DELTA; reject lossy, overflow or inconsistent conversion; cannot infer truthful sensor labeling.",
+      "owners": [
+        "H08",
+        "H09",
+        "H06"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-02",
+        "AT-ENG-08"
+      ]
+    },
+    {
+      "id": "R08-T05",
+      "classification": "NEW_GAP",
+      "claim_scope": "Unknown calibration/frame",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "anchor": "check_design,67-85"
+        }
+      ],
+      "gap": "No metrology or calibration record exists.",
+      "next_closure": "Unknown calibration/uncertainty can be stored as tagged null with ineligible analysis; missing/ambiguous frame rejects scalar ingestion.",
+      "owners": [
+        "H08",
+        "H06",
+        "H09"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-03",
+        "AT-ENG-08"
+      ]
+    },
+    {
+      "id": "R08-T06",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Synthetic versus observed provenance",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "anchor": "check_design synthetic_only and INERT_JSON_DIMENSIONS,67-85"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_bad_dimensions_and_execution_fields_denied,44-49"
+        }
+      ],
+      "gap": "Hardcoded synthetic scope is useful but no acquisition-origin authenticity adapter.",
+      "next_closure": "Only SIMULATED allowed first; relabeling as LIVE_DEVICE/PRERECORDED/MANUAL rejects; later capture authentication separately.",
+      "owners": [
+        "H04",
+        "H08",
+        "H09"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-03"
+      ]
+    },
+    {
+      "id": "R08-T07",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Idempotent measurement and append correction",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_negatives_rejections_and_original_inputs_retained,17-23"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+          "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+          "bytes": 19763,
+          "anchor": "sequential request key/payload conflict,204-208"
+        }
+      ],
+      "gap": "Original inputs retained and generic sequential conflicts do not prove measurement ingest/concurrent correction.",
+      "next_closure": "Exact duplicate returns original; changed payload conflicts; append replacement/correction preserving original and stale analysis history.",
+      "owners": [
+        "H00",
+        "H04",
+        "H09"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-03",
+        "AT-ENG-08"
+      ]
+    },
+    {
+      "id": "R08-T08",
+      "classification": "NEW_GAP",
+      "claim_scope": "Done but defective specimen",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_even_passing_synthetic_check_cannot_fabricate_or_accept,30-33"
+        }
+      ],
+      "gap": "No completion/inspection/specimen states.",
+      "next_closure": "Inert completion+defect fixture yields independent history and UNQUALIFIED; physical inspection requires supervised later gate.",
+      "owners": [
+        "H09",
+        "H06"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-06"
+      ]
+    },
+    {
+      "id": "R08-T09",
+      "classification": "NOT_IN_THIS_SLICE",
+      "claim_scope": "Actual lost machine-start acknowledgement",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+          "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+          "bytes": 19763,
+          "anchor": "manual RUNNING rewrite,237-244"
+        }
+      ],
+      "gap": "Manual job state rewrite is not actual start ACK loss; no machine adapter exists.",
+      "next_closure": "Carry UNKNOWN/no automatic replay documentary rule; later sealed-job endpoint/device observation tests.",
+      "owners": [
+        "H09",
+        "H04",
+        "H06"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-05",
+        "AT-ENG-06"
+      ]
+    },
+    {
+      "id": "R08-T10",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Same key different sealed payload",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+          "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+          "bytes": 19763,
+          "anchor": "sequential identical/conflicting request reuse,204-208"
+        }
+      ],
+      "gap": "No sealed machine payload or concurrent device interaction.",
+      "next_closure": "Inert conflict over exact record payload digest; future machine gateway bound to exact job with no second start.",
+      "owners": [
+        "H00",
+        "H04",
+        "H09"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-05",
+        "AT-ENG-08"
+      ]
+    },
+    {
+      "id": "R08-T11",
+      "classification": "NEW_GAP",
+      "claim_scope": "Admission and post-acceptance config invalidation",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_provenance_and_metadata,50-52"
+        }
+      ],
+      "gap": "Unknown parent rejection is not material/boot/profile/assembly invalidation.",
+      "next_closure": "Append ineligibility for material lot/orientation/assembly/calibration/acquisition changes; retain old verdict; device boot later.",
+      "owners": [
+        "H08",
+        "H09",
+        "H06"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-05",
+        "AT-ENG-08"
+      ]
+    },
+    {
+      "id": "R08-T12",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Revocation at dispatch/publication",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+          "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+          "bytes": 19763,
+          "anchor": "fresh-read result withholding,99-105"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/coordinator.py",
+          "sha256": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+          "bytes": 5970,
+          "anchor": "view,79-101"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/cli.py",
+          "sha256": "9f72fe8ebd03e524711747ac2a1eb2bcff690197bfaa5f3631494eb621e19237",
+          "bytes": 3009,
+          "anchor": "render later,52-56"
+        }
+      ],
+      "gap": "Fresh read then later render has race; no physical dispatch.",
+      "next_closure": "Consume accepted I01/I06 synthetic ordering API; test revoke before release. Physical permit ordering remains separate future gate.",
+      "owners": [
+        "H04",
+        "H00",
+        "H09"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-05",
+        "AT-ENG-07"
+      ]
+    },
+    {
+      "id": "R08-T13",
+      "classification": "NOT_IN_THIS_SLICE",
+      "claim_scope": "Controller reboot while uncertain",
+      "evidence": [],
+      "gap": "No controller or independently observed physical state.",
+      "next_closure": "Future gateway inhibits start, reconciles sealed job and boot/config, refuses automatic resume/replay.",
+      "owners": [
+        "H09",
+        "H04",
+        "H06"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-05",
+        "AT-ENG-06"
+      ]
+    },
+    {
+      "id": "R08-T14",
+      "classification": "NOT_IN_THIS_SLICE",
+      "claim_scope": "Executable CAD containment",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_design_identifiers_cannot_escape_artifact_directory,71-75"
+        }
+      ],
+      "gap": "ID path validation is not OS filesystem/network/secret containment.",
+      "next_closure": "First adapter rejects executable/CAD source. Separate CAD package requires tested OS boundary, exact tool and lifecycle.",
+      "owners": [
+        "H02",
+        "H09",
+        "H04"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-02",
+        "AT-ENG-05"
+      ]
+    },
+    {
+      "id": "R08-T15",
+      "classification": "NOT_IN_THIS_SLICE",
+      "claim_scope": "CAD worker survives parent death",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+          "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+          "bytes": 19763,
+          "anchor": "live-parent timeout,162-169"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/backend.py",
+          "sha256": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+          "bytes": 2643,
+          "anchor": "startup47-48 before try/finally; cleanup44-70"
+        }
+      ],
+      "gap": "CODE-H1 gap; no current repaired R1 available.",
+      "next_closure": "Independent parent-death/deadline/observed-stop proof before executable CAD workers; output withholding insufficient.",
+      "owners": [
+        "H02",
+        "H06",
+        "H09"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-09"
+      ]
+    },
+    {
+      "id": "R08-T16",
+      "classification": "NEW_GAP",
+      "claim_scope": "Protected holdout access",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/design_check.py",
+          "sha256": "b6ca5348a1393b67e0c56ab361cea8d69d67f05f54fefef0570257ce0746e3b4",
+          "bytes": 794,
+          "anchor": "same-author check,1-18"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/haven_lab/notebook.py",
+          "sha256": "6cb81f737325fd6625e96230b9a688e048479db801e525add29fccb9f6c3cbac",
+          "bytes": 10793,
+          "anchor": "campaign direct evaluator,115-136"
+        }
+      ],
+      "gap": "No authenticated holdout-reader boundary or independent evaluator.",
+      "next_closure": "Positive reviewer-only and proposer-denied fixtures against accepted authority interface; real independent evaluation qualification later.",
+      "owners": [
+        "H06",
+        "H04",
+        "H02",
+        "H09"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-04"
+      ]
+    },
+    {
+      "id": "R08-T17",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Predicted improvement versus measured regression",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_negatives_rejections_and_original_inputs_retained,17-23"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_no_improvement_stops,40-43"
+        }
+      ],
+      "gap": "Synthetic negatives retained; no paired predicted-versus-measured actual outcome.",
+      "next_closure": "Synthetic measurement discrepancy correction retains failure; later measured regression under frozen E01 protocol.",
+      "owners": [
+        "H06",
+        "H08",
+        "H09"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-03"
+      ]
+    },
+    {
+      "id": "R08-T18",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Candidate/print/spend/no-progress caps",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_max_five_and_metric_cannot_change,34-39"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_no_improvement_stops,40-43"
+        }
+      ],
+      "gap": "Five-candidate and no-improvement checks; no print/material/energy/operator accounting.",
+      "next_closure": "Reference I05 reservation/attempt/revision; exact ms caps; unknown admitted cost stays reserved; physical caps later.",
+      "owners": [
+        "H02",
+        "H09",
+        "H06"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-09"
+      ]
+    },
+    {
+      "id": "R08-T19",
+      "classification": "NEEDS_OWNER_DECISION",
+      "claim_scope": "Shared-space physical plan",
+      "evidence": [],
+      "gap": "No identified machine/location/supervision or permissions.",
+      "next_closure": "H09/user decide actual placement/ventilation/power/noise/operator plan before fabrication; no purchase inferred. Inert work continues.",
+      "owners": [
+        "H09",
+        "H04",
+        "USER"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-01",
+        "AT-ENG-07"
+      ]
+    },
+    {
+      "id": "R08-T20",
+      "classification": "PARTIALLY_COVERED",
+      "claim_scope": "Forbidden hazardous task boundary",
+      "evidence": [
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_bad_dimensions_and_execution_fields_denied,44-49"
+        },
+        {
+          "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+          "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+          "bytes": 4961,
+          "anchor": "test_even_passing_synthetic_check_cannot_fabricate_or_accept,30-33"
+        }
+      ],
+      "gap": "All physical actions blocked, not domain-specific safety classifier or handling competence.",
+      "next_closure": "Reject executable/physical instructions in inert profile and retain safe evidence inspection; later intended-use and H10 safety review.",
+      "owners": [
+        "H09",
+        "H06",
+        "H10"
+      ],
+      "actual_execution": "NOT_EXECUTED_BY_R08_P00",
+      "full_case_pass": false,
+      "original_acceptance_ids": [
+        "AT-ENG-05",
+        "AT-ENG-10"
+      ]
+    }
+  ],
+  "affected_n2_tests": [
+    {
+      "id": "N2Tests.test_fixed_objective_expected_values_and_selection",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_fixed_objective_expected_values_and_selection:10"
+      },
+      "assertion": "Exact baseline10.3456, five scores, CANDIDATE_4, PROPOSE_NEXT_FOR_REVIEW, UNQUALIFIED.",
+      "r08_cases": [
+        "R08-T01",
+        "R08-T02",
+        "R08-T17"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    },
+    {
+      "id": "N2Tests.test_negatives_rejections_and_original_inputs_retained",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_negatives_rejections_and_original_inputs_retained:17"
+      },
+      "assertion": "Original inputs unchanged; complete negative sequence; five iterations and evaluation/design digest pairs.",
+      "r08_cases": [
+        "R08-T01",
+        "R08-T07",
+        "R08-T17"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    },
+    {
+      "id": "N2Tests.test_missing_rejected_and_mismatched_evaluation_never_accepted",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_missing_rejected_and_mismatched_evaluation_never_accepted:24"
+      },
+      "assertion": "Missing/rejected/mismatched evaluation raises Denied for ACCEPTED/FABRICATION.",
+      "r08_cases": [
+        "R08-T01",
+        "R08-T02"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    },
+    {
+      "id": "N2Tests.test_even_passing_synthetic_check_cannot_fabricate_or_accept",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_even_passing_synthetic_check_cannot_fabricate_or_accept:30"
+      },
+      "assertion": "Passing synthetic check still NOT_AUTHORIZED; fabrication false.",
+      "r08_cases": [
+        "R08-T02",
+        "R08-T08",
+        "R08-T20"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    },
+    {
+      "id": "N2Tests.test_max_five_and_metric_cannot_change",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_max_five_and_metric_cannot_change:34"
+      },
+      "assertion": "Six/bool iterations, changed metric and sixth candidate reject.",
+      "r08_cases": [
+        "R08-T03",
+        "R08-T18"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    },
+    {
+      "id": "N2Tests.test_no_improvement_stops",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_no_improvement_stops:40"
+      },
+      "assertion": "Candidate5 alone stops with no next candidate.",
+      "r08_cases": [
+        "R08-T17",
+        "R08-T18"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    },
+    {
+      "id": "N2Tests.test_bad_dimensions_and_execution_fields_denied",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_bad_dimensions_and_execution_fields_denied:44"
+      },
+      "assertion": "NaN/Inf/bool/-1/101 or fabrication flag reject.",
+      "r08_cases": [
+        "R08-T04",
+        "R08-T06",
+        "R08-T20"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    },
+    {
+      "id": "N2Tests.test_provenance_and_metadata",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_provenance_and_metadata:50"
+      },
+      "assertion": "Unknown candidate parent rejects.",
+      "r08_cases": [
+        "R08-T11"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    },
+    {
+      "id": "N2Tests.test_n1_executed_gate_matches_source",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_n1_executed_gate_matches_source:53"
+      },
+      "assertion": "verify_n1_gate returns64-character digest after verifier's source/log checks; gate provenance mapping remains explicit.",
+      "r08_cases": [
+        "R08-T12",
+        "R08-T15"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    },
+    {
+      "id": "N2Tests.test_n1_gate_rejects_failed_or_incomplete_evidence",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_n1_gate_rejects_failed_or_incomplete_evidence:56"
+      },
+      "assertion": "Failed/skipped/empty/wrong-suite/source/duplicate/test status invalid evidence rejects.",
+      "r08_cases": [
+        "R08-T12",
+        "R08-T15"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    },
+    {
+      "id": "N2Tests.test_design_identifiers_cannot_escape_artifact_directory",
+      "classification": "COVERED_BY_EQUIVALENT_EVIDENCE",
+      "classification_scope": "UNCHANGED_HISTORICAL_SYNTHETIC_ASSERTION_ONLY",
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n2.py",
+        "sha256": "3ae28ae1fd0390b284473e2e4ddad449ab45d8dfe3a4327688bd21e3719dbd4a",
+        "bytes": 4961,
+        "anchor": "test_design_identifiers_cannot_escape_artifact_directory:71"
+      },
+      "assertion": "Relative escape, absolute, nonstring/empty artifact IDs reject; no CAD sandbox claim.",
+      "r08_cases": [
+        "R08-T14"
+      ],
+      "r08_coverage": "PARTIALLY_COVERED_OR_FUTURE_GAP_AS_IN_CASE_ROWS",
+      "historical_suite_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/outputs/logs/n2-20260928T032102Z-341135.json",
+        "sha256": "f3c91075cbf52200190e58d9478b143c0a870479a07132fa3ad3e4a8f21d5f69",
+        "bytes": 6673,
+        "anchor": "11 recorded passes; not rerun"
+      },
+      "affected_by_next_package": "Preserve as regression baseline unchanged; separately test new sidecar; no physical acceptance implied."
+    }
+  ],
+  "n1_analogues": [
+    {
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "anchor": "99-105"
+      },
+      "classification": "PARTIALLY_COVERED",
+      "claim": "Fresh read withholding, not delayed-release serialization."
+    },
+    {
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "anchor": "162-169"
+      },
+      "classification": "PARTIALLY_COVERED",
+      "claim": "Live-parent timeout, not parent-death containment."
+    },
+    {
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "anchor": "204-208"
+      },
+      "classification": "PARTIALLY_COVERED",
+      "claim": "Sequential generic request reuse/conflict, not concurrent measurement/gateway idempotency."
+    },
+    {
+      "source_ref": {
+        "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/lab/tests/test_n1.py",
+        "sha256": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0",
+        "bytes": 19763,
+        "anchor": "237-244"
+      },
+      "classification": "PARTIALLY_COVERED",
+      "claim": "Manual RUNNING state rewrite, not actual crash or lost machine ACK."
+    }
+  ],
+  "historical_redaction": {
+    "source_ref": {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/night01/REDACTION_MANIFEST.json",
+      "sha256": "a662d067ee7723b123ceb617bf6e529726787fd3bbd42e66747be5722e94aca0",
+      "bytes": 3211,
+      "anchor": "N1_GATE mapping"
+    },
+    "original_gate": "f2b62ee7cdb926032b6d846c6adb91f990179e94c06b71782ffe8c7113a63019",
+    "review_gate": "d1e330280582a181a5a7750b24ff56b12ad9740b12a09d47e3adc1d9749da66c",
+    "interpretation": "Archive redaction mapping; no private original reproduction and no new execution."
+  },
+  "all_original_AT_status": "NOT_EXECUTED_BY_THIS_TASK",
+  "new_application_test_count": 0
+}

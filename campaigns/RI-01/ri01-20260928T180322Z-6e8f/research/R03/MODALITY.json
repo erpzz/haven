@@ -1,0 +1,21 @@
+{
+  "task_id": "R03",
+  "agent": "/root/ri01_privacy",
+  "checked_at_utc": "2026-09-28T18:56:15.5026120Z",
+  "exact_model": "NOT_EXPOSED",
+  "text_code": "Read source documents and contracts; application source execution not performed",
+  "web": "Primary HTML/documentation text inspected",
+  "images": "NOT_EXERCISED",
+  "pdf_figures": "NOT_EXERCISED",
+  "audio": "NOT_EXERCISED; no direct audio tool used",
+  "video": "NOT_EXERCISED; no frame sampling used",
+  "spatial": "Contract text read; no geometry/sensor data rendered",
+  "generation": "NOT_EXERCISED",
+  "private_signals": "NOT_ACCESSED",
+  "mode": "DOCUMENTATION_ONLY",
+  "transforms": [
+    "PowerShell JSON parsing and file hashing only"
+  ],
+  "rights": "Public source links and original design prose; no third-party media redistributed",
+  "limitation": "Protocol documentation does not establish Haven runtime modality, device privacy or physical capability"
+}

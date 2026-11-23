@@ -1,0 +1,291 @@
+[
+  {
+    "upstream_task": "INTAKE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/INVENTORY.md",
+      "section": "Decisions and classification; Exact source gaps",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+    "finding": "Three returned handbacks are not accepted implementation; original R01 prompt bytes unavailable",
+    "disposition": "REUSED",
+    "downstream_section": "Metadata; Risks 6; Next package",
+    "design_effect": "Use current R01 task card, acknowledge missing prompt, preserve publication/implementation distinction",
+    "reason": "Hard accepted inventory matches assigned SHA256",
+    "review_state": "ACCEPTED_FOR_SYNTHESIS_INVENTORY_ONLY"
+  },
+  {
+    "upstream_task": "VISION-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/REVIEW.md",
+      "section": "Five integrated journeys; V0-02 through V0-04",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "cb0e9fd770f5dc7040d57abd38451e388530759bb6132b5369bcfaf07b71af36",
+    "finding": "Retain daily recall, image follow-up, replay, public Observatory and engineering failure learning",
+    "disposition": "REUSED",
+    "downstream_section": "Summary; S1-S5; Maturity ladder",
+    "design_effect": "Map recall S1, image S4, replay S5a, Observatory S5b, failure learning S2; preserve rich stages and daily usefulness",
+    "reason": "Exact substantive accepted intake vision plus closure",
+    "review_state": "ACCEPTED_INTAKE_VISION_ONLY"
+  },
+  {
+    "upstream_task": "VISION-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/CLOSURE-1.md",
+      "section": "V0-01 closure; reviewed exact hashes",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "151e22a9030be0d50643261dbec081f12f343460b790ec15839e30381f5aeabf",
+    "finding": "Closure resolves pending-intake disposition and retains additive R14 scope",
+    "disposition": "REUSED",
+    "downstream_section": "Metadata; Maturity ladder; Risks",
+    "design_effect": "Do not treat initial CHANGES_REQUIRED as current intake blocker or as future technical approval",
+    "reason": "Closure governs intake disposition",
+    "review_state": "ACCEPTED_INTAKE_VISION_ONLY"
+  },
+  {
+    "upstream_task": "VISION-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/REQUIREMENT_MAP.json",
+      "section": "rows, H01 DAILY and V anchors",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "a23c5082af277e9bd24a911688addc3815bc77f8d4ba3624d2c696887de61f40",
+    "finding": "102 actual original identifiers/owners/AT links are source coverage only",
+    "disposition": "REUSED",
+    "downstream_section": "Requirements metadata; scenario links; Acceptance",
+    "design_effect": "Keep original IDs and distinguish R01-local D/B case labels; no product-coverage claim",
+    "reason": "Mapping cannot replace original expected results",
+    "review_state": "ACCEPTED_SOURCE_COVERAGE_ONLY"
+  },
+  {
+    "upstream_task": "VISION-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/EXPERIMENT_MAP.json",
+      "section": "EX01 EX05 EX06 EX31",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "f8eda76b0b99325bdf4061b877deb48036b8cc4a9d1d7c1f4824a1f605b0a1d8",
+    "finding": "32 original experiments; EX05 H03 and EX31 H01 with REQ-RF-05",
+    "disposition": "REUSED",
+    "downstream_section": "Requirements metadata; S3 S5; two experiments",
+    "design_effect": "Preserve cross-domain ownership and extend rather than rename EX01/06/31",
+    "reason": "Avoid reassigning by daily-scenario title",
+    "review_state": "ACCEPTED_SOURCE_COVERAGE_ONLY"
+  },
+  {
+    "upstream_task": "CANONICAL-DAILY",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "baseline/cumulative-v1.0/docs/02_DAILY_ASSISTANT.md",
+      "section": "First useful release; Conversation contract; Memory classes; Action lifecycle; Reminders; Attention; Acceptance",
+      "revision_note": "Exact local bytes hashed; campaign-derived artifacts may be uncommitted relative to base"
+    },
+    "artifact_sha256": "7db327e61411afb580a5e4a27e6e62d71327941a50685b2c14e3c2559438ed79",
+    "finding": "Daily value before aircraft, current source memory, domain-specific tasks and honest durable receipts",
+    "disposition": "REUSED",
+    "downstream_section": "D1-D4; S1-S4; Interface changes; D01-D12",
+    "design_effect": "Selected notebook/image slice, no OUTSIDE_CHECK for calendar, no subscription dependency, majority daily cases",
+    "reason": "Authoritative retained domain design",
+    "review_state": "RETAINED_DESIGN_NOT_IMPLEMENTED"
+  },
+  {
+    "upstream_task": "CANONICAL-PRIVACY",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "baseline/cumulative-v1.0/docs/03_PRIVACY_AND_AUTHORITY.md",
+      "section": "Principals/scopes; Consent; Threat model; Human agency",
+      "revision_note": "Exact local bytes hashed; campaign-derived artifacts may be uncommitted relative to base"
+    },
+    "artifact_sha256": "500f2ed36d932dfba5520f18027138fcd2aa38508a1d45be205a7e9f328ff2bf",
+    "finding": "Independent people; purpose/channel/provider consent; revocation and independent recovery",
+    "disposition": "REUSED",
+    "downstream_section": "D1 D3; S1 S3 S5; Offline matrix",
+    "design_effect": "Separate private A/B/shared output, bound recipients, keep independent alarms and host-admin limitation",
+    "reason": "Personalization cannot create authority",
+    "review_state": "RETAINED_DESIGN_NOT_IMPLEMENTED"
+  },
+  {
+    "upstream_task": "CANONICAL-ARCHITECTURE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "baseline/cumulative-v1.0/docs/01_SYSTEM_ARCHITECTURE.md",
+      "section": "Four planes; Source-of-truth boundaries; Placement; Governance",
+      "revision_note": "Exact local bytes hashed; campaign-derived artifacts may be uncommitted relative to base"
+    },
+    "artifact_sha256": "d4dbb74347de3f00d41a932c3cde14106034637254f2fc7014e39e8897c2f072",
+    "finding": "Domain lifecycles distinct; small existing stack and per-user resource fairness",
+    "disposition": "REUSED",
+    "downstream_section": "Interface changes; Affordable alternatives; Next package",
+    "design_effect": "Presentation references trusted records without new services/universal state, PC sleep explicit, no forced broker",
+    "reason": "Preserve foundations rather than rebuild around UI",
+    "review_state": "RETAINED_DESIGN_NOT_IMPLEMENTED"
+  },
+  {
+    "upstream_task": "H01-STARTER",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/agents/H01_STARTER.md",
+      "section": "Exact assignment",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "84f0c0b463b20ce43ca466ee88ffd478ba2b5cbbe39bd9a8f936999ca1899de5",
+    "finding": "Twelve daily and four physical/health boundary journeys; draft/request/ack/outcome distinctions",
+    "disposition": "REUSED",
+    "downstream_section": "Acceptance D01-D12/B01-B04; receipt wording",
+    "design_effect": "Preserve historical breadth under current five-priority-card assignment",
+    "reason": "Historical document is scope evidence, not fresh execution authority",
+    "review_state": "RECOVERED_SOURCE"
+  },
+  {
+    "upstream_task": "ORIGINAL-REQ",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "section": "REQ-DAILY-01 through REQ-DAILY-10",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+    "finding": "Ten retained H01 requirements, exact AT links and unimplemented status",
+    "disposition": "REUSED",
+    "downstream_section": "Scenario mapping; Acceptance",
+    "design_effect": "Cover conversation, reminders, research, drafts, ambiguity, memory, proactivity, continuity, interruption, offline",
+    "reason": "Original statements remain authoritative",
+    "review_state": "RECOVERED_SOURCE_NOT_ACCEPTANCE"
+  },
+  {
+    "upstream_task": "ORIGINAL-AT",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "section": "AT-DAILY-01 through AT-DAILY-10",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+    "finding": "Exact setups/expected results and NOT_EXECUTED status",
+    "disposition": "REUSED",
+    "downstream_section": "Acceptance; S1-S5 measures",
+    "design_effect": "Add falsifiable usefulness targets without replacing original boundary expectations",
+    "reason": "No runtime tests executed by research author",
+    "review_state": "NOT_EXECUTED"
+  },
+  {
+    "upstream_task": "ORIGINAL-EX",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "section": "EX01 EX05 EX06 EX31",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+    "finding": "Notebook deterministic baseline, durable reminders, voice/stop and map uncertainty protocols",
+    "disposition": "REUSED",
+    "downstream_section": "Smallest/Ambitious experiments; S3 S5",
+    "design_effect": "Retain deterministic comparisons and stop conditions; use synthetic/consented future fixtures",
+    "reason": "Experiments extended but original identity/owner/status retained",
+    "review_state": "PROPOSED_NOT_EXECUTED"
+  },
+  {
+    "upstream_task": "ORIGINAL-CONTRACTS",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/README.md",
+      "section": "Boundaries; Invariants not solved by field validation; M0 coexistence",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "84e46ea3a07c3dfb9ca4d8bc95453171d9e51b4e72b8c8dc5113561962a40615",
+    "finding": "Inert schemas do not authorize runtime effects or prove identity/consent",
+    "disposition": "REUSED",
+    "downstream_section": "Interface changes; Next package",
+    "design_effect": "Presentation is documentation profile, no applied migration or mock-to-real conversion",
+    "reason": "Schema shape alone cannot grant authority",
+    "review_state": "INERT_DESIGN_SOURCE"
+  },
+  {
+    "upstream_task": "CORE-PRE",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/CONTRACT_CROSSWALK.md",
+      "section": "D-PRE-01 through 03; I01-I07; cancellation conflict5",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "64db8ea1c5ee1262a549bb589bbb7c0e36bc4dccd758e2e3a845e6d44844ec45",
+    "finding": "Seven provisional interfaces, useful selected image/notes, suppressed output distinct from termination",
+    "disposition": "AMENDED",
+    "downstream_section": "Interface changes; interruption; Next package",
+    "design_effect": "Reference interfaces and add audience/receipt/repair projection; no final CORE claim",
+    "reason": "CORE/R03/R02-P01 closure remains soft research input and hard later implementation gate",
+    "review_state": "PROVISIONAL_DESIGN_ONLY"
+  },
+  {
+    "upstream_task": "R03",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/CONSULTATIONS.md",
+      "section": "Q-R01-01 Shared plan excerpt and offline output",
+      "revision_note": "Campaign artifact exact bytes captured by SHA256; base commit is repository ancestry, not assertion that these bytes are committed"
+    },
+    "artifact_sha256": "473fc43f4eb8340992b450b74e12c1315ddacf2eaa4e9c743744bae3b1cab6d5",
+    "finding": "Strict parent+excerpt dependencies; fresh private/shared offline replay disallowed; prior delivered copies may remain",
+    "disposition": "REUSED",
+    "downstream_section": "D3; S1 S3 S5; offline matrix; Risks1",
+    "design_effect": "Replace uncertain shared-excerpt default with actual provisional author answer; no independent declassification path now",
+    "reason": "Precise peer advice received via root and exact receipt read, not invented consensus",
+    "review_state": "AUTHOR_ADVICE_PENDING_INDEPENDENT_REVIEW"
+  },
+  {
+    "upstream_task": "RI01-TASK",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "section": "R01 Daily and cooperative experience",
+      "revision_note": "Exact local bytes hashed; campaign-derived artifacts may be uncommitted relative to base"
+    },
+    "artifact_sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+    "finding": "Five useful scenarios, measurable recovery/accessibility/proactivity/offline/modest setup",
+    "disposition": "REUSED",
+    "downstream_section": "Entire report",
+    "design_effect": "Five detailed priority cards rather than another planning prompt",
+    "reason": "Current scoped assignment governs missing original prompt",
+    "review_state": "AUTHORIZED_RESEARCH_SCOPE"
+  },
+  {
+    "upstream_task": "RI01-MM",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "section": "A inspection; C audiences; D fusion; F evaluation",
+      "revision_note": "Exact local bytes hashed; campaign-derived artifacts may be uncommitted relative to base"
+    },
+    "artifact_sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+    "finding": "Actual media access separate from runtime; typed evidence, audience and correlated dependencies",
+    "disposition": "REUSED",
+    "downstream_section": "S4 S5; Evidence; experiments",
+    "design_effect": "Direct synthetic-image receipt only; rich replay includes coverage/time/frame/uncertainty and unexecuted media tests",
+    "reason": "Do not claim text access as audio/video or runtime qualification",
+    "review_state": "CAMPAIGN_REQUIREMENT"
+  }
+]

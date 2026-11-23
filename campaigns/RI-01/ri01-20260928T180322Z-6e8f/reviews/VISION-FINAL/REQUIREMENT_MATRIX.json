@@ -1,0 +1,3758 @@
+{
+  "schema": "ri01.vision-final.scope-review.v1",
+  "reviewer": "/root/ri01_vision",
+  "date_utc": "2026-09-29",
+  "candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+  "root_reported_commit": "c087bf9c00cb9213dc3225852fb7385ba0eb9aef",
+  "commit_independently_verified": false,
+  "disposition": "PASS_DOCUMENTARY_SYNTHESIS_ONLY",
+  "read_scope": "All requirement statements/owner/anchor/next/gap and AT expected outcomes; EX name/method/owner; complete structural comparison of originals. No fresh full upstream domain review, no current app qualification, no experiment executed.",
+  "counts": {
+    "journeys": 5,
+    "anchors": 16,
+    "requirements": 102,
+    "future_packages": 14,
+    "gen0": 36,
+    "experiments": 32,
+    "acceptance": 102,
+    "crossmodal_cases": 36
+  },
+  "requirements": {
+    "REQ-CORE-01": {
+      "name": "Cumulative scope",
+      "original_owner": "H00",
+      "integration_owner": "H00",
+      "acceptance_ids": [
+        "AT-CORE-01"
+      ],
+      "vision_anchors": [
+        "V16",
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Cumulative scope using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No deployed enforcement or current application source qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Preserve active M0 and original milestones; independently review the selected documentary/inert slice, without claiming current runtime qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-CORE-02": {
+      "name": "Personalized identity",
+      "original_owner": "H00",
+      "integration_owner": "H00",
+      "acceptance_ids": [
+        "AT-CORE-02"
+      ],
+      "vision_anchors": [
+        "V01",
+        "V16"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Personalized identity using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No deployed enforcement or current application source qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Preserve active M0 and original milestones; independently review the selected documentary/inert slice, without claiming current runtime qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-CORE-03": {
+      "name": "Preserve active M0",
+      "original_owner": "H00",
+      "integration_owner": "H00",
+      "acceptance_ids": [
+        "AT-CORE-03"
+      ],
+      "vision_anchors": [
+        "V16"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Preserve active M0 using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No deployed enforcement or current application source qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Preserve active M0 and original milestones; independently review the selected documentary/inert slice, without claiming current runtime qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-CORE-04": {
+      "name": "Independent work tracks",
+      "original_owner": "H00",
+      "integration_owner": "H00",
+      "acceptance_ids": [
+        "AT-CORE-04"
+      ],
+      "vision_anchors": [
+        "V15",
+        "V01",
+        "V16"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Independent work tracks using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No deployed enforcement or current application source qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Preserve active M0 and original milestones; independently review the selected documentary/inert slice, without claiming current runtime qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-CORE-05": {
+      "name": "Existing compute first",
+      "original_owner": "H00",
+      "integration_owner": "H00",
+      "acceptance_ids": [
+        "AT-CORE-05"
+      ],
+      "vision_anchors": [
+        "V03",
+        "V16"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Existing compute first using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No deployed enforcement or current application source qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Preserve active M0 and original milestones; independently review the selected documentary/inert slice, without claiming current runtime qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-CORE-06": {
+      "name": "Reviewable starter",
+      "original_owner": "H00",
+      "integration_owner": "H00",
+      "acceptance_ids": [
+        "AT-CORE-06"
+      ],
+      "vision_anchors": [
+        "V16"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Reviewable starter using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No deployed enforcement or current application source qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Preserve active M0 and original milestones; independently review the selected documentary/inert slice, without claiming current runtime qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-CORE-07": {
+      "name": "Family explanation",
+      "original_owner": "H00",
+      "integration_owner": "H00",
+      "acceptance_ids": [
+        "AT-CORE-07"
+      ],
+      "vision_anchors": [
+        "V01",
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Family explanation using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No deployed enforcement or current application source qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Preserve active M0 and original milestones; independently review the selected documentary/inert slice, without claiming current runtime qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DAILY-01": {
+      "name": "Everyday conversation",
+      "original_owner": "H01",
+      "integration_owner": "H01/H03",
+      "acceptance_ids": [
+        "AT-DAILY-01"
+      ],
+      "vision_anchors": [
+        "V01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R01-P1 and R05-P0: freeze a scoped demonstration of Everyday conversation using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Vignettes are not scheduler, connector, cross-device or user acceptance; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Freeze useful positive task plus original AT; native reminders, external effects and enrolled-device handoff have separate profiles; AT-DAILY-08 remains partial",
+      "related_final_package_ids": [
+        "R05-AGENDA-LOCAL",
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DAILY-02": {
+      "name": "Planning and reminders",
+      "original_owner": "H01",
+      "integration_owner": "H01/H03",
+      "acceptance_ids": [
+        "AT-DAILY-02"
+      ],
+      "vision_anchors": [
+        "V01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R01-P1 and R05-P0: freeze a scoped demonstration of Planning and reminders using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Vignettes are not scheduler, connector, cross-device or user acceptance; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Freeze useful positive task plus original AT; native reminders, external effects and enrolled-device handoff have separate profiles; AT-DAILY-08 remains partial",
+      "related_final_package_ids": [
+        "R05-AGENDA-LOCAL",
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DAILY-03": {
+      "name": "Research and files",
+      "original_owner": "H01",
+      "integration_owner": "H01/H03",
+      "acceptance_ids": [
+        "AT-DAILY-03"
+      ],
+      "vision_anchors": [
+        "V01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R01-P1 and R05-P0: freeze a scoped demonstration of Research and files using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Vignettes are not scheduler, connector, cross-device or user acceptance; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Freeze useful positive task plus original AT; native reminders, external effects and enrolled-device handoff have separate profiles; AT-DAILY-08 remains partial",
+      "related_final_package_ids": [
+        "R05-AGENDA-LOCAL",
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DAILY-04": {
+      "name": "Draft versus send",
+      "original_owner": "H01",
+      "integration_owner": "H01/H03",
+      "acceptance_ids": [
+        "AT-DAILY-04"
+      ],
+      "vision_anchors": [
+        "V01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R01-P1 and R05-P0: freeze a scoped demonstration of Draft versus send using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Vignettes are not scheduler, connector, cross-device or user acceptance; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Freeze useful positive task plus original AT; native reminders, external effects and enrolled-device handoff have separate profiles; AT-DAILY-08 remains partial",
+      "related_final_package_ids": [
+        "R05-AGENDA-LOCAL",
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DAILY-05": {
+      "name": "Calendar ambiguity",
+      "original_owner": "H01",
+      "integration_owner": "H01/H03",
+      "acceptance_ids": [
+        "AT-DAILY-05"
+      ],
+      "vision_anchors": [
+        "V01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R01-P1 and R05-P0: freeze a scoped demonstration of Calendar ambiguity using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Vignettes are not scheduler, connector, cross-device or user acceptance; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Freeze useful positive task plus original AT; native reminders, external effects and enrolled-device handoff have separate profiles; AT-DAILY-08 remains partial",
+      "related_final_package_ids": [
+        "R05-AGENDA-LOCAL",
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DAILY-06": {
+      "name": "Memory controls",
+      "original_owner": "H01",
+      "integration_owner": "H01/H03",
+      "acceptance_ids": [
+        "AT-DAILY-06"
+      ],
+      "vision_anchors": [
+        "V01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R01-P1 and R05-P0: freeze a scoped demonstration of Memory controls using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Vignettes are not scheduler, connector, cross-device or user acceptance; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Freeze useful positive task plus original AT; native reminders, external effects and enrolled-device handoff have separate profiles; AT-DAILY-08 remains partial",
+      "related_final_package_ids": [
+        "R05-AGENDA-LOCAL",
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DAILY-07": {
+      "name": "Useful proactivity",
+      "original_owner": "H01",
+      "integration_owner": "H01/H03",
+      "acceptance_ids": [
+        "AT-DAILY-07"
+      ],
+      "vision_anchors": [
+        "V01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R01-P1 and R05-P0: freeze a scoped demonstration of Useful proactivity using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Vignettes are not scheduler, connector, cross-device or user acceptance; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Freeze useful positive task plus original AT; native reminders, external effects and enrolled-device handoff have separate profiles; AT-DAILY-08 remains partial",
+      "related_final_package_ids": [
+        "R05-AGENDA-LOCAL",
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DAILY-08": {
+      "name": "Cross-device continuity",
+      "original_owner": "H01",
+      "integration_owner": "H01/H03",
+      "acceptance_ids": [
+        "AT-DAILY-08"
+      ],
+      "vision_anchors": [
+        "V05",
+        "V01",
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R01-P1 and R05-P0: freeze a scoped demonstration of Cross-device continuity using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Vignettes are not scheduler, connector, cross-device or user acceptance; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": "R05 A08/account-switch C09 are not enrolled-device task handoff. Actual author proposed added C09 assertions retain32cases, but protocol amendment awaits final H06 review; no acceptance claimed",
+      "reviewer_reentry": "Freeze useful positive task plus original AT; native reminders, external effects and enrolled-device handoff have separate profiles; AT-DAILY-08 remains partial",
+      "related_final_package_ids": [
+        "R05-AGENDA-LOCAL",
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DAILY-09": {
+      "name": "Voice and interruption",
+      "original_owner": "H01",
+      "integration_owner": "H01/H03",
+      "acceptance_ids": [
+        "AT-DAILY-09"
+      ],
+      "vision_anchors": [
+        "V04",
+        "V01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R01-P1 and R05-P0: freeze a scoped demonstration of Voice and interruption using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Vignettes are not scheduler, connector, cross-device or user acceptance; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Freeze useful positive task plus original AT; native reminders, external effects and enrolled-device handoff have separate profiles; AT-DAILY-08 remains partial",
+      "related_final_package_ids": [
+        "R05-AGENDA-LOCAL",
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DAILY-10": {
+      "name": "Away/offline behavior",
+      "original_owner": "H01",
+      "integration_owner": "H01/H03",
+      "acceptance_ids": [
+        "AT-DAILY-10"
+      ],
+      "vision_anchors": [
+        "V01",
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R01-P1 and R05-P0: freeze a scoped demonstration of Away/offline behavior using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Vignettes are not scheduler, connector, cross-device or user acceptance; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Freeze useful positive task plus original AT; native reminders, external effects and enrolled-device handoff have separate profiles; AT-DAILY-08 remains partial",
+      "related_final_package_ids": [
+        "R05-AGENDA-LOCAL",
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-PRIV-01": {
+      "name": "Two independent users",
+      "original_owner": "H04",
+      "integration_owner": "H04",
+      "acceptance_ids": [
+        "AT-PRIV-01"
+      ],
+      "vision_anchors": [
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Two independent users using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Real principals, source rights, enforcement, erasure and restore remain unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independently protect positive/negative oracle, current full influencing authority, once-only release/consume and correction/restore; real users/native stores require separate qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-PRIV-02": {
+      "name": "Explicit household sharing",
+      "original_owner": "H04",
+      "integration_owner": "H04",
+      "acceptance_ids": [
+        "AT-PRIV-02"
+      ],
+      "vision_anchors": [
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Explicit household sharing using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Real principals, source rights, enforcement, erasure and restore remain unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independently protect positive/negative oracle, current full influencing authority, once-only release/consume and correction/restore; real users/native stores require separate qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-PRIV-03": {
+      "name": "Per-purpose consent",
+      "original_owner": "H04",
+      "integration_owner": "H04",
+      "acceptance_ids": [
+        "AT-PRIV-03"
+      ],
+      "vision_anchors": [
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Per-purpose consent using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Real principals, source rights, enforcement, erasure and restore remain unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independently protect positive/negative oracle, current full influencing authority, once-only release/consume and correction/restore; real users/native stores require separate qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-PRIV-04": {
+      "name": "Revocation and deletion",
+      "original_owner": "H04",
+      "integration_owner": "H04",
+      "acceptance_ids": [
+        "AT-PRIV-04"
+      ],
+      "vision_anchors": [
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Revocation and deletion using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Real principals, source rights, enforcement, erasure and restore remain unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independently protect positive/negative oracle, current full influencing authority, once-only release/consume and correction/restore; real users/native stores require separate qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-PRIV-05": {
+      "name": "Audience-aware output",
+      "original_owner": "H04",
+      "integration_owner": "H04",
+      "acceptance_ids": [
+        "AT-PRIV-05"
+      ],
+      "vision_anchors": [
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Audience-aware output using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Real principals, source rights, enforcement, erasure and restore remain unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independently protect positive/negative oracle, current full influencing authority, once-only release/consume and correction/restore; real users/native stores require separate qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-PRIV-06": {
+      "name": "Device identity",
+      "original_owner": "H04",
+      "integration_owner": "H04",
+      "acceptance_ids": [
+        "AT-PRIV-06"
+      ],
+      "vision_anchors": [
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Device identity using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Real principals, source rights, enforcement, erasure and restore remain unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independently protect positive/negative oracle, current full influencing authority, once-only release/consume and correction/restore; real users/native stores require separate qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-PRIV-07": {
+      "name": "No employer imports",
+      "original_owner": "H04",
+      "integration_owner": "H04",
+      "acceptance_ids": [
+        "AT-PRIV-07"
+      ],
+      "vision_anchors": [
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of No employer imports using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Real principals, source rights, enforcement, erasure and restore remain unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independently protect positive/negative oracle, current full influencing authority, once-only release/consume and correction/restore; real users/native stores require separate qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-PRIV-08": {
+      "name": "Prompt-injection isolation",
+      "original_owner": "H04",
+      "integration_owner": "H04",
+      "acceptance_ids": [
+        "AT-PRIV-08"
+      ],
+      "vision_anchors": [
+        "V02",
+        "V04"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Prompt-injection isolation using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Real principals, source rights, enforcement, erasure and restore remain unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independently protect positive/negative oracle, current full influencing authority, once-only release/consume and correction/restore; real users/native stores require separate qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-PRIV-09": {
+      "name": "Honest admin threat",
+      "original_owner": "H04",
+      "integration_owner": "H04",
+      "acceptance_ids": [
+        "AT-PRIV-09"
+      ],
+      "vision_anchors": [
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "CORE-P0: freeze a scoped demonstration of Honest admin threat using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Real principals, source rights, enforcement, erasure and restore remain unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independently protect positive/negative oracle, current full influencing authority, once-only release/consume and correction/restore; real users/native stores require separate qualification",
+      "related_final_package_ids": [
+        "CORE-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-AI-01": {
+      "name": "No-model first",
+      "original_owner": "H02",
+      "integration_owner": "H02",
+      "acceptance_ids": [
+        "AT-AI-01"
+      ],
+      "vision_anchors": [
+        "V03"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R02-P02-A then P03-EVAL: freeze a scoped demonstration of No-model first using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Independent lifecycle, exact artifact, containment, host and semantic oracle missing; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "VA-01 independent lifecycle cleanup AND exact adapter containment, unchanged M4 pin, exact rights/artifact/host and protected semantic oracle; no automatic allocation or hosted escalation",
+      "related_final_package_ids": [
+        "R02-P02-A",
+        "R02-P02-B",
+        "R02-P03-EVAL",
+        "MV-P1",
+        "P-MMAV-02-ASR"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-AI-02": {
+      "name": "Cheap model routing",
+      "original_owner": "H02",
+      "integration_owner": "H02",
+      "acceptance_ids": [
+        "AT-AI-02"
+      ],
+      "vision_anchors": [
+        "V03"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R02-P02-A then P03-EVAL: freeze a scoped demonstration of Cheap model routing using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Independent lifecycle, exact artifact, containment, host and semantic oracle missing; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "VA-01 independent lifecycle cleanup AND exact adapter containment, unchanged M4 pin, exact rights/artifact/host and protected semantic oracle; no automatic allocation or hosted escalation",
+      "related_final_package_ids": [
+        "R02-P02-A",
+        "R02-P02-B",
+        "R02-P03-EVAL",
+        "MV-P1",
+        "P-MMAV-02-ASR"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-AI-03": {
+      "name": "M4 preservation",
+      "original_owner": "H02",
+      "integration_owner": "H02",
+      "acceptance_ids": [
+        "AT-AI-03"
+      ],
+      "vision_anchors": [
+        "V16",
+        "V03"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R02-P02-A then P03-EVAL: freeze a scoped demonstration of M4 preservation using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Independent lifecycle, exact artifact, containment, host and semantic oracle missing; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "VA-01 independent lifecycle cleanup AND exact adapter containment, unchanged M4 pin, exact rights/artifact/host and protected semantic oracle; no automatic allocation or hosted escalation",
+      "related_final_package_ids": [
+        "R02-P02-A",
+        "R02-P02-B",
+        "R02-P03-EVAL",
+        "MV-P1",
+        "P-MMAV-02-ASR"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-AI-04": {
+      "name": "Framework comparison",
+      "original_owner": "H02",
+      "integration_owner": "H02",
+      "acceptance_ids": [
+        "AT-AI-04"
+      ],
+      "vision_anchors": [
+        "V03",
+        "V16"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R02-P02-A then P03-EVAL: freeze a scoped demonstration of Framework comparison using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Independent lifecycle, exact artifact, containment, host and semantic oracle missing; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "VA-01 independent lifecycle cleanup AND exact adapter containment, unchanged M4 pin, exact rights/artifact/host and protected semantic oracle; no automatic allocation or hosted escalation",
+      "related_final_package_ids": [
+        "R02-P02-A",
+        "R02-P02-B",
+        "R02-P03-EVAL",
+        "MV-P1",
+        "P-MMAV-02-ASR"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-AI-05": {
+      "name": "Two-user resource fairness",
+      "original_owner": "H02",
+      "integration_owner": "H02",
+      "acceptance_ids": [
+        "AT-AI-05"
+      ],
+      "vision_anchors": [
+        "V03",
+        "V02",
+        "V12"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R02-P02-A then P03-EVAL: freeze a scoped demonstration of Two-user resource fairness using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Independent lifecycle, exact artifact, containment, host and semantic oracle missing; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "VA-01 independent lifecycle cleanup AND exact adapter containment, unchanged M4 pin, exact rights/artifact/host and protected semantic oracle; no automatic allocation or hosted escalation",
+      "related_final_package_ids": [
+        "R02-P02-A",
+        "R02-P02-B",
+        "R02-P03-EVAL",
+        "MV-P1",
+        "P-MMAV-02-ASR"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-AI-06": {
+      "name": "Budget enforcement",
+      "original_owner": "H02",
+      "integration_owner": "H02",
+      "acceptance_ids": [
+        "AT-AI-06"
+      ],
+      "vision_anchors": [
+        "V03",
+        "V12"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R02-P02-A then P03-EVAL: freeze a scoped demonstration of Budget enforcement using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Independent lifecycle, exact artifact, containment, host and semantic oracle missing; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "VA-01 independent lifecycle cleanup AND exact adapter containment, unchanged M4 pin, exact rights/artifact/host and protected semantic oracle; no automatic allocation or hosted escalation",
+      "related_final_package_ids": [
+        "R02-P02-A",
+        "R02-P02-B",
+        "R02-P03-EVAL",
+        "MV-P1",
+        "P-MMAV-02-ASR"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-AI-07": {
+      "name": "Grounding and abstention",
+      "original_owner": "H02",
+      "integration_owner": "H02",
+      "acceptance_ids": [
+        "AT-AI-07"
+      ],
+      "vision_anchors": [
+        "V03",
+        "V04",
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R02-P02-A then P03-EVAL: freeze a scoped demonstration of Grounding and abstention using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Independent lifecycle, exact artifact, containment, host and semantic oracle missing; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "VA-01 independent lifecycle cleanup AND exact adapter containment, unchanged M4 pin, exact rights/artifact/host and protected semantic oracle; no automatic allocation or hosted escalation",
+      "related_final_package_ids": [
+        "R02-P02-A",
+        "R02-P02-B",
+        "R02-P03-EVAL",
+        "MV-P1",
+        "P-MMAV-02-ASR"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-AI-08": {
+      "name": "Voice economics",
+      "original_owner": "H02",
+      "integration_owner": "H02",
+      "acceptance_ids": [
+        "AT-AI-08"
+      ],
+      "vision_anchors": [
+        "V04",
+        "V03"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R02-P02-A then P03-EVAL: freeze a scoped demonstration of Voice economics using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Independent lifecycle, exact artifact, containment, host and semantic oracle missing; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "VA-01 independent lifecycle cleanup AND exact adapter containment, unchanged M4 pin, exact rights/artifact/host and protected semantic oracle; no automatic allocation or hosted escalation",
+      "related_final_package_ids": [
+        "R02-P02-A",
+        "R02-P02-B",
+        "R02-P03-EVAL",
+        "MV-P1",
+        "P-MMAV-02-ASR"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-AI-09": {
+      "name": "Versioned model registry",
+      "original_owner": "H02",
+      "integration_owner": "H02",
+      "acceptance_ids": [
+        "AT-AI-09"
+      ],
+      "vision_anchors": [
+        "V03",
+        "V15",
+        "V16"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R02-P02-A then P03-EVAL: freeze a scoped demonstration of Versioned model registry using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Independent lifecycle, exact artifact, containment, host and semantic oracle missing; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "VA-01 independent lifecycle cleanup AND exact adapter containment, unchanged M4 pin, exact rights/artifact/host and protected semantic oracle; no automatic allocation or hosted escalation",
+      "related_final_package_ids": [
+        "R02-P02-A",
+        "R02-P02-B",
+        "R02-P03-EVAL",
+        "MV-P1",
+        "P-MMAV-02-ASR"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-WEAR-01": {
+      "name": "Watch health route",
+      "original_owner": "H07",
+      "integration_owner": "H07",
+      "acceptance_ids": [
+        "AT-WEAR-01"
+      ],
+      "vision_anchors": [
+        "V05"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R04 staged phone/synthetic package: freeze a scoped demonstration of Watch health route using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Exact native tuples, source access, user enrollment and measured output unknown; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact per-person native SKU/OS/firmware/region/entitlement and observation/route qualification; health chronology is not diagnosis; phone-selected files remain useful first",
+      "related_final_package_ids": [
+        "R14-STAGE-A"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-WEAR-02": {
+      "name": "Measurement matrix",
+      "original_owner": "H07",
+      "integration_owner": "H07",
+      "acceptance_ids": [
+        "AT-WEAR-02"
+      ],
+      "vision_anchors": [
+        "V05"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R04 staged phone/synthetic package: freeze a scoped demonstration of Measurement matrix using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Exact native tuples, source access, user enrollment and measured output unknown; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact per-person native SKU/OS/firmware/region/entitlement and observation/route qualification; health chronology is not diagnosis; phone-selected files remain useful first",
+      "related_final_package_ids": [
+        "R14-STAGE-A"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-WEAR-03": {
+      "name": "Health freshness",
+      "original_owner": "H07",
+      "integration_owner": "H07",
+      "acceptance_ids": [
+        "AT-WEAR-03"
+      ],
+      "vision_anchors": [
+        "V05"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R04 staged phone/synthetic package: freeze a scoped demonstration of Health freshness using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Exact native tuples, source access, user enrollment and measured output unknown; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact per-person native SKU/OS/firmware/region/entitlement and observation/route qualification; health chronology is not diagnosis; phone-selected files remain useful first",
+      "related_final_package_ids": [
+        "R14-STAGE-A"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-WEAR-04": {
+      "name": "Manual Watch path",
+      "original_owner": "H07",
+      "integration_owner": "H07",
+      "acceptance_ids": [
+        "AT-WEAR-04"
+      ],
+      "vision_anchors": [
+        "V05",
+        "V16"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R04 staged phone/synthetic package: freeze a scoped demonstration of Manual Watch path using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Exact native tuples, source access, user enrollment and measured output unknown; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact per-person native SKU/OS/firmware/region/entitlement and observation/route qualification; health chronology is not diagnosis; phone-selected files remain useful first",
+      "related_final_package_ids": [
+        "R14-STAGE-A"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-WEAR-05": {
+      "name": "Glasses interfaces",
+      "original_owner": "H07",
+      "integration_owner": "H07",
+      "acceptance_ids": [
+        "AT-WEAR-05"
+      ],
+      "vision_anchors": [
+        "V05"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R04 staged phone/synthetic package: freeze a scoped demonstration of Glasses interfaces using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Exact native tuples, source access, user enrollment and measured output unknown; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact per-person native SKU/OS/firmware/region/entitlement and observation/route qualification; health chronology is not diagnosis; phone-selected files remain useful first",
+      "related_final_package_ids": [
+        "R14-STAGE-A"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-WEAR-06": {
+      "name": "Explicit capture",
+      "original_owner": "H07",
+      "integration_owner": "H07",
+      "acceptance_ids": [
+        "AT-WEAR-06"
+      ],
+      "vision_anchors": [
+        "V05",
+        "V04",
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R04 staged phone/synthetic package: freeze a scoped demonstration of Explicit capture using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Exact native tuples, source access, user enrollment and measured output unknown; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact per-person native SKU/OS/firmware/region/entitlement and observation/route qualification; health chronology is not diagnosis; phone-selected files remain useful first",
+      "related_final_package_ids": [
+        "R14-STAGE-A"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-WEAR-07": {
+      "name": "Independent sharing",
+      "original_owner": "H07",
+      "integration_owner": "H07",
+      "acceptance_ids": [
+        "AT-WEAR-07"
+      ],
+      "vision_anchors": [
+        "V05",
+        "V02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R04 staged phone/synthetic package: freeze a scoped demonstration of Independent sharing using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Exact native tuples, source access, user enrollment and measured output unknown; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact per-person native SKU/OS/firmware/region/entitlement and observation/route qualification; health chronology is not diagnosis; phone-selected files remain useful first",
+      "related_final_package_ids": [
+        "R14-STAGE-A"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-WEAR-08": {
+      "name": "Wearable physical validation",
+      "original_owner": "H07",
+      "integration_owner": "H07",
+      "acceptance_ids": [
+        "AT-WEAR-08"
+      ],
+      "vision_anchors": [
+        "V05",
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R04 staged phone/synthetic package: freeze a scoped demonstration of Wearable physical validation using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Exact native tuples, source access, user enrollment and measured output unknown; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact per-person native SKU/OS/firmware/region/entitlement and observation/route qualification; health chronology is not diagnosis; phone-selected files remain useful first",
+      "related_final_package_ids": [
+        "R14-STAGE-A"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RF-01": {
+      "name": "Beyond WiFi heatmaps",
+      "original_owner": "H08",
+      "integration_owner": "H08",
+      "acceptance_ids": [
+        "AT-RF-01"
+      ],
+      "vision_anchors": [
+        "V06"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R07-P0: freeze a scoped demonstration of Beyond WiFi heatmaps using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Replay metadata is not measured beyond-sight geometry; calibration/identifiability remain; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "R06 original E0 and R07 variant remain separate; exact modality/calibration/clock/frame/sidecar/ground-truth/identifiability before measured geometry; inert replay is not RF capability",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY",
+        "MF-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RF-02": {
+      "name": "Presence bridge",
+      "original_owner": "H08",
+      "integration_owner": "H08",
+      "acceptance_ids": [
+        "AT-RF-02"
+      ],
+      "vision_anchors": [
+        "V06"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R07-P0: freeze a scoped demonstration of Presence bridge using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Replay metadata is not measured beyond-sight geometry; calibration/identifiability remain; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "R06 original E0 and R07 variant remain separate; exact modality/calibration/clock/frame/sidecar/ground-truth/identifiability before measured geometry; inert replay is not RF capability",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY",
+        "MF-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RF-03": {
+      "name": "Localization bridge",
+      "original_owner": "H08",
+      "integration_owner": "H08",
+      "acceptance_ids": [
+        "AT-RF-03"
+      ],
+      "vision_anchors": [
+        "V06"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R07-P0: freeze a scoped demonstration of Localization bridge using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Replay metadata is not measured beyond-sight geometry; calibration/identifiability remain; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "R06 original E0 and R07 variant remain separate; exact modality/calibration/clock/frame/sidecar/ground-truth/identifiability before measured geometry; inert replay is not RF capability",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY",
+        "MF-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RF-04": {
+      "name": "Geometry target",
+      "original_owner": "H08",
+      "integration_owner": "H08",
+      "acceptance_ids": [
+        "AT-RF-04"
+      ],
+      "vision_anchors": [
+        "V06"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R07-P0: freeze a scoped demonstration of Geometry target using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Replay metadata is not measured beyond-sight geometry; calibration/identifiability remain; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "R06 original E0 and R07 variant remain separate; exact modality/calibration/clock/frame/sidecar/ground-truth/identifiability before measured geometry; inert replay is not RF capability",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY",
+        "MF-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RF-05": {
+      "name": "Semantic target",
+      "original_owner": "H08",
+      "integration_owner": "H08",
+      "acceptance_ids": [
+        "AT-RF-05"
+      ],
+      "vision_anchors": [
+        "V06"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R07-P0: freeze a scoped demonstration of Semantic target using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Replay metadata is not measured beyond-sight geometry; calibration/identifiability remain; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "R06 original E0 and R07 variant remain separate; exact modality/calibration/clock/frame/sidecar/ground-truth/identifiability before measured geometry; inert replay is not RF capability",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY",
+        "MF-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RF-06": {
+      "name": "Multiple sensing embodiments",
+      "original_owner": "H08",
+      "integration_owner": "H08",
+      "acceptance_ids": [
+        "AT-RF-06"
+      ],
+      "vision_anchors": [
+        "V06",
+        "V07",
+        "V08",
+        "V09"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R07-P0: freeze a scoped demonstration of Multiple sensing embodiments using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Replay metadata is not measured beyond-sight geometry; calibration/identifiability remain; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "R06 original E0 and R07 variant remain separate; exact modality/calibration/clock/frame/sidecar/ground-truth/identifiability before measured geometry; inert replay is not RF capability",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY",
+        "MF-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RF-07": {
+      "name": "Evidence origin separation",
+      "original_owner": "H08",
+      "integration_owner": "H08",
+      "acceptance_ids": [
+        "AT-RF-07"
+      ],
+      "vision_anchors": [
+        "V07",
+        "V06",
+        "V13"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R07-P0: freeze a scoped demonstration of Evidence origin separation using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Replay metadata is not measured beyond-sight geometry; calibration/identifiability remain; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "R06 original E0 and R07 variant remain separate; exact modality/calibration/clock/frame/sidecar/ground-truth/identifiability before measured geometry; inert replay is not RF capability",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY",
+        "MF-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RF-08": {
+      "name": "Spatial fusion contract",
+      "original_owner": "H08",
+      "integration_owner": "H08",
+      "acceptance_ids": [
+        "AT-RF-08"
+      ],
+      "vision_anchors": [
+        "V07",
+        "V04"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R07-P0: freeze a scoped demonstration of Spatial fusion contract using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Replay metadata is not measured beyond-sight geometry; calibration/identifiability remain; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "R06 original E0 and R07 variant remain separate; exact modality/calibration/clock/frame/sidecar/ground-truth/identifiability before measured geometry; inert replay is not RF capability",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY",
+        "MF-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RF-09": {
+      "name": "Active perception",
+      "original_owner": "H08",
+      "integration_owner": "H08",
+      "acceptance_ids": [
+        "AT-RF-09"
+      ],
+      "vision_anchors": [
+        "V07",
+        "V06",
+        "V12"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R07-P0: freeze a scoped demonstration of Active perception using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Replay metadata is not measured beyond-sight geometry; calibration/identifiability remain; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "R06 original E0 and R07 variant remain separate; exact modality/calibration/clock/frame/sidecar/ground-truth/identifiability before measured geometry; inert replay is not RF capability",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY",
+        "MF-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RF-10": {
+      "name": "Radio/privacy gates",
+      "original_owner": "H08",
+      "integration_owner": "H08",
+      "acceptance_ids": [
+        "AT-RF-10"
+      ],
+      "vision_anchors": [
+        "V06",
+        "V02",
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R07-P0: freeze a scoped demonstration of Radio/privacy gates using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Replay metadata is not measured beyond-sight geometry; calibration/identifiability remain; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "R06 original E0 and R07 variant remain separate; exact modality/calibration/clock/frame/sidecar/ground-truth/identifiability before measured geometry; inert replay is not RF capability",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY",
+        "MF-P0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-01": {
+      "name": "Consumer and budget first",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-01"
+      ],
+      "vision_anchors": [
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Consumer and budget first using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-02": {
+      "name": "EC120 unknown",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-02"
+      ],
+      "vision_anchors": [
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of EC120 unknown using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-03": {
+      "name": "Exact SDK configuration",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-03"
+      ],
+      "vision_anchors": [
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Exact SDK configuration using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-04": {
+      "name": "Real evidence first",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-04"
+      ],
+      "vision_anchors": [
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Real evidence first using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-05": {
+      "name": "Deterministic mission boundary",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-05"
+      ],
+      "vision_anchors": [
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Deterministic mission boundary using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-06": {
+      "name": "Actual outcome and replay",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-06"
+      ],
+      "vision_anchors": [
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Actual outcome and replay using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-07": {
+      "name": "Manual and failsafe recovery",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-07"
+      ],
+      "vision_anchors": [
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Manual and failsafe recovery using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-08": {
+      "name": "Concurrent aircraft",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-08"
+      ],
+      "vision_anchors": [
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Concurrent aircraft using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-09": {
+      "name": "Handoff and energy",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-09"
+      ],
+      "vision_anchors": [
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Handoff and energy using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-10": {
+      "name": "Payload platform choice",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-10"
+      ],
+      "vision_anchors": [
+        "V08",
+        "V09",
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Payload platform choice using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-11": {
+      "name": "Dock/readiness",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-11"
+      ],
+      "vision_anchors": [
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Dock/readiness using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-DRONE-12": {
+      "name": "Simulator protection",
+      "original_owner": "H05",
+      "integration_owner": "H05",
+      "acceptance_ids": [
+        "AT-DRONE-12"
+      ],
+      "vision_anchors": [
+        "V16",
+        "V08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R10 compatibility/readiness dossier: freeze a scoped demonstration of Simulator protection using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Owned tuple/EC120, flight legality, containment and observed recovery unqualified; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact aircraft/controller/SDK/firmware, complete cost, original Gen0 milestone, independent recovery/exclusion and physical authorization; EC120 remains unknown",
+      "related_final_package_ids": [
+        "R07-TYPED-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-COMMS-01": {
+      "name": "Three communication levels",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-COMMS-01"
+      ],
+      "vision_anchors": [
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01: freeze a scoped demonstration of Three communication levels using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Mock ledger does not establish radio/backhaul/delivery or human receipt; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Accepted public R11 variant, layered receipt and intact-local authority; exact link/backhaul/provider/human observations needed for operational claims",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-COMMS-02": {
+      "name": "Public guest isolation",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-COMMS-02"
+      ],
+      "vision_anchors": [
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01: freeze a scoped demonstration of Public guest isolation using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Mock ledger does not establish radio/backhaul/delivery or human receipt; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Accepted public R11 variant, layered receipt and intact-local authority; exact link/backhaul/provider/human observations needed for operational claims",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-COMMS-03": {
+      "name": "Backhaul qualification",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-COMMS-03"
+      ],
+      "vision_anchors": [
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01: freeze a scoped demonstration of Backhaul qualification using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Mock ledger does not establish radio/backhaul/delivery or human receipt; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Accepted public R11 variant, layered receipt and intact-local authority; exact link/backhaul/provider/human observations needed for operational claims",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-COMMS-04": {
+      "name": "Mesh as question",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-COMMS-04"
+      ],
+      "vision_anchors": [
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01: freeze a scoped demonstration of Mesh as question using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Mock ledger does not establish radio/backhaul/delivery or human receipt; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Accepted public R11 variant, layered receipt and intact-local authority; exact link/backhaul/provider/human observations needed for operational claims",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-COMMS-05": {
+      "name": "Message truthfulness",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-COMMS-05"
+      ],
+      "vision_anchors": [
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01: freeze a scoped demonstration of Message truthfulness using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Mock ledger does not establish radio/backhaul/delivery or human receipt; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Accepted public R11 variant, layered receipt and intact-local authority; exact link/backhaul/provider/human observations needed for operational claims",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-COMMS-06": {
+      "name": "Data ferry",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-COMMS-06"
+      ],
+      "vision_anchors": [
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01: freeze a scoped demonstration of Data ferry using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Mock ledger does not establish radio/backhaul/delivery or human receipt; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Accepted public R11 variant, layered receipt and intact-local authority; exact link/backhaul/provider/human observations needed for operational claims",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-COMMS-07": {
+      "name": "Power and offline operation",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-COMMS-07"
+      ],
+      "vision_anchors": [
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01: freeze a scoped demonstration of Power and offline operation using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Mock ledger does not establish radio/backhaul/delivery or human receipt; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Accepted public R11 variant, layered receipt and intact-local authority; exact link/backhaul/provider/human observations needed for operational claims",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-COMMS-08": {
+      "name": "Opt-in community support",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-COMMS-08"
+      ],
+      "vision_anchors": [
+        "V10",
+        "V02",
+        "V14"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01: freeze a scoped demonstration of Opt-in community support using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Mock ledger does not establish radio/backhaul/delivery or human receipt; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Accepted public R11 variant, layered receipt and intact-local authority; exact link/backhaul/provider/human observations needed for operational claims",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-EMERG-01": {
+      "name": "Independent help",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-EMERG-01"
+      ],
+      "vision_anchors": [
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01 then separately qualified native help: freeze a scoped demonstration of Independent help using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No clinical/rescue/field/native proof; independent help path remains mandatory; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independent native/public help first; preauthorized simulation retained; separate actual clinical/rescue/flight/physical qualifications before effects",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-EMERG-02": {
+      "name": "Standing incapacitation target",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-EMERG-02"
+      ],
+      "vision_anchors": [
+        "V10",
+        "V08",
+        "V16"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01 then separately qualified native help: freeze a scoped demonstration of Standing incapacitation target using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No clinical/rescue/field/native proof; independent help path remains mandatory; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independent native/public help first; preauthorized simulation retained; separate actual clinical/rescue/flight/physical qualifications before effects",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-EMERG-03": {
+      "name": "Healthcare communication",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-EMERG-03"
+      ],
+      "vision_anchors": [
+        "V10",
+        "V02",
+        "V05"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01 then separately qualified native help: freeze a scoped demonstration of Healthcare communication using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No clinical/rescue/field/native proof; independent help path remains mandatory; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independent native/public help first; preauthorized simulation retained; separate actual clinical/rescue/flight/physical qualifications before effects",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-EMERG-04": {
+      "name": "Kit logistics",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-EMERG-04"
+      ],
+      "vision_anchors": [
+        "V10",
+        "V08",
+        "V09"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01 then separately qualified native help: freeze a scoped demonstration of Kit logistics using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No clinical/rescue/field/native proof; independent help path remains mandatory; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independent native/public help first; preauthorized simulation retained; separate actual clinical/rescue/flight/physical qualifications before effects",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-EMERG-05": {
+      "name": "Fire/rescue lights",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-EMERG-05"
+      ],
+      "vision_anchors": [
+        "V10",
+        "V04",
+        "V08",
+        "V09"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01 then separately qualified native help: freeze a scoped demonstration of Fire/rescue lights using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No clinical/rescue/field/native proof; independent help path remains mandatory; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independent native/public help first; preauthorized simulation retained; separate actual clinical/rescue/flight/physical qualifications before effects",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-EMERG-06": {
+      "name": "Professional deployment gate",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-EMERG-06"
+      ],
+      "vision_anchors": [
+        "V10"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01 then separately qualified native help: freeze a scoped demonstration of Professional deployment gate using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No clinical/rescue/field/native proof; independent help path remains mandatory; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independent native/public help first; preauthorized simulation retained; separate actual clinical/rescue/flight/physical qualifications before effects",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-EMERG-07": {
+      "name": "Readiness first",
+      "original_owner": "H11",
+      "integration_owner": "H11",
+      "acceptance_ids": [
+        "AT-EMERG-07"
+      ],
+      "vision_anchors": [
+        "V10",
+        "V11",
+        "V12"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "P11-01 then separately qualified native help: freeze a scoped demonstration of Readiness first using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No clinical/rescue/field/native proof; independent help path remains mandatory; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Independent native/public help first; preauthorized simulation retained; separate actual clinical/rescue/flight/physical qualifications before effects",
+      "related_final_package_ids": [
+        "R11-PUBLIC-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ROBOT-01": {
+      "name": "Ground embodiment",
+      "original_owner": "H10",
+      "integration_owner": "H10",
+      "acceptance_ids": [
+        "AT-ROBOT-01"
+      ],
+      "vision_anchors": [
+        "V09"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R09-P0: freeze a scoped demonstration of Ground embodiment using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No physical skill/force/payload/stop/recovery qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain canonical robotics path; protected inert skill/recovery evidence first, then exact embodiment/payload/stop/exclusion with separate physical authority",
+      "related_final_package_ids": [
+        "R09-DOMAIN-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ROBOT-02": {
+      "name": "Teleop to skills",
+      "original_owner": "H10",
+      "integration_owner": "H10",
+      "acceptance_ids": [
+        "AT-ROBOT-02"
+      ],
+      "vision_anchors": [
+        "V09"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R09-P0: freeze a scoped demonstration of Teleop to skills using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No physical skill/force/payload/stop/recovery qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain canonical robotics path; protected inert skill/recovery evidence first, then exact embodiment/payload/stop/exclusion with separate physical authority",
+      "related_final_package_ids": [
+        "R09-DOMAIN-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ROBOT-03": {
+      "name": "Independent stop",
+      "original_owner": "H10",
+      "integration_owner": "H10",
+      "acceptance_ids": [
+        "AT-ROBOT-03"
+      ],
+      "vision_anchors": [
+        "V09"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R09-P0: freeze a scoped demonstration of Independent stop using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No physical skill/force/payload/stop/recovery qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain canonical robotics path; protected inert skill/recovery evidence first, then exact embodiment/payload/stop/exclusion with separate physical authority",
+      "related_final_package_ids": [
+        "R09-DOMAIN-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ROBOT-04": {
+      "name": "Embodiment qualification",
+      "original_owner": "H10",
+      "integration_owner": "H10",
+      "acceptance_ids": [
+        "AT-ROBOT-04"
+      ],
+      "vision_anchors": [
+        "V09"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R09-P0: freeze a scoped demonstration of Embodiment qualification using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No physical skill/force/payload/stop/recovery qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain canonical robotics path; protected inert skill/recovery evidence first, then exact embodiment/payload/stop/exclusion with separate physical authority",
+      "related_final_package_ids": [
+        "R09-DOMAIN-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ROBOT-05": {
+      "name": "Future robotics research",
+      "original_owner": "H10",
+      "integration_owner": "H10",
+      "acceptance_ids": [
+        "AT-ROBOT-05"
+      ],
+      "vision_anchors": [
+        "V09",
+        "V04",
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R09-P0: freeze a scoped demonstration of Future robotics research using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No physical skill/force/payload/stop/recovery qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain canonical robotics path; protected inert skill/recovery evidence first, then exact embodiment/payload/stop/exclusion with separate physical authority",
+      "related_final_package_ids": [
+        "R09-DOMAIN-REPLAY"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ENG-01": {
+      "name": "Printer option",
+      "original_owner": "H09",
+      "integration_owner": "H09",
+      "acceptance_ids": [
+        "AT-ENG-01"
+      ],
+      "vision_anchors": [
+        "V11"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R08-P01-INERT: freeze a scoped demonstration of Printer option using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No independent physical metrology, CAD/fabrication or improvement qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact inert scalar/time/correction profile first; independent metrology/reference/holdout and apparatus/job authority before fabrication or improvement claims",
+      "related_final_package_ids": [
+        "R08-P00-INERT"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ENG-02": {
+      "name": "Parametric CAD",
+      "original_owner": "H09",
+      "integration_owner": "H09",
+      "acceptance_ids": [
+        "AT-ENG-02"
+      ],
+      "vision_anchors": [
+        "V11"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R08-P01-INERT: freeze a scoped demonstration of Parametric CAD using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No independent physical metrology, CAD/fabrication or improvement qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact inert scalar/time/correction profile first; independent metrology/reference/holdout and apparatus/job authority before fabrication or improvement claims",
+      "related_final_package_ids": [
+        "R08-P00-INERT"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ENG-03": {
+      "name": "Design-build-test loop",
+      "original_owner": "H09",
+      "integration_owner": "H09",
+      "acceptance_ids": [
+        "AT-ENG-03"
+      ],
+      "vision_anchors": [
+        "V11",
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R08-P01-INERT: freeze a scoped demonstration of Design-build-test loop using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No independent physical metrology, CAD/fabrication or improvement qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact inert scalar/time/correction profile first; independent metrology/reference/holdout and apparatus/job authority before fabrication or improvement claims",
+      "related_final_package_ids": [
+        "R08-P00-INERT"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ENG-04": {
+      "name": "Independent acceptance",
+      "original_owner": "H09",
+      "integration_owner": "H09",
+      "acceptance_ids": [
+        "AT-ENG-04"
+      ],
+      "vision_anchors": [
+        "V11",
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R08-P01-INERT: freeze a scoped demonstration of Independent acceptance using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No independent physical metrology, CAD/fabrication or improvement qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact inert scalar/time/correction profile first; independent metrology/reference/holdout and apparatus/job authority before fabrication or improvement claims",
+      "related_final_package_ids": [
+        "R08-P00-INERT"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ENG-05": {
+      "name": "Machine authority",
+      "original_owner": "H09",
+      "integration_owner": "H09",
+      "acceptance_ids": [
+        "AT-ENG-05"
+      ],
+      "vision_anchors": [
+        "V11"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R08-P01-INERT: freeze a scoped demonstration of Machine authority using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No independent physical metrology, CAD/fabrication or improvement qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact inert scalar/time/correction profile first; independent metrology/reference/holdout and apparatus/job authority before fabrication or improvement claims",
+      "related_final_package_ids": [
+        "R08-P00-INERT"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ENG-06": {
+      "name": "Inspection stages",
+      "original_owner": "H09",
+      "integration_owner": "H09",
+      "acceptance_ids": [
+        "AT-ENG-06"
+      ],
+      "vision_anchors": [
+        "V11"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R08-P01-INERT: freeze a scoped demonstration of Inspection stages using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No independent physical metrology, CAD/fabrication or improvement qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact inert scalar/time/correction profile first; independent metrology/reference/holdout and apparatus/job authority before fabrication or improvement claims",
+      "related_final_package_ids": [
+        "R08-P00-INERT"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ENG-07": {
+      "name": "Workshop safety",
+      "original_owner": "H09",
+      "integration_owner": "H09",
+      "acceptance_ids": [
+        "AT-ENG-07"
+      ],
+      "vision_anchors": [
+        "V11"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R08-P01-INERT: freeze a scoped demonstration of Workshop safety using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No independent physical metrology, CAD/fabrication or improvement qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact inert scalar/time/correction profile first; independent metrology/reference/holdout and apparatus/job authority before fabrication or improvement claims",
+      "related_final_package_ids": [
+        "R08-P00-INERT"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ENG-08": {
+      "name": "Physical artifact chain",
+      "original_owner": "H09",
+      "integration_owner": "H09",
+      "acceptance_ids": [
+        "AT-ENG-08"
+      ],
+      "vision_anchors": [
+        "V11",
+        "V07",
+        "V13"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R08-P01-INERT: freeze a scoped demonstration of Physical artifact chain using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No independent physical metrology, CAD/fabrication or improvement qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact inert scalar/time/correction profile first; independent metrology/reference/holdout and apparatus/job authority before fabrication or improvement claims",
+      "related_final_package_ids": [
+        "R08-P00-INERT"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ENG-09": {
+      "name": "Bounded campaigns",
+      "original_owner": "H09",
+      "integration_owner": "H09",
+      "acceptance_ids": [
+        "AT-ENG-09"
+      ],
+      "vision_anchors": [
+        "V11",
+        "V12"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R08-P01-INERT: freeze a scoped demonstration of Bounded campaigns using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No independent physical metrology, CAD/fabrication or improvement qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact inert scalar/time/correction profile first; independent metrology/reference/holdout and apparatus/job authority before fabrication or improvement claims",
+      "related_final_package_ids": [
+        "R08-P00-INERT"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-ENG-10": {
+      "name": "Low-risk first",
+      "original_owner": "H09",
+      "integration_owner": "H09",
+      "acceptance_ids": [
+        "AT-ENG-10"
+      ],
+      "vision_anchors": [
+        "V11"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R08-P01-INERT: freeze a scoped demonstration of Low-risk first using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "No independent physical metrology, CAD/fabrication or improvement qualification; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Exact inert scalar/time/correction profile first; independent metrology/reference/holdout and apparatus/job authority before fabrication or improvement claims",
+      "related_final_package_ids": [
+        "R08-P00-INERT"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RESEARCH-01": {
+      "name": "Primary sources and corrections",
+      "original_owner": "H12",
+      "integration_owner": "H12/H06",
+      "acceptance_ids": [
+        "AT-RESEARCH-01"
+      ],
+      "vision_anchors": [
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R12 routed cards and R13 final review: freeze a scoped demonstration of Primary sources and corrections using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Source claims and proposed protocols are not replicated experiments; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain source maturity/corrections/negative results and protected evaluator; measure useful accepted outcomes and total cost before adoption",
+      "related_final_package_ids": [
+        "R14-STAGE-A",
+        "WP-R15-0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RESEARCH-02": {
+      "name": "Useful runtime agents",
+      "original_owner": "H12",
+      "integration_owner": "H12/H06",
+      "acceptance_ids": [
+        "AT-RESEARCH-02"
+      ],
+      "vision_anchors": [
+        "V12",
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R12 routed cards and R13 final review: freeze a scoped demonstration of Useful runtime agents using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Source claims and proposed protocols are not replicated experiments; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain source maturity/corrections/negative results and protected evaluator; measure useful accepted outcomes and total cost before adoption",
+      "related_final_package_ids": [
+        "R14-STAGE-A",
+        "WP-R15-0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RESEARCH-03": {
+      "name": "Thread/runtime distinction",
+      "original_owner": "H12",
+      "integration_owner": "H12/H06",
+      "acceptance_ids": [
+        "AT-RESEARCH-03"
+      ],
+      "vision_anchors": [
+        "V12",
+        "V16"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R12 routed cards and R13 final review: freeze a scoped demonstration of Thread/runtime distinction using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Source claims and proposed protocols are not replicated experiments; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain source maturity/corrections/negative results and protected evaluator; measure useful accepted outcomes and total cost before adoption",
+      "related_final_package_ids": [
+        "R14-STAGE-A",
+        "WP-R15-0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RESEARCH-04": {
+      "name": "Ground truth and holdouts",
+      "original_owner": "H12",
+      "integration_owner": "H12/H06",
+      "acceptance_ids": [
+        "AT-RESEARCH-04"
+      ],
+      "vision_anchors": [
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R12 routed cards and R13 final review: freeze a scoped demonstration of Ground truth and holdouts using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Source claims and proposed protocols are not replicated experiments; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain source maturity/corrections/negative results and protected evaluator; measure useful accepted outcomes and total cost before adoption",
+      "related_final_package_ids": [
+        "R14-STAGE-A",
+        "WP-R15-0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RESEARCH-05": {
+      "name": "Novelty hypotheses",
+      "original_owner": "H12",
+      "integration_owner": "H12/H06",
+      "acceptance_ids": [
+        "AT-RESEARCH-05"
+      ],
+      "vision_anchors": [
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R12 routed cards and R13 final review: freeze a scoped demonstration of Novelty hypotheses using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Source claims and proposed protocols are not replicated experiments; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain source maturity/corrections/negative results and protected evaluator; measure useful accepted outcomes and total cost before adoption",
+      "related_final_package_ids": [
+        "R14-STAGE-A",
+        "WP-R15-0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RESEARCH-06": {
+      "name": "Negative results retained",
+      "original_owner": "H12",
+      "integration_owner": "H12/H06",
+      "acceptance_ids": [
+        "AT-RESEARCH-06"
+      ],
+      "vision_anchors": [
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R12 routed cards and R13 final review: freeze a scoped demonstration of Negative results retained using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Source claims and proposed protocols are not replicated experiments; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain source maturity/corrections/negative results and protected evaluator; measure useful accepted outcomes and total cost before adoption",
+      "related_final_package_ids": [
+        "R14-STAGE-A",
+        "WP-R15-0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    },
+    "REQ-RESEARCH-07": {
+      "name": "Modular adoption",
+      "original_owner": "H12",
+      "integration_owner": "H12/H06",
+      "acceptance_ids": [
+        "AT-RESEARCH-07"
+      ],
+      "vision_anchors": [
+        "V16",
+        "V15"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "canonical_at_records_structurally_unchanged": true,
+      "statement_owner_next_gap_read": true,
+      "at_expected_outcome_read": true,
+      "all_other_original_fields": "STRUCTURAL_COMPARISON_NOT_A_FRESH_FULL_DOMAIN_REVIEW",
+      "scope_disposition": "PASS_RETAINED_DOCUMENTARY_TARGET",
+      "system_acceptance": "NOT_EXECUTED",
+      "candidate_next_work": "R12 routed cards and R13 final review: freeze a scoped demonstration of Modular adoption using the unchanged canonical setup/expected result below",
+      "candidate_evidence_gap": "Source claims and proposed protocols are not replicated experiments; canonical AT remains NOT_EXECUTED",
+      "candidate_special_note": null,
+      "reviewer_reentry": "Retain source maturity/corrections/negative results and protected evaluator; measure useful accepted outcomes and total cost before adoption",
+      "related_final_package_ids": [
+        "R14-STAGE-A",
+        "WP-R15-0"
+      ],
+      "package_relation": "Adjacent first steps only; not full requirement or AT coverage and not a grant",
+      "source": "integration/final-v1/RETAINED_SCOPE.json",
+      "source_sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116"
+    }
+  },
+  "experiments": {
+    "EX01": {
+      "name": "Grounded daily notebook",
+      "original_owner": "H01",
+      "requirement_ids": [
+        "REQ-DAILY-03"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H01 and H06 freeze original EX01 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX02": {
+      "name": "Two-user privacy challenge",
+      "original_owner": "H04",
+      "requirement_ids": [
+        "REQ-PRIV-01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H04 and H06 freeze original EX02 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX03": {
+      "name": "Model economics benchmark",
+      "original_owner": "H02",
+      "requirement_ids": [
+        "REQ-AI-02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H02 and H06 freeze original EX03 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX04": {
+      "name": "Hermes versus thin coordinator",
+      "original_owner": "H02",
+      "requirement_ids": [
+        "REQ-AI-04"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H02 and H06 freeze original EX04 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX05": {
+      "name": "Durable daily reminders",
+      "original_owner": "H03",
+      "requirement_ids": [
+        "REQ-DAILY-02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H03 and H06 freeze original EX05 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX06": {
+      "name": "Voice uncertainty and interruption",
+      "original_owner": "H01",
+      "requirement_ids": [
+        "REQ-DAILY-09"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H01 and H06 freeze original EX06 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX07": {
+      "name": "Watch stale-data semantics",
+      "original_owner": "H07",
+      "requirement_ids": [
+        "REQ-WEAR-03"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H07 and H06 freeze original EX07 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX08": {
+      "name": "Glasses lifecycle mock",
+      "original_owner": "H07",
+      "requirement_ids": [
+        "REQ-WEAR-06"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H07 and H06 freeze original EX08 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX09": {
+      "name": "Spatial origin and transform integrity",
+      "original_owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-07"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H08 and H06 freeze original EX09 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX10": {
+      "name": "CSI acquisition dossier",
+      "original_owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H08 and H06 freeze original EX10 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX11": {
+      "name": "Presence baseline and confounders",
+      "original_owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H08 and H06 freeze original EX11 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX12": {
+      "name": "Localization against measured positions",
+      "original_owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-03"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H08 and H06 freeze original EX12 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX13": {
+      "name": "Printed fixture repeatability",
+      "original_owner": "H09",
+      "requirement_ids": [
+        "REQ-ENG-03"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H09 and H06 freeze original EX13 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX14": {
+      "name": "Controlled edge reconstruction",
+      "original_owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-04"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H08 and H06 freeze original EX14 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX15": {
+      "name": "Adaptive next observation",
+      "original_owner": "H08",
+      "requirement_ids": [
+        "REQ-RF-09"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H08 and H06 freeze original EX15 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX16": {
+      "name": "Sensor enclosure effect",
+      "original_owner": "H09",
+      "requirement_ids": [
+        "REQ-ENG-08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H09 and H06 freeze original EX16 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX17": {
+      "name": "Multimodal degradation replay",
+      "original_owner": "H10",
+      "requirement_ids": [
+        "REQ-RF-08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H10 and H06 freeze original EX17 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX18": {
+      "name": "EC120 compatibility dossier",
+      "original_owner": "H05",
+      "requirement_ids": [
+        "REQ-DRONE-02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H05 and H06 freeze original EX18 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX19": {
+      "name": "Budget aircraft qualification plan",
+      "original_owner": "H05",
+      "requirement_ids": [
+        "REQ-DRONE-01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H05 and H06 freeze original EX19 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX20": {
+      "name": "Concurrent simulator reservations",
+      "original_owner": "H05",
+      "requirement_ids": [
+        "REQ-DRONE-08"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H05 and H06 freeze original EX20 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX21": {
+      "name": "Independent synthetic help",
+      "original_owner": "H11",
+      "requirement_ids": [
+        "REQ-EMERG-01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H11 and H06 freeze original EX21 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX22": {
+      "name": "Ground illumination and message usefulness",
+      "original_owner": "H11",
+      "requirement_ids": [
+        "REQ-EMERG-05"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H11 and H06 freeze original EX22 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX23": {
+      "name": "Offline guest portal",
+      "original_owner": "H11",
+      "requirement_ids": [
+        "REQ-COMMS-01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H11 and H06 freeze original EX23 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX24": {
+      "name": "Relay and data-ferry replay",
+      "original_owner": "H11",
+      "requirement_ids": [
+        "REQ-COMMS-06"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H11 and H06 freeze original EX24 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX25": {
+      "name": "Robot safe-state mock",
+      "original_owner": "H10",
+      "requirement_ids": [
+        "REQ-ROBOT-03"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H10 and H06 freeze original EX25 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX26": {
+      "name": "Teleoperation and bounded inert-object skill",
+      "original_owner": "H10",
+      "requirement_ids": [
+        "REQ-ROBOT-02"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H10 and H06 freeze original EX26 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX27": {
+      "name": "Machine job provenance without a printer",
+      "original_owner": "H09",
+      "requirement_ids": [
+        "REQ-ENG-05"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H09 and H06 freeze original EX27 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX28": {
+      "name": "Bounded engineering iteration",
+      "original_owner": "H09",
+      "requirement_ids": [
+        "REQ-ENG-09"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H09 and H06 freeze original EX28 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX29": {
+      "name": "Readiness without inference",
+      "original_owner": "H06",
+      "requirement_ids": [
+        "REQ-EMERG-07"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H06 and H06 freeze original EX29 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX30": {
+      "name": "Novelty and correction review",
+      "original_owner": "H12",
+      "requirement_ids": [
+        "REQ-RESEARCH-01"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H12 and H06 freeze original EX30 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX31": {
+      "name": "Map uncertainty in an accessible interface",
+      "original_owner": "H01",
+      "requirement_ids": [
+        "REQ-RF-05"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H01 and H06 freeze original EX31 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    },
+    "EX32": {
+      "name": "Restore and revocation across domains",
+      "original_owner": "H06",
+      "requirement_ids": [
+        "REQ-PRIV-04"
+      ],
+      "canonical_record_structurally_unchanged": true,
+      "method_owner_name_read": true,
+      "disposition": "PASS_RETAINED_PROPOSED_NOT_EXECUTED",
+      "candidate_next_work": "Owner H06 and H06 freeze original EX32 protocol, prerequisites and finite resource envelope before any authorized run",
+      "candidate_evidence_gap": "No campaign execution or qualified measurements of this original experiment; source/model/synthetic evidence does not substitute",
+      "execution_authority": "NONE"
+    }
+  },
+  "gen0": [
+    {
+      "id": "T01",
+      "name": "Phone request",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T02",
+      "name": "Duplicate and key conflict",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T03",
+      "name": "Receipt crash windows",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T04",
+      "name": "Identity and expiry",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T05",
+      "name": "Reproducible simulator",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T06",
+      "name": "Containment",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T07",
+      "name": "Telemetry provenance",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T08",
+      "name": "Evidence truthfulness",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T09",
+      "name": "Frozen or delayed frames",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T10",
+      "name": "Capability and bounds",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T11",
+      "name": "Explicit decision",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T12",
+      "name": "Expired approval",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T13",
+      "name": "Changed approval basis",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T14",
+      "name": "Bounded mission",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T15",
+      "name": "ACK and unknown outcome",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T16",
+      "name": "Process/link failure",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T17",
+      "name": "Cancel/recover",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T18",
+      "name": "Recovery configuration and expiry",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T19",
+      "name": "Real advisory model",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T20",
+      "name": "AI unavailable",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T21",
+      "name": "Malicious or malformed model output",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T22",
+      "name": "Internet loss",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T23",
+      "name": "Phone link loss",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T24",
+      "name": "Restart at command boundaries",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T25",
+      "name": "Accidental replay",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T26",
+      "name": "Time behavior",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T27",
+      "name": "Ownership and repeated actions",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T28",
+      "name": "Restore for review",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T29",
+      "name": "First demo qualification",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T30",
+      "name": "Watch manual entry",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T31",
+      "name": "Watch failure/permissions",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "R01",
+      "name": "EC120 research quality",
+      "review_namespace": "GEN0_RESEARCH_TEST_NOT_R01_LANE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T32",
+      "name": "Concurrent simulation",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T33",
+      "name": "Standing policy",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T34",
+      "name": "Help without a drone",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    },
+    {
+      "id": "T35",
+      "name": "Standing-policy boundaries",
+      "review_namespace": "GEN0_ACCEPTANCE",
+      "canonical_row_found_verbatim": true,
+      "disposition": "RETAINED_UNCHANGED_NOT_RERUN",
+      "source_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+    }
+  ],
+  "anchors": [
+    "V01",
+    "V02",
+    "V03",
+    "V04",
+    "V05",
+    "V06",
+    "V07",
+    "V08",
+    "V09",
+    "V10",
+    "V11",
+    "V12",
+    "V13",
+    "V14",
+    "V15",
+    "V16"
+  ],
+  "journeys": [
+    "daily decision recall",
+    "image-grounded follow-up",
+    "multisensor incident replay",
+    "permitted public Observatory question",
+    "engineering learns from failed candidate"
+  ],
+  "canonical_sources": {
+    "experiments": {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c"
+    },
+    "requirements": {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56"
+    },
+    "acceptance": {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478"
+    }
+  },
+  "gen0_source": {
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/baseline/PROJECT_ASTRA_Generation_0_Implementation_Validation_Plan.md",
+    "sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771"
+  },
+  "all_packages_authorization_required": true,
+  "all_experiments_unexecuted": true,
+  "missing_original_prompts": "UNAVAILABLE_NOT_RECONSTRUCTED",
+  "private_original_R11_read": false
+}

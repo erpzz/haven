@@ -1,0 +1,15 @@
+# R04 author integrity record
+
+Status: **REVIEW_READY**, not independent acceptance. Research began 2026-09-28 19:38:30 UTC under a 30-minute bound. Document checks performed by 20:00:24 UTC; final manifest creation time is recorded in HASHES.json. Host: existing Windows workspace, PowerShell document/hash operations. No new agent spawned by this child.
+
+Actual checks: parsed INPUT_USE.json and MODALITY.json; recomputed every listed input hash, with **zero mismatches**; verified the seven supervisor-supplied CORE/R01/R12 pins; counted **26 distinct proposed cases C01–C26**; checked original M6/T30/T31 directly, including accepted-M5 prerequisite and 2–6-hour bound. All eight REQ-WEAR/AT-WEAR pairs and EX07/EX08 are retained. Directly inspected the existing benign synthetic PNG with its unchanged hash. HASHES.json excludes itself and pins all other R04 files.
+
+Public evidence was researched live from official sources and documented with dates, versions, limits and links. Volatile web pages were not archived or byte-hashed, and sources with sparse JavaScript extraction used disclosed official search text or repository documentation. Exact device/OS/country/firmware tuples, background performance, sensor accuracy, native privacy behavior, current retail totals and checkpoint terms remain unresolved. Source-register review and later exact-version qualification are still needed.
+
+The author rejects unsupported inferences that a HealthKit type means a Watch sensor, a successful authorization request proves read access, a missing signal indicates a medical condition, a generic glasses product exposes every SDK feature, a raw repository sample confers redistribution rights, or an authenticated receipt proves perception. These are rejected assumptions, not fabricated claims attributed to upstream peers.
+
+No retrieved application, model, firmware, SDK, installer or test code was executed. No real data or hardware was accessed. No microphone/camera/sensor, private account, network service, paid API, purchase, Git command or external message was used. Files created/changed by this assignment are confined to research/R04. The R10 smoke asset was read only. Root alone handles shared ledgers/publication.
+
+Small read-path mistakes while locating already supplied documents returned file-not-found; subsequent `rg --files` resolved the authoritative paths. No guessed-path content was promoted. The actual UI application is not available in the inspected snapshot, so the future package explicitly requires a code/path freeze and cannot silently edit recovered inputs.
+
+The proposed cases, package budgets, maturity ladder and native/human studies are not execution results. An independent reviewer must evaluate source fidelity, the HealthKit visibility/withdrawal limitation, exact Meta release distinctions, full-vector output ordering, two-person privacy, cost unknowns, positive usefulness and package boundaries. Native AT-WEAR acceptance stays NOT_EXECUTED/PENDING_OPERATOR.

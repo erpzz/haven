@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "label": "TEST DOUBLE / NOT LIVE AI",
+  "hypothesis": "A height closer to the fixed synthetic 40 mm target can lower the arithmetic score while satisfying the separately coded synthetic fit/aspect checks. This predicts no physical performance.",
+  "baseline": {
+    "artifact_id": "BASELINE",
+    "revision": 1,
+    "parent_artifact_ids": [],
+    "units": "mm",
+    "dimensions": {
+      "height_mm": 50,
+      "base_mm": 36,
+      "depth_mm": 24,
+      "thickness_mm": 4,
+      "slot_mm": 20
+    },
+    "qualification_state": "UNQUALIFIED",
+    "fabrication_enabled": false,
+    "synthetic": true,
+    "artifact_kind": "INERT_JSON_DIMENSIONS"
+  },
+  "candidates": [
+    {
+      "artifact_id": "CANDIDATE_1",
+      "revision": 2,
+      "parent_artifact_ids": [
+        "BASELINE"
+      ],
+      "units": "mm",
+      "dimensions": {
+        "height_mm": 45,
+        "base_mm": 32,
+        "depth_mm": 24,
+        "thickness_mm": 4,
+        "slot_mm": 20
+      },
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false,
+      "synthetic": true,
+      "artifact_kind": "INERT_JSON_DIMENSIONS"
+    },
+    {
+      "artifact_id": "CANDIDATE_2",
+      "revision": 3,
+      "parent_artifact_ids": [
+        "BASELINE"
+      ],
+      "units": "mm",
+      "dimensions": {
+        "height_mm": 40,
+        "base_mm": 16,
+        "depth_mm": 24,
+        "thickness_mm": 4,
+        "slot_mm": 20
+      },
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false,
+      "synthetic": true,
+      "artifact_kind": "INERT_JSON_DIMENSIONS"
+    },
+    {
+      "artifact_id": "CANDIDATE_3",
+      "revision": 4,
+      "parent_artifact_ids": [
+        "BASELINE"
+      ],
+      "units": "mm",
+      "dimensions": {
+        "height_mm": 40,
+        "base_mm": 26,
+        "depth_mm": 24,
+        "thickness_mm": 4,
+        "slot_mm": 20
+      },
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false,
+      "synthetic": true,
+      "artifact_kind": "INERT_JSON_DIMENSIONS"
+    },
+    {
+      "artifact_id": "CANDIDATE_4",
+      "revision": 5,
+      "parent_artifact_ids": [
+        "BASELINE"
+      ],
+      "units": "mm",
+      "dimensions": {
+        "height_mm": 40,
+        "base_mm": 30,
+        "depth_mm": 24,
+        "thickness_mm": 4,
+        "slot_mm": 20
+      },
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false,
+      "synthetic": true,
+      "artifact_kind": "INERT_JSON_DIMENSIONS"
+    },
+    {
+      "artifact_id": "CANDIDATE_5",
+      "revision": 6,
+      "parent_artifact_ids": [
+        "BASELINE"
+      ],
+      "units": "mm",
+      "dimensions": {
+        "height_mm": 55,
+        "base_mm": 40,
+        "depth_mm": 24,
+        "thickness_mm": 4,
+        "slot_mm": 20
+      },
+      "qualification_state": "UNQUALIFIED",
+      "fabrication_enabled": false,
+      "synthetic": true,
+      "artifact_kind": "INERT_JSON_DIMENSIONS"
+    }
+  ],
+  "max_iterations": 5,
+  "metric_version": "synthetic-fit-score-1"
+}

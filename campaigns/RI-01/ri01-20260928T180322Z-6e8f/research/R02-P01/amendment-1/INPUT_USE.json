@@ -1,0 +1,114 @@
+[
+  {
+    "upstream_task": "REVIEW-R02-P01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/REVIEW-R02-P01/REVIEW.md",
+      "claim_id": "REVIEW-R02-P01-M1"
+    },
+    "artifact_sha256": "1634b53af3fe0799bcabd5adfbef5658d64812e9d2425c457bc09f3e7faa8589",
+    "finding": "REVIEW-R02-P01-M1",
+    "disposition": "AMENDED",
+    "downstream_section": "Authoritative proposed facts; proposed traces; P02-B supplement",
+    "design_effect": "Replace combined authoritative publication_state with immutable release/consume receipts, delivery observations and current eligibility",
+    "reason": "History must survive revoke/cancel while future authority changes",
+    "review_state": "Independent finding; author response awaits bounded recheck"
+  },
+  {
+    "upstream_task": "REVIEW-R02-P01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/REVIEW-R02-P01/REVIEW.md",
+      "claim_id": "REVIEW-R02-P01-L1"
+    },
+    "artifact_sha256": "1634b53af3fe0799bcabd5adfbef5658d64812e9d2425c457bc09f3e7faa8589",
+    "finding": "REVIEW-R02-P01-L1",
+    "disposition": "AMENDED",
+    "downstream_section": "Scope and exact supersession",
+    "design_effect": "Replace reviewed design proposals with proposed interfaces submitted for independent review",
+    "reason": "Avoid implying prior acceptance of authored design",
+    "review_state": "Independent editorial finding; author response pending recheck"
+  },
+  {
+    "upstream_task": "R02-P01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "research/R02-P01/REPORT.md",
+      "claim_id": "F01 line81 and F02 line92 combined/separate publication definitions"
+    },
+    "artifact_sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+    "finding": "F01 line81 and F02 line92 combined/separate publication definitions",
+    "disposition": "AMENDED",
+    "downstream_section": "Four-record state model",
+    "design_effect": "Explicit narrow supersession; original bytes retained",
+    "reason": "Correct internal conflict without rewriting accepted evidence",
+    "review_state": "Original AMEND, accepted subset preserved"
+  },
+  {
+    "upstream_task": "R02-P01",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "research/R02-P01/NEXT_PACKAGE.md",
+      "claim_id": "P02-B lines42/46/48"
+    },
+    "artifact_sha256": "d278dc54606db1a50803a9b50085b25389ec515f9ea5b95aecaf4223d98c7a8f",
+    "finding": "P02-B lines42/46/48",
+    "disposition": "AMENDED",
+    "downstream_section": "P02-B supplemental implementation request",
+    "design_effect": "Align package with orthogonal state facts and two adversarial traces",
+    "reason": "Implementation request must not preserve contradictory enum",
+    "review_state": "AUTHORIZATION_REQUIRED; not executed"
+  },
+  {
+    "upstream_task": "R03",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "research/R03/CONTRACTS.md",
+      "claim_id": "Sections C/E: complete vector, release/consume receipts, delivery observations"
+    },
+    "artifact_sha256": "cfd271d1650e40daa735651ddc2ab28ca4ccdcb17f117c96cc5602975bad5eea",
+    "finding": "Sections C/E: complete vector, release/consume receipts, delivery observations",
+    "disposition": "REUSED",
+    "downstream_section": "Authoritative proposed facts; both traces",
+    "design_effect": "Use exact vector and separate consumed authorization from destination-reported presentation",
+    "reason": "Actual artifact now available; acknowledge in-flight race and unknown commit",
+    "review_state": "Attributed author proposal; independent R03 review pending"
+  },
+  {
+    "upstream_task": "CODE-0",
+    "source_ref": {
+      "repo": "https://github.com/erpzz/haven",
+      "commit": null,
+      "path": "reviews/CODE-0/REVIEW.md",
+      "claim_id": "CODE-H2 delayed release; CODE-M1 retained audit; CODE-H1 worker lifecycle"
+    },
+    "artifact_sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8",
+    "finding": "CODE-H2 delayed release; CODE-M1 retained audit; CODE-H1 worker lifecycle",
+    "disposition": "REUSED",
+    "downstream_section": "Four-record state model; scope limits",
+    "design_effect": "Keep historical observations, future fencing and compute stop independent",
+    "reason": "Now exact final report available; do not retroactively change v1 input receipt",
+    "review_state": "Independent static review, no new execution"
+  },
+  {
+    "upstream_task": "R03/CORE",
+    "source_ref": {
+      "repo": null,
+      "commit": null,
+      "path": null,
+      "claim_id": "Q-R02P01-A1-R03-01"
+    },
+    "artifact_sha256": null,
+    "finding": "Early question sent through root: consumption is one-use authorization, not verified display?",
+    "disposition": "UNRESOLVED",
+    "downstream_section": "Consultation receipt",
+    "design_effect": "Continue with explicit statement already present in R03 E; record any actual later reply separately",
+    "reason": "Specialist question sent before authoring; no fabricated response",
+    "review_state": "QUESTION_SENT; response pending at creation"
+  }
+]

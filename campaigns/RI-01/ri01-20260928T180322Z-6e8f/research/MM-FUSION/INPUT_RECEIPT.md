@@ -1,0 +1,13 @@
+# MM-FUSION input receipt
+
+Actual author `/root/ri01_world`, assigned haven_sensor_fusion; documentation only. Original start 2026-09-28T21:18Z was interrupted before output files existed. Explicit root/user continuation resumed 2026-09-29T00:26:54Z with a 30-minute research bound. No hidden background work is claimed. Only research/MM-FUSION may be written; root owns Git/shared state. No application, package/model installation, device/account, paid call, deployment or children.
+
+Read exact sensor-fusion profile, RI MULTIMODAL/VISION/task brief and accepted state register. Hard inputs: CORE core-v1, R07, MM-VISION, MM-AV with material reviewer ADDENDUM-1, and R14 with independent review. Scope is accepted documentary research, not runtime/native/physical qualification. Full manifest identities and exact selected findings are recorded in INPUT_USE.json and INTEGRITY.json at freeze. Soft R09 accepted; R15-AUDIT preliminary source findings only. R11 public-safe variant is pending; original private R11 is not consumed or pinned as accepted.
+
+Canonical baseline/cumulative-v1.0/docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md was read for this task after root's Q-REV-R09-01. During R09, only the exact recovered-copy path was absent; the canonical chapter was not consumed then. This new receipt does not retroactively modify R09's 38 pins. Retain reviewed wording: leader/follower gearing differs; supply is motor/variant-specific. No frozen R09 file is changed.
+
+Initial input-use decisions: retain specialized modality contracts rather than flatten raw signals into text; retain original/derived lineage, full current authority and separate physical outcome; preserve selected-image/typed-question useful path; add cross-modal compatibility, conflict/unknown and output-profile composition. Early specialist questions CQ-MF-01 and CQ-MF-02 were sent through root while independent sections proceeded. Final dispositions and actual replies will be recorded in CONSULTATIONS.md.
+
+## R11 public-variant reconciliation
+
+During work root supplied accepted `research/R11-public-v1/HANDOFF_MANIFEST.json` SHA256 `8c4f261598a01bb4971756f0d8fba0746425c10ebf4203721fb0b3c6268300ca`, REPORT `8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165`, substantive REVIEW `14177bacc25927e6ac0969f3e5c52268ce31ddf80f95407a39e1907f92043602` and CLOSURE-1 `44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef`. Read only this public variant and published review/closure for relevant findings. Earlier pending status above records intake chronology, not final dependency status. All32 cases remain unexecuted and G1–G5 remain. No private original or removed provenance value was read or copied.

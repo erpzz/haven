@@ -1,0 +1,226 @@
+{
+  "task": "R07",
+  "author": "/root/ri01_world",
+  "status": "DRAFT_READY",
+  "base_commit": "376031e182c57495912baf6727093b0b188da568",
+  "input_freeze_utc": "2026-09-28T19:58:30.5824186Z",
+  "inputs": [
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "finding": "CORE useful first path and retained foundations",
+      "downstream_section": "REPORT Decisions/scenarios; NEXT_PACKAGE prerequisites",
+      "disposition": "ACCEPTED",
+      "decision": "Keep small image/evidence utility and in-process design, no global map prerequisite"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "finding": "I01-I07 authority/source/job/output/domain boundaries and spatial adapter",
+      "downstream_section": "CONTRACTS CR-R07-01 through04; REPORT time/deletion",
+      "disposition": "ACCEPTED",
+      "decision": "Extend full vector/source closure and exact transform conventions, no schema mutation"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "finding": "Accepted exact core identity",
+      "downstream_section": "INPUT_USE/VALIDATION",
+      "disposition": "ACCEPTED",
+      "decision": "Freeze existing manifest, not guessed json filename"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/REVIEW.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+      "finding": "CR-R06-01 and AMEND-R06-01/02",
+      "downstream_section": "REPORT D07-04/05; CONTRACTS CR-R07-01/03; EXPERIMENTS E07-B",
+      "disposition": "ACCEPTED",
+      "decision": "Pair sidecar,60s total8attempts and distinct hardware stop states"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/CONTRACT_PROPOSALS.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13",
+      "finding": "Sections3-7 observations,transform/calibration,SpatialSemantics,ObservationProposal/Outcome",
+      "downstream_section": "CONTRACTS all; REPORT calibration/correlation",
+      "disposition": "AMENDED",
+      "decision": "Reuse exact fields; reviewer total-deadline and cessation amendments override old per-decision wording"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/spatial_estimate.schema.json",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e",
+      "finding": "Inert v1 metre triples and supports_safe_route_claim false",
+      "downstream_section": "CONTRACTS compatibility",
+      "disposition": "ACCEPTED",
+      "decision": "No legacy downgrade or live boolean flip"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "finding": "O03 VGGT scale/confidence/license; O04 ActiveSplat; O05 RFDT only",
+      "downstream_section": "REPORT representations; EXPERIMENTS E07-B/E",
+      "disposition": "ACCEPTED",
+      "decision": "No full backlog adoption; independent fresh primary text checks confirm limits"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/SOURCES.json",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "011d484891273a9fdadc0277b911ca6f32af9daee054089c6785e0de548de4a0",
+      "finding": "S04-S09 exact primary links and rights qualifications",
+      "downstream_section": "SOURCES S05-S09",
+      "disposition": "ACCEPTED",
+      "decision": "Use author links; no checkpoint/dataset license assumption"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/HANDOFF_MANIFEST.json",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "fec9c4c223fa2370db6bcbe8fd61980d284d92a31a22b37d707dcd48db0a8d77",
+      "finding": "Exact accepted packet identity",
+      "downstream_section": "INPUT_USE",
+      "disposition": "ACCEPTED",
+      "decision": "Freeze actual file bytes"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R12/REVIEW.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+      "finding": "ACCEPT_FOR_SYNTHESIS and routed3updates",
+      "downstream_section": "REPORT dependency/representations",
+      "disposition": "ACCEPTED",
+      "decision": "Design acceptance is not model adoption or licensing clearance"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/REPORT.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "finding": "Payload/calibration/carrier boundaries and60s/eight amendment",
+      "downstream_section": "REPORT platform matrix; CONTRACTS next-view",
+      "disposition": "ACCEPTED",
+      "decision": "Sensing and movement separate; no aircraft operating claim"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/COMPATIBILITY.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "fe4b60387975e7b919bbea84b90bc365e4323420b7d4205c65fc7a604a0f74f6",
+      "finding": "Exact aircraft API uncertainty, source boot/clock,video timestamp limits",
+      "downstream_section": "REPORT datum/platform discussion",
+      "disposition": "ACCEPTED",
+      "decision": "EC120 UNKNOWN and config-specific qualification retained"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/MODALITY.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "c2e70b2403390a05c244ceb64de4d04f02bf738dcd85835bdead20a304f0e097",
+      "finding": "Original synthetic smoke fixture rights/creation",
+      "downstream_section": "REPORT Evidence; MODALITY.json",
+      "disposition": "ACCEPTED",
+      "decision": "Attribute R10 creation but record own direct inspection"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "finding": "Synthetic240x120static bitmap",
+      "downstream_section": "MODALITY.json",
+      "disposition": "ACCEPTED",
+      "decision": "Own full-image inspection only; no runtime/model/spatial proof"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R08/REVIEW.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+      "finding": "R08-M2/M3 and actual Q-R08-01",
+      "downstream_section": "CONTRACTS scalar compatibility; REPORT calibration; CONSULTATIONS",
+      "disposition": "ACCEPTED",
+      "decision": "One-axis reseating not6DoF or sensor-effect evidence"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "finding": "PASS downstream research; VA-01 inferencepilot P01 prerequisites",
+      "downstream_section": "REPORT risks; NEXT_PACKAGE prerequisites",
+      "disposition": "ACCEPTED",
+      "decision": "No unrelated runtime prerequisite for inert package"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/INVENTORY.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+      "finding": "Missing original R07 prompt/archive and recovered originals",
+      "downstream_section": "REPORT preamble/risks",
+      "disposition": "ACCEPTED",
+      "decision": "Declare SOURCE_UNAVAILABLE; no regeneration"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/COVERAGE.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "finding": "Original retained REQ/AT ownership",
+      "downstream_section": "EXPERIMENTS ownership crosswalk",
+      "disposition": "ACCEPTED",
+      "decision": "R07/H08withH05; EX17H10/EX31H01 unchanged"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "finding": "Original102 requirements",
+      "downstream_section": "REQUIREMENT_MAP.json",
+      "disposition": "ACCEPTED",
+      "decision": "Extract relevant exact IDs/owners without renaming"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "finding": "Original acceptance expectation/owner",
+      "downstream_section": "REQUIREMENT_MAP.json",
+      "disposition": "ACCEPTED",
+      "decision": "Retain all referenced AT as NOT_EXECUTED"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/EXPERIMENTS.md",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521",
+      "finding": "EX09,EX14,EX15,EX16,EX17,EX31",
+      "downstream_section": "EXPERIMENTS",
+      "disposition": "ACCEPTED",
+      "decision": "Scope and original ownership retained; no pass"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "finding": "Exact original experiment ownership/method",
+      "downstream_section": "REQUIREMENT_MAP.json",
+      "disposition": "ACCEPTED",
+      "decision": "Machine crosswalk preservation"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/state/run.json",
+      "revision": "bytes read 2026-09-28",
+      "sha256": "643d02cfab46935cd1d87155296f72800b23a1634f378d8ae76ae7548afd8394",
+      "finding": "Frozen base metadata only",
+      "downstream_section": "REPORT preamble",
+      "disposition": "METADATA_ONLY",
+      "decision": "Mutable root state not a hard dependency; no current Git claim"
+    }
+  ],
+  "missing": [
+    "Original R07 prompt ZIP and hub prompt SOURCE_UNAVAILABLE; supervisor confirmed"
+  ],
+  "future_consumers": [
+    "MM-VISION",
+    "MM-FUSION",
+    "R09",
+    "R15"
+  ],
+  "actual_runtime_tests": "NOT_EXECUTED"
+}

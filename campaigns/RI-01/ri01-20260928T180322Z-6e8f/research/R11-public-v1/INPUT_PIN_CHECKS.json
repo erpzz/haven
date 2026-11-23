@@ -1,0 +1,93 @@
+[
+  {
+    "task": "CORE",
+    "path": "integration/core-v1/ARCHITECTURE.md",
+    "expected": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+    "actual": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+    "match": true
+  },
+  {
+    "task": "CORE",
+    "path": "reviews/VISION-ARCH/REVIEW.md",
+    "expected": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+    "actual": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+    "match": true
+  },
+  {
+    "task": "R10",
+    "path": "research/R10/REPORT.md",
+    "expected": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+    "actual": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+    "match": true
+  },
+  {
+    "task": "R10",
+    "path": "reviews/REVIEW-R10/REVIEW.md",
+    "expected": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+    "actual": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+    "match": true
+  },
+  {
+    "task": "R12",
+    "path": "research/R12/REPORT.md",
+    "expected": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+    "actual": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+    "match": true
+  },
+  {
+    "task": "R12",
+    "path": "reviews/REVIEW-R12/REVIEW.md",
+    "expected": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+    "actual": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+    "match": true
+  },
+  {
+    "task": "R04",
+    "path": "research/R04/REPORT.md",
+    "expected": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+    "actual": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+    "match": true
+  },
+  {
+    "task": "R04",
+    "path": "reviews/REVIEW-R04/REVIEW.md",
+    "expected": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956",
+    "actual": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956",
+    "match": true
+  },
+  {
+    "task": "R07",
+    "path": "research/R07/REPORT.md",
+    "expected": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+    "actual": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+    "match": true
+  },
+  {
+    "task": "R07",
+    "path": "reviews/REVIEW-R07/REVIEW.md",
+    "expected": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+    "actual": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+    "match": true
+  },
+  {
+    "task": "MM-AV",
+    "path": "research/MM-AV/REPORT.md",
+    "expected": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0",
+    "actual": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0",
+    "match": true
+  },
+  {
+    "task": "MM-AV",
+    "path": "reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+    "expected": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593",
+    "actual": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593",
+    "match": true
+  },
+  {
+    "task": "MM-AV",
+    "path": "reviews/REVIEW-MM-AV/REVIEW.md",
+    "expected": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025",
+    "actual": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025",
+    "match": true
+  }
+]

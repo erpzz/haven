@@ -1,0 +1,27 @@
+[
+  {
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/INPUT_RECEIPT.md",
+    "bytes": 1453,
+    "sha256": "853e32ebfe1890a35371e2d6d6a1d136198f60f6501d2ddbd55fe5b82ff1eac0"
+  },
+  {
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/REPORT.md",
+    "bytes": 41526,
+    "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283"
+  },
+  {
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/SOURCES.md",
+    "bytes": 7271,
+    "sha256": "b8e0dc7231080a32b2ca0eadbb7acd399444ea288400d8b3cfc550c3c1502859"
+  },
+  {
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/INPUT_USE.json",
+    "bytes": 16985,
+    "sha256": "355b5b220bfd1eb8d03a7cfc9dee045e91f09994c0fd801c2265d15ab224d17a"
+  },
+  {
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/VALIDATION.md",
+    "bytes": 2117,
+    "sha256": "20a3eb4cd665d7b4939e3508a75d8b83a99d8df886338edbf2b327123070210a"
+  }
+]

@@ -1,0 +1,124 @@
+{
+  "kind": "R02_PUBLICATION_SOURCE_AUDIT",
+  "publication_date": "2026-09-28",
+  "scope": "Publication-only; not R02-P01 reconciliation, new research, or runtime qualification",
+  "repository": "erpzz/haven",
+  "base_commit": "dd7e7e3d8a01d5773424678376e1e52d71723da7",
+  "branch": "research/r02-handback-publication-v2",
+  "source_archive": {
+    "name": "HAVEN_R02_Intelligence_Runtime_Handback_v1.zip",
+    "bytes": 52543,
+    "sha256": "19c7ad35e53b95442e7fc4b2c4cb54658a5a01821546a1c10b1be67adf83de8e"
+  },
+  "preserved_existing_directory": "design/H02/R02/v1/",
+  "exact_source_destination": "design/H02/R02/v2/",
+  "source_file_count": 10,
+  "source_total_bytes": 123139,
+  "source_manifest_entries": 9,
+  "source_manifest_verified_entries": 9,
+  "main_v1_matching_files": 9,
+  "main_v1_differing_files": 1,
+  "difference": {
+    "file": "BENCHMARK_AND_EXPERIMENTS.md",
+    "missing_from_main_v1": " A completed print is not an accepted fixture.",
+    "missing_bytes": 46,
+    "main_v1_bytes": 20738,
+    "source_bytes": 20784,
+    "main_v1_sha256": "da43736ae25d5fd29d8adca0051886ec956b08af1a1771aa71fde760dd7d042a",
+    "proof": "Removing this sentence from the delivered bytes exactly reproduces the GitHub main/v1 blob SHA.",
+    "reason_for_earlier_difference": "UNKNOWN"
+  },
+  "verification_method": "Compare git blob object IDs from the pinned GitHub tree to SHA1(blob + space + decimal byte length + NUL + source bytes); independently verify supplied SHA-256 manifest.",
+  "files": [
+    {
+      "path": "ARTIFACT_CHECKS.json",
+      "bytes": 1353,
+      "sha256": "089d2a1171c1398e76a987b2e94178f7de115701a959f348475e9a24980ff9aa",
+      "git_blob_sha": "d8325ae04848edd880de0738cfdd472fd44ac9fb",
+      "main_v1_blob_sha": "d8325ae04848edd880de0738cfdd472fd44ac9fb",
+      "main_v1_matches_delivered_source": true
+    },
+    {
+      "path": "BENCHMARK_AND_EXPERIMENTS.md",
+      "bytes": 20784,
+      "sha256": "641e6f1b409eee0cd69ab182e586957ec17db22e916692bedcd68c7988e665cd",
+      "git_blob_sha": "37458330d305b6bea09759d08968cef71914b6e1",
+      "main_v1_blob_sha": "c7997f67b62eb0a05e9553ee87e3a8e4b4162fa5",
+      "main_v1_matches_delivered_source": false
+    },
+    {
+      "path": "CONTRACT_DESIGN.md",
+      "bytes": 20850,
+      "sha256": "9cc1ce4ce5d2d240b244513aa7680ba0015d86829216497877f3f90cd51856d7",
+      "git_blob_sha": "8c5fcc4898c275d3588dee3a9ebf555f5d0dd806",
+      "main_v1_blob_sha": "8c5fcc4898c275d3588dee3a9ebf555f5d0dd806",
+      "main_v1_matches_delivered_source": true
+    },
+    {
+      "path": "INPUT_AUDIT.json",
+      "bytes": 8633,
+      "sha256": "55dba1e5603f3e1aca31e6de40a64fcd5eb428fc7e080bf44012531f0ab5f4d7",
+      "git_blob_sha": "8c2885e8a87dd914c7742efb543802aaa356f975",
+      "main_v1_blob_sha": "8c2885e8a87dd914c7742efb543802aaa356f975",
+      "main_v1_matches_delivered_source": true
+    },
+    {
+      "path": "INTEGRATION_AND_PACKAGES.md",
+      "bytes": 11581,
+      "sha256": "f8da2b37bd1310b56aebc0887296c938b2a5e3586af5bed4bef4511c18d4471a",
+      "git_blob_sha": "4dac4f533fe6e789858e75a4c839c24cc11c3a3d",
+      "main_v1_blob_sha": "4dac4f533fe6e789858e75a4c839c24cc11c3a3d",
+      "main_v1_matches_delivered_source": true
+    },
+    {
+      "path": "INTEGRATION_SUMMARY.md",
+      "bytes": 3574,
+      "sha256": "fd271448a08ecaa8f8300b4d3e33fc1970c13db5e6be0a85db5c0b4bab7d02f1",
+      "git_blob_sha": "43381b9378598dede8083704c4672dd14d783dc0",
+      "main_v1_blob_sha": "43381b9378598dede8083704c4672dd14d783dc0",
+      "main_v1_matches_delivered_source": true
+    },
+    {
+      "path": "MANIFEST.sha256",
+      "bytes": 767,
+      "sha256": "208216b9bcac32c9e658bbfb3279d625f4451c8f571e5916147aa15b55974cd0",
+      "git_blob_sha": "90570ad2c5f974847d07028700841478ce2e1cb4",
+      "main_v1_blob_sha": "90570ad2c5f974847d07028700841478ce2e1cb4",
+      "main_v1_matches_delivered_source": true
+    },
+    {
+      "path": "R02_HANDOFF.md",
+      "bytes": 36835,
+      "sha256": "c44552107a9e1130d4dd977d2130a1a81a9b6d8308fa939b27f352ad8b4f115f",
+      "git_blob_sha": "03aac7cb3858dd86231e1df9cf8e8e0b6de40420",
+      "main_v1_blob_sha": "03aac7cb3858dd86231e1df9cf8e8e0b6de40420",
+      "main_v1_matches_delivered_source": true
+    },
+    {
+      "path": "README.md",
+      "bytes": 2408,
+      "sha256": "1162aad578dc5109b2d6ca74ac16e93d3b5ab4f31002c37c81fececfacef01ae",
+      "git_blob_sha": "e6bdc33f8e557457295f8ea968190cd1a3d9eaaa",
+      "main_v1_blob_sha": "e6bdc33f8e557457295f8ea968190cd1a3d9eaaa",
+      "main_v1_matches_delivered_source": true
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 16354,
+      "sha256": "05d2e874c971dc21952fecb0cbbee6d25051173e432382ed8f33ed9b0afa9afa",
+      "git_blob_sha": "9b41294cba1f7dd0a8897c60339264f4be367c5f",
+      "main_v1_blob_sha": "9b41294cba1f7dd0a8897c60339264f4be367c5f",
+      "main_v1_matches_delivered_source": true
+    }
+  ],
+  "limits": {
+    "external_claims_reverified": false,
+    "application_or_model_tests": "NOT_EXECUTED",
+    "physical_tests": "NOT_EXECUTED",
+    "m0_or_m4_changes": false,
+    "shared_contract_changes": false,
+    "research_acceptance": "PENDING_REVIEW",
+    "main_merge": "NOT_AUTHORIZED_BY_THIS_PUBLICATION",
+    "whole_repository_import_audited": false
+  }
+}

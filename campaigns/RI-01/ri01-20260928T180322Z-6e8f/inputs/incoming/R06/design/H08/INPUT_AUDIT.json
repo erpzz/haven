@@ -1,0 +1,1048 @@
+{
+  "task_id": "R06-DESIGN-001",
+  "checked_date_utc": "2026-09-28",
+  "input_selection": "Attached prompt ZIP did not contain the starter. The named cumulative v1.0 starter was separately located among supplied project files. No live M0 tree was supplied or inspected.",
+  "required_context_read": [
+    {
+      "path": "START_HERE.md",
+      "status": "READ",
+      "sha256": "98781de20ed2389841e4ba857f609388ffd79b1dd6a5dd933a5a10997635843a"
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "status": "READ",
+      "sha256": "2492e7ae7992dc66fc15c30f0f864429b097a1a63dc1c285dfb523d80140dffa"
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "status": "READ",
+      "sha256": "555515587b0f7ed1c0e6de5c7c55647b93d172f9e6f97633543d41f1d24e6a74"
+    },
+    {
+      "path": "scope/COVERAGE.md",
+      "status": "READ",
+      "sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2"
+    },
+    {
+      "path": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+      "status": "READ",
+      "sha256": "e870c703d036f69199e96b92856c56e99b739ed4a06fa8595b02896221819502"
+    },
+    {
+      "path": "research/RESEARCH_ATLAS.md",
+      "status": "READ",
+      "sha256": "83a41775e6772e607d42da7a475801ed8675b222c5631b373f8b07fb38809b9d"
+    },
+    {
+      "path": "contracts/README.md",
+      "status": "READ",
+      "sha256": "84e46ea3a07c3dfb9ca4d8bc95453171d9e51b4e72b8c8dc5113561962a40615"
+    },
+    {
+      "path": "agents/HANDOFF_TEMPLATE.md",
+      "status": "READ",
+      "sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc"
+    }
+  ],
+  "additional_context": "AGENTS, thread map, H08 charter, relevant architecture/privacy/runtime/hardware documents, shared contracts, RF cases/source/experiment/acceptance entries and relevant M0 baseline sections were read. Inventory is not a claim that all 146 files were read in full.",
+  "archives": [
+    {
+      "kind": "starter",
+      "archive_name": "HAVEN_ASTRA_Cumulative_Starter_v1.0.zip",
+      "sha256": "55f693f64c56a9d8f13a6cd5725ab4c427af6ade2e127fe8e71829eca1f1d412",
+      "entry_count": 146,
+      "file_count": 146,
+      "all_extracted_files_unchanged": true,
+      "inventory": [
+        {
+          "path": "haven-astra-starter/.gitignore",
+          "bytes": 232,
+          "sha256": "be361fdfb5e9d9a8f86d956d7c7df15c2c31832cd7dc775fc380a8aafd49bbc2",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/AGENTS.md",
+          "bytes": 3697,
+          "sha256": "4c756a96206c5dae6c475582877d3a6b214fef694816a60560a496fad00bd717",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/CODEX_START_PROMPT.md",
+          "bytes": 3114,
+          "sha256": "47eb776859ab0afbda19a60a56fb879c4087e735bc0880470f660309cdd09bc7",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/CURRENT_STATUS.md",
+          "bytes": 2486,
+          "sha256": "2492e7ae7992dc66fc15c30f0f864429b097a1a63dc1c285dfb523d80140dffa",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/FOLDER_LOCATION.txt",
+          "bytes": 568,
+          "sha256": "126c7acd454e6d97cd87484c34b39d57db3260e6db655cadb1be898623a69357",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/INDEX.md",
+          "bytes": 10370,
+          "sha256": "b7bb4f18a7eaa86ba13145e97476ab56cc933b31bb69253da9ec781726c24c89",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/LICENSE_NOTE.md",
+          "bytes": 767,
+          "sha256": "73ad582341c1a02bfea24f9354d97c1597e59af298c261b4dad9242ce0e5a8f6",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/MANIFEST.sha256",
+          "bytes": 14125,
+          "sha256": "13fb44698155cad15c8e7dd30b508581007f9221eaff5225c3a3c7cfb8102aae",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/PACKAGE_VALIDATION.md",
+          "bytes": 4843,
+          "sha256": "87828516cb1c9e99ece80654409bab99d811bdfbed26e1bb2756af2f35f419c4",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/PRECEDENCE.md",
+          "bytes": 2638,
+          "sha256": "555515587b0f7ed1c0e6de5c7c55647b93d172f9e6f97633543d41f1d24e6a74",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/README.md",
+          "bytes": 4075,
+          "sha256": "3351c0e704692e7c49a05faad943660c8938075fa41e5512e45f6f355394b5ef",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/START_HERE.html",
+          "bytes": 216018,
+          "sha256": "3064492cf90ece5245e934f4a600b9e187e50a70f36842db0c9fbfad1dce6c03",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/START_HERE.md",
+          "bytes": 3065,
+          "sha256": "98781de20ed2389841e4ba857f609388ffd79b1dd6a5dd933a5a10997635843a",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H00_STARTER.md",
+          "bytes": 3253,
+          "sha256": "870ab31fe15c457009be2420961b7af34a29d3f2ad7753c0279f390f5ef9ff20",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H01_STARTER.md",
+          "bytes": 3236,
+          "sha256": "84f0c0b463b20ce43ca466ee88ffd478ba2b5cbbe39bd9a8f936999ca1899de5",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H02_STARTER.md",
+          "bytes": 3256,
+          "sha256": "d74ae0a9cbef1f4f5fce76eb0a07ccee5905595d9e0629ba1cdb2740438775dc",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H03_STARTER.md",
+          "bytes": 3214,
+          "sha256": "f14a6ea51b8b694e18be47a7172c5e358fd071498089e76a664be0c49dad0815",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H04_STARTER.md",
+          "bytes": 3245,
+          "sha256": "9016ec69a08cc3460d891383d73700b56ac0193c0c4718e0198f8c60d41ca429",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H05_STARTER.md",
+          "bytes": 3248,
+          "sha256": "311bf94cb4e94f38970130b3b65ca96d7431296b2b9308bb74b85be93220a3e9",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H06_STARTER.md",
+          "bytes": 3287,
+          "sha256": "b0de32c2d1bddcac704ad10ea2c6d9300f3eb8b7f8dfa85b4087f4f68e205d73",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H07_STARTER.md",
+          "bytes": 3216,
+          "sha256": "c8cde36666adf3116dd7279b9f2cd3a564eded772fe968844e5ce0fcd752caa7",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H08_STARTER.md",
+          "bytes": 3288,
+          "sha256": "57ce0cbe2c55c31021aaed91bf8eaf52f46a633873a442c7948d441377acc02c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H09_STARTER.md",
+          "bytes": 3314,
+          "sha256": "89913600abe03d818aa0b53f910287627bb30b2b8fde5db86da476ce61a7c22e",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H10_STARTER.md",
+          "bytes": 3254,
+          "sha256": "0b3a8705af1952c7f173ec6c6c2654222454c80da1adf3757f86fdee6ea598e8",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H11_STARTER.md",
+          "bytes": 3275,
+          "sha256": "f36294c4da92567bbb50be60252f8a60559ade80ecd5fe6a3e339c75652bee21",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/H12_STARTER.md",
+          "bytes": 3318,
+          "sha256": "69e9d33917bf75b07367fe98dbb613db704cb07d2ad35d04dc51dec382e6358a",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/HANDOFF_TEMPLATE.md",
+          "bytes": 1329,
+          "sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/THREAD_MAP.md",
+          "bytes": 3099,
+          "sha256": "dd75660375d2d1ff66c9f79117573188dc56392268ac25ae73318474bb997500",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/agents/registry.json",
+          "bytes": 10211,
+          "sha256": "0863466295066f3c5e0fcfc66a8a474a39656ac1fb947dd5299c551ac2bd78fe",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/archive/HAVEN_Low_Cost_AI_Research_2026-09-27.md",
+          "bytes": 11977,
+          "sha256": "302c1acc6d181ad0851b438f1bbc294f68ee8b3ea35bf7de1954e7649f4b254a",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/archive/PROJECT_ASTRA_Codex_Handoff.zip",
+          "bytes": 96978,
+          "sha256": "8b878b75acde68ac25fa53dc467b807d6f0c456968bb1438b6d2d2f9b0a3023e",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/archive/PROJECT_ASTRA_Codex_PC.zip",
+          "bytes": 99046,
+          "sha256": "2b2c51f80a938c8e62772dfb037593e6260a67b6bf69b2e084f58ba93e79c1df",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/archive/PROJECT_ASTRA_Codex_Start_Prompt.md",
+          "bytes": 3318,
+          "sha256": "00527d621dd5334d4b79a9b2d3c33dd3e63edc003f6015f2df916060a6131a45",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/archive/PROJECT_ASTRA_HAVEN_Design_Thread_v0.3.zip",
+          "bytes": 122138,
+          "sha256": "15e45d772a4123937e08ac4bccaf42d3a7436d925b2290ecaa0e9d23fb19dd8f",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/archive/PROJECT_ASTRA_HAVEN_Master_Design_Prompt_v0.3.md",
+          "bytes": 47242,
+          "sha256": "f2510b1328d86ef109f0bb29223e8ca848c1a272c0f500c1418a85f4fdd9b2b2",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/archive/PROJECT_ASTRA_Hardware_Roadmap_v0.1.md",
+          "bytes": 14900,
+          "sha256": "320654789574288cfefc34344e757ac7cad373172a9ffc38642fda3975527618",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/archive/PROJECT_ASTRA_M0_Preflight.zip",
+          "bytes": 3350,
+          "sha256": "fdbb6dc681868c158705b77d1bbc8846b3c6c39c16b4c883ec93fadc631e7599",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/archive/README.md",
+          "bytes": 1009,
+          "sha256": "02f3ffd11380314be692fbadd060e457741e80d154c201e8800121bbdc025718",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/baseline/M0_CURRENT_APPROVED_CONTEXT.md",
+          "bytes": 4974,
+          "sha256": "f84e6b6b04ae8c13b17eed43e9e2c1f3f1f56973862e29560d71b6c5f219b692",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/baseline/PROJECT_ASTRA_Generation_0_Implementation_Validation_Plan.md",
+          "bytes": 61117,
+          "sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/baseline/PROJECT_ASTRA_Reference_Architecture_v0.1.md",
+          "bytes": 132066,
+          "sha256": "ca5f2fdaca66a4ebe0e8226552b2505320ef057ea843bff1853d13463e4da5b6",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/baseline/SOURCE_MANIFEST.json",
+          "bytes": 2939,
+          "sha256": "1056af756760759a6d227b946f3c546bf56d1c7914afab2c6cbcd90a0edea4ef",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/README.md",
+          "bytes": 3604,
+          "sha256": "84e46ea3a07c3dfb9ca4d8bc95453171d9e51b4e72b8c8dc5113561962a40615",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/agent_job.schema.json",
+          "bytes": 2066,
+          "sha256": "fbc33699cebf0f095a5e6da2c5ab3c64554bcb499be2442aa6f62ba1c8047b93",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/capability_qualification.schema.json",
+          "bytes": 1658,
+          "sha256": "5a202cc524f0a5b4d38f526ef7bc8ea12a4b703fc9f1e6d8e554c816eee3cfd3",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/consent_proposal.schema.json",
+          "bytes": 1623,
+          "sha256": "d48d26aac261eb77c9d9f4ecb9d93c6b0a0efdb2358f83c3e613f6419005defb",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/context_packet.schema.json",
+          "bytes": 1781,
+          "sha256": "9ebbf9c8fe0b620db89d3348c31f38580f11b7244b24897a6f200e82e9aba925",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/daily_action_proposal.schema.json",
+          "bytes": 1525,
+          "sha256": "da7b74e6349fd30df796aa6adc149d81c269aa4bc0b504e17eb47f95dcdc6d00",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/delivery_receipt.schema.json",
+          "bytes": 1367,
+          "sha256": "06e49970f99d8bb4a37c2c8343c8e81e40e580aafbcb166f9f6c6f1050245779",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/design_artifact.schema.json",
+          "bytes": 1730,
+          "sha256": "b872628654d13e32ac1571c33790f68ecfc103c7d4fe9e9185f4ccaae7d6847b",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/evidence.schema.json",
+          "bytes": 2422,
+          "sha256": "241d0f2bb00cbbb1e59472a92b66b53b893135f410e4c88bd2712d061e1a1c29",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/experiment.schema.json",
+          "bytes": 1844,
+          "sha256": "14d7893c6728edcbdad7690373a72ea08ab2b1ef32e8285695f3f625afd0402b",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/health_observation.schema.json",
+          "bytes": 2167,
+          "sha256": "793918b305df534b79bd605525e8add2bb545fea9538307dd3b242a9277b70c1",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/physical_action_proposal.schema.json",
+          "bytes": 1668,
+          "sha256": "6e72a18ed05eb120dd02cc4787f52e0ae5d153539ec89f4dcb3602bbfe478d5c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/registry.json",
+          "bytes": 4397,
+          "sha256": "a26d3cf9cb0451f32ba4152ff2382a1126204d0d21c27a179baf112836939873",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/contracts/spatial_estimate.schema.json",
+          "bytes": 2656,
+          "sha256": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/decisions/DECISIONS.md",
+          "bytes": 2660,
+          "sha256": "73aab1c73c01794cc99a14812df7b70123bcb8cb1b29f9f965aa482a1257a1ba",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/00_CHARTER.md",
+          "bytes": 3873,
+          "sha256": "4813bff62c4013700065c3aa400c9de80a199f0cc6f9ce4f181923540f284749",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/01_SYSTEM_ARCHITECTURE.md",
+          "bytes": 5620,
+          "sha256": "d4dbb74347de3f00d41a932c3cde14106034637254f2fc7014e39e8897c2f072",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/02_DAILY_ASSISTANT.md",
+          "bytes": 7116,
+          "sha256": "7db327e61411afb580a5e4a27e6e62d71327941a50685b2c14e3c2559438ed79",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/03_PRIVACY_AND_AUTHORITY.md",
+          "bytes": 5858,
+          "sha256": "500f2ed36d932dfba5520f18027138fcd2aa38508a1d45be205a7e9f328ff2bf",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/04_INTELLIGENCE_AND_COST.md",
+          "bytes": 6578,
+          "sha256": "4fde71fc268c36086ec85016260a941a974429b6f9b254f8bafebcd03bca2a7e",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+          "bytes": 5726,
+          "sha256": "fb4d50536752fe7d993be43e279b8ae34e7414ab57aa4b947eeb6c9a259eca26",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+          "bytes": 7267,
+          "sha256": "e870c703d036f69199e96b92856c56e99b739ed4a06fa8595b02896221819502",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/07_SENSORS_AND_ACTIVE_PERCEPTION.md",
+          "bytes": 6494,
+          "sha256": "b1c01f121abd634f2b9b00532be3849a8134b8560dbdebf086876e8e5af5ff88",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/08_AIRCRAFT_FLEET_AND_BASE.md",
+          "bytes": 6495,
+          "sha256": "0ef409701131a7dc34a9f24417a4a3704b1ab1a5909043140be9de66529a9224",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/09_COMMUNICATIONS_AND_REMOTE_GATEWAY.md",
+          "bytes": 5294,
+          "sha256": "017fa332017b2bf62ffcbc3c705448d103e4080d76ee3db6582cde1bb827857c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/10_EMERGENCY_SUPPORT.md",
+          "bytes": 5950,
+          "sha256": "919d25acd7183cfb9953f9b4c460ad4480c86355a8b8f77491fae2357bbf1a14",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+          "bytes": 5345,
+          "sha256": "0cab226c8382f240f6488fd33818ee8c4afd01fe9627e1beda2bd0222b824cae",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/12_AUTONOMOUS_ENGINEERING_AND_FABRICATION.md",
+          "bytes": 7523,
+          "sha256": "0481d00d88edacd6055509893320ad7574188f08dd866d6fb7b43323e270c05b",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/13_RUNTIME_AGENTS.md",
+          "bytes": 6433,
+          "sha256": "f23346c29f09b89091379ea5b63953c14cd02582c70c45c1e169907f6652bddf",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/14_OPERATIONS_SECURITY_AND_FAILURES.md",
+          "bytes": 5980,
+          "sha256": "f9fb5acdabcdbae987c346285cb79865dadfe4cbe469adecf5c580c2012e72bc",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/15_NOVELTY_AND_SCIENTIFIC_METHOD.md",
+          "bytes": 4531,
+          "sha256": "ee004963b03fe1c14bbbf66bf9efb87955a3ff54279639e2ff25beccf7709279",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/16_HARDWARE_AND_PURCHASE_GATES.md",
+          "bytes": 4607,
+          "sha256": "4f7181984f4df03e781c6c96c206609b237f6ac9b2602e7436698c7dc21462fb",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/docs/17_INTEGRATION_AND_MODULE_PLAN.md",
+          "bytes": 4298,
+          "sha256": "9fb42869fbe37e864b78696031db0ab11243b57247b56920355940bf73e08d46",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/family/HAVEN_IN_PLAIN_ENGLISH.md",
+          "bytes": 1958,
+          "sha256": "b8a512bfd8dde56a4b05e46eea8cd747f802f92b995bf31045c46b15358a475c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/family/HAVEN_IN_PLAIN_ENGLISH.pdf",
+          "bytes": 3299,
+          "sha256": "4a93d2eb9b6c36ce29e37300321848dbca5a7753ec503750f5abc62b4293cb09",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/agent_job.json",
+          "bytes": 504,
+          "sha256": "07de57b46d6bd0c51ddb8a72d351656b231bfe54c758927eac77bcb369d12b42",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/capability_qualification.json",
+          "bytes": 394,
+          "sha256": "0ef79f9d83a6bb8afcd0f95deb72e30bd32bb48b4faa74b6e29a05b320266f01",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/consent_proposal.json",
+          "bytes": 408,
+          "sha256": "8293f15392b4f735c4364e22b5dd803c612742998f125b064e0e669396355c86",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/context_packet.json",
+          "bytes": 449,
+          "sha256": "0579423bd145428bf3c3d954d655492ead75f7046dcff7e3708aa7c6bc6c677c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/daily_action_proposal.json",
+          "bytes": 433,
+          "sha256": "16ff2dd3945562f5f9ed7cb75e573d5893887d13dda548f28bae7c170d16a5a9",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/delivery_receipt.json",
+          "bytes": 333,
+          "sha256": "0d584cf71c6ad862c1753a4a868d644e5cd83548e35387df42b3bacab714dbc3",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/design_artifact.json",
+          "bytes": 446,
+          "sha256": "d83fb37087d9c7e6d672d8aa004a247ba3641484bf569b2d285f9c804f7267c9",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/evidence.json",
+          "bytes": 576,
+          "sha256": "6fd771f3f6b01dc425c8ea1e1f469fab494e5a4b5f5fe4d6295706a54a3dfff5",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/experiment.json",
+          "bytes": 673,
+          "sha256": "06af1d566b4e07537cd0f64fe2e8cdc687014e9d91396827f6e34341f3abb2f3",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/health_observation.json",
+          "bytes": 491,
+          "sha256": "77d69d9240e7abd1779b5ec964d952bd8a6649fbe7ed904e1871940ff5b9d36a",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/physical_action_proposal.json",
+          "bytes": 485,
+          "sha256": "4c1f0877aae81260bae7d89b57f9218745259da99c1fe9ece1ce703e8a78c2d8",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/contracts/spatial_estimate.json",
+          "bytes": 619,
+          "sha256": "94416f16bb2cbb77db4d6b511e4797d1cac106f1ddb2350ce1aaf892621a6f2b",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/designs/sensor_fixture_spec.json",
+          "bytes": 272,
+          "sha256": "e5097349df3eafde93fb752333d7325eaa3708d092fb38b5f58db581aef1be54",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/negative/fabrication_enabled.json",
+          "bytes": 484,
+          "sha256": "6ce364f5ff70703ef4c2408c517b9a2b2aec1905209f6d7c8ed6a36ee37fce60",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/negative/job_budget_negative.json",
+          "bytes": 505,
+          "sha256": "8ca5154ce97b0378bb60d515e370b545a66d70343a78a41534790c0d0f6ce2c1",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/negative/job_network_enabled.json",
+          "bytes": 503,
+          "sha256": "7dc6633d74a4b69d2217e880f4567b0c1fbf47aef0505531100f341395092aa7",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/negative/missing_spatial_frame.json",
+          "bytes": 604,
+          "sha256": "163e73e8d8c4c7cdc9fa77be9223c5425490220381de1dcd7e2176af655ed65f",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/negative/raw_command_in_proposal.json",
+          "bytes": 525,
+          "sha256": "be7d35855e0ed0799e0a5d1c336cf249eef6ff2e150ec46d409e3438972d5160",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/negative/real_dispatch_claim.json",
+          "bytes": 332,
+          "sha256": "07e74e54df5c292d6d1109ed8fc58aae68d6f5c2d94b3c0ed6754a69363e1f19",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/negative/registry.json",
+          "bytes": 1954,
+          "sha256": "5a41a8d57f8b6bd5ad95b8069ea15915c68165f2c3b2f40fa78348385d961253",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/negative/unknown_health_with_value.json",
+          "bytes": 489,
+          "sha256": "bfe52b5628a0dc9337cd65a9b08faa108d619e94bb3f44faf798eef791808067",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/fixtures/negative/unknown_uncertainty_numeric.json",
+          "bytes": 632,
+          "sha256": "e7f17aab11a51a922ff4fe6bfa6176bd150c4f2bb2eec606e62323c7362635fa",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/policies/README.md",
+          "bytes": 434,
+          "sha256": "f9e73ba78f20f8e960cadf745e42800ce770abaa119e846354e3567a737465ab",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/policies/defaults.example.json",
+          "bytes": 453,
+          "sha256": "da79f207499b5f2a2877e56aee6da386f25e206a407c5c6051d7eb79756462be",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/policies/model_budget.example.json",
+          "bytes": 547,
+          "sha256": "fa7cccec0b4f9b8bf9ba19b0b18884f672b46025124a67fa1168cf6ba9c753ca",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/CLAIM_AUDIT.md",
+          "bytes": 3146,
+          "sha256": "c0dd7487829fcb003e26415894bb58fe7f2155d8178f5bb3b963cb4aed733858",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/EXPERIMENTS.md",
+          "bytes": 25739,
+          "sha256": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/EXPERIMENT_PROTOCOL_TEMPLATE.md",
+          "bytes": 1092,
+          "sha256": "ef1bfb07dfb2e8586c24eed92747eec3b14fb4109a801d609226269ca379aaa2",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/RESEARCH_ATLAS.md",
+          "bytes": 3858,
+          "sha256": "83a41775e6772e607d42da7a475801ed8675b222c5631b373f8b07fb38809b9d",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/SOURCES.md",
+          "bytes": 21077,
+          "sha256": "3e5845789b4cb6185ecf41f5b0a67b71114fc387d0851912d37c2593d37108df",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE01.md",
+          "bytes": 1476,
+          "sha256": "00ac57370242c8c02177b6fc4203712736b12ec396a11f1f58bd8f3dbe666a03",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE02.md",
+          "bytes": 1449,
+          "sha256": "a4e2fafdc49ed77392af33e975132b2d58e270f01abe0b5cc9435e024422b4b0",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE03.md",
+          "bytes": 1428,
+          "sha256": "5877178400d141b225d2a765c64dba6dfa1b93ea2ffbe72797432353506dbc65",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE04.md",
+          "bytes": 1463,
+          "sha256": "9ebd4bca5514106ea1c95b8ccedcb6caea8fd2ffc4b8b9598ca13319393b1b8e",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE05.md",
+          "bytes": 1453,
+          "sha256": "e3cd8b204a28fc8ad15a262e17ed4197bf336b61f0c2a1fa7df4533601f85d42",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE06.md",
+          "bytes": 1404,
+          "sha256": "a90dfc13cb255a7bf1d2d97308d9b2fcd68df9540e5fd936b7cbfae90fe88ad0",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE07.md",
+          "bytes": 1415,
+          "sha256": "0f376b52e6cc1b5908764526f10d2877c4d0115f3a9b06d9c101d460150bf2ba",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE08.md",
+          "bytes": 1441,
+          "sha256": "b0f9824abd9736fb517ca2f2b3bc8946fb62001c9729ee5f0372fa25f3e5fb9c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE09.md",
+          "bytes": 1436,
+          "sha256": "16208e13c9dea5429a80c1ed68fd5736c5026dc57d7d3d3db684238f8af1c522",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE10.md",
+          "bytes": 1367,
+          "sha256": "10110f6ab8d47a4e717c02816ee44ab0086fcc29e2d86af5ceed1b597ad3c4f1",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE11.md",
+          "bytes": 1441,
+          "sha256": "bb321ebee5d997d0b188c6b72ebf7402159528a647e6449e2806540f0ba78f90",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE12.md",
+          "bytes": 1424,
+          "sha256": "0ef670a3a6c7f3a06820e87d20192195a961ba0a0cd9a8804fabdd9d8f472978",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE13.md",
+          "bytes": 1497,
+          "sha256": "4eafb53e417b40d6f337cc49ec79c11a19c22919b5223a3e51aa9264de5e06d1",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE14.md",
+          "bytes": 1498,
+          "sha256": "e6c15882ad31531506feb54da984aef2377786dee1a37bd285802a3dbf7f2c29",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE15.md",
+          "bytes": 1413,
+          "sha256": "badf712af8016b0f4f4a1c3bab8754b6ba6df9398a87bce98af0527d47aa2022",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE16.md",
+          "bytes": 1363,
+          "sha256": "7bb6c15fdf5bc0c0a7d431f393658e52134adada59c005b5aa16ba78efd4b9b8",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE17.md",
+          "bytes": 1374,
+          "sha256": "e7b75fe5420d2c3f3d434401bfe40eb96a25e8aa53b710cb9c8e668df69004a2",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE18.md",
+          "bytes": 1447,
+          "sha256": "3408ee559b95bd64810a3e3892ad648025c01b36d6ba361691a9bfe21874c4f0",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE19.md",
+          "bytes": 1410,
+          "sha256": "fa951dba0feb9d42a9d9b59665c03a222204d46c891f45698aa38d6fc22a6cae",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE20.md",
+          "bytes": 1470,
+          "sha256": "3f11e0e15ebbff14f21b2de210029a5ded1cdfbd45ac0359c3594ad895a74ef0",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE21.md",
+          "bytes": 1440,
+          "sha256": "d6ad1fc1cdfa141a241be53a10400f49d34b102751eef76a69cd9999c1b14490",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases/CASE22.md",
+          "bytes": 1437,
+          "sha256": "2824571da0d69bc004acdd7e965726cc371c4a07d9ffd3333fdd5ea3e39af31d",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/cases.json",
+          "bytes": 16171,
+          "sha256": "055476b6e429706d842eed9f1683f5598a7166f0de0e227556f99df25f487f7e",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/experiments.json",
+          "bytes": 37277,
+          "sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/research/sources.json",
+          "bytes": 24362,
+          "sha256": "8dfdb7f74b44d4595605533cb4dfc57a14b19569369008ff7047e7a1631889a0",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/review/package_checks/browser_checks.json",
+          "bytes": 458,
+          "sha256": "6c8b85880a0f9cac2cf221bdca14daac0c653ed3e84ff38d1b193dbcf662c77c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/review/package_checks/environment.json",
+          "bytes": 428,
+          "sha256": "03f41ee92bb916794c618a20847018a8919cee545e64471eb08708cf829a15f1",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/review/package_checks/unit_tests.log",
+          "bytes": 1997,
+          "sha256": "46e8b443d3da4ebe92dad00aa273eef18fad380316ab4f5525ea6d9a9607dbd4",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/roadmap/ROADMAP.md",
+          "bytes": 4183,
+          "sha256": "81c06ff08c938ff709708745ae80a002e6778e3c07106509abdcac767c9b46c7",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/scope/CONVERSATION_PROVENANCE.md",
+          "bytes": 4331,
+          "sha256": "20e748cbac77a934b24885c21982c9e238b57d37fce73d333b4fa02544ff5e8d",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/scope/COVERAGE.md",
+          "bytes": 21724,
+          "sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/scope/requirements.json",
+          "bytes": 54675,
+          "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/scripts/Extract-HavenStarter.ps1",
+          "bytes": 2037,
+          "sha256": "486e8e0301144aecec45a2a36bcc4c71d3981eee62cc643bee9b419da888339c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/scripts/validate_bundle.py",
+          "bytes": 11574,
+          "sha256": "68203160f90aee00735be2d698b5d12b2a971be1328a66339efe4b2f0723447f",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/tests/ACCEPTANCE_CATALOG.md",
+          "bytes": 53861,
+          "sha256": "abb6deaf4d945c3f6daafc86d5107ac28a9953fcde5ea26c5430a536eb87e387",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/tests/RESULT_TEMPLATE.md",
+          "bytes": 828,
+          "sha256": "bdf5efd45b5bad553795372da6b03ec92550a0685c7ec49a5ba107f6511c0d69",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/tests/acceptance_catalog.json",
+          "bytes": 90815,
+          "sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/tests/test_bundle_validator.py",
+          "bytes": 4573,
+          "sha256": "c00e7a8697000f130684bb8dee9ee9ab623885027b140823c7cf6fce6214ae14",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "haven-astra-starter/workstreams/I00_RECONCILE_AND_PLAN.md",
+          "bytes": 2429,
+          "sha256": "1cd4feecf61693fba238799373794860d2957255acbca47ba7d4a91953424ea3",
+          "extracted_matches_archive": true
+        }
+      ]
+    },
+    {
+      "kind": "prompts",
+      "archive_name": "HAVEN_Research_Thread_Prompts_v1(2).zip",
+      "sha256": "78794dc12f03c905811a8dddb7cf51de700dcb72a221196c4375458b52ae79df",
+      "entry_count": 17,
+      "file_count": 16,
+      "all_extracted_files_unchanged": true,
+      "inventory": [
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R05_PERSONAL_TOOLS_SCHEDULING_CONNECTORS.md",
+          "bytes": 3129,
+          "sha256": "2fa4cf52f3fbeaa62be9609dd1fcc97aa50f5233b2cbdf22f5b353b5a1f85f7e",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/INDEX.md",
+          "bytes": 1453,
+          "sha256": "3d6034aad16febc2472f1ce80c60464f4a93066c010e7325861a283a036d394b",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/HANDOFF_TEMPLATE.md",
+          "bytes": 1738,
+          "sha256": "d6f95d42046002985cde97f3d806b7d2aab67cddd006f73571d77d484f1dbc6c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R13_VALIDATION_OPERATIONS_BENCHMARKS.md",
+          "bytes": 3448,
+          "sha256": "2544975dd4a7beee64e89c63c47de953383399ca17b1cac2ce41ca8007fbed41",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R02_INTELLIGENCE_MODEL_ROUTING_AGENTS.md",
+          "bytes": 3392,
+          "sha256": "54ee1992e193ebb66140e405dcc5751b352600db6e77183fcc7f2927e83e82cf",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R06_RF_SPATIAL_SENSING.md",
+          "bytes": 3436,
+          "sha256": "b5987d58579df4da30fd8c18f7ef2c93b045f743ee6d45b11a68486bc7f3137c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R03_IDENTITY_PRIVACY_AUTHORITY.md",
+          "bytes": 3283,
+          "sha256": "d94cfbc3d901209326ec1f1bdfd6bf9c590a8840acd5fda311634cb4388adee9",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/00_READ_ME_FIRST.md",
+          "bytes": 3028,
+          "sha256": "9582988e0f07d7e8bd0600e590cbc00d04e249544cfd81ed09b6c012b7efdb8d",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R12_FRONTIER_RESEARCH_SCOUT.md",
+          "bytes": 3467,
+          "sha256": "283e390aefbafe046b87d85d349918979e6642dab228302ebb8f63f5095de71d",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R04_WEARABLES_HEALTH_GLASSES.md",
+          "bytes": 3246,
+          "sha256": "374fbc43e4a3c915877abd5bdf6cc6303d55295c0856b3c656781cb5cbea0d80",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R11_EMERGENCY_RESCUE_COMMUNICATIONS.md",
+          "bytes": 3474,
+          "sha256": "0760c05b281a465823297ab1ff7ed729dc31042f05104fec2736544075a46ab9",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R07_SENSORS_WORLD_MODEL_ACTIVE_PERCEPTION.md",
+          "bytes": 3351,
+          "sha256": "1b26936e7661e835331adb8f389b356b3dfb8a2c8eb0e623f000322a9987eb26",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R09_GROUND_ROBOTICS_MANIPULATION.md",
+          "bytes": 3264,
+          "sha256": "7e2bcdc02167a6cf103c406c04c8337fef202152ca2cfebe2410f1eaf9aa092c",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R10_AIRCRAFT_FLEET_BASE_PAYLOADS.md",
+          "bytes": 3506,
+          "sha256": "3e6e04fabd93fb3905e5b2796638d2025792241ebceb815942bbf44f52932418",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R01_DAILY_ASSISTANT_EXPERIENCE.md",
+          "bytes": 3325,
+          "sha256": "1ce5b1701e12cc3bf782af973f380ab5b3152d81e7a72e6deaa53a5be8100457",
+          "extracted_matches_archive": true
+        },
+        {
+          "path": "HAVEN_Research_Thread_Prompts_v1/R08_AUTONOMOUS_ENGINEERING_FABRICATION.md",
+          "bytes": 3559,
+          "sha256": "e6162df10f557d7c50f6d8ed655ea702cd25433082d2b4a03574e3a68f7b887d",
+          "extracted_matches_archive": true
+        }
+      ]
+    }
+  ],
+  "runtime_for_document_checks": {
+    "python": "3.12.14",
+    "os": "Linux",
+    "kernel": "6.18.44"
+  },
+  "application_or_physical_testing": "NOT_EXECUTED"
+}

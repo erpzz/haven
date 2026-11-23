@@ -1,0 +1,120 @@
+{
+  "task": "R11",
+  "variant": "R11-public-v1",
+  "revision": 1,
+  "owner": "H11",
+  "role": "haven_researcher",
+  "author": "/root/ri01_privacy",
+  "status": "PUBLIC_VARIANT_READY_FOR_INDEPENDENT_REVIEW",
+  "canonical_repository": "https://github.com/erpzz/haven",
+  "base_commit_supervisor_reported": "376031e182c57495912baf6727093b0b188da568",
+  "revision_kind": "Public redacted working-tree variant; no claim of publication or membership at base commit",
+  "allowed_output_prefix": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/",
+  "completed_at_utc": "2026-09-29T00:28:23.9707438Z",
+  "original_research_timing": {
+    "elapsed_minutes": 26.48,
+    "completed_at_utc": "2026-09-28T21:13:46.5051925Z",
+    "started_at_utc": "2026-09-28T20:47:18Z"
+  },
+  "amendment_history": {
+    "original_manifest_sha256": "ae2f3e7193e49db10e8fa6b707878428d0b2f9a84ed734923cbc14846773f7bb",
+    "reason": "User-authorized continuation after account-limit reset; no research repeated",
+    "initial_inspection_at_utc": "2026-09-28T21:17:16Z",
+    "redaction_receipt": "REDACTION_RECEIPT.json",
+    "resumed_partial_packet_inspection_at_utc": "2026-09-29T00:26:35Z"
+  },
+  "content_file_count": 14,
+  "files": [
+    {
+      "path": "CONSULTATIONS.md",
+      "sha256": "4fd627670707f130ab913dde9881faa430c98268bb5893424ce7e60c7dbe693a",
+      "bytes": 4279
+    },
+    {
+      "path": "CONTRACTS.md",
+      "sha256": "5295c4836f524748d25b0e76b06c7db6330c4c7c36ec82ac28f2a8a8f2101baa",
+      "bytes": 13340
+    },
+    {
+      "path": "EXPERIMENTS_AND_PACKAGES.md",
+      "sha256": "27b5239458f2fc644071bef9b060ac8fec834ff015f77c8a66a4938b4f991122",
+      "bytes": 16632
+    },
+    {
+      "path": "HANDOFF.md",
+      "sha256": "e039b7c689e277765692b012119503cb7a974f273eba8dc91b48a1fc351585a9",
+      "bytes": 5455
+    },
+    {
+      "path": "INPUT_PIN_CHECKS.json",
+      "sha256": "17e3644c12ea9f42cc164c62030a4556fafd4471fd4aa4176b27dbde8522a9de",
+      "bytes": 3420
+    },
+    {
+      "path": "INPUT_RECEIPT.md",
+      "sha256": "6bea2fc7fb170a8b54fd4535269900ec80081cad9cd4c812410b915080ef0fb1",
+      "bytes": 2208
+    },
+    {
+      "path": "INPUT_USE.json",
+      "sha256": "2ed564b989bf0665eb8e813b944939b5d392ecb3c9034ad260d3b49e55e8990c",
+      "bytes": 28105
+    },
+    {
+      "path": "MODALITY.json",
+      "sha256": "318c2453b721c7d80f7f89253a0c5af520144071f18e1d71fdb830cf06f4efbc",
+      "bytes": 3470
+    },
+    {
+      "path": "PATHWAYS_AND_COSTS.md",
+      "sha256": "40060f058c9f47e49c7dae7a060b1d1922b0ab7487ace9aedb10efda72a4908b",
+      "bytes": 10046
+    },
+    {
+      "path": "REDACTION_RECEIPT.json",
+      "sha256": "d9b4a1a1f0332c8cb448fa3444d0db6d5ecf41c0e3bcbabd366dec2b1c1c648e",
+      "bytes": 7472
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+      "bytes": 17433
+    },
+    {
+      "path": "REQUIREMENT_MAP.json",
+      "sha256": "5e5d9c5fd97605ac7b3974be7d068a439dd8029f02ad405ab60d301defd2d0c8",
+      "bytes": 31754
+    },
+    {
+      "path": "SOURCES.md",
+      "sha256": "c2c2841312a204c59ebca8dd1edc13a6658cf6644c3bb2f62d28a1d05951b6bb",
+      "bytes": 9958
+    },
+    {
+      "path": "VALIDATION.json",
+      "sha256": "a2d5bf603696d0e6aa92678cb29c3aedaa8fe2021d06d0cb94a9537dc892bbb4",
+      "bytes": 28819
+    }
+  ],
+  "manifest_self_hash": "Excluded to avoid recursion; returned in handback",
+  "changed_from_original": [
+    "INPUT_USE.json",
+    "VALIDATION.json",
+    "HANDOFF_MANIFEST.json"
+  ],
+  "added": [
+    "REDACTION_RECEIPT.json"
+  ],
+  "substantive_byte_preserved_count": 11,
+  "experiments": "ALL_NOT_EXECUTED",
+  "future_packages": [
+    "P11-01 AUTHORIZATION_REQUIRED",
+    "P11-02 AUTHORIZATION_REQUIRED",
+    "P11-03 AUTHORIZATION_REQUIRED"
+  ],
+  "independent_review_needs": [
+    "Assigned reviewer verifies corrected public bytes before acceptance",
+    "Original H06/H04/CORE substantive review and retained native/provider/rights/cost gates unchanged"
+  ],
+  "protected_paths": "Frozen original and shared state untouched; no Git/source/application/tests/install/device/contact operations"
+}

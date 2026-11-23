@@ -1,0 +1,25 @@
+{
+  "status": "EXECUTED_PASS",
+  "scope": "N1_SYNTHETIC_ONLY",
+  "label": "TEST DOUBLE / NOT LIVE AI",
+  "tests": 33,
+  "passed_at": "2026-09-28T03:21:02.116816+00:00",
+  "test_log": "outputs/logs/n1-20260928T032012Z-94d095.json",
+  "test_log_sha256": "ba7bac7e8e87353edb5b6d2a6b250c807a3962a5cacc464fdc7304f04a5d0df8",
+  "source_hashes": {
+    "fixtures/context.json": "dc078b743931add0b86f96a2cf379929bce98a6e18a948994f2519862fb3d9b9",
+    "haven_lab/__init__.py": "16c4d5c0b3499ebaf385aa52b5edf573d50d57b8c8ff3f9104902763ab00b523",
+    "haven_lab/__main__.py": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+    "haven_lab/backend.py": "897ad93277399e08903f72e5e25e8dcd4e0aab6379618cb1703d3abf63d64a81",
+    "haven_lab/cli.py": "9f72fe8ebd03e524711747ac2a1eb2bcff690197bfaa5f3631494eb621e19237",
+    "haven_lab/context.py": "7c536a2bdd52ec543204d213e69c1811134eb7d90d7f124a3d9eb0b48b911fe8",
+    "haven_lab/coordinator.py": "29001252a1b450587f746610c88b93e25f963eb117f8bb87f5e132b41c145345",
+    "haven_lab/render.py": "dae6b79597220dea72a661684b926d47d75f867ff738e36102bf0f3ccc05dd93",
+    "haven_lab/store.py": "cf1244197cbb86a9d7488f2c2714ca987cb3b23228a53050beca471c6dfb8273",
+    "haven_lab/types.py": "1830730ea641cc9d4b1997113816f293c12f40d5593b91da22f23058eb01b955",
+    "haven_lab/validation.py": "803e7565bf490155160e18c79d43a59900a481f73a5a76b9641978f31bbd0a96",
+    "tests/test_n1.py": "c21608db960e39d9773823157d87958f057eeaba53209faf2a817afbc115dfd0"
+  },
+  "sample_run_path": "/home/<operator>/projects/haven-tonight-2026-09-27-c2cc0e/lab/runtime/run-f22e63c6-48cd-4563-88bf-9b0c8283110d",
+  "reproduce": "python3.12 -B -m unittest discover -s tests -p test_n1.py -v"
+}

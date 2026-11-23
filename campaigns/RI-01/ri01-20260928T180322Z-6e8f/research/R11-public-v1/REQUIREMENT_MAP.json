@@ -1,0 +1,844 @@
+{
+  "task": "R11",
+  "canonical_total": 102,
+  "canonical_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+  "mapped_count": 33,
+  "unmapped_retained_count": 69,
+  "meaning": "Selected affected requirements; all other canonical targets remain retained. No original owner or acceptance ID is reassigned.",
+  "requirements": [
+    {
+      "id": "REQ-CORE-01",
+      "name": "Cumulative scope",
+      "statement": "Retain every prior branch; additions do not replace earlier targets.",
+      "owner": "H00",
+      "acceptance_tests": [
+        "AT-CORE-01"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,7; E11-A",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-DAILY-04",
+      "name": "Draft versus send",
+      "statement": "Drafting is distinct from sending email or performing other external writes.",
+      "owner": "H01",
+      "acceptance_tests": [
+        "AT-DAILY-04"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,7; E11-A",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-DAILY-08",
+      "name": "Cross-device continuity",
+      "statement": "Phone, desktop, Watch and glasses refer to the same authorized conversation/task.",
+      "owner": "H01",
+      "acceptance_tests": [
+        "AT-DAILY-08"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,7; E11-A",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-DAILY-09",
+      "name": "Voice and interruption",
+      "statement": "Distinguish stop speech, cancel task, stop investigation and request physical recovery.",
+      "owner": "H01",
+      "acceptance_tests": [
+        "AT-DAILY-09"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,7; E11-A",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-DAILY-10",
+      "name": "Away/offline behavior",
+      "statement": "Explain which functions work when away from home, WAN down or desktop asleep.",
+      "owner": "H01",
+      "acceptance_tests": [
+        "AT-DAILY-10"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,7; E11-A",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-PRIV-01",
+      "name": "Two independent users",
+      "statement": "Eric and Kennedy have independent private identities and stores.",
+      "owner": "H04",
+      "acceptance_tests": [
+        "AT-PRIV-01"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1-2,4; CONTRACTS CR01-07",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-PRIV-02",
+      "name": "Explicit household sharing",
+      "statement": "Shared context is intentionally granted, not everything on the shared server.",
+      "owner": "H04",
+      "acceptance_tests": [
+        "AT-PRIV-02"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1-2,4; CONTRACTS CR01-07",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-PRIV-03",
+      "name": "Per-purpose consent",
+      "statement": "Read, retain, summarize, share, cloud transmit and emergency disclose are separate grants.",
+      "owner": "H04",
+      "acceptance_tests": [
+        "AT-PRIV-03"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1-2,4; CONTRACTS CR01-07",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-PRIV-04",
+      "name": "Revocation and deletion",
+      "statement": "Apply changes to pending jobs, caches, summaries and documented backups.",
+      "owner": "H04",
+      "acceptance_tests": [
+        "AT-PRIV-04"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1-2,4; CONTRACTS CR01-07",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-PRIV-05",
+      "name": "Audience-aware output",
+      "statement": "Shared speakers/displays do not leak private information.",
+      "owner": "H04",
+      "acceptance_tests": [
+        "AT-PRIV-05"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1-2,4; CONTRACTS CR01-07",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-PRIV-06",
+      "name": "Device identity",
+      "statement": "Borrowed/lost/swapped devices do not inherit another person's authority.",
+      "owner": "H04",
+      "acceptance_tests": [
+        "AT-PRIV-06"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1-2,4; CONTRACTS CR01-07",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-PRIV-07",
+      "name": "No employer imports",
+      "statement": "Personal system does not import workplace/customer data or credentials by association.",
+      "owner": "H04",
+      "acceptance_tests": [
+        "AT-PRIV-07"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1-2,4; CONTRACTS CR01-07",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-PRIV-08",
+      "name": "Prompt-injection isolation",
+      "statement": "Untrusted documents/images/audio/memory/tool descriptions cannot add authority.",
+      "owner": "H04",
+      "acceptance_tests": [
+        "AT-PRIV-08"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1-2,4; CONTRACTS CR01-07",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-PRIV-09",
+      "name": "Honest admin threat",
+      "statement": "Do not equate application scopes with privacy from the host administrator.",
+      "owner": "H04",
+      "acceptance_tests": [
+        "AT-PRIV-09"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1-2,4; CONTRACTS CR01-07",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-DRONE-02",
+      "name": "EC120 unknown",
+      "statement": "Run independent four-hour docs-only research; no inferred programmability.",
+      "owner": "H05",
+      "acceptance_tests": [
+        "AT-DRONE-02"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT5; PATHWAYS; P11-03",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-DRONE-06",
+      "name": "Actual outcome and replay",
+      "statement": "Distinguish ACK, observation and unknown; reconcile before retry.",
+      "owner": "H05",
+      "acceptance_tests": [
+        "AT-DRONE-06"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT5; PATHWAYS; P11-03",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-DRONE-10",
+      "name": "Payload platform choice",
+      "statement": "Choose ground/consumer/open/enterprise path based on actual payload need.",
+      "owner": "H05",
+      "acceptance_tests": [
+        "AT-DRONE-10"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT5; PATHWAYS; P11-03",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-DRONE-12",
+      "name": "Simulator protection",
+      "statement": "Preserve current Gen0 pins, namespaces and milestone separation.",
+      "owner": "H05",
+      "acceptance_tests": [
+        "AT-DRONE-12"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT5; PATHWAYS; P11-03",
+      "direct_h11": false,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-COMMS-01",
+      "name": "Three communication levels",
+      "statement": "Separate offline local portal, low-bandwidth relay and real internet.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-COMMS-01"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT3-4; CONTRACTS CR02-04; E11-B",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-COMMS-02",
+      "name": "Public guest isolation",
+      "statement": "Easy access does not expose personal/health/control/admin systems.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-COMMS-02"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT3-4; CONTRACTS CR02-04; E11-B",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-COMMS-03",
+      "name": "Backhaul qualification",
+      "statement": "Use verified cellular/satellite/ground upstream when available.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-COMMS-03"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT3-4; CONTRACTS CR02-04; E11-B",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-COMMS-04",
+      "name": "Mesh as question",
+      "statement": "Choose star/mesh/point-to-point links based on measured need.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-COMMS-04"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT3-4; CONTRACTS CR02-04; E11-B",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-COMMS-05",
+      "name": "Message truthfulness",
+      "statement": "Track storage/relay/destination/recipient acknowledgements distinctly.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-COMMS-05"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT3-4; CONTRACTS CR02-04; E11-B",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-COMMS-06",
+      "name": "Data ferry",
+      "statement": "Explore store-and-forward robot mobility separately from permanent connectivity.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-COMMS-06"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT3-4; CONTRACTS CR02-04; E11-B",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-COMMS-07",
+      "name": "Power and offline operation",
+      "statement": "Measure ground station endurance and restart behavior.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-COMMS-07"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT3-4; CONTRACTS CR02-04; E11-B",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-COMMS-08",
+      "name": "Opt-in community support",
+      "statement": "Shared relays/observations expose only explicit capabilities.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-COMMS-08"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT3-4; CONTRACTS CR02-04; E11-B",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-EMERG-01",
+      "name": "Independent help",
+      "statement": "Emergency communication does not wait for AI/drone/printer/cloud budgets.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-EMERG-01"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,5-7; CONTRACTS CR01,05-06; E11-A/C",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-EMERG-02",
+      "name": "Standing incapacitation target",
+      "statement": "Preserve separately reviewed preauthorized dispatch simulation.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-EMERG-02"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,5-7; CONTRACTS CR01,05-06; E11-A/C",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-EMERG-03",
+      "name": "Healthcare communication",
+      "statement": "Prepare minimal consented facts and location/timestamps for a helper.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-EMERG-03"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,5-7; CONTRACTS CR01,05-06; E11-A/C",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-EMERG-04",
+      "name": "Kit logistics",
+      "statement": "Explore delivery/access to predefined supplies with human factors.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-EMERG-04"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,5-7; CONTRACTS CR01,05-06; E11-A/C",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-EMERG-05",
+      "name": "Fire/rescue lights",
+      "statement": "Explore bright lights, speakers and active illumination.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-EMERG-05"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,5-7; CONTRACTS CR01,05-06; E11-A/C",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-EMERG-06",
+      "name": "Professional deployment gate",
+      "statement": "Separate simulation ambition from real fireground/medical/aviation permission.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-EMERG-06"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,5-7; CONTRACTS CR01,05-06; E11-A/C",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "REQ-EMERG-07",
+      "name": "Readiness first",
+      "statement": "Prepare qualified equipment before a crisis rather than fabricate during one.",
+      "owner": "H11",
+      "acceptance_tests": [
+        "AT-EMERG-07"
+      ],
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED",
+      "r11_section": "REPORT1,5-7; CONTRACTS CR01,05-06; E11-A/C",
+      "direct_h11": true,
+      "acceptance_status": "NOT_EXECUTED"
+    }
+  ],
+  "direct_h11_acceptance": [
+    {
+      "id": "AT-COMMS-01",
+      "title": "Three communication levels",
+      "requirement_ids": [
+        "REQ-COMMS-01"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Remove upstream while local AP remains available.",
+      "expected_result": "Portal clearly says no internet; local information remains useful.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-COMMS-02",
+      "title": "Public guest isolation",
+      "requirement_ids": [
+        "REQ-COMMS-02"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Guest tries internal control or private resources.",
+      "expected_result": "No route/authorization; only narrow public capabilities.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-COMMS-03",
+      "title": "Backhaul qualification",
+      "requirement_ids": [
+        "REQ-COMMS-03"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "A relay is airborne but has no upstream provider.",
+      "expected_result": "No internet claim; measured status visible.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-COMMS-04",
+      "title": "Mesh as question",
+      "requirement_ids": [
+        "REQ-COMMS-04"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Proposed mesh adds power/complexity without coverage gain.",
+      "expected_result": "Keep optional/deferred; retain future justified relay path.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-COMMS-05",
+      "title": "Message truthfulness",
+      "requirement_ids": [
+        "REQ-COMMS-05"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Packet reaches a relay but destination offline.",
+      "expected_result": "No delivered/help-dispatched statement.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-COMMS-06",
+      "title": "Data ferry",
+      "requirement_ids": [
+        "REQ-COMMS-06"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Replay intermittent contacts with duplicated/expired messages.",
+      "expected_result": "Correct dedup/expiry/delivery; motion remains independently authorized.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-COMMS-07",
+      "title": "Power and offline operation",
+      "requirement_ids": [
+        "REQ-COMMS-07"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "AI off or power-limited communications node.",
+      "expected_result": "Minimal local status/message functions remain; honest unavailable services.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-COMMS-08",
+      "title": "Opt-in community support",
+      "requirement_ids": [
+        "REQ-COMMS-08"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Neighbor shares relay but not camera or private identity.",
+      "expected_result": "Routing works without granting unrelated data access.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-EMERG-01",
+      "title": "Independent help",
+      "requirement_ids": [
+        "REQ-EMERG-01"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "All optional inference/aircraft paths fail during synthetic trigger.",
+      "expected_result": "Mock help path meets its defined independent deadline.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-EMERG-02",
+      "title": "Standing incapacitation target",
+      "requirement_ids": [
+        "REQ-EMERG-02"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Qualifying synthetic events under valid standing policy, then unrelated missed notification.",
+      "expected_result": "Only the eligible one-use scenario can authorize bounded simulation.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-EMERG-03",
+      "title": "Healthcare communication",
+      "requirement_ids": [
+        "REQ-EMERG-03"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Mix user statement, stale measurement and model interpretation.",
+      "expected_result": "Packet labels each and omits ungranted history; no diagnosis.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-EMERG-04",
+      "title": "Kit logistics",
+      "requirement_ids": [
+        "REQ-EMERG-04"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Dummy kit reaches marked area but no person acknowledges access.",
+      "expected_result": "Delivery and recipient usability remain distinct; no treatment success claim.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-EMERG-05",
+      "title": "Fire/rescue lights",
+      "requirement_ids": [
+        "REQ-EMERG-05"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Ground-fixture comparison under approved output conditions.",
+      "expected_result": "Useful lighting/intelligibility measured; aircraft payload still unqualified.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-EMERG-06",
+      "title": "Professional deployment gate",
+      "requirement_ids": [
+        "REQ-EMERG-06"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "System is asked to enter an active emergency area without clearance.",
+      "expected_result": "No unauthorized operation or emergency-exemption assumption.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-EMERG-07",
+      "title": "Readiness first",
+      "requirement_ids": [
+        "REQ-EMERG-07"
+      ],
+      "owner": "H11",
+      "reviewer": "H06",
+      "setup": "Needed kit item is unqualified or unavailable.",
+      "expected_result": "Unavailable stated; independent help proceeds; no rushed unsafe print.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    }
+  ],
+  "experiments": [
+    {
+      "equivalence": "NOT_EQUIVALENT; original independent-help acceptance remains unexecuted",
+      "new_variant": "E11-A/C11",
+      "id": "EX21",
+      "requirement": "REQ-EMERG-01",
+      "status": "NOT_EXECUTED",
+      "owner": "H11"
+    },
+    {
+      "equivalence": "Future separately authorized ground study; no physical acceptance",
+      "new_variant": "E11-C",
+      "id": "EX22",
+      "requirement": "REQ-EMERG-05",
+      "status": "NOT_EXECUTED",
+      "owner": "H11"
+    },
+    {
+      "equivalence": "Inert public document does not qualify AP isolation/native portal",
+      "new_variant": "E11-A then E11-C",
+      "id": "EX23",
+      "requirement": "REQ-COMMS-01",
+      "status": "NOT_EXECUTED",
+      "owner": "H11"
+    },
+    {
+      "equivalence": "New synthetic variant, not original radio/motion execution",
+      "new_variant": "E11-B",
+      "id": "EX24",
+      "requirement": "REQ-COMMS-06",
+      "status": "NOT_EXECUTED",
+      "owner": "H11"
+    },
+    {
+      "new_variant": "C20 is affected contract case only",
+      "equivalence": "No ownership change or restore-system acceptance",
+      "status": "NOT_EXECUTED",
+      "id": "EX32",
+      "owner": "H06"
+    }
+  ],
+  "legacy_milestones": [
+    "M0",
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6",
+    "S1/T32",
+    "S2/T33",
+    "S2/T34",
+    "S2/T35"
+  ],
+  "legacy_status": "RETAINED_NOT_EXECUTED_BY_R11"
+}

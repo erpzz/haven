@@ -1,0 +1,20 @@
+{
+  "schema": "ri01.review-r15.manifest.v1",
+  "reviewer": "/root/ri01_code_review",
+  "created_utc": "2026-09-29T01:11:28.4260201Z",
+  "disposition": "ACCEPT_FOR_SYNTHESIS",
+  "scope": "Frozen R15 and corrected R15-AUDIT composite only",
+  "payloads": [
+    {
+      "path": "reviews/REVIEW-R15/REVIEW.md",
+      "bytes": 12006,
+      "sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6"
+    },
+    {
+      "path": "reviews/REVIEW-R15/SOURCE_CHECKS.json",
+      "bytes": 9026,
+      "sha256": "4815425b7ce8c7342fbebb1f80e71efa8d2e02f1243dccf0dd40f4cfd9196f45"
+    }
+  ],
+  "self_hash": "Excluded; supervisor receipt records exact manifest hash"
+}

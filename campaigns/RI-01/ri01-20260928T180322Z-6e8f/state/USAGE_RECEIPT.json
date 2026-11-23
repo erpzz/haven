@@ -1,0 +1,13 @@
+{
+  "observed_at": "2026-09-29T01:33:54Z",
+  "source": "get_goal",
+  "tool_reported_goal_tokens_used": 11259919,
+  "tool_reported_time_used_seconds": 15766,
+  "token_budget": null,
+  "scope_note": "Goal-service counters, not independently summed per-agent billing or a replacement for the original wall-clock ceiling. Later root delivery work adds usage.",
+  "per_agent_token_attribution": "UNKNOWN",
+  "session_cost": "UNKNOWN_NOT_ZERO",
+  "additional_paid_provider_calls": 0,
+  "native_assignments": 63,
+  "maximum_native_assignments": 64
+}

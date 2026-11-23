@@ -1,0 +1,188 @@
+{
+  "snapshot_utc": "2026-09-29T00:39:00Z",
+  "source_path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/state/ACCEPTED_INPUTS.json",
+  "source_sha256": "b2256d7821a04efa05d8dfc33f6d6deb68a395963577eab791578064447decbd",
+  "meaning": "Selected acceptance records frozen at read; later root updates do not rewrite this receipt",
+  "entries": [
+    {
+      "task_id": "CORE",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/night01_review",
+      "scope": "First architecture and downstream research only; VA01 must close before P03 freeze, no application qualification",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "integration/core-v1/ARCHITECTURE.md",
+          "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82"
+        },
+        {
+          "path": "reviews/VISION-ARCH/REVIEW.md",
+          "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+        }
+      ],
+      "open_findings": [
+        "VA-01_P03_FREEZE_ONLY",
+        "VA-02_LATER_RECEIPTS"
+      ]
+    },
+    {
+      "task_id": "R04",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_privacy",
+      "scope": "Bounded documentation/contracts/proposed experiments. No mandatory source amendment; exact native tuple/access ambiguity/output accounting/application path/inference/SDK cost-rights promotion gates retained.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R04/REPORT.md",
+          "sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479"
+        },
+        {
+          "path": "reviews/REVIEW-R04/REVIEW.md",
+          "sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956"
+        }
+      ],
+      "open_findings": [
+        "R04-G1_NATIVE_EVIDENCE",
+        "R04-G2_ACCESS_WITHDRAWAL",
+        "R04-G3_OUTPUT_ACCOUNTING",
+        "R04-G4_PATH_INFERENCE",
+        "R04-G5_RIGHTS_COSTS"
+      ]
+    },
+    {
+      "task_id": "R07",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_world",
+      "scope": "Bounded typed evidence/world-model documentary design; no runtime or physical qualification. E07-B separately versioned experiment before freeze; E07-A/P0 and downstream research unblocked.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R07/REPORT.md",
+          "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0"
+        },
+        {
+          "path": "reviews/REVIEW-R07/REVIEW.md",
+          "sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+        }
+      ],
+      "open_findings": [
+        "R07-L01_EXPERIMENT_VARIANT_BEFORE_FREEZE",
+        "R07-L02_ADOPTION_GATES"
+      ]
+    },
+    {
+      "task_id": "R08-P00",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_runtime_probe",
+      "scope": "Bounded reconciliation and inert scalar/correction design. No mandatory amendment. E01 method/estimand/interval/uncertainty freeze, physical inputs and independent implementation acceptance remain unqualified.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R08-P00/REPORT.md",
+          "sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7"
+        },
+        {
+          "path": "reviews/REVIEW-R08-P00/REVIEW.md",
+          "sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0"
+        }
+      ],
+      "open_findings": [
+        "R08P00-G1_E01_METHOD_FREEZE",
+        "R08P00-G2_PHYSICAL_METROLOGY",
+        "R08P00-G3_IMPLEMENTATION_ACCEPTANCE"
+      ]
+    },
+    {
+      "task_id": "MM-VISION",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_mmvision",
+      "scope": "Exact documentary design, shortlist and proposed evaluations; no mandatory source amendment. Rights, lifecycle/decoder, independent oracle, route/attempt denominator and metric/native/human gates retained.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/MM-VISION/REPORT.md",
+          "sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd"
+        },
+        {
+          "path": "reviews/REVIEW-MM-VISION/REVIEW.md",
+          "sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660"
+        }
+      ],
+      "open_findings": [
+        "MV-G1_ARTIFACT_RIGHTS",
+        "MV-G2_LIFECYCLE_DECODER_NATIVE",
+        "MV-G3_ORACLE_SEMANTIC_UTILITY",
+        "MV-G4_ROUTE_ATTEMPT_DENOMINATORS",
+        "MV-G5_METRIC_TEMPORAL_HUMAN"
+      ]
+    },
+    {
+      "task_id": "MM-AV",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_mmav",
+      "scope": "ACCEPT_FOR_SYNTHESIS: documentary multimodal audio/video design only; no execution qualification or permission.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/MM-AV/REPORT.md",
+          "sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0"
+        },
+        {
+          "path": "reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+          "sha256": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593"
+        },
+        {
+          "path": "reviews/REVIEW-MM-AV/REVIEW.md",
+          "sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025"
+        }
+      ],
+      "open_findings": [
+        "H06 protocol freeze and all exact model/runtime/host/authorization prerequisites remain.",
+        "R12 review read-scope addendum retained in original MM-AV review."
+      ]
+    },
+    {
+      "task_id": "R09",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_world",
+      "scope": "ACCEPT_FOR_SYNTHESIS: bounded robotics research/contracts/inert evaluation; no physical/model/runtime qualification or implementation authorization.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R09/REPORT.md",
+          "sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb"
+        },
+        {
+          "path": "reviews/REVIEW-R09/REVIEW.md",
+          "sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81"
+        }
+      ],
+      "open_findings": [
+        "LOW R09-L01: recovered-copy absence only; canonical robotics chapter exists, reviewer read it, original author consumption UNKNOWN. Add exact canonical input to synthesis without backfilling original38pins.",
+        "LOW R09-L02: leader/follower gearing differs; supply is motor/variant-specific, unresolved electrical compatibility remains adoption gate."
+      ]
+    },
+    {
+      "task_id": "R14",
+      "status": "ACCEPTED_FOR_SYNTHESIS",
+      "author_or_reviewer": "/root/ri01_mmav",
+      "scope": "ACCEPT_FOR_SYNTHESIS: bounded augmentation public research/interfaces/proposed experiments; no implementation, native, human-study or physical qualification.",
+      "disposition": null,
+      "artifacts": [
+        {
+          "path": "research/R14/R14_HANDOFF.md",
+          "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544"
+        },
+        {
+          "path": "reviews/REVIEW-R14/REVIEW.md",
+          "sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c"
+        }
+      ],
+      "open_findings": [
+        "E07 exact-person/checkpoint exposure and person/session independence, idle-data feasibility must be frozen before study;12heldoutfamilies are not12new people.",
+        "Exact artifact rights/access, native/human-study/clinical/physical and ordinary-baseline benefit gates remain."
+      ]
+    }
+  ],
+  "late_r11_acceptance": "Root message plus exact REVIEW-R11/CLOSURE-1 and public manifest, independently pinned in INPUT_USE"
+}

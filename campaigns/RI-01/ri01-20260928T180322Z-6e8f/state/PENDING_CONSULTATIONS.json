@@ -1,0 +1,9 @@
+[
+  {
+    "question_id": "Q-CORE-04",
+    "from_agent": "/root/night01_review",
+    "intended_target": "R08 reviewer or author",
+    "question": "Explicit seconds/integer-ms and mm/m adapters plus shared reservation identity: identify lossy conversions and domain types.",
+    "status": "NOT_DELIVERED_THREAD_CAP; dispatch when slot available"
+  }
+]

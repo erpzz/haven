@@ -1,0 +1,14 @@
+{
+  "configuration_kind": "INERT_DESIGN_EXAMPLE_NOT_RUNTIME",
+  "mode": "OFFLINE_DESIGN",
+  "real_aircraft_enabled": false,
+  "real_robot_enabled": false,
+  "printer_enabled": false,
+  "real_emergency_delivery_enabled": false,
+  "public_gateway_enabled": false,
+  "health_collection_enabled": false,
+  "cloud_inference_enabled": false,
+  "automatic_dependency_install": false,
+  "automatic_skill_promotion": false,
+  "remote_repository_writes": false
+}

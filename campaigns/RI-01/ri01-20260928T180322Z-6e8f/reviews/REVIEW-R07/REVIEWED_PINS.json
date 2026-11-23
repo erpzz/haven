@@ -1,0 +1,245 @@
+{
+  "task": "REVIEW-R07",
+  "reviewer": "/root/ri01_vision",
+  "date": "2026-09-28",
+  "disposition": "ACCEPT_FOR_SYNTHESIS",
+  "scope": "Documentary/design subset; E07-B variant clarification before its freeze; no implementation authority",
+  "source_files": [
+    {
+      "path": "research/R07/CONSULTATIONS_AND_CHECKIN.md",
+      "sha256": "a04ecee1f60428d565028b8405bd260a3e90aab75e7ca31dccbc544c509b287f",
+      "bytes": 2808
+    },
+    {
+      "path": "research/R07/CONTRACTS.md",
+      "sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+      "bytes": 12240
+    },
+    {
+      "path": "research/R07/EXPERIMENTS.md",
+      "sha256": "dd457288976f87441c02f64dd6ccbb2c67b7e3ac445e311d07df5a6d358e9ac0",
+      "bytes": 9334
+    },
+    {
+      "path": "research/R07/HANDOFF_MANIFEST.json",
+      "sha256": "2db5745bfc5626f38542b1b4608e63b00458b21f4a38c1b05f2437414cf9bfc8",
+      "bytes": 2265
+    },
+    {
+      "path": "research/R07/INPUT_RECEIPT.md",
+      "sha256": "6958b937bc35b52f9a439dfb6b518f4f7d403343caedc5c80bb7a0680576215f",
+      "bytes": 2770
+    },
+    {
+      "path": "research/R07/INPUT_USE.json",
+      "sha256": "12d61d84351d65b368daadbca9119b22f01e0a9d68ca70e72bd986d72ab9a2ba",
+      "bytes": 11633
+    },
+    {
+      "path": "research/R07/INTEGRATION_SUMMARY.md",
+      "sha256": "7081b28fac8a5a8478f59c674b8967ecf18efb3a17000e0d5c92bfe7845e75de",
+      "bytes": 2425
+    },
+    {
+      "path": "research/R07/MODALITY.json",
+      "sha256": "a2eb5d095426fc50ca8b693e35dda8adea6cc90faecdb2f3de51168e5688aaba",
+      "bytes": 1664
+    },
+    {
+      "path": "research/R07/NEXT_PACKAGE.md",
+      "sha256": "71194cf3ab940abd7e632e0a1691af98c908f8fc778341a12b33274602fe1cde",
+      "bytes": 2891
+    },
+    {
+      "path": "research/R07/REPORT.md",
+      "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+      "bytes": 21375
+    },
+    {
+      "path": "research/R07/REQUIREMENT_MAP.json",
+      "sha256": "16c2b017c53dae7b2b8bcd3f7b9e62dd798fa136e844db8a18103c5d93fe36fa",
+      "bytes": 8815
+    },
+    {
+      "path": "research/R07/SOURCES.md",
+      "sha256": "7b4a2923868cc1594a8f2b3ab93e43525858bb85fafafa64a26742147534290c",
+      "bytes": 5920
+    },
+    {
+      "path": "research/R07/VALIDATION.json",
+      "sha256": "c2f02c4075e72421bd348474fad17273d9c5758b017dad9bc9d3c59dd8019de3",
+      "bytes": 7914
+    }
+  ],
+  "immutable_inputs": [
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "expected_sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "actual_sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "expected_sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "actual_sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "expected_sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "actual_sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/REVIEW.md",
+      "expected_sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+      "actual_sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/CONTRACT_PROPOSALS.md",
+      "expected_sha256": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13",
+      "actual_sha256": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/spatial_estimate.schema.json",
+      "expected_sha256": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e",
+      "actual_sha256": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "expected_sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "actual_sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/SOURCES.json",
+      "expected_sha256": "011d484891273a9fdadc0277b911ca6f32af9daee054089c6785e0de548de4a0",
+      "actual_sha256": "011d484891273a9fdadc0277b911ca6f32af9daee054089c6785e0de548de4a0"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/HANDOFF_MANIFEST.json",
+      "expected_sha256": "fec9c4c223fa2370db6bcbe8fd61980d284d92a31a22b37d707dcd48db0a8d77",
+      "actual_sha256": "fec9c4c223fa2370db6bcbe8fd61980d284d92a31a22b37d707dcd48db0a8d77"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R12/REVIEW.md",
+      "expected_sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+      "actual_sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/REPORT.md",
+      "expected_sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "actual_sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/COMPATIBILITY.md",
+      "expected_sha256": "fe4b60387975e7b919bbea84b90bc365e4323420b7d4205c65fc7a604a0f74f6",
+      "actual_sha256": "fe4b60387975e7b919bbea84b90bc365e4323420b7d4205c65fc7a604a0f74f6"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/MODALITY.md",
+      "expected_sha256": "c2e70b2403390a05c244ceb64de4d04f02bf738dcd85835bdead20a304f0e097",
+      "actual_sha256": "c2e70b2403390a05c244ceb64de4d04f02bf738dcd85835bdead20a304f0e097"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "expected_sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "actual_sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R08/REVIEW.md",
+      "expected_sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+      "actual_sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "expected_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "actual_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/INVENTORY.md",
+      "expected_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+      "actual_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/COVERAGE.md",
+      "expected_sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "actual_sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "expected_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "actual_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "expected_sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "actual_sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/EXPERIMENTS.md",
+      "expected_sha256": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521",
+      "actual_sha256": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "expected_sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "actual_sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c"
+    }
+  ],
+  "additional_review_pins": [
+    {
+      "path": ".codex/agents/haven_research_reviewer.toml",
+      "sha256": "f8cade789e2baf6afda61eecacd36734b4072aad1f1a3d9bd0ed4528c495457c"
+    },
+    {
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a"
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0"
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R10/REVIEW.md",
+      "sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R12/REVIEW.md",
+      "sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51"
+    }
+  ],
+  "checks": {
+    "manifest_content_hashes_and_sizes": 12,
+    "all_matched": true,
+    "immutable_input_hashes": 22,
+    "input_mismatches": 0,
+    "original_requirements": 18,
+    "acceptance_rows": 18,
+    "experiments": 6,
+    "mapping_mismatches": 0
+  },
+  "excluded_mutable_input": "state/run.json: historical base metadata only, not immutable equality",
+  "consultations": "CQ-R07-01, CQ-R07-02 and Q-R08P00-R07-01 checked in append-only log; Q-REV-R07-01 author reactivation failed, root variant disposition only",
+  "actual_actions": [
+    "Document reading",
+    "Current primary web text checks",
+    "JSON/hash/relationship checks",
+    "Direct existing synthetic image inspection",
+    "Owned review output writing"
+  ],
+  "not_executed": [
+    "Application code/tests",
+    "Scientific experiments",
+    "Models",
+    "Devices",
+    "Audio/video",
+    "Git",
+    "Installations"
+  ],
+  "review_md_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815"
+}

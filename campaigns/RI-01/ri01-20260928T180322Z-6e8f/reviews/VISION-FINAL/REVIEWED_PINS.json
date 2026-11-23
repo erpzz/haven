@@ -1,0 +1,2351 @@
+{
+  "task": "VISION-FINAL",
+  "reviewer": "/root/ri01_vision",
+  "candidate_commit_root_reported": "c087bf9c00cb9213dc3225852fb7385ba0eb9aef",
+  "git_not_used": true,
+  "candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+  "payloads": [
+    {
+      "path": "integration/final-v1/ACCEPTED_INPUTS_SNAPSHOT.json",
+      "sha256": "dd42866890a719008b5654e1d7d7045ed6a12840b680e272d6948bb02fd0fa47",
+      "bytes": 34472,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/ARCHITECTURE.md",
+      "sha256": "edac2e9196037dfbea43396dc2d692679c5c86499dbae8194a1d09172c1616ee",
+      "bytes": 11436,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/CONSULTATIONS_SNAPSHOT.jsonl",
+      "sha256": "439fa5643a168235a91c65e14b29eb18e71a74375d2d57962c5ac6a3e9952675",
+      "bytes": 45327,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/CONTRACT_CROSSWALK.md",
+      "sha256": "0ee3d9eb32f8d87f6d3d8b74cf310f0c4f7632f695f8f15a4b09776792584ea8",
+      "bytes": 5794,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/CONTRACTS.md",
+      "sha256": "cb6cea47fb00aba89da234da620b3fb3bd240c2a10e314bcc81cbfa647cc4be7",
+      "bytes": 20609,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/DECISIONS.md",
+      "sha256": "2d663245e1746df508f4e9334f8c1a57539cf9d45a001c5b0e36981d16e71f76",
+      "bytes": 7349,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/DEPENDENCIES.json",
+      "sha256": "1cbae2c5c3e1ebb454162e3bf9254358c91d918504bbd0c445c1fef11c81ed45",
+      "bytes": 18157,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/EVALUATION_PLAN.md",
+      "sha256": "fedcb2f515abeed39e977c851188876902ef57f3e4ff6c683f28d248bbb3ab59",
+      "bytes": 8388,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/IMPLEMENTATION_QUEUE.md",
+      "sha256": "aca2b175bcd564c8c497b12b850ff6d33ebfd7233c1dc85cb123574667f7f7ed",
+      "bytes": 6869,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/INPUT_USE.json",
+      "sha256": "7c67866d5658526ff86533d8b56c1e2174f345b4c6a5ac4b870d465b39ea3a25",
+      "bytes": 186592,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/MANAGER_HANDBACK.md",
+      "sha256": "2948c7601730b03e66d830f959ad648ab28df06cbc1ffdcff182f7639238b695",
+      "bytes": 4109,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/MANAGER_STATE.md",
+      "sha256": "7b4072e995d584a6c250d5cf348b6db935b80bb2dc893008deb3c05c2210269a",
+      "bytes": 3997,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/MODALITY_MATRIX.md",
+      "sha256": "e272f7b1690c7676258adbeef8b89773c12559fac84600b627af2515190f3329",
+      "bytes": 5488,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/MULTIMODAL_CASES.json",
+      "sha256": "8a17c1a46fd858af562b7891f9bbfcb2caac7003ebb34e1dc9177f23623cd52b",
+      "bytes": 49874,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/MULTIMODAL.md",
+      "sha256": "d1e954738d8c2d5e6361b5328dce15f787b933e09bbf8b15b77d1400a1b47bc7",
+      "bytes": 10774,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/RETAINED_SCOPE.json",
+      "sha256": "2a95bc530ce19ce0a72bca4349f091806d8276fc52a3863e180eb081b8dc0116",
+      "bytes": 492384,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/RISKS_AND_DISSENT.md",
+      "sha256": "6fbf57d1c98d5d8d7a190d40d1e7170dfd16bbf4a25fbe482c0c4d6ac3a94241",
+      "bytes": 4403,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/ROOT_NOTES_SNAPSHOT.md",
+      "sha256": "1e14c09fd4729cade42316ad09403e43ed02e81c41f380cb508f186db4136823",
+      "bytes": 9957,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/ROOT_UPDATES_SNAPSHOT.jsonl",
+      "sha256": "1d90c95503a1bffb87be80604dd55d4dcacc67f0624e825ee0b22ae3e6588c02",
+      "bytes": 2174,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/SOURCE_USE_INDEX.json",
+      "sha256": "8f113635a791d21817f134147d8933fb5164cf4dc2f7ab3f63884bc62452f9d1",
+      "bytes": 52391,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/VALIDATION.json",
+      "sha256": "73b6bb198200745d5e3417cd4fe5d982b8ec92867495799b42b50d1e5c7dd10e",
+      "bytes": 1099,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/VISION_COVERAGE.md",
+      "sha256": "a19dc834e0a043f985cb7dc010775a7c1a637d964175a08e5d068fcda37317c1",
+      "bytes": 7814,
+      "matches_manifest": true
+    },
+    {
+      "path": "integration/final-v1/WORK_PACKAGES.json",
+      "sha256": "d7b46b4f14165d7634fa1931c772c026a2b14d49cd607faee27fa91d3a9e6500",
+      "bytes": 139651,
+      "matches_manifest": true
+    }
+  ],
+  "input_members": [
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/INPUT_RECEIPT.md",
+      "sha256": "853e32ebfe1890a35371e2d6d6a1d136198f60f6501d2ddbd55fe5b82ff1eac0",
+      "expected_sha256": "853e32ebfe1890a35371e2d6d6a1d136198f60f6501d2ddbd55fe5b82ff1eac0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/INPUT_USE.json",
+      "sha256": "355b5b220bfd1eb8d03a7cfc9dee045e91f09994c0fd801c2265d15ab224d17a",
+      "expected_sha256": "355b5b220bfd1eb8d03a7cfc9dee045e91f09994c0fd801c2265d15ab224d17a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/REPORT.md",
+      "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+      "expected_sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/SHA256SUMS.json",
+      "sha256": "504b9aed17e60faa81d35ce0ee2ea340b7731ce2bddd09fa1d6e28f8b20100be",
+      "expected_sha256": "504b9aed17e60faa81d35ce0ee2ea340b7731ce2bddd09fa1d6e28f8b20100be",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/SOURCES.md",
+      "sha256": "b8e0dc7231080a32b2ca0eadbb7acd399444ea288400d8b3cfc550c3c1502859",
+      "expected_sha256": "b8e0dc7231080a32b2ca0eadbb7acd399444ea288400d8b3cfc550c3c1502859",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/VALIDATION.md",
+      "sha256": "20a3eb4cd665d7b4939e3508a75d8b83a99d8df886338edbf2b327123070210a",
+      "expected_sha256": "20a3eb4cd665d7b4939e3508a75d8b83a99d8df886338edbf2b327123070210a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/AMENDMENT.md",
+      "sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535",
+      "expected_sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/ARTIFACT_CHECKS.json",
+      "sha256": "a9d288fe118a5153ec5d8d2054d898a980adf4aa30e48437a89cc6f421c2cffa",
+      "expected_sha256": "a9d288fe118a5153ec5d8d2054d898a980adf4aa30e48437a89cc6f421c2cffa",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/INPUT_USE.json",
+      "sha256": "d9661e9a53da88ca1889ed22dac9c08fd4b290407ac452fde05ff01a754e3a6c",
+      "expected_sha256": "d9661e9a53da88ca1889ed22dac9c08fd4b290407ac452fde05ff01a754e3a6c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/ORIGINAL_PINS.json",
+      "sha256": "da7bc6e9b31c0fe418f63f860fcfb4c23c8faba07f69af6a7de5bf2ff82232e9",
+      "expected_sha256": "da7bc6e9b31c0fe418f63f860fcfb4c23c8faba07f69af6a7de5bf2ff82232e9",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/PROPOSED_TRACES.json",
+      "sha256": "62a1ac1bcd2aca65d04d158e548d3d468fe1fe19dc4247d8c897e44b74a29e0e",
+      "expected_sha256": "62a1ac1bcd2aca65d04d158e548d3d468fe1fe19dc4247d8c897e44b74a29e0e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/SHA256SUMS.json",
+      "sha256": "7fcddeec0bdc5edeea80cec272612e1a95f7e0194465a0a06ae455882fc348a6",
+      "expected_sha256": "7fcddeec0bdc5edeea80cec272612e1a95f7e0194465a0a06ae455882fc348a6",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/CASE_CROSSWALK.json",
+      "sha256": "f7dbebfc218d2c5cff7c7ff6d0396c15ef86b02c8fcb9e8bbff778ff829f6921",
+      "expected_sha256": "f7dbebfc218d2c5cff7c7ff6d0396c15ef86b02c8fcb9e8bbff778ff829f6921",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/INPUT_USE.json",
+      "sha256": "9ec7a115c89eda2bb22b1a724a0480f7f069f8fc2da7c72474bbaf639d197faa",
+      "expected_sha256": "9ec7a115c89eda2bb22b1a724a0480f7f069f8fc2da7c72474bbaf639d197faa",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/NEXT_PACKAGE.md",
+      "sha256": "d278dc54606db1a50803a9b50085b25389ec515f9ea5b95aecaf4223d98c7a8f",
+      "expected_sha256": "d278dc54606db1a50803a9b50085b25389ec515f9ea5b95aecaf4223d98c7a8f",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/REPORT.md",
+      "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+      "expected_sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/SOURCES.md",
+      "sha256": "a23251a40cda484b61f22e282502d6d7057e8c5eb6fbb960f85c786ff1264a4b",
+      "expected_sha256": "a23251a40cda484b61f22e282502d6d7057e8c5eb6fbb960f85c786ff1264a4b",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/AMENDMENT.md",
+      "sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "expected_sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/INPUT_USE.json",
+      "sha256": "2cd8bdaa4b40103b4acd9e4bea4a363adc14c3377b3cc6f81226bcf8c215f9d3",
+      "expected_sha256": "2cd8bdaa4b40103b4acd9e4bea4a363adc14c3377b3cc6f81226bcf8c215f9d3",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/STATE_TRACES.json",
+      "sha256": "15db9de5f33c7bbd58acd21dfa4d69122364f07a517b26e1c0c78f508a2c49e8",
+      "expected_sha256": "15db9de5f33c7bbd58acd21dfa4d69122364f07a517b26e1c0c78f508a2c49e8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/ARTIFACT_CHECKS.json",
+      "sha256": "870ffcfeb2ae4da085e06f926aa40b3eb706ebe9938a177e999a3140169a2baa",
+      "expected_sha256": "870ffcfeb2ae4da085e06f926aa40b3eb706ebe9938a177e999a3140169a2baa",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/CONSULTATIONS.md",
+      "sha256": "473fc43f4eb8340992b450b74e12c1315ddacf2eaa4e9c743744bae3b1cab6d5",
+      "expected_sha256": "473fc43f4eb8340992b450b74e12c1315ddacf2eaa4e9c743744bae3b1cab6d5",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/CONTRACTS.md",
+      "sha256": "cfd271d1650e40daa735651ddc2ab28ca4ccdcb17f117c96cc5602975bad5eea",
+      "expected_sha256": "cfd271d1650e40daa735651ddc2ab28ca4ccdcb17f117c96cc5602975bad5eea",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/EXPERIMENTS.md",
+      "sha256": "275f68e9d1c4c6c668adbd568768e7f10b3cb491007a70a6a4904e76d3161511",
+      "expected_sha256": "275f68e9d1c4c6c668adbd568768e7f10b3cb491007a70a6a4904e76d3161511",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/INPUT_RECEIPT.md",
+      "sha256": "a5531e66a433eb0348c60a82c0f398078314db41a8a542fbd92a8f5d21eb04ea",
+      "expected_sha256": "a5531e66a433eb0348c60a82c0f398078314db41a8a542fbd92a8f5d21eb04ea",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/INPUT_USE.json",
+      "sha256": "42e57e4531e1c2b80e487c17ca7876af8c6b18c263094f749660396926eb060e",
+      "expected_sha256": "42e57e4531e1c2b80e487c17ca7876af8c6b18c263094f749660396926eb060e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/MANIFEST.sha256",
+      "sha256": "e154d038cd1eedf1dcfa7acefc29ddb31c88cd5d36b56573a3dc5e344405a4ac",
+      "expected_sha256": "e154d038cd1eedf1dcfa7acefc29ddb31c88cd5d36b56573a3dc5e344405a4ac",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/MODALITY.json",
+      "sha256": "43d9e6f553a492ba68307b920f36a75a7686601b740522e13bcfb6568eb15d52",
+      "expected_sha256": "43d9e6f553a492ba68307b920f36a75a7686601b740522e13bcfb6568eb15d52",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/NEXT_PACKAGE.md",
+      "sha256": "070e7e09ec91c4ccd565f25716d95a812332a377d240538b993fc1f2558c9df8",
+      "expected_sha256": "070e7e09ec91c4ccd565f25716d95a812332a377d240538b993fc1f2558c9df8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/REPORT.md",
+      "sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+      "expected_sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/SOURCES.md",
+      "sha256": "89d1ae4b50550fac061d3794b4e85535330bf1c3d0063d76bbbb513650cab8fa",
+      "expected_sha256": "89d1ae4b50550fac061d3794b4e85535330bf1c3d0063d76bbbb513650cab8fa",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/AMENDMENT.md",
+      "sha256": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "expected_sha256": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/ARTIFACT_CHECKS.json",
+      "sha256": "d98d8ca6dab290786a877d78294169d59ae97007631124f40f1dfbae6bb4f1ad",
+      "expected_sha256": "d98d8ca6dab290786a877d78294169d59ae97007631124f40f1dfbae6bb4f1ad",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/INPUT_USE.json",
+      "sha256": "d1e112f2cbac559c128f7b993a648a8369353d01f77b0170b9676a45e4de743e",
+      "expected_sha256": "d1e112f2cbac559c128f7b993a648a8369353d01f77b0170b9676a45e4de743e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/MANIFEST.sha256",
+      "sha256": "4984a658f00e8c9a9248c03d56390ce29aba52d5676acc30b5ec0e860f8878ae",
+      "expected_sha256": "4984a658f00e8c9a9248c03d56390ce29aba52d5676acc30b5ec0e860f8878ae",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/PROPOSED_CASES.md",
+      "sha256": "d019c2553d92e7fd465ca9f8b7c27f381965669d653368c505aca588c8320748",
+      "expected_sha256": "d019c2553d92e7fd465ca9f8b7c27f381965669d653368c505aca588c8320748",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CAPABILITIES.md",
+      "sha256": "c3663b8e72513feb50be22063a3da5964f20def7c34b3bf31a25e12fdb8489eb",
+      "expected_sha256": "c3663b8e72513feb50be22063a3da5964f20def7c34b3bf31a25e12fdb8489eb",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CONSULTATIONS.md",
+      "sha256": "c6a82b71c80301ecec9d5ce598fbb184b1dec671b7dded36684f2624880d4a01",
+      "expected_sha256": "c6a82b71c80301ecec9d5ce598fbb184b1dec671b7dded36684f2624880d4a01",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CONTRACTS.md",
+      "sha256": "985b53bab11cc9b581e3242429f73be87d41b8d4b55de2069fe64b4317d0b7a2",
+      "expected_sha256": "985b53bab11cc9b581e3242429f73be87d41b8d4b55de2069fe64b4317d0b7a2",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/EXPERIMENTS_AND_PACKAGE.md",
+      "sha256": "c12167d3efd91ee3eb7df8819ab4dec40ab069eaf918b64da20b08d0ee76be3c",
+      "expected_sha256": "c12167d3efd91ee3eb7df8819ab4dec40ab069eaf918b64da20b08d0ee76be3c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/HASHES.json",
+      "sha256": "90c2d832f126b0111d0726f75f1d8eb5f36bb040fbd82ce154a5b5e016a0eef0",
+      "expected_sha256": "90c2d832f126b0111d0726f75f1d8eb5f36bb040fbd82ce154a5b5e016a0eef0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/INPUT_RECEIPT.md",
+      "sha256": "67628fd1c9a0e41ac641df0bafb2b41b56d908aacc6c573a61b55ea08c5f3713",
+      "expected_sha256": "67628fd1c9a0e41ac641df0bafb2b41b56d908aacc6c573a61b55ea08c5f3713",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/INPUT_USE.json",
+      "sha256": "3d89c8c8f5b149b673a525ad38874ab99534d1b6ebe218f40f2548b89f39f5de",
+      "expected_sha256": "3d89c8c8f5b149b673a525ad38874ab99534d1b6ebe218f40f2548b89f39f5de",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/MODALITY.json",
+      "sha256": "c16536e2ed52a9dca2736429fc25b4d8fac23e86b7f8f3559e5be8bff8dd7396",
+      "expected_sha256": "c16536e2ed52a9dca2736429fc25b4d8fac23e86b7f8f3559e5be8bff8dd7396",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/REPORT.md",
+      "sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+      "expected_sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/SOURCES.md",
+      "sha256": "2ba4219a1f9cc88fef34ecd031cd8d00dc7e80b3021e68f400a55bcf9123a15b",
+      "expected_sha256": "2ba4219a1f9cc88fef34ecd031cd8d00dc7e80b3021e68f400a55bcf9123a15b",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/VALIDATION.md",
+      "sha256": "ef8369186b4e0b0a6c2ba77e73fcdb25158f8fc7e191d974287c1a187ecf0c7c",
+      "expected_sha256": "ef8369186b4e0b0a6c2ba77e73fcdb25158f8fc7e191d974287c1a187ecf0c7c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05/ARTIFACT_CHECKS.json",
+      "sha256": "aeba2cfea445199e4bb5ae9ca1c99cf184970be909befdfca38ed2c248a3290f",
+      "expected_sha256": "aeba2cfea445199e4bb5ae9ca1c99cf184970be909befdfca38ed2c248a3290f",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05/CONSULTATION.md",
+      "sha256": "fb97b5c66c12a4c4a93463c691dc26e7ff3ee05a71f4722fd2a41f49227b44fb",
+      "expected_sha256": "fb97b5c66c12a4c4a93463c691dc26e7ff3ee05a71f4722fd2a41f49227b44fb",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05/EXPERIMENTS.md",
+      "sha256": "6566d33691ca387f5f8fa4547b1f9637191f9e1032529c95785d90efb32b1ba6",
+      "expected_sha256": "6566d33691ca387f5f8fa4547b1f9637191f9e1032529c95785d90efb32b1ba6",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05/HANDBACK.md",
+      "sha256": "65e9d6f408aabc97cd71de233e1b3fc77f59ab80af67f1518c7186a9f3ab80e4",
+      "expected_sha256": "65e9d6f408aabc97cd71de233e1b3fc77f59ab80af67f1518c7186a9f3ab80e4",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05/INPUT_RECEIPT.md",
+      "sha256": "851c7d036a9cb34f92c0e142acca53d129c18b37a8e35d047ba5961391260eb1",
+      "expected_sha256": "851c7d036a9cb34f92c0e142acca53d129c18b37a8e35d047ba5961391260eb1",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05/INPUT_USE.json",
+      "sha256": "10cc1857d74e1e1e0c72c7fb3600c9db2a43c19335626c1707a77bd011138f1e",
+      "expected_sha256": "10cc1857d74e1e1e0c72c7fb3600c9db2a43c19335626c1707a77bd011138f1e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05/MANIFEST.sha256",
+      "sha256": "5e84dc6232a2e48b16e2ddee2dbfa8ee54248b4c28ef458e0b1b7dde0875097a",
+      "expected_sha256": "5e84dc6232a2e48b16e2ddee2dbfa8ee54248b4c28ef458e0b1b7dde0875097a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05/REPORT.md",
+      "sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1",
+      "expected_sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05/SOURCES.md",
+      "sha256": "e60f9b1ee9fb06038b0420bd7ec59ef33bf5e8f547d8bbc1912efc5c7baf3122",
+      "expected_sha256": "e60f9b1ee9fb06038b0420bd7ec59ef33bf5e8f547d8bbc1912efc5c7baf3122",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONSULTATIONS_AND_CHECKIN.md",
+      "sha256": "a04ecee1f60428d565028b8405bd260a3e90aab75e7ca31dccbc544c509b287f",
+      "expected_sha256": "a04ecee1f60428d565028b8405bd260a3e90aab75e7ca31dccbc544c509b287f",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONTRACTS.md",
+      "sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+      "expected_sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/EXPERIMENTS.md",
+      "sha256": "dd457288976f87441c02f64dd6ccbb2c67b7e3ac445e311d07df5a6d358e9ac0",
+      "expected_sha256": "dd457288976f87441c02f64dd6ccbb2c67b7e3ac445e311d07df5a6d358e9ac0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/HANDOFF_MANIFEST.json",
+      "sha256": "2db5745bfc5626f38542b1b4608e63b00458b21f4a38c1b05f2437414cf9bfc8",
+      "expected_sha256": "2db5745bfc5626f38542b1b4608e63b00458b21f4a38c1b05f2437414cf9bfc8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/INPUT_RECEIPT.md",
+      "sha256": "6958b937bc35b52f9a439dfb6b518f4f7d403343caedc5c80bb7a0680576215f",
+      "expected_sha256": "6958b937bc35b52f9a439dfb6b518f4f7d403343caedc5c80bb7a0680576215f",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/INPUT_USE.json",
+      "sha256": "12d61d84351d65b368daadbca9119b22f01e0a9d68ca70e72bd986d72ab9a2ba",
+      "expected_sha256": "12d61d84351d65b368daadbca9119b22f01e0a9d68ca70e72bd986d72ab9a2ba",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/INTEGRATION_SUMMARY.md",
+      "sha256": "7081b28fac8a5a8478f59c674b8967ecf18efb3a17000e0d5c92bfe7845e75de",
+      "expected_sha256": "7081b28fac8a5a8478f59c674b8967ecf18efb3a17000e0d5c92bfe7845e75de",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/MODALITY.json",
+      "sha256": "a2eb5d095426fc50ca8b693e35dda8adea6cc90faecdb2f3de51168e5688aaba",
+      "expected_sha256": "a2eb5d095426fc50ca8b693e35dda8adea6cc90faecdb2f3de51168e5688aaba",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/NEXT_PACKAGE.md",
+      "sha256": "71194cf3ab940abd7e632e0a1691af98c908f8fc778341a12b33274602fe1cde",
+      "expected_sha256": "71194cf3ab940abd7e632e0a1691af98c908f8fc778341a12b33274602fe1cde",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/REPORT.md",
+      "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+      "expected_sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/REQUIREMENT_MAP.json",
+      "sha256": "16c2b017c53dae7b2b8bcd3f7b9e62dd798fa136e844db8a18103c5d93fe36fa",
+      "expected_sha256": "16c2b017c53dae7b2b8bcd3f7b9e62dd798fa136e844db8a18103c5d93fe36fa",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/SOURCES.md",
+      "sha256": "7b4a2923868cc1594a8f2b3ab93e43525858bb85fafafa64a26742147534290c",
+      "expected_sha256": "7b4a2923868cc1594a8f2b3ab93e43525858bb85fafafa64a26742147534290c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/VALIDATION.json",
+      "sha256": "c2f02c4075e72421bd348474fad17273d9c5758b017dad9bc9d3c59dd8019de3",
+      "expected_sha256": "c2f02c4075e72421bd348474fad17273d9c5758b017dad9bc9d3c59dd8019de3",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CASE_CROSSWALK.json",
+      "sha256": "726d49635341c8e57be8a675aa4ec0a62c4e72d2f845578279086cf717036e63",
+      "expected_sha256": "726d49635341c8e57be8a675aa4ec0a62c4e72d2f845578279086cf717036e63",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CONSULTATIONS.json",
+      "sha256": "31aae3d34486eec7856d9a697e0ede3c32c77e26a36ee1e799303d96a5aff0b8",
+      "expected_sha256": "31aae3d34486eec7856d9a697e0ede3c32c77e26a36ee1e799303d96a5aff0b8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/CONTRACT_DELTA.md",
+      "sha256": "642ea41d2a218ab018b62d1edc92e317c4edd72c972a80a258fd71d556f8045a",
+      "expected_sha256": "642ea41d2a218ab018b62d1edc92e317c4edd72c972a80a258fd71d556f8045a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/HANDOFF_MANIFEST.json",
+      "sha256": "75bff7a70d5593c9d0f0283e9ec095585f972e6a8a11b8a41b1cb936ea47640b",
+      "expected_sha256": "75bff7a70d5593c9d0f0283e9ec095585f972e6a8a11b8a41b1cb936ea47640b",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/INPUT_USE.json",
+      "sha256": "9d4af66c08ac69b60d465b25b68924ba77091e3c097131dc43c8cb2b3e465ca0",
+      "expected_sha256": "9d4af66c08ac69b60d465b25b68924ba77091e3c097131dc43c8cb2b3e465ca0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/MEASUREMENT_PLAN.md",
+      "sha256": "636e176b2016e119b5098828b9ac42fbabedc8312d9f3fb560a0bfb2788fc24b",
+      "expected_sha256": "636e176b2016e119b5098828b9ac42fbabedc8312d9f3fb560a0bfb2788fc24b",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/MODALITY.json",
+      "sha256": "4ad1d5203b20df21e16191acf9e3c28dd3d0fd0ca2e544d31b60e6ec1ca3484a",
+      "expected_sha256": "4ad1d5203b20df21e16191acf9e3c28dd3d0fd0ca2e544d31b60e6ec1ca3484a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/NEXT_PACKAGE.md",
+      "sha256": "01e9bbc1487b82b43548a0b0f11082be8500fdc74bf5a7ab463bc426401f8c99",
+      "expected_sha256": "01e9bbc1487b82b43548a0b0f11082be8500fdc74bf5a7ab463bc426401f8c99",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/REPORT.md",
+      "sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7",
+      "expected_sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/SOURCE_REGISTER.json",
+      "sha256": "0deab560fee63358814ab00eab53295645cdcbf00c10366a971672da8328e448",
+      "expected_sha256": "0deab560fee63358814ab00eab53295645cdcbf00c10366a971672da8328e448",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/SOURCES.md",
+      "sha256": "49c606be7492d563da544c266c4243cd970a41a5bfd4a83b2a7c760ea06bbaff",
+      "expected_sha256": "49c606be7492d563da544c266c4243cd970a41a5bfd4a83b2a7c760ea06bbaff",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/VALIDATION.json",
+      "sha256": "f5380b89c4ae2f27b8726af5accffa6106c580f691bd9bee5d542af0a5ad432d",
+      "expected_sha256": "f5380b89c4ae2f27b8726af5accffa6106c580f691bd9bee5d542af0a5ad432d",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/CONSULTATIONS.md",
+      "sha256": "e80432c7f0076796de0b1a7b3f393598601ca86365a4970a0f3ce8d6e59dca6e",
+      "expected_sha256": "e80432c7f0076796de0b1a7b3f393598601ca86365a4970a0f3ce8d6e59dca6e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/CONTRACTS.md",
+      "sha256": "854d05a470581289537df387a959c817cf9be6b05d46c0686f93a6f82aa948a1",
+      "expected_sha256": "854d05a470581289537df387a959c817cf9be6b05d46c0686f93a6f82aa948a1",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/EXPERIMENTS.md",
+      "sha256": "1ae38826040db0b9202f89dd6c2097ed9b2fc822edc783092ed267bbf1827d9d",
+      "expected_sha256": "1ae38826040db0b9202f89dd6c2097ed9b2fc822edc783092ed267bbf1827d9d",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/HANDOFF_MANIFEST.json",
+      "sha256": "8162e008ee6c2909cfb0bf5dff9e926fea4b6dd4d2dc8ea8952244f4b1616fc8",
+      "expected_sha256": "8162e008ee6c2909cfb0bf5dff9e926fea4b6dd4d2dc8ea8952244f4b1616fc8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/INPUT_RECEIPT.md",
+      "sha256": "37616fbc8f219ac359f3c00bdcd9e68f27b8a4eceeeff1899bfa120b9853e042",
+      "expected_sha256": "37616fbc8f219ac359f3c00bdcd9e68f27b8a4eceeeff1899bfa120b9853e042",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/INPUT_USE.json",
+      "sha256": "7106289e929d3ffe1183b28d01dabd5ca0850d29d5cb95cdfe16880ae5076719",
+      "expected_sha256": "7106289e929d3ffe1183b28d01dabd5ca0850d29d5cb95cdfe16880ae5076719",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/MODALITY.md",
+      "sha256": "6ce8b290a590533cfa84e27b92546cd66bd64bb0adfd7838516c3da10842e10a",
+      "expected_sha256": "6ce8b290a590533cfa84e27b92546cd66bd64bb0adfd7838516c3da10842e10a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/NEXT_PACKAGE.md",
+      "sha256": "ca701c590d12eafe42f810ce67b3766bf7a9dc7aa3869da070a7ad88b6f94084",
+      "expected_sha256": "ca701c590d12eafe42f810ce67b3766bf7a9dc7aa3869da070a7ad88b6f94084",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/PLATFORMS.md",
+      "sha256": "d058e034a7da9543653eb9a5c64fc520eb0a64c829652cf5903d4f7b0a88554e",
+      "expected_sha256": "d058e034a7da9543653eb9a5c64fc520eb0a64c829652cf5903d4f7b0a88554e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/REPORT.md",
+      "sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb",
+      "expected_sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/REQUIREMENTS.json",
+      "sha256": "75747451c1513c81fad99012b4819686e40298447788e316eae900ad6dd45970",
+      "expected_sha256": "75747451c1513c81fad99012b4819686e40298447788e316eae900ad6dd45970",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/SOURCES.md",
+      "sha256": "00976279e8e6fd8795f0af5627f1ecdf60e59483b6695290c2cac3db972b5fde",
+      "expected_sha256": "00976279e8e6fd8795f0af5627f1ecdf60e59483b6695290c2cac3db972b5fde",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/VALIDATION.md",
+      "sha256": "e8ef692e03ba9938af09e29cffbf40133f6d40882b5c7dde16b4453b6ced6628",
+      "expected_sha256": "e8ef692e03ba9938af09e29cffbf40133f6d40882b5c7dde16b4453b6ced6628",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/COMPATIBILITY.md",
+      "sha256": "fe4b60387975e7b919bbea84b90bc365e4323420b7d4205c65fc7a604a0f74f6",
+      "expected_sha256": "fe4b60387975e7b919bbea84b90bc365e4323420b7d4205c65fc7a604a0f74f6",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/CONSULTATIONS_AND_CHECKIN.md",
+      "sha256": "0f4b9a4d9e80b4452d22252728e8ba34c1373be79197b9a534fe7f91fffa06fe",
+      "expected_sha256": "0f4b9a4d9e80b4452d22252728e8ba34c1373be79197b9a534fe7f91fffa06fe",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/COSTS.md",
+      "sha256": "e1a25c3947feed2728a44421098ad9457592a663a3225d7c0d3497b8fc3be6d3",
+      "expected_sha256": "e1a25c3947feed2728a44421098ad9457592a663a3225d7c0d3497b8fc3be6d3",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/EXPERIMENTS_AND_PACKAGE.md",
+      "sha256": "e3a0ea372287ab6d9b43c57310b3bb3ff92e82d99fcc38dd20c623edd823a01c",
+      "expected_sha256": "e3a0ea372287ab6d9b43c57310b3bb3ff92e82d99fcc38dd20c623edd823a01c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/INPUT_RECEIPT.md",
+      "sha256": "4a0366decb919b0a6a910bc121482ae4bd6ab7f1af01e4a8497fd4b0dfb5f4d3",
+      "expected_sha256": "4a0366decb919b0a6a910bc121482ae4bd6ab7f1af01e4a8497fd4b0dfb5f4d3",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/INPUT_USE.json",
+      "sha256": "fce32febcb869f705d4e3333016ab3c88b8e7248dfc39563671fb614969c7250",
+      "expected_sha256": "fce32febcb869f705d4e3333016ab3c88b8e7248dfc39563671fb614969c7250",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/MANIFEST.json",
+      "sha256": "a880c3eea7584036651c280a8d4a71f28a0d5645471a4e064c8df6ff27e541c1",
+      "expected_sha256": "a880c3eea7584036651c280a8d4a71f28a0d5645471a4e064c8df6ff27e541c1",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "expected_sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/MODALITY.md",
+      "sha256": "c2e70b2403390a05c244ceb64de4d04f02bf738dcd85835bdead20a304f0e097",
+      "expected_sha256": "c2e70b2403390a05c244ceb64de4d04f02bf738dcd85835bdead20a304f0e097",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/REPORT.md",
+      "sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "expected_sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/SOURCES.md",
+      "sha256": "1080c49714a48b8a8298787b701f479aaa2eabe576362bc5b48b3e7a85eaf3f4",
+      "expected_sha256": "1080c49714a48b8a8298787b701f479aaa2eabe576362bc5b48b3e7a85eaf3f4",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/VALIDATION.md",
+      "sha256": "db26144c599139c4ef45d064a8d149e59268cd709f766d0aea64b38b24c3e285",
+      "expected_sha256": "db26144c599139c4ef45d064a8d149e59268cd709f766d0aea64b38b24c3e285",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/CONSULTATIONS.md",
+      "sha256": "4fd627670707f130ab913dde9881faa430c98268bb5893424ce7e60c7dbe693a",
+      "expected_sha256": "4fd627670707f130ab913dde9881faa430c98268bb5893424ce7e60c7dbe693a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/CONTRACTS.md",
+      "sha256": "5295c4836f524748d25b0e76b06c7db6330c4c7c36ec82ac28f2a8a8f2101baa",
+      "expected_sha256": "5295c4836f524748d25b0e76b06c7db6330c4c7c36ec82ac28f2a8a8f2101baa",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/EXPERIMENTS_AND_PACKAGES.md",
+      "sha256": "27b5239458f2fc644071bef9b060ac8fec834ff015f77c8a66a4938b4f991122",
+      "expected_sha256": "27b5239458f2fc644071bef9b060ac8fec834ff015f77c8a66a4938b4f991122",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/HANDOFF_MANIFEST.json",
+      "sha256": "8c4f261598a01bb4971756f0d8fba0746425c10ebf4203721fb0b3c6268300ca",
+      "expected_sha256": "8c4f261598a01bb4971756f0d8fba0746425c10ebf4203721fb0b3c6268300ca",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/HANDOFF.md",
+      "sha256": "e039b7c689e277765692b012119503cb7a974f273eba8dc91b48a1fc351585a9",
+      "expected_sha256": "e039b7c689e277765692b012119503cb7a974f273eba8dc91b48a1fc351585a9",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/INPUT_PIN_CHECKS.json",
+      "sha256": "17e3644c12ea9f42cc164c62030a4556fafd4471fd4aa4176b27dbde8522a9de",
+      "expected_sha256": "17e3644c12ea9f42cc164c62030a4556fafd4471fd4aa4176b27dbde8522a9de",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/INPUT_RECEIPT.md",
+      "sha256": "6bea2fc7fb170a8b54fd4535269900ec80081cad9cd4c812410b915080ef0fb1",
+      "expected_sha256": "6bea2fc7fb170a8b54fd4535269900ec80081cad9cd4c812410b915080ef0fb1",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/INPUT_USE.json",
+      "sha256": "2ed564b989bf0665eb8e813b944939b5d392ecb3c9034ad260d3b49e55e8990c",
+      "expected_sha256": "2ed564b989bf0665eb8e813b944939b5d392ecb3c9034ad260d3b49e55e8990c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/MODALITY.json",
+      "sha256": "318c2453b721c7d80f7f89253a0c5af520144071f18e1d71fdb830cf06f4efbc",
+      "expected_sha256": "318c2453b721c7d80f7f89253a0c5af520144071f18e1d71fdb830cf06f4efbc",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/PATHWAYS_AND_COSTS.md",
+      "sha256": "40060f058c9f47e49c7dae7a060b1d1922b0ab7487ace9aedb10efda72a4908b",
+      "expected_sha256": "40060f058c9f47e49c7dae7a060b1d1922b0ab7487ace9aedb10efda72a4908b",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/REDACTION_RECEIPT.json",
+      "sha256": "d9b4a1a1f0332c8cb448fa3444d0db6d5ecf41c0e3bcbabd366dec2b1c1c648e",
+      "expected_sha256": "d9b4a1a1f0332c8cb448fa3444d0db6d5ecf41c0e3bcbabd366dec2b1c1c648e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/REPORT.md",
+      "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+      "expected_sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/REQUIREMENT_MAP.json",
+      "sha256": "5e5d9c5fd97605ac7b3974be7d068a439dd8029f02ad405ab60d301defd2d0c8",
+      "expected_sha256": "5e5d9c5fd97605ac7b3974be7d068a439dd8029f02ad405ab60d301defd2d0c8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/SOURCES.md",
+      "sha256": "c2c2841312a204c59ebca8dd1edc13a6658cf6644c3bb2f62d28a1d05951b6bb",
+      "expected_sha256": "c2c2841312a204c59ebca8dd1edc13a6658cf6644c3bb2f62d28a1d05951b6bb",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/VALIDATION.json",
+      "sha256": "a2d5bf603696d0e6aa92678cb29c3aedaa8fe2021d06d0cb94a9537dc892bbb4",
+      "expected_sha256": "a2d5bf603696d0e6aa92678cb29c3aedaa8fe2021d06d0cb94a9537dc892bbb4",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/HANDOFF_MANIFEST.json",
+      "sha256": "fec9c4c223fa2370db6bcbe8fd61980d284d92a31a22b37d707dcd48db0a8d77",
+      "expected_sha256": "fec9c4c223fa2370db6bcbe8fd61980d284d92a31a22b37d707dcd48db0a8d77",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/INPUT_USE.json",
+      "sha256": "3c063b11e64f5e64d3f6ca7476c5819fe90c73520de34cc59056dea55c188cf5",
+      "expected_sha256": "3c063b11e64f5e64d3f6ca7476c5819fe90c73520de34cc59056dea55c188cf5",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/MODALITY.json",
+      "sha256": "095e26558ec1ec83ab9ab5e8a96d464f2b794119a553245d90c85cfeed949e6a",
+      "expected_sha256": "095e26558ec1ec83ab9ab5e8a96d464f2b794119a553245d90c85cfeed949e6a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/NEXT_PACKAGE.md",
+      "sha256": "391e363a37645da4d003904c02817bb9643152b928a18eff5b2853e6ae0736f7",
+      "expected_sha256": "391e363a37645da4d003904c02817bb9643152b928a18eff5b2853e6ae0736f7",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "expected_sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/REPORT.md",
+      "sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+      "expected_sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/SOURCES.json",
+      "sha256": "011d484891273a9fdadc0277b911ca6f32af9daee054089c6785e0de548de4a0",
+      "expected_sha256": "011d484891273a9fdadc0277b911ca6f32af9daee054089c6785e0de548de4a0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/SOURCES.md",
+      "sha256": "ae11bb28c1f0c73538b95b310b5de304c4e12a403853d75779e7eed8473d2b6f",
+      "expected_sha256": "ae11bb28c1f0c73538b95b310b5de304c4e12a403853d75779e7eed8473d2b6f",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/VERIFICATION.json",
+      "sha256": "9c06ffb1a7c0b680348631732e740d28f0ae7d392b9d41368c7803a2816829ee",
+      "expected_sha256": "9c06ffb1a7c0b680348631732e740d28f0ae7d392b9d41368c7803a2816829ee",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/EXPERIMENTS_AND_INTERFACES.md",
+      "sha256": "b556b10603d2a7de884fb1ea4c0f89880c3db676f3d8be282e48d92968129149",
+      "expected_sha256": "b556b10603d2a7de884fb1ea4c0f89880c3db676f3d8be282e48d92968129149",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/HANDOFF_MANIFEST.json",
+      "sha256": "e99367a0d96ae3398b02821752c9256b705d6931050a9c7dfcca5ec10f25ac79",
+      "expected_sha256": "e99367a0d96ae3398b02821752c9256b705d6931050a9c7dfcca5ec10f25ac79",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/INPUT_RECEIPT.md",
+      "sha256": "a69b72381b7ed954c3ccec6f688540740bb050d4b3255937a6143030674c6469",
+      "expected_sha256": "a69b72381b7ed954c3ccec6f688540740bb050d4b3255937a6143030674c6469",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/INPUT_USE.json",
+      "sha256": "94ba79b06af72f721bbfe9a7c7d13a8cc3adac676c6a97293e572765ce9661c4",
+      "expected_sha256": "94ba79b06af72f721bbfe9a7c7d13a8cc3adac676c6a97293e572765ce9661c4",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/INTEGRATION_SUMMARY.md",
+      "sha256": "de71f9806644efde6b964f0aa87fabf794e43bb7021d406316cc308e4e10aeba",
+      "expected_sha256": "de71f9806644efde6b964f0aa87fabf794e43bb7021d406316cc308e4e10aeba",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/MODALITY.json",
+      "sha256": "cbec8086c12bdfd39288ebd6501b0aee2bf41f746f8656534035e96ff3c34f7e",
+      "expected_sha256": "cbec8086c12bdfd39288ebd6501b0aee2bf41f746f8656534035e96ff3c34f7e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/R14_HANDOFF.md",
+      "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
+      "expected_sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/REQUIREMENT_MAP.json",
+      "sha256": "8832a55c3e7ec39fa857d4e6a0d294d51869bb3232cc6e3fbb120f0cb08ae002",
+      "expected_sha256": "8832a55c3e7ec39fa857d4e6a0d294d51869bb3232cc6e3fbb120f0cb08ae002",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/SOURCES.md",
+      "sha256": "00f2cf2b1aeed0f2d3985cffd1afcc038ca8e3dc698d006168498512100929a8",
+      "expected_sha256": "00f2cf2b1aeed0f2d3985cffd1afcc038ca8e3dc698d006168498512100929a8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/VALIDATION.json",
+      "sha256": "4cfed601d2086fbb2f6c454d05df2e4c97352de1c2017ced1b3ed7f7713a0dcc",
+      "expected_sha256": "4cfed601d2086fbb2f6c454d05df2e4c97352de1c2017ced1b3ed7f7713a0dcc",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/CONSULTATIONS.md",
+      "sha256": "156b37cfc5a752ba9bf09418ce38e6f901f03b54412e5a10da89b6d6f2925ca3",
+      "expected_sha256": "156b37cfc5a752ba9bf09418ce38e6f901f03b54412e5a10da89b6d6f2925ca3",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/CONTRACTS.md",
+      "sha256": "97a6a0ab83297bbe30905d0b22b4f45bd9caf1fb7092d8f98b4eb25a27268038",
+      "expected_sha256": "97a6a0ab83297bbe30905d0b22b4f45bd9caf1fb7092d8f98b4eb25a27268038",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/EVALUATION.md",
+      "sha256": "bbed0c91a9aa52e96b0df7dae4c1646723b6fc6c81f404b235d3d322035d74ed",
+      "expected_sha256": "bbed0c91a9aa52e96b0df7dae4c1646723b6fc6c81f404b235d3d322035d74ed",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/HANDOFF_MANIFEST.json",
+      "sha256": "8e9cdac5e012c2fa76cd27b29204158719cee95b2cc7d0663382d003d5b80703",
+      "expected_sha256": "8e9cdac5e012c2fa76cd27b29204158719cee95b2cc7d0663382d003d5b80703",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/INPUT_USE.json",
+      "sha256": "9c55f35506176a8fa7c6d3f56e9f48263fda12054e5fd5a522313f612bddbbb0",
+      "expected_sha256": "9c55f35506176a8fa7c6d3f56e9f48263fda12054e5fd5a522313f612bddbbb0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/INTEGRATION_SUMMARY.md",
+      "sha256": "e0dbf2c5be66f48402638b650f8b4d916c2930c4f77926522a444e8fbab14acd",
+      "expected_sha256": "e0dbf2c5be66f48402638b650f8b4d916c2930c4f77926522a444e8fbab14acd",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/MODALITY.json",
+      "sha256": "bc5c625e0b6feffe3558cbfc39736b677e1d364d3e4c4ae3dffcec913f24b8a6",
+      "expected_sha256": "bc5c625e0b6feffe3558cbfc39736b677e1d364d3e4c4ae3dffcec913f24b8a6",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/NEXT_PACKAGE.md",
+      "sha256": "7782c9f7d43a2df2c64682e9b81929cc9e3498715cb44ed5ec6b2f9ca469ece4",
+      "expected_sha256": "7782c9f7d43a2df2c64682e9b81929cc9e3498715cb44ed5ec6b2f9ca469ece4",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/REPORT.md",
+      "sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd",
+      "expected_sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/REQUIREMENT_MAP.json",
+      "sha256": "fe8c6e6524e18146099bc5999d4d3aaa12f664d166259631cf12f915fa0124aa",
+      "expected_sha256": "fe8c6e6524e18146099bc5999d4d3aaa12f664d166259631cf12f915fa0124aa",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/SHORTLIST.md",
+      "sha256": "91cdf5de90a2f87bb53a4ccb604b5d2d015db15848be20ffd814833bf30cd13e",
+      "expected_sha256": "91cdf5de90a2f87bb53a4ccb604b5d2d015db15848be20ffd814833bf30cd13e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/SOURCE_FETCHES.json",
+      "sha256": "34ae0c0fd57dc00e7d5a8d9f935e3eae9806c1ff197fcb3e891f83a5f9d991fe",
+      "expected_sha256": "34ae0c0fd57dc00e7d5a8d9f935e3eae9806c1ff197fcb3e891f83a5f9d991fe",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/SOURCES.md",
+      "sha256": "b21661413cb79b367da4aede824d770641a16337de01000003c3a3e4f7ba209c",
+      "expected_sha256": "b21661413cb79b367da4aede824d770641a16337de01000003c3a3e4f7ba209c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/VALIDATION.json",
+      "sha256": "5c239733227ce11ef3b551d0ed6db4d076ab46f1d3715a73ab222f54221d3bdc",
+      "expected_sha256": "5c239733227ce11ef3b551d0ed6db4d076ab46f1d3715a73ab222f54221d3bdc",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/CANDIDATES.md",
+      "sha256": "6b618b483ef35043771d440cdb62c6c4c16d841a3e4962d58833be399049deb0",
+      "expected_sha256": "6b618b483ef35043771d440cdb62c6c4c16d841a3e4962d58833be399049deb0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/CONSULTATIONS_AND_CHECKIN.md",
+      "sha256": "08bbc3712afb24365d1ca3e60a29488aa98af1631b7205d2ae9e96949bf2ae79",
+      "expected_sha256": "08bbc3712afb24365d1ca3e60a29488aa98af1631b7205d2ae9e96949bf2ae79",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/CONTRACTS.md",
+      "sha256": "4a7d03dbc7bf164f0de2e1f6febf5bb91d6813b652c52c1bd5ae96dc39c95fd7",
+      "expected_sha256": "4a7d03dbc7bf164f0de2e1f6febf5bb91d6813b652c52c1bd5ae96dc39c95fd7",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/EVALUATION.md",
+      "sha256": "69605bc8ed49b9329ada068221bb2f6d522a24e69e5738ee8e4da47dc94cf80c",
+      "expected_sha256": "69605bc8ed49b9329ada068221bb2f6d522a24e69e5738ee8e4da47dc94cf80c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/HANDOFF_MANIFEST.json",
+      "sha256": "1cb85927411aefaf3ba16a39e4b2465b53ee12dfd5f7d240da3112128d19cc64",
+      "expected_sha256": "1cb85927411aefaf3ba16a39e4b2465b53ee12dfd5f7d240da3112128d19cc64",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/INPUT_RECEIPT.md",
+      "sha256": "3b5e8820438d23ac0f1e0e7e141284e7b460bc6e590302d4693629a582adec58",
+      "expected_sha256": "3b5e8820438d23ac0f1e0e7e141284e7b460bc6e590302d4693629a582adec58",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/INPUT_USE.json",
+      "sha256": "1664d089c6e59c893b6b98aa685486b0050bc99640a5e848e6d6e28cb8e3e073",
+      "expected_sha256": "1664d089c6e59c893b6b98aa685486b0050bc99640a5e848e6d6e28cb8e3e073",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/INTEGRATION_SUMMARY.md",
+      "sha256": "a7fd77582f4f14b8e5635b94a1860216eb54dbb4f2e78b1fad44836588cd6270",
+      "expected_sha256": "a7fd77582f4f14b8e5635b94a1860216eb54dbb4f2e78b1fad44836588cd6270",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/MODALITY.json",
+      "sha256": "e2b7fd2ed549355976c44c976cce1aa02b2fa352dd2f7fadd549b232f75a7505",
+      "expected_sha256": "e2b7fd2ed549355976c44c976cce1aa02b2fa352dd2f7fadd549b232f75a7505",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/NEXT_PACKAGE.md",
+      "sha256": "1f3dd480a89e31d529e92fe69b83ba799f62bfcfb4ebb7a435d0d0756986bbc2",
+      "expected_sha256": "1f3dd480a89e31d529e92fe69b83ba799f62bfcfb4ebb7a435d0d0756986bbc2",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/REPORT.md",
+      "sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0",
+      "expected_sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/REQUIREMENT_MAP.json",
+      "sha256": "31450c10183ab3f42b3f58922b299424fe09cca6fb05fdd95df672fd424aa06c",
+      "expected_sha256": "31450c10183ab3f42b3f58922b299424fe09cca6fb05fdd95df672fd424aa06c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/SOURCES.md",
+      "sha256": "165bd5c9c2f406660d277d443592f44c8193f31e678ade63c8949f58b83d0ac6",
+      "expected_sha256": "165bd5c9c2f406660d277d443592f44c8193f31e678ade63c8949f58b83d0ac6",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/VALIDATION.json",
+      "sha256": "92ee9e17db0df7f95928214aa6ed0b9ef5e12b7cae5dc67feeef552f21f5a678",
+      "expected_sha256": "92ee9e17db0df7f95928214aa6ed0b9ef5e12b7cae5dc67feeef552f21f5a678",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": ".codex/agents/haven_integration_manager.toml",
+      "sha256": "ea5ff7331942d843feaad7067d672e89ba7adb69f2ba6fd56255da83708d34e3",
+      "expected_sha256": "ea5ff7331942d843feaad7067d672e89ba7adb69f2ba6fd56255da83708d34e3",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281",
+      "expected_sha256": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "baseline/cumulative-v1.0/docs/11_GROUND_ROBOTICS_AND_EMBODIMENT.md",
+      "sha256": "0cab226c8382f240f6488fd33818ee8c4afd01fe9627e1beda2bd0222b824cae",
+      "expected_sha256": "0cab226c8382f240f6488fd33818ee8c4afd01fe9627e1beda2bd0222b824cae",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/INVENTORY.md",
+      "sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+      "expected_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "expected_sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "expected_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "expected_sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "expected_sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARTIFACT_CHECKS.json",
+      "sha256": "a3c93401211eee4ef3b34c377ad2493cef5df98cac404b6a89c9dddc71aa2283",
+      "expected_sha256": "a3c93401211eee4ef3b34c377ad2493cef5df98cac404b6a89c9dddc71aa2283",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACT_CROSSWALK.md",
+      "sha256": "5f5576b508ec646024f45171989b93b55237020d24f139c1132e6bc513d87aec",
+      "expected_sha256": "5f5576b508ec646024f45171989b93b55237020d24f139c1132e6bc513d87aec",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "expected_sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/DECISIONS.md",
+      "sha256": "5f33ca3c1f20704c80c651bab2b40ccef77c2fea7f9231ce6c4be28e861c9ad8",
+      "expected_sha256": "5f33ca3c1f20704c80c651bab2b40ccef77c2fea7f9231ce6c4be28e861c9ad8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/DEPENDENCIES.json",
+      "sha256": "ee5830be9f29115f0ee41b9f596d303adf895a1ec37380d33e866cdfb80a6c52",
+      "expected_sha256": "ee5830be9f29115f0ee41b9f596d303adf895a1ec37380d33e866cdfb80a6c52",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/IMPLEMENTATION_QUEUE.md",
+      "sha256": "133b25824c606fcb68a2b6f393a42691835afd0e4b19f3ee7fa1511396c509c6",
+      "expected_sha256": "133b25824c606fcb68a2b6f393a42691835afd0e4b19f3ee7fa1511396c509c6",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/INPUT_USE.json",
+      "sha256": "5b66e695fb4ceb285e95981843f1f74c722121c685d24c7ba35a4d5384a8c070",
+      "expected_sha256": "5b66e695fb4ceb285e95981843f1f74c722121c685d24c7ba35a4d5384a8c070",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANAGER_STATE.md",
+      "sha256": "cf7c4ecbe4ac2bd8615e51920a5c456d43a130fec2f0ffcf596fd6c8834dc77a",
+      "expected_sha256": "cf7c4ecbe4ac2bd8615e51920a5c456d43a130fec2f0ffcf596fd6c8834dc77a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "expected_sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MULTIMODAL.md",
+      "sha256": "43ec2f49d6062d7a758aa283c6d95158f6954187b065681c109e268dc02b8366",
+      "expected_sha256": "43ec2f49d6062d7a758aa283c6d95158f6954187b065681c109e268dc02b8366",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-AV/REPORT.md",
+      "sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0",
+      "expected_sha256": "f4446f21baddbe67b1f51fb80d5feb43a95b3c84aa18d7f7357a5018251477e0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-VISION/REPORT.md",
+      "sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd",
+      "expected_sha256": "ea6722679f82074ebd022505a3f64149fb45233eff64f6e7ac4a7de7333fbddd",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/AMENDMENT.md",
+      "sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535",
+      "expected_sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/REPORT.md",
+      "sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+      "expected_sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/AMENDMENT.md",
+      "sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "expected_sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/REPORT.md",
+      "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+      "expected_sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/AMENDMENT.md",
+      "sha256": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "expected_sha256": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/REPORT.md",
+      "sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+      "expected_sha256": "5b2029bb8b292f8ebef3ef89a1a4442c27b6c8545cad3f7820854817a7c2368d",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/REPORT.md",
+      "sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+      "expected_sha256": "b519b2189c711c8edbf2458d6e18cf9d3273705a1b84722eae4cbc6a178c9479",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R05/REPORT.md",
+      "sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1",
+      "expected_sha256": "24df0841542ab8f48332682c7cded6e854fbd2d45e3e88f52763f4992a3ed1a1",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/REPORT.md",
+      "sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+      "expected_sha256": "ac573b654bea1009de7cec40649721b59d1440c5b12291ae82e62c495d7351f0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R08-P00/REPORT.md",
+      "sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7",
+      "expected_sha256": "9cde142d5ced8c2b2f896ca995a147aa339adc96e80b472945aad074acb70fb7",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R09/REPORT.md",
+      "sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb",
+      "expected_sha256": "81290fc5fcf2d2590be96d0adc5f9baa8a2c573683e3f46ca5ed87419913a9cb",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/REPORT.md",
+      "sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "expected_sha256": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/REDACTION_RECEIPT.json",
+      "sha256": "d9b4a1a1f0332c8cb448fa3444d0db6d5ecf41c0e3bcbabd366dec2b1c1c648e",
+      "expected_sha256": "d9b4a1a1f0332c8cb448fa3444d0db6d5ecf41c0e3bcbabd366dec2b1c1c648e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R11-public-v1/REPORT.md",
+      "sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+      "expected_sha256": "8e80f4fedf949c1c58914b2ef1018e7eaa3005e822f72094cf4e15721072a165",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/REPORT.md",
+      "sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+      "expected_sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R14/R14_HANDOFF.md",
+      "sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
+      "expected_sha256": "e0019c00c59b60b6143e4582e2c048a09e0015591dbdc3c81102f63d3900a544",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/CODE-0/REVIEW.md",
+      "sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8",
+      "expected_sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/EVIDENCE-0/REVIEW.md",
+      "sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d",
+      "expected_sha256": "edd0f92e12e909a5df089ed735f9a8812515003eb30af57cae67da14d66c426d",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R02/REVIEW.md",
+      "sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+      "expected_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/REVIEW.md",
+      "sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+      "expected_sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R08/REVIEW.md",
+      "sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+      "expected_sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-AV/ADDENDUM-1.md",
+      "sha256": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593",
+      "expected_sha256": "8b9b0e47f0f3132e397899d734f56a3c378af02ef070e499fe6c358b9b8b1593",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-AV/REVIEW.md",
+      "sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025",
+      "expected_sha256": "3f8cdbd4479b7a5f9bf1ba20f5d44aa0e76d1b5f6ba7172e45d5cfdf21db3025",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-VISION/REVIEW.md",
+      "sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660",
+      "expected_sha256": "7b39cd661feaefcd091afe748d36f819f6fc11e4e0de53b14dd1563cc5aeb660",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R01/CLOSURE-1.md",
+      "sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
+      "expected_sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R01/REVIEW.md",
+      "sha256": "27503c8aceb2ef43afc35fe4d3ffa352f9df4fbe3482f3562c825ff59990839b",
+      "expected_sha256": "27503c8aceb2ef43afc35fe4d3ffa352f9df4fbe3482f3562c825ff59990839b",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R02-P01/CLOSURE-1.md",
+      "sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+      "expected_sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R02-P01/REVIEW.md",
+      "sha256": "1634b53af3fe0799bcabd5adfbef5658d64812e9d2425c457bc09f3e7faa8589",
+      "expected_sha256": "1634b53af3fe0799bcabd5adfbef5658d64812e9d2425c457bc09f3e7faa8589",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R03/CLOSURE-1.md",
+      "sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "expected_sha256": "d3e12e1371e04538cadc7ce77c84cd9a1c455282d5df49de7e2c9a46fb98b7be",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R03/REVIEW.md",
+      "sha256": "cc393683b0db1ff0723cc6688196bfe11871b6844019cf2d3ecd4b29ab330952",
+      "expected_sha256": "cc393683b0db1ff0723cc6688196bfe11871b6844019cf2d3ecd4b29ab330952",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R04/REVIEW.md",
+      "sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956",
+      "expected_sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R05/REPORT.md",
+      "sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7",
+      "expected_sha256": "884b6cabf53c076d333060535f8eb060cdeb522179975a720cb02cda7e5107d7",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R07/REVIEW.md",
+      "sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+      "expected_sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R08-P00/REVIEW.md",
+      "sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0",
+      "expected_sha256": "054e41c73952de02e37f99c40458488481a4740a686573adf5049bc3fd441ee0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R09/REVIEW.md",
+      "sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81",
+      "expected_sha256": "1af62fedd36ff92908c317f12b724627ddbfb4655d9b168dd65d5116ba7ecf81",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R10/REVIEW.md",
+      "sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+      "expected_sha256": "227e775267b79b38326ffbd064db61fa3836a7e83468e21672e6e470f57880d8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R11/CLOSURE-1.md",
+      "sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef",
+      "expected_sha256": "44ce810700649b35cb85ecd7241949be1415bfbf5b81ac3f6f2a779fbc13e6ef",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R11/REVIEW.md",
+      "sha256": "14177bacc25927e6ac0969f3e5c52268ce31ddf80f95407a39e1907f92043602",
+      "expected_sha256": "14177bacc25927e6ac0969f3e5c52268ce31ddf80f95407a39e1907f92043602",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R12/REVIEW.md",
+      "sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+      "expected_sha256": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R14/REVIEW.md",
+      "sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c",
+      "expected_sha256": "4569169fa5227e04a98623d5becbb0178e7208f703cbbd5dccfed9778691c15c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/CLOSURE-1.md",
+      "sha256": "151e22a9030be0d50643261dbec081f12f343460b790ec15839e30381f5aeabf",
+      "expected_sha256": "151e22a9030be0d50643261dbec081f12f343460b790ec15839e30381f5aeabf",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/EXPERIMENT_MAP.json",
+      "sha256": "f8eda76b0b99325bdf4061b877deb48036b8cc4a9d1d7c1f4824a1f605b0a1d8",
+      "expected_sha256": "f8eda76b0b99325bdf4061b877deb48036b8cc4a9d1d7c1f4824a1f605b0a1d8",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/REQUIREMENT_MAP.json",
+      "sha256": "a23c5082af277e9bd24a911688addc3815bc77f8d4ba3624d2c696887de61f40",
+      "expected_sha256": "a23c5082af277e9bd24a911688addc3815bc77f8d4ba3624d2c696887de61f40",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "expected_sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "coordination/PROTOCOL.md",
+      "sha256": "40fbb4f282155cb2762a67c2d970b2332ff37dcc3f303dc823d4b6e00db712dc",
+      "expected_sha256": "40fbb4f282155cb2762a67c2d970b2332ff37dcc3f303dc823d4b6e00db712dc",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "sha256": "bf4745153beff5687207f8e733809567e72080f0645241a1840c2cfb13a4ae16",
+      "expected_sha256": "bf4745153beff5687207f8e733809567e72080f0645241a1840c2cfb13a4ae16",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+      "expected_sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "orchestration/RI-01/MASTER_PROMPT.md",
+      "sha256": "d102519c6b871470601f88c01e649f7487c7c522712fd7d9c5728b5d8d59e722",
+      "expected_sha256": "d102519c6b871470601f88c01e649f7487c7c522712fd7d9c5728b5d8d59e722",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "expected_sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+      "expected_sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+      "expected_sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "orchestration/RI-01/RUNTIME.md",
+      "sha256": "57f3ae83f69690f432e6b9e522cf31a1b030711006e059023730177992819b05",
+      "expected_sha256": "57f3ae83f69690f432e6b9e522cf31a1b030711006e059023730177992819b05",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "orchestration/RI-01/TASK_GRAPH.json",
+      "sha256": "c9b5364b8eb23dad76f194cb4a0bed8858ede40dd33a45220e95cd3f81b7d9bd",
+      "expected_sha256": "c9b5364b8eb23dad76f194cb4a0bed8858ede40dd33a45220e95cd3f81b7d9bd",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "orchestration/RI-01/TEMPLATES.md",
+      "sha256": "7296a0c3b73437cae992788eea49bc6de1f693dc2198147a38fb729861529ae2",
+      "expected_sha256": "7296a0c3b73437cae992788eea49bc6de1f693dc2198147a38fb729861529ae2",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "expected_sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "sha256": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc",
+      "expected_sha256": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "START_HERE.md",
+      "sha256": "aec6a160969d1ade3725f262f7bca76fead1a34730d6cda299b4cc018f64de7c",
+      "expected_sha256": "aec6a160969d1ade3725f262f7bca76fead1a34730d6cda299b4cc018f64de7c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/SOURCE_MANIFEST.json",
+      "sha256": "687b25a3934b351d9ff20a2ce472587ca6dd90a9c8809bf5f74f7f6b0b160392",
+      "expected_sha256": "687b25a3934b351d9ff20a2ce472587ca6dd90a9c8809bf5f74f7f6b0b160392",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/SOURCE_SNAPSHOT.json",
+      "sha256": "1bc2d6af12b9b4a502015934528f45e9560b77b7f059377bc7b070bfe2b67435",
+      "expected_sha256": "1bc2d6af12b9b4a502015934528f45e9560b77b7f059377bc7b070bfe2b67435",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-0/REVIEW.md",
+      "sha256": "cb0e9fd770f5dc7040d57abd38451e388530759bb6132b5369bcfaf07b71af36",
+      "expected_sha256": "cb0e9fd770f5dc7040d57abd38451e388530759bb6132b5369bcfaf07b71af36",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/registry.json",
+      "sha256": "a26d3cf9cb0451f32ba4152ff2382a1126204d0d21c27a179baf112836939873",
+      "expected_sha256": "a26d3cf9cb0451f32ba4152ff2382a1126204d0d21c27a179baf112836939873",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/agent_job.schema.json",
+      "sha256": "fbc33699cebf0f095a5e6da2c5ab3c64554bcb499be2442aa6f62ba1c8047b93",
+      "expected_sha256": "fbc33699cebf0f095a5e6da2c5ab3c64554bcb499be2442aa6f62ba1c8047b93",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/capability_qualification.schema.json",
+      "sha256": "5a202cc524f0a5b4d38f526ef7bc8ea12a4b703fc9f1e6d8e554c816eee3cfd3",
+      "expected_sha256": "5a202cc524f0a5b4d38f526ef7bc8ea12a4b703fc9f1e6d8e554c816eee3cfd3",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/consent_proposal.schema.json",
+      "sha256": "d48d26aac261eb77c9d9f4ecb9d93c6b0a0efdb2358f83c3e613f6419005defb",
+      "expected_sha256": "d48d26aac261eb77c9d9f4ecb9d93c6b0a0efdb2358f83c3e613f6419005defb",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/context_packet.schema.json",
+      "sha256": "9ebbf9c8fe0b620db89d3348c31f38580f11b7244b24897a6f200e82e9aba925",
+      "expected_sha256": "9ebbf9c8fe0b620db89d3348c31f38580f11b7244b24897a6f200e82e9aba925",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/daily_action_proposal.schema.json",
+      "sha256": "da7b74e6349fd30df796aa6adc149d81c269aa4bc0b504e17eb47f95dcdc6d00",
+      "expected_sha256": "da7b74e6349fd30df796aa6adc149d81c269aa4bc0b504e17eb47f95dcdc6d00",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/delivery_receipt.schema.json",
+      "sha256": "06e49970f99d8bb4a37c2c8343c8e81e40e580aafbcb166f9f6c6f1050245779",
+      "expected_sha256": "06e49970f99d8bb4a37c2c8343c8e81e40e580aafbcb166f9f6c6f1050245779",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/design_artifact.schema.json",
+      "sha256": "b872628654d13e32ac1571c33790f68ecfc103c7d4fe9e9185f4ccaae7d6847b",
+      "expected_sha256": "b872628654d13e32ac1571c33790f68ecfc103c7d4fe9e9185f4ccaae7d6847b",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/evidence.schema.json",
+      "sha256": "241d0f2bb00cbbb1e59472a92b66b53b893135f410e4c88bd2712d061e1a1c29",
+      "expected_sha256": "241d0f2bb00cbbb1e59472a92b66b53b893135f410e4c88bd2712d061e1a1c29",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/experiment.schema.json",
+      "sha256": "14d7893c6728edcbdad7690373a72ea08ab2b1ef32e8285695f3f625afd0402b",
+      "expected_sha256": "14d7893c6728edcbdad7690373a72ea08ab2b1ef32e8285695f3f625afd0402b",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/health_observation.schema.json",
+      "sha256": "793918b305df534b79bd605525e8add2bb545fea9538307dd3b242a9277b70c1",
+      "expected_sha256": "793918b305df534b79bd605525e8add2bb545fea9538307dd3b242a9277b70c1",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/physical_action_proposal.schema.json",
+      "sha256": "6e72a18ed05eb120dd02cc4787f52e0ae5d153539ec89f4dcb3602bbfe478d5c",
+      "expected_sha256": "6e72a18ed05eb120dd02cc4787f52e0ae5d153539ec89f4dcb3602bbfe478d5c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/spatial_estimate.schema.json",
+      "sha256": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e",
+      "expected_sha256": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R02/CONTRACT_DESIGN.md",
+      "sha256": "9cc1ce4ce5d2d240b244513aa7680ba0015d86829216497877f3f90cd51856d7",
+      "expected_sha256": "9cc1ce4ce5d2d240b244513aa7680ba0015d86829216497877f3f90cd51856d7",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/CONTRACT_PROPOSALS.md",
+      "sha256": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13",
+      "expected_sha256": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R08/INTERFACES_AND_CONTRACTS.md",
+      "sha256": "01ed60d55591b3d4a2a03cafaf4c299d24c1c9f47d406d68bd3dd2bac6d02f03",
+      "expected_sha256": "01ed60d55591b3d4a2a03cafaf4c299d24c1c9f47d406d68bd3dd2bac6d02f03",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "baseline/cumulative-v1.0/agents/HANDOFF_TEMPLATE.md",
+      "sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+      "expected_sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "coordination/HANDBACK_METADATA.md",
+      "sha256": "27a8d0b5bc8aec1eeeb5c7fc178b7a977016e96aaf69f5f62f63a39a3731c3a7",
+      "expected_sha256": "27a8d0b5bc8aec1eeeb5c7fc178b7a977016e96aaf69f5f62f63a39a3731c3a7",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/CONTRACT_CROSSWALK.md",
+      "sha256": "64db8ea1c5ee1262a549bb589bbb7c0e36bc4dccd758e2e3a845e6d44844ec45",
+      "expected_sha256": "64db8ea1c5ee1262a549bb589bbb7c0e36bc4dccd758e2e3a845e6d44844ec45",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/DEPENDENCIES.json",
+      "sha256": "3456d9b3f027ca0dc03e8af555dc4d58b44bbd53c7f5be2f4e45cb497c8a5e64",
+      "expected_sha256": "3456d9b3f027ca0dc03e8af555dc4d58b44bbd53c7f5be2f4e45cb497c8a5e64",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/INPUT_USE.json",
+      "sha256": "0818baac652f2180e2a593ebe2667a666b3bddb05eaf8f48a8695589d56bf225",
+      "expected_sha256": "0818baac652f2180e2a593ebe2667a666b3bddb05eaf8f48a8695589d56bf225",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/MANAGER_STATE.md",
+      "sha256": "27bb39fb236c4ebfe711ebc826fb68a6605535cb99ccfb2d960274eda49275ac",
+      "expected_sha256": "27bb39fb236c4ebfe711ebc826fb68a6605535cb99ccfb2d960274eda49275ac",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/ACCEPTED_INPUT_SNAPSHOT.json",
+      "sha256": "2f10a519b24e160d0e8a9547376d2d0d5810ed1f7a66ffa1c5fed660c1bd88e9",
+      "expected_sha256": "2f10a519b24e160d0e8a9547376d2d0d5810ed1f7a66ffa1c5fed660c1bd88e9",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/CONSULTATIONS.md",
+      "sha256": "15103e9c9ab534a162135c2afb0ec4401332da504afa5a58ed529a65fda4cf62",
+      "expected_sha256": "15103e9c9ab534a162135c2afb0ec4401332da504afa5a58ed529a65fda4cf62",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/CONTRACTS.md",
+      "sha256": "fed1ad340e9d45b95d71252e25ce183ac89cfbdd4449d74025d29ceb5454dfb9",
+      "expected_sha256": "fed1ad340e9d45b95d71252e25ce183ac89cfbdd4449d74025d29ceb5454dfb9",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/DELTAS.md",
+      "sha256": "4d983c95aa535d6d2e83b8b20340f21ac0f21a64a1ff1d48b78c6272f22c3841",
+      "expected_sha256": "4d983c95aa535d6d2e83b8b20340f21ac0f21a64a1ff1d48b78c6272f22c3841",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/EVALUATION.md",
+      "sha256": "610aac480e3e4bd562f25df62a2c6be3ccd384e872f83ffae618fb325cbec7dd",
+      "expected_sha256": "610aac480e3e4bd562f25df62a2c6be3ccd384e872f83ffae618fb325cbec7dd",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/HANDOFF_MANIFEST.json",
+      "sha256": "c5fd20410d718bea5a1e02141b53ef925cfec0948e7e73be0a1f0045142ce7a9",
+      "expected_sha256": "c5fd20410d718bea5a1e02141b53ef925cfec0948e7e73be0a1f0045142ce7a9",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/HANDOFF.md",
+      "sha256": "079d64fbee95b248c8b2f66c78f8b5382d346a381384eb7fcf101dcc65da7403",
+      "expected_sha256": "079d64fbee95b248c8b2f66c78f8b5382d346a381384eb7fcf101dcc65da7403",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/INPUT_RECEIPT.md",
+      "sha256": "53e2c96891abbf5a285a591becf5212bd1b9a7a5e94cb7c2e7e7b396ba87a4de",
+      "expected_sha256": "53e2c96891abbf5a285a591becf5212bd1b9a7a5e94cb7c2e7e7b396ba87a4de",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/INPUT_USE.json",
+      "sha256": "89fec704a74ef6c567827846bcafc6da77e9a07423933f95b524f1f57c9e55f5",
+      "expected_sha256": "89fec704a74ef6c567827846bcafc6da77e9a07423933f95b524f1f57c9e55f5",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/INTEGRITY.json",
+      "sha256": "ee8ecdd28cf1e4d1267c7f5576f1e169692e9d6ca7e8a849ff91ae49bb20832e",
+      "expected_sha256": "ee8ecdd28cf1e4d1267c7f5576f1e169692e9d6ca7e8a849ff91ae49bb20832e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/MODALITY_REGISTRY.md",
+      "sha256": "a62ef91aff1d63ab9d29dd1b53e4cd72ae532d2414d75684e8226862eebead37",
+      "expected_sha256": "a62ef91aff1d63ab9d29dd1b53e4cd72ae532d2414d75684e8226862eebead37",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/MODALITY.md",
+      "sha256": "2cda024ae8df6ab16b650ced9c4537ab5c80026ba788925e482b03925c1f4934",
+      "expected_sha256": "2cda024ae8df6ab16b650ced9c4537ab5c80026ba788925e482b03925c1f4934",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/NEXT_PACKAGES.md",
+      "sha256": "2b64520a3455071dde1d267557083961216f66e3f4949d9a877e8f72db5538ac",
+      "expected_sha256": "2b64520a3455071dde1d267557083961216f66e3f4949d9a877e8f72db5538ac",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/REPORT.md",
+      "sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3",
+      "expected_sha256": "8c4e32000f3022a3a46fe040872de1693468f87ff26dcb8d05886e6f5a7867c3",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/REQUIREMENT_MAP.json",
+      "sha256": "ad7e2f3dc1459ce56debe892bfcce87c880add1fb59b3bcb3215fd0879358155",
+      "expected_sha256": "ad7e2f3dc1459ce56debe892bfcce87c880add1fb59b3bcb3215fd0879358155",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/SOURCES.md",
+      "sha256": "477ffdddce092121e4b21e22854979fa688fe8fb003d3126f527d206f1433f7d",
+      "expected_sha256": "477ffdddce092121e4b21e22854979fa688fe8fb003d3126f527d206f1433f7d",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/MM-FUSION/VALIDATION.json",
+      "sha256": "096b05add37c0190b7732a60477636c9dbeecc1ad99d2619e01a1385e5f91a5f",
+      "expected_sha256": "096b05add37c0190b7732a60477636c9dbeecc1ad99d2619e01a1385e5f91a5f",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-MM-FUSION/REVIEW.md",
+      "sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd",
+      "expected_sha256": "c244ac41c7a443839c66725356db434f4b4da73d36811362654cd067c73ae9dd",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/AUDIT_CORRECTIONS.md",
+      "sha256": "523e1e24632021f9afc892d479399d69b2959d5e2125aa260752855d6f9c3a09",
+      "expected_sha256": "523e1e24632021f9afc892d479399d69b2959d5e2125aa260752855d6f9c3a09",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/CONTRACTS_AND_TRUST.md",
+      "sha256": "ac0359b10b2751094996ed8e10893c70f0b884afe698808b18306dd53f8ad522",
+      "expected_sha256": "ac0359b10b2751094996ed8e10893c70f0b884afe698808b18306dd53f8ad522",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/EXPERIMENTS_AND_ROADMAP.md",
+      "sha256": "37ac2aca4c5b3fe3b52c185f0965e61be3cd4d73857f0b0c68e7303a636585dd",
+      "expected_sha256": "37ac2aca4c5b3fe3b52c185f0965e61be3cd4d73857f0b0c68e7303a636585dd",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/GEV_AUDIT.md",
+      "sha256": "80c38a048b9cc5b7f77dacb49782117a0a89dee749d4aeff8ad2d002d7464384",
+      "expected_sha256": "80c38a048b9cc5b7f77dacb49782117a0a89dee749d4aeff8ad2d002d7464384",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/HANDOFF_MANIFEST.json",
+      "sha256": "6620628821e093c9585e920fce241044f0aa697c29b7942d3f7c3b7017d4314c",
+      "expected_sha256": "6620628821e093c9585e920fce241044f0aa697c29b7942d3f7c3b7017d4314c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/HANDOFF.md",
+      "sha256": "7a21cb42c21c81fcb7e6706527f6bd69284f23691cf7b8796239549dd2cd014e",
+      "expected_sha256": "7a21cb42c21c81fcb7e6706527f6bd69284f23691cf7b8796239549dd2cd014e",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/INPUT_AUDIT.json",
+      "sha256": "3f319bb0a98be429f64c6a9ee4122aeb701237eedd0e4bca3776590857f09c9c",
+      "expected_sha256": "3f319bb0a98be429f64c6a9ee4122aeb701237eedd0e4bca3776590857f09c9c",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/INPUT_USE.json",
+      "sha256": "1e45e269961cc6b14fd2b8e4048dfa5a14811f6a41b1d88e7adfb11356ea271b",
+      "expected_sha256": "1e45e269961cc6b14fd2b8e4048dfa5a14811f6a41b1d88e7adfb11356ea271b",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/INTEGRATION_SUMMARY.md",
+      "sha256": "b4a58e054c6304ed1c6fd7c83a2fe12eec89fb85fd516ec3ec53334b39b9bc12",
+      "expected_sha256": "b4a58e054c6304ed1c6fd7c83a2fe12eec89fb85fd516ec3ec53334b39b9bc12",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/MODALITY.json",
+      "sha256": "e84ea8ea9c0679088f1a618f77ff6b3a4db5e9f6e61afbac6d45abe31af45221",
+      "expected_sha256": "e84ea8ea9c0679088f1a618f77ff6b3a4db5e9f6e61afbac6d45abe31af45221",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/OBSERVATORY_DESIGN.md",
+      "sha256": "14b98b7cf16172a0fe6912d54c110190bcb9dde366935c955fd375a7d1fc2721",
+      "expected_sha256": "14b98b7cf16172a0fe6912d54c110190bcb9dde366935c955fd375a7d1fc2721",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/REQUIREMENT_MAP.json",
+      "sha256": "0b6313fdb57c53c0bcd39f2a7f97d094459f3f9b361bb84c4bba34463c5583a3",
+      "expected_sha256": "0b6313fdb57c53c0bcd39f2a7f97d094459f3f9b361bb84c4bba34463c5583a3",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/SOURCES_AND_COSTS.md",
+      "sha256": "b4631a6a7dc2c5b17c9bf86c77491c07f75d9246d54bd44263a021a1fa3a8d4f",
+      "expected_sha256": "b4631a6a7dc2c5b17c9bf86c77491c07f75d9246d54bd44263a021a1fa3a8d4f",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/THREAD_PROMPTS.md",
+      "sha256": "891baff4db2046676e7a8b63b3e0f75199761a659907426a46edf89e76f8cf95",
+      "expected_sha256": "891baff4db2046676e7a8b63b3e0f75199761a659907426a46edf89e76f8cf95",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15/VALIDATION.json",
+      "sha256": "24f93c4d3f8f663ac2f87f00b8e31c8da004f92e9a4f44504fa756d515fedc8f",
+      "expected_sha256": "24f93c4d3f8f663ac2f87f00b8e31c8da004f92e9a4f44504fa756d515fedc8f",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R15/REVIEW.md",
+      "sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6",
+      "expected_sha256": "45d197fccf4ebe67f00a0ac4dfe11d5d6ef85fb932fe8aa9d67d3c6dd5ec11c6",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/MANIFEST.json",
+      "sha256": "f29e746157d7d04f5c0c9cf38210872a84ace1351b5cc63b1600c1f70eb71a1a",
+      "expected_sha256": "f29e746157d7d04f5c0c9cf38210872a84ace1351b5cc63b1600c1f70eb71a1a",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/baseline/PROJECT_ASTRA_Generation_0_Implementation_Validation_Plan.md",
+      "sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771",
+      "expected_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/SOURCE_AUDIT.md",
+      "sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74",
+      "expected_sha256": "0c09786e2c7ddaf7275840c924218f8b819b9f047d7234937f2eeb882f0a2b74",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/INPUT_AUDIT.json",
+      "sha256": "94203e5e82c28223a0d4b0a4da23e3ae875a6e2076a0ab32751bf4f781e74f19",
+      "expected_sha256": "94203e5e82c28223a0d4b0a4da23e3ae875a6e2076a0ab32751bf4f781e74f19",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R15-AUDIT/VALIDATION.json",
+      "sha256": "48226092b13680b9caf6aafb154f93704379ebb5d2ea7cc6a491771330c4b3ee",
+      "expected_sha256": "48226092b13680b9caf6aafb154f93704379ebb5d2ea7cc6a491771330c4b3ee",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R15/SOURCE_CHECKS.json",
+      "sha256": "4815425b7ce8c7342fbebb1f80e71efa8d2e02f1243dccf0dd40f4cfd9196f45",
+      "expected_sha256": "4815425b7ce8c7342fbebb1f80e71efa8d2e02f1243dccf0dd40f4cfd9196f45",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R15/MANIFEST.json",
+      "sha256": "4ba0e2ffff0f68c4892632fa10b885a2c46b75dc3414854f244126bec6567ad2",
+      "expected_sha256": "4ba0e2ffff0f68c4892632fa10b885a2c46b75dc3414854f244126bec6567ad2",
+      "matches": true,
+      "read_scope": "IDENTITY_CHECK_ONLY_UNLESS_SEMANTIC_SCOPE_LISTED_IN_REVIEW"
+    }
+  ],
+  "package_input_occurrences_checked": 448,
+  "package_input_mismatches": [],
+  "canonical_structural_differences": [],
+  "nested_acceptance_differences": [],
+  "gen0_all36_rows_found_verbatim": true,
+  "check_method": "PowerShell document parse, original-object comparison and SHA256; no application or proposed experiment execution",
+  "source_semantic_scope": "See REVIEW.md; identity checks do not claim fresh full-body reads",
+  "normative_inputs": [
+    {
+      "path": ".codex/agents/haven_vision_guardian.toml",
+      "sha256": "ca1db91952aac21449eec907abe0903cf20d20f4745d5c11cec4313148b9e1fa"
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92"
+    },
+    {
+      "path": "orchestration/RI-01/PROTOCOL.md",
+      "sha256": "67ec7f4fd1f40c49fdd233e6a44a7de0dad2237393195106770e0303cbaaccd0"
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f"
+    }
+  ]
+}

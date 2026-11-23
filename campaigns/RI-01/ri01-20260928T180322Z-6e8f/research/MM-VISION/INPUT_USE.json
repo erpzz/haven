@@ -1,0 +1,383 @@
+{
+  "task": "MM-VISION",
+  "created_at": "2026-09-28T20:18:38.0390112Z",
+  "base_commit_source": "Intake snapshot, no new Git read",
+  "records": [
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "sha256": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "bytes": 833,
+      "source_section": "Identity of accepted core packet",
+      "finding": "Identity of accepted core packet",
+      "output_section": "REPORT metadata",
+      "decision": "REUSE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "bytes": 6025,
+      "source_section": "Useful first path and compatibility",
+      "finding": "Useful first path and compatibility",
+      "output_section": "REPORT MV01/MV02",
+      "decision": "REUSE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "bytes": 13893,
+      "source_section": "I01-I07 full vector and four records",
+      "finding": "I01-I07 full vector and four records",
+      "output_section": "CONTRACTS C1-C4",
+      "decision": "EXTEND_ADDITIVELY",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MULTIMODAL.md",
+      "sha256": "43ec2f49d6062d7a758aa283c6d95158f6954187b065681c109e268dc02b8366",
+      "bytes": 4815,
+      "source_section": "Full profiles and 24 failure cases",
+      "finding": "Full profiles and 24 failure cases",
+      "output_section": "EVALUATION cases and later scenario",
+      "decision": "PRESERVE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "sha256": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "bytes": 9636,
+      "source_section": "VA-01 and scope preservation",
+      "finding": "VA-01 and scope preservation",
+      "output_section": "NEXT_PACKAGE prerequisites",
+      "decision": "RETAIN_GATE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/HANDOFF_MANIFEST.json",
+      "sha256": "2db5745bfc5626f38542b1b4608e63b00458b21f4a38c1b05f2437414cf9bfc8",
+      "bytes": 2265,
+      "source_section": "Accepted R07 packet identity",
+      "finding": "Accepted R07 packet identity",
+      "output_section": "REPORT metadata",
+      "decision": "REUSE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/CONTRACTS.md",
+      "sha256": "9185653cdd0f24f73c7312710aae20f53d848a3fa622bcd68c17fc4489011ac3",
+      "bytes": 12240,
+      "source_section": "CR-R07-01-04 typed geometry and lineage",
+      "finding": "CR-R07-01-04 typed geometry and lineage",
+      "output_section": "CONTRACTS C2-C4",
+      "decision": "EXTEND_ADDITIVELY",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R07/REQUIREMENT_MAP.json",
+      "sha256": "16c2b017c53dae7b2b8bcd3f7b9e62dd798fa136e844db8a18103c5d93fe36fa",
+      "bytes": 8815,
+      "source_section": "Original requirement/owner links",
+      "finding": "Original requirement/owner links",
+      "output_section": "REPORT requirements",
+      "decision": "PRESERVE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R07/REVIEW.md",
+      "sha256": "21b43e0196bd62144cd284c618954c3260482e0bbd111f30ed15fa76d4582815",
+      "bytes": 15628,
+      "source_section": "L01 experiment split/catalog distinction; L02 rights; accepted semantics",
+      "finding": "L01 experiment split/catalog distinction; L02 rights; accepted semantics",
+      "output_section": "REPORT Acceptance",
+      "decision": "PRESERVE_VARIANT",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/REPORT.md",
+      "sha256": "ac62eb73800e12b08e6fd46c9206d64bdbe8f7e28844f87cb54b46f8815197c7",
+      "bytes": 27833,
+      "source_section": "Logical adapters, lifecycle and original first-model boundary",
+      "finding": "Logical adapters, lifecycle and original first-model boundary",
+      "output_section": "REPORT MV01; NEXT_PACKAGE",
+      "decision": "REUSE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R02-P01/amendment-1/AMENDMENT.md",
+      "sha256": "3efda1609fb138adc6bef9d125ac2390f4ccc484e797ab2eeefc7f4d26cc3605",
+      "bytes": 13519,
+      "source_section": "Four-record replacement with historical unknowns",
+      "finding": "Four-record replacement with historical unknowns",
+      "output_section": "CONTRACTS C4",
+      "decision": "REUSE_COMPOSITE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/amendment-1/AMENDMENT.md",
+      "sha256": "b2608ea743084af0f7f854b32b8156dc50e95370051de641ab9ae919ac77e667",
+      "bytes": 15080,
+      "source_section": "One release/destination/whole output finite use; quota vs authority",
+      "finding": "One release/destination/whole output finite use; quota vs authority",
+      "output_section": "CONTRACTS C4",
+      "decision": "REUSE_COMPOSITE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/CONTRACTS.md",
+      "sha256": "985b53bab11cc9b581e3242429f73be87d41b8d4b55de2069fe64b4317d0b7a2",
+      "bytes": 11443,
+      "source_section": "W01/W03/W05 exact native capture and output route",
+      "finding": "W01/W03/W05 exact native capture and output route",
+      "output_section": "CONTRACTS C3/C4",
+      "decision": "REUSE_ACCEPTED_ROOT_NOTICE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R04/REVIEW.md",
+      "sha256": "4995a764b93eac91844bf1e0de8ccd1eec47c6fac64a5a58375d3fcf62db0956",
+      "bytes": 13842,
+      "source_section": "Acceptance with five native/access/output/path/rights gates",
+      "finding": "Acceptance with five native/access/output/path/rights gates",
+      "output_section": "REPORT metadata; NEXT_PACKAGE",
+      "decision": "RETAIN_GATES",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R04/HASHES.json",
+      "sha256": "90c2d832f126b0111d0726f75f1d8eb5f36bb040fbd82ce154a5b5e016a0eef0",
+      "bytes": 1787,
+      "source_section": "Exact accepted R04 source identity",
+      "finding": "Exact accepted R04 source identity",
+      "output_section": "INPUT_USE identity",
+      "decision": "REUSE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "bytes": 40289,
+      "source_section": "O02 only: SAM2 masklets and rights",
+      "finding": "O02 only: SAM2 masklets and rights",
+      "output_section": "SHORTLIST SAM2; CONTRACTS track",
+      "decision": "REUSE_ONE_ROUTED_UPDATE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/REPORT.md",
+      "sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+      "bytes": 15990,
+      "source_section": "O02 routing and bounded maturity/cost distinctions",
+      "finding": "O02 routing and bounded maturity/cost distinctions",
+      "output_section": "REPORT MV05",
+      "decision": "REUSE_O02_ONLY",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "bytes": 1130,
+      "source_section": "Direct full-image access smoke observation",
+      "finding": "Direct full-image access smoke observation",
+      "output_section": "REPORT Evidence; MODALITY",
+      "decision": "DIRECT_IMAGE_OBSERVATION",
+      "read_mode": "DIRECT_IMAGE"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/SOURCE_SNAPSHOT.json",
+      "sha256": "1bc2d6af12b9b4a502015934528f45e9560b77b7f059377bc7b070bfe2b67435",
+      "bytes": 3976,
+      "source_section": "Recorded main revision",
+      "finding": "Recorded main revision",
+      "output_section": "REPORT metadata",
+      "decision": "HISTORICAL_BASE_ONLY",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/COVERAGE.md",
+      "sha256": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "bytes": 21724,
+      "source_section": "Recovered original cumulative scope, selected visual rows",
+      "finding": "Recovered original cumulative scope, selected visual rows",
+      "output_section": "REPORT requirements",
+      "decision": "PRESERVE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "bytes": 54675,
+      "source_section": "Exact selected REQ/AT and owners",
+      "finding": "Exact selected REQ/AT and owners",
+      "output_section": "REQUIREMENT_MAP",
+      "decision": "PRESERVE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "bytes": 37277,
+      "source_section": "Exact EX08/EX17/EX31 rows",
+      "finding": "Exact EX08/EX17/EX31 rows",
+      "output_section": "REQUIREMENT_MAP",
+      "decision": "PRESERVE",
+      "read_mode": "TEXT_RELEVANT_SECTIONS"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "a2099ad3254d298f4ebbce84b4164c5068f682d8d1473247039768f95ab76281",
+      "bytes": 4318,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "START_HERE.md",
+      "sha256": "aec6a160969d1ade3725f262f7bca76fead1a34730d6cda299b4cc018f64de7c",
+      "bytes": 4413,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "PRECEDENCE.md",
+      "sha256": "2986161baaf22b189d91d5518f58cbec0f03974d585774d6748b34f208313cbc",
+      "bytes": 1512,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "sha256": "bf4745153beff5687207f8e733809567e72080f0645241a1840c2cfb13a4ae16",
+      "bytes": 3781,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "coordination/PROTOCOL.md",
+      "sha256": "40fbb4f282155cb2762a67c2d970b2332ff37dcc3f303dc823d4b6e00db712dc",
+      "bytes": 3858,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "coordination/HANDBACK_METADATA.md",
+      "sha256": "27a8d0b5bc8aec1eeeb5c7fc178b7a977016e96aaf69f5f62f63a39a3731c3a7",
+      "bytes": 999,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "coordination/THREAD_STATUS.md",
+      "sha256": "00c0e9de101989fb1cbad2e95ccad54d43dfbe8a27b8492b9144bf79f71dcd81",
+      "bytes": 2786,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "orchestration/RI-01/AUTHORIZATION.md",
+      "sha256": "9e9fb9f60a35007d6755e54655d61524066a026f38afac962184a53edad1865a",
+      "bytes": 5980,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "orchestration/RI-01/VISION.md",
+      "sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+      "bytes": 5286,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+      "bytes": 9910,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+      "bytes": 12968,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": ".codex/agents/haven_vision_perception.toml",
+      "sha256": "c2ee9ceb3d7c3463e618752a250b32a5faa64850cab5de0c8ce79663dc5fee1e",
+      "bytes": 1332,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "baseline/cumulative-v1.0/agents/HANDOFF_TEMPLATE.md",
+      "sha256": "dc4aefac224ec7619c527e1e8bec1d6eac7d9a61da964186a606b88c000740dc",
+      "bytes": 1329,
+      "source_section": "Authority/profile/scope or required handback format",
+      "finding": "Research only and owned output scope",
+      "output_section": "REPORT metadata; entire handback",
+      "decision": "FOLLOW_AUTHORIZED_SCOPE",
+      "read_mode": "TEXT"
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "sha256": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "bytes": 90815,
+      "source_section": "Exact selected original AT rows with expected results and owner/reviewer",
+      "finding": "Preserve original acceptance semantics, not newly executed",
+      "output_section": "REQUIREMENT_MAP acceptance_tests",
+      "decision": "PRESERVE",
+      "read_mode": "JSON_SELECTED_ROWS"
+    }
+  ],
+  "mutable_index": {
+    "use": "Navigation; root notice, exact reviews and content pins establish accepted scope",
+    "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/state/ACCEPTED_INPUTS.json",
+    "sha256_at_record": "c7e4f85ae104ddc8a6d2920c356d1ccfd97494661a7324a0dc8632746fcf059d",
+    "mutable": true
+  },
+  "external_license_finding": {
+    "decision": "Preserve M4 baseline and gate exact artifact rights before actual model pilot",
+    "output_sections": [
+      "SHORTLIST",
+      "SOURCES S11",
+      "NEXT_PACKAGE"
+    ],
+    "finding": "Original upstream Qwen3B research license versus unpinned redistributed baseline",
+    "source": "S11"
+  }
+}

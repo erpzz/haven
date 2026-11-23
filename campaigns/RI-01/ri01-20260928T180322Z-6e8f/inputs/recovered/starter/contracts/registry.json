@@ -1,0 +1,118 @@
+[
+  {
+    "name": "evidence",
+    "schema": "contracts/evidence.schema.json",
+    "example": "fixtures/contracts/evidence.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "Unknown capture time cannot be labeled current without another explicitly valid freshness definition.",
+      "A hash verifies referenced bytes only; it does not make an inference true."
+    ]
+  },
+  {
+    "name": "context_packet",
+    "schema": "contracts/context_packet.schema.json",
+    "example": "fixtures/contracts/context_packet.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "Authorization must be rechecked at retrieval and publication; a packet is not a transferable grant."
+    ]
+  },
+  {
+    "name": "consent_proposal",
+    "schema": "contracts/consent_proposal.schema.json",
+    "example": "fixtures/contracts/consent_proposal.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "A design/example record is never a real subject grant.",
+      "Health read, partner share, retention and cloud transfer require distinct purpose handling."
+    ]
+  },
+  {
+    "name": "daily_action_proposal",
+    "schema": "contracts/daily_action_proposal.schema.json",
+    "example": "fixtures/contracts/daily_action_proposal.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "The application must define daylight-saving and missed-run semantics before scheduling.",
+      "Draft/proposal cannot be shown as a provider-accepted action."
+    ]
+  },
+  {
+    "name": "health_observation",
+    "schema": "contracts/health_observation.schema.json",
+    "example": "fixtures/contracts/health_observation.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "UNKNOWN/PROVIDER_ERROR observation must not contain a fabricated numerical value.",
+      "Arrival time cannot replace sample time."
+    ]
+  },
+  {
+    "name": "spatial_estimate",
+    "schema": "contracts/spatial_estimate.schema.json",
+    "example": "fixtures/contracts/spatial_estimate.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "Unknown uncertainty has no invented numerical parameters.",
+      "Transform and time compatibility require semantic validation outside schema."
+    ]
+  },
+  {
+    "name": "agent_job",
+    "schema": "contracts/agent_job.schema.json",
+    "example": "fixtures/contracts/agent_job.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "A job lease/budget is not physical authorization; executor policy is separate.",
+      "No automatic skill or policy mutation."
+    ]
+  },
+  {
+    "name": "experiment",
+    "schema": "contracts/experiment.schema.json",
+    "example": "fixtures/contracts/experiment.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "A max trial count is a budget, not statistical evidence that the sample size is adequate."
+    ]
+  },
+  {
+    "name": "design_artifact",
+    "schema": "contracts/design_artifact.schema.json",
+    "example": "fixtures/contracts/design_artifact.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "Future actual artifacts must match their content hash and safe relative path.",
+      "Requirement spec is not a toolpath or inspected part."
+    ]
+  },
+  {
+    "name": "physical_action_proposal",
+    "schema": "contracts/physical_action_proposal.schema.json",
+    "example": "fixtures/contracts/physical_action_proposal.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "No arbitrary IP/URI/serial/raw command field is permitted.",
+      "Physical executor requires independently validated actual authorization and qualified apparatus."
+    ]
+  },
+  {
+    "name": "delivery_receipt",
+    "schema": "contracts/delivery_receipt.schema.json",
+    "example": "fixtures/contracts/delivery_receipt.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "Local storage is neither destination delivery nor responder dispatch."
+    ]
+  },
+  {
+    "name": "capability_qualification",
+    "schema": "contracts/capability_qualification.schema.json",
+    "example": "fixtures/contracts/capability_qualification.json",
+    "status": "DRAFT_NOT_ACTIVE_M0_SCHEMA",
+    "semantic_rules": [
+      "External documentation does not qualify the local device or technique."
+    ]
+  }
+]

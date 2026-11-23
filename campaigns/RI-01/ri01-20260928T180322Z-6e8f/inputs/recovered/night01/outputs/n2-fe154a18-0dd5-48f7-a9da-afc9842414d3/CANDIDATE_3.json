@@ -1,0 +1,1 @@
+{"artifact_id":"CANDIDATE_3","artifact_kind":"INERT_JSON_DIMENSIONS","dimensions":{"base_mm":26,"depth_mm":24,"height_mm":40,"slot_mm":20,"thickness_mm":4},"fabrication_enabled":false,"parent_artifact_ids":["BASELINE"],"qualification_state":"UNQUALIFIED","revision":4,"synthetic":true,"units":"mm"}

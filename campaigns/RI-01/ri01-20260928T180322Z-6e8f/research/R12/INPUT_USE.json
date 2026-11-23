@@ -1,0 +1,194 @@
+[
+  {
+    "upstream_task": "INTAKE",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "inputs/INTAKE/INVENTORY.md"
+    },
+    "artifact_sha256": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+    "finding": "Accepted inventory distinguishes recovered handbacks, unavailable originals and task prompts from completed research.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT: Scope fidelity; all cards",
+    "design_effect": "Do not reconstruct original H00/R1 records or claim original prompt fidelity; use current canonical scope.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "Accepted intake with VISION-0 closure; this does not accept every recovered handback."
+  },
+  {
+    "upstream_task": "VISION-0",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "reviews/VISION-0/REVIEW.md"
+    },
+    "artifact_sha256": "cb0e9fd770f5dc7040d57abd38451e388530759bb6132b5369bcfaf07b71af36",
+    "finding": "Cumulative scope and independent final vision review are required.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT: Scope fidelity and five journeys",
+    "design_effect": "Retain16anchors and5journeys; no new candidate substitutes for scope.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "Read with CLOSURE-1, which supersedes pending intake."
+  },
+  {
+    "upstream_task": "VISION-0",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "reviews/VISION-0/CLOSURE-1.md"
+    },
+    "artifact_sha256": "151e22a9030be0d50643261dbec081f12f343460b790ec15839e30381f5aeabf",
+    "finding": "Intake mapping verified102requirements/32experiments; additive R14 vision retained; no physical capability approved.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT: Scope fidelity; O09",
+    "design_effect": "Preserve deliberate communication/augmentation and canonical namespace, while not qualifying a human interface.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "PASS for intake vision only."
+  },
+  {
+    "upstream_task": "CANONICAL_SCOPE",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "inputs/recovered/starter/scope/requirements.json"
+    },
+    "artifact_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+    "finding": "102 retained canonical requirements with owners and matching AT IDs.",
+    "disposition": "REUSED",
+    "downstream_section": "OPPORTUNITIES.json: requirements/owner; REPORT: Scope fidelity",
+    "design_effect": "Use exact existing requirement IDs; do not mark any acceptance passed.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "Retained target, not implemented or accepted by this scout."
+  },
+  {
+    "upstream_task": "CANONICAL_EXPERIMENTS",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "inputs/recovered/starter/research/experiments.json"
+    },
+    "artifact_sha256": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+    "finding": "32 proposed experiments including spatial origin, next observation, engineering correction and relay replay.",
+    "disposition": "REUSED",
+    "downstream_section": "OPPORTUNITIES.json: experiments; NEXT_PACKAGE",
+    "design_effect": "Propose smaller precursor cases under exact EX IDs without relabeling unexecuted trials as run.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "PROPOSED_NOT_EXECUTED; physical permission not granted."
+  },
+  {
+    "upstream_task": "REV-R02",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "reviews/REV-R02/REVIEW.md"
+    },
+    "artifact_sha256": "69cf8d1644361fa521a7c458ea08dda0aa4b4843eec9a9b4326bde978d981746",
+    "finding": "Thin coordinator/advisory model subset; preserve M4 and distinguish exact model economics.",
+    "disposition": "REUSED",
+    "downstream_section": "O01/O10; REPORT: Dependencies",
+    "design_effect": "No framework replacement or M4 substitution; exact candidate profile and host fit remain gates.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "Accepted scoped subset with limitations; not a blanket runtime approval."
+  },
+  {
+    "upstream_task": "REV-R06",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "reviews/REV-R06/REVIEW.md"
+    },
+    "artifact_sha256": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+    "finding": "CR-R06-01 paired SpatialSemantics;60sec total/8attempt ceiling; optical priors and inferred completion retain dependency roots.",
+    "disposition": "REUSED",
+    "downstream_section": "O03/O04/O05; REPORT: Interfaces; NEXT_PACKAGE",
+    "design_effect": "Version learned geometry adapter; do not coerce confidence into covariance or next-view into movement permission; avoid sensor-survey repetition.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "AMEND overall; accepted scoped findings reused, unresolved domain contracts remain owner-owned."
+  },
+  {
+    "upstream_task": "REV-R06",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "reviews/REV-R06/SOURCES.json"
+    },
+    "artifact_sha256": "53314bb656c7f6127e3dfaa0def4acb3d43daae3125f055cf5854e996c5df453",
+    "finding": "Prior source register already covers optical/RF priors and sensing evidence limitations.",
+    "disposition": "REUSED",
+    "downstream_section": "O05; REPORT: Dependency use",
+    "design_effect": "Choose current minimal RFDT artifact/identifiability gap rather than redo R06 acquisition review.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "Source register supports scoped review, not physical RF qualification."
+  },
+  {
+    "upstream_task": "REV-R08",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "reviews/REV-R08/REVIEW.md"
+    },
+    "artifact_sha256": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+    "finding": "R08-M4 template-only entry rejects SANDBOXED_GENERATED_SOURCE and requires authenticated independent H06 holdout/evaluator.",
+    "disposition": "REUSED",
+    "downstream_section": "O06/O07; REPORT: Decisions",
+    "design_effect": "Text2CAD stays backlog; autonomous-lab correction strengthens independent evaluator/correction lineage.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "Scoped reviewed findings, not widened generated-source authorization."
+  },
+  {
+    "upstream_task": "CODE-0",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "reviews/CODE-0/REVIEW.md"
+    },
+    "artifact_sha256": "066bbc38273320895dbd5cf1fc3fde31c209253103fa2e170dbf905ff8d4abc8",
+    "finding": "Synthetic33+11 scope does not prove full method/boundary execution, parent-death termination, billing stop or current M0 acceptance.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT: Dependencies and Actual versus proposed; O01/O08/O10",
+    "design_effect": "No physical/compute cancellation or runtime acceptance inferred from code tests; new traces explicitly proposed.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "Evidence-limited read-only review."
+  },
+  {
+    "upstream_task": "RECHECK-R02-P01-A1",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "reviews/REVIEW-R02-P01/CLOSURE-1.md"
+    },
+    "artifact_sha256": "2438d74f574ed79d7613207c2686f6429eb821f1e8ef232dcebc0376bcacf5f4",
+    "finding": "M1/L1 closed for orthogonal immutable release/consume, append-only delivery/current eligibility; finite-grant accounting separate.",
+    "disposition": "REUSED",
+    "downstream_section": "O08/O10; REPORT: Interfaces",
+    "design_effect": "Use lost-ACK UNKNOWN and historical preservation; no second parent charge or perception claim.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "ACCEPT_FOR_SYNTHESIS scoped composite. Same agent previously reviewed P01; now authors R12 and cannot self-approve R12."
+  },
+  {
+    "upstream_task": "ROOT_ROUTED_GUIDANCE",
+    "source_ref": {
+      "repo": "RI-01 isolated worktree ri01-20260928-1803",
+      "commit": null,
+      "commit_note": "Working-tree artifact identified by exact SHA-256; Git inspection forbidden to this author; root owns commit attribution",
+      "path": "actual collaboration messages Q-R12-01/02"
+    },
+    "artifact_sha256": null,
+    "finding": "Root routed existing REV-R06/08 findings and priority advice; authors not active, so no new specialist answer exists.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT: Consultations; O03-O07",
+    "design_effect": "Three geometry updates at most forR07, keepText2CADbacklog. Do not fabricate consensus or block on soft-input wait.",
+    "reason": "Reuse accepted or explicitly limited existing evidence instead of replacing the domain contract; new public claims separately cited in SOURCES.",
+    "review_state": "Root guidance only; message timestamp not recorded in this handback."
+  }
+]

@@ -1,0 +1,25 @@
+# P-MMAV-01 — AUTHORIZATION_REQUIRED
+
+Smallest useful next implementation proposal: an inert selected-media timeline/authority adapter with synthetic fixtures, usable by the already proposed image-question interface. It helps a user see exactly which speech interval/frame supports an answer and where evidence is missing, before any real audio model or device is added. No coding or model pilot was started here.
+
+Owner H02 with H01 experience and H04/H08 contract review; independent H06 reviewer. Existing Python/M0 foundations remain; no new broker/vector database/framework required. Root must supply a real, frozen application or newly authorized isolated laboratory revision and exact allowed paths. CODE_NOT_AVAILABLE / PACKAGE_PATH_FREEZE_REQUIRED for application implementation in this task. Do not edit recovered source snapshots. Suggested paths below are labels awaiting authorization, not present code: `media_contracts/`, `fixtures/mmav/`, `tests/mmav/`, and a read-only evidence timeline view.
+
+Hard prerequisites: independently reviewed MM-AV revision/hash; accepted CORE composite and four-output-record/finite-use semantics; R04 W01–W06/independent gates; accepted relevant MM-VISION/R07 temporal seam; approved synthetic asset manifest/oracle; source licenses; separately scoped authority-laboratory implementation where actual authority enforcement is claimed. VA-01 independent lifecycle and exact-adapter containment closure must precede any actual inference pilot; a document or fixture test cannot close it. No inherited install/model/provider permission.
+
+Allowed proposed scope: typed AV01–AV05 records, deterministic integer/rational timestamp mapping, completeness/bounds/current-authority validation using inert fixtures, source-linked timeline labeling and the original CORE receipt ledger adapter where separately authorized. Synthetic fixtures represent audio/video timing and cancellations; they are not a fake ASR/TTS implementation. Do not claim hearing or native stop from fixture rows.
+
+Ceiling proposal: one focused engineering day; at most 32 fixture families, one 20-minute suite run plus at most two repair reruns, one process, 512 MiB test-process memory, 10 MiB new fixture assets, 60 s per decode-free case, 2 synthetic principals/32 sources/16 grants/128 lineage edges/depth16, 64 KiB metadata and 256 KiB output. No network, media decoder execution, packages, models, microphone/camera, native playback, accounts, purchases or new paid-provider calls. These ceilings are not reported measurements.
+
+Acceptance: positive image/typed-oracle timeline, correct speech/clip span display from supplied synthetic evidence, honest gaps and unknown order, valid max_uses=1 release/consume, correction/withdrawal invalidation including uncited parents, independent B status responsiveness, no new send on unknown receipt, route/restore mismatch rejection, distinct cancel outcome axes. Independent reviewer checks actual tests and source hashes. Stop on privacy/authority escape, implicit clock/unit conversion, invalid source closure, resource ceiling, or unavailable real implementation input; preserve failed cases and unknowns.
+
+## Re-entry packages, separately scoped
+
+P-MMAV-02 offline decoding/perception: after lifecycle/containment and artifact/license/host review, approve bounded eligible audio/clip originals and exact existing/newly authorized decoder/ASR/VAD/TTS artifacts. Compare one small profile plus one escalation, not the whole shortlist. Freeze all runtime/weight/preprocessor hashes, budget and independent listening/video oracle. No microphone or device acquisition. Run EX03/EX06/EX17 protected cases, report actual failure and cost denominators. Candidate initial cap: 2 hours, <=24 source families, <=48 inference attempts, <=15 s video or <=30 s speech per case, 1 in flight, no paid calls; RAM/VRAM limits must be supplied from the approved exact host before admission rather than guessed here.
+
+P-MMAV-03 endpoint qualification: only after R04's exact independently enrolled A/B device tuples, participant consent, native permission/indicator/route tests and explicit scope. Test real playback stop, route change, latency, comprehension and accessibility with qualified human evaluation. Platform success/ACK is not human perception. No emergency contact, physical execution, always-on capture or cloned voice.
+
+P-MMAV-04 richer simultaneous research: bounded licensed/synthetic offline scene/video/audio/telemetry replay at matched budgets. Compare late fusion with exact research-eligible omni profile, preserve dependence and ablation. Live stream and multidestination output require a separately accepted authority/counting/chunk protocol before any related implementation; no one-use-profile shortcut. Hardware action stays outside this lane.
+
+## Decision needed at the next gate
+
+Approve or amend an exact frozen P-MMAV-01 scope and real path allowlist after independent review. This is the sole immediate next package. Later model/device paths are explicit re-entry conditions, not automatically queued execution or permission requests to the user during this research handback.

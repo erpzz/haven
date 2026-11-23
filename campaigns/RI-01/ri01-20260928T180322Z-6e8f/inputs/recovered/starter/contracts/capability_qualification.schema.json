@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:haven:draft:capability_qualification:1",
+  "title": "capability_qualification — design contract, not authorization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "qualification_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "logical_device_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capability": {
+      "type": "string",
+      "minLength": 1
+    },
+    "hardware_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "software_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "calibration_revision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "test_result_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "PROPOSED_TEST",
+        "DOCUMENTED_NOT_TESTED",
+        "MOCK_ONLY"
+      ]
+    },
+    "real_world_execution_eligible": {
+      "type": "boolean",
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "qualification_id",
+    "logical_device_id",
+    "capability",
+    "hardware_revision",
+    "software_revision",
+    "calibration_revision",
+    "source_ids",
+    "test_result_ids",
+    "state",
+    "real_world_execution_eligible"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,16 @@
+{
+  "checked_at_utc": "2026-09-28T19:28:09.0016506Z",
+  "author": "/root/ri01_daily",
+  "check_scope": "Documentation JSON/hash checks only; no application/tests executed",
+  "original_files": 6,
+  "original_byte_mismatches": 0,
+  "input_use_rows": 6,
+  "input_hash_mismatches": 0,
+  "json_parse": "VALID",
+  "proposed_trace_count": 6,
+  "trace_status": "PROPOSED_NOT_EXECUTED",
+  "runtime_user_media_tests": "NOT_EXECUTED",
+  "CORE_consumption": "NOT_CONSUMED_PENDING_REVIEW",
+  "independent_recheck": "PENDING",
+  "original_manifest_sha256": "504b9aed17e60faa81d35ce0ee2ea340b7731ce2bddd09fa1d6e28f8b20100be"
+}

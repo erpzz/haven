@@ -1,0 +1,218 @@
+[
+  {
+    "claim_id": "C01",
+    "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/wifi-driver/wifi-vendor-features.html",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Observed stable6.1; conditional CSI metadata, not coherent imaging",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C01b",
+    "url": "https://github.com/espressif/esp-csi",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Landing page only; no build or commit qualification",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C02",
+    "url": "https://developer.android.com/develop/connectivity/wifi/wifi-rtt",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "API28 baseline/API35az discussion; cooperative device range",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C03",
+    "url": "https://developer.apple.com/videos/play/wwdc2022/10008/",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "WWDC2022 TRANSCRIPT_ONLY; accessory/BLE background restrictions, not currentOS qualification",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C03b",
+    "url": "https://developer.apple.com/documentation/technotes/tn3111-ios-wifi-api-overview",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Insufficient text shell; no categorical iOS CSI absence proven",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C04",
+    "url": "https://www.ieee802.org/11/Reports/802.11_Timelines.htm",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "2026-09-19 page lists bf-2025 publication2025-09-26; not hardware/SDK access",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C05",
+    "url": "https://span.ece.utah.edu/uploads/RTI_version_3.pdf",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "PDF text,p1;28node regularized inverse setup",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C05b",
+    "url": "https://web.ece.ucsb.edu/~ymostofi/papers/IPSN17_KaranamMostofi.pdf",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "IPSN2017 controlled pairedUAV apparatus;PDF text",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C06",
+    "url": "https://web.ece.ucsb.edu/~ymostofi/WiFiReadingThroughWall",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "MobiCom2022/RadarConf2023 grids,motion and edge inference; text/captions only",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C06b",
+    "url": "https://web.ece.ucsb.edu/mostofi-lab/code-data/WiFiImagingData2014",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Academic-purpose data limitation; not unrestricted presencebenchmark",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C07",
+    "url": "https://people.csail.mit.edu/mingmin/papers/rfpose-cvpr-zhao.pdf",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "CVPR2018 PDF text, trained specific setup",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C07b",
+    "url": "https://arxiv.org/html/2301.00250v1",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "DensePose v1; seen/unseen layout degradation",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C08",
+    "url": "https://arxiv.org/pdf/2511.14019v1",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "2025-11-18;PDF_PAGE_IMAGE p1,p3; TI cascade,movingvolunteers,learnedcompletion; authorreportedmetrics",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C08b",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhou_RISE_Single_Static_Radar-based_Indoor_Scene_Understanding_CVPR_2026_paper.html",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Primaryindex venuecorroboration; directretrievalunreliable, v1actualcontent",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C09",
+    "url": "https://arxiv.org/html/2605.29098v1",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "GeRaF2 v1; controlled robotSAR,opticalprior; Chamfer/tableunit ambiguity unresolved",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C09b",
+    "url": "https://arxiv.org/pdf/2605.29098v1",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "PDF_PAGE_IMAGE p6 figs4/5; exteriorvisionSDF,RFstages,alignment",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C09c",
+    "url": "https://github.com/VictorLlu/GeRaF-SENS",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Authorcode landingpage; no license/reproduction claim",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C10",
+    "url": "https://www.ti.com/lit/an/swra553a/swra553a.pdf",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "RevA May2017/revisedFeb2020,p4 c/(2B); resolutionnotgeometryaccuracy",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C10b",
+    "url": "https://www.ti.com/tool/IWRL6432BOOST",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Mutable product/SDK patchlabels differ; pin artifact later",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C10c",
+    "url": "https://www.qorvo.com/products/ek/DWM3001CDK",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Productreference, not quote/fullsystemcost",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C11",
+    "url": "https://github.com/guozhen-jenn-zhu/CSI-Bench-Real-WiFi-Sensing-Benchmark",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "README correctedKaggleV12/CCBYNCND4 vs repoMIT; code/data scopes unresolved",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C11b",
+    "url": "https://github.com/guozhen-jenn-zhu/CSI-Bench-Real-WiFi-Sensing-Benchmark/blob/main/LICENSE",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "MIT text conflicts README data terms; no acquisition",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C12",
+    "url": "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-F/section-15.510",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Displayedthrough2026-09-24; specific throughwallUWBcategory",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  },
+  {
+    "claim_id": "C12b",
+    "url": "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-F/section-15.521",
+    "checked_at": "2026-09-28",
+    "inspection": "TEXT unless explicitly stated PDF_PAGE_IMAGE or TRANSCRIPT_ONLY",
+    "version_scope_and_limit": "Aircraft/ship/satellite restrictions underthissubpart, notallRFprohibition",
+    "response_byte_hash": "NOT_CAPTURED for mutable web response",
+    "checked_by": "/root/ri01_vision"
+  }
+]

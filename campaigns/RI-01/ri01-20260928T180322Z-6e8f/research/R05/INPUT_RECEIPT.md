@@ -1,0 +1,7 @@
+# R05 input receipt
+
+Task R05/H03, author `/root/ri01_daily`, haven_researcher exact profile read, current RI-01 public research authorization and protocol reread. Allowed writes only this directory. No Git, application code/execution, installations, private accounts/devices, provider operations, messages/calendar changes or children. Public official documentation retrieval is research, not provider account access.
+
+Hard inputs consumed: accepted CORE contracts/decisions/architecture/package queue; exact core manifest SHA256 7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2 verified; independent VISION-ARCH acceptance with REVIEW-R07 read-scope addendum; accepted original R01 plus amendment and closure SHA256 96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032 verified. Original R05 prompt archive is SOURCE_UNAVAILABLE; current RI queue and canonical/recovered daily/privacy/H03/REQ/AT/EX sources govern, without reconstruction.
+
+Scope: current primary calendar/email/files/tasks/reminder APIs; useful read-only slice; future narrowly authorized writes; endpoint-specific reconciliation; no subscription or always-on service required for basic value. All proposed model/runtime/provider/user tests NOT_EXECUTED. Base inherited from intake 376031e182c57495912baf6727093b0b188da568, not independently Git-verified. Exact source use/hashes follow in INPUT_USE.json.

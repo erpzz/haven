@@ -1,0 +1,28 @@
+{
+  "task": "VISION-FINAL",
+  "reviewer": "/root/ri01_vision",
+  "date_utc": "2026-09-29",
+  "disposition": "PASS_DOCUMENTARY_SYNTHESIS_ONLY",
+  "candidate_manifest_sha256": "c5ec562b5ea5390962ab8334b39f397e959a071a4314c3b17898ec991b3ede1b",
+  "candidate_commit_root_reported": "c087bf9c00cb9213dc3225852fb7385ba0eb9aef",
+  "files": [
+    {
+      "path": "REVIEW.md",
+      "sha256": "a3a4cb2591813da7b77dbbd5eebb3becb29ffdc6477b7fe38ab9bd983bca9d69",
+      "bytes": 14324
+    },
+    {
+      "path": "REQUIREMENT_MATRIX.json",
+      "sha256": "8c87e063f6554ed00b7afe2977f7f2b4004059e01d72b77bb6d4e6f1eb14c136",
+      "bytes": 194377
+    },
+    {
+      "path": "REVIEWED_PINS.json",
+      "sha256": "f0db68739cc5fc9ba000ef72a49ccef3ccd529552e9d1306914e5b28af765eac",
+      "bytes": 128374
+    }
+  ],
+  "application_code_changed": false,
+  "experiments_executed": 0,
+  "scope": "Independent final cumulative vision review; code/evidence final reviews remain separate"
+}

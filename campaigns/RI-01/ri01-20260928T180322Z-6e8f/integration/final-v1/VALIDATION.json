@@ -1,0 +1,32 @@
+{
+  "task": "SYNTHESIS",
+  "time_utc": "2026-09-29T01:16:57.0564005Z",
+  "status": "PASS_DOCUMENTARY_SELF_CHECKS",
+  "independent_final_review": false,
+  "input_members_verified": 311,
+  "accepted_registry_pins_verified": 76,
+  "immutable_coordination_snapshots_verified": 4,
+  "live_mutable_ledger_required_to_keep_hash": false,
+  "canonical_counts": {
+    "requirements": 102,
+    "acceptance": 102,
+    "experiments": 32,
+    "gen0": 36,
+    "anchors": 16,
+    "journeys": 5
+  },
+  "canonical_structural_differences": 0,
+  "per_original_disposition_owner_nextwork_gap_checked": true,
+  "crossmodal_cases": 36,
+  "source_use_records": 39,
+  "r12_bridge_count": 3,
+  "future_packages": 14,
+  "original_hard_inputs_accepted": 15,
+  "public_pattern_match_files": [],
+  "json_parse": "ALL_PASS",
+  "app_model_native_physical_tests": 0,
+  "application_code_changed": false,
+  "historical_n1_n2_rerun": false,
+  "check_scope": "PowerShell document parsing, structural comparison and SHA256 only; no application execution or independent self-acceptance",
+  "failures": []
+}

@@ -1,0 +1,291 @@
+[
+  {
+    "upstream_task": "CORE",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+    "finding": "Existing stack, selected-image useful first slice, modality staging and domain separation.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Decisions; EXPERIMENTS P-R04-01",
+    "design_effect": "Retains Python application and M4 baseline; does not add wearable microservices.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Hard accepted upstream; supervisor reports VISION-ARCH PASS, VA01 remains later P03 prerequisite."
+  },
+  {
+    "upstream_task": "CORE",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+    "finding": "I01/I02 full source authority, time, lineage and deletion; I06 four records and finite P0.",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS W01-W06",
+    "design_effect": "Adds typed wearable fields while retaining complete vector, distinct delivery and fresh consumption.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Hard accepted upstream; exact core-v1 pinned."
+  },
+  {
+    "upstream_task": "R01",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/REPORT.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "e515ada3259cfe6a56a9c8b9ac7e09ff2c00a1b90a5f4ca8fa7455328cb66283",
+    "finding": "S1/S4/S5 two-person daily help, selected image, wearable continuity and useful fallback.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Evidence; EXPERIMENTS positive cases",
+    "design_effect": "First same-phone selected image and independent A/B utility paths.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Accepted composite only with amendment and closure."
+  },
+  {
+    "upstream_task": "R01-A1",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R01/amendment-1/AMENDMENT.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "0f1acb6fb6dbcd9d1a39a39d083275a82eb57e56175f71c235ab99e385c56535",
+    "finding": "No-ACK is not not-sent; historical delivery remains; no automatic unknown replay.",
+    "disposition": "REUSED",
+    "downstream_section": "CONTRACTS W05; C19-C24",
+    "design_effect": "Replaces any simplified saved-not-delivered interpretation with orthogonal unknown/history.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Accepted amendment governs original wording."
+  },
+  {
+    "upstream_task": "REVIEW-R01",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R01/CLOSURE-1.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "96687ff8643ea960aa275855160a4124d0925e933ebdefdd9c4e8031f4ac9032",
+    "finding": "Accepted composite requires exact original plus amendment.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Metadata; INPUT_USE",
+    "design_effect": "Consumes composite rather than self-accepting scenario prose.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Independent closure pinned and hash verified."
+  },
+  {
+    "upstream_task": "R12",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/REPORT.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "7f47f9672dd4441bc38c336374958910ff1b2b096381c530a8a3517c20032af5",
+    "finding": "O09 only: neuromotor research, deliberate input and deployment/license limits.",
+    "disposition": "REUSED",
+    "downstream_section": "CAPABILITIES O09; REPORT Risks",
+    "design_effect": "Keeps ambitious deliberate cues while excluding consumer raw-EMG assumption.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Soft independently accepted per supervisor; only O09 relevant scope consumed."
+  },
+  {
+    "upstream_task": "R12",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+    "finding": "O09 current dataset/checkpoints and 80/10/10 release differs paper-era; checkpoint terms unresolved.",
+    "disposition": "AMENDED",
+    "downstream_section": "CAPABILITIES O09; SOURCES S31-S32",
+    "design_effect": "Independently refreshed current README/LICENSE; does not infer owned hardware or commercial checkpoint rights.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Soft accepted O09, public primary refresh; no other opportunities promoted."
+  },
+  {
+    "upstream_task": "BASELINE",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "baseline/cumulative-v1.0/docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "fb4d50536752fe7d993be43e279b8ae34e7414ab57aa4b947eeb6c9a259eca26",
+    "finding": "Two independently enrolled people; native health route; generic models and permissions unknown.",
+    "disposition": "REUSED",
+    "downstream_section": "CAPABILITIES all; CONTRACTS W01-W03",
+    "design_effect": "No guessed owned model, sensor or native acceptance.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Recovered baseline, full relevant chapter read."
+  },
+  {
+    "upstream_task": "ORIGINAL-REQ",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+    "finding": "REQ-WEAR-01 through 08 and REQ-DAILY-08 retained.",
+    "disposition": "REUSED",
+    "downstream_section": "EXPERIMENTS Original requirement preservation",
+    "design_effect": "Maps each existing ID to proposed evidence rather than inventing replacement requirements.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Recovered original register, relevant entries read."
+  },
+  {
+    "upstream_task": "ORIGINAL-AT",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/ACCEPTANCE_CATALOG.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "abb6deaf4d945c3f6daafc86d5107ac28a9953fcde5ea26c5430a536eb87e387",
+    "finding": "AT-WEAR-01 through 08 separate design/mock/native evidence and independent sharing.",
+    "disposition": "REUSED",
+    "downstream_section": "EXPERIMENTS Original requirement preservation",
+    "design_effect": "All statuses remain NOT_EXECUTED; native PENDING_OPERATOR.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Recovered original, full relevant setup/expected/evidence/status read."
+  },
+  {
+    "upstream_task": "ORIGINAL-EX",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/EXPERIMENTS.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521",
+    "finding": "EX07 stale health and EX08 explicit glasses lifecycle are proposed experiments.",
+    "disposition": "REUSED",
+    "downstream_section": "EXPERIMENTS C01-C15",
+    "design_effect": "Extends finite synthetic cases without relabeling original proposals as execution.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Recovered original relevant sections read."
+  },
+  {
+    "upstream_task": "ORIGINAL-M6",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/baseline/PROJECT_ASTRA_Generation_0_Implementation_Validation_Plan.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "b599da50679bedb9612cc4613e46ecfe616f448884b5ad4731748ca5aed68771",
+    "finding": "M6 after accepted M5; request-only Watch credential; T30-T31 receipt/network unknown; 2-6h.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT Acceptance; EXPERIMENTS Original M6",
+    "design_effect": "Native health/glasses packages do not replace M6 or physical/S2 policy gates.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Recovered baseline relevant M6/T30/T31 and original goal boundaries read."
+  },
+  {
+    "upstream_task": "RI01-QUEUE",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/RESEARCH_QUEUE.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "906136446b443f54eaed8294b0609d6dfad89706e69512bda50929f1f53d480a",
+    "finding": "R04 uses CORE/R01 and feeds MM-AV,R14,R11.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT entire scope",
+    "design_effect": "Exact assigned research completed rather than device inventory or SDK execution.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Current campaign governance read."
+  },
+  {
+    "upstream_task": "RI01-VISION",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/VISION.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "e6542dfbccd519cf1b2ffade1196b9c8f091f27ffe010d7c67cecacfaf194f92",
+    "finding": "V02/V04/V05 preserve two-user multimodality and deliberate interfaces; V15/V16 rigor and continuity.",
+    "disposition": "REUSED",
+    "downstream_section": "REPORT journeys/maturity",
+    "design_effect": "Preserves richer cooperative target with staged re-entry criteria.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Current campaign governance read."
+  },
+  {
+    "upstream_task": "RI01-MM",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/MULTIMODAL.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "aa1000f1fc92c1baf1b7d1f6d9e2dd941516e40c97583c1d4a2bf69267f2003f",
+    "finding": "Development tool inspection separate from eventual runtime; source/time/correlation/audience.",
+    "disposition": "REUSED",
+    "downstream_section": "MODALITY.json; CONTRACTS; 26 cases",
+    "design_effect": "Direct benign image smoke only; no audio/video or hardware qualification invented.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Current campaign governance read."
+  },
+  {
+    "upstream_task": "RI01-TEMPLATES",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "orchestration/RI-01/TEMPLATES.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "7296a0c3b73437cae992788eea49bc6de1f693dc2198147a38fb729861529ae2",
+    "finding": "Exact input uses and complete future package fields.",
+    "disposition": "REUSED",
+    "downstream_section": "INPUT_USE; EXPERIMENTS; manifest",
+    "design_effect": "Provides hashed inputs and AUTHORIZATION_REQUIRED bounded package.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Current campaign governance read."
+  },
+  {
+    "upstream_task": "R10-ASSET",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies consumed bytes, not a claim that campaign output exists in base commit"
+    },
+    "artifact_sha256": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+    "finding": "Existing synthetic image has red square, blue circle and black diagonal on white.",
+    "disposition": "REUSED",
+    "downstream_section": "MODALITY.json",
+    "design_effect": "Directly viewed again for R04 without writing R10 or qualifying Haven.",
+    "reason": "Preserve reviewed upstream scope and distinguish documentation from execution.",
+    "review_state": "Author-generated synthetic development asset; not a peer acceptance claim."
+  },
+  {
+    "upstream_task": "R03",
+    "source_ref": {
+      "repo": "local RI-01 worktree",
+      "commit": "376031e182c57495912baf6727093b0b188da568",
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R03/CONTRACTS.md",
+      "snapshot": "WORKING_TREE artifact; SHA256 identifies bytes; original used with accepted composite through CORE",
+      "claim_id": "F deletion receipt, read for CQ-R07-01"
+    },
+    "artifact_sha256": "cfd271d1650e40daa735651ddc2ab28ca4ccdcb17f117c96cc5602975bad5eea",
+    "finding": "Payload-free deletion receipt can remain linkable; denial is distinct from verified erasure; no blanket retention approval.",
+    "disposition": "REUSED",
+    "downstream_section": "CONSULTATIONS CQ-R07-01; CONTRACTS W06",
+    "design_effect": "Limits map audit-receipt retention to an explicit minimized purpose/access/retention policy and preserves tombstone/restore barriers.",
+    "reason": "Targeted actual peer consultation answered using existing reviewed contract, not new authority.",
+    "review_state": "R03 author is same agent; independent acceptance comes from root-reported accepted composite and canonical CORE, not self-review."
+  }
+]

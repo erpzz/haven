@@ -1,0 +1,305 @@
+{
+  "task": "MM-VISION",
+  "status": "DESIGN_COVERAGE_ONLY_NOT_EXECUTED",
+  "requirements": [
+    {
+      "id": "REQ-AI-07",
+      "name": "Grounding and abstention",
+      "statement": "Schema-valid outputs require evidence and may remain uncertain.",
+      "owner": "H02",
+      "document": "docs/04_INTELLIGENCE_AND_COST.md",
+      "acceptance_tests": [
+        "AT-AI-07"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-WEAR-06",
+      "name": "Explicit capture",
+      "statement": "Preserve wearer/recording state, bystander privacy and bounded media.",
+      "owner": "H07",
+      "document": "docs/05_WEARABLES_HEALTH_AND_GLASSES.md",
+      "acceptance_tests": [
+        "AT-WEAR-06"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-RF-04",
+      "name": "Geometry target",
+      "statement": "Investigate controlled reconstruction with exact measurement assumptions.",
+      "owner": "H08",
+      "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+      "acceptance_tests": [
+        "AT-RF-04"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-RF-05",
+      "name": "Semantic target",
+      "statement": "Treat scene interpretation as inference linked to measured structure.",
+      "owner": "H08",
+      "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+      "acceptance_tests": [
+        "AT-RF-05"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-RF-06",
+      "name": "Multiple sensing embodiments",
+      "statement": "Keep phone-accessory/fixed/handheld/fixture/rover/drone options.",
+      "owner": "H08",
+      "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+      "acceptance_tests": [
+        "AT-RF-06"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    },
+    {
+      "id": "REQ-RF-07",
+      "name": "Evidence origin separation",
+      "statement": "Through-obstruction, other-side sensor and historical map are distinct.",
+      "owner": "H08",
+      "document": "docs/06_WIRELESS_SPATIAL_RESEARCH.md",
+      "acceptance_tests": [
+        "AT-RF-07"
+      ],
+      "origin": "CUMULATIVE_USER_CONVERSATION_AND_RETAINED_DESIGN",
+      "status": "RETAINED_TARGET",
+      "implementation_status": "NOT_CLAIMED_BY_THIS_PACKAGE",
+      "change_rule": "Explicit owner decision required to remove or materially narrow"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "EX08",
+      "name": "Glasses lifecycle mock",
+      "owner": "H07",
+      "requirement_ids": [
+        "REQ-WEAR-06"
+      ],
+      "source_ids": [
+        "R29"
+      ],
+      "prerequisites": "Mock wearer and feature capabilities",
+      "hypothesis": "Explicit capture state prevents unintended collection/disclosure.",
+      "baseline": "Phone explicit photo upload",
+      "method": "Swap wearer, pause session, remove display capability and revoke sharing mid-capture.",
+      "metrics": "Correct capability unavailable/privacy behavior",
+      "scope": "No physical glasses assumed",
+      "stop_conditions": "Do not count mock success as device acceptance",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX17",
+      "name": "Multimodal degradation replay",
+      "owner": "H10",
+      "requirement_ids": [
+        "REQ-RF-08"
+      ],
+      "source_ids": [
+        "R06"
+      ],
+      "prerequisites": "Synthetic/authorized aligned streams",
+      "hypothesis": "Fusion can detect when one modality becomes misleading.",
+      "baseline": "Best single-sensor baseline",
+      "method": "Remove/corrupt one stream, drift timestamps and invalidate calibration; require explicit degraded state.",
+      "metrics": "Error and time to detect invalid modality",
+      "scope": "Offline only first",
+      "stop_conditions": "No averaging inconsistent evidence into false safety",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    },
+    {
+      "id": "EX31",
+      "name": "Map uncertainty in an accessible interface",
+      "owner": "H01",
+      "requirement_ids": [
+        "REQ-RF-05"
+      ],
+      "source_ids": [
+        "R30"
+      ],
+      "prerequisites": "Synthetic spatial layers and uncertainty regions",
+      "hypothesis": "Users can distinguish known, estimated and unobserved space.",
+      "baseline": "Text explanation",
+      "method": "Compare phone/mock-glasses presentations with old maps/conflicting evidence.",
+      "metrics": "Human comprehension; unsafe interpretation frequency",
+      "scope": "No real navigation guidance",
+      "stop_conditions": "Stop a display that implies safe passage without evidence",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "physical_permission": "NOT_GRANTED",
+      "resources": "Define finite time/trial/energy/spend limits in the approved protocol before execution",
+      "evidence": [
+        "Protocol version and permission references",
+        "Apparatus/input/model/calibration hashes",
+        "Raw measurements and all eligible trials",
+        "Analysis method and uncertainty",
+        "Independent outcome review"
+      ]
+    }
+  ],
+  "note": "Exact original subset; no remapping or claim to replace full CORE register",
+  "acceptance_tests": [
+    {
+      "id": "AT-AI-07",
+      "title": "Grounding and abstention",
+      "requirement_ids": [
+        "REQ-AI-07"
+      ],
+      "owner": "H02",
+      "reviewer": "H06",
+      "setup": "Return fabricated evidence IDs or confident unsupported interpretation.",
+      "expected_result": "Reject invalid grounding; keep explicit no-answer/unknown states.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-WEAR-06",
+      "title": "Explicit capture",
+      "requirement_ids": [
+        "REQ-WEAR-06"
+      ],
+      "owner": "H07",
+      "reviewer": "H06",
+      "setup": "Capture is paused or glasses are removed/swapped.",
+      "expected_result": "Collection stops or becomes unavailable; no covert continuation.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-RF-04",
+      "title": "Geometry target",
+      "requirement_ids": [
+        "REQ-RF-04"
+      ],
+      "owner": "H08",
+      "reviewer": "H06",
+      "setup": "Attempt known target reconstruction from qualified sample positions.",
+      "expected_result": "Geometry compared to ground truth; unsupported detailed imagery rejected.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-RF-05",
+      "title": "Semantic target",
+      "requirement_ids": [
+        "REQ-RF-05"
+      ],
+      "owner": "H08",
+      "reviewer": "H06",
+      "setup": "Ask for object identity where RF geometry is ambiguous.",
+      "expected_result": "Hypotheses/abstention preserved; generative plausibility not observed fact.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-RF-06",
+      "title": "Multiple sensing embodiments",
+      "requirement_ids": [
+        "REQ-RF-06"
+      ],
+      "owner": "H08",
+      "reviewer": "H06",
+      "setup": "One phone radio lacks required low-level access.",
+      "expected_result": "Alternative measurement architecture evaluated without deleting goal.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    },
+    {
+      "id": "AT-RF-07",
+      "title": "Evidence origin separation",
+      "requirement_ids": [
+        "REQ-RF-07"
+      ],
+      "owner": "H08",
+      "reviewer": "H06",
+      "setup": "Fuse an old room scan with a new RF observation.",
+      "expected_result": "Provenance/time/coverage displayed for each source; old map not relabeled live.",
+      "retained_evidence": [
+        "Run ID and environment/configuration identity",
+        "Inputs and relevant permission/contract revisions",
+        "Actual output/receipt or observed physical measurement where applicable",
+        "Commands/timestamps and failures, without secrets",
+        "Independent pass/fail/inconclusive review"
+      ],
+      "status": "NOT_EXECUTED",
+      "test_class": "FUTURE_SYSTEM_ACCEPTANCE",
+      "operator_gate": "Separate approval required for native/device/account/physical/paid tests; synthetic tests do not qualify those paths"
+    }
+  ]
+}

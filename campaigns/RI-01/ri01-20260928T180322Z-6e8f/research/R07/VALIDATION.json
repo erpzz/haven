@@ -1,0 +1,162 @@
+{
+  "task": "R07",
+  "checked_at": "2026-09-28T19:59:17.8697038Z",
+  "method": "PowerShell Get-FileHash SHA256; ConvertFrom-Json; structural document crosswalk counts; direct image observation separately recorded",
+  "environment": "existing PowerShell Windows, no application/package execution",
+  "expected": "All frozen immutable input hashes match, generated JSON parses, exact18relevantREQ/AT and6originalEX retained",
+  "actual": {
+    "input_checks": 22,
+    "input_mismatches": 0,
+    "json_parsed": [
+      "INPUT_USE.json",
+      "MODALITY.json",
+      "REQUIREMENT_MAP.json"
+    ],
+    "requirements": 18,
+    "acceptance": 18,
+    "experiments": 6,
+    "ex17_owner": "H10",
+    "ex31_owner": "H01"
+  },
+  "checks": [
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/ARCHITECTURE.md",
+      "expected": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "actual": "abf33854c793fc58c6e6679348a34d546abe5051bdfd6d91978e24b75449eb82",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/CONTRACTS.md",
+      "expected": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "actual": "df19f37926b33851236aca230859adfef332a85120380ea04c24294237c2e6d0",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/integration/core-v1/MANIFEST.sha256",
+      "expected": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "actual": "7c0349a42c4345f68cd2e2abec6e3827a475177ff0d757509114fec05d1515e2",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R06/REVIEW.md",
+      "expected": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+      "actual": "b00b0e57f577b53d1c6728766569391be674449c8e483952e0b6e82028e16ca8",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/incoming/R06/design/H08/CONTRACT_PROPOSALS.md",
+      "expected": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13",
+      "actual": "e4833cb18364235110065b2f702a1e67dfa552de78c0769dde6b32288432bf13",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/contracts/spatial_estimate.schema.json",
+      "expected": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e",
+      "actual": "540008bb51f6aa5096b678cae68d75333b7934c08357df035767fb076d8f781e",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/OPPORTUNITIES.json",
+      "expected": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "actual": "62c8da5aa77c78cb39af57d19cf31698033cf0e9b85a58d04b56579c7c082781",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/SOURCES.json",
+      "expected": "011d484891273a9fdadc0277b911ca6f32af9daee054089c6785e0de548de4a0",
+      "actual": "011d484891273a9fdadc0277b911ca6f32af9daee054089c6785e0de548de4a0",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R12/HANDOFF_MANIFEST.json",
+      "expected": "fec9c4c223fa2370db6bcbe8fd61980d284d92a31a22b37d707dcd48db0a8d77",
+      "actual": "fec9c4c223fa2370db6bcbe8fd61980d284d92a31a22b37d707dcd48db0a8d77",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REVIEW-R12/REVIEW.md",
+      "expected": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+      "actual": "392ae8ceaf82e5dd07cb23c48e67d0e123870d42c0f16d87e46044a379e45600",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/REPORT.md",
+      "expected": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "actual": "0ff3035427b78dd71594b38b152904d67bf2771829b9ceece12cd51c3f1e0c90",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/COMPATIBILITY.md",
+      "expected": "fe4b60387975e7b919bbea84b90bc365e4323420b7d4205c65fc7a604a0f74f6",
+      "actual": "fe4b60387975e7b919bbea84b90bc365e4323420b7d4205c65fc7a604a0f74f6",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/MODALITY.md",
+      "expected": "c2e70b2403390a05c244ceb64de4d04f02bf738dcd85835bdead20a304f0e097",
+      "actual": "c2e70b2403390a05c244ceb64de4d04f02bf738dcd85835bdead20a304f0e097",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/research/R10/modality-smoke.png",
+      "expected": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "actual": "10468285615819f3e0946a12b149e2c67699da89002d15747856487fbd54e86f",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/REV-R08/REVIEW.md",
+      "expected": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+      "actual": "927079d45477d292a6d31f427e5cefba9c382263db03ffbce7a60f9395556d41",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/reviews/VISION-ARCH/REVIEW.md",
+      "expected": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "actual": "64615521c1e27c0bbc1f7e82eb919341f8493be60f2b568b08e785661f978e51",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/INTAKE/INVENTORY.md",
+      "expected": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+      "actual": "9aa57516443d56e969ddadaacf160dd7714989c3d4f01e638bb7a7012f15c6e4",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/COVERAGE.md",
+      "expected": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "actual": "a9d3dd7171220ee2a29ca99f969edeaa2ba9f15af5dde82045314180677cb5a2",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/scope/requirements.json",
+      "expected": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "actual": "b904206fefcd553003129bfc30ede87785ff3325a13657f162125b3868492f56",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/tests/acceptance_catalog.json",
+      "expected": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "actual": "d41660b25a5b105024083cf4c3c0e914c92dc4b68afef60be4649153ab06b478",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/EXPERIMENTS.md",
+      "expected": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521",
+      "actual": "8ad8051e90cf7bf68aebd556543d61e9ff5779562ef355248fdf7bf8771eb521",
+      "match": true
+    },
+    {
+      "path": "campaigns/RI-01/ri01-20260928T180322Z-6e8f/inputs/recovered/starter/research/experiments.json",
+      "expected": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "actual": "8d58513cc21daec045b14a0f4f3f0c371241ab9cdac02e303f6bd19debb4411c",
+      "match": true
+    }
+  ],
+  "status": "DOCUMENT_CHECK_ONLY",
+  "runtime_experiments": "NOT_EXECUTED",
+  "source_and_physical_qualification": "NOT_ESTABLISHED",
+  "memory": "Registry search found no task-relevant hits; no memory facts used",
+  "external_binary_assets_acquired": 0,
+  "new_paid_calls_or_models": 0,
+  "known_limit": "Mutable root state metadata excluded from immutable recheck; source scientific validity not established by hashes"
+}
