@@ -1,8 +1,8 @@
 # Kaggle run 1: HARE-S0-1 and HARE-S0-2 results
 
-**Executed.** Kaggle notebook `yahboyomni/haven-hare-s0` v2 (private), launched through the API at 2026-11-21 22:51 ET and complete before 05:46 ET on 11-22.
+**Executed.** Kaggle notebook `haven-hare-s0` (owner account) v2 (private), launched through the API at 2026-11-21 22:51 ET and complete before 05:46 ET on 11-22.
 - **Hardware:** 2× Tesla T4 (CUDA 13.0.88, driver 580.178.04). The 4B ran on GPU0; the 35B was layer-split across both GPUs (Slink instead keeps its experts on the CPU).
-- **Engine:** llama.cpp b11146, the hash-checked portable build from the private dataset `yahboyomni/haven-llama-b11146-cuda13-sm75`, run with round-2 server arguments.
+- **Engine:** llama.cpp b11146, the hash-checked portable build from the private dataset `haven-llama-b11146-cuda13-sm75`, run with round-2 server arguments.
 - **Models:** pinned GGUFs, 4B `00fe7986…` and 35B `ac0e2c11…`. Temperature 0, thinking off, one greedy run per arm.
 
 **Receipt integrity.** All 13 arms scored exactly their expected episode-ID sets (180 frozen, 179 fresh, 179 untouched). Code hashes match both preregistrations, and record files match their recorded sha256 (in `corrected_false_refusals.json`). Transcripts (`*.jsonl`) are kept out of the repository; summaries hold per-episode scores. Non-transport episodes are all `MAX_TOOL_ROUNDS` (the model looping), scored as failures as in round 2.
