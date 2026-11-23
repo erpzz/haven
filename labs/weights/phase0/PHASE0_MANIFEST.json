@@ -1,0 +1,113 @@
+{
+  "schema": "haven-weights-phase0-manifest-1",
+  "status": "PHASE 0 BUILT. No GPU time, no inference, no teacher batch, no training. Real training seeds are drawn at Phase 1 start and posted by salted hash then.",
+  "plan": {
+    "path": "labs/weights/PLAN.md",
+    "commit": "667bd3a8f90dcdc11b8d55672f8d0d2ea3ff90a1",
+    "sha256": "119930a934de1a7a4a58c4b6624bc4c3094090d2d1a739a3e1025df2bd086720",
+    "pr": 124
+  },
+  "gates_before_any_gpu_or_batch": [
+    "Astra 6.2 DECISION: sign-off on #123 (PLAN.md review)",
+    "M4 reserve salted digest posted on #119"
+  ],
+  "files_sha256": {
+    "deps.json": "e5e5431324ee053df35e6e5d7ceeeb7b1605760183cad9a5a442b48a2e55ebd0",
+    "fetch_deps.py": "fa0a76196d0d49988fa6282c4455c05594479940aecca1fcf524384fe033ed2f",
+    "common.py": "186c6c8dc4cb7583f6d2ee2565993905fbacecba5834637071e20328e9e14f4e",
+    "gen_hare.py": "ab5a57a791bd8fe8b943b149e72ab2fefa3b694c2729c4baf5dc495af58c1e07",
+    "gen_query.py": "c6f16a9640527580fe75d9dd38b54f8aac1ec5ecd857de722a382c5f6cec7759",
+    "dedupe.py": "5385985a2a51d567aa8956053ee02461a42d3da63cf6af08a12222ba3e6b39d1",
+    "sft.py": "841dc25a5c82ca7a51c891f7230cce38e36bec1f1ffb24e42f656751e175f98c",
+    "oracle_export.py": "ae4ac40bf938acb16bfdd968c0a1a2abd7e0010b81762a90f9c1076dc859d34a",
+    "astra_batch.py": "9c7b2a5f3da5a671bbdb3f07c9091ab32e38eb8131529d1c8c9ad043c90d2e77",
+    "manifest.py": "8f2957c9b9dbbcc9009767ef05fbef438fa152b818dafe4385d7d4a0f588bb74",
+    "regression/config.json": "4c805606a6c8394f3313af6bdd870229704f9a33d6f31d9c163aed9e597b7625",
+    "regression/mmlu_pro_subset.json": "82baf21fbcc95c73cdd8b0d36e369c04a5db4ca5ee1c9fefa3fe21feaf2fc576",
+    "kaggle/w1_phase1.py": "70ec69cd1ce966ef8d6350db6b6ae000d32a32419646e5b72c3853d06a474763",
+    "kaggle/build_w1_phase1.py": "820d6ffed1b3f04dccc6399e5bbef32255cc05a4a9ee93590593d1ad7c87e686",
+    "kaggle/llama_build_cell.py": "d7bdbefe61e82f10b0eade913b1a3ee071c1bb819858c8d61371b16fdacfd5b7",
+    "kaggle/w1_phase1_kaggle.ipynb": "88dfdc2df50cc10464c0d51edfba307bdf410befb6d5bf290f80fcd32b957d0e",
+    "tests/test_phase0.py": "29dbae86367f23b4e329cbbc8330e2e73d4939c8f6e2b5cc828b64f70eac96a3",
+    "tests/test_notebook_and_config.py": "a391fa7f7e09f0b8548ec8ef310ef90ee8f8bd7c7524f3f49a9f75dfcc880679",
+    ".gitignore": "651be1ff6c0f98518f02df57dad808e26af51f4b28ac5fc7183e6a2e22330ca0"
+  },
+  "deps": {
+    "main_commit": "53387e74a0ad90786ac3ea16753c8ad99142e9df",
+    "sources": {
+      "hare-s0": {
+        "pr": 115,
+        "commit": "7f5af0d549fe89056181942b268b01573cf86ce5"
+      },
+      "querywriter": {
+        "pr": 118,
+        "commit": "5276673c9c43c6030ca7202690229cb149fb617d"
+      },
+      "purple-copilot": {
+        "pr": 122,
+        "commit": "cd15d570055d8d8c55a665a69af1366a15832d97"
+      }
+    }
+  },
+  "harness": {
+    "mechanisms_full": {
+      "advisory": true,
+      "gateway": true,
+      "verifier": true,
+      "correction": true
+    },
+    "mechanisms_replay": {
+      "advisory": true,
+      "gateway": true,
+      "verifier": true,
+      "correction": false
+    },
+    "keep_rule": "adjudicator pass against gold AND zero blocked or duplicate calls AND transport ok"
+  },
+  "dedupe": {
+    "params": {
+      "ngram": 8,
+      "text_id_min_len": 8,
+      "dates_are_ids": false,
+      "tokenizer": "adjudicated/generator.py norm_tokens"
+    },
+    "fingerprint_sha256": "3734086609555f78805710a5af863934818f045768af6eb76e443a34243f8555",
+    "dev_items": {
+      "hare-frozen-180": 180,
+      "hare-fresh-s0-179": 179,
+      "hare-untouched-179": 179,
+      "tool-sft-train": 400,
+      "tool-sft-dev": 40,
+      "tool-sft-heldout": 110,
+      "querywriter-dev-84": 84,
+      "purple-h2h-questions": 8,
+      "purple-investigator-inputs": 24,
+      "purple-investigator-gold": 24,
+      "purple-phase3-cases": 20,
+      "purple-hermes-questions": 72
+    },
+    "label_only_sources": [
+      "purple-investigator-gold"
+    ]
+  },
+  "generators": {
+    "hare_vocabulary_overlap_with_dev": [],
+    "hare_families": [
+      "chain3_conditional",
+      "chain_device_cause",
+      "conflict_report",
+      "conflict_rule",
+      "distractor_resolve",
+      "execute_refusal",
+      "household_delegated",
+      "household_denied",
+      "household_own",
+      "injection_output",
+      "missing_admit",
+      "no_tool",
+      "proposal_explicit",
+      "stale_note_chain",
+      "stale_premise"
+    ]
+  }
+}
