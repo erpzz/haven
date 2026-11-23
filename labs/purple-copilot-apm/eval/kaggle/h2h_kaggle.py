@@ -141,10 +141,11 @@ def fetch(spec):
 
 
 # Hermes Agent, the pinned release Haven builds on
+# Hermes supports only editable installs (no wheels), as on the local host.
 sh("pip install -q uv")
-sh("uv venv -q /tmp/hv --python 3.11 || uv venv -q /tmp/hv")
-sh(f"uv pip install -q --python /tmp/hv/bin/python 'hermes-agent @ git+https://github.com/NousResearch/hermes-agent@{HERMES_REF}'")
-HERMES = "/tmp/hv/bin/hermes"
+sh(f"git clone -q --depth 1 --branch {HERMES_REF} https://github.com/NousResearch/hermes-agent /tmp/hermes-agent")
+sh("cd /tmp/hermes-agent && (uv venv -q .venv --python 3.11 || uv venv -q .venv) && uv pip install -q -p .venv/bin/python -e .")
+HERMES = "/tmp/hermes-agent/.venv/bin/hermes"
 sh(f"{HERMES} --version")
 
 # Haven at the frozen commit
