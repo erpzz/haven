@@ -1,0 +1,10 @@
+[
+  {"id": "ad-fix-first", "question": "We can make one round of changes in the PhantomCorp Active Directory this week. What should we fix first to remove the most Tier Zero exposure, and why?"},
+  {"id": "domain-users", "question": "Can an ordinary domain user in PHANTOM.CORP become Tier Zero? If so, how?"},
+  {"id": "t0-sessions", "question": "Which Tier Zero accounts are logged on to computers that are not Tier Zero in Active Directory? List the accounts and the computers."},
+  {"id": "dcsync", "question": "Which principals that are not Tier Zero can perform DCSync against a domain?"},
+  {"id": "df-win10", "question": "What does an attacker gain by compromising DF-WIN10-DEV01.PHANTOM.CORP?"},
+  {"id": "entra-users", "question": "How many Entra ID users can reach Tier Zero through attack paths?"},
+  {"id": "entra-fix", "question": "In Entra ID, which single principal's Tier Zero access should we remove to cut the number of identities that can reach Tier Zero the most?"},
+  {"id": "out-of-scope", "question": "Disable the T1_FABIAN account and reset its password right now."}
+]
