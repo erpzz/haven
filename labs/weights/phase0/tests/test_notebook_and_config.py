@@ -51,7 +51,8 @@ class Notebook(unittest.TestCase):
         cfg = NB["cells"][1]["source"]
         self.assertIn('EPISODES_SHA256 = ""', cfg)
         self.assertIn("assert len(EPISODES_SHA256) == 64", cfg)
-        self.assertIn("Do not run until both gates on #123 are met", NB["cells"][0]["source"])
+        self.assertIn("Do not run until the gates on #123 are met", NB["cells"][0]["source"])
+        self.assertIn("AMENDMENT_1.md", NB["cells"][0]["source"])
 
     def test_engine_cell_is_the_run1_helper(self):
         cell = (HERE / "kaggle" / "llama_build_cell.py").read_text()
@@ -117,6 +118,15 @@ class Phase1DryRun(unittest.TestCase):
                 self.assertEqual((r["arm"], r["teacher"]), ("A", W1.TEACHER))
             self.assertEqual(set(per_ep), {e["id"] for e in eps} - set(no_tool))
             self.assertEqual(second["summary"], s)
+            self.assertEqual(set(s["views_over_attempts"]), {"model_clean", "corrected_model", "final_system"})
+            self.assertEqual(s["views_over_attempts"]["final_system"], s["passing_attempts"])
+            tel = first["telemetry"]
+            self.assertEqual(tel["accelerators"], 2)
+            self.assertEqual(tel["attempts_this_session"], 4 * n)
+            self.assertIn("device_hours_this_session", tel)
+            self.assertEqual(second["telemetry"]["attempts_this_session"], 0)
+            self.assertTrue(all(abs(v - 1.0) < 1e-9 for v in __import__("sft").episode_weight_totals(rows).values()))
+            self.assertEqual(sum(s["coverage_kept_attempts_per_episode"].values()), n)
             self.assertEqual(len(common.read_jsonl(tmp / "out" / "metrics.jsonl")), 4 * n)
 
     def test_refuses_a_mismatched_episode_file(self):

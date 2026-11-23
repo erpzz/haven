@@ -12,8 +12,11 @@ PLAN.md, W1 Stage A steps 1-4 and the Phase 1 gate:
   * episodes with no kept attempt are W2's hard episodes;
   * gate G1: the share of passing attempts must fall in [15%, 85%]. This script reports the
     number; the decision is recorded on #123.
-No training happens in Phase 1. Transcripts and kept rows stay in DIR (private); only
-summary.json is meant to leave the session. Re-running with the same DIR resumes.
+Amendment 1, section 6: the summary publishes measured throughput (attempts and completion tokens
+per wall-hour), peak VRAM per GPU, the accelerator count, wall-hours and device-hours, and
+per-episode coverage; section 1: every attempt is scored in the model-clean, corrected-model and
+final-system views. No training happens in Phase 1. Transcripts and kept rows stay in DIR
+(private); only summary.json is meant to leave the session. Re-running with the same DIR resumes.
 """
 from __future__ import annotations
 
@@ -61,6 +64,26 @@ def start_server(engine, model, gpu, port, log):
     raise SystemExit("llama-server did not become healthy in 30 minutes")
 
 
+class VramSampler(threading.Thread):
+    """Peak memory.used per GPU from nvidia-smi every `every` seconds (absent on CPU: records nothing)."""
+
+    def __init__(self, every=20):
+        super().__init__(daemon=True)
+        self.every, self.peak, self.stop = every, {}, threading.Event()
+
+    def run(self):
+        while not self.stop.is_set():
+            try:
+                out = subprocess.run(["nvidia-smi", "--query-gpu=index,memory.used", "--format=csv,noheader,nounits"],
+                                     capture_output=True, text=True, timeout=10).stdout
+                for line in out.strip().splitlines():
+                    i, mb = [x.strip() for x in line.split(",")]
+                    self.peak[i] = max(self.peak.get(i, 0), int(mb))
+            except (OSError, ValueError, subprocess.SubprocessError):
+                pass
+            self.stop.wait(self.every)
+
+
 def select_kept(rows):
     """At most KEEP_PER_EPISODE kept attempts, verifier-accepted first answers first."""
     ok = [r for r in rows if r["keep"]]
@@ -91,10 +114,26 @@ def summarize(episodes, metrics, attempts):
             "solved_episodes": sum(any(r["keep"] for r in by_ep.get(e["id"], [])) for e in complete),
             "hard_episodes": sum(not any(r["keep"] for r in by_ep.get(e["id"], [])) for e in complete),
             "blocked_attempts": sum(m["blocked_any"] > 0 for m in metrics),
+            "views_over_attempts": {v: sum(m["views"][v] for m in metrics)
+                                    for v in ("model_clean", "corrected_model", "final_system")},
+            "coverage_kept_attempts_per_episode": dict(sorted(collections.Counter(
+                sum(r["keep"] for r in by_ep.get(e["id"], [])) for e in complete).items())),
             "outcomes": dict(collections.Counter(m["outcome"] for m in metrics)),
             "transport_failures": sum(not m["transport_ok"] for m in metrics),
             "mean_attempt_seconds": round(sum(m["seconds"] for m in metrics) / max(n_att, 1), 2),
             "by_family": dict(sorted(fam.items()))}
+
+
+def telemetry(records, run_seconds, gpus, peak, new_attempts):
+    """Amendment 1, section 6. Throughput counts this session's attempts only (resumed runs add up)."""
+    tokens = sum((st.get("usage") or {}).get("completion_tokens", 0) for r in records for st in r.get("steps", []))
+    hours = run_seconds / 3600
+    return {"accelerators": len(gpus), "wall_hours_this_session": round(hours, 3),
+            "device_hours_this_session": round(hours * len(gpus), 3),
+            "attempts_this_session": new_attempts,
+            "attempts_per_wall_hour": round(new_attempts / hours, 1) if hours > 0 else None,
+            "completion_tokens_all_records": tokens,
+            "peak_vram_mib_by_gpu": peak or None}
 
 
 def main(argv=None):
@@ -134,6 +173,9 @@ def main(argv=None):
     index = {e["id"]: e for e in episodes}
     gpus = [g for g in args.gpus.split(",") if g != ""]
     procs = [start_server(args.engine, args.model, g, 18950 + i, out / f"server-{i}.log") for i, g in enumerate(gpus)]
+    vram = VramSampler()
+    vram.start()
+    run_started = time.monotonic()
     lock = threading.Lock()
     deadline = started + args.deadline_minutes * 60
     jobs = [(e["id"], k) for k in range(args.attempts) for e in episodes if (e["id"], k) not in done]
@@ -161,8 +203,10 @@ def main(argv=None):
                 if m and n % 25 == 0:
                     print(f"{n}/{len(jobs)} attempts, last {m['episode']}#{m['attempt']} keep={m['keep']}", flush=True)
     finally:
+        vram.stop.set()
         for p in procs:
             p.terminate()
+    run_seconds = time.monotonic() - run_started
     metrics = common.read_jsonl(metrics_path)
     records = {(r["episode"], r["attempt"]): r for r in common.read_jsonl(records_path)}
     by_ep = collections.defaultdict(list)
@@ -176,6 +220,7 @@ def main(argv=None):
             hard.append(e["id"])
         for m in kept:
             rows += sft.rows_from_record(records[(e["id"], m["attempt"])], source="w1", arm="A", teacher=TEACHER)
+    rows = sft.apply_episode_weights(rows)
     common.write_jsonl(out / "kept-rows.jsonl", rows)
     (out / "hard-episodes.txt").write_text("\n".join(hard) + ("\n" if hard else ""))
     summary = {"schema": "haven-weights-w1-phase1-1", "status": "EXECUTED" if all(len(by_ep.get(e["id"], [])) == args.attempts for e in episodes) else "PARTIAL",
@@ -189,7 +234,8 @@ def main(argv=None):
                "summary": summarize(episodes, metrics, args.attempts), "kept_rows": len(rows),
                "kept_rows_sha256": common.sha256_file(out / "kept-rows.jsonl"),
                "hard_episodes_sha256": common.sha256_file(out / "hard-episodes.txt"),
-               "wall_seconds": round(time.monotonic() - started, 1)}
+               "wall_seconds": round(time.monotonic() - started, 1),
+               "telemetry": telemetry(records.values(), run_seconds, gpus, vram.peak, new_attempts=len(jobs))}
     (out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary["summary"], indent=2))
 

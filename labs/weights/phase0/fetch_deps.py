@@ -3,6 +3,7 @@
 
   python3 fetch_deps.py            # from labs/weights/phase0/, inside a git clone of erpzz/haven
   python3 fetch_deps.py --verify   # check what is already in _deps/ without fetching
+  python3 fetch_deps.py --regression   # also the pinned regression benchmark files (public, Hugging Face)
 
 Each file is read with `git show <commit>:<path>` from the exact commit in deps.json. If the
 commit is not in the local clone it is fetched with a bounded depth. A file whose sha256
@@ -44,9 +45,38 @@ def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def regression_files():
+    """(repo, revision, file, sha256) for every pinned file in regression/config.json."""
+    cfg = json.loads((HERE / "regression" / "config.json").read_text())
+    for b in cfg["benchmarks"].values():
+        d = b["dataset"]
+        files = d.get("files") or {d["file"]: d["sha256"]}
+        for f, h in files.items():
+            yield d["repo"], d["revision"], f, h
+
+
+def fetch_regression(verify_only=False) -> list[str]:
+    problems = []
+    for repo, rev, f, want in regression_files():
+        dest = DEPS / "regression" / repo / f
+        if not dest.exists() and not verify_only:
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            url = f"https://huggingface.co/datasets/{repo}/resolve/{rev}/{f}"
+            r = subprocess.run(["curl", "-sSL", "--retry", "3", "--max-time", "300", "-o", str(dest) + ".part", url])
+            if r.returncode == 0:
+                pathlib.Path(str(dest) + ".part").rename(dest)
+        got = sha256(dest.read_bytes()) if dest.exists() else "missing"
+        if got != want:
+            problems.append(f"regression:{repo}/{f} sha256 {got[:12]} != pinned {want[:12]}")
+            if dest.exists() and not verify_only:
+                dest.unlink()
+    return problems
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--verify", action="store_true")
+    ap.add_argument("--regression", action="store_true")
     args = ap.parse_args(argv)
     spec = json.loads((HERE / "deps.json").read_text())
     problems, written = [], 0
@@ -68,6 +98,8 @@ def main(argv=None):
                     written += 1
             if got != want:
                 problems.append(f"{src['name']}:{path} sha256 {got[:12]} != pinned {want[:12]}")
+    if args.regression:
+        problems += fetch_regression(args.verify)
     print(json.dumps({"deps_dir": str(DEPS), "written": written, "problems": problems}, indent=2))
     if problems:
         raise SystemExit(1)

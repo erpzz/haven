@@ -25,7 +25,10 @@ import gen_hare  # noqa: E402
 
 PLAN = {"path": "labs/weights/PLAN.md", "commit": "667bd3a8f90dcdc11b8d55672f8d0d2ea3ff90a1",
         "sha256": "119930a934de1a7a4a58c4b6624bc4c3094090d2d1a739a3e1025df2bd086720", "pr": 124}
-FILES = ["deps.json", "fetch_deps.py", "common.py", "gen_hare.py", "gen_query.py", "dedupe.py", "sft.py",
+AMENDMENT = {"path": "labs/weights/AMENDMENT_1.md", "commit": "63bcd6e8e2b53d7559d6965fd372f4cabcf4078a",
+             "sha256": "cb7954a2c384059e1acbcc904b5356f0a57e0bcb287a41160274691b124a1a1b", "pr": 124}
+FILES = ["deps.json", "fetch_deps.py", "common.py", "gen_hare.py", "gen_query.py", "dedupe.py", "sft.py", "pools.py",
+         "flip_pairs.py", "rule8/evidence_flip_pairs.jsonl", "pools/dev_manifest.jsonl",
          "oracle_export.py", "astra_batch.py", "manifest.py", "regression/config.json",
          "regression/mmlu_pro_subset.json", "kaggle/w1_phase1.py", "kaggle/build_w1_phase1.py",
          "kaggle/llama_build_cell.py", "kaggle/w1_phase1_kaggle.ipynb", "tests/test_phase0.py",
@@ -33,35 +36,63 @@ FILES = ["deps.json", "fetch_deps.py", "common.py", "gen_hare.py", "gen_query.py
 OUT = HERE / "PHASE0_MANIFEST.json"
 
 
-def plan_check() -> dict:
-    """PLAN.md in the working tree and at its preregistration commit must both match."""
-    tree = common.REPO / PLAN["path"]
-    if subprocess.run(["git", "-C", str(common.REPO), "cat-file", "-e", f"{PLAN['commit']}:{PLAN['path']}"],
+def _check(doc) -> dict:
+    tree = common.REPO / doc["path"]
+    if subprocess.run(["git", "-C", str(common.REPO), "cat-file", "-e", f"{doc['commit']}:{doc['path']}"],
                       capture_output=True).returncode:
-        subprocess.run(["git", "-C", str(common.REPO), "fetch", "-q", "--depth=1", "origin", PLAN["commit"]],
-                       capture_output=True)       # a shallow clone may not hold the preregistration commit
-    at_commit = subprocess.run(["git", "-C", str(common.REPO), "show", f"{PLAN['commit']}:{PLAN['path']}"],
+        subprocess.run(["git", "-C", str(common.REPO), "fetch", "-q", "--depth=1", "origin", doc["commit"]],
+                       capture_output=True)       # a shallow clone may not hold the commit
+    at_commit = subprocess.run(["git", "-C", str(common.REPO), "show", f"{doc['commit']}:{doc['path']}"],
                                capture_output=True)
-    return {"working_tree_matches": tree.exists() and common.sha256_file(tree) == PLAN["sha256"],
-            "commit_matches": at_commit.returncode == 0 and common.sha256_bytes(at_commit.stdout) == PLAN["sha256"]}
+    return {"working_tree_matches": tree.exists() and common.sha256_file(tree) == doc["sha256"],
+            "commit_matches": at_commit.returncode == 0 and common.sha256_bytes(at_commit.stdout) == doc["sha256"]}
+
+
+def plan_check() -> dict:
+    """PLAN.md and AMENDMENT_1.md, in the working tree and at their commits, must match their hashes."""
+    p, a = _check(PLAN), _check(AMENDMENT)
+    return {"plan": p, "amendment_1": a, "commit_matches": p["commit_matches"] and a["commit_matches"]}
 
 
 def build() -> dict:
+    import astra_batch
+    import pools
     fp = dedupe.load_fingerprint()
+    pairs = common.read_jsonl(HERE / "rule8" / "evidence_flip_pairs.jsonl")
     return {
         "schema": "haven-weights-phase0-manifest-1",
-        "status": "PHASE 0 BUILT. No GPU time, no inference, no teacher batch, no training. Real training seeds "
-                  "are drawn at Phase 1 start and posted by salted hash then.",
+        "status": "PHASE 0 BUILT AGAINST PLAN.md + AMENDMENT_1.md. No GPU time, no inference, no teacher batch, no "
+                  "training. Real generator seeds are drawn at Phase 1 start and posted by salted hash then.",
         "plan": PLAN,
-        "gates_before_any_gpu_or_batch": ["Astra 6.2 DECISION: sign-off on #123 (PLAN.md review)",
-                                          "M4 reserve salted digest posted on #119"],
+        "amendment_1": AMENDMENT,
+        "gates_before_any_gpu_or_batch": ["Astra 6.2 DECISION: sign-off on #123 of PLAN.md as amended by AMENDMENT_1.md",
+                                          "M4 reserve salted digest on #119 (posted 2026-11-23T02:24Z)",
+                                          "#117 independent human spot-check disposition recorded on #119"],
+        "score_views": {"model_clean": "first answer and the trace at that point pass, no blocked call before it",
+                        "corrected_model": "final answer after at most one verifier revision passes, no blocked call",
+                        "final_system": "final answer passes, whatever the harness did",
+                        "weights_claims_use": "model_clean"},
+        "no_action_stratum": {"definition": "dispositions no_action_needed + insufficient_evidence (pools.py)",
+                              **{k: v for k, v in pools.frozen_no_action_rate().items() if k != "by_pool"}},
+        "weighting_rule": "each episode's kept traces share a total weight of 1.0, split equally (sft.py)",
+        "training_seeds_registered": [1101, 2202, 3303],
+        "rule8_flip_pairs": {"file": "rule8/evidence_flip_pairs.jsonl", "public_seed": __import__("flip_pairs").SEED,
+                             "flip": sum(p["kind"] == "flip" for p in pairs),
+                             "control": sum(p["kind"] == "control" for p in pairs),
+                             "families": sorted({p["family"] for p in pairs})},
+        "dev_manifest": {"file": "pools/dev_manifest.jsonl", "rows": len(common.read_jsonl(pools.DEV_MANIFEST))},
+        "teacher_exchange": {"protocol": "stepwise (astra_batch.py)", "versions": astra_batch.tool_versions(),
+                             "commitment_rule": common.COMMITMENT_RULE},
         "files_sha256": {f: common.sha256_file(HERE / f) for f in FILES},
         "deps": {"main_commit": common.SPEC["main"]["commit"],
                  "sources": {s["name"]: {"pr": s["pr"], "commit": s["commit"]} for s in common.SPEC["sources"]}},
         "harness": {"mechanisms_full": common.FULL, "mechanisms_replay": common.REPLAY,
                     "keep_rule": "adjudicator pass against gold AND zero blocked or duplicate calls AND transport ok"},
         "dedupe": {"params": dedupe.PARAMS, "fingerprint_sha256": fp["sha256"], "dev_items": fp["counts"],
-                   "label_only_sources": sorted(dedupe.LABEL_ONLY)},
+                   "structure_keys": len(fp["structures"]), "label_only_sources": sorted(dedupe.LABEL_ONLY),
+                   "checks": ["8-token runs", "entity ids", "prompt lineage", "whole-item structure",
+                              "WL tenant-graph hash", "question skeleton on WL-equal graph",
+                              "general-mix vs regression set (check_general)"]},
         "generators": {"hare_vocabulary_overlap_with_dev": gen_hare.vocabulary_overlap(),
                        "hare_families": sorted(gen_hare.FAMILIES)},
     }
@@ -73,7 +104,7 @@ def main(argv=None):
     args = ap.parse_args(argv)
     pc = plan_check()
     if not pc["commit_matches"]:
-        raise SystemExit(f"PLAN.md at {PLAN['commit']} does not match the preregistered sha256: {pc}")
+        raise SystemExit(f"PLAN.md or AMENDMENT_1.md does not match its registered sha256: {pc}")
     m = build()
     if args.check:
         old = json.loads(OUT.read_text())

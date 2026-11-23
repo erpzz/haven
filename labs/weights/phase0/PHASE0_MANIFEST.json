@@ -1,35 +1,115 @@
 {
   "schema": "haven-weights-phase0-manifest-1",
-  "status": "PHASE 0 BUILT. No GPU time, no inference, no teacher batch, no training. Real training seeds are drawn at Phase 1 start and posted by salted hash then.",
+  "status": "PHASE 0 BUILT AGAINST PLAN.md + AMENDMENT_1.md. No GPU time, no inference, no teacher batch, no training. Real generator seeds are drawn at Phase 1 start and posted by salted hash then.",
   "plan": {
     "path": "labs/weights/PLAN.md",
     "commit": "667bd3a8f90dcdc11b8d55672f8d0d2ea3ff90a1",
     "sha256": "119930a934de1a7a4a58c4b6624bc4c3094090d2d1a739a3e1025df2bd086720",
     "pr": 124
   },
+  "amendment_1": {
+    "path": "labs/weights/AMENDMENT_1.md",
+    "commit": "63bcd6e8e2b53d7559d6965fd372f4cabcf4078a",
+    "sha256": "cb7954a2c384059e1acbcc904b5356f0a57e0bcb287a41160274691b124a1a1b",
+    "pr": 124
+  },
   "gates_before_any_gpu_or_batch": [
-    "Astra 6.2 DECISION: sign-off on #123 (PLAN.md review)",
-    "M4 reserve salted digest posted on #119"
+    "Astra 6.2 DECISION: sign-off on #123 of PLAN.md as amended by AMENDMENT_1.md",
+    "M4 reserve salted digest on #119 (posted 2026-11-23T02:24Z)",
+    "#117 independent human spot-check disposition recorded on #119"
   ],
+  "score_views": {
+    "model_clean": "first answer and the trace at that point pass, no blocked call before it",
+    "corrected_model": "final answer after at most one verifier revision passes, no blocked call",
+    "final_system": "final answer passes, whatever the harness did",
+    "weights_claims_use": "model_clean"
+  },
+  "no_action_stratum": {
+    "definition": "dispositions no_action_needed + insufficient_evidence (pools.py)",
+    "source": [
+      "hare-fresh-s0-179",
+      "hare-frozen-180",
+      "hare-untouched-179"
+    ],
+    "n": 538,
+    "dispositions": {
+      "answer": 412,
+      "insufficient_evidence": 72,
+      "no_action_needed": 18,
+      "refusal": 36
+    },
+    "no_action_share": 0.1673
+  },
+  "weighting_rule": "each episode's kept traces share a total weight of 1.0, split equally (sft.py)",
+  "training_seeds_registered": [
+    1101,
+    2202,
+    3303
+  ],
+  "rule8_flip_pairs": {
+    "file": "rule8/evidence_flip_pairs.jsonl",
+    "public_seed": "rule8-evidence-flip-public-v1-20261122",
+    "flip": 66,
+    "control": 66,
+    "families": [
+      "chain3_conditional",
+      "chain_device_cause",
+      "conflict_rule",
+      "distractor_resolve",
+      "household_delegated",
+      "household_denied",
+      "household_own",
+      "stale_note_chain",
+      "stale_premise"
+    ]
+  },
+  "dev_manifest": {
+    "file": "pools/dev_manifest.jsonl",
+    "rows": 938
+  },
+  "teacher_exchange": {
+    "protocol": "stepwise (astra_batch.py)",
+    "versions": {
+      "schema": "haven-weights-astra-stepwise-1",
+      "tool_catalogue_sha256": "e68a7529b269d93af9fc7b417355045a1f0a63e15c6409564577744a035c44eb",
+      "harness_sha256": {
+        "checks.py": "d8e5428f197476c028cbff65c761d9268454aee52e47eaceec25cee0ec4e370b",
+        "enforce.py": "0f32fafdad0c92236ed23df21763ff038a4ae653a618f58a7e7571b3c050e424",
+        "bench_s0.py": "63cf692c09f9835a7ddb7ebc513eb653fd5e0f8ee642a7b11fc26c42507e9f7b",
+        "bench_x.py": "9817732ff4a8fcb3a1dcfc5435403ec6c4c4263876b725e0c8a2c28ff6d78b68"
+      },
+      "mechanisms": {
+        "advisory": true,
+        "gateway": true,
+        "verifier": true,
+        "correction": false
+      }
+    },
+    "commitment_rule": "SHA-256(raw 32-byte salt || uint64 big-endian byte length of P || P), P = canonical JSON (sort_keys, separators (',', ':'), UTF-8). Amendment 1, section 5: unambiguously framed."
+  },
   "files_sha256": {
     "deps.json": "e5e5431324ee053df35e6e5d7ceeeb7b1605760183cad9a5a442b48a2e55ebd0",
-    "fetch_deps.py": "fa0a76196d0d49988fa6282c4455c05594479940aecca1fcf524384fe033ed2f",
-    "common.py": "186c6c8dc4cb7583f6d2ee2565993905fbacecba5834637071e20328e9e14f4e",
-    "gen_hare.py": "ab5a57a791bd8fe8b943b149e72ab2fefa3b694c2729c4baf5dc495af58c1e07",
+    "fetch_deps.py": "c843d96e1e258d7c51cdbffeb8f2e1f406ff092f32471c2535d8e9bb1cb7d201",
+    "common.py": "d18a50969007cbabbe02fc5945def8256c3f81c4407570cd3b88109f3f880328",
+    "gen_hare.py": "6410c31c4ad3fd25843f6e1537f24b61b9e5a3c8dc2af30d77f4c4ac1d635c4c",
     "gen_query.py": "c6f16a9640527580fe75d9dd38b54f8aac1ec5ecd857de722a382c5f6cec7759",
-    "dedupe.py": "5385985a2a51d567aa8956053ee02461a42d3da63cf6af08a12222ba3e6b39d1",
-    "sft.py": "841dc25a5c82ca7a51c891f7230cce38e36bec1f1ffb24e42f656751e175f98c",
-    "oracle_export.py": "ae4ac40bf938acb16bfdd968c0a1a2abd7e0010b81762a90f9c1076dc859d34a",
-    "astra_batch.py": "9c7b2a5f3da5a671bbdb3f07c9091ab32e38eb8131529d1c8c9ad043c90d2e77",
-    "manifest.py": "3323f3c582add6b40b050b0e7b24dfffdc3097b53529e5325b7ab7840a6a5416",
+    "dedupe.py": "a596434e67cead31630288864389cae03b34abff1a813d9b4cab4c808f81b63a",
+    "sft.py": "f9ed70cf5708773628f04aa349b8323651093435b9c316f72fc1c0397f523e1c",
+    "pools.py": "b1b8499c4f8d7d18845c9638f70887b2591893458159adbdbea88f7abdf696d9",
+    "flip_pairs.py": "6238be6e6d99def127510f6c8a1d26113b74d4b5ebf2244e138d62d945cda2f8",
+    "rule8/evidence_flip_pairs.jsonl": "b888d4298197acee83decee7ce7800698ceaf8a09eff9758056365ffd839ac42",
+    "pools/dev_manifest.jsonl": "60c2a84f2356a749f68830af9907ab1a01b209a499140c08be92c304c5ae605f",
+    "oracle_export.py": "f73479cd6dd77af123b8cc4d4195607fe1896c5b19e0e8c590c548b25e6bc5e1",
+    "astra_batch.py": "7982ba8d9ee9bcad6a92615315734f269423db99ed477898b3cb7a09d75b257d",
+    "manifest.py": "258918e1686fac39443f18fd749c3621495920102cc4df9cc1caaf00a54c057b",
     "regression/config.json": "4c805606a6c8394f3313af6bdd870229704f9a33d6f31d9c163aed9e597b7625",
     "regression/mmlu_pro_subset.json": "82baf21fbcc95c73cdd8b0d36e369c04a5db4ca5ee1c9fefa3fe21feaf2fc576",
-    "kaggle/w1_phase1.py": "70ec69cd1ce966ef8d6350db6b6ae000d32a32419646e5b72c3853d06a474763",
-    "kaggle/build_w1_phase1.py": "820d6ffed1b3f04dccc6399e5bbef32255cc05a4a9ee93590593d1ad7c87e686",
+    "kaggle/w1_phase1.py": "2ee5eab6839aa224d2fd3c7b482fe8e815c23c4e102fc4228a68a6125d5c1378",
+    "kaggle/build_w1_phase1.py": "3c11ad91cf427bcda8b5d904db1c8fe1cc4d323c410c538cf1f65a7908bf5a43",
     "kaggle/llama_build_cell.py": "d7bdbefe61e82f10b0eade913b1a3ee071c1bb819858c8d61371b16fdacfd5b7",
-    "kaggle/w1_phase1_kaggle.ipynb": "88dfdc2df50cc10464c0d51edfba307bdf410befb6d5bf290f80fcd32b957d0e",
-    "tests/test_phase0.py": "29dbae86367f23b4e329cbbc8330e2e73d4939c8f6e2b5cc828b64f70eac96a3",
-    "tests/test_notebook_and_config.py": "a391fa7f7e09f0b8548ec8ef310ef90ee8f8bd7c7524f3f49a9f75dfcc880679",
+    "kaggle/w1_phase1_kaggle.ipynb": "e3c47870c067c3f678d2f466f47673d3399ba3f46a42e4d18e5d1b1432eaea01",
+    "tests/test_phase0.py": "56649bfc6c07d9d3b30ba3380d57256fd1bd8601b93c034c7536abee2912f02a",
+    "tests/test_notebook_and_config.py": "8637f4f9cd540c6375cc664087764b9430c933fb6a147827dede006a6adde79a",
     ".gitignore": "651be1ff6c0f98518f02df57dad808e26af51f4b28ac5fc7183e6a2e22330ca0"
   },
   "deps": {
@@ -71,7 +151,7 @@
       "dates_are_ids": false,
       "tokenizer": "adjudicated/generator.py norm_tokens"
     },
-    "fingerprint_sha256": "3734086609555f78805710a5af863934818f045768af6eb76e443a34243f8555",
+    "fingerprint_sha256": "c6ac5aed2ca9a2ead2a014e1f5926a6162aee8d194f13e61b7d78abfe2356303",
     "dev_items": {
       "hare-frozen-180": 180,
       "hare-fresh-s0-179": 179,
@@ -84,10 +164,21 @@
       "purple-investigator-inputs": 24,
       "purple-investigator-gold": 24,
       "purple-phase3-cases": 20,
-      "purple-hermes-questions": 72
+      "purple-hermes-questions": 72,
+      "rule8-flip-pairs": 264
     },
+    "structure_keys": 1795,
     "label_only_sources": [
       "purple-investigator-gold"
+    ],
+    "checks": [
+      "8-token runs",
+      "entity ids",
+      "prompt lineage",
+      "whole-item structure",
+      "WL tenant-graph hash",
+      "question skeleton on WL-equal graph",
+      "general-mix vs regression set (check_general)"
     ]
   },
   "generators": {

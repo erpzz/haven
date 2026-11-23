@@ -114,9 +114,17 @@ def new_salt() -> str:
     return secrets.token_hex(32)
 
 
+COMMITMENT_RULE = ("SHA-256(raw 32-byte salt || uint64 big-endian byte length of P || P), P = canonical JSON "
+                   "(sort_keys, separators (',', ':'), UTF-8). Amendment 1, section 5: unambiguously framed.")
+
+
 def commit(salt_hex: str, payload) -> str:
-    """SHA-256 of the raw salt bytes followed by the canonical JSON payload bytes."""
-    return sha256_bytes(bytes.fromhex(salt_hex) + canonical(payload))
+    """Framed commitment: salt, then the payload's length, then the payload (no concatenation ambiguity)."""
+    salt = bytes.fromhex(salt_hex)
+    if len(salt) != 32:
+        raise ValueError("salt must be 32 bytes")
+    body = canonical(payload)
+    return sha256_bytes(salt + len(body).to_bytes(8, "big") + body)
 
 
 def check_commitment(salt_hex: str, payload, digest: str) -> bool:
@@ -146,10 +154,21 @@ def run_harness(backend, episode: dict, mechanisms: dict) -> dict:
 
 
 def judge(record: dict, episode: dict) -> dict:
-    """Run-1 metrics plus the W1/W2 keep rule: gold pass with zero blocked or duplicate calls."""
+    """Run-1 metrics, Amendment 1's three score views, and the keep rule.
+
+    model-clean:     the model's first answer and the trace at that point pass, with no blocked call before it
+    corrected-model: the final answer (after at most one verifier revision) passes, with no blocked call
+    final-system:    the final answer passes, whatever the harness did
+    keep (W1/W2):    final pass with zero blocked or duplicate calls and transport ok (PLAN.md W1 step 3)
+    """
     m = bench_x.episode_metrics(record, episode)
-    blocked = [a for a in record.get("attempts") or [] if not a["executed"]]
+    attempts = record.get("attempts") or []
+    blocked = [a for a in attempts if not a["executed"]]
+    blocked_main = [a for a in blocked if a.get("phase") != "correction"]
     m["blocked_any"] = len(blocked)
+    m["views"] = {"model_clean": bool(m["transport_ok"] and m["raw_pass"] and not blocked_main),
+                  "corrected_model": bool(m["transport_ok"] and m["pass"] and not blocked),
+                  "final_system": bool(m["transport_ok"] and m["pass"])}
     m["keep"] = bool(m["transport_ok"] and m["pass"] and not blocked)
     return m
 

@@ -4,6 +4,7 @@
 """
 from __future__ import annotations
 
+import collections
 import copy
 import json
 import pathlib
@@ -191,187 +192,381 @@ class ArmO(unittest.TestCase):
         self.assertEqual([r["corrected"] for r in rows], [False, True])
 
 
-# ------------------------------------------------------------------ Astra exporter and replayer
-def oracle_answer(rid, e, placeholder=False):
+# ------------------------------------------------------------------ Astra stepwise exchange
+import pools  # noqa: E402
+
+DISP = {"answer": "answer", "insufficient_evidence": "insufficient_evidence", "no_action_needed": "no_action_needed",
+        "refusal": "refusal"}
+
+
+def oracle_plan(e, placeholder=False):
     claims, _, err = common.adjudicator.extract_claims(e["oracle"]["answer"])
     assert err is None
-    prose = e["oracle"]["answer"].split("\n{")[0]
-    answer = {"id": rid, "tool_calls": [c for rnd in e["oracle"]["calls"] for c in rnd],
-              "conclusion": prose, "claims": claims}
+    calls = [c for rnd in e["oracle"]["calls"] for c in rnd]
     if placeholder:
-        text = json.dumps(answer)
-        for c in claims:
-            if c["status"] == "proposed":
-                text = text.replace(c["value"], astra_batch.PLACEHOLDER)
-        answer = json.loads(text)
-    return answer
+        claims = [dict(c, value=astra_batch.PLACEHOLDER, evidence_id=astra_batch.PLACEHOLDER)
+                  if c["status"] == "proposed" else c for c in claims]
+    final = {"tool_calls": calls, "disposition": pools.disposition(e), "conclusion": e["oracle"]["answer"].split("\n{")[0],
+             "claims": claims}
+    return calls, final
 
 
-def corruptions(answer, e):
-    """(kind, corrupted answer) for every corruption that applies to this episode."""
-    out, c = [], e["contract"]
+def run_session(gold, session, plans, label, mutate_reply=None):
+    """Drive a stepwise session: each id sends its planned calls one per round, then its final record."""
+    for rnd in range(astra_batch.MAX_CALLS + 2):
+        replies = []
+        for rid, s in session.items():
+            if s["final"] is not None or s["rejected"]:
+                continue
+            calls, final = plans[rid]
+            if len(s["calls"]) < len(calls):
+                r = {"schema": astra_batch.SCHEMA, "batch": label, "id": rid, "round": len(s["calls"]),
+                     "action": "call", "call": calls[len(s["calls"])]}
+            else:
+                r = {"schema": astra_batch.SCHEMA, "batch": label, "id": rid, "action": "final", "final": final}
+            replies.append(mutate_reply(rid, r) if mutate_reply else r)
+        if not replies:
+            break
+        astra_batch.step(gold, session, replies)
+    return astra_batch.seal_record(gold, session)
+
+
+def corrupted_plans(e):
+    """(kind, calls, final) for every corruption that applies to this episode; none may be kept."""
+    calls, final = oracle_plan(e)
+    c, out = e["contract"], []
+
+    def f(**kw):
+        return dict(copy.deepcopy(final), **kw)
     swap = {"supported": "unknown", "conflicting": "supported", "unknown": "supported", "unavailable": "supported",
             "refused": "proposed", "proposed": "refused", "direct": "supported"}
-    a = copy.deepcopy(answer)
-    for cl in a["claims"]:
-        cl["status"] = swap[cl["status"]]
-    out.append(("status_swap", a))
-    if any(cl["evidence_id"] for cl in answer["claims"]):
-        a = copy.deepcopy(answer)
-        for cl in a["claims"]:
-            if cl["evidence_id"]:
-                cl["evidence_id"] = "ev-00000000"
-        out.append(("forged_evidence", a))
+    sw = [dict(cl, status=swap[cl["status"]]) for cl in final["claims"]]
+    sts = [x["status"] for x in sw]
+    disp = "refusal" if "refused" in sts else ("insufficient_evidence" if all(x in ("unavailable", "unknown") for x in sts)
+                                               else "answer")
+    out.append(("status_swap", calls, f(claims=sw, disposition=disp)))
+    if any(cl["evidence_id"] for cl in final["claims"]):
+        out.append(("forged_evidence", calls, f(claims=[dict(cl, evidence_id="ev-00000000") if cl["evidence_id"] else cl
+                                                        for cl in final["claims"]])))
     if c["required_calls"]:
-        out.append(("drop_required_calls", dict(copy.deepcopy(answer), tool_calls=[])))
+        out.append(("drop_required_calls", [], f(tool_calls=[])))
     if not c["proposals_allowed"]:
         target = e["world"]["devices"][0]["device_id"] if e["world"]["devices"] else "front-door-1"
-        a = copy.deepcopy(answer)
-        a["tool_calls"].append({"name": "haven_propose_action", "arguments": {"action": "unlock", "target": target}})
-        out.append(("unauthorized_proposal", a))
-    if answer["tool_calls"]:
-        a = copy.deepcopy(answer)
-        a["tool_calls"].insert(1, copy.deepcopy(a["tool_calls"][0]))
-        out.append(("duplicate_call", a))
-    asserting = [i for i, cl in enumerate(answer["claims"]) if cl["status"] in ("supported", "conflicting", "direct")
+        extra = calls + [{"name": "haven_propose_action", "arguments": {"action": "unlock", "target": target}}]
+        out.append(("unauthorized_proposal", extra, f(tool_calls=extra)))
+    if calls:
+        dup = calls[:1] + calls[:1] + calls[1:]
+        out.append(("duplicate_call", dup, f(tool_calls=dup)))
+    asserting = [i for i, cl in enumerate(final["claims"]) if cl["status"] in ("supported", "conflicting", "direct")
                  and cl["value"]]
     if asserting:
-        a = copy.deepcopy(answer)
-        decoys = [f["value"] for f in c["forbidden_values"] if not f.get("may_conflict")]
+        decoys = [v["value"] for v in c["forbidden_values"] if not v.get("may_conflict")]
+        wv = copy.deepcopy(final["claims"])
         for i in asserting:
-            a["claims"][i]["value"] = decoys[0] if decoys else "qqqzz"
-        out.append(("wrong_value", a))
+            wv[i]["value"] = decoys[0] if decoys else "qqqzz"
+        out.append(("wrong_value", calls, f(claims=wv)))
+    # future citation: the conclusion and claims are correct, but the call that returns a cited record never ran
+    cited = {cl["evidence_id"] for cl in final["claims"] if cl["evidence_id"]}
+    for k in range(len(calls)):
+        out_k = json.loads(common.contract.dispatch(e["world"], e["principal"], calls[k]["name"],
+                                                    dict(calls[k]["arguments"], principal=e["principal"])))
+        if cited & {out_k.get("evidence_id"), out_k.get("device_id")}:
+            short = calls[:k] + calls[k + 1:]
+            out.append(("future_citation", short, f(tool_calls=short)))
+            break
+    # future identifier: an id used before the call that reveals it
+    if len(calls) >= 2 and calls[1]["name"] == "haven_device_state" and calls[1]["arguments"]["device_id"] not in e["prompt"]:
+        rev = [calls[1], calls[0]] + calls[2:]
+        out.append(("future_identifier", rev, f(tool_calls=rev)))
+    out.append(("session_mismatch", calls, f(tool_calls=calls[:-1] if calls else [{"name": "haven_list_resources",
+                                                                                    "arguments": {"kind": "devices"}}])))
+    out.append(("clarification", calls, f(disposition="clarification")))
+    out.append(("disposition_mismatch", calls, f(disposition="refusal" if final["disposition"] != "refusal" else "answer")))
     return out
 
 
-class AstraBatch(unittest.TestCase):
+class AstraStepwise(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.batches = []
-        pool = list(EPISODES)
-        for i in range(0, len(pool), 40):
-            ids = {e["id"] for e in pool[i:i + 40]}
-            cls.batches.append(astra_batch.export_batch(pool, f"t{i}", 50, ids=ids, seed_commitment=DIGEST))
+        for i in range(0, len(EPISODES), 40):
+            ids = {e["id"] for e in EPISODES[i:i + 40]}
+            cls.batches.append(astra_batch.export_batch(EPISODES, f"t{i}", 50, ids=ids, seed_commitment=DIGEST))
 
     def test_every_episode_lands_in_a_batch_of_at_most_50(self):
-        n = 0
-        for records, gold, _, _ in self.batches:
-            self.assertLessEqual(len(records), astra_batch.MAX_BATCH)
-            n += len(records)
-        self.assertEqual(n, len(EPISODES))
+        self.assertEqual(sum(len(b[0]) for b in self.batches), len(EPISODES))
         with self.assertRaises(SystemExit):
             astra_batch.export_batch(EPISODES, "big", 51)
 
-    def test_records_carry_no_gold_family_seed_or_source_id(self):
-        families = list(gen_hare.FAMILIES)
-        for records, gold, salt, _ in self.batches:
+    def test_round0_reveals_no_tool_output_gold_family_seed_or_source_id(self):
+        for records, gold, salt, _, _ in self.batches:
             blob = json.dumps(records)
             for word in ("expect_claims", "forbidden_values", "required_calls", "oracle", "train-", SEED, salt):
                 self.assertNotIn(word, blob)
-            for r in records:
-                self.assertEqual(set(r), {"id", "batch", "system", "user", "tools", "evidence_bundle", "answer_schema"})
-                self.assertFalse(any(f in r["id"] for f in families))
-            for g in gold["records"]:
-                self.assertNotIn(g["episode"]["id"], blob)
-
-    def test_order_is_not_grouped_by_family(self):
-        records, gold, _, _ = self.batches[0]
-        fam = {g["id"]: g["episode"]["family"] for g in gold["records"]}
-        order = [fam[r["id"]] for r in records]
-        self.assertNotEqual(order, sorted(order))
-
-    def test_bundle_never_shows_a_note_the_principal_cannot_read(self):
-        for records, gold, _, _ in self.batches:
-            by_id = {r["id"]: r for r in records}
-            for g in gold["records"]:
-                e, blob = g["episode"], json.dumps(by_id[g["id"]]["evidence_bundle"])
-                for n in e["world"]["notes"]:
-                    if e["principal"] not in n["audience"]:
-                        self.assertNotIn(n["id"], blob)
-                        self.assertNotIn(n["text"], blob)
-
-    def test_bundle_matches_the_real_dispatcher_on_every_oracle_call(self):
-        for records, gold, _, _ in self.batches:
-            by_id = {r["id"]: r for r in records}
             for g in gold["records"]:
                 e = g["episode"]
-                for rnd in e["oracle"]["calls"]:
-                    for call in rnd:
-                        if call["name"] == "haven_propose_action":
-                            continue
-                        args = dict(call["arguments"])
-                        if call["name"] in common.bench.BIND:
-                            args["principal"] = e["principal"]
-                        real = json.loads(common.contract.dispatch(e["world"], e["principal"], call["name"], args))
-                        self.assertEqual(astra_batch.bundle_lookup(by_id[g["id"]]["evidence_bundle"], call["name"],
-                                                                   call["arguments"], e["principal"]), real)
+                self.assertNotIn(e["id"], blob)
+                for n in e["world"]["notes"]:
+                    self.assertNotIn(n["text"], blob)
+                    self.assertNotIn(n["id"], blob)
+                for d in e["world"]["devices"]:
+                    if d["cause"] and len(d["cause"]) > 12:
+                        self.assertNotIn(d["cause"], blob)
+            for r in records:
+                self.assertEqual(r["initial_observations"], [])
+                self.assertFalse(any(f in r["id"] for f in gen_hare.FAMILIES))
 
-    def test_oracle_answers_all_pass(self):
+    def test_round0_user_turn_is_exactly_what_the_4b_sees(self):
+        records, gold, _, _, _ = self.batches[0]
+        e = gold["records"][0]["episode"]
+        rec = common.run_harness(common.Oracle(e), e, common.FULL)
+        r = next(x for x in records if x["id"] == gold["records"][0]["id"])
+        self.assertEqual((r["system"], r["user"]), (rec["messages"][0]["content"], rec["messages"][1]["content"]))
+
+    def test_each_step_reveals_only_the_result_of_the_call_just_made(self):
+        records, gold, _, _, _ = self.batches[0]
+        g = gold["records"][0]
+        e = g["episode"]
+        calls, _ = oracle_plan(e)
+        if not calls:
+            g = next(x for x in gold["records"] if x["episode"]["oracle"]["calls"])
+            e, (calls, _) = g["episode"], oracle_plan(g["episode"])
+        session = {g["id"]: {"calls": [], "observations": [], "final": None, "rejected": None}}
+        full = common.run_harness(common.Oracle(e), e, common.FULL)
+        tool_msgs = [m["content"] for m in full["messages"] if m["role"] == "tool"]
+        for k, call in enumerate(calls):
+            obs, _ = astra_batch.step(gold, session, [{"schema": astra_batch.SCHEMA, "batch": gold["batch"],
+                                                       "id": g["id"], "round": k, "action": "call", "call": call}])
+            self.assertEqual(len(obs), 1)
+            self.assertEqual(obs[0]["result"], tool_msgs[k])          # the annotated message the 4B would see
+            for later in tool_msgs[k + 1:]:
+                self.assertNotIn(later, json.dumps(obs))
+
+    def test_oracle_sessions_all_pass(self):
         for placeholder in (False, True):
-            for records, gold, _, _ in self.batches:
-                answers = [oracle_answer(g["id"], g["episode"], placeholder) for g in gold["records"]]
-                res = astra_batch.replay(gold, answers, "oracle-check")
+            for records, gold, _, _, session in self.batches:
+                sess = copy.deepcopy(session)
+                plans = {g["id"]: oracle_plan(g["episode"], placeholder) for g in gold["records"]}
+                seal = run_session(gold, sess, plans, gold["batch"])
+                res = astra_batch.replay(gold, sess, seal, "oracle-check")
                 bad = [r for r in res["results"] if not r["keep"]]
                 self.assertEqual(bad, [], f"placeholder={placeholder}")
-                self.assertEqual(res["summary"]["kept"], len(gold["records"]))
-                self.assertTrue(all(r["teacher"] == "oracle-check" and r["arm"] == "B" for r in res["rows"]))
-                self.assertTrue(all(r["episode"].startswith("train-") for r in res["rows"]))
+                totals = sft.episode_weight_totals(res["rows"])
+                self.assertTrue(all(abs(v - 1.0) < 1e-9 for v in totals.values()))
+                fam = res["summary"]["by_family"]
+                self.assertEqual(sum(v["accepted"] for v in fam.values()), len(gold["records"]))
 
-    def test_corrupted_answers_all_fail(self):
+    def test_corrupted_sessions_all_fail(self):
         counts = {}
-        for records, gold, _, _ in self.batches:
+        for records, gold, _, _, session in self.batches:
             for g in gold["records"]:
-                base = oracle_answer(g["id"], g["episode"])
-                for kind, bad in corruptions(base, g["episode"]):
-                    res = astra_batch.replay({"batch": "c", "records": [g]}, [bad], "corrupt")
-                    r = res["results"][0]
+                for kind, calls, final in corrupted_plans(g["episode"]):
+                    sess = {g["id"]: {"calls": [], "observations": [], "final": None, "rejected": None}}
+                    one = {"batch": gold["batch"], "records": [g], "schema": gold["schema"]}
+                    seal = run_session(one, sess, {g["id"]: (calls, final)}, gold["batch"])
+                    r = astra_batch.replay(one, sess, seal, "corrupt")["results"][0]
                     self.assertFalse(r["keep"], f"{kind} kept on {g['episode']['id']}: {r}")
                     counts[kind] = counts.get(kind, 0) + 1
-        self.assertEqual(set(counts), {"status_swap", "forged_evidence", "drop_required_calls",
-                                       "unauthorized_proposal", "duplicate_call", "wrong_value"})
-        print("\ncorrupted answers rejected:", json.dumps(counts, sort_keys=True), file=sys.stderr)
+        self.assertTrue({"future_citation", "future_identifier", "status_swap", "forged_evidence",
+                         "drop_required_calls", "unauthorized_proposal", "duplicate_call", "wrong_value",
+                         "session_mismatch", "clarification", "disposition_mismatch"} <= set(counts))
+        print("\ncorrupted sessions rejected:", json.dumps(counts, sort_keys=True), file=sys.stderr)
 
-    def test_invalid_unknown_duplicate_and_missing_answers_are_not_kept(self):
-        records, gold, _, _ = self.batches[0]
-        g0, g1 = gold["records"][0], gold["records"][1]
-        good = oracle_answer(g0["id"], g0["episode"])
-        answers = [good, dict(good), {"id": "a-nope", "tool_calls": [], "conclusion": "x",
-                                      "claims": [{"status": "refused", "value": None, "evidence_id": None}]},
-                   {"id": g1["id"], "tool_calls": [{"name": "rm_rf", "arguments": {}}], "conclusion": "", "claims": []}]
-        res = astra_batch.replay(gold, answers, "t")
-        self.assertEqual(res["summary"]["kept"], 0)
-        statuses = [r["status"] for r in res["results"]]
-        self.assertEqual(statuses.count("schema_invalid"), 4)
-        self.assertEqual(res["summary"]["no_answer"], len(gold["records"]) - 2)
+    def test_protocol_violations_close_the_session(self):
+        records, gold, _, _, session = self.batches[0]
+        sess = copy.deepcopy(session)
+        ids = list(sess)
+        bad = [{"schema": astra_batch.SCHEMA, "batch": gold["batch"], "id": ids[0], "round": 3, "action": "call",
+                "call": {"name": "haven_device_state", "arguments": {"device_id": "x"}}},
+               {"schema": astra_batch.SCHEMA, "batch": gold["batch"], "id": ids[1], "round": 0, "action": "call",
+                "call": {"name": "rm_rf", "arguments": {}}},
+               {"schema": "other", "batch": gold["batch"], "id": ids[2], "action": "final", "final": {}},
+               {"schema": astra_batch.SCHEMA, "batch": gold["batch"], "id": ids[3], "action": "think"},
+               {"schema": astra_batch.SCHEMA, "batch": gold["batch"], "id": "a-unknown", "action": "final", "final": {}}]
+        obs, status = astra_batch.step(gold, sess, bad)
+        self.assertEqual(obs, [])
+        self.assertTrue(all(sess[i]["rejected"] for i in ids[:4]))
+        seal = astra_batch.seal_record(gold, sess)
+        res = astra_batch.replay(gold, sess, seal, "t")
+        self.assertEqual(res["summary"]["accepted"], 0)
+        self.assertEqual(res["summary"]["status"]["rejected_in_session"], 4)
 
-    def test_gold_commitment_verifies_and_detects_tampering(self):
-        records, gold, salt, digest = self.batches[0]
-        self.assertTrue(common.check_commitment(salt, gold, digest))
+    def test_replay_refuses_an_unsealed_or_altered_session(self):
+        records, gold, _, _, session = self.batches[0]
+        sess = copy.deepcopy(session)
+        plans = {g["id"]: oracle_plan(g["episode"]) for g in gold["records"]}
+        seal = run_session(gold, sess, plans, gold["batch"])
+        with self.assertRaises(SystemExit):
+            astra_batch.replay(gold, sess, None, "t")
+        first = next(iter(sess))
+        sess[first]["final"]["conclusion"] += " (edited)"
+        with self.assertRaises(SystemExit):
+            astra_batch.replay(gold, sess, seal, "t")
+
+    def test_gold_commitment_is_framed_and_detects_tampering(self):
+        records, gold, salt, digest, _ = self.batches[0]
+        body = common.canonical(gold)
+        manual = common.sha256_bytes(bytes.fromhex(salt) + len(body).to_bytes(8, "big") + body)
+        self.assertEqual(manual, digest)
         tampered = copy.deepcopy(gold)
         tampered["records"][0]["episode"]["contract"]["expect_claims"][0]["status"] = "refused"
         self.assertFalse(common.check_commitment(salt, tampered, digest))
 
-    def test_cli_round_trip_keeps_secrets_outside_the_repository(self):
+    def test_cli_round_trip_seal_before_reveal_and_audit_sample(self):
         with tempfile.TemporaryDirectory() as tmp:
-            ep = pathlib.Path(tmp) / "eps.jsonl"
+            tmp = pathlib.Path(tmp)
+            ep, priv = tmp / "eps.jsonl", tmp / "priv"
             common.write_jsonl(ep, EPISODES[:20])
-            priv, out = pathlib.Path(tmp) / "priv", pathlib.Path(tmp) / "b.jsonl"
             astra_batch.main(["export", "--episodes", str(ep), "--label", "rt", "--private-dir", str(priv),
-                              "--out", str(out), "--n", "20"])
+                              "--out", str(tmp / "r0.jsonl"), "--n", "20"])
             gold = json.loads((priv / "rt.gold.json").read_text())
-            answers = pathlib.Path(tmp) / "ans.jsonl"
-            common.write_jsonl(answers, [oracle_answer(g["id"], g["episode"], True) for g in gold["records"]])
-            astra_batch.main(["replay", "--private-dir", str(priv), "--label", "rt", "--answers", str(answers),
-                              "--out-dir", str(pathlib.Path(tmp) / "r")])
-            summary = json.loads((pathlib.Path(tmp) / "r" / "rt.summary.json").read_text())
-            self.assertEqual(summary["kept"], 20)
+            plans = {g["id"]: oracle_plan(g["episode"], True) for g in gold["records"]}
+            with self.assertRaises(SystemExit):
+                astra_batch.main(["reveal", "--private-dir", str(priv), "--label", "rt", "--out", str(tmp / "g.json")])
+            for rnd in range(astra_batch.MAX_CALLS + 2):
+                session = json.loads((priv / "rt.session.json").read_text())
+                replies = []
+                for rid, s in session.items():
+                    if s["final"] is None and not s["rejected"]:
+                        calls, final = plans[rid]
+                        replies.append({"schema": astra_batch.SCHEMA, "batch": "rt", "id": rid, "round": len(s["calls"]),
+                                        "action": "call", "call": calls[len(s["calls"])]} if len(s["calls"]) < len(calls)
+                                       else {"schema": astra_batch.SCHEMA, "batch": "rt", "id": rid, "action": "final",
+                                             "final": final})
+                if not replies:
+                    break
+                common.write_jsonl(tmp / f"reply{rnd}.jsonl", replies)
+                astra_batch.main(["step", "--private-dir", str(priv), "--label", "rt", "--reply",
+                                  str(tmp / f"reply{rnd}.jsonl"), "--out", str(tmp / f"obs{rnd}.jsonl")])
+            astra_batch.main(["seal", "--private-dir", str(priv), "--label", "rt"])
+            common.write_jsonl(tmp / "late.jsonl", [])
+            with self.assertRaises(SystemExit):
+                astra_batch.main(["step", "--private-dir", str(priv), "--label", "rt", "--reply", str(tmp / "late.jsonl"),
+                                  "--out", str(tmp / "late-obs.jsonl")])
+            astra_batch.main(["replay", "--private-dir", str(priv), "--label", "rt", "--out-dir", str(tmp / "r")])
+            summary = json.loads((tmp / "r" / "rt.summary.json").read_text())
+            self.assertEqual(summary["accepted"], 20)
             pub = json.loads((priv / "rt.public.json").read_text())
-            astra_batch.main(["reveal", "--private-dir", str(priv), "--label", "rt", "--out",
-                              str(pathlib.Path(tmp) / "g.json")])
-            astra_batch.main(["verify", "--gold", str(pathlib.Path(tmp) / "g.json"), "--commitment",
-                              pub["gold_commitment"]])
+            astra_batch.main(["reveal", "--private-dir", str(priv), "--label", "rt", "--out", str(tmp / "g.json")])
+            astra_batch.main(["verify", "--gold", str(tmp / "g.json"), "--commitment", pub["gold_commitment"]])
+            a1 = astra_batch.audit_sample(tmp / "r" / "rt.kept-rows.jsonl", 50)
+            a2 = astra_batch.audit_sample(tmp / "r" / "rt.kept-rows.jsonl", 50)
+            self.assertEqual(a1, a2)
+            self.assertEqual(a1["sampled"], 20)
+            self.assertEqual(len({(x["episode"], x["teacher"]) for x in a1["sample"]}), 20)
+            self.assertEqual(astra_batch.audit_sample(tmp / "r" / "rt.kept-rows.jsonl", 5)["sampled"], 5)
         with self.assertRaises(SystemExit):
             common.private_dir(HERE / "out" / "secrets")
+
+
+# ------------------------------------------------------------------ Amendment 1: pools, structure, flips
+import flip_pairs  # noqa: E402
+
+
+class PoolsAndSplits(unittest.TestCase):
+    def test_no_action_rate_is_frozen_from_public_dev_and_matched(self):
+        r = pools.frozen_no_action_rate()
+        self.assertEqual((r["n"], r["no_action_share"]), (538, 0.1673))
+        eps, _, _ = gen_hare.make_episodes(SEED, 14, variants=2)
+        kept = gen_hare.match_no_action_rate(eps, r["no_action_share"])
+        self.assertLess(abs(pools.no_action_share(kept)["no_action_share"] - r["no_action_share"]), 1.0 / len(kept) * 3)
+
+    def test_dispositions_by_family(self):
+        d = collections.defaultdict(set)
+        for e in EPISODES:
+            d[e["family"]].add(pools.disposition(e))
+        self.assertEqual(d["execute_refusal"], {"refusal"})
+        self.assertEqual(d["household_denied"], {"insufficient_evidence"})
+        self.assertEqual(d["chain3_conditional"], {"no_action_needed", "answer"})
+        self.assertEqual(d["proposal_explicit"], {"answer"})
+
+    def test_paired_variants_share_world_group_and_split(self):
+        eps, _, _ = gen_hare.make_episodes(SEED, 4, variants=3)
+        rows = gen_hare.training_manifest(eps, val_fraction=0.5)
+        by = collections.defaultdict(list)
+        for r in rows:
+            by[r["scenario_group"]].append(r)
+        self.assertTrue(any(len(v) > 1 for v in by.values()))
+        for v in by.values():
+            self.assertEqual(len({r["split"] for r in v}), 1)
+            self.assertEqual({tuple(r["paired_variants"]) + (r["id"],) for r in v} and len(v), len(v))
+        splits = collections.Counter(r["split"] for r in rows)
+        self.assertEqual(set(splits), {"train", "train-val"})
+        worlds = collections.defaultdict(set)
+        for e in eps:
+            worlds[e["lineage"]["scenario_group"]].add(json.dumps(e["world"], sort_keys=True))
+        self.assertTrue(all(len(w) == 1 for w in worlds.values()))
+        for r in rows:
+            self.assertTrue(all(k in r for k in ("template_lineage", "structure", "entity_group", "disposition",
+                                                 "sampling_weight", "template_ids")))
+
+    def test_dev_manifest_covers_every_dev_pool_and_keeps_them_identifiable(self):
+        rows = common.read_jsonl(HERE / "pools" / "dev_manifest.jsonl")
+        self.assertEqual({r["pool"] for r in rows} >= {"hare-frozen-180", "hare-fresh-s0-179", "hare-untouched-179",
+                                                        "querywriter-dev-84", "rule8-flip-pairs"}, True)
+        self.assertEqual(sum(r["pool"] == "hare-frozen-180" for r in rows), 180)
+        self.assertTrue(all(r["split"] == "dev" for r in rows))
+
+
+class StructuralDedupe(unittest.TestCase):
+    def test_renamed_copy_of_a_dev_episode_is_caught_by_structure(self):
+        dev = next(e for e in common.bench.load_episodes() if e["family"] == "injection_output" and len(e["prompt"].split()) < 8)
+        e = json.loads(json.dumps(dev))
+        mapping = {s: f"zz{i}renamed" for i, (s, _) in enumerate(sorted(set(pools.entity_strings(dev)), key=lambda x: -len(x[0])))}
+        blob = json.dumps(e)
+        for old, new in mapping.items():
+            blob = blob.replace(old, new)
+        e = json.loads(blob)
+        e["id"] = "train-renamed"
+        rep = dedupe.check_items([dedupe.hare_item(e)], FP)
+        self.assertEqual(len(rep["rejected"]), 1)
+        self.assertTrue(rep["rejected"][0]["structure_hits"])
+
+    def test_relabelled_dev_tenant_is_caught_by_the_graph_hash(self):
+        T, qrun = common.load_querywriter()
+        block = T.make_suite(qrun.SUITE_SEED, 12)[3]
+        t = json.loads(json.dumps(block["tenant"]))
+        names = {x: f"node{i}" for i, x in enumerate([u["id"] for u in t["users"]] + t["groups"] + t["sps"])}
+        blob = json.dumps(t)
+        for old in sorted(names, key=len, reverse=True):
+            blob = blob.replace(f'"{old}"', f'"{names[old]}"')
+        t2 = json.loads(blob)
+        t2["users"] = list(reversed(t2["users"]))
+        q = dict(block["questions"][0], id="train-q", question="A brand-new question wording about nothing in particular.")
+        rep = dedupe.check_items([dedupe.query_item(q, t2)], FP)
+        self.assertEqual(len(rep["rejected"]), 1)
+        self.assertTrue(any(k.startswith("graph:") for k, _ in rep["rejected"][0]["structure_hits"]))
+
+    def test_general_mix_is_checked_against_the_regression_set(self):
+        try:
+            reg = dedupe.regression_texts()
+        except (FileNotFoundError, ImportError) as err:
+            self.skipTest(f"regression files not fetched: {err}")
+        texts = [t for e in EPISODES[:30] for t in dedupe.hare_item(e)["texts"]]
+        rep = dedupe.check_general(texts + [reg["ifeval"][0], reg["mmlu_pro"][0], reg["bfcl"][0]])
+        self.assertEqual([r["index"] for r in rep["rejected"]], [len(texts), len(texts) + 1, len(texts) + 2])
+
+    def test_reserve_fingerprint_export_is_hashed(self):
+        fp = dedupe.export_fingerprint([dedupe.hare_item(e) for e in EPISODES[:5]])
+        blob = json.dumps(fp)
+        self.assertNotIn(EPISODES[0]["prompt"][:30], blob)
+        self.assertTrue(all(len(h) == 16 for h in fp["ngram_hashes"][:10]))
+
+
+class EvidenceFlipPairs(unittest.TestCase):
+    PAIRS = common.read_jsonl(HERE / "rule8" / "evidence_flip_pairs.jsonl")
+
+    def test_committed_pairs_equal_a_fresh_build_and_validate(self):
+        pairs, _ = flip_pairs.build_pairs()
+        self.assertEqual(self.PAIRS, json.loads(json.dumps(pairs)))
+        self.assertEqual(flip_pairs.validate(self.PAIRS), [])
+
+    def test_balanced_flip_and_control_with_identical_requests_on_flips(self):
+        kinds = collections.Counter(p["kind"] for p in self.PAIRS)
+        self.assertEqual(kinds["flip"], kinds["control"])
+        self.assertGreaterEqual(kinds["flip"], 60)
+        self.assertTrue(all(p["request_identical"] for p in self.PAIRS if p["kind"] == "flip"))
+        self.assertGreaterEqual(len({p["family"] for p in self.PAIRS}), 9)
 
 
 if __name__ == "__main__":

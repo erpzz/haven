@@ -58,6 +58,7 @@ def export_hare(episodes, match=None) -> tuple[list[dict], dict]:
             failures.append((e["id"], m["violations"], m["outcome"]))
             continue
         rows += sft.rows_from_record(rec, source="oracle", arm="O", teacher="oracle")
+    rows = sft.apply_episode_weights(rows)
     if failures:
         raise SystemExit(f"oracle failed on {len(failures)} episodes, e.g. {failures[0]}; the generator or "
                          f"harness is wrong. Nothing exported.")
