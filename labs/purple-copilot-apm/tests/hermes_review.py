@@ -181,7 +181,7 @@ def main():
         if not ok:
             failures.append(model)
         print(json.dumps({"scenario": model, "passed": ok, "exit": results[model]["exit"],
-                          "calls": results[model]["receipt"].get("calls"),
+                          "calls": [c["tool"] if isinstance(c, dict) else c for c in results[model]["receipt"].get("calls") or []],
                           "blocked": [b["reason"][:60] for b in results[model]["receipt"].get("blocked", [])],
                           "problems": results[model]["receipt"].get("problems"),
                           "answer": re.sub(r"\s+", " ", results[model]["answer"])[:240],

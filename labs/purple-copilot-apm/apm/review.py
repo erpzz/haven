@@ -25,9 +25,76 @@ TOOLS = {
     "purple_tier_zero_changes": ("platform",),
 }
 MAX_CALLS = 6
-CITATION = re.compile(r"\[((?:T0|P|F)-\d+(?:-[0-9a-f]{12})?)\]")
+# Anything shaped like a citation must be one the tools returned, so malformed or invented tokens are caught.
+CITATION = re.compile(r"\[(?:citation:\s*)?((?:T0|P|F)-[^\]\s,;]+)\]")
+TIMESTAMP = re.compile(r"\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?)?"
+                       r"|\b\d{1,2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:\s?UTC)?")
 NUMBER = re.compile(r"(?<![\w.-])\d{1,3}(?:,\d{3})+(?![\w-])|(?<![\w.-])\d+(?![\w-])")
-PRINCIPAL = re.compile(r"[A-Za-z0-9_.$-]+@[A-Za-z0-9_.-]+")
+PRINCIPAL = re.compile(r"[A-Za-z0-9_.$-]+@[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*")  # Never ends with a full stop.
+
+
+# What each BloodHound attack edge lets whoever controls the source do, phrased with its direction.
+MEANING = {
+    "HasSession": "{target} has a logon session on {source}; whoever controls {source} can harvest {target}'s credentials",
+    "AdminTo": "{source} is a local administrator on {target}",
+    "MemberOf": "{source} is a member of {target} and inherits its rights",
+    "Contains": "{source} contains {target}; control of {source} can be inherited by {target}",
+    "GenericAll": "{source} has full control of {target}",
+    "GenericWrite": "{source} can write the attributes of {target}",
+    "WriteDacl": "{source} can change the permissions on {target} and grant itself full control",
+    "WriteOwner": "{source} can make itself the owner of {target} and then take full control",
+    "Owns": "{source} owns {target} and can grant itself full control",
+    "AllExtendedRights": "{source} holds all extended rights on {target}, such as forcing a password reset",
+    "AddMember": "{source} can add members to {target}",
+    "AddSelf": "{source} can add itself to {target}",
+    "ForceChangePassword": "{source} can reset the password of {target}",
+    "DCSync": "{source} can replicate secrets from {target}, including every password hash (DCSync)",
+    "ReadGMSAPassword": "{source} can read the managed account password of {target}",
+    "ReadLAPSPassword": "{source} can read the local administrator password of {target}",
+    "AllowedToDelegate": "{source} is trusted for constrained delegation to {target} and can impersonate users to it",
+    "AllowedToAct": "{source} can impersonate users to {target} through resource-based constrained delegation",
+    "CoerceToTGT": "{source} has unconstrained delegation; coercing {target} to authenticate to it yields {target}'s Kerberos tickets",
+    "WriteAccountRestrictions": "{source} can write delegation settings on {target} and abuse resource-based constrained delegation",
+    "AddKeyCredentialLink": "{source} can add shadow credentials to {target} and authenticate as it",
+    "ManageCA": "{source} can manage the certificate authority {target}",
+    "ManageCertificates": "{source} can approve certificate requests on {target}",
+    "GoldenCert": "{source} holds a CA key that can forge certificates for principals in {target}",
+    "HasSIDHistory": "{source} carries the SID of {target} in its SID history and receives its rights",
+    "GPLink": "{source} is linked to {target}; control of {source} applies to objects in {target}",
+    "AZAddOwner": "{source} can add owners to {target}",
+    "AZAddSecret": "{source} can add a credential to {target} and authenticate as it",
+    "AZMGAddOwner": "{source} holds a Microsoft Graph permission that lets it add an owner to {target}",
+    "AZMGAddSecret": "{source} holds a Microsoft Graph permission that lets it add a credential to {target} and authenticate as it",
+    "AZMGAddMember": "{source} holds a Microsoft Graph permission that lets it add members to {target}",
+    "AZMGGrantRole": "{source} holds a Microsoft Graph permission that lets it assign the directory role {target}",
+    "AZMGGrantAppRoles": "{source} holds a Microsoft Graph permission that lets it grant application permissions, reaching {target}",
+    "AZManagedIdentity": "{source} runs as the managed identity {target}; control of {source} yields {target}'s permissions",
+    "AZOwns": "{source} owns {target}",
+    "AZResetPassword": "{source} can reset the password of {target}",
+    "AZAddMembers": "{source} can add members to {target}",
+    "AZHasRole": "{source} holds the directory role {target}",
+    "AZMemberOf": "{source} is a member of {target} and inherits its rights",
+    "AZRunsAs": "{source} runs as {target}",
+    "AZContains": "{source} contains {target}",
+    "AZContributor": "{source} has Contributor access to {target}",
+    "AZOwner": "{source} has Owner access to {target}",
+    "AZUserAccessAdministrator": "{source} can grant access to {target}",
+    "AZGlobalAdmin": "{source} has Global Administrator control over {target}",
+    "AZPrivilegedRoleAdmin": "{source} has Privileged Role Administrator control over {target}",
+    "AZExecuteCommand": "{source} can run commands on {target}",
+}
+
+
+def meaning(kind, source, target):
+    if kind.startswith("ADCSESC"):
+        return f"{source} can obtain a certificate that authenticates as privileged principals of {target} ({kind[4:]} certificate abuse)"
+    return MEANING.get(kind, "{source} has the BloodHound attack edge " + kind + " to {target}").format(source=source, target=target)
+
+
+def reach_statement(name, factors):
+    return (f"{factors['users']} users, {factors['computers']} computers, {factors['workloads']} workloads and "
+            f"{factors['groups']} groups can reach {name} through attack paths without passing through Tier Zero; "
+            f"compromising any of them leads to the Tier Zero control {name} holds")
 
 
 def state(f):
@@ -74,16 +141,21 @@ def overview(platform, limit=10):
     top = []
     for s in ranked[:limit]:
         factors = groups[s][0][1]["priority"]["factors"]
-        top.append({"citation": short(run, s), "principal": nodes[s]["label"], "kind": nodes[s]["kind"],
+        kinds = dict(Counter(f["path"][0][1] for _, f in live[s]).most_common())
+        label = nodes[s]["label"]
+        top.append({"citation": short(run, s), "principal": label, "kind": nodes[s]["kind"],
                     "identities_able_to_gain_control": groups[s][0][1]["priority"]["score"],
-                    "users": factors["users"], "computers": factors["computers"], "workloads": factors["workloads"],
-                    "control_edges": dict(Counter(f["path"][0][1] for _, f in live[s]).most_common())})
+                    "reachable_from": {k: factors[k] for k in ("users", "computers", "workloads", "groups")},
+                    "tier_zero_controls_held": len(live[s]), "control_edges": kinds,
+                    "summary": f"{label} ({nodes[s]['kind']}) holds {len(live[s])} Tier Zero control edges "
+                               f"({', '.join(kinds)}); {reach_statement(label, factors)}."})
     return dict(base, available=True,
                 principals_with_direct_control=len(ranked),
                 control_edges=sum(len(v) for v in live.values()),
                 identities_able_to_reach_tier_zero=sum(pop.get(k, 0) for k in ("users", "computers", "workloads")),
                 exposed_users=pop.get("users", 0), exposed_computers=pop.get("computers", 0),
-                exposed_workloads=pop.get("workloads", 0), top_principals=top, shown=len(top))
+                exposed_workloads=pop.get("workloads", 0), top_principals=top, shown=len(top),
+                not_shown=len(ranked) - len(top))
 
 
 def resolve(platform, name):
@@ -106,15 +178,19 @@ def principal(platform, principal, limit=60):
     run, observed, e, findings = snap
     items = sorted(by_principal(findings)[oid], key=lambda kf: (kf[1]["path"][0][1], kf[1]["path"][0][2]))
     nodes, prio = e["nodes"], items[0][1]["priority"]
-    edges = [{"citation": f"F-{run}-{k[:12]}", "relationship": f["path"][0][1],
-              "target": nodes.get(f["path"][0][2], {}).get("label") or f["path"][0][2],
-              "target_kind": nodes.get(f["path"][0][2], {}).get("kind"), "state": state(f)} for k, f in items]
+    label = nodes[oid]["label"]
+    edges = []
+    for k, f in items:
+        target = nodes.get(f["path"][0][2], {}).get("label") or f["path"][0][2]
+        edges.append({"citation": f"F-{run}-{k[:12]}", "relationship": f["path"][0][1], "target": target,
+                      "target_kind": nodes.get(f["path"][0][2], {}).get("kind"), "state": state(f),
+                      "meaning": meaning(f["path"][0][1], label, target)})
+    factors = prio["factors"]
     return {"citation": short(run, oid), "platform": platform, "snapshot": run, "observed": observed, "found": True,
-            "principal": nodes[oid]["label"], "kind": nodes[oid]["kind"], "object_id": oid,
-            "identities_able_to_gain_control": prio["score"], "users": prio["factors"]["users"],
-            "computers": prio["factors"]["computers"], "workloads": prio["factors"]["workloads"],
-            "groups": prio["factors"]["groups"], "edges_total": len(edges), "edges": edges[:limit],
-            "confidence": "limited"}
+            "principal": label, "kind": nodes[oid]["kind"], "object_id": oid, "is_tier_zero": False,
+            "tier_zero_controls_held": len(edges), "identities_able_to_gain_control": prio["score"],
+            "reachable_from": {k: factors[k] for k in ("users", "computers", "workloads", "groups")},
+            "reach": reach_statement(label, factors) + ".", "edges": edges[:limit], "confidence": "limited"}
 
 
 def changes(platform, limit=40):
@@ -138,11 +214,20 @@ def changes(platform, limit=40):
            "previous_snapshot": previous[0] if previous else None,
            "counts": dict(Counter(state(f) for f in findings.values())), "confidence": "limited",
            "note": "Missing means not observed; removal needs independent corroboration"}
+    totals = {k: out["counts"].get(k, 0) for k in ("new", "changed", "missing")}
+    out["totals"] = totals
+    out["summary"] = (f"At snapshot {run}, {totals['new']} Tier Zero control edges are new, {totals['changed']} changed route "
+                      f"and {totals['missing']} are missing compared with "
+                      + (f"snapshot {previous[0]}" if previous else "no earlier snapshot")
+                      + ". The lists below are examples, not totals.")
     for kind in ("new", "changed", "missing"):
         rows = [(k, f) for k, f in sorted(findings.items()) if state(f) == kind]
-        out[kind] = [{"citation": f"F-{run}-{k[:12]}", "principal": nodes.get(f["path"][0][0], {}).get("label") or f["path"][0][0],
-                      "relationship": f["path"][0][1],
-                      "target": nodes.get(f["path"][0][2], {}).get("label") or f["path"][0][2]} for k, f in rows[:limit]]
+        out[kind] = []
+        for k, f in rows[:limit]:
+            source = nodes.get(f["path"][0][0], {}).get("label") or f["path"][0][0]
+            target = nodes.get(f["path"][0][2], {}).get("label") or f["path"][0][2]
+            out[kind].append({"citation": f"F-{run}-{k[:12]}", "principal": source, "relationship": f["path"][0][1],
+                              "target": target, "meaning": meaning(f["path"][0][1], source, target)})
     return out
 
 
@@ -152,7 +237,8 @@ SCHEMAS = {
     "purple_tier_zero_overview": "Headline Tier Zero exposure and the highest-priority non-Tier Zero principals "
                                  "for one platform. Start here.",
     "purple_tier_zero_principal": "All Tier Zero control edges held by one principal named exactly as an earlier "
-                                  "result showed it, with the identities able to gain that control.",
+                                  "result showed it. Each edge has a 'meaning' sentence stating its direction; "
+                                  "'reachable_from' counts who can reach this principal, not what it can access.",
     "purple_tier_zero_changes": "Tier Zero control edges that are new, changed or missing at the latest snapshot.",
 }
 
@@ -161,7 +247,8 @@ def schema(name):
     props = {"platform": {"type": "string", "enum": list(PLATFORMS), "description": "ad or entra"}}
     if name == "purple_tier_zero_principal":
         props["principal"] = {"type": "string", "description": "Exact principal label or object ID from an earlier result"}
-    return {"name": name, "description": SCHEMAS[name] + " Cite results with their [citation] tokens.",
+    return {"name": name, "description": SCHEMAS[name] + " Prefer the result's own summary and meaning sentences. "
+                                                       "Cite each claim with its [citation] token.",
             "parameters": {"type": "object", "properties": props, "required": list(TOOLS[name]),
                            "additionalProperties": False}}
 
@@ -205,6 +292,35 @@ class Turn:
     def principals(self):
         return {m.casefold() for _, data in self.results for m in PRINCIPAL.findall(data)}
 
+    def by_principal(self):
+        """Integer values found in each object that describes one principal, keyed by its label."""
+        index = {}
+
+        def ints(value, out):
+            if isinstance(value, bool):
+                return
+            if isinstance(value, int):
+                out.add(str(value))
+            elif isinstance(value, dict):
+                for v in value.values():
+                    ints(v, out)
+            elif isinstance(value, list):
+                for v in value:
+                    ints(v, out)
+
+        def walk(value):
+            if isinstance(value, dict):
+                if isinstance(value.get("principal"), str):
+                    ints(value, index.setdefault(value["principal"].casefold(), set()))
+                for v in value.values():
+                    walk(v)
+            elif isinstance(value, list):
+                for v in value:
+                    walk(v)
+        for _, data in self.results:
+            walk(json.loads(data))
+        return index
+
 
 class Gate:
     """Pre-execution checks. A returned message blocks the call and is shown to the model."""
@@ -238,6 +354,24 @@ class Gate:
         return None
 
 
+UNITS = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen " \
+        "seventeen eighteen nineteen".split()
+TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90}
+NUMBER_WORD = re.compile(r"\b(" + "|".join(TENS) + r")(?:[- ](" + "|".join(UNITS[1:10]) + r"))?\b|\b(" + "|".join(UNITS[2:]) + r")\b",
+                         re.IGNORECASE)
+
+
+def spelled(text):
+    """Counts written as words above one, such as 'twenty-three', as digits."""
+    out = []
+    for tens, unit, small in NUMBER_WORD.findall(text):
+        if small:
+            out.append(str(UNITS.index(small.lower())))
+        else:
+            out.append(str(TENS[tens.lower()] + (UNITS.index(unit.lower()) if unit else 0)))
+    return out
+
+
 class Verifier:
     """Checks a final answer against the evidence retrieved in the same turn."""
 
@@ -252,16 +386,37 @@ class Verifier:
         unknown = sorted(set(cited) - known)
         if unknown:
             found.append("unknown citations: " + ", ".join(unknown[:5]))
-        text = CITATION.sub(" ", answer)
+        text = TIMESTAMP.sub(" ", CITATION.sub(" ", answer))  # Dates and times are not counts.
         text = re.sub(r"(?m)^\s*(?:\d+[.)]|[-*])\s+", " ", text)
-        numbers = {n.replace(",", "") for n in NUMBER.findall(text)}
+        numbers = {n.replace(",", "") for n in NUMBER.findall(text)} | set(spelled(text))
         unsupported = sorted(numbers - turn.numbers(), key=lambda n: (len(n), n))
         if unsupported:
             found.append("numbers absent from evidence: " + ", ".join(unsupported[:5]))
         names = {m.casefold() for m in PRINCIPAL.findall(text)} - turn.principals()
         if names:
             found.append("principals absent from evidence: " + ", ".join(sorted(names)[:5]))
+        misbound = self.misattributed(turn, text)
+        if misbound:
+            found.append("numbers attributed to the wrong principal: " + ", ".join(misbound[:5]))
         return found
+
+    def misattributed(self, turn, text):
+        """In a sentence that names principals, each number must belong to one of those principals' evidence."""
+        index = turn.by_principal()
+        labels = sorted(index, key=len, reverse=True)
+        out = []
+        for segment in re.split(r"(?<=[.;!?])\s+|\n+|\s+\|\s+", text):
+            lowered, named = segment.casefold(), []
+            for label in labels:
+                if label in lowered and not any(label in other for other in named):
+                    named.append(label)
+            if not named:
+                continue
+            allowed = set().union(*(index[n] for n in named))
+            for n in NUMBER.findall(segment):
+                if n.replace(",", "") not in allowed:
+                    out.append(f"{n} with {named[0]}")
+        return out
 
 
 def fallback(turn, problems):
@@ -279,18 +434,16 @@ def fallback(turn, problems):
                          f"({r['exposed_users']} users, {r['exposed_computers']} computers, "
                          f"{r['exposed_workloads']} workloads). Confidence {r['confidence']}. [{r['citation']}]")
             for p in r["top_principals"][:5]:
-                edges = ", ".join(p["control_edges"])
-                lines.append(f"  - {p['principal']} ({p['kind']}): {p['identities_able_to_gain_control']} identities "
-                             f"can gain this control via {edges}. [{p['citation']}]")
+                lines.append(f"  - {p['summary']} [{p['citation']}]")
         elif name == "purple_tier_zero_principal" and r.get("found"):
-            lines.append(f"- {r['principal']} ({r['kind']}) holds {r['edges_total']} Tier Zero control edges; "
-                         f"{r['identities_able_to_gain_control']} identities can gain them. [{r['citation']}]")
+            lines.append(f"- {r['principal']} ({r['kind']}) holds {r['tier_zero_controls_held']} Tier Zero control edges. "
+                         f"{r['reach']} [{r['citation']}]")
             for edge in r["edges"][:8]:
-                lines.append(f"  - {edge['relationship']} → {edge['target']} ({edge['state']}) [{edge['citation']}]")
+                lines.append(f"  - {edge['meaning']} ({edge['state']}). [{edge['citation']}]")
         elif name == "purple_tier_zero_changes" and r.get("snapshot"):
-            counts = ", ".join(f"{v} {k}" for k, v in sorted(r["counts"].items()))
-            lines.append(f"- {r['platform'].upper()} snapshot {r['snapshot']} versus "
-                         f"{r['previous_snapshot'] or 'no earlier snapshot'}: {counts}. {r['note']}. [{r['citation']}]")
+            lines.append(f"- {r['platform'].upper()}: {r['summary']} {r['note']}. [{r['citation']}]")
+            for edge in (r["new"] + r["changed"] + r["missing"])[:5]:
+                lines.append(f"  - {edge['meaning']}. [{edge['citation']}]")
         else:
             lines.append(f"- {name}: {r.get('reason', 'no result')}")
     return "\n".join(lines)

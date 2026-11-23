@@ -22,10 +22,8 @@ if str(LAB) not in sys.path:
 from apm import review  # noqa: E402
 
 STRICT = os.environ.get("PURPLE_REVIEW_STRICT", "1") != "0"
-INSTRUCTION = ("[Purple Copilot review] Answer only from purple_tier_zero_* tool results retrieved in this turn. "
-               "Cite each claim with the [citation] token from the result, for example [T0-6] or [P-6-0123456789ab]. "
-               "Use only numbers and principal names that the results contain. Say what the evidence does not show. "
-               "Findings are exposure, not proof of compromise; confidence is limited for archived samples.")
+INSTRUCTION = ("[Purple Copilot review] Answer only from this turn's purple_tier_zero_* results, quote their summary, "
+               "meaning and reach sentences, and cite each claim with its [citation] token.")
 GATE, VERIFIER = review.Gate(strict=STRICT), review.Verifier()
 _turns: dict[str, review.Turn] = {}
 _lock = threading.Lock()
@@ -76,7 +74,7 @@ def _transform_llm_output(response_text=None, session_id=None, turn_id=None, mod
     problems = VERIFIER.problems(turn, response_text or "")
     if turn.results or turn.blocked:
         review.receipt({"at": time.time(), "session": session_id, "turn": turn_id, "model": model,
-                        "question": turn.question, "calls": [c[0] for c in turn.calls],
+                        "question": turn.question, "calls": [{"tool": n, "args": json.loads(a)} for n, a in turn.calls],
                         "blocked": turn.blocked, "problems": problems, "replaced": bool(problems),
                         "answer": response_text})
     return review.fallback(turn, problems) if problems else None

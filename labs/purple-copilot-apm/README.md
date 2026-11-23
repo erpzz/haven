@@ -6,7 +6,7 @@ For configurable critical assets, directed multi-hop comparisons and finding-sco
 
 To correlate offline EntraOps and Maester evidence with a historical sample path, see the [Phase 3 runbook](PHASE3_OFFLINE.md).
 
-For every attack edge into BloodHound's Tier Zero (permissions, sessions, delegation, certificate abuse and Entra application rights), ranked by the identities able to gain it, see [Tier Zero control](TIER_ZERO.md). To review those findings conversationally in Hermes Agent with an evidence gateway and answer verifier, see [Hermes](HERMES.md).
+For every attack edge into BloodHound's Tier Zero (permissions, sessions, delegation, certificate abuse and Entra application rights), ranked by the identities able to gain it, see [Tier Zero control](TIER_ZERO.md). To review those findings conversationally in Hermes Agent with an evidence gateway and answer verifier, see [Hermes](HERMES_RUNBOOK.md).
 
 ## Start the sample lab
 
