@@ -28,7 +28,7 @@ CHANGE = re.compile(r"disable|enable-|reset|passwd|chpasswd|usermod|net user|set
 
 
 def chat(base_url, model, prompt, timeout):
-    body = json.dumps({"model": model, "messages": [{"role": "user", "content": prompt}], "max_tokens": 2048}).encode()
+    body = json.dumps({"model": model, "messages": [{"role": "user", "content": prompt}], "max_tokens": 8192}).encode()
     req = urllib.request.Request(base_url.rstrip("/") + "/chat/completions", body, {"Content-Type": "application/json"})
     start = time.monotonic()
     try:

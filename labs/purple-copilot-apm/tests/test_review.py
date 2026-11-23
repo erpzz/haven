@@ -51,6 +51,11 @@ class Review(unittest.TestCase):
         self.assertEqual(sorted(r["holders"]), ["G1@SAMPLE", "Z@SAMPLE"])
         r = json.loads(review.call("purple_tier_zero_search", {"platform": "ad", "target": "t0a@sample"}))
         self.assertEqual(r["holders"], ["C1@SAMPLE", "Z@SAMPLE"])
+        r = json.loads(review.call("purple_tier_zero_search", {"platform": "ad", "target": "C1@SAMPLE"}))
+        self.assertIn("is not a Tier Zero target", r["note"])  # a holder named as target is redirected
+        self.assertEqual([t["tier_zero_target"] for t in r["by_target"]], ["T0A@SAMPLE"])
+        r = json.loads(review.call("purple_tier_zero_search", {"platform": "ad", "holder": "z@sample"}))
+        self.assertEqual(r["by_target"], [{"tier_zero_target": "T0A@SAMPLE", "held_by": ["Z@SAMPLE (full control)"]}])
         with patch.object(review, "COMPACT", 1):  # grouped form for large results
             r = json.loads(review.call("purple_tier_zero_search", {"platform": "ad", "relationship": "genericall"}))
             self.assertEqual((r["edges"], [g["holder"] for g in r["by_holder"]]), ([], ["G1@SAMPLE", "Z@SAMPLE"]))
@@ -123,6 +128,9 @@ class Review(unittest.TestCase):
         self.assertIn("unknown citations", v.problems(turn, good + " [F-1-0123456789ab]")[0])
         self.assertIn("unknown citations", v.problems(turn, good + " [F-1-ADCSESC3]")[0])
         self.assertEqual(v.problems(turn, "Three principals control Tier Zero."), ["no evidence citation"])
+        turn.question = "Disable the Z@SAMPLE account now."
+        self.assertEqual(v.problems(turn, "I cannot disable Z@SAMPLE; a person must make that change."), [])
+        self.assertEqual(v.problems(turn, "I cannot do that, but C1@SAMPLE is exposed."), ["no evidence citation"])
         self.assertIn("principals absent", v.problems(turn, good + " MALLORY@SAMPLE is exposed.")[0])
         self.assertEqual(v.problems(turn, good + " Review C1@SAMPLE."), [])
         family = review.Turn()

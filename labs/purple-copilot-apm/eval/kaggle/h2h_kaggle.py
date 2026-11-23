@@ -17,7 +17,7 @@ RUNS = [  # model spec, alias, repetitions
       "file": "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf", "sha256": "ac0e2c1189e055faa36eff361580e79c5bd6f8e76bffb4ce547f167d53e31a61"},
      "qwen3.6-35b-a3b", 1),
 ]
-OUT = "/kaggle/working/h2h-results.jsonl"
+OUT = "/kaggle/working/h2h-results.jsonl"  # round 2
 MODELS = "/tmp/models"
 os.makedirs(MODELS, exist_ok=True)
 
@@ -170,19 +170,37 @@ for spec, alias, reps in RUNS:
     except Exception as exc:
         print("skipping", alias, exc)
         continue
+    # Round 1 lost the 35B: terminating the shell left the 4B server holding the port, and llama.cpp ignores the
+    # requested model name. Each server now runs in its own process group, the port must be free before start,
+    # and the served alias is checked before any arm runs.
+    assert subprocess.run("curl -s http://127.0.0.1:8080/health", shell=True).returncode != 0, "port 8080 still in use"
     log = open(f"/kaggle/working/llama-{alias}.log", "w")
-    server = subprocess.Popen(f"{ENGINE} -m {path} --host 127.0.0.1 --port 8080 -c 65536 -np 1 --jinja -ngl 99 "
-                              f"--alias {alias} --no-webui", shell=True, stdout=log, stderr=subprocess.STDOUT)
-    for _ in range(300):
+    server = subprocess.Popen([ENGINE, "-m", path, "--host", "127.0.0.1", "--port", "8080", "-c", "65536", "-np", "1",
+                               "--jinja", "-ngl", "99", "--alias", alias, "--no-webui"],
+                              stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+    for _ in range(400):
         time.sleep(3)
+        if server.poll() is not None:
+            break
         if subprocess.run("curl -s http://127.0.0.1:8080/health | grep -q ok", shell=True).returncode == 0:
             break
+    served = subprocess.run("curl -s http://127.0.0.1:8080/v1/models", shell=True, text=True, capture_output=True).stdout
+    if server.poll() is not None or f'"{alias}"' not in served:
+        print("server for", alias, "is not serving it; skipping. models:", served[:300])
+        if server.poll() is None:
+            os.killpg(server.pid, 15)
+        continue
     try:
         stream(f"cd {LAB} && python3 eval/h2h_run.py --base-url http://127.0.0.1:8080/v1 --model {alias} "
                f"--hermes {HERMES} --lab {LAB} --state {STATE} --export {EXPORT} --stock-dir /tmp/h2h-stock "
                f"--reps {reps} --out {OUT}")
     finally:
-        server.terminate()
-        server.wait()
+        os.killpg(server.pid, 15)
+        try:
+            server.wait(timeout=60)
+        except subprocess.TimeoutExpired:
+            os.killpg(server.pid, 9)
+            server.wait()
+        time.sleep(5)
         os.remove(path)
 print("done", sum(1 for _ in open(OUT)) if os.path.exists(OUT) else 0, "runs")

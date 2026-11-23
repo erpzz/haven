@@ -25,7 +25,7 @@ TOOLS = {  # required arguments
     "purple_tier_zero_changes": ("platform",),
     "purple_tier_zero_search": ("platform",),
 }
-OPTIONAL = {"purple_tier_zero_search": ("relationship", "target")}
+OPTIONAL = {"purple_tier_zero_search": ("relationship", "target", "holder")}
 CATEGORIES = {  # analyst vocabulary for groups of BloodHound attack edges
     "sessions": {"HasSession"},
     "dcsync": {"DCSync", "GetChanges", "GetChangesAll", "GetChangesInFilteredSet"},
@@ -117,6 +117,24 @@ MEANING = {
 }
 
 
+PHRASE = {"HasSession": "Tier Zero logon session", "DCSync": "DCSync", "AllowedToDelegate": "constrained delegation",
+          "AllowedToAct": "resource-based constrained delegation", "CoerceToTGT": "unconstrained delegation",
+          "WriteAccountRestrictions": "delegation-setting abuse", "GenericAll": "full control", "GenericWrite": "write access",
+          "WriteDacl": "permission change", "WriteOwner": "ownership takeover", "Owns": "ownership", "AddMember": "add member",
+          "AdminTo": "local admin", "ReadGMSAPassword": "gMSA password read", "ReadLAPSPassword": "LAPS password read",
+          "ManageCA": "CA management", "ManageCertificates": "certificate approval", "Contains": "container control",
+          "AZMGAddSecret": "Graph permission to add app credentials", "AZAddSecret": "add app credentials",
+          "AZMGAddOwner": "Graph permission to add owners", "AZAddOwner": "add owners", "AZOwns": "ownership",
+          "AZMGGrantRole": "Graph permission to assign directory roles", "AZMGGrantAppRoles": "Graph permission to grant app roles",
+          "AZManagedIdentity": "managed identity takeover", "AZResetPassword": "password reset"}
+
+
+def kind_phrase(kind):
+    if kind.startswith("ADCSESC"):
+        return f"certificate abuse (ADCS {kind[4:]})"
+    return PHRASE.get(kind, kind)
+
+
 def meaning(kind, source, target):
     if kind.startswith("ADCSESC"):
         return f"{source} can obtain a certificate that authenticates as privileged principals of {target} ({kind[4:]} certificate abuse)"
@@ -204,21 +222,25 @@ def overview(platform, limit=10):
                     "reachable_from": {k: factors[k] for k in ("users", "computers", "workloads", "groups")},
                     "tier_zero_controls_held": len(live[s]), "control_edges": kinds,
                     "summary": f"{who_label} ({nodes[s]['kind']}) holds {len(live[s])} Tier Zero control edges "
-                               f"({', '.join(kinds)}); {reach_statement(who_label, factors)}."})
+                               f"({', '.join(dict.fromkeys(kind_phrase(k) for k in kinds))}); "
+                               f"{reach_statement(who_label, factors)}."})
     fix_first = []
     for i, step in enumerate(e.get("remediation") or [], 1):
         names = [label(nodes, x) for x in step["sources"]]
         shown, more = names[:5], max(0, len(names) - 5)
         who = ", ".join(shown) + (f" and {more} more" if more else "")
+        mechanisms = sorted({kind_phrase(f["path"][0][1]) for src in step["sources"] for _, f in groups.get(src, [])
+                             if state(f) in LIVE})
         fix_first.append({
             "step": i, "principals": shown, "principals_count": len(names), "more_principals": more,
             "control_edges": step["control_edges"], "identities_removed": step["identities_removed"],
             "identities_still_exposed": step["identities_still_exposed"],
-            "citations": [short(run, x) for x in step["sources"][:5]],
+            "citations": [short(run, x) for x in step["sources"][:5]], "mechanisms": mechanisms,
             "summary": (f"Step {i}: remove every direct Tier Zero control edge held by {who} "
                         f"({plural(step['control_edges'], 'edge')}"
                         + (f" across {len(names)} principals that must be fixed together" if len(names) > 1 else "")
-                        + f"). {plural(step['identities_removed'], 'identity', 'identities')} then lose every route "
+                        + f"; mechanisms: {', '.join(mechanisms)}). "
+                          f"{plural(step['identities_removed'], 'identity', 'identities')} then lose every route "
                           f"to Tier Zero and {step['identities_still_exposed']} remain exposed.")})
     return dict(base, available=True, fix_first=fix_first,
                 principals_with_direct_control=len(ranked),
@@ -305,13 +327,26 @@ def changes(platform, limit=40):
 COMPACT = 25
 
 
-def search(platform, relationship=None, target=None, limit=40):
-    """Every live Tier Zero control edge matching a relationship (kind or category) and/or a Tier Zero target."""
+def search(platform, relationship=None, target=None, holder=None, limit=40):
+    """Every live Tier Zero control edge matching a relationship, a Tier Zero target and/or a non-Tier Zero holder."""
     snap = latest(platform)
     if not snap or snap[2].get("unavailable"):
         return {"platform": platform, "available": False, "reason": "No available Tier Zero snapshot"}
     run, observed, e, findings = snap
     nodes = e["nodes"]
+    note = None
+    if target and not holder:
+        # Analysts often name a holder (a computer, a group) where the filter expects a Tier Zero target. Answering
+        # "0 matches" would read as "no exposure", so redirect to the holder side and say so.
+        want = target.strip().casefold()
+        targets = {label(nodes, f["path"][0][2]).casefold() for f in findings.values()} | \
+                  {f["path"][0][2].casefold() for f in findings.values()}
+        holders = {label(nodes, f["path"][0][0]).casefold() for f in findings.values()} | \
+                  {f["path"][0][0].casefold() for f in findings.values()}
+        if want not in targets and want in holders:
+            holder, target = target, None
+            note = (f"{holder.strip()} is not a Tier Zero target; it is a non-Tier Zero holder, so these are the "
+                    f"Tier Zero control edges it holds.")
     rows = []
     for k, f in sorted(findings.items(), key=lambda kf: (kf[1]["path"][0][1], kf[1]["path"][0][0])):
         source, kind, tgt = f["path"][0]
@@ -323,6 +358,8 @@ def search(platform, relationship=None, target=None, limit=40):
         if target and target.strip().casefold() not in (tlabel.casefold(), tgt.casefold()):
             continue
         slabel = label(nodes, source)
+        if holder and holder.strip().casefold() not in (slabel.casefold(), source.casefold()):
+            continue
         rows.append({"citation": f"F-{run}-{k[:12]}", "source": slabel, "source_kind": nodes.get(source, {}).get("kind"),
                      "relationship": kind, "target": tlabel, "target_kind": nodes.get(tgt, {}).get("kind"),
                      "state": state(f), "meaning": meaning(kind, slabel, tlabel)})
@@ -342,9 +379,17 @@ def search(platform, relationship=None, target=None, limit=40):
     for g in by_holder:
         g["tier_zero_targets"] = len(g.pop("targets"))
     what = " and ".join(x for x in (f"relationship '{relationship}'" if relationship else "",
-                                    f"target '{target}'" if target else "") if x) or "any filter"
+                                    f"target '{target}'" if target else "",
+                                    f"holder '{holder}'" if holder else "") if x) or "any filter"
+    by_target = []
+    if len(rows) <= COMPACT:
+        listing = {}
+        for r in rows:
+            listing.setdefault(r["target"], []).append(f"{r['source']} ({kind_phrase(r['relationship'])})")
+        by_target = [{"tier_zero_target": t, "held_by": sorted(set(h))} for t, h in sorted(listing.items())]
     return {"citation": f"T0-{run}", "platform": platform, "snapshot": run, "observed": observed,
-            "filter": {"relationship": relationship, "target": target}, "matches_total": len(rows),
+            "filter": {"relationship": relationship, "target": target, "holder": holder}, "note": note,
+            "by_target": by_target, "matches_total": len(rows),
             "holders_total": len(sources), "tier_zero_targets_total": len(targets),
             "holders_by_kind": dict(Counter(g["holder_kind"] for g in by_holder).most_common()),
             "holders": sources[:limit], "tier_zero_targets": targets[:limit],
@@ -366,7 +411,10 @@ SCHEMAS = {
                                   "result showed it. Each edge has a 'meaning' sentence stating its direction; "
                                   "'reachable_from' counts who can reach this principal, not what it can access.",
     "purple_tier_zero_changes": "Tier Zero control edges that are new, changed or missing at the latest snapshot.",
-    "purple_tier_zero_search": "Every live Tier Zero control edge matching a relationship and/or a Tier Zero target. "
+    "purple_tier_zero_search": "Lists the non-Tier Zero principals (holders) that hold attack edges into Tier Zero, "
+                               "for example who can DCSync, which computers carry Tier Zero logon sessions, or who can "
+                               "add credentials to Tier Zero apps. Filter by relationship, by a Tier Zero target, or by "
+                               "holder to see what one principal gives an attacker. "
                                "relationship is a BloodHound edge kind (for example HasSession, DCSync, ADCSESC1, "
                                "AZAddSecret) or a category: " + ", ".join(sorted(CATEGORIES)) + ". "
                                "For sessions, holders are the computers and tier_zero_targets the logged-on accounts. "
@@ -381,6 +429,7 @@ def schema(name):
     if name == "purple_tier_zero_search":
         props["relationship"] = {"type": "string", "description": "Edge kind or category, e.g. sessions, dcsync"}
         props["target"] = {"type": "string", "description": "Optional exact Tier Zero target label"}
+        props["holder"] = {"type": "string", "description": "Optional exact non-Tier Zero holder label"}
     return {"name": name, "description": SCHEMAS[name] + " Prefer the result's own summary and meaning sentences. "
                                                        "Cite each claim with its [citation] token.",
             "parameters": {"type": "object", "properties": props, "required": list(TOOLS[name]),
@@ -481,6 +530,9 @@ class Gate:
             return "Blocked: platform must be ad or entra."
         if tool_name == "purple_tier_zero_search":
             rel, tgt = args.get("relationship"), args.get("target")
+            hld = args.get("holder")
+            if hld is not None and (not isinstance(hld, str) or not 0 < len(hld) <= 400):
+                return "Blocked: holder must be a principal name of at most 400 characters."
             if rel is not None and (not isinstance(rel, str) or len(rel) > 60):
                 return "Blocked: relationship must be a short edge kind or category name."
             if tgt is not None and (not isinstance(tgt, str) or not 0 < len(tgt) <= 400):
@@ -533,7 +585,9 @@ class Verifier:
         found = []
         cited = CITATION.findall(answer)
         known = turn.citations()
-        if not cited:
+        claims = NUMBER.findall(TIMESTAMP.sub(" ", answer)) or spelled(answer) or [
+            n for n in PRINCIPAL.findall(answer) if n.casefold() not in (turn.question or "").casefold()]
+        if not cited and claims:  # a refusal or clarification with no factual claim needs no citation
             found.append("no evidence citation")
         unknown = sorted(set(cited) - known)
         if unknown:
@@ -608,6 +662,10 @@ def fallback(turn, problems):
             lines.append(f"- {r['platform'].upper()}: {r['summary']} [{r['citation']}]")
             if r.get("holders_by_kind"):
                 lines.append("  - Holders by kind: " + ", ".join(f"{k} {v}" for k, v in r["holders_by_kind"].items()) + ".")
+            if r.get("note"):
+                lines.append(f"  - {r['note']}")
+            for t in r.get("by_target", [])[:12]:
+                lines.append(f"  - {t['tier_zero_target']}: {', '.join(t['held_by'][:8])}.")
             for g in r.get("by_holder", [])[:8]:
                 lines.append(f"  - {g['holder']} ({g['holder_kind']}): {g['edges']} edges to {g['tier_zero_targets']} "
                              f"Tier Zero targets, for example: {g['example']}. [{g['citation']}]")
