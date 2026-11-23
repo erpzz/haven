@@ -159,7 +159,8 @@ def judge(record: dict, episode: dict) -> dict:
     model-clean:     the model's first answer and the trace at that point pass, with no blocked call before it
     corrected-model: the final answer (after at most one verifier revision) passes, with no blocked call
     final-system:    the final answer passes, whatever the harness did
-    keep (W1/W2):    final pass with zero blocked or duplicate calls and transport ok (PLAN.md W1 step 3)
+    keep (W1/W2):    model-clean pass, zero blocked or duplicate calls anywhere, transport ok
+                     (Amendment 2, D1: a pass that needed a verifier correction is not training data)
     """
     m = bench_x.episode_metrics(record, episode)
     attempts = record.get("attempts") or []
@@ -169,7 +170,7 @@ def judge(record: dict, episode: dict) -> dict:
     m["views"] = {"model_clean": bool(m["transport_ok"] and m["raw_pass"] and not blocked_main),
                   "corrected_model": bool(m["transport_ok"] and m["pass"] and not blocked),
                   "final_system": bool(m["transport_ok"] and m["pass"])}
-    m["keep"] = bool(m["transport_ok"] and m["pass"] and not blocked)
+    m["keep"] = bool(m["transport_ok"] and m["views"]["model_clean"] and not blocked)
     return m
 
 

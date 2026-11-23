@@ -281,12 +281,23 @@ def check_general(texts) -> dict:
 
 
 # ------------------------------------------------------------------ fingerprint for Astra's private reserve check
-def export_fingerprint(items) -> dict:
-    """Hashed training fingerprints, so the reserve holder can test collisions privately and report only
-    pass/fail (Amendment 1, section 2). Same tokenizer and rules as this file; nothing is reversible."""
+def prompt_scope(item: dict, episode: dict | None = None) -> dict:
+    """Stage 1 (Amendment 2, D3): only what round 0 reveals anyway, the request text and the principal."""
+    texts = item["texts"][:1]
+    ids = text_ids(texts[0]) if texts else set()
+    if episode is not None:
+        ids.add(str(episode.get("principal", "")).casefold())
+    return {"id": item["id"], "texts": texts, "ids": ids - {""},
+            "structures": {k for k in item.get("structures", ()) if k.startswith(("lineage:", "question:"))}}
+
+
+def export_fingerprint(items, scope: str = "full") -> dict:
+    """Hashed training fingerprints for the reserve holder, who reports only pass/fail (Amendment 1,
+    section 2; Amendment 2, D3). scope="prompts" (stage 1, before any batch) holds no note text, cause or
+    hidden id; scope="full" (stage 2) is only for a pool whose teacher batches are sealed and revealed."""
     def h(x):
         return common.sha256_bytes(x.encode())[:16]
-    return {"schema": "haven-weights-train-fingerprint-1", "params": PARAMS,
+    return {"schema": "haven-weights-train-fingerprint-1", "scope": scope, "params": PARAMS,
             "hash_rule": "first 16 hex of sha256(utf-8 string); n-grams are space-joined norm_tokens",
             "items": len(items),
             "ngram_hashes": sorted({h(g) for it in items for t in it["texts"] for g in ngrams(t)}),
@@ -315,13 +326,20 @@ def main(argv=None):
     x.add_argument("--episodes", required=True)
     x.add_argument("--kind", choices=("hare", "query"), required=True)
     x.add_argument("--out", required=True)
+    x.add_argument("--scope", choices=("prompts", "full"), required=True,
+                   help="prompts: stage 1, before any batch; full: stage 2, after the pool's batches are revealed")
     args = ap.parse_args(argv)
     if args.cmd == "check-general":
         rep = check_general([json.loads(line) for line in open(args.texts) if line.strip()])
         print(json.dumps({k: v for k, v in rep.items() if k != "rejected"} | {"rejected": len(rep["rejected"])}, indent=2))
         raise SystemExit(1 if rep["rejected"] else 0)
     if args.cmd == "export-fingerprint":
-        out = export_fingerprint(items_from_file(args.episodes, args.kind))
+        items = items_from_file(args.episodes, args.kind)
+        if args.scope == "prompts":
+            rows = common.read_jsonl(args.episodes)
+            eps = rows if args.kind == "hare" else [None] * len(rows)
+            items = [prompt_scope(it, ep) for it, ep in zip(items, eps)]
+        out = export_fingerprint(items, args.scope)
         pathlib.Path(args.out).write_text(json.dumps(out) + "\n")
         print(json.dumps({k: (len(v) if isinstance(v, list) else v) for k, v in out.items()}, indent=2))
         return

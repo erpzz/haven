@@ -4,10 +4,9 @@ Format: tool_sft/run.py's rows ({episode, family, source, turn, messages}; the l
 is the assistant target), so PR #95/#45 trainers read them unchanged. Two differences, both
 needed because the training records come from the *full* harness:
 
-* A verifier-rejected first answer is never a target. In a corrected episode the rejected
-  answer stays in the prefix of later turns (that is what the model saw), but no row trains
-  on it.
-* Each row records `teacher`, `arm`, `outcome` and `corrected`, so arms can be filtered and
+* Rows stop at the model's first answer (Amendment 2, D1). Nothing after a verifier message
+  is ever a target or a prefix, so the verifier's feedback never becomes training data.
+* Each row records `teacher`, `arm` and `outcome`, so arms can be filtered and
   the "B without Astra" arm can drop one teacher's rows exactly.
 * Weighting (Amendment 1, section 3, frozen): each episode contributes a total weight of 1.0,
   split equally across its kept traces. Every row of a trace carries that trace's weight in
@@ -24,22 +23,17 @@ def rows_from_record(record: dict, *, source: str, arm: str, teacher: str | None
     messages = record["messages"]
     episode_id = episode_id or record["episode"]
     trace_id = trace_id or f"{episode_id}|{teacher}|{record.get('attempt', 0)}"
-    rejected_index = None
-    if record.get("corrections_used"):
-        # the first final answer, i.e. the assistant turn right before the correction message
-        for i, m in enumerate(messages):
-            if m["role"] == "user" and m["content"].startswith("[runtime verifier]"):
-                rejected_index = i - 1
-                break
-    rows, corrected = [], False
+    rows = []
     for i, m in enumerate(messages):
         if m["role"] == "user" and i > 1:
-            corrected = True
-        if m["role"] != "assistant" or i == rejected_index:
+            break                                    # a verifier correction: stop before it
+        if m["role"] != "assistant":
             continue
         rows.append({"episode": episode_id, "family": record["family"], "source": source, "arm": arm,
                      "teacher": teacher, "trace": trace_id, "turn": i, "outcome": record.get("outcome"),
-                     "corrected": corrected, "messages": messages[:i + 1]})
+                     "messages": messages[:i + 1]})
+        if not m.get("tool_calls"):
+            break                                    # the first answer is the last target
     return rows
 
 
@@ -65,6 +59,6 @@ def episode_weight_totals(rows: list[dict]) -> dict:
 
 def query_row(q: dict, system: str, reply: str, *, source: str, arm: str, teacher: str | None = None) -> dict:
     return {"episode": q["id"], "family": q["family"], "source": source, "arm": arm, "teacher": teacher,
-            "trace": f"{q['id']}|{teacher}|0", "trace_weight": 1.0, "turn": 2, "outcome": None, "corrected": False,
+            "trace": f"{q['id']}|{teacher}|0", "trace_weight": 1.0, "turn": 2, "outcome": None,
             "messages": [{"role": "system", "content": system}, {"role": "user", "content": q["question"]},
                          {"role": "assistant", "content": reply}]}

@@ -7,8 +7,8 @@
 PLAN.md, W1 Stage A steps 1-4 and the Phase 1 gate:
   * every episode is attempted ATTEMPTS times at TEMPERATURE through enforce.run_episode_x with
     advisory checks, gateway, verifier and one correction (the run-1 "full" arm);
-  * an attempt is kept only if the adjudicator passes it against gold with zero blocked or
-    duplicate calls; at most 2 per episode, verifier-accepted first answers preferred;
+  * an attempt is kept only if its first answer passes the adjudicator against gold (model-clean)
+    with zero blocked or duplicate calls; at most 2 per episode, in attempt order (Amendment 2, D1);
   * episodes with no kept attempt are W2's hard episodes;
   * gate G1: the share of passing attempts must fall in [15%, 85%]. This script reports the
     number; the decision is recorded on #123.
@@ -85,10 +85,9 @@ class VramSampler(threading.Thread):
 
 
 def select_kept(rows):
-    """At most KEEP_PER_EPISODE kept attempts, verifier-accepted first answers first."""
-    ok = [r for r in rows if r["keep"]]
-    ok.sort(key=lambda r: (r["outcome"] != "accepted_raw", r["attempt"]))
-    return ok[:KEEP_PER_EPISODE]
+    """At most KEEP_PER_EPISODE kept (model-clean) attempts, in attempt order. The verifier's verdict
+    does not choose between passing attempts (Amendment 2, D1)."""
+    return sorted((r for r in rows if r["keep"]), key=lambda r: r["attempt"])[:KEEP_PER_EPISODE]
 
 
 def summarize(episodes, metrics, attempts):
@@ -109,7 +108,8 @@ def summarize(episodes, metrics, attempts):
     complete = [e for e in episodes if len(by_ep.get(e["id"], [])) == attempts]
     return {"episodes": len(episodes), "episodes_complete": len(complete), "attempts": n_att,
             "passing_attempts": passing, "passing_rate": round(rate, 4),
-            "gate_G1": {"band": list(G1), "in_band": G1[0] <= rate <= G1[1] if n_att else None,
+            "gate_G1": {"band": list(G1), "rate": "model-clean kept attempts / all attempted rollouts",
+                        "in_band": G1[0] <= rate <= G1[1] if n_att else None,
                         "decision": "recorded on #123, not here"},
             "solved_episodes": sum(any(r["keep"] for r in by_ep.get(e["id"], [])) for e in complete),
             "hard_episodes": sum(not any(r["keep"] for r in by_ep.get(e["id"], [])) for e in complete),

@@ -27,6 +27,8 @@ PLAN = {"path": "labs/weights/PLAN.md", "commit": "667bd3a8f90dcdc11b8d55672f8d0
         "sha256": "119930a934de1a7a4a58c4b6624bc4c3094090d2d1a739a3e1025df2bd086720", "pr": 124}
 AMENDMENT = {"path": "labs/weights/AMENDMENT_1.md", "commit": "63bcd6e8e2b53d7559d6965fd372f4cabcf4078a",
              "sha256": "cb7954a2c384059e1acbcc904b5356f0a57e0bcb287a41160274691b124a1a1b", "pr": 124}
+AMENDMENT_2 = {"path": "labs/weights/AMENDMENT_2.md", "commit": "fd2c2998ad83ff1e7da49d7ce8ca461e40d4c867",
+               "sha256": "480db5838d3c7c80b5ff1d6e0d786515dc7737b47d3e086cf39c3b6610c48db7", "pr": 124}
 FILES = ["deps.json", "fetch_deps.py", "common.py", "gen_hare.py", "gen_query.py", "dedupe.py", "sft.py", "pools.py",
          "flip_pairs.py", "rule8/evidence_flip_pairs.jsonl", "pools/dev_manifest.jsonl",
          "oracle_export.py", "astra_batch.py", "manifest.py", "regression/config.json",
@@ -50,8 +52,9 @@ def _check(doc) -> dict:
 
 def plan_check() -> dict:
     """PLAN.md and AMENDMENT_1.md, in the working tree and at their commits, must match their hashes."""
-    p, a = _check(PLAN), _check(AMENDMENT)
-    return {"plan": p, "amendment_1": a, "commit_matches": p["commit_matches"] and a["commit_matches"]}
+    p, a, b = _check(PLAN), _check(AMENDMENT), _check(AMENDMENT_2)
+    return {"plan": p, "amendment_1": a, "amendment_2": b,
+            "commit_matches": p["commit_matches"] and a["commit_matches"] and b["commit_matches"]}
 
 
 def build() -> dict:
@@ -61,11 +64,12 @@ def build() -> dict:
     pairs = common.read_jsonl(HERE / "rule8" / "evidence_flip_pairs.jsonl")
     return {
         "schema": "haven-weights-phase0-manifest-1",
-        "status": "PHASE 0 BUILT AGAINST PLAN.md + AMENDMENT_1.md. No GPU time, no inference, no teacher batch, no "
+        "status": "PHASE 0 BUILT AGAINST PLAN.md + AMENDMENTS 1 AND 2. No GPU time, no inference, no teacher batch, no "
                   "training. Real generator seeds are drawn at Phase 1 start and posted by salted hash then.",
         "plan": PLAN,
         "amendment_1": AMENDMENT,
-        "gates_before_any_gpu_or_batch": ["Astra 6.2 DECISION: sign-off on #123 of PLAN.md as amended by AMENDMENT_1.md",
+        "amendment_2": AMENDMENT_2,
+        "gates_before_any_gpu_or_batch": ["Astra 6.2 DECISION: sign-off on #123 of PLAN.md as amended by AMENDMENT_1.md and AMENDMENT_2.md",
                                           "an accepted M4 reserve commitment on #119 (as of 2026-11-23T03:31Z: v1 and v2 "
                                           "retired; v3 f2c817f1b1896049b82a13c7486dd3be4502e8a90b0b27b9e5bc201080d39318 "
                                           "posted with no ACCEPT)",
@@ -89,7 +93,16 @@ def build() -> dict:
         "deps": {"main_commit": common.SPEC["main"]["commit"],
                  "sources": {s["name"]: {"pr": s["pr"], "commit": s["commit"]} for s in common.SPEC["sources"]}},
         "harness": {"mechanisms_full": common.FULL, "mechanisms_replay": common.REPLAY,
-                    "keep_rule": "adjudicator pass against gold AND zero blocked or duplicate calls AND transport ok"},
+                    "keep_rule": "model-clean pass (first answer and its trace pass the adjudicator) AND zero blocked "
+                                 "or duplicate calls anywhere AND transport ok; rows stop at the first answer "
+                                 "(Amendment 2, D1)"},
+        "reserve_collision_check": "two stages, pass/fail only: --scope prompts before any batch, --scope full "
+                                   "after the pool's batches are sealed and revealed; FAIL regenerates the pool "
+                                   "(Amendment 2, D3)",
+        "rule_4": "unchanged: 2 absolute points per benchmark on the point estimate; paired 95% CI published; no "
+                  "retries (Amendment 2, D2)",
+        "private_store": "owner's Mac ~/haven-private/weights/<pool>/ plus a private Kaggle dataset for notebook "
+                         "inputs only (Amendment 2, D4)",
         "dedupe": {"params": dedupe.PARAMS, "fingerprint_sha256": fp["sha256"], "dev_items": fp["counts"],
                    "structure_keys": len(fp["structures"]), "label_only_sources": sorted(dedupe.LABEL_ONLY),
                    "checks": ["8-token runs", "entity ids", "prompt lineage", "whole-item structure",
@@ -106,7 +119,7 @@ def main(argv=None):
     args = ap.parse_args(argv)
     pc = plan_check()
     if not pc["commit_matches"]:
-        raise SystemExit(f"PLAN.md or AMENDMENT_1.md does not match its registered sha256: {pc}")
+        raise SystemExit(f"PLAN.md or an amendment does not match its registered sha256: {pc}")
     m = build()
     if args.check:
         old = json.loads(OUT.read_text())

@@ -179,17 +179,39 @@ class ArmO(unittest.TestCase):
         with self.assertRaises(SystemExit):
             oracle_export.export_hare(common.bench.load_episodes()[:3])
 
-    def test_a_verifier_rejected_answer_is_never_a_target(self):
+    def test_rows_stop_at_the_first_answer_and_never_include_verifier_feedback(self):
         rec = {"episode": "train-x", "family": "f", "corrections_used": 1, "outcome": "corrected", "messages": [
             {"role": "system", "content": "s"}, {"role": "user", "content": "u"},
             {"role": "assistant", "content": "", "tool_calls": [{"id": "1", "name": "n", "arguments": {}}]},
             {"role": "tool", "content": "{}", "name": "n", "tool_call_id": "1"},
-            {"role": "assistant", "content": "WRONG"},
+            {"role": "assistant", "content": "FIRST"},
             {"role": "user", "content": "[runtime verifier] Your answer was not accepted"},
-            {"role": "assistant", "content": "RIGHT"}]}
+            {"role": "assistant", "content": "REVISED"}]}
         rows = sft.rows_from_record(rec, source="w1", arm="A")
-        self.assertEqual([r["messages"][-1]["content"] for r in rows], ["", "RIGHT"])
-        self.assertEqual([r["corrected"] for r in rows], [False, True])
+        self.assertEqual([r["messages"][-1]["content"] for r in rows], ["", "FIRST"])
+        self.assertFalse(any("[runtime verifier]" in json.dumps(r["messages"]) for r in rows))
+
+    def test_a_pass_that_needed_a_correction_is_not_kept(self):
+        e = next(x for x in EPISODES if x["family"] == "household_own")
+        claims, _, _ = common.adjudicator.extract_claims(e["oracle"]["answer"])
+        good = e["oracle"]["answer"]
+        bad = "It is unknown.\n" + json.dumps({"claims": [{"value": "x", "evidence_id": "ev-00000000",
+                                                             "status": "supported"}]})
+        calls = [c for rnd in e["oracle"]["calls"] for c in rnd]
+
+        class FirstWrongThenRight:
+            def __init__(self):
+                self.replies = [{"content": "", "tool_calls": [c]} for c in calls] + \
+                    [{"content": bad, "tool_calls": []}, {"content": good, "tool_calls": []}]
+
+            def step(self, messages, tools):
+                return self.replies.pop(0)
+        rec = common.run_harness(FirstWrongThenRight(), e, common.FULL)
+        m = common.judge(rec, e)
+        self.assertEqual(rec["outcome"], "corrected")
+        self.assertTrue(m["views"]["final_system"] and m["views"]["corrected_model"])
+        self.assertFalse(m["views"]["model_clean"])
+        self.assertFalse(m["keep"])
 
 
 # ------------------------------------------------------------------ Astra stepwise exchange
@@ -551,6 +573,20 @@ class StructuralDedupe(unittest.TestCase):
         blob = json.dumps(fp)
         self.assertNotIn(EPISODES[0]["prompt"][:30], blob)
         self.assertTrue(all(len(h) == 16 for h in fp["ngram_hashes"][:10]))
+
+    def test_stage1_fingerprint_holds_nothing_round0_does_not_reveal(self):
+        def h(x):
+            return common.sha256_bytes(x.encode())[:16]
+        eps = [e for e in EPISODES if e["world"]["notes"]][:10]
+        items = [dedupe.prompt_scope(dedupe.hare_item(e), e) for e in eps]
+        fp = dedupe.export_fingerprint(items, "prompts")
+        hidden_grams = {h(g) for e in eps for n in e["world"]["notes"] for g in dedupe.ngrams(n["text"])}
+        prompt_grams = {h(g) for e in eps for g in dedupe.ngrams(e["prompt"])}
+        self.assertEqual(set(fp["ngram_hashes"]) & (hidden_grams - prompt_grams), set())
+        hidden_ids = {h(str(n["id"]).casefold()) for e in eps for n in e["world"]["notes"]}
+        self.assertEqual(set(fp["id_hashes"]) & hidden_ids, set())
+        self.assertFalse(any(k.startswith("structure:") for k in fp["structure_keys"]))
+        self.assertEqual(fp["scope"], "prompts")
 
 
 class EvidenceFlipPairs(unittest.TestCase):
