@@ -19,11 +19,14 @@ Hermes's `pre_verify` hook fires only after file edits, so a read-only review re
 | --- | --- |
 | `purple_tier_zero_overview(platform)` | Headline exposure, the computed `fix_first` remediation order and the ten highest-priority non-Tier Zero principals for `ad` or `entra`. |
 | `purple_tier_zero_principal(platform, principal)` | Every control edge one principal holds, its state and the identities able to gain it. |
+| `purple_tier_zero_search(platform, relationship?, target?)` | Every live finding of one edge kind or analyst category (sessions, dcsync, certificates, delegation, app-credentials and more) or against one Tier Zero target. Large results are grouped by holder, with `holders_by_kind`. |
 | `purple_tier_zero_changes(platform)` | New, changed and missing edges at the latest snapshot. A missing edge keeps its last observed labels. |
 
 The tools read the local history written by `python3 -m apm.tier_zero` ([TIER_ZERO.md](TIER_ZERO.md)). They never contact CE, the directory or the network.
 
 ## Run it
+
+`./ops/review.sh` does everything below in one command: Hermes with the `mcp` extra, the model server and the review profile. The manual equivalent follows.
 
 Use Hermes v2026.9.24, the release Haven already pins. Install it separately. Then point a Hermes home at a local OpenAI-compatible model server, for example llama.cpp started with `--jinja`, and enable the plugin. Hermes hides plugin tools behind its Tool Search bridge by default. Turn that off so the review tools are offered to the model directly.
 

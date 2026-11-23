@@ -20,6 +20,14 @@ On 2026-11-22 this took 3 min 32 s from a clean Linux x86-64 container to a scan
 
 **macOS (prepared, not yet executed on a Mac).** Both pinned images are multi-architecture index digests with native `linux/arm64` builds. `ops/fetch.sh` selects the matching `bloodhound-cli` build (darwin-arm64, darwin-amd64, linux-arm64 or linux-amd64) and uses `shasum` where `sha256sum` is absent. Docker Desktop must expose the default socket at `/var/run/docker.sock`. For an offline install, `APM_MCP_CHECKOUT` may point to a clean git checkout of the pinned community MCP commit instead of downloading its tarball.
 
+**Ask questions.** `./ops/review.sh` opens a Hermes Agent chat with the Purple Copilot plugin and a local model. Add a question as an argument for a one-off answer instead. On first use it sets up, under `APM_STATE`:
+- Hermes v2026.9.24 with its MCP extra;
+- llama.cpp b11146 (Metal on macOS, CUDA or CPU on Linux);
+- the hash-checked Qwen3.5-4B model;
+- a review profile.
+
+It reads the local history, so CE does not need to be running. It was tested end to end on Linux (CPU) on 2026-11-22; the macOS build path has not yet been executed on a Mac.
+
 The steps below are what `lab.sh` runs.
 
 Use a Linux x86-64 host with Python 3.11+, Docker Engine with Compose v2, curl, tar, sha256sum, uv and free loopback ports 8080 and 8134. The CPU model runner also uses 8135. Allow space for the database, Docker layers and a 3.05 GB GGUF. Run the commands below from this directory. Private state defaults to `~/.local/state/purple-copilot-apm`. Set `APM_STATE` consistently to use another private directory.
