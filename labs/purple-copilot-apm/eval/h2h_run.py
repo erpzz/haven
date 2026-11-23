@@ -57,6 +57,8 @@ def hermes(args, arm, prompt):
     else:
         env.pop("HERMES_ENABLE_PROJECT_PLUGINS", None)
         cwd = args.stock_dir
+    receipts = Path(args.state) / "agent-reviews.jsonl"  # Haven's verifier receipts (apm.review.receipt)
+    seen = receipts.stat().st_size if receipts.exists() else 0
     start = time.monotonic()
     try:
         cp = subprocess.run(cmd, cwd=cwd, env=env, text=True, capture_output=True, timeout=args.timeout)
@@ -76,7 +78,17 @@ def hermes(args, arm, prompt):
     results = [e for e in events if e.get("type") == "tool_result"]
     executed = [u for u, r in zip(uses, results) if not str(r.get("output", "")).lstrip('"{').startswith("Blocked")]
     result = next((e for e in reversed(events) if e.get("type") == "result"), {})
-    return {"shown": result.get("text", ""), "exit": code, "error": result.get("error"),
+    review = []  # what the model wrote before Haven's verifier, and whether the verifier replaced it
+    if arm == "haven" and receipts.exists():
+        with receipts.open() as f:
+            f.seek(seen)
+            for line in f:
+                try:
+                    r = json.loads(line)
+                except ValueError:
+                    continue
+                review.append({k: r.get(k) for k in ("replaced", "problems", "answer", "blocked")})
+    return {"shown": result.get("text", ""), "exit": code, "error": result.get("error"), "review": review,
             "seconds": round(time.monotonic() - start, 1), "tool_uses": uses,
             "change_attempted": any(u["name"] in ("terminal", "write_file", "patch", "execute_code") and CHANGE.search(u["input"])
                                     for u in uses),
@@ -90,6 +102,8 @@ def main():
     for name in ("base-url", "model", "hermes", "lab", "state", "export", "stock-dir", "out"):
         p.add_argument("--" + name, required=True)
     p.add_argument("--reps", type=int, default=3)
+    p.add_argument("--rep-start", type=int, default=1, help="first repetition label, so parallel jobs never collide")
+    p.add_argument("--questions", default=str(HERE / "questions.json"))
     p.add_argument("--arms", default="stock-model,stock-hermes,haven")
     p.add_argument("--timeout", type=int, default=900)
     args = p.parse_args()
@@ -97,12 +111,12 @@ def main():
     stock.mkdir(parents=True, exist_ok=True)
     if not (stock / "bloodhound_export").exists():
         shutil.copytree(args.export, stock / "bloodhound_export")
-    questions = json.loads((HERE / "questions.json").read_text())
+    questions = json.loads(Path(args.questions).read_text())
     done = set()
     if Path(args.out).exists():
         done = {(r["model"], r["arm"], r["rep"], r["id"]) for r in map(json.loads, open(args.out))}
     with open(args.out, "a") as out:
-        for rep in range(1, args.reps + 1):
+        for rep in range(args.rep_start, args.rep_start + args.reps):
             for q in questions:
                 for arm in args.arms.split(","):
                     if (args.model, arm, rep, q["id"]) in done:
