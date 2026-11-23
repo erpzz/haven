@@ -1,6 +1,8 @@
 """Kaggle job: the preregistered Purple Copilot head-to-head (see eval/PREREGISTRATION.md).
 
 Kaggle T4 GPUs, internet on, datasets haven-llama-b11146-cuda13-sm75 and haven-purple-h2h.
+Push with OWNER in kernel-metadata.json replaced by the Kaggle account, for example:
+  sed "s/OWNER/$KAGGLE_USER/g" kernel-metadata.json > /tmp/push/kernel-metadata.json
 Writes /kaggle/working/h2h-results.jsonl after every run.
 """
 import glob, hashlib, json, os, re, shutil, subprocess, sys, time

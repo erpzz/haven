@@ -1,4 +1,16 @@
-{"id": "yahboyomni/haven-purple-h2h-run", "title": "haven-purple-h2h-run", "code_file": "h2h_kaggle.py",
- "language": "python", "kernel_type": "script", "is_private": true, "enable_gpu": true, "enable_internet": true,
- "dataset_sources": ["yahboyomni/haven-llama-b11146-cuda13-sm75", "yahboyomni/haven-purple-h2h"],
- "competition_sources": [], "kernel_sources": []}
+{
+ "id": "OWNER/haven-purple-h2h-run",
+ "title": "haven-purple-h2h-run",
+ "code_file": "h2h_kaggle.py",
+ "language": "python",
+ "kernel_type": "script",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "dataset_sources": [
+  "OWNER/haven-llama-b11146-cuda13-sm75",
+  "OWNER/haven-purple-h2h"
+ ],
+ "competition_sources": [],
+ "kernel_sources": []
+}
