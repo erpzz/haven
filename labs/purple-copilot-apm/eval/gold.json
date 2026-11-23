@@ -1,0 +1,161 @@
+{
+  "t0-sessions": {
+    "tier_zero_users": [
+      "ADMINISTRATOR@PHANTOM.CORP",
+      "ALICE@PHANTOM.CORP",
+      "ANDY@PHANTOM.CORP",
+      "BM@WRAITH.CORP",
+      "BOB@PHANTOM.CORP",
+      "CHARLIE@PHANTOM.CORP",
+      "FABIAN@PHANTOM.CORP",
+      "JD@PHANTOM.CORP",
+      "ROSHI@PHANTOM.CORP"
+    ],
+    "pairs": [
+      [
+        "ADMINISTRATOR@PHANTOM.CORP",
+        "ADMINSERVER01.PHANTOM.CORP"
+      ],
+      [
+        "ADMINISTRATOR@PHANTOM.CORP",
+        "ALICE-LAPTOP.PHANTOM.CORP"
+      ],
+      [
+        "ADMINISTRATOR@PHANTOM.CORP",
+        "AM-WIN10-DEV02.PHANTOM.CORP"
+      ],
+      [
+        "ADMINISTRATOR@PHANTOM.CORP",
+        "DF-WIN10-DEV01.PHANTOM.CORP"
+      ],
+      [
+        "ADMINISTRATOR@PHANTOM.CORP",
+        "FILESERVER01.PHANTOM.CORP"
+      ],
+      [
+        "ADMINISTRATOR@PHANTOM.CORP",
+        "JONAS-TEST-MS01.PHANTOM.CORP"
+      ],
+      [
+        "ALICE@PHANTOM.CORP",
+        "ADMINSERVER01.PHANTOM.CORP"
+      ],
+      [
+        "ALICE@PHANTOM.CORP",
+        "ALICE-LAPTOP.PHANTOM.CORP"
+      ],
+      [
+        "ALICE@PHANTOM.CORP",
+        "AM-WIN10-DEV02.PHANTOM.CORP"
+      ],
+      [
+        "ANDY@PHANTOM.CORP",
+        "ADMINSERVER01.PHANTOM.CORP"
+      ],
+      [
+        "ANDY@PHANTOM.CORP",
+        "AM-WIN10-DEV02.PHANTOM.CORP"
+      ],
+      [
+        "ANDY@PHANTOM.CORP",
+        "FILESERVER01.PHANTOM.CORP"
+      ],
+      [
+        "ANDY@PHANTOM.CORP",
+        "JONAS-TEST-MS01.PHANTOM.CORP"
+      ],
+      [
+        "ANDY@PHANTOM.CORP",
+        "PAYMENT01.PHANTOM.CORP"
+      ],
+      [
+        "BM@WRAITH.CORP",
+        "UNCON.WRAITH.CORP"
+      ],
+      [
+        "BOB@PHANTOM.CORP",
+        "ADMINSERVER01.PHANTOM.CORP"
+      ],
+      [
+        "BOB@PHANTOM.CORP",
+        "DF-WIN10-DEV01.PHANTOM.CORP"
+      ],
+      [
+        "BOB@PHANTOM.CORP",
+        "JONAS-TEST-MS01.PHANTOM.CORP"
+      ],
+      [
+        "CHARLIE@PHANTOM.CORP",
+        "ADMINSERVER01.PHANTOM.CORP"
+      ],
+      [
+        "CHARLIE@PHANTOM.CORP",
+        "JONAS-TEST-MS01.PHANTOM.CORP"
+      ],
+      [
+        "FABIAN@PHANTOM.CORP",
+        "ADMINSERVER01.PHANTOM.CORP"
+      ],
+      [
+        "JD@PHANTOM.CORP",
+        "ADMINSERVER01.PHANTOM.CORP"
+      ],
+      [
+        "ROSHI@PHANTOM.CORP",
+        "ADMINSERVER01.PHANTOM.CORP"
+      ],
+      [
+        "ROSHI@PHANTOM.CORP",
+        "FILESERVER01.PHANTOM.CORP"
+      ],
+      [
+        "ROSHI@PHANTOM.CORP",
+        "JONAS-TEST-MS01.PHANTOM.CORP"
+      ]
+    ]
+  },
+  "dcsync": {
+    "principals": [
+      "DCSYNCERS@PHANTOM.CORP",
+      "DOMAINUSER@PHANTOM.CORP"
+    ]
+  },
+  "df-win10": {
+    "tier_zero_gained": [
+      "HasSession ADMINISTRATOR@PHANTOM.CORP",
+      "HasSession BOB@PHANTOM.CORP"
+    ]
+  },
+  "domain-users": {
+    "reaches_tier_zero": true,
+    "direct_edges_into_tier_zero": [
+      "ADCSESC3 PHANTOM.CORP",
+      "ADCSESC6b PHANTOM.CORP"
+    ]
+  },
+  "ad-fix-first": {
+    "broad_group_edges_into_tier_zero": [
+      "AUTHENTICATED USERS@PHANTOM.CORP ADCSESC1 PHANTOM.CORP",
+      "AUTHENTICATED USERS@PHANTOM.CORP ADCSESC3 PHANTOM.CORP",
+      "AUTHENTICATED USERS@PHANTOM.CORP ADCSESC6a PHANTOM.CORP",
+      "AUTHENTICATED USERS@PHANTOM.CORP ADCSESC6b PHANTOM.CORP",
+      "DOMAIN COMPUTERS@PHANTOM.CORP ADCSESC3 PHANTOM.CORP",
+      "DOMAIN COMPUTERS@PHANTOM.CORP ADCSESC6b PHANTOM.CORP",
+      "DOMAIN USERS@PHANTOM.CORP ADCSESC3 PHANTOM.CORP",
+      "DOMAIN USERS@PHANTOM.CORP ADCSESC6b PHANTOM.CORP",
+      "EVERYONE@PHANTOM.CORP ADCSESC10a PHANTOM.CORP",
+      "EVERYONE@PHANTOM.CORP ADCSESC9a PHANTOM.CORP"
+    ]
+  },
+  "entra-users": {
+    "users_reaching_tier_zero": 151,
+    "identities_reaching_tier_zero": 7010
+  },
+  "entra-fix": {
+    "best_single_principal": "JohnsAutomationAccount",
+    "identities_removed": 5147,
+    "runner_up": "fdb295a3-AppRoleAssignment.ReadWrite.All@PhantomCorp",
+    "runner_up_removed": 2,
+    "identities_before": 7010
+  }
+}
