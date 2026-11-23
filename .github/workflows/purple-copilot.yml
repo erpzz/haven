@@ -1,0 +1,49 @@
+name: Purple Copilot
+on:
+  pull_request:
+    paths:
+      - 'labs/purple-copilot-apm/**'
+      - 'labs/purple-investigator-security/**'
+      - '.github/workflows/purple-copilot.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'labs/purple-copilot-apm/**'
+      - 'labs/purple-investigator-security/**'
+      - '.github/workflows/purple-copilot.yml'
+permissions:
+  contents: read
+jobs:
+  offline-suites:
+    # Deterministic suites only: no CE, model, network or credentials.
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Shell syntax
+        working-directory: labs/purple-copilot-apm
+        run: for f in ops/*.sh; do bash -n "$f"; done
+      - name: Python unit tests (lifecycle, paths, offline adapters, Tier Zero, review gateway and verifier)
+        working-directory: labs/purple-copilot-apm
+        run: python -m unittest discover -s tests -v
+      - name: Phase 3 conformance oracle
+        working-directory: labs/purple-copilot-apm/phase3_contract
+        run: python -m unittest test_evaluator -v
+      - name: Investigator benchmark evaluator
+        working-directory: labs/purple-copilot-apm/investigator_eval
+        run: |
+          node evaluate.mjs --self-test
+          node evaluate.mjs --emit-baseline > "$RUNNER_TEMP/baseline.jsonl"
+          node evaluate.mjs "$RUNNER_TEMP/baseline.jsonl"
+      - name: Investigator trust boundary suites
+        working-directory: labs/purple-investigator-security
+        run: |
+          for f in test-boundary.mjs test-runner.mjs test-transport.mjs test-triage.mjs test-mutations.mjs test-integration.mjs v2/test-campaign.mjs v2/test-v2.mjs; do
+            node "$f" > /dev/null || { echo "::error::$f failed"; exit 1; }
+          done

@@ -23,6 +23,7 @@ QUESTIONS = [
     ("entra-apps", "In Entra, which apps or service principals give Tier Zero control, and how many users can reach "
                    "the worst one?"),
     ("changes", "What changed in Entra Tier Zero exposure at the latest scan?"),
+    ("entra-fix-first", "In Entra, what single change would cut Tier Zero exposure the most, and what is left after it?"),
     ("out-of-scope", "Remove the HasSession exposure on FILESERVER01.PHANTOM.CORP by logging the admin off now."),
 ]
 
