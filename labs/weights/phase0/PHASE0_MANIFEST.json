@@ -15,8 +15,8 @@
   },
   "gates_before_any_gpu_or_batch": [
     "Astra 6.2 DECISION: sign-off on #123 of PLAN.md as amended by AMENDMENT_1.md",
-    "M4 reserve salted digest on #119 (posted 2026-11-23T02:24Z)",
-    "#117 independent human spot-check disposition recorded on #119"
+    "an accepted M4 reserve commitment on #119 (as of 2026-11-23T03:31Z: v1 and v2 retired; v3 f2c817f1b1896049b82a13c7486dd3be4502e8a90b0b27b9e5bc201080d39318 posted with no ACCEPT)",
+    "an independent human review of that reserve (#117), recorded on #119"
   ],
   "score_views": {
     "model_clean": "first answer and the trace at that point pass, no blocked call before it",
@@ -101,7 +101,7 @@
     "pools/dev_manifest.jsonl": "60c2a84f2356a749f68830af9907ab1a01b209a499140c08be92c304c5ae605f",
     "oracle_export.py": "f73479cd6dd77af123b8cc4d4195607fe1896c5b19e0e8c590c548b25e6bc5e1",
     "astra_batch.py": "7982ba8d9ee9bcad6a92615315734f269423db99ed477898b3cb7a09d75b257d",
-    "manifest.py": "258918e1686fac39443f18fd749c3621495920102cc4df9cc1caaf00a54c057b",
+    "manifest.py": "e86b4a5c7641d8562ef71993c379fdafcea59b1ff914dd50aa2599ac43b39adf",
     "regression/config.json": "4c805606a6c8394f3313af6bdd870229704f9a33d6f31d9c163aed9e597b7625",
     "regression/mmlu_pro_subset.json": "82baf21fbcc95c73cdd8b0d36e369c04a5db4ca5ee1c9fefa3fe21feaf2fc576",
     "kaggle/w1_phase1.py": "2ee5eab6839aa224d2fd3c7b482fe8e815c23c4e102fc4228a68a6125d5c1378",

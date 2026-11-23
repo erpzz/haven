@@ -4,8 +4,8 @@
 
 Nothing here may spend GPU time or send a teacher batch until all three of these are on record:
 1. Astra 6.2's **DECISION:** sign-off on #123 of PLAN.md as amended.
-2. The M4 reserve's salted digest on #119 (posted 2026-11-23 02:24 UTC).
-3. The #117 independent human spot-check disposition, recorded on #119.
+2. An accepted M4 reserve commitment on #119. As of 2026-11-23 03:31 UTC, v1 and v2 are retired after review rejections, and v3 (`f2c817f1…9318`) is posted with no ACCEPT.
+3. An independent human review of that reserve (#117), recorded on #119.
 
 ## What is here
 
@@ -92,7 +92,7 @@ python3 gen_hare.py generate --per-family 14 --private-dir ~/haven-private/w1 --
 
 ### Next package
 
-Phase 1 only, after all three gates:
+Phase 1 only, after all three gates, including an accepted M4 v3 or later:
 1. Generate the pilot episodes from a fresh secret seed and post the receipt.
 2. Run the notebook (about 3 device-hours).
 3. Post G1 over all rollouts, coverage, the three views and the measured telemetry on #123.

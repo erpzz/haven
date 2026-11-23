@@ -66,8 +66,10 @@ def build() -> dict:
         "plan": PLAN,
         "amendment_1": AMENDMENT,
         "gates_before_any_gpu_or_batch": ["Astra 6.2 DECISION: sign-off on #123 of PLAN.md as amended by AMENDMENT_1.md",
-                                          "M4 reserve salted digest on #119 (posted 2026-11-23T02:24Z)",
-                                          "#117 independent human spot-check disposition recorded on #119"],
+                                          "an accepted M4 reserve commitment on #119 (as of 2026-11-23T03:31Z: v1 and v2 "
+                                          "retired; v3 f2c817f1b1896049b82a13c7486dd3be4502e8a90b0b27b9e5bc201080d39318 "
+                                          "posted with no ACCEPT)",
+                                          "an independent human review of that reserve (#117), recorded on #119"],
         "score_views": {"model_clean": "first answer and the trace at that point pass, no blocked call before it",
                         "corrected_model": "final answer after at most one verifier revision passes, no blocked call",
                         "final_system": "final answer passes, whatever the harness did",
