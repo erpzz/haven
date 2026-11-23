@@ -36,6 +36,10 @@ OUT = HERE / "PHASE0_MANIFEST.json"
 def plan_check() -> dict:
     """PLAN.md in the working tree and at its preregistration commit must both match."""
     tree = common.REPO / PLAN["path"]
+    if subprocess.run(["git", "-C", str(common.REPO), "cat-file", "-e", f"{PLAN['commit']}:{PLAN['path']}"],
+                      capture_output=True).returncode:
+        subprocess.run(["git", "-C", str(common.REPO), "fetch", "-q", "--depth=1", "origin", PLAN["commit"]],
+                       capture_output=True)       # a shallow clone may not hold the preregistration commit
     at_commit = subprocess.run(["git", "-C", str(common.REPO), "show", f"{PLAN['commit']}:{PLAN['path']}"],
                                capture_output=True)
     return {"working_tree_matches": tree.exists() and common.sha256_file(tree) == PLAN["sha256"],

@@ -21,7 +21,7 @@
     "sft.py": "841dc25a5c82ca7a51c891f7230cce38e36bec1f1ffb24e42f656751e175f98c",
     "oracle_export.py": "ae4ac40bf938acb16bfdd968c0a1a2abd7e0010b81762a90f9c1076dc859d34a",
     "astra_batch.py": "9c7b2a5f3da5a671bbdb3f07c9091ab32e38eb8131529d1c8c9ad043c90d2e77",
-    "manifest.py": "8f2957c9b9dbbcc9009767ef05fbef438fa152b818dafe4385d7d4a0f588bb74",
+    "manifest.py": "3323f3c582add6b40b050b0e7b24dfffdc3097b53529e5325b7ab7840a6a5416",
     "regression/config.json": "4c805606a6c8394f3313af6bdd870229704f9a33d6f31d9c163aed9e597b7625",
     "regression/mmlu_pro_subset.json": "82baf21fbcc95c73cdd8b0d36e369c04a5db4ca5ee1c9fefa3fe21feaf2fc576",
     "kaggle/w1_phase1.py": "70ec69cd1ce966ef8d6350db6b6ae000d32a32419646e5b72c3853d06a474763",
