@@ -7,6 +7,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 from .policy import REVIEWS
+from .review import clean
 from .store import database
 
 STYLE = Path(__file__).with_name("dashboard.css")
@@ -103,7 +104,7 @@ def plan_html(e):
     items = []
     nodes = e["nodes"]
     for step in e.get("remediation") or []:
-        names = [nodes.get(x, {}).get("label") or x for x in step["sources"]]
+        names = [clean(nodes.get(x, {}).get("label") or x) for x in step["sources"]]
         who = ", ".join(names[:5]) + (f" and {len(names) - 5} more" if len(names) > 5 else "")
         together = " (fix together)" if len(names) > 1 else ""
         edges = "edge" if step["control_edges"] == 1 else "edges"
@@ -143,11 +144,11 @@ def tier_zero_page(selected=None):
             kinds = {}
             for _, f in live:
                 kinds[f["path"][0][1]] = kinds.get(f["path"][0][1], 0) + 1
-            edges = "".join(f'<li>{h(f["path"][0][1])} → {h(nodes.get(f["path"][0][2], {}).get("label") or f["path"][0][2])}'
+            edges = "".join(f'<li>{h(f["path"][0][1])} → {h(clean(nodes.get(f["path"][0][2], {}).get("label") or f["path"][0][2]))}'
                             f' <small>{h(f.get("observation") or f["state"])} · {h(k[:12])}</small></li>'
                             for k, f in sorted(items, key=lambda kf: kf[1]["path"][0][1]))
             label = nodes.get(source, {})
-            rows.append(f'<tr><td><details><summary><b>{h(label.get("label") or source)}</b> <small>{h(label.get("kind"))}</small></summary>'
+            rows.append(f'<tr><td><details><summary><b>{h(clean(label.get("label") or source))}</b> <small>{h(label.get("kind"))}</small></summary>'
                         f'<p><small>{h(source)}</small></p><ul>{edges}</ul></details></td>'
                         f'<td data-label="Identities able to gain it"><b>{h(items[0][1]["priority"]["score"])}</b><br><small>{h(factors.get("users", 0))} users · '
                         f'{h(factors.get("computers", 0))} computers · {h(factors.get("workloads", 0))} workloads</small></td>'
