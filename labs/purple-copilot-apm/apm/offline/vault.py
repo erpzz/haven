@@ -7,6 +7,7 @@ from contextlib import closing
 from datetime import timedelta
 from pathlib import Path
 
+from .timeline import observation_groups
 from ..path_history import get_run, confidence as graph_confidence
 from ..paths import digest
 from ..samples import FILES, ROOT
@@ -225,6 +226,10 @@ def correlate(run, fingerprint, artifact):
 def report(run, fingerprint, as_of):
     utc(as_of)
     e, path, _ = historical(run, fingerprint)
+    require(
+        utc(e["observed"]) <= utc(as_of),
+        "Graph observation unavailable at report clock",
+    )
     snapshot = digest(e)
     result = {s: [] for s in SECTIONS}
     result["path_context"] = dict(
@@ -241,6 +246,7 @@ def report(run, fingerprint, as_of):
     )
     result["joins"] = []
     with closing(connect(True)) as db:
+        db.execute("BEGIN")
         confidence_by_id = {}
         for r in db.execute(
             """SELECT a.* FROM correlated_artifacts c JOIN artifacts a ON a.id=c.artifact
@@ -248,10 +254,13 @@ def report(run, fingerprint, as_of):
             (run, snapshot, fingerprint),
         ):
             m = json.loads(r["manifest"])
+            if utc(m["received_utc"]) > utc(as_of):
+                continue
+            required = "tests" if r["source"] == "maester" else "role-assignments"
             c = confidence(
                 m["complete"],
                 m["partitions"],
-                ["tests" if r["source"] == "maester" else "role-assignments"],
+                [required],
                 m["warnings"],
                 m["collected_utc"],
                 as_of,
@@ -264,7 +273,15 @@ def report(run, fingerprint, as_of):
                 identity_basis=m["identity_basis"],
                 run=r["run"],
                 collected=m["collected_utc"],
-                confidence=c,
+                confidence="limited" if c == "limited" else "qualified_by_receipt",
+                integrity="sha256_matched_at_import",
+                coverage="complete"
+                if m["complete"] and required in m["partitions"] and not m["warnings"]
+                else "incomplete",
+                freshness="fresh"
+                if utc(as_of) - utc(m["collected_utc"]) <= timedelta(days=1)
+                else "stale",
+                producer_authentication="unverified",
                 sha256=r["sha"],
                 format=m["format"],
                 producer_revision=m["producer_revision"],
@@ -275,10 +292,8 @@ def report(run, fingerprint, as_of):
                 partitions=m["partitions"],
                 warnings=m["warnings"],
             )
-            if utc(m["received_utc"]) > utc(as_of):
-                c = receipt["confidence"] = "limited"
             result["collection_quality"].append(receipt)
-            confidence_by_id[r["id"]] = c
+            confidence_by_id[r["id"]] = receipt["confidence"]
         for r in db.execute(
             """SELECT a.*, r.seq,r.data,r.category,r.kind,r.native,l.outcome FROM links l
             JOIN artifacts a ON a.id=l.artifact JOIN records r ON r.artifact=l.artifact AND r.seq=l.seq
@@ -286,6 +301,8 @@ def report(run, fingerprint, as_of):
             ORDER BY a.id,r.seq""",
             (run, snapshot, fingerprint),
         ):
+            if r["id"] not in confidence_by_id:
+                continue
             result["joins"].append(
                 dict(
                     artifact=r["id"],
@@ -325,18 +342,22 @@ def report(run, fingerprint, as_of):
         section: "linked" if result[section] else "unknown"
         for section in ("identity_tier_evidence", "posture_evidence")
     }
-    if not result["identity_tier_evidence"]:
-        action = (
-            "Obtain a scoped privilege export and resolve its native object references."
-        )
-    elif any(
-        r.get("assignment_mode") == "eligible" for r in result["identity_tier_evidence"]
-    ):
+    receipts = {r["artifact"]: r for r in result["collection_quality"]}
+    entitlements = observation_groups(
+        result["identity_tier_evidence"], receipts, posture=False
+    )
+    checks = observation_groups(result["posture_evidence"], receipts, posture=True)
+    result["latest_observations_as_of"] = dict(
+        entitlements=entitlements, posture=checks
+    )
+    if any(g["conflict"] for g in entitlements + checks):
+        action = "Reconcile contradictory observations with their source owners."
+    elif any("eligible" in g["values"] for g in entitlements):
         action = "Review the eligible assignment's scope and check for separately recorded activation."
+    elif entitlements:
+        action = "Verify the latest reported assignment and its scope with the identity owner."
     else:
-        action = (
-            "Validate the linked assignments and their scopes with the identity owner."
-        )
+        action = "Obtain a scoped privilege export and verify the assignment identity."
     result["recommendation"] = (
         action + " Verify current membership before acting on this historical path."
     )

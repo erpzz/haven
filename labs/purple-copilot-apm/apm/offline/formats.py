@@ -121,6 +121,10 @@ def eam(doc, manifest):
         )
         ids = []
         for a in array(p["RoleAssignments"]):
+            require(
+                a.get("RoleSystem", system) == system,
+                "Assignment RoleSystem conflicts with receipt",
+            )
             aid = text(a.get("RoleAssignmentInstanceId") or a.get("RoleAssignmentId"))
             ids.append(aid)
             rows.append(

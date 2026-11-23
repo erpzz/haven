@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 
+from apm.local import now
 from apm.offline.demo import FIXTURES, fixture
 from apm.offline.formats import PARSERS
 from apm.offline.vault import bounded, correlate, ingest, report
@@ -29,7 +30,7 @@ def check():
         )
         assert state == "accepted"
         correlate(run, fp, aid)
-    view = report(run, fp, "2026-11-21T20:00:00Z")
+    view = report(run, fp, now())
     after = hashlib.sha256(history.read_bytes()).hexdigest()
     assert before == after
     assert (
