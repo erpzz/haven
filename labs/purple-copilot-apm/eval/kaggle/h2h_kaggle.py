@@ -7,7 +7,7 @@ Writes /kaggle/working/h2h-results.jsonl after every run.
 """
 import glob, hashlib, json, os, re, shutil, subprocess, sys, time
 
-HAVEN_COMMIT = "6d62b1032f602efcb994b24e9d3760b69f940087"
+HAVEN_COMMIT = "ba3fcf6efb4a47d842653f6505ad81c7df0eb2cc"
 HERMES_REF = "v2026.9.24"
 RUNS = [  # model spec, alias, repetitions
     ({"repo": "unsloth/Qwen3.5-4B-GGUF", "revision": "e87f176479d0855a907a41277aca2f8ee7a09523",
