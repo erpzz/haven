@@ -203,13 +203,8 @@ def main(argv=None):
     p.add_argument("bundle")
     p.add_argument("--artifact-root")
     args=p.parse_args(argv)
-    try:
-        raw=Path(args.bundle).read_bytes()
-    except OSError:
-        result=receipt(["BUNDLE_READ_FAILED"])
-    else:
-        doc,err=parse_bundle(raw)
-        result=err or (verify_artifact_root(doc,args.artifact_root) if args.artifact_root else check_bundle(doc))
+    doc,err=read_bundle_file(args.bundle)
+    result=err or (verify_artifact_root(doc,args.artifact_root) if args.artifact_root else check_bundle(doc))
     print(json.dumps(result,sort_keys=True))
     return 0 if result["status"]=="pass" else 2
 if __name__=="__main__": raise SystemExit(main())
