@@ -51,7 +51,7 @@ This is the main integration target for context narrowing on a small model.
 
 2. **Free-form descriptions are not routing metadata.** Tool descriptions can be long and dynamic; admitted skill metadata can originate in model-authored candidate content before owner admission. The prototype scores only explicit host-curated lowercase `route_terms`. Description/schema text is carried to the model only after the tool is selected.
 
-3. **Dynamic catalogs need invalidation.** A catalog SHA-256 binds tool name, effect, route metadata and the exact model-visible definition. The hash is order-independent so transport reordering is harmless, but any semantic/card change invalidates a bound selection. A `tools/list_changed` event must force a refresh/reroute before another model turn.
+3. **Dynamic catalogs need invalidation.** A catalog SHA-256 binds tool name, effect, route metadata and the exact model-visible definition. The hash is order-independent so transport reordering is harmless, but any semantic/card change invalidates a bound selection. A `tools/list_changed` event must force a refresh/reroute before another model turn. The integration should also refresh/compare the bound hash immediately before dispatch so a catalog change between model request and tool call fails closed.
 
 4. **Effects are filtered separately from relevance.** The default router admits only `read` cards. Change/create tools can be considered only when the host explicitly permits those effects *and* the tool is already authorized. Relevance never upgrades effect authority.
 
@@ -74,12 +74,12 @@ This is the main integration target for context narrowing on a small model.
 For the Haven operator small-model route:
 
 1. Read the server's complete current tool catalog before a model request.
-2. Build trusted cards from exact model-visible definitions plus host-curated route terms/effect metadata.
+2. Build trusted cards from the exact **post-client-transform definition that Hermes will place in the model request**, plus host-curated route terms/effect metadata. MCP `tools/list` source objects are not automatically identical to the OpenAI-compatible definitions the model receives.
 3. Intersect with the host-authorized surface.
 4. Route the current task under hard count/byte/effect budgets.
 5. Instantiate/bind PR #129's exact model-visible scope to the selected names and argument constraints.
-6. Use PR #127's first-request probe to verify the model request actually contains that selected set.
-7. On `tools/list_changed` or any catalog-hash change, invalidate the selection before the next model turn and repeat.
+6. Use PR #127's first-request probe to verify the model request actually contains that selected set and the expected transformed definitions.
+7. On `tools/list_changed` or any catalog-hash change, invalidate the selection before the next model turn; refresh the bound catalog again at pre-tool-call so a selected name cannot silently point at changed semantics.
 8. Record the catalog/selection hash in PR #130's immutable run manifest when checkpointing is enabled.
 
 For Haven Cyber, retain the existing four-tool facade unless controlled evaluation shows a material problem. Inner registry-tool choice can be narrowed through `cyber_call` plus PR #129 nested target constraints.
@@ -92,4 +92,4 @@ For Haven Cyber, retain the existing four-tool facade unless controlled evaluati
 - Serialized byte budget is not tokenizer-aware.
 - It does not sanitize selected tool descriptions/schema text.
 - It does not decide owner approvals or change/create authorization.
-- Real first-request context size, latency and accuracy impact on Qwythos were not measured here.
+- Real first-request context size, latency and accuracy impact on Qwythos were not measured here. Persisted selected-tool names can also reveal coarse task intent even without storing the query; receipt privacy needs an integration decision.
