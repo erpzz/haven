@@ -52,7 +52,7 @@ These findings are source-reading results, not claims that the existing verifier
 
 ## Second-pass defects caught in this work
 
-Before publication, author re-review found two defects in the new gate itself:
+Author re-review/final-diff review found three defects in the new gate itself:
 - malformed finding reference arrays could reach `set()` and crash on unhashable values after being flagged; fixed by guarding all lineage operations behind validated string-list types;
 - the CLI originally used `read_bytes()` before applying the bundle-size check; fixed by reading at most `MAX_BUNDLE_BYTES + 1`.
 
