@@ -70,7 +70,8 @@ Second-pass changes before publication:
 1. attempt N+1 initially lacked a trustworthy process/recovery boundary; added explicit `run_resumed` epochs;
 2. the planner alone initially blocked non-replay-safe recovery; the journal transition validator now independently refuses such restart;
 3. manifest hash can no longer be the all-zero sentinel;
-4. the initial payload API accepted raw objects and hashed them, which could leak low-entropy private values through offline guessing; raw payload input was removed;\n5. final-diff review found that merely reopening the file was being treated as proof of a new recovery process; resume is now an explicit host decision (`open(resume=True)`), with exclusive old-process ownership/death left as an integration requirement.
+4. the initial payload API accepted raw objects and hashed them, which could leak low-entropy private values through offline guessing; raw payload input was removed;
+5. final-diff review found that merely reopening the file was being treated as proof of a new recovery process; resume is now an explicit host decision (`open(resume=True)`), with exclusive old-process ownership/death left as an integration requirement.
 
 ## Integration order
 
