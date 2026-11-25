@@ -110,5 +110,6 @@ For Haven Cyber, keep #105's compact four-tool lazy facade unless evaluation dem
 - dynamic `tools/list_changed` live behavior and route→dispatch catalog-change race;
 - owner-signed provenance for route terms;
 - sanitization/minimization of a selected dynamic skill's description/schema;
-- privacy disposition for persisted selected-tool names, which can reveal coarse task intent even though the query is not stored;\n- macOS integration;
+- privacy disposition for persisted selected-tool names, which can reveal coarse task intent even though the query is not stored;
+- macOS integration;
 - independent review.
