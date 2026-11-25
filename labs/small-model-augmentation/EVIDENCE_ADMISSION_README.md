@@ -30,14 +30,14 @@ The intended order is:
 
 Initial implementation: 16/16 unit tests passed in the ChatGPT Linux sandbox.
 
-Mandatory second pass then found two defects in this package itself:
+Mandatory second pass found three defects in this package itself:
 1. malformed finding reference arrays could be flagged and then still crash during `set()`/membership logic;
 2. the CLI originally called `read_bytes()` before applying the bundle size limit.
 
 Both were fixed. A local semantic rerun of the complete logic plus second-pass cases passed **19/19** in 4.281 s, including malformed reference arrays, non-finite/non-JSON observation values and bounded file reads.
 
 Final published blobs after the fixes:
-- `evidence_admission.py`: `0daa7495a1778c740a444b8f2a3a7b5385b9e953`
+- `evidence_admission.py`: `7f90ffd11f89816f32d26c7e6c88cd89301f5f14`
 - `test_evidence_admission.py`: `b17170ccfea01b02f90936d07094d0943a29e817`
 
 **Exact final-commit clean-checkout execution is NOT claimed.** The sandbox could not resolve `raw.githubusercontent.com` when attempting to pull the commit back for execution. The connector was used to re-read the final files, but it cannot execute them. A clean-checkout run is therefore explicitly assigned to the Codex/local validation queue.
