@@ -39,10 +39,14 @@ class EvidenceAdmissionTests(unittest.TestCase):
         for state in ("corroborated","confirmed","refuted","insufficient_evidence"):
             b=valid_bundle(); b["findings"][0]["verification"]=state
             self.assertIn("PREVERIFIED_FINDING",e.check_bundle(b)["errors"])
+        b=valid_bundle(); b["findings"][0]["verification_notes"]=["already checked"]
+        self.assertIn("PREVERIFIED_FINDING",e.check_bundle(b)["errors"])
 
     def test_decisive_requires_evidence(self):
-        b=valid_bundle(); b["observations"]=[]; b["findings"][0]["observations"]=[]; b["findings"][0]["artifacts"]=[]
-        self.assertIn("DECISIVE_FINDING_WITHOUT_EVIDENCE",e.check_bundle(b)["errors"])
+        for status in ("pass","fail"):
+            b=valid_bundle(); b["findings"][0]["status"]=status
+            b["observations"]=[]; b["findings"][0]["observations"]=[]; b["findings"][0]["artifacts"]=[]
+            self.assertIn("DECISIVE_FINDING_WITHOUT_EVIDENCE",e.check_bundle(b)["errors"])
 
     def test_paths(self):
         for p in ("../secret.json","x/../../secret.json","/etc/passwd","C:\\secret.json","\\server\\share\\x"):
@@ -90,6 +94,18 @@ class EvidenceAdmissionTests(unittest.TestCase):
             b=valid_bundle(); b["findings"][0]["confidence"]=v
             self.assertIn("INVALID_CONFIDENCE",e.check_bundle(b)["errors"])
 
+    def test_malformed_reference_lists_fail_closed_not_crash(self):
+        for key,value in (("observations",[{"bad":1}]),("artifacts",[{"bad":1}]),("controls",[{"bad":1}])):
+            b=valid_bundle(); b["findings"][0][key]=value
+            r=e.check_bundle(b)
+            self.assertEqual(r["status"],"block")
+            self.assertIn("INVALID_FINDING_LIST",r["errors"])
+
+    def test_observation_value_must_be_finite_json(self):
+        for value in (float("nan"),float("inf"),{1:"bad"},object()):
+            b=valid_bundle(); b["observations"][0]["value"]=value
+            self.assertIn("INVALID_OBSERVATION_VALUE",e.check_bundle(b)["errors"])
+
     def test_cli_redacts_paths_and_values(self):
         with tempfile.TemporaryDirectory() as d:
             b=valid_bundle(); b["artifacts"][0]["path"]="../PRIVATE_MARKER.json"
@@ -100,6 +116,8 @@ class EvidenceAdmissionTests(unittest.TestCase):
 
     def test_bundle_duplicate_json_key(self):
         doc,err=e.parse_bundle(b'{"schema":"x","schema":"y","artifacts":[],"observations":[],"findings":[]}')
+        self.assertIsNone(doc); self.assertEqual(err["errors"],["INVALID_BUNDLE_JSON"])
+        doc,err=e.parse_bundle(b'{"schema":"haven-cyber-evidence-v1","artifacts":[],"observations":[{"id":1e999}],"findings":[]}')
         self.assertIsNone(doc); self.assertEqual(err["errors"],["INVALID_BUNDLE_JSON"])
 
     def test_root_pointer_and_nested(self):
