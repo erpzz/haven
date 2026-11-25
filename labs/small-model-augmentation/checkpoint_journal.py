@@ -346,7 +346,7 @@ class Journal:
         self.manifest_sha256 = manifest_sha256
         self.fsync = fsync
 
-    def open(self):
+    def open(self, resume=False):
         with _locked_file(self.path) as fh:
             s = scan(self.path)
             if not s.ok:
@@ -361,7 +361,7 @@ class Journal:
                 first = s.events[0]
                 if first["run_id"] != self.run_id or first["manifest_sha256"] != self.manifest_sha256:
                     raise ValueError("run identity mismatch")
-                if s.events[-1]["event"] != "run_completed":
+                if resume and s.events[-1]["event"] != "run_completed":
                     self._append_locked(fh, s, "run_resumed", "", 0, "", False, ZERO)
             else:
                 self._append_locked(fh, s, "run_started", "", 0, "", False, ZERO)
