@@ -4,7 +4,7 @@ This is a structural/lineage gate for untrusted or model-adjacent evidence. It d
 replace domain re-derivation. Receipts contain fixed codes and counts only.
 """
 from __future__ import annotations
-import argparse, hashlib, json, math, os, re, sys
+import argparse, hashlib, json, math, re
 from pathlib import Path
 
 SCHEMA = "haven-cyber-evidence-v1"
@@ -31,6 +31,16 @@ def _plain(v): return type(v) is dict
 def _text(v, limit=4096): return type(v) is str and 0 < len(v) <= limit and CONTROL.search(v) is None
 def _str_list(v, limit=MAX_ITEMS):
     return type(v) is list and len(v) <= limit and all(type(x) is str and len(x) <= 4096 and CONTROL.search(x) is None for x in v)
+
+def _json_value_ok(v, depth=0):
+    if depth > 100: return False
+    if v is None or type(v) in (str, bool, int): return True
+    if type(v) is float: return math.isfinite(v)
+    if type(v) is list: return len(v) <= MAX_ITEMS and all(_json_value_ok(x, depth+1) for x in v)
+    if type(v) is dict:
+        return len(v) <= MAX_ITEMS and all(type(k) is str and _json_value_ok(x, depth+1) for k,x in v.items())
+    return False
+
 def _safe_rel_path(value):
     if not _text(value, 4096): return False
     if value.startswith(("/", "\\")) or re.match(r"^[A-Za-z]:[\\/]", value): return False
@@ -81,7 +91,9 @@ def _load_json_bytes(raw):
             out[k]=v
         return out
     def reject_constant(_): raise ValueError("nonfinite")
-    return json.loads(raw.decode("utf-8-sig"), object_pairs_hook=unique, parse_constant=reject_constant)
+    value=json.loads(raw.decode("utf-8-sig"), object_pairs_hook=unique, parse_constant=reject_constant)
+    if not _json_value_ok(value): raise ValueError("invalid json value")
+    return value
 
 def check_bundle(doc):
     errors=[]
@@ -110,6 +122,7 @@ def check_bundle(doc):
         else: oids.add(oid); omap[oid]=o
         if type(o.get("artifact")) is not str or o.get("artifact") not in amap: errors.append("UNDECLARED_OBSERVATION_ARTIFACT")
         if not _pointer_ok(o.get("pointer")): errors.append("INVALID_JSON_POINTER")
+        if not _json_value_ok(o.get("value")): errors.append("INVALID_OBSERVATION_VALUE")
         if type(o.get("note")) is not str or len(o.get("note"))>4096 or CONTROL.search(o.get("note")): errors.append("INVALID_OBSERVATION_NOTE")
     for f in finds[:MAX_ITEMS+1]:
         if not _plain(f) or set(f)!=FINDING_KEYS: errors.append("INVALID_FINDING"); continue
@@ -132,11 +145,13 @@ def check_bundle(doc):
         if f.get("verification")!="reported" or f.get("verification_notes")!=[]: errors.append("PREVERIFIED_FINDING")
         fo=f.get("observations") if type(f.get("observations")) is list else []
         fa=f.get("artifacts") if type(f.get("artifacts")) is list else []
-        if len(fo)!=len(set(fo)) or len(fa)!=len(set(fa)): errors.append("DUPLICATE_FINDING_REFERENCE")
-        if any(x not in omap for x in fo): errors.append("UNKNOWN_FINDING_OBSERVATION")
-        if any(x not in amap for x in fa): errors.append("UNKNOWN_FINDING_ARTIFACT")
-        linked={omap[x]["artifact"] for x in fo if x in omap and type(omap[x]) is dict and omap[x].get("artifact") in amap}
-        if set(fa)!=linked: errors.append("FINDING_LINEAGE_MISMATCH")
+        refs_ok=_str_list(fo) and _str_list(fa)
+        if refs_ok:
+            if len(fo)!=len(set(fo)) or len(fa)!=len(set(fa)): errors.append("DUPLICATE_FINDING_REFERENCE")
+            if any(x not in omap for x in fo): errors.append("UNKNOWN_FINDING_OBSERVATION")
+            if any(x not in amap for x in fa): errors.append("UNKNOWN_FINDING_ARTIFACT")
+            linked={omap[x]["artifact"] for x in fo if x in omap and type(omap[x]) is dict and omap[x].get("artifact") in amap}
+            if set(fa)!=linked: errors.append("FINDING_LINEAGE_MISMATCH")
         if f.get("status") in ("pass","fail") and (not fo or not fa): errors.append("DECISIVE_FINDING_WITHOUT_EVIDENCE")
         if f.get("status")=="fail" and not f.get("remediation"): errors.append("FAILING_FINDING_WITHOUT_REMEDIATION")
     return receipt(errors,artifacts=len(arts),observations=len(obs),findings=len(finds))
