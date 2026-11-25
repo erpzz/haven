@@ -120,6 +120,18 @@ class EvidenceAdmissionTests(unittest.TestCase):
         doc,err=e.parse_bundle(b'{"schema":"haven-cyber-evidence-v1","artifacts":[],"observations":[{"id":1e999}],"findings":[]}')
         self.assertIsNone(doc); self.assertEqual(err["errors"],["INVALID_BUNDLE_JSON"])
 
+    def test_bundle_file_read_is_bounded(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d,"bundle.json"); p.write_bytes(b"x"*33)
+            old=e.MAX_BUNDLE_BYTES
+            try:
+                e.MAX_BUNDLE_BYTES=32
+                doc,err=e.read_bundle_file(p)
+            finally:
+                e.MAX_BUNDLE_BYTES=old
+            self.assertIsNone(doc)
+            self.assertEqual(err["errors"],["BUNDLE_TOO_LARGE"])
+
     def test_root_pointer_and_nested(self):
         raw=json.dumps({"a/b":{"~":[1,{"x":"y"}]}},separators=(",",":")).encode(); sha=hashlib.sha256(raw).hexdigest()
         b=valid_bundle(); b["artifacts"][0]["sha256"]=sha; b["observations"][0].update(artifact=sha,pointer="/a~1b/~/1/x",value="y"); b["findings"][0]["artifacts"]=[sha]
