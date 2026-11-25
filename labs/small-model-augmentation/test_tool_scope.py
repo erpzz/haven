@@ -121,6 +121,20 @@ class ScopeTests(unittest.TestCase):
         missing=s.check_call(p,st,visible[0],{"tool_id":"entra.ca.assess","arguments":{}})
         self.assertIn("CONSTRAINED_VALUE_MISSING",missing["errors"])
 
+    def test_exact_structured_target_is_type_strict(self):
+        p=policy()
+        p["argument_rules"]["mcp_haven_cyber_search"]["allowed_keys"].append("targets")
+        p["argument_rules"]["mcp_haven_cyber_search"]["required_keys"].append("targets")
+        p["argument_rules"]["mcp_haven_cyber_search"]["exact_values"]["/targets"]=[["id-a","id-b"]]
+        st=s.State()
+        self.assertEqual(s.check_call(p,st,"mcp_haven_cyber_search",
+            {"query":"x","domain":"network","targets":["id-a","id-b"]})["status"],"pass")
+        st=s.State()
+        self.assertIn("ARGUMENT_VALUE_OUT_OF_SCOPE",s.check_call(p,st,"mcp_haven_cyber_search",
+            {"query":"x","domain":"network","targets":["id-b","id-a"]})["errors"])
+        p["argument_rules"]["mcp_haven_cyber_search"]["exact_values"]["/targets"]=[["id-a","<TARGET>"]]
+        self.assertIn("INVALID_EXACT_VALUES",s.validate_policy(p))
+
     def test_policy_json_duplicate_and_nonfinite(self):
         doc,err=s.parse_policy(b'{"schema":"x","schema":"y"}')
         self.assertIsNone(doc); self.assertIn("INVALID_POLICY_JSON",err["errors"])
