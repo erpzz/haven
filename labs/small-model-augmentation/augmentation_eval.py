@@ -4,7 +4,8 @@ This does not replace any domain grader and refuses reserve-tagged reports. Each
 contains grader/runtime-owned metrics only; no model transcript or gold is needed.
 """
 from __future__ import annotations
-import hashlib, json, math, re
+import argparse, hashlib, json, math, re
+from pathlib import Path
 from collections import defaultdict
 
 SCHEMA = "haven.augmentation-eval-arm.v1"
@@ -12,6 +13,7 @@ RECEIPT = "haven.augmentation-eval-compare.v1"
 HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 TOKEN = re.compile(r"[A-Za-z0-9_.:@/+ -]{1,256}\Z", re.ASCII)
 MAX_ROWS = 10000
+MAX_REPORT_BYTES = 32 * 1024 * 1024
 MANIFEST_KEYS = {
     "schema","experiment","comparison_group","arm","dataset_id","dataset_sha256",
     "model_id","model_artifact_sha256","engine","hardware","temperature",
@@ -194,3 +196,50 @@ def compare(a,b):
             ("nonreplayable_replays",sb["nonreplayable_replays"]),
             ("recovery_failures",sb["recovery_failures"])) if val],
     }
+
+def load_report(path):
+    try:
+        with Path(path).open("rb") as fh:
+            raw=fh.read(MAX_REPORT_BYTES+1)
+    except OSError:
+        return None, ["REPORT_READ_FAILED"]
+    if len(raw)>MAX_REPORT_BYTES:
+        return None, ["REPORT_TOO_LARGE"]
+    def unique(pairs):
+        out={}
+        for k,v in pairs:
+            if k in out: raise ValueError("duplicate")
+            out[k]=v
+        return out
+    def reject(_):
+        raise ValueError("nonfinite")
+    try:
+        value=json.loads(raw.decode("utf-8"), object_pairs_hook=unique, parse_constant=reject)
+    except (UnicodeDecodeError, ValueError, RecursionError):
+        return None, ["INVALID_REPORT_JSON"]
+    errors=validate(value)
+    return (None, errors) if errors else (value, [])
+
+def main(argv=None):
+    p=argparse.ArgumentParser()
+    sub=p.add_subparsers(dest="cmd", required=True)
+    v=sub.add_parser("validate"); v.add_argument("report")
+    q=sub.add_parser("compare"); q.add_argument("a"); q.add_argument("b")
+    args=p.parse_args(argv)
+    if args.cmd=="validate":
+        report,errors=load_report(args.report)
+        out={"schema":RECEIPT,"status":"block" if errors else "pass","errors":errors}
+        if report is not None:
+            out["report_sha256"]=report_sha256(report)
+    else:
+        a,ea=load_report(args.a); b,eb=load_report(args.b)
+        if ea or eb:
+            out={"schema":RECEIPT,"status":"block",
+                 "errors":sorted(set(["A:"+x for x in ea]+["B:"+x for x in eb]))}
+        else:
+            out=compare(a,b)
+    print(json.dumps(out,sort_keys=True))
+    return 0 if out["status"]=="pass" else 2
+
+if __name__=="__main__":
+    raise SystemExit(main())
