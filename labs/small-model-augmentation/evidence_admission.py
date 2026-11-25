@@ -198,6 +198,14 @@ def parse_bundle(raw):
     except (UnicodeDecodeError,ValueError,RecursionError): return None, receipt(["INVALID_BUNDLE_JSON"])
     return doc,None
 
+def read_bundle_file(path):
+    try:
+        with Path(path).open("rb") as fh:
+            raw=fh.read(MAX_BUNDLE_BYTES+1)
+    except OSError:
+        return None, receipt(["BUNDLE_READ_FAILED"])
+    return parse_bundle(raw)
+
 def main(argv=None):
     p=argparse.ArgumentParser()
     p.add_argument("bundle")
