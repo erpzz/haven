@@ -30,7 +30,7 @@ A guessed `../../etc/hosts`, another registry tool id, or a missing constrained 
 
 ## Author tests and second pass
 
-Local Linux semantic run after second-pass hardening: **16/16 test methods pass**.
+Local Linux semantic run after second-pass hardening: **17/17 test methods pass**.
 
 Coverage includes:
 - exact visible surface; missing/extra/duplicate visible tools;
@@ -39,7 +39,7 @@ Coverage includes:
 - exact type-strict value checks;
 - placeholder/null policy rejection;
 - total/per-tool/duplicate budgets;
-- nested dispatcher target constraints;
+- nested dispatcher target constraints;\n- type-strict structured exact targets (including ordered lists) and placeholder rejection inside them;
 - atomic concurrent budget test (20 parallel attempts, exactly 2 admitted under a budget of 2);
 - state stores SHA-256 fingerprints rather than raw query/target values;
 - duplicate/non-finite policy JSON;
@@ -51,7 +51,7 @@ Second-pass changes made before publication:
 1. top-level exact constraints were insufficient for a dispatcher; changed to JSON-pointer constraints so nested targets are enforceable;
 2. call-budget state was made atomic under concurrent dispatch;
 3. duplicate-call state changed from canonical raw call strings to SHA-256 fingerprints;
-4. null was removed from allowed exact policy values so an unset target cannot be approved.
+4. null was removed from allowed exact policy values so an unset target cannot be approved;\n5. exact values were extended to non-empty nested JSON lists/objects so structured approved targets can be bound without weakening to unconstrained containers.
 
 Published blobs will be recorded on the PR after the final-diff pass.
 
