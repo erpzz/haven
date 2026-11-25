@@ -8,7 +8,7 @@ Implementation: `tool_context.py`. Upstream audit/design: `TOOL_CONTEXT_GAP_ANAL
 
 The router takes four trust inputs from the host:
 
-- a current catalog of exact model-visible tool definitions;
+- a current catalog of exact **post-transform model-visible** tool definitions (not merely the MCP source objects);
 - explicit host-curated lowercase routing terms for each tool;
 - the already-authorized tool names;
 - allowed effect classes (`read` by default).
@@ -40,7 +40,7 @@ Change/create tools are filtered out by default even when they are in the author
 
 Hashing sorts cards by tool name, so a harmless `tools/list` reorder does not change the fingerprint. Any definition/routing/effect change does.
 
-A dynamic `tools/list_changed` event should invalidate the current selection before the next model turn.
+A dynamic `tools/list_changed` event should invalidate the current selection before the next model turn. Integration should also re-check the bound catalog immediately before dispatch to close the route→call change window.
 
 ## Context budget
 
@@ -106,9 +106,9 @@ For Haven Cyber, keep #105's compact four-tool lazy facade unless evaluation dem
 - exact committed-head clean-checkout suite;
 - actual PR #107 catalog converted into route cards;
 - actual Hermes first-request byte/token savings;
-- Qwythos accuracy/latency comparison with full vs narrowed tools;
-- dynamic `tools/list_changed` live behavior;
+- Qwythos accuracy/latency comparison with full vs narrowed tools and tokenizer-level context measurement;
+- dynamic `tools/list_changed` live behavior and route→dispatch catalog-change race;
 - owner-signed provenance for route terms;
 - sanitization/minimization of a selected dynamic skill's description/schema;
-- macOS integration;
+- privacy disposition for persisted selected-tool names, which can reveal coarse task intent even though the query is not stored;\n- macOS integration;
 - independent review.
