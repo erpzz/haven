@@ -35,7 +35,7 @@ The Purple investigator boundary is also a favorable recovery target: its tool p
 
 6. **Automatic restart needs replay semantics.** Restarting a whole incomplete unit repeats every earlier operation in that unit. That is safe for a model request and explicitly idempotent/read-only observations, but it is not generically safe for a write, external action, or unknown tool. The journal blocks automatic restart if an incomplete attempt ever dispatched a tool marked non-replay-safe, even when a result was recorded.
 
-7. **A retry must prove a new recovery epoch.** The journal requires a `run_resumed` event before attempt N+1 can supersede an incomplete attempt N. This prevents a live process from accidentally opening overlapping attempts.
+7. **A retry needs an explicit recovery epoch.** The journal requires a `run_resumed` event before attempt N+1 can supersede an incomplete attempt N. `Journal.open(resume=True)` is a host declaration of recovery; it is **not proof that the previous process is dead**. The integration owner must ensure exclusive runner/process ownership before emitting it. A plain reopen does not create an epoch.
 
 8. **Crash loops need a bound.** `resume_plan(max_attempts=...)` blocks repeated automatic retries once the host-defined limit is reached.
 
@@ -54,7 +54,7 @@ For an H2H unit such as `model|arm|rep|question-id`:
 5. Immediately before dispatching any tool: `tool_dispatch_started` with an explicit host-derived `replay_safe` classification.
 6. After its result is durably stored: `tool_result_committed`.
 7. Durably append the result row/artifact, then `unit_completed` with the row/artifact hash if publishing that hash is safe.
-8. On process restart, `run_resumed` is added. Completed units are skipped. Retryable incomplete units restart from trusted inputs as a new attempt; blocked units require operator disposition.
+8. After the runner has established exclusive ownership on recovery, open with `resume=True` to append `run_resumed`. Completed units are skipped. Retryable incomplete units restart from trusted inputs as a new attempt; blocked units require operator disposition.
 
 A model timeout/interruption with no tool dispatch is retryable. An interrupted replay-safe read is retryable. An incomplete unit that dispatched a non-replay-safe operation is not.
 
@@ -64,5 +64,5 @@ A model timeout/interruption with no tool dispatch is retryable. An interrupted 
 - POSIX `flock` provides cross-process coordination on macOS/Linux. On platforms without `fcntl`, the current fallback is thread-only and must not be presented as multiprocess-safe.
 - File contents are fsynced by default, but the parent directory is not fsynced on first creation.
 - Journal size is bounded at 64 MiB and there is no rotation/compaction protocol yet.
-- Filesystem/NFS semantics, abrupt power-loss behavior, Windows behavior and real Hermes interruption timing are not qualified here.
+- Filesystem/NFS semantics, abrupt power-loss behavior, Windows behavior, exclusive old-process death/ownership detection and real Hermes interruption timing are not qualified here.
 - A `unit_failed` event is terminal; policy-driven retry of explicit failures is deliberately not designed in this prototype.
