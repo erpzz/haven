@@ -120,7 +120,7 @@ class JournalTests(unittest.TestCase):
             j = self.make(d)
             j.append("unit_started", "q1", 1)
             j.append("tool_dispatch_started", "q1", 1, "t1", False)
-            j = c.Journal(Path(d, "run.jsonl"), "run-1", MANIFEST, fsync=False).open()
+            j = c.Journal(Path(d, "run.jsonl"), "run-1", MANIFEST, fsync=False).open(resume=True)
             with self.assertRaises(ValueError):
                 j.append("unit_started", "q1", 2)
 
@@ -128,10 +128,18 @@ class JournalTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             j = self.make(d)
             j.append("unit_started", "q1", 1)
-            j = c.Journal(Path(d, "run.jsonl"), "run-1", MANIFEST, fsync=False).open()
+            j = c.Journal(Path(d, "run.jsonl"), "run-1", MANIFEST, fsync=False).open(resume=True)
             j.append("unit_started", "q1", 2)
             st = j.state(max_attempts=2)
             self.assertEqual(st["blocked_units"][0]["reasons"], ["ATTEMPT_LIMIT"])
+
+    def test_plain_reopen_does_not_create_resume_epoch(self):
+        with tempfile.TemporaryDirectory() as d:
+            j = self.make(d)
+            j.append("unit_started", "q1", 1)
+            j = c.Journal(Path(d, "run.jsonl"), "run-1", MANIFEST, fsync=False).open()
+            with self.assertRaises(ValueError):
+                j.append("unit_started", "q1", 2)
 
     def test_overlapping_attempt_without_resume_epoch_is_rejected(self):
         with tempfile.TemporaryDirectory() as d:
