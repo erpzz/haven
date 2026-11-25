@@ -75,10 +75,12 @@ def _pointer_get(doc,p):
     return cur
 
 def _valid_exact_value(v):
-    if not _json_ok(v): return False
-    if v is None: return False
-    if type(v) is str and (not v or PLACEHOLDER.fullmatch(v)): return False
-    return type(v) in (str,int,float,bool)
+    if not _json_ok(v) or v is None: return False
+    if type(v) is str: return bool(v) and PLACEHOLDER.fullmatch(v) is None
+    if type(v) in (int,float,bool): return True
+    if type(v) is list: return bool(v) and all(_valid_exact_value(x) for x in v)
+    if type(v) is dict: return bool(v) and all(_valid_exact_value(x) for x in v.values())
+    return False
 
 def parse_policy(raw):
     if len(raw) > MAX_POLICY_BYTES:
