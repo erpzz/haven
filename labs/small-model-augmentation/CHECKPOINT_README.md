@@ -12,7 +12,7 @@ A strict run records:
 
 `run_started → unit_started → model/tool operation boundaries → unit_completed|unit_failed → run_completed`
 
-A process restart appends `run_resumed`. Attempt N+1 for an incomplete unit is legal only after such a new recovery epoch.
+`Journal.open(resume=True)` appends `run_resumed`. Attempt N+1 for an incomplete unit is legal only after such a host-declared recovery epoch. A plain reopen does not create one. The journal does not prove that an old process is dead; the runner must establish exclusive ownership before declaring resume.
 
 Recovery is deliberately **unit-level**, not opaque conversation restoration:
 
@@ -41,7 +41,7 @@ Do not turn private low-entropy values such as hostnames, account identifiers or
 
 ## Author test evidence
 
-Local Linux semantic suite after mandatory second-pass hardening: **18/18 PASS**.
+Local Linux semantic suite after mandatory second-pass hardening: **19/19 PASS**.
 
 Coverage includes:
 
@@ -56,7 +56,7 @@ Coverage includes:
 - interrupted model request classified retryable;
 - uncertain replay-safe tool classified retryable;
 - non-replay-safe incomplete unit blocked by both planner and transition gate;
-- explicit resume epoch required before attempt N+1;
+- explicit resume epoch required before attempt N+1; plain reopen does not create one;
 - retry-attempt cap;
 - operation start/commit pairing;
 - active unit prevents run completion;
@@ -70,7 +70,7 @@ Second-pass changes before publication:
 1. attempt N+1 initially lacked a trustworthy process/recovery boundary; added explicit `run_resumed` epochs;
 2. the planner alone initially blocked non-replay-safe recovery; the journal transition validator now independently refuses such restart;
 3. manifest hash can no longer be the all-zero sentinel;
-4. the initial payload API accepted raw objects and hashed them, which could leak low-entropy private values through offline guessing; raw payload input was removed.
+4. the initial payload API accepted raw objects and hashed them, which could leak low-entropy private values through offline guessing; raw payload input was removed;\n5. final-diff review found that merely reopening the file was being treated as proof of a new recovery process; resume is now an explicit host decision (`open(resume=True)`), with exclusive old-process ownership/death left as an integration requirement.
 
 ## Integration order
 
@@ -84,7 +84,7 @@ The immutable run manifest should bind the exact model/admission receipt, execut
 
 - exact final-head clean-checkout execution;
 - wiring into `h2h_run.py`, Haven Cyber eval, Hermes hooks or investigator runner;
-- real process kill/power-loss tests on macOS;
+- real process kill/power-loss tests on macOS, including proof that the previous runner is dead before `resume=True`;
 - recovery while an actual local model server is hung;
 - parent-directory fsync on first journal creation;
 - Windows multiprocess locking;
