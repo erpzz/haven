@@ -1,4 +1,5 @@
-import copy, hashlib, unittest
+import copy, hashlib, json, subprocess, sys, tempfile, unittest
+from pathlib import Path
 import augmentation_eval as e
 
 H=lambda s: hashlib.sha256(s.encode()).hexdigest()
@@ -93,6 +94,29 @@ class EvalTests(unittest.TestCase):
     def test_invalid_report_blocks_compare(self):
         a=report("a");b=report("b");b["manifest"]["reserve"]=True
         x=e.compare(a,b);self.assertEqual(x["status"],"block");self.assertTrue(any("RESERVE_FORBIDDEN" in z for z in x["errors"]))
+    def test_load_report_rejects_duplicate_json_keys(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d,"r.json");p.write_text('{"manifest":{},"manifest":{},"rows":[]}')
+            value,errors=e.load_report(p)
+            self.assertIsNone(value);self.assertIn("INVALID_REPORT_JSON",errors)
+    def test_load_report_is_bounded(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d,"r.json");p.write_bytes(b"x"*33)
+            old=e.MAX_REPORT_BYTES
+            try:
+                e.MAX_REPORT_BYTES=32
+                value,errors=e.load_report(p)
+            finally:
+                e.MAX_REPORT_BYTES=old
+            self.assertIsNone(value);self.assertEqual(errors,["REPORT_TOO_LARGE"])
+    def test_cli_compare(self):
+        with tempfile.TemporaryDirectory() as d:
+            a=Path(d,"a.json");b=Path(d,"b.json")
+            a.write_text(json.dumps(report("a")));b.write_text(json.dumps(report("b")))
+            cp=subprocess.run([sys.executable,str(Path(e.__file__)),"compare",str(a),str(b)],
+                              text=True,capture_output=True)
+            self.assertEqual(cp.returncode,0)
+            self.assertEqual(json.loads(cp.stdout)["status"],"pass")
     def test_p95_nearest_rank(self):
         self.assertEqual(e._p95(list(range(1,21))),19)
     def test_sign_no_discordant(self):
