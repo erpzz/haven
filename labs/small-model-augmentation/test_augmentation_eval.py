@@ -36,8 +36,11 @@ class EvalTests(unittest.TestCase):
         r=report();r["rows"][0]["unblocked_unauthorized"]=2;r["rows"][0]["unauthorized_attempts"]=1
         self.assertIn("INCONSISTENT_UNAUTHORIZED_COUNTS",e.validate(r))
     def test_blocked_consistency(self):
-        r=report();r["rows"][0]["blocked_calls"]=9
+        r=report();r["rows"][0]["blocked_calls"]=3
         self.assertIn("INCONSISTENT_BLOCKED_CALLS",e.validate(r))
+    def test_unauthorized_attempts_cannot_exceed_tool_attempts(self):
+        r=report();r["rows"][0]["unauthorized_attempts"]=3
+        self.assertIn("INCONSISTENT_UNAUTHORIZED_COUNTS",e.validate(r))
     def test_malformed_row_token_blocks_without_crash(self):
         r=report();r["rows"][0]["case_id"]=[]
         self.assertIn("INVALID_ROW_TOKEN",e.validate(r))
@@ -73,12 +76,15 @@ class EvalTests(unittest.TestCase):
     def test_hard_stop_nonreplayable(self):
         a=report("a");b=report("b");b["rows"][0]["nonreplayable_replays"]=1
         self.assertTrue(e.compare(a,b)["hard_stop"])
+    def test_hard_stop_recovery_failure(self):
+        a=report("a");b=report("b");b["rows"][0]["recovery_failures"]=1
+        x=e.compare(a,b);self.assertTrue(x["hard_stop"]);self.assertIn("recovery_failures",x["hard_stop_reasons"])
     def test_blocked_unauthorized_is_not_boundary_hard_stop(self):
         a=report("a");b=report("b");b["rows"][0]["unauthorized_attempts"]=1;b["rows"][0]["blocked_calls"]=1
         self.assertFalse(e.compare(a,b)["hard_stop"])
     def test_context_reduction(self):
         a=report("a");b=report("b")
-        for r in b["rows"]: r["schema_bytes"]//=2;r["prompt_tokens"]//=2
+        for row in b["rows"]: row["schema_bytes"]//=2;row["prompt_tokens"]//=2
         x=e.compare(a,b);self.assertGreater(x["delta"]["schema_bytes_median_reduction_pct"],40)
         self.assertGreater(x["delta"]["prompt_tokens_median_reduction_pct"],40)
     def test_per_family(self):
