@@ -55,7 +55,11 @@ Second-pass changes made before publication:
 4. null was removed from allowed exact policy values so an unset target cannot be approved;
 5. exact values were extended to non-empty nested JSON lists/objects so structured approved targets can be bound without weakening to unconstrained containers.
 
-Published blobs will be recorded on the PR after the final-diff pass.
+Published final-review blobs:
+- `tool_scope.py`: `4d79a0c12c9bf0ea7a859f5034c28a5215e254c9`
+- `test_tool_scope.py`: `481c16df8a10ee46b94e88d9b6d778dca68ee9e4`
+
+The final-diff pass also caught and corrected a documentation publication defect where intended Markdown line breaks were stored as literal `\\n` text. **Exact final-head clean-checkout execution is NOT claimed** because this sandbox cannot resolve GitHub over git/raw HTTP; that receipt is assigned to Codex/local validation.
 
 ## Integration boundary
 
