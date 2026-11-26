@@ -133,7 +133,7 @@ def _invalid_score(case: RedCase, violation: str) -> dict[str, Any]:
     return body
 
 
-def _write_private_json(path: Path, value: Mapping[str, Any]) -> None:
+def _validate_new_output_path(path: Path) -> tuple[Path, Path]:
     path = Path(path)
     if path.exists() or path.is_symlink():
         raise ValueError("output path must not already exist")
@@ -143,6 +143,11 @@ def _write_private_json(path: Path, value: Mapping[str, Any]) -> None:
     tmp = path.with_name(path.name + ".tmp")
     if tmp.exists() or tmp.is_symlink():
         raise ValueError("temporary output path already exists")
+    return path, tmp
+
+
+def _write_private_json(path: Path, value: Mapping[str, Any]) -> None:
+    path, tmp = _validate_new_output_path(path)
     data = json.dumps(value, ensure_ascii=False, sort_keys=True, indent=1, allow_nan=False).encode("utf-8") + b"\n"
     fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     try:
@@ -332,6 +337,8 @@ def main(argv=None) -> int:
     parser.add_argument("--api-key-env", help="Read optional local API key from this environment variable")
     parser.add_argument("--out", type=Path, required=True, help="New private JSON receipt path (must not exist)")
     args = parser.parse_args(argv)
+
+    _validate_new_output_path(args.out)
 
     api_key = None
     if args.api_key_env:
