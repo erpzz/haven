@@ -1,0 +1,36 @@
+name: Checkpoint recovery
+
+on:
+  pull_request:
+    paths:
+      - 'labs/small-model-augmentation/checkpoint_journal.py'
+      - 'labs/small-model-augmentation/test_checkpoint_journal.py'
+      - 'labs/small-model-augmentation/test_checkpoint_process.py'
+      - '.github/workflows/checkpoint-recovery.yml'
+  push:
+    branches:
+      - 'astra/checkpoint-recovery-20261125'
+    paths:
+      - 'labs/small-model-augmentation/checkpoint_journal.py'
+      - 'labs/small-model-augmentation/test_checkpoint_journal.py'
+      - 'labs/small-model-augmentation/test_checkpoint_process.py'
+      - '.github/workflows/checkpoint-recovery.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  linux-process-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile recovery sources
+        working-directory: labs/small-model-augmentation
+        run: python3 -m py_compile checkpoint_journal.py test_checkpoint_journal.py test_checkpoint_process.py
+      - name: Unit and SIGKILL process matrix
+        working-directory: labs/small-model-augmentation
+        run: python3 -m unittest -v test_checkpoint_journal test_checkpoint_process
