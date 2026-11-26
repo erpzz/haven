@@ -76,6 +76,9 @@ class HermesPluginPreflightTests(unittest.TestCase):
         root = Path(self.tmp.name)
         self.home = root / "home"
         self.home.mkdir()
+        self.profile_env = self.home / ".env"
+        self.profile_env.write_text("# isolated guarded profile\n")
+        self.profile_env.chmod(0o600)
         self.plugin = self.home / "plugins" / preflight.PLUGIN_NAME
         self.plugin.mkdir(parents=True)
         shutil.copyfile(SOURCE_PLUGIN / "__init__.py", self.plugin / "__init__.py")
@@ -135,6 +138,27 @@ class HermesPluginPreflightTests(unittest.TestCase):
         return preflight.run_preflight(
             **self.base_kwargs(), timeout=10, env=child
         )
+
+    def test_missing_profile_env_blocks(self):
+        self.profile_env.unlink()
+        result = self.preflight()
+        self.assertEqual(result["status"], "block")
+        self.assertEqual(result["errors"], ["PROFILE_ENV_REQUIRED"])
+
+    def test_profile_env_cannot_reenable_project_plugins(self):
+        for line in (
+            "HERMES_ENABLE_PROJECT_PLUGINS=1\n",
+            " export HERMES_ENABLE_PROJECT_PLUGINS = true\n",
+            "HERMES_ENABLE_PROJECT_PLUGINS=0\n",
+        ):
+            with self.subTest(line=line):
+                self.profile_env.write_text(line)
+                self.profile_env.chmod(0o600)
+                result = self.preflight()
+                self.assertEqual(result["status"], "block")
+                self.assertEqual(
+                    result["errors"], ["PROFILE_ENV_PROJECT_PLUGINS_FORBIDDEN"]
+                )
 
     def test_exact_profile_passes_and_receipt_binds_bytes(self):
         result = self.preflight()
