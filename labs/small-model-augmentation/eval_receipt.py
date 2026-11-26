@@ -8,7 +8,8 @@ part of the receipt schema.
 A receipt is one arm/case execution. It binds:
 - the exact public evaluation manifest identity/settings;
 - #127 admission;
-- #129 tool policy;
+- #129 model-visible tool policy;
+- #199 guarded-Hermes preflight/supervisor receipts and raw final-dispatch policy;
 - #131 catalogue/selection;
 - #132 claim bundle/policy/renderer;
 - #130 run manifest;
@@ -42,10 +43,13 @@ MANIFEST_BINDING_KEYS = {
 }
 CONTROL_KEYS = {
     "admission_receipt_sha256",
+    "guard_preflight_receipt_sha256",
+    "guard_supervisor_receipt_sha256",
     "runtime_profile_sha256",
     "request_settings_sha256",
     "world_sha256",
     "tool_policy_sha256",
+    "final_dispatch_policy_sha256",
     "catalog_sha256",
     "selection_receipt_sha256",
     "claim_bundle_sha256",
@@ -464,8 +468,10 @@ def compare_private_receipt_sets(
     """Preflight matched arms before producing/accepting the public comparison.
 
     Stable runtime/settings/world/catalog/tool-implementation identities can never be
-    waived. Other control bindings may differ only when the caller explicitly names
-    them as the experiment's intended manipulation.
+    waived. The tool-implementation identity must cover the complete enforcement
+    implementation used for the run, including the #199 guard/plugin/final-dispatch
+    code when that stack is active. Other control bindings may differ only when the
+    caller explicitly names them as the experiment's intended manipulation.
     """
     if not isinstance(allowed_control_differences, Sequence) or isinstance(
         allowed_control_differences, (str, bytes)
