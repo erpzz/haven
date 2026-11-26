@@ -85,7 +85,7 @@ class Gate:
             if invalid or self._policy is None:
                 raise ValueError("INVALID_POLICY")
             self._policy_sha256 = hashlib.sha256(raw).hexdigest()
-        except (OSError, ValueError, TypeError, ImportError, RecursionError) as exc:
+        except Exception as exc:
             # Register the veto anyway: missing/bad configuration must not
             # silently remove the hook on an otherwise valid plugin.
             self._failed = str(exc).split(":", 1)[0][:64]
