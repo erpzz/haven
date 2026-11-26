@@ -84,6 +84,7 @@ class DefenseFactoryTests(unittest.TestCase):
             "diff --git a/x b/x\nnew file mode 100644\n--- /dev/null\n+++ b/x\n",
             "diff --git a/x b/y\nrename from x\nrename to y\n",
             "diff --git a/x b/x\nGIT binary patch\n",
+            "diff --git a/x b/x\nold mode 100644\nnew mode 100755\n--- a/x\n+++ b/x\n",
         ]
         for patch in cases:
             with self.subTest(patch=patch[:30]):
