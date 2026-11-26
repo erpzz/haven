@@ -13,10 +13,13 @@ PLAN.md, W1 Stage A steps 1-4 and the Phase 1 gate:
   * gate G1: the share of passing attempts must fall in [15%, 85%]. This script reports the
     number; the decision is recorded on #123.
 Amendment 1, section 6: the summary publishes measured throughput (attempts and completion tokens
-per wall-hour), peak VRAM per GPU, the accelerator count, wall-hours and device-hours, and
+per inference wall-hour), peak VRAM per GPU, accelerator count, collector wall/device hours and
 per-episode coverage; section 1: every attempt is scored in the model-clean, corrected-model and
-final-system views. No training happens in Phase 1. Transcripts and kept rows stay in DIR
-(private); only summary.json is meant to leave the session. Re-running with the same DIR resumes.
+final-system views. Allocation fields are explicitly scoped to the collector process; notebook
+setup/model download are not silently counted. No training happens in Phase 1. Transcripts,
+metrics and kept rows stay private and are hash-bound by the summary; if DIR is under a persisted
+private-kernel output path, those files remain private audit artifacts and must not be published.
+Re-running with the same DIR resumes.
 """
 from __future__ import annotations
 
