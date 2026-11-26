@@ -19,6 +19,7 @@ from defense_factory import canonical_rel_path
 
 _COMMIT_RE = re.compile(r"^[0-9a-f]{40,64}$")
 _HASH_RE = re.compile(r"^[0-9a-f]{64}$")
+_GIT = ("git", "-c", "core.hooksPath=/dev/null")
 
 
 def _sha256_stream(f) -> tuple[str, int]:
@@ -131,7 +132,7 @@ def _require_repo(path: Path) -> Path:
     if not p.is_dir():
         raise ValueError("repository path must be a directory")
     probe = subprocess.run(
-        ("git", "rev-parse", "--show-toplevel"), cwd=p,
+        _GIT + ("rev-parse", "--show-toplevel"), cwd=p,
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False, text=True, timeout=10.0,
     )
     if probe.returncode != 0:
@@ -186,7 +187,7 @@ def run_fix(*, repo: Path, base_commit: str, validated_fix: Mapping[str, Any], r
     worktree = root / "worktree"
     receipts: list[CommandReceipt] = []
     try:
-        add = _run(("git", "worktree", "add", "--detach", str(worktree), base_commit), cwd=repo, timeout=30.0, recipe_id="git_worktree_add")
+        add = _run(_GIT + ("worktree", "add", "--detach", str(worktree), base_commit), cwd=repo, timeout=30.0, recipe_id="git_worktree_add")
         if add.timed_out or add.exit_code != 0:
             raise RuntimeError("failed to create detached worktree")
 
@@ -195,15 +196,15 @@ def run_fix(*, repo: Path, base_commit: str, validated_fix: Mapping[str, Any], r
             if target.is_symlink() or not target.is_file():
                 raise ValueError("patch target must be an existing non-symlink file")
 
-        check = _run(("git", "apply", "--check", "--whitespace=nowarn", "-"), cwd=worktree, timeout=15.0, stdin=patch.encode("utf-8"), recipe_id="git_apply_check")
+        check = _run(_GIT + ("apply", "--check", "--whitespace=nowarn", "-"), cwd=worktree, timeout=15.0, stdin=patch.encode("utf-8"), recipe_id="git_apply_check")
         if check.timed_out or check.exit_code != 0:
             raise ValueError("patch failed git apply --check")
-        apply_receipt = _run(("git", "apply", "--whitespace=nowarn", "-"), cwd=worktree, timeout=15.0, stdin=patch.encode("utf-8"), recipe_id="git_apply")
+        apply_receipt = _run(_GIT + ("apply", "--whitespace=nowarn", "-"), cwd=worktree, timeout=15.0, stdin=patch.encode("utf-8"), recipe_id="git_apply")
         if apply_receipt.timed_out or apply_receipt.exit_code != 0:
             raise RuntimeError("validated patch failed to apply")
 
         changed = subprocess.run(
-            ("git", "diff", "--name-only", "--no-renames", "--"), cwd=worktree,
+            _GIT + ("diff", "--name-only", "--no-renames", "--"), cwd=worktree,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False, text=True, timeout=10.0,
         )
         if changed.returncode != 0:
@@ -238,7 +239,7 @@ def run_fix(*, repo: Path, base_commit: str, validated_fix: Mapping[str, Any], r
     finally:
         if worktree.exists():
             try:
-                subprocess.run(("git", "worktree", "remove", "--force", str(worktree)), cwd=repo, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False, timeout=10.0)
+                subprocess.run(_GIT + ("worktree", "remove", "--force", str(worktree)), cwd=repo, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False, timeout=10.0)
             except subprocess.TimeoutExpired:
                 pass
         shutil.rmtree(root, ignore_errors=True)
