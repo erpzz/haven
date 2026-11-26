@@ -51,6 +51,8 @@ if args[:2] == ["plugins", "doctor"]:
     ]
     if any(not os.environ.get(key) for key in required):
         raise SystemExit(7)
+    if os.environ.get("HERMES_ENABLE_PROJECT_PLUGINS") != "0":
+        raise SystemExit(8)
     if os.environ.get("FAKE_MUTATE", "0") == "1":
         home = pathlib.Path(os.environ["HERMES_HOME"])
         p = home / "plugins" / "haven-scope" / "__init__.py"
