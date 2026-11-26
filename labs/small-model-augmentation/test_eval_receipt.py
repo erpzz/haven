@@ -244,6 +244,53 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                     "RECEIPT_HASH_MISMATCH", receipt.validate_receipt(r)
                 )
 
+    def test_guard_supervisor_must_bind_embedded_preflight(self):
+        r = private()
+        r["guard"]["preflight"]["plugin_init_sha256"] = H("other-plugin")
+        new_preflight = receipt.profile_sha256(r["guard"]["preflight"])
+        r["controls"]["guard_preflight_receipt_sha256"] = new_preflight
+        # Deliberately leave supervisor.plugin_preflight_sha256 bound to the old preflight.
+        rehash(r)
+        errors = receipt.validate_receipt(r)
+        self.assertIn("INVALID_GUARD_BINDING", errors)
+        self.assertNotIn("RECEIPT_HASH_MISMATCH", errors)
+
+    def test_guard_policy_controls_must_match_embedded_preflight(self):
+        for key, expected in (
+            ("tool_policy_sha256", "MODEL_SCOPE_POLICY_HASH_MISMATCH"),
+            ("final_dispatch_policy_sha256", "FINAL_DISPATCH_POLICY_HASH_MISMATCH"),
+        ):
+            with self.subTest(key=key):
+                r = private()
+                r["controls"][key] = H("self-consistent-but-wrong-" + key)
+                rehash(r)
+                errors = receipt.validate_receipt(r)
+                self.assertIn(expected, errors)
+                self.assertNotIn("RECEIPT_HASH_MISMATCH", errors)
+
+    def test_guard_runtime_hermes_cross_link_is_required(self):
+        r = private()
+        r["guard"]["preflight"]["hermes_sha256"] = H("different-hermes")
+        new_preflight = receipt.profile_sha256(r["guard"]["preflight"])
+        r["guard"]["supervisor"]["plugin_preflight_sha256"] = new_preflight
+        r["controls"]["guard_preflight_receipt_sha256"] = new_preflight
+        r["controls"]["guard_supervisor_receipt_sha256"] = receipt.profile_sha256(
+            r["guard"]["supervisor"]
+        )
+        rehash(r)
+        errors = receipt.validate_receipt(r)
+        self.assertIn("GUARD_RUNTIME_HERMES_MISMATCH", errors)
+        self.assertNotIn("INVALID_GUARD_BINDING", errors)
+        self.assertNotIn("RECEIPT_HASH_MISMATCH", errors)
+
+    def test_private_receipt_v1_is_rejected_even_when_rehashed(self):
+        r = private()
+        r["schema"] = "haven.augmentation-eval-private-receipt.v1"
+        rehash(r)
+        errors = receipt.validate_receipt(r)
+        self.assertIn("INVALID_RECEIPT_SCHEMA", errors)
+        self.assertNotIn("RECEIPT_HASH_MISMATCH", errors)
+
     def test_control_binding_mutation_breaks_receipt_hash(self):
         r = private()
         r["controls"]["tool_policy_sha256"] = H("changed-policy")
