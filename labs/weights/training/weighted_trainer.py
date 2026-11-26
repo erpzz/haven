@@ -43,7 +43,25 @@ def build_episode_items(rows: Sequence[dict], encoded_rows: Sequence[dict]) -> l
     grouped: dict[str, list[tuple[dict, dict]]] = collections.defaultdict(list)
     for row, encoded in zip(rows, encoded_rows):
         episode, _ = weighting._row_identity(row)
-        _target_count(encoded)
+        count = _target_count(encoded)
+        if "target_tokens" in encoded and encoded["target_tokens"] != count:
+            raise weighting.WeightingError("encoded target-token count mismatch")
+        if "tool_surface_sha256" in row or "tool_surface" in row:
+            expected_surface = row.get("tool_surface_sha256")
+            expected_receipt = (
+                row.get("tool_surface", {}).get("receipt_sha256")
+                if isinstance(row.get("tool_surface"), dict) else None
+            )
+            if (
+                not isinstance(expected_surface, str)
+                or encoded.get("tool_surface_sha256") != expected_surface
+            ):
+                raise weighting.WeightingError("encoded tool-surface hash mismatch")
+            if (
+                not isinstance(expected_receipt, str)
+                or encoded.get("tool_surface_receipt_sha256") != expected_receipt
+            ):
+                raise weighting.WeightingError("encoded tool-surface receipt mismatch")
         grouped[episode].append((row, encoded))
 
     items = []
@@ -59,14 +77,20 @@ def build_episode_items(rows: Sequence[dict], encoded_rows: Sequence[dict]) -> l
                 attention = [1] * len(encoded["input_ids"])
             if not isinstance(attention, list) or len(attention) != len(encoded["input_ids"]):
                 raise weighting.WeightingError("invalid attention_mask")
-            packed.append({
+            packed_row = {
                 "input_ids": list(encoded["input_ids"]),
                 "attention_mask": list(attention),
                 "labels": list(encoded["labels"]),
                 "target_tokens": count,
                 "loss_weight": loss_weight,
                 "trace": row["trace"],
-            })
+            }
+            if "tool_surface_sha256" in encoded:
+                packed_row["tool_surface_sha256"] = encoded["tool_surface_sha256"]
+                packed_row["tool_surface_receipt_sha256"] = encoded.get(
+                    "tool_surface_receipt_sha256"
+                )
+            packed.append(packed_row)
         items.append({"episode": episode, "rows": packed})
     return items
 
