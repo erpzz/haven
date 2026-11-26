@@ -94,3 +94,12 @@ The immutable run manifest should bind the exact model/admission receipt, execut
 - rotation/compaction after the 64 MiB journal bound;
 - authenticated/MAC-signed journal receipts;
 - independent reviewer qualification.
+
+## Main-target recovery candidate
+
+Main-target integration candidate: #222. It carries the full recovery contract plus the durable first-journal creation fix from #218.
+
+The first-journal durability delta has Linux qualification at the exact code state that preceded this documentation update: workflow `45767327957`, **27/27 PASS**. Opening #222 against `main` is intended to make this hardened state the proposed recovery merge path rather than leaving #130 as a knowingly weaker standalone candidate.
+
+Target-Mac evidence is still required before merge-owner acceptance: APFS durability and supported-Python `flock`, competing live owner, real process interruption/restart, actual admitted Qwythos request interruption, and a demonstrably hung model/server case. CI does not establish those macOS/runtime facts.
+
