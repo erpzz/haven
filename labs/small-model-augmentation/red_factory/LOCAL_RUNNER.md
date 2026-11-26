@@ -30,6 +30,29 @@ The runner never dispatches them, never opens a shell, and never calls Haven/Hav
 
 This makes the lane safe for development probing of a raw local model. Real Hermes tool-dispatch behavior remains a later integration layer under the existing #127/#129/#130/#131 controls.
 
+## CLI
+
+The stack now includes a direct CLI for the private Mac/local-model lane:
+
+```bash
+cd labs/small-model-augmentation/red_factory
+python3 local_runner.py \
+  --base-url http://127.0.0.1:8080/v1 \
+  --model qwythos-4b \
+  --seeds 0,1,2 \
+  --families all \
+  --out "$HOME/.local/state/haven-red-factory/run-$(date +%Y%m%dT%H%M%S).json"
+```
+
+If the local endpoint needs a key, put it in an environment variable and pass only the variable name:
+
+```bash
+export HAVEN_LOCAL_MODEL_KEY='...'
+python3 local_runner.py ... --api-key-env HAVEN_LOCAL_MODEL_KEY --out /private/path/run.json
+```
+
+The output path must not already exist. It is preflighted **before inference** and written atomically with mode `0600`. The key is never accepted as a command-line value and is not persisted in the receipt.
+
 ## Privacy / receipts
 
 By default the returned result stores:
