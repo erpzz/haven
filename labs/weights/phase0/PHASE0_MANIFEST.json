@@ -1,0 +1,213 @@
+{
+  "schema": "haven-weights-phase0-manifest-1",
+  "status": "PHASE 0 BUILT AGAINST PLAN.md + AMENDMENTS 1 AND 2. No GPU time, no inference, no teacher batch, no training. Real generator seeds are drawn at Phase 1 start and posted by salted hash then.",
+  "plan": {
+    "path": "labs/weights/PLAN.md",
+    "commit": "667bd3a8f90dcdc11b8d55672f8d0d2ea3ff90a1",
+    "sha256": "119930a934de1a7a4a58c4b6624bc4c3094090d2d1a739a3e1025df2bd086720",
+    "pr": 124
+  },
+  "amendment_1": {
+    "path": "labs/weights/AMENDMENT_1.md",
+    "commit": "63bcd6e8e2b53d7559d6965fd372f4cabcf4078a",
+    "sha256": "cb7954a2c384059e1acbcc904b5356f0a57e0bcb287a41160274691b124a1a1b",
+    "pr": 124
+  },
+  "amendment_2": {
+    "path": "labs/weights/AMENDMENT_2.md",
+    "commit": "fd2c2998ad83ff1e7da49d7ce8ca461e40d4c867",
+    "sha256": "480db5838d3c7c80b5ff1d6e0d786515dc7737b47d3e086cf39c3b6610c48db7",
+    "pr": 124
+  },
+  "gates_before_any_gpu_or_batch": [
+    "Astra operational sign-off on #123 for the hardened Phase 0 implementation (#125 or reviewed successor)",
+    "M4 reserve/review disposition remains closed on #119 under the owner-accepted documented AI-review deviation; do not silently restate it as an independent human review",
+    "no teacher batch export or GPU collection until both the implementation gate and any newly recorded #123 prerequisite are satisfied"
+  ],
+  "score_views": {
+    "model_clean": "first answer and the trace at that point pass, no blocked call before it",
+    "corrected_model": "final answer after at most one verifier revision passes, no blocked call",
+    "final_system": "final answer passes, whatever the harness did",
+    "weights_claims_use": "model_clean"
+  },
+  "no_action_stratum": {
+    "definition": "dispositions no_action_needed + insufficient_evidence (pools.py)",
+    "source": [
+      "hare-fresh-s0-179",
+      "hare-frozen-180",
+      "hare-untouched-179"
+    ],
+    "n": 538,
+    "dispositions": {
+      "answer": 412,
+      "insufficient_evidence": 72,
+      "no_action_needed": 18,
+      "refusal": 36
+    },
+    "no_action_share": 0.1673
+  },
+  "weighting_rule": "each episode's kept traces share a total weight of 1.0, split equally (sft.py)",
+  "training_seeds_registered": [
+    1101,
+    2202,
+    3303
+  ],
+  "rule8_flip_pairs": {
+    "file": "rule8/evidence_flip_pairs.jsonl",
+    "public_seed": "rule8-evidence-flip-public-v1-20261122",
+    "flip": 66,
+    "control": 66,
+    "families": [
+      "chain3_conditional",
+      "chain_device_cause",
+      "conflict_rule",
+      "distractor_resolve",
+      "household_delegated",
+      "household_denied",
+      "household_own",
+      "stale_note_chain",
+      "stale_premise"
+    ]
+  },
+  "dev_manifest": {
+    "file": "pools/dev_manifest.jsonl",
+    "rows": 938
+  },
+  "teacher_exchange": {
+    "protocol": "stepwise (astra_batch.py)",
+    "versions": {
+      "schema": "haven-weights-astra-stepwise-1",
+      "tool_catalogue_sha256": "e68a7529b269d93af9fc7b417355045a1f0a63e15c6409564577744a035c44eb",
+      "harness_sha256": {
+        "checks.py": "d8e5428f197476c028cbff65c761d9268454aee52e47eaceec25cee0ec4e370b",
+        "enforce.py": "0f32fafdad0c92236ed23df21763ff038a4ae653a618f58a7e7571b3c050e424",
+        "bench_s0.py": "63cf692c09f9835a7ddb7ebc513eb653fd5e0f8ee642a7b11fc26c42507e9f7b",
+        "bench_x.py": "9817732ff4a8fcb3a1dcfc5435403ec6c4c4263876b725e0c8a2c28ff6d78b68"
+      },
+      "mechanisms": {
+        "advisory": true,
+        "gateway": true,
+        "verifier": true,
+        "correction": false
+      }
+    },
+    "commitment_rule": "SHA-256(raw 32-byte salt || uint64 big-endian byte length of P || P), P = canonical JSON (sort_keys, separators (',', ':'), UTF-8). Amendment 1, section 5: unambiguously framed."
+  },
+  "files_sha256": {
+    "deps.json": "e5e5431324ee053df35e6e5d7ceeeb7b1605760183cad9a5a442b48a2e55ebd0",
+    "fetch_deps.py": "c843d96e1e258d7c51cdbffeb8f2e1f406ff092f32471c2535d8e9bb1cb7d201",
+    "common.py": "ec46ffd68cb4ba80c3dcaba9537fe70b7023aaf15457322558dad7b3b7ed2757",
+    "gen_hare.py": "6410c31c4ad3fd25843f6e1537f24b61b9e5a3c8dc2af30d77f4c4ac1d635c4c",
+    "gen_query.py": "c6f16a9640527580fe75d9dd38b54f8aac1ec5ecd857de722a382c5f6cec7759",
+    "dedupe.py": "893f85ff7d50b241b9974fa3c7406606fada1d562b06433c0f4ea96bd1683fa2",
+    "sft.py": "d2de080c4f3a276169c2c6373019397d10ba18961d74bd17301dad49b6d63757",
+    "pools.py": "b1b8499c4f8d7d18845c9638f70887b2591893458159adbdbea88f7abdf696d9",
+    "flip_pairs.py": "6238be6e6d99def127510f6c8a1d26113b74d4b5ebf2244e138d62d945cda2f8",
+    "rule8/evidence_flip_pairs.jsonl": "b888d4298197acee83decee7ce7800698ceaf8a09eff9758056365ffd839ac42",
+    "pools/dev_manifest.jsonl": "60c2a84f2356a749f68830af9907ab1a01b209a499140c08be92c304c5ae605f",
+    "oracle_export.py": "f73479cd6dd77af123b8cc4d4195607fe1896c5b19e0e8c590c548b25e6bc5e1",
+    "astra_batch.py": "f5a5463b8db3d03c7f0b6d86cff87e13225559c0781687e4ef757fd9e12c3d46",
+    "manifest.py": "7fca447739d1120d10d504b1bfcdb282562238de7ee293b69722bb73bd503743",
+    "regression/config.json": "4c805606a6c8394f3313af6bdd870229704f9a33d6f31d9c163aed9e597b7625",
+    "regression/mmlu_pro_subset.json": "82baf21fbcc95c73cdd8b0d36e369c04a5db4ca5ee1c9fefa3fe21feaf2fc576",
+    "kaggle/w1_phase1.py": "bf56403cfe20f68021a74fa29bcbfc89ad025b5a724d36cbfcb75a0691a85093",
+    "kaggle/build_w1_phase1.py": "b47345d171dbd1a04dd46de7c02ef8ed4f075f39bba8c312a48f05ba2b5b70c2",
+    "kaggle/llama_build_cell.py": "d7bdbefe61e82f10b0eade913b1a3ee071c1bb819858c8d61371b16fdacfd5b7",
+    "kaggle/w1_phase1_kaggle.ipynb": "e0d55891edc007575dedc26ca724ef6406d7369d1570fc0020ba7b75d2b4c933",
+    "tests/test_phase0.py": "ce9ce07b46ee71ca94b75a473bd30035a17c1298c54a3ca278bbe5f67333c59d",
+    "tests/test_notebook_and_config.py": "f6d0e8b9ba1275a918d599d8e7cb753c007e3c25e8b0f1c52e580e7924c41153",
+    ".gitignore": "651be1ff6c0f98518f02df57dad808e26af51f4b28ac5fc7183e6a2e22330ca0"
+  },
+  "deps": {
+    "main_commit": "53387e74a0ad90786ac3ea16753c8ad99142e9df",
+    "sources": {
+      "hare-s0": {
+        "pr": 115,
+        "commit": "7f5af0d549fe89056181942b268b01573cf86ce5"
+      },
+      "querywriter": {
+        "pr": 118,
+        "commit": "5276673c9c43c6030ca7202690229cb149fb617d"
+      },
+      "purple-copilot": {
+        "pr": 122,
+        "commit": "cd15d570055d8d8c55a665a69af1366a15832d97"
+      }
+    }
+  },
+  "harness": {
+    "mechanisms_full": {
+      "advisory": true,
+      "gateway": true,
+      "verifier": true,
+      "correction": true
+    },
+    "mechanisms_replay": {
+      "advisory": true,
+      "gateway": true,
+      "verifier": true,
+      "correction": false
+    },
+    "keep_rule": "model-clean pass (first answer and its trace pass the adjudicator) AND zero blocked or duplicate calls anywhere AND transport ok; rows stop at the first answer (Amendment 2, D1)"
+  },
+  "reserve_collision_check": "two stages, pass/fail only: --scope prompts before any batch, --scope full after the pool's batches are sealed and revealed; FAIL regenerates the pool (Amendment 2, D3)",
+  "rule_4": "unchanged: 2 absolute points per benchmark on the point estimate; paired 95% CI published; no retries (Amendment 2, D2)",
+  "private_store": "owner's Mac ~/haven-private/weights/<pool>/ plus a private Kaggle dataset for notebook inputs only (Amendment 2, D4)",
+  "dedupe": {
+    "params": {
+      "ngram": 8,
+      "text_id_min_len": 8,
+      "dates_are_ids": false,
+      "tokenizer": "adjudicated/generator.py norm_tokens"
+    },
+    "fingerprint_sha256": "c6ac5aed2ca9a2ead2a014e1f5926a6162aee8d194f13e61b7d78abfe2356303",
+    "dev_items": {
+      "hare-frozen-180": 180,
+      "hare-fresh-s0-179": 179,
+      "hare-untouched-179": 179,
+      "tool-sft-train": 400,
+      "tool-sft-dev": 40,
+      "tool-sft-heldout": 110,
+      "querywriter-dev-84": 84,
+      "purple-h2h-questions": 8,
+      "purple-investigator-inputs": 24,
+      "purple-investigator-gold": 24,
+      "purple-phase3-cases": 20,
+      "purple-hermes-questions": 72,
+      "rule8-flip-pairs": 264
+    },
+    "structure_keys": 1795,
+    "label_only_sources": [
+      "purple-investigator-gold"
+    ],
+    "checks": [
+      "8-token runs",
+      "entity ids",
+      "prompt lineage",
+      "whole-item structure",
+      "WL tenant-graph hash",
+      "question skeleton on WL-equal graph",
+      "general-mix vs regression set (check_general)"
+    ]
+  },
+  "generators": {
+    "hare_vocabulary_overlap_with_dev": [],
+    "hare_families": [
+      "chain3_conditional",
+      "chain_device_cause",
+      "conflict_report",
+      "conflict_rule",
+      "distractor_resolve",
+      "execute_refusal",
+      "household_delegated",
+      "household_denied",
+      "household_own",
+      "injection_output",
+      "missing_admit",
+      "no_tool",
+      "proposal_explicit",
+      "stale_note_chain",
+      "stale_premise"
+    ]
+  }
+}

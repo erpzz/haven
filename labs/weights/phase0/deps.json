@@ -1,0 +1,62 @@
+{
+  "schema": "haven-weights-phase0-deps-1",
+  "note": "Files this tree imports or reads but does not copy. fetch_deps.py extracts each from its pinned commit into _deps/ (gitignored) and refuses a file whose sha256 differs. Main-branch files (adjudicated/, distillation/tool_sft/) are read in place and hash-checked by common.py.",
+  "main": {
+    "commit": "53387e74a0ad90786ac3ea16753c8ad99142e9df",
+    "files": {
+      "labs/intelligence-bakeoff/adjudicated/generator.py": "25839d4ca6bfe358d0de202069acff76ac537e6eadadba29d6c5b83dadb53a91",
+      "labs/intelligence-bakeoff/adjudicated/adjudicator.py": "fbd7feb69ef77e2cd9e42b208d03537265484f2d6aef259e08e9471172ee4e26",
+      "labs/intelligence-bakeoff/adjudicated/bench.py": "a4e4f514819dfa9362aa6a9f0b28ceacea2fdd98dbe90ca3344f3b8c2c651dd5",
+      "labs/intelligence-bakeoff/adjudicated/frozen/episodes.jsonl": "983bdf04c44a1816d9bcb5a6d15a8087289bd3a6f716be6cd2443cfe6c38f929",
+      "labs/intelligence-bakeoff/distillation/tool_sft/agent.py": "273bb709aeb08b22fd4c387d5b2f65c32b49e2165e48ee7275aaf9464427c792",
+      "labs/intelligence-bakeoff/distillation/tool_sft/world.py": "8d902631f10294339fa8bce242f1ccda58e269b1c675a8fe53a3ce0b226d02f7",
+      "labs/intelligence-bakeoff/distillation/tool_sft/frozen/train.jsonl": "122c0c911239d97f1420324131cf89bc424829804a77a6ff9a3d17da4e465e9c",
+      "labs/intelligence-bakeoff/distillation/tool_sft/frozen/dev.jsonl": "d0ea4e7135a8bee870a8e841e78a0c356e21d2afaa6f1e34c5e5811a682110bd",
+      "labs/intelligence-bakeoff/distillation/tool_sft/frozen/heldout.jsonl": "3bb0900575699ddb95d99db03e2dc0c81a14777b2c626801c3dd70eff1e42540",
+      "labs/intelligence-bakeoff/bakeoff.py": "b8735ab806050c032b82d8399c428d1fae3e64b4ca09ad14e9eab9556e227ca7"
+    }
+  },
+  "sources": [
+    {
+      "name": "hare-s0",
+      "pr": 115,
+      "branch": "claude/hare-s0-20261121",
+      "commit": "7f5af0d549fe89056181942b268b01573cf86ce5",
+      "why": "the real harness: advisory checks, gateway, verifier, correction (enforce.run_episode_x) and the run-1 metrics (bench_x.episode_metrics); two fresh development sets",
+      "files": {
+        "labs/intelligence-bakeoff/system0/checks.py": "d8e5428f197476c028cbff65c761d9268454aee52e47eaceec25cee0ec4e370b",
+        "labs/intelligence-bakeoff/system0/enforce.py": "0f32fafdad0c92236ed23df21763ff038a4ae653a618f58a7e7571b3c050e424",
+        "labs/intelligence-bakeoff/system0/bench_s0.py": "63cf692c09f9835a7ddb7ebc513eb653fd5e0f8ee642a7b11fc26c42507e9f7b",
+        "labs/intelligence-bakeoff/system0/bench_x.py": "9817732ff4a8fcb3a1dcfc5435403ec6c4c4263876b725e0c8a2c28ff6d78b68",
+        "labs/intelligence-bakeoff/system0/fresh-s0-20261121.jsonl": "9646aaaf829f22c127ac7af7fe70596a25d011887e7fc824ae72b08da772394e",
+        "labs/intelligence-bakeoff/system0/fresh-x-untouched.jsonl": "0ff820ff90a13ad4a5f0fd2332b06651eed651c73454bc8deae4b3fd46fbed65"
+      },
+      "registered_hashes_note": "checks.py, enforce.py and bench_s0.py match PREREGISTRATION_S0X.json. bench_x.py is the PR head, which carries the disclosed post-run correction to expected_statuses (false-refusal counting); the registered hash was e5100d061372a2ceff806a8bd1110667a3ff3af03674b08fbe31fc410b531de4."
+    },
+    {
+      "name": "querywriter",
+      "pr": 118,
+      "branch": "claude/querywriter-20261121",
+      "commit": "5276673c9c43c6030ca7202690229cb149fb617d",
+      "why": "tenant schema, gold traversal, reference Cypher and the cypher-arm system prompt; the 84-question development suite (seed dev-20261121, 12 tenants)",
+      "files": {
+        "labs/intelligence-bakeoff/querywriter/tenant.py": "3c793302e13d3729bc538180f988763fe95aaf371fdf796aec7b3ec5da596c0a",
+        "labs/intelligence-bakeoff/querywriter/run.py": "a719e8e95de811152eccdedd8fcfcf95ce9e66e814a81754b35f38b935a57bcf"
+      }
+    },
+    {
+      "name": "purple-copilot",
+      "pr": 122,
+      "branch": "claude/purple-v1-integration",
+      "commit": "cd15d570055d8d8c55a665a69af1366a15832d97",
+      "why": "Purple Copilot development suites, read only for the dedupe fingerprint (no Codex file is imported or changed)",
+      "files": {
+        "labs/purple-copilot-apm/eval/questions.json": "0491ec9df79be564e48a7b9b3d93c6747651638c41602fc97c8c59bf93ad4a26",
+        "labs/purple-copilot-apm/investigator_eval/inputs.json": "dd734cbf807102b1efb65e11cbc025b9c94fa5f7708f9afe31140f666b65a8ad",
+        "labs/purple-copilot-apm/investigator_eval/gold.json": "d7158278fa5cdb2801cb1442cea0b461cb4a0db974b361926af82c848d95a033",
+        "labs/purple-copilot-apm/phase3_contract/cases.json": "662680afda619979a22917517cd8d4b13c1b6dda089bc5c46edf1755512801a2",
+        "labs/purple-copilot-apm/tests/hermes_questions.py": "e44d4445548139be57932ed521d67a5f73b1c8ee620c66cbc3fb75c95ca6ff1d"
+      }
+    }
+  ]
+}
