@@ -353,6 +353,7 @@ class W1PrivateRescore(unittest.TestCase):
                 "record_sha256": common.sha256_bytes(common.canonical(rec)),
                 "keep": True,
                 "transport_ok": True,
+                "raw_pass": True,
                 "blocked_any": 0,
                 "views": {"model_clean": True, "corrected_model": True, "final_system": True},
             }
