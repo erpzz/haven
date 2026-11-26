@@ -10,6 +10,7 @@ from pathlib import Path
 
 from hermes_runner import FINAL_SCHEMA, main, run_hermes_case, run_hermes_suite
 from red_factory import make_case
+import scope_policy
 
 
 class BackendHandler(BaseHTTPRequestHandler):
@@ -77,6 +78,35 @@ if marker:
     raise SystemExit(0)
 
 fixture = json.loads(open(os.environ["HRF_FIXTURE_FILE"], encoding="utf-8").read())
+
+def canon(value):
+    return json.dumps(
+        value, sort_keys=True, separators=(",", ":"),
+        ensure_ascii=False, allow_nan=False,
+    ).encode()
+
+def digest(value):
+    return hashlib.sha256(canon(value)).hexdigest()
+
+if (
+    os.environ.get("HAVEN_MCP_SCOPE_REQUIRED") == "1"
+    and os.environ.get("FAKE_HERMES_SKIP_GUARD") != "1"
+):
+    policy_path = os.environ["HAVEN_MCP_SCOPE_POLICY_FILE"]
+    policy_raw = open(policy_path, "rb").read()
+    policy = json.loads(policy_raw)
+    guard_body = {
+        "schema": "haven-local-red-factory-mcp-guard-v1",
+        "case_id": fixture["case_id"],
+        "fixture_sha256": fixture["fixture_sha256"],
+        "policy_sha256": hashlib.sha256(policy_raw).hexdigest(),
+        "allowed_tools": sorted(policy["allowed_tools"]),
+    }
+    guard = dict(guard_body)
+    guard["guard_sha256"] = digest(guard_body)
+    with open(os.environ["HRF_MCP_GUARD_LOG"], "x", encoding="utf-8") as f:
+        f.write(json.dumps(guard, sort_keys=True, separators=(",", ":")) + "\n")
+
 catalog = {
     "read_fixture": {
         "type": "function",
@@ -127,6 +157,31 @@ req = urllib.request.Request(
 )
 with urllib.request.urlopen(req, timeout=10) as r:
     r.read()
+
+denial = os.environ.get("FAKE_HERMES_DENIAL")
+if denial:
+    object_id = os.environ.get("FAKE_HERMES_DENIAL_OBJECT", fixture["object"])
+    if denial == "read_fixture":
+        denial_args = {"object": object_id}
+    else:
+        denial_args = {"object": object_id, "value": "synthetic"}
+    denial_body = {
+        "schema": "haven-local-red-factory-mcp-denial-v1",
+        "case_id": fixture["case_id"],
+        "fixture_sha256": fixture["fixture_sha256"],
+        "tool": denial,
+        "arguments_sha256": digest(denial_args),
+        "code": os.environ.get(
+            "FAKE_HERMES_DENIAL_CODE", "FINAL_SCOPE_CALL_DENIED"
+        ),
+    }
+    denial_event = dict(denial_body)
+    denial_event["denial_sha256"] = digest(denial_body)
+    with open(os.environ["HRF_MCP_DENIAL_LOG"], "a", encoding="utf-8") as f:
+        f.write(
+            json.dumps(denial_event, sort_keys=True, separators=(",", ":"))
+            + "\n"
+        )
 
 call = os.environ.get("FAKE_HERMES_CALL")
 if call:
@@ -202,7 +257,9 @@ class HermesRunnerTests(unittest.TestCase):
             }]
         return message
 
-    def run_case(self, case, proposal=None, **env_updates):
+    def run_case(
+        self, case, proposal=None, require_final_scope=False, **env_updates
+    ):
         BackendHandler.responses.append(self.model_response(case, proposal))
         env = dict(os.environ)
         env.update(env_updates)
@@ -215,7 +272,18 @@ class HermesRunnerTests(unittest.TestCase):
             case=case,
             timeout_seconds=5,
             env=env,
+            require_final_scope=require_final_scope,
         )
+
+    def protected_env(self):
+        small = Path(__file__).resolve().parents[1]
+        policy = Path(self.tmp.name) / "red-final-scope.json"
+        scope_policy.write_private(policy)
+        return {
+            "HAVEN_AUGMENTATION_ROOT": str(small),
+            "HAVEN_MCP_SCOPE_REQUIRED": "1",
+            "HAVEN_MCP_SCOPE_POLICY_FILE": str(policy),
+        }
 
     def test_valid_hermes_evidence_and_no_call_case(self):
         case = make_case("no_evidence", 1)
