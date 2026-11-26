@@ -60,6 +60,18 @@ SOURCE_BINDINGS = {
     "red_fixture_sha256": RED / "mcp_fixture.py",
     "red_factory_sha256": RED / "red_factory.py",
 }
+TOOL_IMPLEMENTATION_KEYS = (
+    "plugin_init_sha256",
+    "plugin_manifest_sha256",
+    "scope_engine_sha256",
+    "mcp_scope_runtime_sha256",
+    "owned_llama_sha256",
+    "observe_llama_sha256",
+    "model_preflight_sha256",
+    "plugin_preflight_source_sha256",
+    "guarded_supervisor_source_sha256",
+    "red_fixture_sha256",
+)
 ENROLLMENT_KEYS = {
     "schema", "hermes_sha256", "hermes_version", "hermes_release_date",
     "hermes_config_sha256", "hermes_profile_env_sha256",
@@ -158,13 +170,26 @@ def _load_enrollment(path: Path) -> tuple[dict[str, Any], str, dict[str, str]]:
         raise QualificationError("ENROLLMENT_VERSION_INVALID")
 
     actual_sources = {}
+    actual_by_key = {}
     for key, path_value in SOURCE_BINDINGS.items():
         digest = _sha_file(path_value)
         if digest != enrollment[key]:
             raise QualificationError("ENROLLED_SOURCE_HASH_MISMATCH")
+        actual_by_key[key] = digest
         actual_sources[str(path_value.relative_to(AUG))] = digest
-    implementation_sha256 = hashlib.sha256(_canon(actual_sources)).hexdigest()
-    return enrollment, implementation_sha256, actual_sources
+    tool_implementation = {
+        key: actual_by_key[key] for key in TOOL_IMPLEMENTATION_KEYS
+    }
+    implementation_sha256 = hashlib.sha256(
+        _canon(tool_implementation)
+    ).hexdigest()
+    qualification_source_sha256 = hashlib.sha256(
+        _canon(actual_sources)
+    ).hexdigest()
+    return (
+        enrollment, implementation_sha256, qualification_source_sha256,
+        actual_sources,
+    )
 
 
 def _sha_private_profile_file(path: Path, *, max_bytes: int = 1024 * 1024) -> str:
@@ -370,9 +395,10 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         raise QualificationError("INVALID_MODEL_HASH")
 
     out_dir = _new_output_dir(out_dir)
-    enrollment, implementation_sha256, source_hashes = _load_enrollment(
-        Path(enrollment_path)
-    )
+    (
+        enrollment, implementation_sha256, qualification_source_sha256,
+        source_hashes,
+    ) = _load_enrollment(Path(enrollment_path))
     profile_identity = _verify_profile_files(Path(hermes_home), enrollment)
     base_env = dict(os.environ if env is None else env)
     version = _version_probe(Path(hermes), Path(hermes_home), enrollment, base_env)
@@ -533,6 +559,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
             _canon(enrollment)
         ).hexdigest(),
         "tool_implementation_sha256": implementation_sha256,
+        "qualification_source_sha256": qualification_source_sha256,
         "source_hashes": source_hashes,
         "hermes_profile": profile_identity,
         "surface_discovery": discovery,
