@@ -1,0 +1,15 @@
+name: Phase0 workflow smoke
+
+on:
+  push:
+    branches:
+      - 'astra/weights-phase0-hardening-20261125'
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo phase0-workflow-smoke
