@@ -44,7 +44,7 @@ Rows carry only aggregate/control metrics and a SHA-256 of the private host-owne
 - an explicit private request profile: temperature/max tokens (which must match the public manifest), request seed, max turns and stream mode; the stable request-settings hash is derived from those fields;
 - stable private world hash;
 - #129 model-visible tool-policy hash;
-- #199 guarded-Hermes preflight receipt, guarded supervisor receipt, and the separate raw-MCP/final-dispatch policy hash;
+- the actual private #199 guarded-Hermes preflight receipt and guarded supervisor receipt. v2 validates their schemas/pass states, re-derives their canonical hashes, requires the supervisor to bind that exact preflight, cross-checks the preflight Hermes hash against the runtime profile, and cross-checks the #129 model-side plus raw-MCP/final-dispatch policy hashes against the preflight;
 - #131 catalogue hash and selection receipt;
 - #132 claim bundle, claim policy and deterministic renderer;
 - #130 run-manifest hash;
@@ -57,7 +57,7 @@ The public sidecar row is deterministically derived from those fixed host source
 
 The model must not author these fields. They come from the existing grader, dispatcher/gateway, independent effect observer, verifier, claim boundary, recovery runner, backend usage and host timer as described in `CONTROLLED_EVAL_PLAN.md`.
 
-The private receipt provides content and cross-control binding only. It does **not** authenticate the instrumentation producer. If a hostile same-user/local writer is in scope, a MAC/signature or immutable external provenance is still required before calling the receipt authenticated.
+The private receipt provides content and cross-control binding only. The #199 guard receipts are embedded privately rather than represented only by caller-supplied opaque hashes; their hashes and policy/runtime cross-links are derived again by the evaluator. It still does **not** authenticate the instrumentation producer. If a hostile same-user/local writer is in scope, a MAC/signature or immutable external provenance is still required before calling the receipt authenticated.
 
 The fixed source domains make provenance mistakes visible: semantic correctness comes only from the grader source, call/safety counters only from the dispatcher source, external effects only from the observer source, verifier/release counters only from the verifier source, recovery counters only from the recovery source, and token/timing/schema metrics only from the backend source. Their source receipt hashes must be distinct.
 
