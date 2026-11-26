@@ -73,19 +73,53 @@ class HermesPluginPreflightTests(unittest.TestCase):
         self.hermes_sha = sha(self.hermes)
         self.init_sha = sha(self.plugin / "__init__.py")
         self.manifest_sha = sha(self.plugin / "plugin.yaml")
+        self.engine_sha = sha(AUG / "tool_scope.py")
+        self.scope_policy = root / "scope-policy.json"
+        self.mcp_policy = root / "mcp-policy.json"
+        self._write_policy(self.scope_policy, "mcp_haven_status")
+        self._write_policy(self.mcp_policy, "haven_status")
+        self.scope_policy_sha = sha(self.scope_policy)
+        self.mcp_policy_sha = sha(self.mcp_policy)
+
+    def _write_policy(self, path, tool):
+        policy = {
+            "schema": "haven.tool-scope.v1",
+            "allowed_tools": [tool],
+            "max_calls": 1,
+            "per_tool_max": {tool: 1},
+            "unique_calls": True,
+            "argument_rules": {
+                tool: {
+                    "allowed_keys": [],
+                    "required_keys": [],
+                    "exact_values": {},
+                }
+            },
+        }
+        path.write_text(json.dumps(policy))
+        path.chmod(0o600)
+
+    def base_kwargs(self):
+        return {
+            "hermes": self.hermes,
+            "hermes_home": self.home,
+            "hermes_sha256": self.hermes_sha,
+            "init_sha256": self.init_sha,
+            "manifest_sha256": self.manifest_sha,
+            "augmentation_root": AUG,
+            "scope_engine_sha256": self.engine_sha,
+            "scope_policy": self.scope_policy,
+            "scope_policy_sha256": self.scope_policy_sha,
+            "mcp_policy": self.mcp_policy,
+            "mcp_policy_sha256": self.mcp_policy_sha,
+            "allowed_user_plugins": [preflight.PLUGIN_NAME],
+        }
 
     def preflight(self, **env):
         child = dict(os.environ)
         child.update({k: str(v) for k, v in env.items()})
         return preflight.run_preflight(
-            hermes=self.hermes,
-            hermes_home=self.home,
-            hermes_sha256=self.hermes_sha,
-            init_sha256=self.init_sha,
-            manifest_sha256=self.manifest_sha,
-            allowed_user_plugins=[preflight.PLUGIN_NAME],
-            timeout=10,
-            env=child,
+            **self.base_kwargs(), timeout=10, env=child
         )
 
     def test_exact_profile_passes_and_receipt_binds_bytes(self):
@@ -125,19 +159,15 @@ class HermesPluginPreflightTests(unittest.TestCase):
     def test_plugin_code_and_manifest_hash_mismatch_block(self):
         self.assertEqual(
             preflight.run_preflight(
-                hermes=self.hermes, hermes_home=self.home,
-                hermes_sha256=self.hermes_sha, init_sha256="1" * 64,
-                manifest_sha256=self.manifest_sha,
-                allowed_user_plugins=[preflight.PLUGIN_NAME], env=os.environ,
+                **{**self.base_kwargs(), "init_sha256": "1" * 64},
+                env=os.environ,
             )["errors"],
             ["PLUGIN_CODE_HASH_MISMATCH"],
         )
         self.assertEqual(
             preflight.run_preflight(
-                hermes=self.hermes, hermes_home=self.home,
-                hermes_sha256=self.hermes_sha, init_sha256=self.init_sha,
-                manifest_sha256="2" * 64,
-                allowed_user_plugins=[preflight.PLUGIN_NAME], env=os.environ,
+                **{**self.base_kwargs(), "manifest_sha256": "2" * 64},
+                env=os.environ,
             )["errors"],
             ["PLUGIN_MANIFEST_HASH_MISMATCH"],
         )
@@ -155,19 +185,11 @@ class HermesPluginPreflightTests(unittest.TestCase):
 
     def test_hermes_hash_and_executable_are_enrolled(self):
         bad = preflight.run_preflight(
-            hermes=self.hermes, hermes_home=self.home,
-            hermes_sha256="3" * 64, init_sha256=self.init_sha,
-            manifest_sha256=self.manifest_sha,
-            allowed_user_plugins=[preflight.PLUGIN_NAME],
+            **{**self.base_kwargs(), "hermes_sha256": "3" * 64}
         )
         self.assertEqual(bad["errors"], ["HERMES_HASH_MISMATCH"])
         self.hermes.chmod(0o600)
-        not_exec = preflight.run_preflight(
-            hermes=self.hermes, hermes_home=self.home,
-            hermes_sha256=self.hermes_sha, init_sha256=self.init_sha,
-            manifest_sha256=self.manifest_sha,
-            allowed_user_plugins=[preflight.PLUGIN_NAME],
-        )
+        not_exec = preflight.run_preflight(**self.base_kwargs())
         self.assertEqual(not_exec["errors"], ["HERMES_NOT_EXECUTABLE"])
 
     def test_doctor_time_mutation_is_detected(self):
@@ -176,17 +198,11 @@ class HermesPluginPreflightTests(unittest.TestCase):
 
     def test_invalid_allowlist_or_hash_fails_without_exec(self):
         bad_set = preflight.run_preflight(
-            hermes=self.hermes, hermes_home=self.home,
-            hermes_sha256=self.hermes_sha, init_sha256=self.init_sha,
-            manifest_sha256=self.manifest_sha,
-            allowed_user_plugins=["other"],
+            **{**self.base_kwargs(), "allowed_user_plugins": ["other"]}
         )
         self.assertEqual(bad_set["errors"], ["INVALID_ALLOWED_PLUGIN_SET"])
         bad_hash = preflight.run_preflight(
-            hermes=self.hermes, hermes_home=self.home,
-            hermes_sha256="nope", init_sha256=self.init_sha,
-            manifest_sha256=self.manifest_sha,
-            allowed_user_plugins=[preflight.PLUGIN_NAME],
+            **{**self.base_kwargs(), "hermes_sha256": "nope"}
         )
         self.assertEqual(bad_hash["errors"], ["INVALID_ENROLLED_HASH"])
 
