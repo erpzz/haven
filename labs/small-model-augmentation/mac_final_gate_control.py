@@ -249,7 +249,10 @@ def _profile_config(mcp_fixture: Path) -> dict[str, Any]:
 def _assert_no_user_plugins(hermes: Path, home: Path, env: Mapping[str, str]) -> None:
     try:
         cp = subprocess.run(
-            [str(hermes), "plugins", "list", "--enabled", "--user", "--json"],
+            [
+                str(hermes), "plugins", "list", "--enabled",
+                "--no-bundled", "--json",
+            ],
             env=dict(env), text=True, capture_output=True, timeout=30,
         )
     except (OSError, subprocess.TimeoutExpired) as exc:
@@ -261,7 +264,7 @@ def _assert_no_user_plugins(hermes: Path, home: Path, env: Mapping[str, str]) ->
     except json.JSONDecodeError as exc:
         raise ControlError("PLUGIN_INVENTORY_INVALID") from exc
     if rows != []:
-        raise ControlError("EARLY_HOOK_NOT_ABSENT")
+        raise ControlError("EXTERNAL_PLUGIN_NOT_ABSENT")
     if (home / "plugins" / "haven-scope").exists():
         raise ControlError("EARLY_HOOK_NOT_ABSENT")
 
