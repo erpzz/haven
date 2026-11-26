@@ -6,6 +6,29 @@ Base main: `53387e74a0ad90786ac3ea16753c8ad99142e9df`
 
 This plan evaluates the small-model augmentation controls without touching the #119 M4 reserve and without creating a parallel training/teacher benchmark to #123.
 
+
+## Current candidate mapping — 2026-11-26 (non-semantic amendment)
+
+The experiment definitions and gates below remain frozen. Historical PR numbers name
+the semantic component that was preregistered; they do **not** require reviving those
+superseded merge paths.
+
+- **#216** is now the product source for the admission / model-scope /
+  guarded-Hermes / raw-final-dispatch semantics historically developed in
+  #127/#129/#199.
+- **#215** supplies target-Mac qualification evidence for #216. Its
+  `qualification_source_sha256` is an evidence-harness identity and must never be
+  substituted for the matched-arm `tool_implementation_sha256`.
+- **#223** is the product source for recovery semantics historically named #130.
+- **#226** is evidence-only injected-hang qualification for #223; it may establish
+  recovery from a deliberately SIGSTOPed owned server but not a naturally occurring
+  model/server hang.
+- **#203** is the current Purple/product candidate into which router/claim behavior is
+  integrated.
+
+This mapping changes no dataset, metric, threshold, arm, gold, or gate.
+
+
 ## Firewall
 
 1. **M4 is forbidden here.** `augmentation_eval.py` rejects any arm report whose manifest has `reserve != false`.

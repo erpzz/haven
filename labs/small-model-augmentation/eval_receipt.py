@@ -7,14 +7,20 @@ part of the receipt schema.
 
 A receipt is one arm/case execution. It binds:
 - the exact public evaluation manifest identity/settings;
-- #127 admission;
-- #129 model-visible tool policy;
-- #199 guarded-Hermes preflight/supervisor receipts and raw final-dispatch policy;
+- the admitted owned-loopback runtime identity used by current #216/#215;
+- the exact #216 model-visible policy plus guarded-Hermes preflight/supervisor
+  receipts and raw final-dispatch policy (historically #129/#199);
 - #131 catalogue/selection;
 - #132 claim bundle/policy/renderer;
-- #130 run manifest;
-- MCP/tool implementation revision;
+- the #223 recovery/run-manifest identity (historically #130);
+- the exact product MCP/tool/enforcement implementation revision;
 - fixed host-instrumentation source receipt hashes and their derived counters.
+
+The receipt schema intentionally remains v2 because the promoted #216 guard still
+emits the same preflight/supervisor schemas that v2 validates. Evidence-harness
+identity is separate: #215/#226 qualification_source_sha256 values must never be
+substituted for controls.tool_implementation_sha256. The latter means the product
+implementation actually exercised by both compared arms.
 """
 from __future__ import annotations
 
@@ -566,10 +572,12 @@ def compare_private_receipt_sets(
     """Preflight matched arms before producing/accepting the public comparison.
 
     Stable runtime/settings/world/catalog/tool-implementation identities can never be
-    waived. The tool-implementation identity must cover the complete enforcement
-    implementation used for the run, including the #199 guard/plugin/final-dispatch
-    code when that stack is active. Other control bindings may differ only when the
-    caller explicitly names them as the experiment's intended manipulation.
+    waived. The tool-implementation identity must cover the complete *product*
+    enforcement implementation used for the run, including the promoted #216
+    guard/plugin/final-dispatch code when that stack is active. It is not the
+    #215/#226 qualification_source_sha256 (or any other evidence-harness identity).
+    Other control bindings may differ only when the caller explicitly names them as
+    the experiment's intended manipulation.
     """
     if not isinstance(allowed_control_differences, Sequence) or isinstance(
         allowed_control_differences, (str, bytes)

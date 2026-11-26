@@ -4,6 +4,34 @@ Workstream: #126. Base `53387e74a0ad90786ac3ea16753c8ad99142e9df`. Author: Astra
 
 Implementation: `augmentation_eval.py`. Frozen development-only experiment matrix: `CONTROLLED_EVAL_PLAN.md`.
 
+
+## Current candidate mapping — 2026-11-26
+
+The numbered controls below are the **historical semantic components used when this
+development plan was preregistered**, not instructions to revive superseded PRs.
+
+Current sources of record:
+
+- **#216** carries the promoted owned-loopback admission, model-visible scope,
+  guarded-Hermes preflight/supervisor and raw final-dispatch semantics historically
+  developed as #127/#129/#199.
+- **#215** is target-Mac qualification/evidence tooling for those #216 bytes. Its
+  `qualification_source_sha256` identifies the qualification harness and is **not**
+  the product `tool_implementation_sha256` used by matched E1/E2 receipts.
+- **#223** is the sole product recovery candidate and carries the crash-safe journal
+  semantics historically developed as #130.
+- **#226** is evidence-only fault injection for #223: it proves deterministic
+  recovery from an owned server deliberately stopped with SIGSTOP while explicitly
+  retaining `natural_server_hang_proven=false`. It is not a product merge source.
+- **#203** remains the current Purple/product candidate for evaluated domain behavior;
+  #131/#132 names below continue to denote the router/claim semantics frozen by this
+  plan.
+
+The private receipt remains `haven.augmentation-eval-private-receipt.v2`: current
+#216 preflight/supervisor receipts still use exactly the schemas v2 validates. A schema
+bump is not justified by PR-number promotion alone.
+
+
 ## Purpose
 
 This sidecar does **not** create another benchmark or another source of gold.
