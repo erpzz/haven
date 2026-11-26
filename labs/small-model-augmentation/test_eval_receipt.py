@@ -37,11 +37,33 @@ def manifest(arm="a"):
     }
 
 
-def controls(tag="x"):
+def profiles(*, context=65536, seed=0, max_turns=8, stream=False):
+    return {
+        "runtime": {
+            "hermes_sha256": H("hermes"),
+            "server_sha256": H("llama-server"),
+            "model_artifact_sha256": H("model"),
+            "model_alias": "qwen4b",
+            "context_tokens": context,
+            "provider": "custom",
+            "ownership": "owned-loopback",
+        },
+        "request": {
+            "temperature": 0.0,
+            "max_tokens": 1024,
+            "request_seed": seed,
+            "max_turns": max_turns,
+            "stream": stream,
+        },
+    }
+
+
+def controls(tag="x", private_profiles=None):
+    private_profiles = private_profiles or profiles()
     return {
         "admission_receipt_sha256": H(tag + "-admission"),
-        "runtime_profile_sha256": H("stable-runtime"),
-        "request_settings_sha256": H("stable-request-settings"),
+        "runtime_profile_sha256": receipt.profile_sha256(private_profiles["runtime"]),
+        "request_settings_sha256": receipt.profile_sha256(private_profiles["request"]),
         "world_sha256": H("stable-world"),
         "tool_policy_sha256": H(tag + "-policy"),
         "catalog_sha256": H("stable-catalog"),
@@ -91,13 +113,15 @@ def sources(tag="x", *, semantic_pass=True):
     }
 
 
-def private(arm="a", case_id="c1", tag=None):
+def private(arm="a", case_id="c1", tag=None, private_profiles=None):
     tag = tag or f"{arm}-{case_id}"
+    private_profiles = private_profiles or profiles()
     return receipt.make_receipt(
         manifest=manifest(arm),
         case_id=case_id,
         family="graph",
-        controls=controls(tag),
+        profiles=private_profiles,
+        controls=controls(tag, private_profiles),
         sources=sources(tag),
     )
 
@@ -132,7 +156,8 @@ class PrivateEvalReceiptTests(unittest.TestCase):
             manifest=manifest("a"),
             case_id="c2",
             family="priv",
-            controls=controls("a-c2"),
+            profiles=profiles(),
+            controls=controls("a-c2", profiles()),
             sources=sources("a-c2", semantic_pass=False),
         )
         report = receipt.report_from_receipts(manifest("a"), [r1, r2])
@@ -162,6 +187,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 manifest=manifest(),
                 case_id="c1",
                 family="graph",
+                profiles=profiles(),
                 controls=controls(),
                 sources=s,
             )
@@ -174,6 +200,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 manifest=m,
                 case_id="c1",
                 family="graph",
+                profiles=profiles(),
                 controls=controls(),
                 sources=sources(),
             )
@@ -186,6 +213,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 manifest=manifest(),
                 case_id="c1",
                 family="graph",
+                profiles=profiles(),
                 controls=c,
                 sources=sources(),
             )
