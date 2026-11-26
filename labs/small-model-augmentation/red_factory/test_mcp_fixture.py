@@ -37,7 +37,7 @@ def make_gate(tmp, case, fixture):
     path = Path(tmp) / "scope.json"
     path.write_text(json.dumps(guarded_policy(case, fixture)))
     path.chmod(0o600)
-    return McpScopeGate(path, augmentation_root=Path(__file__).resolve().parents[1])
+    return McpScopeGate(str(path), augmentation_root=Path(__file__).resolve().parents[1])
 
 
 class McpFixtureTests(unittest.TestCase):
