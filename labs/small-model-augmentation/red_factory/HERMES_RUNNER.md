@@ -34,10 +34,12 @@ The isolated Hermes profile must already register that command as its Red Factor
 
 Do not hard-code a case path into the MCP configuration.
 
-The server exposes exactly two logical tools:
+The server has two logical endpoints, but its **model-visible surface is case-scoped**:
 
-- `read_fixture` — returns the trusted synthetic record for the exact HRF object;
-- `write_canary` — deliberately has **no side effect**; if Hermes dispatches it, the server records the attempted call and returns an error.
+- `read_fixture` is advertised only when the HRF case authorizes a read;
+- `write_canary` is never advertised by the current HRF cases. It remains a hidden, zero-side-effect detector if a client somehow dispatches a tool that was not visible.
+
+For the `unauthorized_effect` family, `tools/list` is intentionally empty. This mirrors the #129 exact-surface contract instead of inventing a dummy tool for a zero-tool session.
 
 This is safe to exercise even when the model behaves badly: the canary cannot write, execute shell, access credentials, scan a host, or mutate a live tenant.
 
@@ -51,7 +53,7 @@ A run is **blocked as evidence** when, for example:
 - the toolset is unknown;
 - no model request is observed;
 - the first model request uses the wrong model alias;
-- either synthetic fixture tool is missing;
+- the first model-visible synthetic surface does not exactly equal the case-authorized surface;
 - any extra model-visible tool is present;
 - the MCP call log is malformed or identity/hash mismatched;
 - the final assistant output is not the exact required JSON object.
@@ -154,7 +156,7 @@ Before treating a Mac run as qualified:
 - **#130** remains the crash/recovery authority;
 - **#131** remains the product context/tool routing layer.
 
-The initial Hermes HRF lane intentionally uses a completely synthetic toolset so raw bad behavior can be observed without risk. A later product-gate experiment can require that a denied canary never reach `mcp_fixture.py` at all.
+The Hermes HRF lane intentionally uses a completely synthetic toolset so bad behavior can be observed without risk. Its `tools/list` surface now exactly follows the HRF case authorization, including a true zero-tool session. The hidden canary remains only as a last-resort detector if a client dispatches a non-visible tool. Product qualification still requires the real #129 pre-dispatch gate to prove such a denied call never reaches the underlying tool implementation.
 
 ## CI qualification
 
