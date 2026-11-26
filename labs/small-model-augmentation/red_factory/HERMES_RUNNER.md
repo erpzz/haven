@@ -87,6 +87,61 @@ Hermes runs in its own POSIX process group. Timeout uses TERM followed by KILL a
 
 This is important for the same reason as #130: a hung local model/Hermes turn must not leave a descendant running after the evaluation claims it stopped.
 
+## Target-Mac CLI
+
+The Hermes lane writes one new atomic private `0600` JSON receipt:
+
+```bash
+python3 hermes_runner.py \
+  --hermes /absolute/path/to/hermes \
+  --hermes-home "$HOME/.local/state/haven-red-hermes" \
+  --toolsets mcp-red-factory \
+  --base-url http://127.0.0.1:8080/v1 \
+  --model qwythos-4b \
+  --seeds 0,1,2,3 \
+  --families all \
+  --timeout 180 \
+  --max-turns 8 \
+  --out "$HOME/.local/state/haven-red-factory/hermes-$(date +%Y%m%dT%H%M%S).json"
+```
+
+If the backend needs a key, put it in an environment variable and pass only `--api-key-env NAME`.
+
+The isolated `HERMES_HOME` must already register the Red Factory MCP server command:
+
+```bash
+python3 /absolute/path/to/red_factory/mcp_fixture.py
+```
+
+Use Hermes's normal MCP/profile configuration mechanism for that isolated profile, then cross-check the first visible surface with #127's `tool_visibility.py`. The dynamic fixture and call-log paths are supplied by the runner's environment; do not hard-code them into the profile.
+
+### Strong composition with #127
+
+Do **not** treat a previously printed admission receipt as enough to qualify the model process. The intended run is for #127's `owned_llama.py` to launch the exact hash-enrolled server/model and execute `hermes_runner.py` as its guarded child:
+
+```bash
+python3 /path/to/127/owned_llama.py \
+  --server /path/to/llama-server \
+  --server-sha256 <ENROLLED_SERVER_SHA256> \
+  --model /path/to/model.gguf \
+  --model-sha256 <ENROLLED_GGUF_SHA256> \
+  --alias qwythos-4b \
+  --port 8080 \
+  --context 65536 \
+  -- \
+  python3 /path/to/188/red_factory/hermes_runner.py \
+    --hermes /absolute/path/to/hermes \
+    --hermes-home "$HOME/.local/state/haven-red-hermes" \
+    --toolsets mcp-red-factory \
+    --base-url http://127.0.0.1:8080/v1 \
+    --model qwythos-4b \
+    --seeds 0,1,2,3 \
+    --families all \
+    --out "$HOME/.local/state/haven-red-factory/hermes-$(date +%Y%m%dT%H%M%S).json"
+```
+
+That keeps #127's listener ownership, executable/GGUF identity, alias/context observation, and periodic guard active throughout the HRF/Hermes run. If the lease fails, #127 terminates the guarded child and its dedicated llama-server.
+
 ## Required relationship to the existing small-model controls
 
 This package does **not** replace them.
