@@ -45,7 +45,7 @@ Global limitations are always returned independent of model selection.
 
 ## Author test evidence
 
-Author semantic reproduction after second pass: **26/26 PASS**.
+Author semantic reproduction before the final scope-hardening refinement: **26/26 PASS**. Final review then added a regression requiring a non-empty host scope; exact final-head clean-checkout execution is intentionally left to Codex/local validation rather than claimed here.
 
 Coverage includes:
 
@@ -59,6 +59,7 @@ Coverage includes:
 - required conflicting/limiting claim;
 - forced global limitations;
 - exact host scope projection;
+- empty/unbound host scope rejection;
 - stale candidate after scope change;
 - bundle hash binding predicate and timestamp;
 - claim-order-independent bundle hash;
@@ -81,6 +82,7 @@ A malformed-input fuzz probe exercised **30,000** randomized bundle/candidate/co
 5. Host `required_ids` is the anti-cherry-picking mechanism for required conflicts/counterevidence.
 6. Claim derivation is explicitly outside this boundary: the adapter must consume verified evidence.
 7. The hash is content integrity, not producer authentication.
+8. Final review corrected an over-permissive scope check: an empty `{}` scope is now invalid.
 
 ## Intended composition
 
