@@ -222,6 +222,8 @@ Hermes entrypoint and reported release. Required keys are:
   "hermes_sha256": "<64 hex>",
   "hermes_version": "0.21.5",
   "hermes_release_date": "2026.9.24",
+  "hermes_python_sha256": "<64 hex>",
+  "hermes_runtime_source_sha256": "<64 hex>",
   "hermes_config_sha256": "<64 hex>",
   "hermes_profile_env_sha256": "<64 hex>",
   "plugin_init_sha256": "<64 hex>",
@@ -243,6 +245,17 @@ Hermes entrypoint and reported release. Required keys are:
 Those hashes are enrollment inputs only after the corresponding checkout/install has been
 reviewed. Automatically hashing arbitrary local bytes and immediately trusting the result is
 not provenance.
+
+The Hermes console-script hash and version label are not treated as sufficient package
+provenance. The runner reads the console-script shebang, requires an absolute interpreter,
+checks that interpreter's enrolled SHA-256, then executes that interpreter in isolated mode
+to import the installed Hermes package and hash the fixed trust-path source set that owns
+plugin hooks, dotenv loading, MCP discovery/name conversion/registration, registry selection,
+tool dispatch and agent invocation. The aggregate must equal
+`hermes_runtime_source_sha256`, and the imported package must report exactly
+`0.21.5 / 2026.9.24`. The package fingerprint is rechecked after discovery, after replay
+and after the owned-model run. This makes the pinned Hermes claim about installed bytes,
+not only the wrapper script or its version string.
 
 For the isolated qualification profile, `config.yaml` and `.env` are also enrollment
 artifacts. Both must be owner-private regular files with no group/other permission bits.
