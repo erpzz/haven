@@ -189,3 +189,88 @@ The tests distinguish harness failure from model failure and prove that a timed-
 - The isolated Hermes profile/MCP registration is a target-Mac responsibility.
 - This is development-only and must not be used as M4/reserve or promotion evidence.
 - No real target discovery, network scanning, exploit execution, credential access, persistence, lateral movement, destructive action, live tenant mutation, training, model promotion, deployment, or self-merge is introduced.
+
+## One-case guarded Mac qualification
+
+For the real #141 campaign, do not wrap a mixed HRF suite in one #212 supervisor admission.
+The early Hermes policy is process/session state, while the HRF authorization changes by case.
+Use `mac_case_qualification.py` once per family/seed.
+
+The runner has three phases:
+
+1. **Profile + surface discovery, no local model.** It verifies a private enrollment
+   manifest, checks the Hermes executable hash and reported release, runs the #212 plugin
+   preflight with deny-all policies, and invokes `tool_visibility.py` against its scripted
+   loopback backend. The Red MCP fixture is synthetic and no tool call is requested.
+2. **Case-policy replay, still no local model.** The exact transformed tool-name sequence
+   and full tool-definition SHA-256 from discovery are converted into a case-specific
+   model-side policy. The existing HRF ToolPolicy becomes the raw MCP policy. The probe is
+   replayed under both policies and must reproduce the exact name sequence and surface hash.
+3. **Owned Qwythos/Hermes run.** Only after the replay passes does
+   `guarded_model_supervisor.py` start the enrolled llama-server/GGUF. The one-case
+   `hermes_runner.py` child is given the same raw-MCP policy file and SHA-256 that #212
+   preflight already bound. The Red result must report
+   `final_mcp_policy_bound_by_parent=true` and the identical policy hash.
+
+The enrollment file is owner-private 0600 JSON with schema
+`haven.mac-red-case-enrollment.v1`. It binds the reviewed checkout sources plus the
+Hermes entrypoint and reported release. Required keys are:
+
+```json
+{
+  "schema": "haven.mac-red-case-enrollment.v1",
+  "hermes_sha256": "<64 hex>",
+  "hermes_version": "0.21.5",
+  "hermes_release_date": "2026.9.24",
+  "plugin_init_sha256": "<64 hex>",
+  "plugin_manifest_sha256": "<64 hex>",
+  "scope_engine_sha256": "<64 hex>",
+  "mcp_scope_runtime_sha256": "<64 hex>",
+  "owned_llama_sha256": "<64 hex>",
+  "observe_llama_sha256": "<64 hex>",
+  "model_preflight_sha256": "<64 hex>",
+  "tool_visibility_sha256": "<64 hex>",
+  "plugin_preflight_source_sha256": "<64 hex>",
+  "guarded_supervisor_source_sha256": "<64 hex>",
+  "red_runner_sha256": "<64 hex>",
+  "red_fixture_sha256": "<64 hex>",
+  "red_factory_sha256": "<64 hex>"
+}
+```
+
+Those hashes are enrollment inputs only after the corresponding checkout/install has been
+reviewed. Automatically hashing arbitrary local bytes and immediately trusting the result is
+not provenance.
+
+Example shape:
+
+```bash
+python3 labs/small-model-augmentation/red_factory/mac_case_qualification.py \
+  --hermes "$HERMES" \
+  --hermes-home "$HOME/.local/state/haven-red-hermes" \
+  --toolsets mcp-red-factory \
+  --server /absolute/path/to/llama-server \
+  --server-sha256 "$SERVER_SHA" \
+  --model /absolute/path/to/qwythos.gguf \
+  --model-sha256 "$MODEL_SHA" \
+  --alias qwythos-4b \
+  --port 38080 \
+  --context 65536 \
+  --family duplicate_read \
+  --seed 2 \
+  --enrollment /absolute/private/mac-red-enrollment.json \
+  --out-dir "$HOME/.local/state/haven-red-factory/case-duplicate-read-2"
+```
+
+The output directory is created new with mode 0700 and is never reused. It contains the
+discovery fixture/policies, surface discovery + replay receipts, the actual model/raw scope
+policies, #212 preflight + supervisor receipts, llama log, one-case Red receipt, and final
+qualification receipt. The final receipt separates `model_behavior_pass` from
+`execution_protection_pass`; a model-intent failure can therefore remain valid evidence
+when execution was protected.
+
+This positive runner does not replace the separate negative controls in #141. In particular,
+the plugin-missing case must still make normal #212 guarded startup refuse, and the
+final-dispatch-only control must remain explicitly labeled as a negative-control run rather
+than a qualified positive run.
+
