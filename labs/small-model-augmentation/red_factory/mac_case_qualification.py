@@ -246,8 +246,7 @@ def _sha_provenance_executable(path: Path, *, max_bytes: int = 128 * 1024 * 1024
         os.close(fd)
 
 
-def _hermes_interpreter(hermes: Path,
-                        enrollment: Mapping[str, Any]) -> Path:
+def _hermes_interpreter_path(hermes: Path) -> Path:
     try:
         raw = Path(hermes).read_bytes()[:4096]
     except OSError as exc:
@@ -264,15 +263,22 @@ def _hermes_interpreter(hermes: Path,
     python = Path(value)
     if not python.is_absolute():
         raise QualificationError("HERMES_INTERPRETER_NOT_ABSOLUTE")
+    return python
+
+
+def _hermes_interpreter(hermes: Path,
+                        enrollment: Mapping[str, Any]) -> Path:
+    python = _hermes_interpreter_path(hermes)
     if _sha_provenance_executable(python) != enrollment["hermes_python_sha256"]:
         raise QualificationError("HERMES_INTERPRETER_HASH_MISMATCH")
     return python
 
 
-def _runtime_package_fingerprint(hermes: Path, enrollment: Mapping[str, Any],
-                                 env: Mapping[str, str]) -> dict[str, Any]:
-    """Hash the installed Hermes files that own this qualification's trust path."""
-    python = _hermes_interpreter(hermes, enrollment)
+def _runtime_package_snapshot(hermes: Path,
+                              env: Mapping[str, str]) -> dict[str, Any]:
+    """Measure installed Hermes interpreter + trust-path sources without blessing them."""
+    python = _hermes_interpreter_path(hermes)
+    python_sha256 = _sha_provenance_executable(python)
     files_json = json.dumps(list(HERMES_RUNTIME_FILES))
     code = f"""
 import hashlib, json, os, stat
@@ -326,6 +332,15 @@ print(json.dumps({{
             or not isinstance(value.get("source_sha256"), str)
             or HEX64.fullmatch(value["source_sha256"]) is None):
         raise QualificationError("HERMES_RUNTIME_FINGERPRINT_INVALID")
+    value["python_sha256"] = python_sha256
+    return value
+
+
+def _runtime_package_fingerprint(hermes: Path, enrollment: Mapping[str, Any],
+                                 env: Mapping[str, str]) -> dict[str, Any]:
+    value = _runtime_package_snapshot(hermes, env)
+    if value["python_sha256"] != enrollment["hermes_python_sha256"]:
+        raise QualificationError("HERMES_INTERPRETER_HASH_MISMATCH")
     if (value["version"] != enrollment["hermes_version"]
             or value["release_date"] != enrollment["hermes_release_date"]):
         raise QualificationError("HERMES_RUNTIME_VERSION_MISMATCH")
