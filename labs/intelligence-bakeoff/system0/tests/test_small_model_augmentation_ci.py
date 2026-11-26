@@ -13,6 +13,8 @@ class SmallModelAugmentationCombinedCI(unittest.TestCase):
             [sys.executable, "-m", "unittest", "discover", "-s", ".", "-p", "test_*.py", "-v"],
             cwd=aug, text=True, capture_output=True,
         )
+        print(suite_run.stdout)
+        print(suite_run.stderr)
         self.assertEqual(suite_run.returncode, 0, suite_run.stdout + "\n" + suite_run.stderr)
 
 if __name__ == "__main__":
