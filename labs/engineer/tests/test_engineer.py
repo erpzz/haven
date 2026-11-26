@@ -306,6 +306,7 @@ class LoopTest(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.srv.shutdown()
+        cls.srv.server_close()
 
     def agent(self, ws, **kw):
         return loop.Agent(new_executor(ws, **kw.pop("ex", {})), base_url=self.url, model="fake", max_steps=10, **kw)
@@ -480,6 +481,7 @@ class ConsoleTest(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.srv.shutdown()
+        cls.srv.server_close()
 
     def req(self, path, body=None, token=True, host=None):
         r = urllib.request.Request(self.base + path, data=json.dumps(body).encode() if body is not None else None)

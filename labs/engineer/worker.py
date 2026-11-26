@@ -34,6 +34,7 @@ import shutil
 import signal
 import subprocess
 import sys
+import threading
 import time
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -94,6 +95,16 @@ def validate_spec(spec):
     return {**spec, "workspace": str(ws), "timeout_s": timeout, "network": bool(spec.get("network"))}
 
 
+def _reap_background(proc):
+    """Retain and reap a detached child without blocking the caller."""
+    def wait():
+        try:
+            proc.wait()
+        except Exception:
+            pass
+    threading.Thread(target=wait, name=f"haven-worker-reap-{proc.pid}", daemon=True).start()
+
+
 def start(jid, spec):
     d = job_dir(jid)
     spec = validate_spec(spec)
@@ -114,6 +125,7 @@ def start(jid, spec):
         if (d / "runner.json").exists() or proc.poll() is not None:
             break
         time.sleep(0.05)
+    _reap_background(proc)
     return status(jid)
 
 

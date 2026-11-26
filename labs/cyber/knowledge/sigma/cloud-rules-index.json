@@ -1,0 +1,2951 @@
+{
+"source": "SigmaHQ/sigma",
+"commit": "05d1031f537e830b76da53bae2400c5814c89165",
+"dirs": [
+"rules/cloud/azure",
+"rules/cloud/m365"
+],
+"license": "Detection Rule License (DRL) 1.1, https://github.com/SigmaHQ/Detection-Rule-License; metadata only, follow url for the rule",
+"rules": [
+{
+"title": "Azure Active Directory Hybrid Health AD FS New Server",
+"id": "288a39fc-4914-4831-9ada-270e9dc12cb4",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.defense-impairment",
+"attack.t1578"
+],
+"techniques": [
+"T1578"
+],
+"path": "rules/cloud/azure/activity_logs/azure_aadhybridhealth_adfs_new_server.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_aadhybridhealth_adfs_new_server.yml"
+},
+{
+"title": "Azure Active Directory Hybrid Health AD FS Service Delete",
+"id": "48739819-8230-4ee3-a8ea-e0289d1fb0ff",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.defense-impairment",
+"attack.t1578.003"
+],
+"techniques": [
+"T1578.003"
+],
+"path": "rules/cloud/azure/activity_logs/azure_aadhybridhealth_adfs_service_delete.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_aadhybridhealth_adfs_service_delete.yml"
+},
+{
+"title": "Azure Application Gateway Modified or Deleted",
+"id": "ad87d14e-7599-4633-ba81-aeb60cfe8cd6",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/activity_logs/azure_application_gateway_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_application_gateway_modified_or_deleted.yml"
+},
+{
+"title": "Azure Application Security Group Modified or Deleted",
+"id": "835747f1-9329-40b5-9cc3-97d465754ce6",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/activity_logs/azure_application_security_group_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_application_security_group_modified_or_deleted.yml"
+},
+{
+"title": "Azure Container Registry Created or Deleted",
+"id": "93e0ef48-37c8-49ed-a02c-038aab23628e",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "low",
+"tags": [
+"attack.impact",
+"attack.t1485",
+"attack.t1496",
+"attack.t1489"
+],
+"techniques": [
+"T1485",
+"T1489",
+"T1496"
+],
+"path": "rules/cloud/azure/activity_logs/azure_container_registry_created_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_container_registry_created_or_deleted.yml"
+},
+{
+"title": "Number Of Resource Creation Or Deployment Activities",
+"id": "d2d901db-7a75-45a1-bc39-0cbf00812192",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.t1098"
+],
+"techniques": [
+"T1098"
+],
+"path": "rules/cloud/azure/activity_logs/azure_creating_number_of_resources_detection.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_creating_number_of_resources_detection.yml"
+},
+{
+"title": "Azure Device or Configuration Modified or Deleted",
+"id": "46530378-f9db-4af9-a9e5-889c177d3881",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.t1485",
+"attack.t1565.001"
+],
+"techniques": [
+"T1485",
+"T1565.001"
+],
+"path": "rules/cloud/azure/activity_logs/azure_device_or_configuration_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_device_or_configuration_modified_or_deleted.yml"
+},
+{
+"title": "Azure DNS Zone Modified or Deleted",
+"id": "af6925b0-8826-47f1-9324-337507a0babd",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.t1565.001"
+],
+"techniques": [
+"T1565.001"
+],
+"path": "rules/cloud/azure/activity_logs/azure_dns_zone_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_dns_zone_modified_or_deleted.yml"
+},
+{
+"title": "Azure Firewall Modified or Deleted",
+"id": "512cf937-ea9b-4332-939c-4c2c94baadcd",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.defense-impairment",
+"attack.t1686.001"
+],
+"techniques": [
+"T1686.001"
+],
+"path": "rules/cloud/azure/activity_logs/azure_firewall_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_firewall_modified_or_deleted.yml"
+},
+{
+"title": "Azure Firewall Rule Collection Modified or Deleted",
+"id": "025c9fe7-db72-49f9-af0d-31341dd7dd57",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.defense-impairment",
+"attack.t1686.001"
+],
+"techniques": [
+"T1686.001"
+],
+"path": "rules/cloud/azure/activity_logs/azure_firewall_rule_collection_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_firewall_rule_collection_modified_or_deleted.yml"
+},
+{
+"title": "Granting Of Permissions To An Account",
+"id": "a622fcd2-4b5a-436a-b8a2-a4171161833c",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.t1098.003"
+],
+"techniques": [
+"T1098.003"
+],
+"path": "rules/cloud/azure/activity_logs/azure_granting_permission_detection.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_granting_permission_detection.yml"
+},
+{
+"title": "Azure Keyvault Key Modified or Deleted",
+"id": "80eeab92-0979-4152-942d-96749e11df40",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.credential-access",
+"attack.t1552",
+"attack.t1552.001"
+],
+"techniques": [
+"T1552",
+"T1552.001"
+],
+"path": "rules/cloud/azure/activity_logs/azure_keyvault_key_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_keyvault_key_modified_or_deleted.yml"
+},
+{
+"title": "Azure Key Vault Modified or Deleted",
+"id": "459a2970-bb84-4e6a-a32e-ff0fbd99448d",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.credential-access",
+"attack.t1552",
+"attack.t1552.001"
+],
+"techniques": [
+"T1552",
+"T1552.001"
+],
+"path": "rules/cloud/azure/activity_logs/azure_keyvault_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_keyvault_modified_or_deleted.yml"
+},
+{
+"title": "Azure Keyvault Secrets Modified or Deleted",
+"id": "b831353c-1971-477b-abb6-2828edc3bca1",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.credential-access",
+"attack.t1552",
+"attack.t1552.001"
+],
+"techniques": [
+"T1552",
+"T1552.001"
+],
+"path": "rules/cloud/azure/activity_logs/azure_keyvault_secrets_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_keyvault_secrets_modified_or_deleted.yml"
+},
+{
+"title": "Azure Kubernetes Admission Controller",
+"id": "a61a3c56-4ce2-4351-a079-88ae4cbd2b58",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.initial-access",
+"attack.persistence",
+"attack.stealth",
+"attack.t1078",
+"attack.credential-access",
+"attack.t1552",
+"attack.t1552.007"
+],
+"techniques": [
+"T1078",
+"T1552",
+"T1552.007"
+],
+"path": "rules/cloud/azure/activity_logs/azure_kubernetes_admission_controller.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_kubernetes_admission_controller.yml"
+},
+{
+"title": "Azure Kubernetes Cluster Created or Deleted",
+"id": "9541f321-7cba-4b43-80fc-fbd1fb922808",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "low",
+"tags": [
+"attack.impact",
+"attack.t1485",
+"attack.t1496",
+"attack.t1489"
+],
+"techniques": [
+"T1485",
+"T1489",
+"T1496"
+],
+"path": "rules/cloud/azure/activity_logs/azure_kubernetes_cluster_created_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_kubernetes_cluster_created_or_deleted.yml"
+},
+{
+"title": "Azure Kubernetes CronJob",
+"id": "1c71e254-6655-42c1-b2d6-5e4718d7fc0a",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.persistence",
+"attack.t1053.003",
+"attack.privilege-escalation",
+"attack.execution"
+],
+"techniques": [
+"T1053.003"
+],
+"path": "rules/cloud/azure/activity_logs/azure_kubernetes_cronjob.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_kubernetes_cronjob.yml"
+},
+{
+"title": "Azure Kubernetes Events Deleted",
+"id": "225d8b09-e714-479c-a0e4-55e6f29adf35",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.defense-impairment",
+"attack.t1685"
+],
+"techniques": [
+"T1685"
+],
+"path": "rules/cloud/azure/activity_logs/azure_kubernetes_events_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_kubernetes_events_deleted.yml"
+},
+{
+"title": "Azure Kubernetes Network Policy Change",
+"id": "08d6ac24-c927-4469-b3b7-2e422d6e3c43",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.credential-access",
+"attack.t1485",
+"attack.t1496",
+"attack.t1489"
+],
+"techniques": [
+"T1485",
+"T1489",
+"T1496"
+],
+"path": "rules/cloud/azure/activity_logs/azure_kubernetes_network_policy_change.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_kubernetes_network_policy_change.yml"
+},
+{
+"title": "Azure Kubernetes Pods Deleted",
+"id": "b02f9591-12c3-4965-986a-88028629b2e1",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/activity_logs/azure_kubernetes_pods_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_kubernetes_pods_deleted.yml"
+},
+{
+"title": "Azure Kubernetes Sensitive Role Access",
+"id": "818fee0c-e0ec-4e45-824e-83e4817b0887",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.t1485",
+"attack.t1496",
+"attack.t1489"
+],
+"techniques": [
+"T1485",
+"T1489",
+"T1496"
+],
+"path": "rules/cloud/azure/activity_logs/azure_kubernetes_role_access.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_kubernetes_role_access.yml"
+},
+{
+"title": "Azure Kubernetes RoleBinding/ClusterRoleBinding Modified and Deleted",
+"id": "25cb259b-bbdc-4b87-98b7-90d7c72f8743",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.credential-access",
+"attack.t1485",
+"attack.t1496",
+"attack.t1489"
+],
+"techniques": [
+"T1485",
+"T1489",
+"T1496"
+],
+"path": "rules/cloud/azure/activity_logs/azure_kubernetes_rolebinding_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_kubernetes_rolebinding_modified_or_deleted.yml"
+},
+{
+"title": "Azure Kubernetes Secret or Config Object Access",
+"id": "7ee0b4aa-d8d4-4088-b661-20efdf41a04c",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.t1485",
+"attack.t1496",
+"attack.t1489"
+],
+"techniques": [
+"T1485",
+"T1489",
+"T1496"
+],
+"path": "rules/cloud/azure/activity_logs/azure_kubernetes_secret_or_config_object_access.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_kubernetes_secret_or_config_object_access.yml"
+},
+{
+"title": "Azure Kubernetes Service Account Modified or Deleted",
+"id": "12d027c3-b48c-4d9d-8bb6-a732200034b2",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.t1531",
+"attack.t1485",
+"attack.t1496",
+"attack.t1489"
+],
+"techniques": [
+"T1485",
+"T1489",
+"T1496",
+"T1531"
+],
+"path": "rules/cloud/azure/activity_logs/azure_kubernetes_service_account_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_kubernetes_service_account_modified_or_deleted.yml"
+},
+{
+"title": "Azure Network Firewall Policy Modified or Deleted",
+"id": "83c17918-746e-4bd9-920b-8e098bf88c23",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.defense-impairment",
+"attack.t1686.001"
+],
+"techniques": [
+"T1686.001"
+],
+"path": "rules/cloud/azure/activity_logs/azure_network_firewall_policy_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_network_firewall_policy_modified_or_deleted.yml"
+},
+{
+"title": "Azure Firewall Rule Configuration Modified or Deleted",
+"id": "2a7d64cf-81fa-4daf-ab1b-ab80b789c067",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/activity_logs/azure_network_firewall_rule_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_network_firewall_rule_modified_or_deleted.yml"
+},
+{
+"title": "Azure Point-to-site VPN Modified or Deleted",
+"id": "d9557b75-267b-4b43-922f-a775e2d1f792",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/activity_logs/azure_network_p2s_vpn_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_network_p2s_vpn_modified_or_deleted.yml"
+},
+{
+"title": "Azure Network Security Configuration Modified or Deleted",
+"id": "d22b4df4-5a67-4859-a578-8c9a0b5af9df",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/activity_logs/azure_network_security_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_network_security_modified_or_deleted.yml"
+},
+{
+"title": "Azure Virtual Network Device Modified or Deleted",
+"id": "15ef3fac-f0f0-4dc4-ada0-660aa72980b3",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/activity_logs/azure_network_virtual_device_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_network_virtual_device_modified_or_deleted.yml"
+},
+{
+"title": "Azure New CloudShell Created",
+"id": "72af37e2-ec32-47dc-992b-bc288a2708cb",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.execution",
+"attack.t1059"
+],
+"techniques": [
+"T1059"
+],
+"path": "rules/cloud/azure/activity_logs/azure_new_cloudshell_created.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_new_cloudshell_created.yml"
+},
+{
+"title": "Rare Subscription-level Operations In Azure",
+"id": "c1182e02-49a3-481c-b3de-0fadc4091488",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.t1003",
+"attack.credential-access"
+],
+"techniques": [
+"T1003"
+],
+"path": "rules/cloud/azure/activity_logs/azure_rare_operations.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_rare_operations.yml"
+},
+{
+"title": "Azure Subscription Permission Elevation Via ActivityLogs",
+"id": "09438caa-07b1-4870-8405-1dbafe3dad95",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/activity_logs/azure_subscription_permissions_elevation_via_activitylogs.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_subscription_permissions_elevation_via_activitylogs.yml"
+},
+{
+"title": "Azure Suppression Rule Created",
+"id": "92cc3e5d-eb57-419d-8c16-5c63f325a401",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/activity_logs/azure_suppression_rule_created.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_suppression_rule_created.yml"
+},
+{
+"title": "Azure Virtual Network Modified or Deleted",
+"id": "bcfcc962-0e4a-4fd9-84bb-a833e672df3f",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/activity_logs/azure_virtual_network_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_virtual_network_modified_or_deleted.yml"
+},
+{
+"title": "Azure VPN Connection Modified or Deleted",
+"id": "61171ffc-d79c-4ae5-8e10-9323dba19cd3",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "activitylogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/activity_logs/azure_vpn_connection_modified_or_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/activity_logs/azure_vpn_connection_modified_or_deleted.yml"
+},
+{
+"title": "CA Policy Removed by Non Approved Actor",
+"id": "26e7c5e2-6545-481e-b7e6-050143459635",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.credential-access",
+"attack.persistence",
+"attack.defense-impairment",
+"attack.t1548",
+"attack.t1556"
+],
+"techniques": [
+"T1548",
+"T1556"
+],
+"path": "rules/cloud/azure/audit_logs/azure_aad_secops_ca_policy_removedby_bad_actor.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_aad_secops_ca_policy_removedby_bad_actor.yml"
+},
+{
+"title": "CA Policy Updated by Non Approved Actor",
+"id": "50a3c7aa-ec29-44a4-92c1-fce229eef6fc",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.credential-access",
+"attack.persistence",
+"attack.defense-impairment",
+"attack.t1548",
+"attack.t1556"
+],
+"techniques": [
+"T1548",
+"T1556"
+],
+"path": "rules/cloud/azure/audit_logs/azure_aad_secops_ca_policy_updatedby_bad_actor.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_aad_secops_ca_policy_updatedby_bad_actor.yml"
+},
+{
+"title": "New CA Policy by Non-approved Actor",
+"id": "0922467f-db53-4348-b7bf-dee8d0d348c6",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.t1548"
+],
+"techniques": [
+"T1548"
+],
+"path": "rules/cloud/azure/audit_logs/azure_aad_secops_new_ca_policy_addedby_bad_actor.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_aad_secops_new_ca_policy_addedby_bad_actor.yml"
+},
+{
+"title": "Account Created And Deleted Within A Close Time Frame",
+"id": "6f583da0-3a90-4566-a4ed-83c09fe18bbf",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/audit_logs/azure_ad_account_created_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_ad_account_created_deleted.yml"
+},
+{
+"title": "Bitlocker Key Retrieval",
+"id": "a0413867-daf3-43dd-9245-734b3a787942",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/audit_logs/azure_ad_bitlocker_key_retrieval.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_ad_bitlocker_key_retrieval.yml"
+},
+{
+"title": "Certificate-Based Authentication Enabled",
+"id": "c2496b41-16a9-4016-a776-b23f8910dc58",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.credential-access",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.defense-impairment",
+"attack.t1556"
+],
+"techniques": [
+"T1556"
+],
+"path": "rules/cloud/azure/audit_logs/azure_ad_certificate_based_authencation_enabled.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_ad_certificate_based_authencation_enabled.yml"
+},
+{
+"title": "Changes to Device Registration Policy",
+"id": "9494bff8-959f-4440-bbce-fb87a208d517",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.defense-impairment",
+"attack.t1484"
+],
+"techniques": [
+"T1484"
+],
+"path": "rules/cloud/azure/audit_logs/azure_ad_device_registration_policy_changes.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_ad_device_registration_policy_changes.yml"
+},
+{
+"title": "New Root Certificate Authority Added",
+"id": "4bb80281-3756-4ec8-a88e-523c5a6fda9e",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.credential-access",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.defense-impairment",
+"attack.t1556"
+],
+"techniques": [
+"T1556"
+],
+"path": "rules/cloud/azure/audit_logs/azure_ad_new_root_ca_added.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_ad_new_root_ca_added.yml"
+},
+{
+"title": "User Added to an Administrator's Azure AD Role",
+"id": "ebbeb024-5b1d-4e16-9c0c-917f86c708a7",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.initial-access",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.stealth",
+"attack.t1098.003",
+"attack.t1078"
+],
+"techniques": [
+"T1078",
+"T1098.003"
+],
+"path": "rules/cloud/azure/audit_logs/azure_ad_user_added_to_admin_role.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_ad_user_added_to_admin_role.yml"
+},
+{
+"title": "Users Added to Global or Device Admin Roles",
+"id": "11c767ae-500b-423b-bae3-b234450736ed",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.persistence",
+"attack.initial-access",
+"attack.privilege-escalation",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/audit_logs/azure_ad_users_added_to_device_admin_roles.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_ad_users_added_to_device_admin_roles.yml"
+},
+{
+"title": "Application AppID Uri Configuration Changes",
+"id": "1b45b0d1-773f-4f23-aedc-814b759563b1",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.persistence",
+"attack.credential-access",
+"attack.privilege-escalation",
+"attack.stealth",
+"attack.t1552",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004",
+"T1552"
+],
+"path": "rules/cloud/azure/audit_logs/azure_app_appid_uri_changes.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_app_appid_uri_changes.yml"
+},
+{
+"title": "Added Credentials to Existing Application",
+"id": "cbb67ecc-fb70-4467-9350-c910bdf7c628",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.t1098.001",
+"attack.persistence"
+],
+"techniques": [
+"T1098.001"
+],
+"path": "rules/cloud/azure/audit_logs/azure_app_credential_added.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_app_credential_added.yml"
+},
+{
+"title": "Delegated Permissions Granted For All Users",
+"id": "a6355fbe-f36f-45d8-8efc-ab42465cbc52",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.credential-access",
+"attack.t1528"
+],
+"techniques": [
+"T1528"
+],
+"path": "rules/cloud/azure/audit_logs/azure_app_delegated_permissions_all_users.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_app_delegated_permissions_all_users.yml"
+},
+{
+"title": "End User Consent",
+"id": "9b2cc4c4-2ad4-416d-8e8e-ee6aa6f5035a",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "low",
+"tags": [
+"attack.credential-access",
+"attack.t1528"
+],
+"techniques": [
+"T1528"
+],
+"path": "rules/cloud/azure/audit_logs/azure_app_end_user_consent.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_app_end_user_consent.yml"
+},
+{
+"title": "End User Consent Blocked",
+"id": "7091372f-623c-4293-bc37-20c32b3492be",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.credential-access",
+"attack.t1528"
+],
+"techniques": [
+"T1528"
+],
+"path": "rules/cloud/azure/audit_logs/azure_app_end_user_consent_blocked.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_app_end_user_consent_blocked.yml"
+},
+{
+"title": "Added Owner To Application",
+"id": "74298991-9fc4-460e-a92e-511aa60baec1",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.t1552",
+"attack.credential-access"
+],
+"techniques": [
+"T1552"
+],
+"path": "rules/cloud/azure/audit_logs/azure_app_owner_added.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_app_owner_added.yml"
+},
+{
+"title": "App Granted Microsoft Permissions",
+"id": "c1d147ae-a951-48e5-8b41-dcd0170c7213",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.credential-access",
+"attack.t1528"
+],
+"techniques": [
+"T1528"
+],
+"path": "rules/cloud/azure/audit_logs/azure_app_permissions_msft.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_app_permissions_msft.yml"
+},
+{
+"title": "App Granted Privileged Delegated Or App Permissions",
+"id": "5aecf3d5-f8a0-48e7-99be-3a759df7358f",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.t1098.003"
+],
+"techniques": [
+"T1098.003"
+],
+"path": "rules/cloud/azure/audit_logs/azure_app_privileged_permissions.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_app_privileged_permissions.yml"
+},
+{
+"title": "App Assigned To Azure RBAC/Microsoft Entra Role",
+"id": "b04934b2-0a68-4845-8a19-bdfed3a68a7a",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.t1098.003"
+],
+"techniques": [
+"T1098.003"
+],
+"path": "rules/cloud/azure/audit_logs/azure_app_role_added.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_app_role_added.yml"
+},
+{
+"title": "Application URI Configuration Changes",
+"id": "0055ad1f-be85-4798-83cf-a6da17c993b3",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.stealth",
+"attack.t1528",
+"attack.t1078.004",
+"attack.persistence",
+"attack.credential-access",
+"attack.privilege-escalation"
+],
+"techniques": [
+"T1078.004",
+"T1528"
+],
+"path": "rules/cloud/azure/audit_logs/azure_app_uri_modifications.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_app_uri_modifications.yml"
+},
+{
+"title": "Azure Application Deleted",
+"id": "410d2a41-1e6d-452f-85e5-abdd8257a823",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.t1489"
+],
+"techniques": [
+"T1489"
+],
+"path": "rules/cloud/azure/audit_logs/azure_application_deleted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_application_deleted.yml"
+},
+{
+"title": "Windows LAPS Credential Dump From Entra ID",
+"id": "a4b25073-8947-489c-a8dd-93b41c23f26d",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.t1098.005"
+],
+"techniques": [
+"T1098.005"
+],
+"path": "rules/cloud/azure/audit_logs/azure_auditlogs_laps_credential_dumping.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_auditlogs_laps_credential_dumping.yml"
+},
+{
+"title": "Change to Authentication Method",
+"id": "4d78a000-ab52-4564-88a5-7ab5242b20c7",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.credential-access",
+"attack.defense-impairment",
+"attack.t1556",
+"attack.persistence",
+"attack.t1098"
+],
+"techniques": [
+"T1098",
+"T1556"
+],
+"path": "rules/cloud/azure/audit_logs/azure_change_to_authentication_method.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_change_to_authentication_method.yml"
+},
+{
+"title": "Azure Device No Longer Managed or Compliant",
+"id": "542b9912-c01f-4e3f-89a8-014c48cdca7d",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/azure/audit_logs/azure_device_no_longer_managed_or_compliant.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_device_no_longer_managed_or_compliant.yml"
+},
+{
+"title": "Azure Domain Federation Settings Modified",
+"id": "352a54e1-74ba-4929-9d47-8193d67aba1e",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/audit_logs/azure_federation_modified.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_federation_modified.yml"
+},
+{
+"title": "User Added To Group With CA Policy Modification Access",
+"id": "91c95675-1f27-46d0-bead-d1ae96b97cd3",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.credential-access",
+"attack.persistence",
+"attack.defense-impairment",
+"attack.t1548",
+"attack.t1556"
+],
+"techniques": [
+"T1548",
+"T1556"
+],
+"path": "rules/cloud/azure/audit_logs/azure_group_user_addition_ca_modification.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_group_user_addition_ca_modification.yml"
+},
+{
+"title": "User Removed From Group With CA Policy Modification Access",
+"id": "665e2d43-70dc-4ccc-9d27-026c9dd7ed9c",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.credential-access",
+"attack.persistence",
+"attack.defense-impairment",
+"attack.t1548",
+"attack.t1556"
+],
+"techniques": [
+"T1548",
+"T1556"
+],
+"path": "rules/cloud/azure/audit_logs/azure_group_user_removal_ca_modification.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_group_user_removal_ca_modification.yml"
+},
+{
+"title": "Guest User Invited By Non Approved Inviters",
+"id": "0b4b72e3-4c53-4d5b-b198-2c58cfef39a9",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.initial-access",
+"attack.persistence",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/audit_logs/azure_guest_invite_failure.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_guest_invite_failure.yml"
+},
+{
+"title": "User State Changed From Guest To Member",
+"id": "8dee7a0d-43fd-4b3c-8cd1-605e189d195e",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/audit_logs/azure_guest_to_member.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_guest_to_member.yml"
+},
+{
+"title": "Disabled MFA to Bypass Authentication Mechanisms",
+"id": "7ea78478-a4f9-42a6-9dcd-f861816122bf",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.credential-access",
+"attack.persistence",
+"attack.defense-impairment",
+"attack.t1556"
+],
+"techniques": [
+"T1556"
+],
+"path": "rules/cloud/azure/audit_logs/azure_mfa_disabled.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_mfa_disabled.yml"
+},
+{
+"title": "Azure Owner Removed From Application or Service Principal",
+"id": "636e30d5-3736-42ea-96b1-e6e2f8429fd6",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.stealth"
+],
+"techniques": [],
+"path": "rules/cloud/azure/audit_logs/azure_owner_removed_from_application_or_service_principal.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_owner_removed_from_application_or_service_principal.yml"
+},
+{
+"title": "PIM Approvals And Deny Elevation",
+"id": "039a7469-0296-4450-84c0-f6966b16dc6d",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.persistence",
+"attack.initial-access",
+"attack.privilege-escalation",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/audit_logs/azure_pim_activation_approve_deny.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_pim_activation_approve_deny.yml"
+},
+{
+"title": "PIM Alert Setting Changes To Disabled",
+"id": "aeaef14c-e5bf-4690-a9c8-835caad458bd",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.stealth",
+"attack.t1078"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/audit_logs/azure_pim_alerts_disabled.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_pim_alerts_disabled.yml"
+},
+{
+"title": "Changes To PIM Settings",
+"id": "db6c06c4-bf3b-421c-aa88-15672b88c743",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/audit_logs/azure_pim_change_settings.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_pim_change_settings.yml"
+},
+{
+"title": "User Added To Privilege Role",
+"id": "49a268a4-72f4-4e38-8a7b-885be690c5b5",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.persistence",
+"attack.initial-access",
+"attack.privilege-escalation",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/audit_logs/azure_priviledged_role_assignment_add.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_priviledged_role_assignment_add.yml"
+},
+{
+"title": "Bulk Deletion Changes To Privileged Account Permissions",
+"id": "102e11e3-2db5-4c9e-bc26-357d42585d21",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.t1098"
+],
+"techniques": [
+"T1098"
+],
+"path": "rules/cloud/azure/audit_logs/azure_priviledged_role_assignment_bulk_change.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_priviledged_role_assignment_bulk_change.yml"
+},
+{
+"title": "Privileged Account Creation",
+"id": "f7b5b004-dece-46e4-a4a5-f6fd0e1c6947",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.initial-access",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/audit_logs/azure_privileged_account_creation.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_privileged_account_creation.yml"
+},
+{
+"title": "Azure Service Principal Created",
+"id": "0ddcff6d-d262-40b0-804b-80eb592de8e3",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.stealth"
+],
+"techniques": [],
+"path": "rules/cloud/azure/audit_logs/azure_service_principal_created.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_service_principal_created.yml"
+},
+{
+"title": "Azure Service Principal Removed",
+"id": "448fd1ea-2116-4c62-9cde-a92d120e0f08",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.stealth"
+],
+"techniques": [],
+"path": "rules/cloud/azure/audit_logs/azure_service_principal_removed.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_service_principal_removed.yml"
+},
+{
+"title": "Azure Subscription Permission Elevation Via AuditLogs",
+"id": "ca9bf243-465e-494a-9e54-bf9fc239057d",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/audit_logs/azure_subscription_permissions_elevation_via_auditlogs.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_subscription_permissions_elevation_via_auditlogs.yml"
+},
+{
+"title": "Temporary Access Pass Added To An Account",
+"id": "fa84aaf5-8142-43cd-9ec2-78cfebf878ce",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.initial-access",
+"attack.persistence",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/audit_logs/azure_tap_added.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_tap_added.yml"
+},
+{
+"title": "User Risk and MFA Registration Policy Updated",
+"id": "d4c7758e-9417-4f2e-9109-6125d66dabef",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "high",
+"tags": [
+"attack.persistence"
+],
+"techniques": [],
+"path": "rules/cloud/azure/audit_logs/azure_update_risk_and_mfa_registration_policy.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_update_risk_and_mfa_registration_policy.yml"
+},
+{
+"title": "Multi Factor Authentication Disabled For User Account",
+"id": "b18454c8-0be3-41f7-86bc-9c614611b839",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs",
+"definition": "'Requirements: The TargetResources array needs to be mapped accurately in order for this rule to work'"
+},
+"level": "medium",
+"tags": [
+"attack.credential-access",
+"attack.persistence"
+],
+"techniques": [],
+"path": "rules/cloud/azure/audit_logs/azure_user_account_mfa_disable.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_user_account_mfa_disable.yml"
+},
+{
+"title": "Password Reset By User Account",
+"id": "340ee172-4b67-4fb4-832f-f961bdc1f3aa",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "auditlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.initial-access",
+"attack.persistence",
+"attack.credential-access",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/audit_logs/azure_user_password_change.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/audit_logs/azure_user_password_change.yml"
+},
+{
+"title": "Anomalous Token",
+"id": "6555754e-5e7f-4a67-ad1c-4041c413a007",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.t1528",
+"attack.credential-access"
+],
+"techniques": [
+"T1528"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_anomalous_token.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_anomalous_token.yml"
+},
+{
+"title": "Anomalous User Activity",
+"id": "258b6593-215d-4a26-a141-c8e31c1299a6",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.t1098",
+"attack.persistence"
+],
+"techniques": [
+"T1098"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_anomalous_user.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_anomalous_user.yml"
+},
+{
+"title": "Activity From Anonymous IP Address",
+"id": "be4d9c86-d702-4030-b52e-c7859110e5e8",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.initial-access"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_anonymous_ip_activity.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_anonymous_ip_activity.yml"
+},
+{
+"title": "Anonymous IP Address",
+"id": "53acd925-2003-440d-a1f3-71a5253fe237",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.t1528",
+"attack.credential-access"
+],
+"techniques": [
+"T1528"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_anonymous_ip_address.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_anonymous_ip_address.yml"
+},
+{
+"title": "Atypical Travel",
+"id": "1a41023f-1e70-4026-921a-4d9341a9038e",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.initial-access"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_atypical_travel.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_atypical_travel.yml"
+},
+{
+"title": "Impossible Travel",
+"id": "b2572bf9-e20a-4594-b528-40bde666525a",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.initial-access"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_impossible_travel.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_impossible_travel.yml"
+},
+{
+"title": "Suspicious Inbox Forwarding Identity Protection",
+"id": "27e4f1d6-ae72-4ea0-8a67-77a73a289c3d",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.t1114.003",
+"attack.collection"
+],
+"techniques": [
+"T1114.003"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_inbox_forwarding_rule.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_inbox_forwarding_rule.yml"
+},
+{
+"title": "Suspicious Inbox Manipulation Rules",
+"id": "ceb55fd0-726e-4656-bf4e-b585b7f7d572",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.stealth",
+"attack.t1140"
+],
+"techniques": [
+"T1140"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_inbox_manipulation.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_inbox_manipulation.yml"
+},
+{
+"title": "Azure AD Account Credential Leaked",
+"id": "19128e5e-4743-48dc-bd97-52e5775af817",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.t1589",
+"attack.reconnaissance"
+],
+"techniques": [
+"T1589"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_leaked_credentials.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_leaked_credentials.yml"
+},
+{
+"title": "Malicious IP Address Sign-In Failure Rate",
+"id": "a3f55ebd-0c01-4ed6-adc0-8fb76d8cd3cd",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.t1090",
+"attack.command-and-control"
+],
+"techniques": [
+"T1090"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_malicious_ip_address.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_malicious_ip_address.yml"
+},
+{
+"title": "Malicious IP Address Sign-In Suspicious",
+"id": "36440e1c-5c22-467a-889b-593e66498472",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.t1090",
+"attack.command-and-control"
+],
+"techniques": [
+"T1090"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_malicious_ip_address_suspicious.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_malicious_ip_address_suspicious.yml"
+},
+{
+"title": "Sign-In From Malware Infected IP",
+"id": "821b4dc3-1295-41e7-b157-39ab212dd6bd",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.t1090",
+"attack.command-and-control"
+],
+"techniques": [
+"T1090"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_malware_linked_ip.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_malware_linked_ip.yml"
+},
+{
+"title": "New Country",
+"id": "adf9f4d2-559e-4f5c-95be-c28dff0b1476",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.initial-access"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_new_coutry_region.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_new_coutry_region.yml"
+},
+{
+"title": "Password Spray Activity",
+"id": "28ecba0a-c743-4690-ad29-9a8f6f25a6f9",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.t1110",
+"attack.credential-access"
+],
+"techniques": [
+"T1110"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_password_spray.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_password_spray.yml"
+},
+{
+"title": "Primary Refresh Token Access Attempt",
+"id": "a84fc3b1-c9ce-4125-8e74-bdcdb24021f1",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.t1528",
+"attack.credential-access"
+],
+"techniques": [
+"T1528"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_prt_access.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_prt_access.yml"
+},
+{
+"title": "Suspicious Browser Activity",
+"id": "944f6adb-7a99-4c69-80c1-b712579e93e6",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.initial-access"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_suspicious_browser.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_suspicious_browser.yml"
+},
+{
+"title": "Azure AD Threat Intelligence",
+"id": "a2cb56ff-4f46-437a-a0fa-ffa4d1303cba",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.initial-access"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_threat_intel.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_threat_intel.yml"
+},
+{
+"title": "SAML Token Issuer Anomaly",
+"id": "e3393cba-31f0-4207-831e-aef90ab17a8c",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.t1606",
+"attack.credential-access"
+],
+"techniques": [
+"T1606"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_token_issuer_anomaly.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_token_issuer_anomaly.yml"
+},
+{
+"title": "Unfamiliar Sign-In Properties",
+"id": "128faeef-79dd-44ca-b43c-a9e236a60f49",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "riskdetection"
+},
+"level": "high",
+"tags": [
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.initial-access"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/identity_protection/azure_identity_protection_unfamilar_sign_in.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/identity_protection/azure_identity_protection_unfamilar_sign_in.yml"
+},
+{
+"title": "Stale Accounts In A Privileged Role",
+"id": "e402c26a-267a-45bd-9615-bd9ceda6da85",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "pim"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/privileged_identity_management/azure_pim_account_stale.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/privileged_identity_management/azure_pim_account_stale.yml"
+},
+{
+"title": "Invalid PIM License",
+"id": "58af08eb-f9e1-43c8-9805-3ad9b0482bd8",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "pim"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/privileged_identity_management/azure_pim_invalid_license.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/privileged_identity_management/azure_pim_invalid_license.yml"
+},
+{
+"title": "Roles Assigned Outside PIM",
+"id": "b1bc08d1-8224-4758-a0e6-fbcfc98c73bb",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "pim"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/privileged_identity_management/azure_pim_role_assigned_outside_of_pim.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/privileged_identity_management/azure_pim_role_assigned_outside_of_pim.yml"
+},
+{
+"title": "Roles Activated Too Frequently",
+"id": "645fd80d-6c07-435b-9e06-7bc1b5656cba",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "pim"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/privileged_identity_management/azure_pim_role_frequent_activation.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/privileged_identity_management/azure_pim_role_frequent_activation.yml"
+},
+{
+"title": "Roles Activation Doesn't Require MFA",
+"id": "94a66f46-5b64-46ce-80b2-75dcbe627cc0",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "pim"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/privileged_identity_management/azure_pim_role_no_mfa_required.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/privileged_identity_management/azure_pim_role_no_mfa_required.yml"
+},
+{
+"title": "Roles Are Not Being Used",
+"id": "8c6ec464-4ae4-43ac-936a-291da66ed13d",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "pim"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/privileged_identity_management/azure_pim_role_not_used.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/privileged_identity_management/azure_pim_role_not_used.yml"
+},
+{
+"title": "Too Many Global Admins",
+"id": "7bbc309f-e2b1-4eb1-8369-131a367d67d3",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "pim"
+},
+"level": "high",
+"tags": [
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/privileged_identity_management/azure_pim_too_many_global_admins.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/privileged_identity_management/azure_pim_too_many_global_admins.yml"
+},
+{
+"title": "Account Lockout",
+"id": "2b7d6fc0-71ac-4cf7-8ed1-b5788ee5257a",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "medium",
+"tags": [
+"attack.credential-access",
+"attack.t1110"
+],
+"techniques": [
+"T1110"
+],
+"path": "rules/cloud/azure/signin_logs/azure_account_lockout.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_account_lockout.yml"
+},
+{
+"title": "Discovery Using AzureHound",
+"id": "35b781cc-1a08-4a5a-80af-42fd7c315c6b",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "high",
+"tags": [
+"attack.discovery",
+"attack.t1087.004",
+"attack.t1526"
+],
+"techniques": [
+"T1087.004",
+"T1526"
+],
+"path": "rules/cloud/azure/signin_logs/azure_ad_azurehound_discovery.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_ad_azurehound_discovery.yml"
+},
+{
+"title": "Device Registration or Join Without MFA",
+"id": "5afa454e-030c-4ab4-9253-a90aa7fcc581",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/signin_logs/azure_ad_device_registration_or_join_without_mfa.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_ad_device_registration_or_join_without_mfa.yml"
+},
+{
+"title": "Azure AD Only Single Factor Authentication Required",
+"id": "28eea407-28d7-4e42-b0be-575d5ba60b2c",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "low",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.credential-access",
+"attack.stealth",
+"attack.defense-impairment",
+"attack.t1078.004",
+"attack.t1556.006"
+],
+"techniques": [
+"T1078.004",
+"T1556.006"
+],
+"path": "rules/cloud/azure/signin_logs/azure_ad_only_single_factor_auth_required.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_ad_only_single_factor_auth_required.yml"
+},
+{
+"title": "Suspicious SignIns From A Non Registered Device",
+"id": "572b12d4-9062-11ed-a1eb-0242ac120002",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/signin_logs/azure_ad_risky_sign_ins_with_singlefactorauth_from_unknown_devices.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_ad_risky_sign_ins_with_singlefactorauth_from_unknown_devices.yml"
+},
+{
+"title": "Sign-ins from Non-Compliant Devices",
+"id": "4f77e1d7-3982-4ee0-8489-abf2d6b75284",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/signin_logs/azure_ad_sign_ins_from_noncompliant_devices.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_ad_sign_ins_from_noncompliant_devices.yml"
+},
+{
+"title": "Sign-ins by Unknown Devices",
+"id": "4d136857-6a1a-432a-82fc-5dd497ee5e7c",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "low",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/signin_logs/azure_ad_sign_ins_from_unknown_devices.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_ad_sign_ins_from_unknown_devices.yml"
+},
+{
+"title": "Potential MFA Bypass Using Legacy Client Authentication",
+"id": "53bb4f7f-48a8-4475-ac30-5a82ddfdf6fc",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.credential-access",
+"attack.stealth",
+"attack.t1078.004",
+"attack.t1110"
+],
+"techniques": [
+"T1078.004",
+"T1110"
+],
+"path": "rules/cloud/azure/signin_logs/azure_ad_suspicious_signin_bypassing_mfa.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_ad_suspicious_signin_bypassing_mfa.yml"
+},
+{
+"title": "Application Using Device Code Authentication Flow",
+"id": "248649b7-d64f-46f0-9fb2-a52774166fb5",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "medium",
+"tags": [
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.initial-access"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/signin_logs/azure_app_device_code_authentication.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_app_device_code_authentication.yml"
+},
+{
+"title": "Applications That Are Using ROPC Authentication Flow",
+"id": "55695bc0-c8cf-461f-a379-2535f563c854",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "medium",
+"tags": [
+"attack.stealth",
+"attack.t1078",
+"attack.persistence",
+"attack.privilege-escalation",
+"attack.initial-access"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/signin_logs/azure_app_ropc_authentication.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_app_ropc_authentication.yml"
+},
+{
+"title": "Account Disabled or Blocked for Sign in Attempts",
+"id": "4afac85c-224a-4dd7-b1af-8da40e1c60bd",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/signin_logs/azure_blocked_account_attempt.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_blocked_account_attempt.yml"
+},
+{
+"title": "Sign-in Failure Due to Conditional Access Requirements Not Met",
+"id": "b4a6d707-9430-4f5f-af68-0337f52d5c42",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.credential-access",
+"attack.stealth",
+"attack.t1110",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004",
+"T1110"
+],
+"path": "rules/cloud/azure/signin_logs/azure_conditional_access_failure.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_conditional_access_failure.yml"
+},
+{
+"title": "Use of Legacy Authentication Protocols",
+"id": "60f6535a-760f-42a9-be3f-c9a0a025906e",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.credential-access",
+"attack.stealth",
+"attack.t1078.004",
+"attack.t1110"
+],
+"techniques": [
+"T1078.004",
+"T1110"
+],
+"path": "rules/cloud/azure/signin_logs/azure_legacy_authentication_protocols.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_legacy_authentication_protocols.yml"
+},
+{
+"title": "Login to Disabled Account",
+"id": "908655e0-25cf-4ae1-b775-1c8ce9cf43d8",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004"
+],
+"path": "rules/cloud/azure/signin_logs/azure_login_to_disabled_account.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_login_to_disabled_account.yml"
+},
+{
+"title": "Multifactor Authentication Denied",
+"id": "e40f4962-b02b-4192-9bfe-245f7ece1f99",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.credential-access",
+"attack.stealth",
+"attack.t1078.004",
+"attack.t1110",
+"attack.t1621"
+],
+"techniques": [
+"T1078.004",
+"T1110",
+"T1621"
+],
+"path": "rules/cloud/azure/signin_logs/azure_mfa_denies.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_mfa_denies.yml"
+},
+{
+"title": "Multifactor Authentication Interrupted",
+"id": "5496ff55-42ec-4369-81cb-00f417029e25",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.credential-access",
+"attack.stealth",
+"attack.t1078.004",
+"attack.t1110",
+"attack.t1621"
+],
+"techniques": [
+"T1078.004",
+"T1110",
+"T1621"
+],
+"path": "rules/cloud/azure/signin_logs/azure_mfa_interrupted.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_mfa_interrupted.yml"
+},
+{
+"title": "Azure Unusual Authentication Interruption",
+"id": "8366030e-7216-476b-9927-271d79f13cf3",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/azure/signin_logs/azure_unusual_authentication_interruption.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_unusual_authentication_interruption.yml"
+},
+{
+"title": "User Access Blocked by Azure Conditional Access",
+"id": "9a60e676-26ac-44c3-814b-0c2a8b977adf",
+"status": "test",
+"logsource": {
+"product": "azure",
+"service": "signinlogs"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.credential-access",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1110",
+"attack.t1078.004"
+],
+"techniques": [
+"T1078.004",
+"T1110"
+],
+"path": "rules/cloud/azure/signin_logs/azure_user_login_blocked_by_conditional_access.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/azure/signin_logs/azure_user_login_blocked_by_conditional_access.yml"
+},
+{
+"title": "Azure Login Bypassing Conditional Access Policies",
+"id": "13f2d3f5-6497-44a7-bf5f-dc13ffafe5dc",
+"status": "experimental",
+"logsource": {
+"service": "audit",
+"product": "m365"
+},
+"level": "high",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/m365/audit/microsoft365_bypass_conditional_access.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/audit/microsoft365_bypass_conditional_access.yml"
+},
+{
+"title": "Disabling Multi Factor Authentication",
+"id": "60de9b57-dc4d-48b9-a6a0-b39e0469f876",
+"status": "test",
+"logsource": {
+"service": "audit",
+"product": "m365"
+},
+"level": "high",
+"tags": [
+"attack.persistence",
+"attack.credential-access",
+"attack.defense-impairment",
+"attack.t1556.006"
+],
+"techniques": [
+"T1556.006"
+],
+"path": "rules/cloud/m365/audit/microsoft365_disabling_mfa.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/audit/microsoft365_disabling_mfa.yml"
+},
+{
+"title": "New Federated Domain Added",
+"id": "58f88172-a73d-442b-94c9-95eaed3cbb36",
+"status": "test",
+"logsource": {
+"service": "audit",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.defense-impairment",
+"attack.t1484.002"
+],
+"techniques": [
+"T1484.002"
+],
+"path": "rules/cloud/m365/audit/microsoft365_new_federated_domain_added_audit.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/audit/microsoft365_new_federated_domain_added_audit.yml"
+},
+{
+"title": "Suspicious Email Delivered In Microsoft 365",
+"id": "3569aefd-e535-4391-8c18-24bd01a21eaf",
+"status": "experimental",
+"logsource": {
+"service": "audit",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.initial-access",
+"attack.t1566.001",
+"attack.t1566.002"
+],
+"techniques": [
+"T1566.001",
+"T1566.002"
+],
+"path": "rules/cloud/m365/audit/microsoft365_suspicious_email_delivered.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/audit/microsoft365_suspicious_email_delivered.yml"
+},
+{
+"title": "New Federated Domain Added - Exchange",
+"id": "42127bdd-9133-474f-a6f1-97b6c08a4339",
+"status": "test",
+"logsource": {
+"service": "exchange",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.persistence",
+"attack.t1136.003"
+],
+"techniques": [
+"T1136.003"
+],
+"path": "rules/cloud/m365/exchange/microsoft365_new_federated_domain_added_exchange.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/exchange/microsoft365_new_federated_domain_added_exchange.yml"
+},
+{
+"title": "Activity from Suspicious IP Addresses",
+"id": "a3501e8e-af9e-43c6-8cd6-9360bdaae498",
+"status": "test",
+"logsource": {
+"service": "threat_detection",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.command-and-control",
+"attack.t1573"
+],
+"techniques": [
+"T1573"
+],
+"path": "rules/cloud/m365/threat_detection/microsoft365_from_susp_ip_addresses.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_detection/microsoft365_from_susp_ip_addresses.yml"
+},
+{
+"title": "Activity Performed by Terminated User",
+"id": "2e669ed8-742e-4fe5-b3c4-5a59b486c2ee",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.impact"
+],
+"techniques": [],
+"path": "rules/cloud/m365/threat_management/microsoft365_activity_by_terminated_user.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_activity_by_terminated_user.yml"
+},
+{
+"title": "Activity from Anonymous IP Addresses",
+"id": "d8b0a4fe-07a8-41be-bd39-b14afa025d95",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.command-and-control",
+"attack.t1573"
+],
+"techniques": [
+"T1573"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_activity_from_anonymous_ip_addresses.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_activity_from_anonymous_ip_addresses.yml"
+},
+{
+"title": "Activity from Infrequent Country",
+"id": "0f2468a2-5055-4212-a368-7321198ee706",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.command-and-control",
+"attack.t1573"
+],
+"techniques": [
+"T1573"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_activity_from_infrequent_country.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_activity_from_infrequent_country.yml"
+},
+{
+"title": "Data Exfiltration to Unsanctioned Apps",
+"id": "2b669496-d215-47d8-bd9a-f4a45bf07cda",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.exfiltration",
+"attack.t1537"
+],
+"techniques": [
+"T1537"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_data_exfiltration_to_unsanctioned_app.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_data_exfiltration_to_unsanctioned_app.yml"
+},
+{
+"title": "Microsoft 365 - Impossible Travel Activity",
+"id": "d7eab125-5f94-43df-8710-795b80fa1189",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_impossible_travel_activity.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_impossible_travel_activity.yml"
+},
+{
+"title": "Logon from a Risky IP Address",
+"id": "c191e2fa-f9d6-4ccf-82af-4f2aba08359f",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.privilege-escalation",
+"attack.persistence",
+"attack.initial-access",
+"attack.stealth",
+"attack.t1078"
+],
+"techniques": [
+"T1078"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_logon_from_risky_ip_address.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_logon_from_risky_ip_address.yml"
+},
+{
+"title": "Microsoft 365 - Potential Ransomware Activity",
+"id": "bd132164-884a-48f1-aa2d-c6d646b04c69",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.t1486"
+],
+"techniques": [
+"T1486"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_potential_ransomware_activity.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_potential_ransomware_activity.yml"
+},
+{
+"title": "PST Export Alert Using eDiscovery Alert",
+"id": "18b88d08-d73e-4f21-bc25-4b9892a4fdd0",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365",
+"definition": "Requires the 'eDiscovery search or exported' alert to be enabled"
+},
+"level": "medium",
+"tags": [
+"attack.collection",
+"attack.t1114"
+],
+"techniques": [
+"T1114"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_pst_export_alert.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_pst_export_alert.yml"
+},
+{
+"title": "PST Export Alert Using New-ComplianceSearchAction",
+"id": "6897cd82-6664-11ed-9022-0242ac120002",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.collection",
+"attack.t1114"
+],
+"techniques": [
+"T1114"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_pst_export_alert_using_new_compliancesearchaction.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_pst_export_alert_using_new_compliancesearchaction.yml"
+},
+{
+"title": "Suspicious Inbox Forwarding",
+"id": "6c220477-0b5b-4b25-bb90-66183b4089e8",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "low",
+"tags": [
+"attack.exfiltration",
+"attack.t1020"
+],
+"techniques": [
+"T1020"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_susp_inbox_forwarding.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_susp_inbox_forwarding.yml"
+},
+{
+"title": "Suspicious OAuth App File Download Activities",
+"id": "ee111937-1fe7-40f0-962a-0eb44d57d174",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.exfiltration"
+],
+"techniques": [],
+"path": "rules/cloud/m365/threat_management/microsoft365_susp_oauth_app_file_download_activities.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_susp_oauth_app_file_download_activities.yml"
+},
+{
+"title": "Microsoft 365 - Unusual Volume of File Deletion",
+"id": "78a34b67-3c39-4886-8fb4-61c46dc18ecd",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.impact",
+"attack.t1485"
+],
+"techniques": [
+"T1485"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_unusual_volume_of_file_deletion.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_unusual_volume_of_file_deletion.yml"
+},
+{
+"title": "Microsoft 365 - User Restricted from Sending Email",
+"id": "ff246f56-7f24-402a-baca-b86540e3925c",
+"status": "test",
+"logsource": {
+"service": "threat_management",
+"product": "m365"
+},
+"level": "medium",
+"tags": [
+"attack.initial-access",
+"attack.t1199"
+],
+"techniques": [
+"T1199"
+],
+"path": "rules/cloud/m365/threat_management/microsoft365_user_restricted_from_sending_email.yml",
+"url": "https://github.com/SigmaHQ/sigma/blob/05d1031f537e830b76da53bae2400c5814c89165/rules/cloud/m365/threat_management/microsoft365_user_restricted_from_sending_email.yml"
+}
+]
+}

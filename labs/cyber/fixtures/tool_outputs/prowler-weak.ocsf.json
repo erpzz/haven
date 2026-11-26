@@ -1,0 +1,273 @@
+[
+  {
+    "message": "Conditional Access Policy 'CA001 Block legacy authentication' blocks legacy authentication.",
+    "activity_id": 1,
+    "activity_name": "Create",
+    "finding_info": {
+      "created_time": 1793448300,
+      "created_time_dt": "2026-10-31T12:05:00Z",
+      "desc": "At least one Conditional Access policy blocks legacy authentication",
+      "title": "At least one Conditional Access policy blocks legacy authentication",
+      "uid": "prowler-m365-entra_legacy_authentication_blocked-c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11-global-1",
+      "name": "Conditional Access Policies",
+      "types": []
+    },
+    "time": 1793448300,
+    "time_dt": "2026-10-31T12:05:00Z",
+    "remediation": {
+      "desc": "Block legacy authentication with Conditional Access.",
+      "references": [
+        "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-legacy-authentication"
+      ]
+    },
+    "severity_id": 5,
+    "severity": "Critical",
+    "status_id": 1,
+    "status": "New",
+    "status_code": "PASS",
+    "status_detail": "Conditional Access Policy 'CA001 Block legacy authentication' blocks legacy authentication.",
+    "risk_details": "",
+    "resources": [
+      {
+        "labels": [],
+        "name": "Conditional Access Policies",
+        "uid": "conditionalAccessPolicies",
+        "group": {
+          "name": "entra"
+        },
+        "type": "NotDefined",
+        "cloud_partition": null,
+        "region": "global",
+        "data": {}
+      }
+    ],
+    "metadata": {
+      "event_code": "entra_legacy_authentication_blocked",
+      "product": {
+        "uid": "prowler",
+        "name": "Prowler",
+        "vendor_name": "Prowler",
+        "version": "5.14.0"
+      },
+      "profiles": [
+        "cloud",
+        "datetime"
+      ],
+      "tenant_uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+      "version": "1.5.0"
+    },
+    "type_uid": 200401,
+    "type_name": "Detection Finding: Create",
+    "category_uid": 2,
+    "class_uid": 2004,
+    "unmapped": {
+      "related_url": "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-legacy-authentication",
+      "categories": [],
+      "depends_on": [],
+      "related_to": [],
+      "additional_urls": [],
+      "notes": "",
+      "compliance": {
+        "CIS-4.0_M365": [
+          "5.2.2.3"
+        ]
+      },
+      "scan_id": "00000000-0000-4000-8000-00000000c0de",
+      "provider_uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+      "provider": "m365"
+    },
+    "cloud": {
+      "account": {
+        "name": "Contoso (synthetic)",
+        "type_id": 99,
+        "type": "Other",
+        "uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+        "labels": []
+      },
+      "org": {
+        "uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+        "name": "Contoso (synthetic)"
+      },
+      "provider": "m365",
+      "region": "global"
+    }
+  },
+  {
+    "message": "No Conditional Access Policy blocks device code flow.",
+    "activity_id": 1,
+    "activity_name": "Create",
+    "finding_info": {
+      "created_time": 1793448300,
+      "created_time_dt": "2026-10-31T12:05:00Z",
+      "desc": "Conditional Access policy blocks device code flow to prevent phishing attacks",
+      "title": "Conditional Access policy blocks device code flow to prevent phishing attacks",
+      "uid": "prowler-m365-entra_conditional_access_policy_device_code_flow_blocked-c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11-global-2",
+      "name": "Conditional Access Policies",
+      "types": []
+    },
+    "time": 1793448300,
+    "time_dt": "2026-10-31T12:05:00Z",
+    "remediation": {
+      "desc": "Create a policy that blocks the device code authentication flow.",
+      "references": [
+        "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-authentication-flows"
+      ]
+    },
+    "severity_id": 4,
+    "severity": "High",
+    "status_id": 1,
+    "status": "New",
+    "status_code": "FAIL",
+    "status_detail": "No Conditional Access Policy blocks device code flow.",
+    "risk_details": "",
+    "resources": [
+      {
+        "labels": [],
+        "name": "Conditional Access Policies",
+        "uid": "conditionalAccessPolicies",
+        "group": {
+          "name": "entra"
+        },
+        "type": "NotDefined",
+        "cloud_partition": null,
+        "region": "global",
+        "data": {}
+      }
+    ],
+    "metadata": {
+      "event_code": "entra_conditional_access_policy_device_code_flow_blocked",
+      "product": {
+        "uid": "prowler",
+        "name": "Prowler",
+        "vendor_name": "Prowler",
+        "version": "5.14.0"
+      },
+      "profiles": [
+        "cloud",
+        "datetime"
+      ],
+      "tenant_uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+      "version": "1.5.0"
+    },
+    "type_uid": 200401,
+    "type_name": "Detection Finding: Create",
+    "category_uid": 2,
+    "class_uid": 2004,
+    "unmapped": {
+      "related_url": "https://learn.microsoft.com/entra/identity/conditional-access/policy-block-authentication-flows",
+      "categories": [],
+      "depends_on": [],
+      "related_to": [],
+      "additional_urls": [],
+      "notes": "",
+      "compliance": {},
+      "scan_id": "00000000-0000-4000-8000-00000000c0de",
+      "provider_uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+      "provider": "m365"
+    },
+    "cloud": {
+      "account": {
+        "name": "Contoso (synthetic)",
+        "type_id": 99,
+        "type": "Other",
+        "uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+        "labels": []
+      },
+      "org": {
+        "uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+        "name": "Contoso (synthetic)"
+      },
+      "provider": "m365",
+      "region": "global"
+    }
+  },
+  {
+    "message": "No enabled Conditional Access policy requires phishing-resistant MFA for administrator roles.",
+    "activity_id": 1,
+    "activity_name": "Create",
+    "finding_info": {
+      "created_time": 1793448300,
+      "created_time_dt": "2026-10-31T12:05:00Z",
+      "desc": "At least one Conditional Access policy requires phishing-resistant MFA strength for administrator roles",
+      "title": "At least one Conditional Access policy requires phishing-resistant MFA strength for administrator roles",
+      "uid": "prowler-m365-entra_admin_users_phishing_resistant_mfa_enabled-c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11-global-3",
+      "name": "Conditional Access Policies",
+      "types": []
+    },
+    "time": 1793448300,
+    "time_dt": "2026-10-31T12:05:00Z",
+    "remediation": {
+      "desc": "Require the Phishing-resistant MFA authentication strength for admin roles.",
+      "references": [
+        "https://learn.microsoft.com/entra/identity/conditional-access/policy-admin-phish-resistant-mfa"
+      ]
+    },
+    "severity_id": 4,
+    "severity": "High",
+    "status_id": 1,
+    "status": "New",
+    "status_code": "FAIL",
+    "status_detail": "No enabled Conditional Access policy requires phishing-resistant MFA for administrator roles.",
+    "risk_details": "",
+    "resources": [
+      {
+        "labels": [],
+        "name": "Conditional Access Policies",
+        "uid": "conditionalAccessPolicies",
+        "group": {
+          "name": "entra"
+        },
+        "type": "NotDefined",
+        "cloud_partition": null,
+        "region": "global",
+        "data": {}
+      }
+    ],
+    "metadata": {
+      "event_code": "entra_admin_users_phishing_resistant_mfa_enabled",
+      "product": {
+        "uid": "prowler",
+        "name": "Prowler",
+        "vendor_name": "Prowler",
+        "version": "5.14.0"
+      },
+      "profiles": [
+        "cloud",
+        "datetime"
+      ],
+      "tenant_uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+      "version": "1.5.0"
+    },
+    "type_uid": 200401,
+    "type_name": "Detection Finding: Create",
+    "category_uid": 2,
+    "class_uid": 2004,
+    "unmapped": {
+      "related_url": "https://learn.microsoft.com/entra/identity/conditional-access/policy-admin-phish-resistant-mfa",
+      "categories": [],
+      "depends_on": [],
+      "related_to": [],
+      "additional_urls": [],
+      "notes": "",
+      "compliance": {},
+      "scan_id": "00000000-0000-4000-8000-00000000c0de",
+      "provider_uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+      "provider": "m365"
+    },
+    "cloud": {
+      "account": {
+        "name": "Contoso (synthetic)",
+        "type_id": 99,
+        "type": "Other",
+        "uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+        "labels": []
+      },
+      "org": {
+        "uid": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+        "name": "Contoso (synthetic)"
+      },
+      "provider": "m365",
+      "region": "global"
+    }
+  }
+]
