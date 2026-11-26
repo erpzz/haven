@@ -554,8 +554,13 @@ def run_hermes_case(
         raise ValueError("Hermes executable is not executable")
     if not hermes_home.is_dir():
         raise ValueError("Hermes home must be an existing directory")
-    if not isinstance(toolsets, str) or TOOLSETS_RE.fullmatch(toolsets) is None:
+    if not isinstance(toolsets, str):
         raise ValueError("invalid toolsets")
+    if toolsets:
+        if TOOLSETS_RE.fullmatch(toolsets) is None:
+            raise ValueError("invalid toolsets")
+    elif case.tool_policy.allowed_tools:
+        raise ValueError("empty toolsets require a zero-tool HRF case")
     backend_base_url = normalize_loopback_base_url(backend_base_url)
     backend_host = urllib.parse.urlparse(backend_base_url).hostname
     if backend_host not in {"127.0.0.1", "::1"}:
