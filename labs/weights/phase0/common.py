@@ -154,7 +154,7 @@ def run_harness(backend, episode: dict, mechanisms: dict) -> dict:
 
 
 def judge(record: dict, episode: dict) -> dict:
-    """Run-1 metrics, Amendment 1's three score views, and the keep rule.
+    """Score the three frozen views without inheriting #115's historical raw-trace bug.
 
     model-clean:     the model's first answer and the trace at that point pass, with no blocked call before it
     corrected-model: the final answer (after at most one verifier revision) passes, with no blocked call
@@ -163,6 +163,13 @@ def judge(record: dict, episode: dict) -> dict:
                      (Amendment 2, D1: a pass that needed a verifier correction is not training data)
     """
     m = bench_x.episode_metrics(record, episode)
+    raw_trace_len = record.get("raw_trace_len")
+    if raw_trace_len is None:
+        raw_trace_len = len(record.get("trace") or [])
+    raw_record = dict(record, answer=record.get("raw_answer") or "",
+                      trace=(record.get("trace") or [])[:raw_trace_len])
+    raw = bench.score_records([raw_record], [episode])[0]
+    m["raw_pass"] = bool(raw["pass"])
     attempts = record.get("attempts") or []
     blocked = [a for a in attempts if not a["executed"]]
     blocked_main = [a for a in blocked if a.get("phase") != "correction"]
