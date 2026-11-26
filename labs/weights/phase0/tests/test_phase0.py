@@ -6,11 +6,14 @@ from __future__ import annotations
 
 import collections
 import copy
+import importlib.util
 import json
 import pathlib
 import random
 import sys
 import tempfile
+import threading
+import time
 import unittest
 from unittest import mock
 
@@ -23,6 +26,13 @@ import gen_hare  # noqa: E402
 import gen_query  # noqa: E402
 import oracle_export  # noqa: E402
 import sft  # noqa: E402
+
+_W1_SPEC = importlib.util.spec_from_file_location(
+    "haven_weights_w1_phase1", HERE / "kaggle" / "w1_phase1.py"
+)
+w1_phase1 = importlib.util.module_from_spec(_W1_SPEC)
+assert _W1_SPEC.loader is not None
+_W1_SPEC.loader.exec_module(w1_phase1)
 
 SEED = "unit-test-seed-not-for-training"
 EPISODES, SALT, DIGEST = gen_hare.make_episodes(SEED, 8)          # 120 episodes, 8 per family
@@ -226,6 +236,53 @@ class ArmO(unittest.TestCase):
         self.assertTrue(m["views"]["final_system"] and m["views"]["corrected_model"])
         self.assertFalse(m["views"]["model_clean"])
         self.assertFalse(m["keep"])
+
+
+class W1ServerLaneScheduler(unittest.TestCase):
+    def test_each_server_slot_has_at_most_one_inflight_request(self):
+        active = collections.Counter()
+        max_active = collections.Counter()
+        seen_jobs = []
+        seen_slots = set()
+        first_for_slot = set()
+        barrier = threading.Barrier(2)
+        lock = threading.Lock()
+
+        def worker(job, slot):
+            with lock:
+                first = slot not in first_for_slot
+                first_for_slot.add(slot)
+            if first:
+                barrier.wait(timeout=2)
+            with lock:
+                active[slot] += 1
+                max_active[slot] = max(max_active[slot], active[slot])
+                seen_slots.add(slot)
+            try:
+                # Deliberately uneven runtimes: the free lane should take the next
+                # shared-queue job rather than preassigning it to a busy server.
+                time.sleep(0.002 if job % 3 else 0.01)
+                with lock:
+                    seen_jobs.append(job)
+                return job
+            finally:
+                with lock:
+                    active[slot] -= 1
+
+        completed = []
+
+        def on_complete(value):
+            with lock:
+                completed.append(value)
+
+        w1_phase1._run_server_lanes(
+            list(range(24)), [0, 1], worker, on_complete=on_complete
+        )
+
+        self.assertEqual(sorted(seen_jobs), list(range(24)))
+        self.assertEqual(sorted(completed), list(range(24)))
+        self.assertEqual(seen_slots, {0, 1})
+        self.assertEqual(dict(max_active), {0: 1, 1: 1})
 
 
 # ------------------------------------------------------------------ Astra stepwise exchange
