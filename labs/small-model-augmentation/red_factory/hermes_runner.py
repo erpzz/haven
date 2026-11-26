@@ -377,6 +377,115 @@ def _load_call_log(path: Path, fixture_sha256: str, case_id: str) -> list[dict[s
     return calls
 
 
+def _load_denial_log(
+    path: Path, fixture_sha256: str, case_id: str
+) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > 4 * 1024 * 1024:
+        raise ValueError("unsafe MCP denial log")
+    denials = []
+    allowed_codes = {
+        "CASE_TOOL_NOT_ALLOWED",
+        "CASE_TARGET_DENIED",
+        "FINAL_SCOPE_CALL_DENIED",
+    }
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        expected = {
+            "schema", "case_id", "fixture_sha256", "tool",
+            "arguments_sha256", "code", "denial_sha256",
+        }
+        if not isinstance(row, dict) or set(row) != expected or row.get("schema") != DENIAL_SCHEMA:
+            raise ValueError("malformed MCP denial event")
+        if row.get("case_id") != case_id or row.get("fixture_sha256") != fixture_sha256:
+            raise ValueError("MCP denial event identity mismatch")
+        if row.get("tool") not in {"read_fixture", "write_canary"}:
+            raise ValueError("invalid MCP denial tool")
+        if row.get("code") not in allowed_codes:
+            raise ValueError("invalid MCP denial code")
+        if not isinstance(row.get("arguments_sha256"), str) or not _HASH_RE.fullmatch(row["arguments_sha256"]):
+            raise ValueError("invalid MCP denial argument hash")
+        body = {k: v for k, v in row.items() if k != "denial_sha256"}
+        if not isinstance(row.get("denial_sha256"), str) or not _HASH_RE.fullmatch(row["denial_sha256"]) or _sha256(body) != row["denial_sha256"]:
+            raise ValueError("MCP denial event hash mismatch")
+        denials.append({
+            "tool": row["tool"],
+            "arguments_sha256": row["arguments_sha256"],
+            "code": row["code"],
+        })
+    return denials
+
+
+def _load_guard_receipt(
+    path: Path,
+    fixture_sha256: str,
+    case_id: str,
+    expected_policy_sha256: str | None,
+) -> dict[str, Any] | None:
+    if not path.exists():
+        return None
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > 64 * 1024:
+        raise ValueError("unsafe MCP guard receipt")
+    lines = [line for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    if len(lines) != 1:
+        raise ValueError("invalid MCP guard receipt count")
+    row = json.loads(lines[0])
+    expected = {
+        "schema", "case_id", "fixture_sha256", "policy_sha256",
+        "allowed_tools", "guard_sha256",
+    }
+    if not isinstance(row, dict) or set(row) != expected or row.get("schema") != GUARD_SCHEMA:
+        raise ValueError("malformed MCP guard receipt")
+    if row.get("case_id") != case_id or row.get("fixture_sha256") != fixture_sha256:
+        raise ValueError("MCP guard receipt identity mismatch")
+    if not isinstance(row.get("policy_sha256"), str) or not _HASH_RE.fullmatch(row["policy_sha256"]):
+        raise ValueError("invalid MCP guard policy hash")
+    if expected_policy_sha256 is not None and row["policy_sha256"] != expected_policy_sha256:
+        raise ValueError("MCP guard policy hash mismatch")
+    allowed = row.get("allowed_tools")
+    if (
+        not isinstance(allowed, list)
+        or allowed != sorted(allowed)
+        or len(allowed) != len(set(allowed))
+        or any(name not in {"read_fixture"} for name in allowed)
+    ):
+        raise ValueError("invalid MCP guard allowed tools")
+    body = {k: v for k, v in row.items() if k != "guard_sha256"}
+    if not isinstance(row.get("guard_sha256"), str) or not _HASH_RE.fullmatch(row["guard_sha256"]) or _sha256(body) != row["guard_sha256"]:
+        raise ValueError("MCP guard receipt hash mismatch")
+    return {
+        "policy_sha256": row["policy_sha256"],
+        "allowed_tools": allowed,
+        "guard_sha256": row["guard_sha256"],
+    }
+
+
+def _combined_events_align(
+    proposed: list[dict[str, Any]],
+    actual: list[dict[str, Any]],
+    denied: list[dict[str, Any]],
+) -> bool:
+    """Every actual or denied event consumes one distinct model proposal."""
+    available: dict[tuple[str, str], int] = {}
+    for row in proposed:
+        key = (row.get("tool"), _sha256(row.get("arguments")))
+        available[key] = available.get(key, 0) + 1
+    for row in actual:
+        key = (row.get("tool"), _sha256(row.get("arguments")))
+        if available.get(key, 0) < 1:
+            return False
+        available[key] -= 1
+    for row in denied:
+        key = (row.get("tool"), row.get("arguments_sha256"))
+        if available.get(key, 0) < 1:
+            return False
+        available[key] -= 1
+    return True
+
+
 def _proposed_calls(chat_records: list[Mapping[str, Any]], fixture_surface: Mapping[str, str]) -> list[dict[str, Any]]:
     reverse = {raw: logical for logical, raw in fixture_surface.items()}
     calls: list[dict[str, Any]] = []
