@@ -251,10 +251,12 @@ class CaptureHandler(BaseHTTPRequestHandler):
 
         assistant_content, assistant_tool_calls = _assistant_from_response(response_body, content_type)
         tool_names = []
+        tool_surface_sha256 = None
         model = None
         stream = None
         roles = []
         if parsed_request is not None:
+            tool_surface_sha256 = _sha256(parsed_request.get("tools"))
             model = parsed_request.get("model")
             stream = parsed_request.get("stream")
             messages = parsed_request.get("messages")
@@ -277,6 +279,7 @@ class CaptureHandler(BaseHTTPRequestHandler):
             "stream": stream,
             "message_roles": roles,
             "tool_names": tool_names,
+            "tool_surface_sha256": tool_surface_sha256,
             "response_status": status,
             "response_sha256": hashlib.sha256(response_body).hexdigest(),
             "assistant_content": assistant_content,
@@ -682,6 +685,7 @@ def run_hermes_case(
     if not chat_records:
         errors.append("NO_MODEL_REQUEST")
     first_tools: list[str] = []
+    first_tool_surface_sha256: str | None = None
     fixture_surface: dict[str, str] = {}
     extras: list[str] = []
     if chat_records:
@@ -691,6 +695,10 @@ def run_hermes_case(
         if first.get("model") != model:
             errors.append("MODEL_ALIAS_MISMATCH")
         first_tools = first.get("tool_names") if isinstance(first.get("tool_names"), list) else []
+        first_tool_surface_sha256 = (
+            first.get("tool_surface_sha256")
+            if isinstance(first.get("tool_surface_sha256"), str) else None
+        )
         try:
             fixture_surface, extras = _logical_fixture_surface(first_tools)
         except ValueError:
@@ -762,6 +770,7 @@ def run_hermes_case(
         "duration_ms": max(0, int((time.monotonic() - started) * 1000)),
         "model_requests": len(chat_records),
         "first_visible_tool_count": len(first_tools),
+        "first_tool_surface_sha256": first_tool_surface_sha256,
         "fixture_tool_names": fixture_surface,
         "extra_visible_tool_count": len(extras),
         "proposed_fixture_calls": proposed_calls,
