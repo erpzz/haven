@@ -543,6 +543,9 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
     ) = _load_enrollment(Path(enrollment_path))
     profile_identity = _verify_profile_files(Path(hermes_home), enrollment)
     base_env = dict(os.environ if env is None else env)
+    runtime_fingerprint = _runtime_package_fingerprint(
+        Path(hermes), enrollment, base_env
+    )
     version = _version_probe(Path(hermes), Path(hermes_home), enrollment, base_env)
     _verify_profile_files(Path(hermes_home), enrollment)
 
@@ -584,6 +587,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
     )
     _write_private_json(out_dir / "surface-discovery.json", discovery)
     _verify_profile_files(Path(hermes_home), enrollment)
+    _runtime_package_fingerprint(Path(hermes), enrollment, base_env)
     if discovery.get("status") != "pass":
         raise QualificationError("SURFACE_DISCOVERY_BLOCKED")
     names = discovery.get("tool_names")
@@ -622,6 +626,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
     )
     _write_private_json(out_dir / "surface-replay.json", replay)
     _verify_profile_files(Path(hermes_home), enrollment)
+    _runtime_package_fingerprint(Path(hermes), enrollment, base_env)
     if replay.get("status") != "pass":
         raise QualificationError("SURFACE_REPLAY_BLOCKED")
 
@@ -662,6 +667,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
     )
     _write_private_json(out_dir / "supervisor.json", supervisor)
     _verify_profile_files(Path(hermes_home), enrollment)
+    _runtime_package_fingerprint(Path(hermes), enrollment, base_env)
     if supervisor.get("plugin_preflight_sha256") != _preflight_hash(preflight):
         raise QualificationError("SUPERVISOR_PREFLIGHT_BINDING_MISMATCH")
     if supervisor.get("status") != "pass" or child_rc != 0:
@@ -697,6 +703,8 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         "context_tokens": context,
         "effective_toolsets": effective_toolsets,
         "hermes": version,
+        "hermes_runtime": runtime_fingerprint,
+        "hermes_python_sha256": enrollment["hermes_python_sha256"],
         "enrollment_sha256": hashlib.sha256(
             _canon(enrollment)
         ).hexdigest(),
