@@ -194,6 +194,38 @@ class ModelCleanAccounting(unittest.TestCase):
             bench_x.score_views = original
 
 
+class PosthocRescoreInputs(unittest.TestCase):
+    def test_exact_record_loader_rejects_missing_duplicate_foreign_and_malformed(self):
+        import tempfile
+        from pathlib import Path
+        expected = {"a", "b"}
+        cases = (
+            ([{"episode": "a"}], "missing"),
+            ([{"episode": "a"}, {"episode": "a"}], "duplicate"),
+            ([{"episode": "a"}, {"episode": "x"}], "foreign"),
+        )
+        for rows, label in cases:
+            with self.subTest(label=label), tempfile.TemporaryDirectory() as d:
+                p = Path(d) / "records.jsonl"
+                p.write_text("".join(json.dumps(x) + "\n" for x in rows))
+                with self.assertRaises(SystemExit):
+                    bench_x.load_records_exact(p, expected)
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "records.jsonl"
+            p.write_text('{"episode":"a"}\nnot-json\n')
+            with self.assertRaises(SystemExit):
+                bench_x.load_records_exact(p, expected)
+
+    def test_exact_record_loader_accepts_each_expected_id_once(self):
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "records.jsonl"
+            p.write_text('{"episode":"b"}\n{"episode":"a"}\n')
+            rows = bench_x.load_records_exact(p, {"a", "b"})
+            self.assertEqual({r["episode"] for r in rows}, {"a", "b"})
+
+
 class CorrectionAccounting(unittest.TestCase):
     def test_rejected_then_corrected(self):
         e = by_family("household_own")[0]
