@@ -264,11 +264,17 @@ def _seal_binding(gold, session, public=None) -> dict:
         public = {"schema": SCHEMA, "batch": gold.get("batch"), "versions": gold.get("versions"),
                   "round0_sha256": None, "gold_commitment": None}
     gold_ids = [row.get("id") for row in gold.get("records", []) if isinstance(row, dict)]
-    if (not gold_ids or len(gold_ids) != len(set(gold_ids))
+    if (not gold_ids or any(not isinstance(x, str) or not x for x in gold_ids)
+            or len(gold_ids) != len(set(gold_ids))
             or set(gold_ids) != set(session)
             or gold.get("batch") != public.get("batch")
             or public.get("schema") != SCHEMA
-            or gold.get("versions") != public.get("versions")):
+            or public.get("episodes") != len(gold_ids)
+            or gold.get("versions") != public.get("versions")
+            or not isinstance(public.get("round0_sha256"), str)
+            or len(public.get("round0_sha256")) != 64
+            or not isinstance(public.get("gold_commitment"), str)
+            or len(public.get("gold_commitment")) != 64):
         raise ValueError("batch/session/public identity mismatch")
     payload = {}
     finals = rejected = 0
@@ -297,6 +303,7 @@ def _seal_binding(gold, session, public=None) -> dict:
         "round0_sha256": public.get("round0_sha256"),
         "gold_commitment": public.get("gold_commitment"),
         "versions_sha256": common.sha256_bytes(common.canonical(public.get("versions"))),
+        "public_sha256": common.sha256_bytes(common.canonical(public)),
     }
 
 
