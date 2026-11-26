@@ -55,6 +55,15 @@ CONTROL_KEYS = {
     "tool_implementation_sha256",
 }
 SOURCE_KEYS = {"grader", "dispatcher", "observer", "verifier", "recovery", "backend"}
+PROFILE_KEYS = {"runtime", "request"}
+RUNTIME_PROFILE_KEYS = {
+    "hermes_sha256", "server_sha256", "model_artifact_sha256",
+    "model_alias", "context_tokens", "provider", "ownership",
+}
+REQUEST_PROFILE_KEYS = {
+    "temperature", "max_tokens", "request_seed", "max_turns", "stream",
+}
+MIN_CONTEXT_TOKENS = 64_000
 SOURCE_FIELDS = {
     "grader": {"receipt_sha256", "semantic_pass"},
     "dispatcher": {
@@ -83,7 +92,7 @@ ALWAYS_MATCH_CONTROLS = {
 PRIVATE_COMPARE_SCHEMA = "haven.augmentation-eval-private-compare.v1"
 
 RECEIPT_KEYS = {
-    "schema", "manifest", "case_id", "family", "controls", "sources",
+    "schema", "manifest", "case_id", "family", "profiles", "controls", "sources",
     "receipt_sha256",
 }
 
@@ -159,6 +168,78 @@ def _manifest_binding(manifest: Mapping[str, Any]) -> dict[str, Any]:
     return {key: copy.deepcopy(manifest[key]) for key in sorted(MANIFEST_BINDING_KEYS)}
 
 
+def _validate_profiles(
+    manifest: Mapping[str, Any], profiles: Mapping[str, Any]
+) -> dict[str, dict[str, Any]]:
+    if not isinstance(profiles, Mapping) or set(profiles) != PROFILE_KEYS:
+        raise ReceiptError("invalid private profile shape")
+
+    runtime = profiles["runtime"]
+    request = profiles["request"]
+    if not isinstance(runtime, Mapping) or set(runtime) != RUNTIME_PROFILE_KEYS:
+        raise ReceiptError("invalid runtime profile shape")
+    if not isinstance(request, Mapping) or set(request) != REQUEST_PROFILE_KEYS:
+        raise ReceiptError("invalid request profile shape")
+
+    runtime = copy.deepcopy(dict(runtime))
+    request = copy.deepcopy(dict(request))
+
+    for key in ("hermes_sha256", "server_sha256", "model_artifact_sha256"):
+        if not _valid_hash(runtime.get(key)):
+            raise ReceiptError(f"invalid runtime hash: {key}")
+    if runtime["model_artifact_sha256"] != manifest["model_artifact_sha256"]:
+        raise ReceiptError("runtime model artifact does not match public manifest")
+    if not _valid_token(runtime.get("model_alias")):
+        raise ReceiptError("invalid runtime model alias")
+    if runtime["model_alias"] != manifest["model_id"]:
+        raise ReceiptError("runtime model alias does not match public model_id")
+    context = runtime.get("context_tokens")
+    if (
+        isinstance(context, bool)
+        or not isinstance(context, int)
+        or context < MIN_CONTEXT_TOKENS
+        or context > 10_000_000
+    ):
+        raise ReceiptError("invalid runtime context")
+    if not _valid_token(runtime.get("provider")):
+        raise ReceiptError("invalid runtime provider")
+    if runtime.get("ownership") != "owned-loopback":
+        raise ReceiptError("runtime ownership must be owned-loopback")
+
+    temperature = request.get("temperature")
+    if (
+        isinstance(temperature, bool)
+        or not isinstance(temperature, (int, float))
+        or not math.isfinite(float(temperature))
+        or float(temperature) != float(manifest["temperature"])
+    ):
+        raise ReceiptError("request temperature does not match public manifest")
+    max_tokens = request.get("max_tokens")
+    if (
+        isinstance(max_tokens, bool)
+        or not isinstance(max_tokens, int)
+        or max_tokens != manifest["max_tokens"]
+    ):
+        raise ReceiptError("request max_tokens does not match public manifest")
+    seed = request.get("request_seed")
+    if (
+        isinstance(seed, bool)
+        or not isinstance(seed, int)
+        or not 0 <= seed <= 2**31 - 1
+    ):
+        raise ReceiptError("invalid request seed")
+    max_turns = request.get("max_turns")
+    if (
+        isinstance(max_turns, bool)
+        or not isinstance(max_turns, int)
+        or not 1 <= max_turns <= 100
+    ):
+        raise ReceiptError("invalid max_turns")
+    if type(request.get("stream")) is not bool:
+        raise ReceiptError("invalid stream flag")
+    return {"runtime": runtime, "request": request}
+
+
 def _validate_controls(controls: Mapping[str, Any]) -> dict[str, str]:
     if not isinstance(controls, Mapping) or set(controls) != CONTROL_KEYS:
         raise ReceiptError("invalid control binding shape")
@@ -222,18 +303,31 @@ def make_receipt(
     manifest: Mapping[str, Any],
     case_id: str,
     family: str,
+    profiles: Mapping[str, Any],
     controls: Mapping[str, Any],
     sources: Mapping[str, Any],
 ) -> dict[str, Any]:
     """Build a canonical private receipt for one arm/case."""
     if not _valid_token(case_id) or not _valid_token(family):
         raise ReceiptError("invalid case/family token")
+    manifest_binding = _manifest_binding(manifest)
+    private_profiles = _validate_profiles(manifest_binding, profiles)
+    control_bindings = _validate_controls(controls)
+    if control_bindings["runtime_profile_sha256"] != profile_sha256(
+        private_profiles["runtime"]
+    ):
+        raise ReceiptError("runtime profile hash mismatch")
+    if control_bindings["request_settings_sha256"] != profile_sha256(
+        private_profiles["request"]
+    ):
+        raise ReceiptError("request settings hash mismatch")
     body = {
         "schema": SCHEMA,
-        "manifest": _manifest_binding(manifest),
+        "manifest": manifest_binding,
         "case_id": case_id,
         "family": family,
-        "controls": _validate_controls(controls),
+        "profiles": private_profiles,
+        "controls": control_bindings,
         "sources": _validate_sources(sources),
     }
     body["receipt_sha256"] = _sha(body)
@@ -258,10 +352,22 @@ def validate_receipt(receipt: Mapping[str, Any]) -> list[str]:
 
     if not _valid_token(receipt.get("case_id")) or not _valid_token(receipt.get("family")):
         errors.append("INVALID_CASE_IDENTITY")
+    manifest_binding = receipt.get("manifest")
     try:
-        _validate_controls(receipt.get("controls"))
+        profiles = _validate_profiles(manifest_binding, receipt.get("profiles"))
     except ReceiptError:
+        profiles = None
+        errors.append("INVALID_PRIVATE_PROFILES")
+    try:
+        controls = _validate_controls(receipt.get("controls"))
+    except ReceiptError:
+        controls = None
         errors.append("INVALID_CONTROL_BINDINGS")
+    if profiles is not None and controls is not None:
+        if controls["runtime_profile_sha256"] != profile_sha256(profiles["runtime"]):
+            errors.append("RUNTIME_PROFILE_HASH_MISMATCH")
+        if controls["request_settings_sha256"] != profile_sha256(profiles["request"]):
+            errors.append("REQUEST_PROFILE_HASH_MISMATCH")
     try:
         _validate_sources(receipt.get("sources"))
     except ReceiptError:
