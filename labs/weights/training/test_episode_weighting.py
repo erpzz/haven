@@ -157,10 +157,15 @@ class EpisodeWeightingInvariantTests(unittest.TestCase):
         class Args:
             per_device_train_batch_size = 1
             remove_unused_columns = False
+            world_size = 1
+            gradient_accumulation_steps = 1
+            max_steps = -1
+            num_train_epochs = 1.0
 
         class DummyTrainer:
-            def __init__(self, args=None):
+            def __init__(self, args=None, train_dataset=None):
                 self.args = args or Args()
+                self.train_dataset = [object()] if train_dataset is None else train_dataset
                 self.model_accepts_loss_kwargs = True
 
         Weighted = t.make_episode_weighted_trainer_class(DummyTrainer)
@@ -182,6 +187,29 @@ class EpisodeWeightingInvariantTests(unittest.TestCase):
         bad_columns.remove_unused_columns = True
         with self.assertRaisesRegex(w.WeightingError, "remove_unused_columns=False"):
             Weighted(args=bad_columns)
+
+        partial_group = Args()
+        partial_group.world_size = 2
+        partial_group.gradient_accumulation_steps = 2
+        with self.assertRaisesRegex(w.WeightingError, "divisible"):
+            Weighted(args=partial_group, train_dataset=[1, 2, 3, 4, 5, 6])
+
+        complete_group = Args()
+        complete_group.world_size = 2
+        complete_group.gradient_accumulation_steps = 2
+        self.assertFalse(
+            Weighted(args=complete_group, train_dataset=[1, 2, 3, 4, 5, 6, 7, 8]).model_accepts_loss_kwargs
+        )
+
+        truncated = Args()
+        truncated.max_steps = 10
+        with self.assertRaisesRegex(w.WeightingError, "complete epochs"):
+            Weighted(args=truncated)
+
+        fractional = Args()
+        fractional.num_train_epochs = 1.5
+        with self.assertRaisesRegex(w.WeightingError, "positive integer"):
+            Weighted(args=fractional)
 
 
 if __name__ == "__main__":
