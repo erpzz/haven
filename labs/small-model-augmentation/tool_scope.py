@@ -105,12 +105,17 @@ def validate_policy(p):
         return ["INVALID_POLICY_SHAPE"]
     if p.get("schema") != SCHEMA: errors.append("INVALID_POLICY_SCHEMA")
     tools=p.get("allowed_tools")
-    if type(tools) is not list or not 1 <= len(tools) <= MAX_ITEMS or not all(_name(x) for x in tools):
+    if type(tools) is not list or not 0 <= len(tools) <= MAX_ITEMS or not all(_name(x) for x in tools):
         errors.append("INVALID_ALLOWED_TOOLS"); tools=[] if type(tools) is not list else tools
     if type(tools) is list and len(tools)!=len(set(x for x in tools if type(x) is str)):
         errors.append("DUPLICATE_ALLOWED_TOOL")
     max_calls=p.get("max_calls")
-    if type(max_calls) is not int or type(max_calls) is bool or not 1 <= max_calls <= 100:
+    if type(max_calls) is not int or type(max_calls) is bool:
+        errors.append("INVALID_MAX_CALLS")
+    elif tools == []:
+        if max_calls != 0:
+            errors.append("INVALID_MAX_CALLS")
+    elif not 1 <= max_calls <= 100:
         errors.append("INVALID_MAX_CALLS")
     if type(p.get("unique_calls")) is not bool:
         errors.append("INVALID_UNIQUE_CALLS")
