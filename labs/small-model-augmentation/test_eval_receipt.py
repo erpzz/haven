@@ -303,9 +303,10 @@ class PrivateEvalReceiptTests(unittest.TestCase):
 
     def test_private_pair_runtime_profile_can_never_be_waived(self):
         a = private("a", "c1", "runtime-a")
-        b = private("b", "c1", "runtime-b")
-        b["controls"]["runtime_profile_sha256"] = H("different-runtime")
-        rehash(b)
+        b = private(
+            "b", "c1", "runtime-b",
+            private_profiles=profiles(context=131072),
+        )
 
         result = receipt.compare_private_receipt_sets(
             [a], [b],
@@ -333,14 +334,17 @@ class PrivateEvalReceiptTests(unittest.TestCase):
         for key in ("request_settings_sha256", "world_sha256", "catalog_sha256", "tool_implementation_sha256"):
             with self.subTest(key=key):
                 a = private("a", "c1", "stable-a")
-                b = private("b", "c1", "stable-b")
-                # First align every non-immutable control so only the selected stable
-                # binding plus unavoidable arm/run receipt identity can differ.
-                for control in receipt.CONTROL_KEYS:
-                    if control in receipt.ALWAYS_MATCH_CONTROLS:
+                if key == "request_settings_sha256":
+                    b = private(
+                        "b", "c1", "stable-b",
+                        private_profiles=profiles(seed=7),
+                    )
+                else:
+                    b = private("b", "c1", "stable-b")
+                    for control in receipt.ALWAYS_MATCH_CONTROLS:
                         b["controls"][control] = a["controls"][control]
-                b["controls"][key] = H("drift-" + key)
-                rehash(b)
+                    b["controls"][key] = H("drift-" + key)
+                    rehash(b)
                 result = receipt.compare_private_receipt_sets(
                     [a], [b],
                     allowed_control_differences=[
@@ -355,6 +359,44 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 )
                 self.assertEqual(result["status"], "block")
                 self.assertIn(key, result["disallowed_control_differences"])
+
+    def test_receipt_refuses_under_64k_runtime_context(self):
+        p = profiles(context=8192)
+        with self.assertRaisesRegex(receipt.ReceiptError, "context"):
+            receipt.make_receipt(
+                manifest=manifest(),
+                case_id="c1",
+                family="graph",
+                profiles=p,
+                controls=controls("small-context", p),
+                sources=sources("small-context"),
+            )
+
+    def test_receipt_refuses_runtime_alias_mismatch(self):
+        p = profiles()
+        p["runtime"]["model_alias"] = "different-model"
+        with self.assertRaisesRegex(receipt.ReceiptError, "model alias"):
+            receipt.make_receipt(
+                manifest=manifest(),
+                case_id="c1",
+                family="graph",
+                profiles=p,
+                controls=controls("wrong-alias", p),
+                sources=sources("wrong-alias"),
+            )
+
+    def test_receipt_refuses_request_setting_manifest_mismatch(self):
+        p = profiles()
+        p["request"]["max_tokens"] = 2048
+        with self.assertRaisesRegex(receipt.ReceiptError, "max_tokens"):
+            receipt.make_receipt(
+                manifest=manifest(),
+                case_id="c1",
+                family="graph",
+                profiles=p,
+                controls=controls("wrong-request", p),
+                sources=sources("wrong-request"),
+            )
 
     def test_profile_hash_is_order_independent_and_content_sensitive(self):
         a = receipt.profile_sha256({"context": 65536, "alias": "q4b"})
