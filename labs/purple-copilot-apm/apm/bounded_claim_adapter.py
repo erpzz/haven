@@ -15,6 +15,8 @@ BUNDLE_SCHEMA = "haven.claim-bundle.v1"
 COVERAGE_SCHEMA = "haven.purple-claim-coverage.v1"
 COVERAGE_RECEIPT_SCHEMA = "haven.purple-claim-coverage-receipt.v1"
 CHECKPOINT_BINDING_SCHEMA = "haven.purple-claim-checkpoint-binding.v1"
+SELECTOR_SCHEMA = "haven.purple-claim-selector.v1"
+DISCLOSURE_SCHEMA = "haven.purple-claim-disclosure-policy.v1"
 MAX_RELEASE_CLAIMS = 64
 TOOLS = {
     "purple_tier_zero_overview",
@@ -382,6 +384,102 @@ def validate_coverage_policy(bundle: dict, policy: dict) -> list[str]:
     if policy.get("policy_sha256") != expected["policy_sha256"]:
         errors.append("COVERAGE_POLICY_HASH_MISMATCH")
     return sorted(set(errors))
+
+
+def disclosure_policy() -> dict:
+    """Fixed disclosure contract for model, logs, and user-facing output."""
+    body = {
+        "schema": DISCLOSURE_SCHEMA,
+        "model_selector_fields": [
+            "schema",
+            "bundle_sha256",
+            "coverage_policy_sha256",
+            "tool",
+            "max_claims",
+            "claims[].id",
+            "claims[].kind",
+            "claims[].required",
+        ],
+        "model_hidden_fields": [
+            "claims[].payload",
+            "claims[].citations",
+            "limitations",
+            "scope.platform",
+            "scope.snapshot",
+            "candidate_raw",
+            "host_result",
+            "provenance_paths",
+        ],
+        "log_surface": [
+            "coverage/status",
+            "coverage/errors",
+            "bundle_sha256",
+            "policy_sha256",
+            "candidate_sha256",
+            "release_sha256",
+            "receipt_sha256",
+            "required_count",
+            "selected_count",
+        ],
+        "user_surface": [
+            "host_rendered_claim_text",
+            "host_rendered_citations",
+            "global_limitations",
+        ],
+        "user_hidden_fields": [
+            "candidate_raw",
+            "selector_view",
+            "coverage_policy",
+            "raw_bundle",
+            "raw_host_result",
+        ],
+    }
+    body["policy_sha256"] = hashlib.sha256(_canon(body)).hexdigest()
+    return body
+
+
+def selector_view(bundle: dict, policy: dict) -> dict:
+    """Return the only claim catalogue intended for the selector model.
+
+    Claim payloads and citations are deliberately absent. The host remains responsible
+    for mandatory coverage and deterministic user rendering after selection.
+    """
+    errors = validate_coverage_policy(bundle, policy)
+    if errors:
+        raise ClaimAdapterError("invalid coverage policy for selector view")
+
+    by_id = {}
+    for claim in bundle["claims"]:
+        if type(claim) is not dict:
+            raise ClaimAdapterError("invalid claim in selector bundle")
+        cid = claim.get("id")
+        kind = claim.get("kind")
+        if type(cid) is not str or cid not in policy["allowed_ids"]:
+            raise ClaimAdapterError("selector claim outside policy")
+        if not _text(kind, 128):
+            raise ClaimAdapterError("invalid selector claim kind")
+        by_id[cid] = kind
+    if set(by_id) != set(policy["allowed_ids"]):
+        raise ClaimAdapterError("selector claim set mismatch")
+
+    required = set(policy["required_ids"])
+    view = {
+        "schema": SELECTOR_SCHEMA,
+        "bundle_sha256": policy["bundle_sha256"],
+        "coverage_policy_sha256": policy["policy_sha256"],
+        "tool": policy["tool"],
+        "max_claims": policy["max_claims"],
+        "claims": [
+            {
+                "id": cid,
+                "kind": by_id[cid],
+                "required": cid in required,
+            }
+            for cid in policy["allowed_ids"]
+        ],
+    }
+    view["selector_sha256"] = hashlib.sha256(_canon(view)).hexdigest()
+    return view
 
 
 def claim_checkpoint_binding(
