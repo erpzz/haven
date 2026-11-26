@@ -58,6 +58,23 @@ class Recipe:
         canonical_rel_path(self.cwd if self.cwd != "." else "workspace")
 
 
+def recipe_policy_sha256(recipes: Iterable[Recipe]) -> str:
+    rows = []
+    for recipe in recipes:
+        if not isinstance(recipe, Recipe):
+            raise ValueError("recipes must contain Recipe objects")
+        recipe.validate()
+        rows.append({
+            "recipe_id": recipe.recipe_id,
+            "argv": list(recipe.argv),
+            "timeout_seconds": float(recipe.timeout_seconds),
+            "cwd": recipe.cwd,
+        })
+    if not rows:
+        raise ValueError("at least one host-owned retest recipe is required")
+    return hashlib.sha256(_canonical_json(rows)).hexdigest()
+
+
 @dataclass(frozen=True)
 class CommandReceipt:
     recipe_id: str
@@ -143,12 +160,18 @@ def _require_repo(path: Path) -> Path:
     return p
 
 
-def _validate_fix(validated_fix: Mapping[str, Any]) -> tuple[str, tuple[str, ...]]:
+def _validate_fix(validated_fix: Mapping[str, Any]) -> tuple[str, str, str, tuple[str, ...]]:
     if not isinstance(validated_fix, Mapping):
         raise ValueError("validated_fix must be an object")
+    finding_id = validated_fix.get("finding_id")
+    packet_sha = validated_fix.get("packet_sha256")
     patch = validated_fix.get("patch")
     patch_sha = validated_fix.get("patch_sha256")
     paths = validated_fix.get("touched_paths")
+    if not isinstance(finding_id, str) or not finding_id.startswith("hdf_"):
+        raise ValueError("validated fix missing finding_id")
+    if not isinstance(packet_sha, str) or not _HASH_RE.fullmatch(packet_sha):
+        raise ValueError("validated fix missing packet_sha256")
     if not isinstance(patch, str) or not isinstance(patch_sha, str) or not _HASH_RE.fullmatch(patch_sha):
         raise ValueError("validated fix missing patch/hash")
     actual = hashlib.sha256(patch.encode("utf-8")).hexdigest()
@@ -159,7 +182,7 @@ def _validate_fix(validated_fix: Mapping[str, Any]) -> tuple[str, tuple[str, ...
     normalized = tuple(canonical_rel_path(p) for p in paths)
     if len(set(normalized)) != len(normalized):
         raise ValueError("duplicate touched_paths")
-    return patch, normalized
+    return finding_id, packet_sha, patch, normalized
 
 
 def run_fix(*, repo: Path, base_commit: str, validated_fix: Mapping[str, Any], recipes: Iterable[Recipe]) -> dict[str, Any]:
@@ -170,10 +193,9 @@ def run_fix(*, repo: Path, base_commit: str, validated_fix: Mapping[str, Any], r
     repo = _require_repo(Path(repo))
     if not isinstance(base_commit, str) or not _COMMIT_RE.fullmatch(base_commit):
         raise ValueError("base_commit must be an exact lowercase commit hash")
-    patch, expected_paths = _validate_fix(validated_fix)
+    finding_id, packet_sha, patch, expected_paths = _validate_fix(validated_fix)
     recipe_list = list(recipes)
-    if not recipe_list:
-        raise ValueError("at least one host-owned retest recipe is required")
+    policy_sha = recipe_policy_sha256(recipe_list)
     seen_ids: set[str] = set()
     for recipe in recipe_list:
         if not isinstance(recipe, Recipe):
@@ -228,8 +250,11 @@ def run_fix(*, repo: Path, base_commit: str, validated_fix: Mapping[str, Any], r
         passed = len(receipts) == len(recipe_list) and all((not r.timed_out and r.exit_code == 0) for r in receipts)
         body = {
             "schema": "haven-local-defense-factory-run-v1",
+            "finding_id": finding_id,
+            "fix_packet_sha256": packet_sha,
             "base_commit": base_commit,
             "patch_sha256": validated_fix["patch_sha256"],
+            "recipe_policy_sha256": policy_sha,
             "touched_paths": list(expected_paths),
             "recipes": [r.__dict__ for r in receipts],
             "passed": passed,
