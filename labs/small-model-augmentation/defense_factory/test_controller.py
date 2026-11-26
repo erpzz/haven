@@ -70,14 +70,14 @@ class ControllerTests(unittest.TestCase):
         body["receipt_sha256"] = canonical_hash(body)
         return body
 
-    def test_successful_bound_run_closes_finding(self):
+    def test_successful_bound_run_stops_at_verified(self):
         self.controller.record_proposal(self.contract)
         result = self.controller.record_run(contract=self.contract, receipt=self.receipt())
-        self.assertEqual(result["state"], "closed")
+        self.assertEqual(result["state"], "verified")
         self.assertTrue(result["passed"])
         self.assertEqual(
             [x["event"] for x in self.ledger.entries],
-            ["detected", "triaged", "fix_proposed", "fix_applied", "retested", "closed"],
+            ["detected", "triaged", "fix_proposed", "fix_applied", "retested"],
         )
 
     def test_failed_retest_remains_revisable(self):
@@ -175,12 +175,19 @@ class ControllerTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             verify_run_receipt(receipt, self.contract)
 
-    def test_close_can_be_deferred_after_verified_retest(self):
+    def test_validation_receipt_cannot_close_without_integration_receipt(self):
         self.controller.record_proposal(self.contract)
-        result = self.controller.record_run(
-            contract=self.contract, receipt=self.receipt(), close_on_pass=False
-        )
+        result = self.controller.record_run(contract=self.contract, receipt=self.receipt())
         self.assertEqual(result["state"], "verified")
+        with self.assertRaises(ValueError):
+            self.ledger.append(finding_id=self.finding_id, event="closed")
+
+    def test_none_exit_code_rejected(self):
+        row = self.command("unit")
+        row["exit_code"] = None
+        receipt = self.receipt(rows=[row], passed=False)
+        with self.assertRaises(ValueError):
+            verify_run_receipt(receipt, self.contract)
 
 
 if __name__ == "__main__":
