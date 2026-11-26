@@ -189,6 +189,7 @@ def validate_unified_diff(patch: str, allowed_paths: Iterable[str], max_bytes: i
     forbidden_markers = (
         "GIT binary patch", "Binary files ", "rename from ", "rename to ",
         "copy from ", "copy to ", "new file mode ", "deleted file mode ",
+        "old mode ", "new mode ",
     )
     for marker in forbidden_markers:
         if marker in patch:
