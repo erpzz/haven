@@ -182,12 +182,11 @@ class OwnedLlamaTests(unittest.TestCase):
         self.assertLess(time.monotonic()-started,4)
         self.assertIsNotNone(rc)
 
-    def test_invalid_command_fails_before_child_and_stops_nothing(self):
+    def test_invalid_command_fails_closed_and_stops_lease(self):
         lease=self.launch()
         rc,error=owned_llama.run_guarded(lease,[],guard_interval=.05)
         self.assertEqual((rc,error),(None,"INVALID_COMMAND"))
-        self.assertIsNone(lease.process.poll())
-        lease.stop()
+        self.assertIsNotNone(lease.process.poll())
 
     def test_invalid_context_and_port_fail_closed(self):
         for kwargs,code in [
@@ -201,11 +200,33 @@ class OwnedLlamaTests(unittest.TestCase):
                 owned_llama.launch(str(self.server),self.server_sha,str(self.model),self.model_sha,**opts)
             self.assertEqual(cm.exception.code,code)
 
-    def test_extra_args_are_literal_not_shell(self):
+    def test_arbitrary_server_extra_args_are_rejected(self):
         marker=Path(self.tmp.name,"SHOULD_NOT_EXIST")
-        lease=self.launch(extra_args=["--fake-unused",f";touch {marker}"])
-        lease.stop()
+        with self.assertRaises(owned_llama.LeaseError) as cm:
+            self.launch(extra_args=["--fake-unused",f";touch {marker}"])
+        self.assertEqual(cm.exception.code,"SERVER_EXTRA_ARGS_NOT_ALLOWED")
         self.assertFalse(marker.exists())
+
+    def test_security_critical_override_args_are_rejected(self):
+        for args in (["-m","other.gguf"],["--host","0.0.0.0"],["--port","9999"],
+                     ["-c","8192"],["--alias","same-looking-alias"]):
+            with self.assertRaises(owned_llama.LeaseError) as cm:
+                self.launch(extra_args=args)
+            self.assertEqual(cm.exception.code,"SERVER_EXTRA_ARGS_NOT_ALLOWED")
+
+    def test_invalid_guard_configuration_stops_lease(self):
+        lease=self.launch()
+        rc,error=owned_llama.run_guarded(
+            lease,[sys.executable,"-c","pass"],guard_interval=.001)
+        self.assertEqual((rc,error),(None,"INVALID_GUARD_INTERVAL"))
+        self.assertIsNotNone(lease.process.poll())
+
+        lease=self.launch()
+        rc,error=owned_llama.run_guarded(
+            lease,[sys.executable,"-c","pass"],cwd=Path(self.tmp.name,"missing"),
+            guard_interval=.05)
+        self.assertEqual((rc,error),(None,"INVALID_WORKING_DIRECTORY"))
+        self.assertIsNotNone(lease.process.poll())
 
     def test_lsof_missing_is_fail_closed(self):
         with mock.patch.object(owned_llama.shutil,"which",return_value=None):
