@@ -466,6 +466,31 @@ def _prompt(case: RedCase) -> str:
     )
 
 
+def _mcp_scope_policy(case, fixture: Mapping[str, Any]) -> dict[str, Any]:
+    """Translate the existing HRF host policy into haven.tool-scope.v1."""
+    case.validate()
+    allowed = list(case.tool_policy.allowed_tools)
+    rules = {}
+    for name in allowed:
+        if name != "read_fixture":
+            raise ValueError("unsupported HRF tool for final MCP scope")
+        rules[name] = {
+            "allowed_keys": ["object"],
+            "required_keys": ["object"],
+            "exact_values": {"/object": [fixture["object"]]},
+        }
+    return {
+        "schema": "haven.tool-scope.v1",
+        "allowed_tools": allowed,
+        "max_calls": case.tool_policy.max_total_calls,
+        "per_tool_max": {
+            name: case.tool_policy.max_per_tool for name in allowed
+        },
+        "unique_calls": not case.tool_policy.allow_duplicate_calls,
+        "argument_rules": rules,
+    }
+
+
 def run_hermes_case(
     *,
     hermes: Path,
@@ -502,12 +527,19 @@ def run_hermes_case(
 
     root = Path(tempfile.mkdtemp(prefix="haven-red-hermes-"))
     fixture_path = root / "fixture.json"
+    mcp_policy_path = root / "mcp-scope.json"
     call_log = root / "mcp-calls.jsonl"
     fixture = fixture_for_case(case)
+    mcp_policy = _mcp_scope_policy(case, fixture)
     fd = os.open(fixture_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     with os.fdopen(fd, "w", encoding="utf-8") as writer:
         json.dump(fixture, writer, sort_keys=True, separators=(",", ":"))
         writer.write("\n")
+    fd = os.open(mcp_policy_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, "w", encoding="utf-8") as writer:
+        json.dump(mcp_policy, writer, sort_keys=True, separators=(",", ":"))
+        writer.write("\n")
+    mcp_policy_sha256 = hashlib.sha256(mcp_policy_path.read_bytes()).hexdigest()
 
     state = CaptureState(backend_base_url, backend_key)
     server = ThreadingHTTPServer(("127.0.0.1", 0), CaptureHandler)
@@ -521,6 +553,8 @@ def run_hermes_case(
         "HERMES_HOME": str(hermes_home),
         "HRF_FIXTURE_FILE": str(fixture_path),
         "HRF_MCP_LOG": str(call_log),
+        "HRF_MCP_SCOPE_POLICY_FILE": str(mcp_policy_path),
+        "HRF_MCP_SCOPE_REQUIRED": "1",
         "OPENAI_API_KEY": "local-red-factory-proxy",
         "NO_PROXY": "127.0.0.1,localhost",
         "no_proxy": "127.0.0.1,localhost",
@@ -672,6 +706,8 @@ def run_hermes_case(
         "proposed_fixture_calls": proposed_calls,
         "actual_fixture_calls": actual_calls,
         "dispatch_alignment": _dispatches_align(proposed_calls, actual_calls),
+        "final_mcp_scope_required": True,
+        "final_mcp_policy_sha256": mcp_policy_sha256,
         "stdout_sha256": stdout_hash.hexdigest(),
         "stderr_sha256": stderr_hash.hexdigest(),
         "stdout_bytes": stdout_bytes,
@@ -682,6 +718,7 @@ def run_hermes_case(
     body["result_sha256"] = _sha256(body)
     try:
         fixture_path.unlink(missing_ok=True)
+        mcp_policy_path.unlink(missing_ok=True)
         call_log.unlink(missing_ok=True)
         root.rmdir()
     except OSError:
