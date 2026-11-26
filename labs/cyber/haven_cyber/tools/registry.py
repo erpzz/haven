@@ -175,37 +175,75 @@ def _process_entry(conn, fn: Callable[..., Any], args: dict) -> None:
         conn.close()
 
 
+def _stop_process(proc) -> None:
+    """Best-effort hard stop for a spawned hard-timeout worker."""
+    if not proc.is_alive():
+        proc.join(timeout=0)
+        return
+    proc.terminate()
+    proc.join(1.0)
+    if proc.is_alive():
+        proc.kill()
+        proc.join(1.0)
+
+
 def _hard_call(spec: ToolSpec, args: dict) -> Any:
-    """Run one tool in a spawned process and terminate it on deadline."""
+    """Run one tool in a spawned process and terminate it on deadline.
+
+    Drain the result pipe while the child is running. Waiting for process exit before
+    reading can deadlock when a successful result exceeds the OS pipe buffer.
+    """
     ctx = multiprocessing.get_context("spawn")
     recv_conn, send_conn = ctx.Pipe(duplex=False)
     proc = ctx.Process(target=_process_entry, args=(send_conn, spec.fn, args))
     proc.start()
     send_conn.close()
+    deadline = time.monotonic() + spec.timeout_s
+    message = None
     try:
-        proc.join(spec.timeout_s)
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                _stop_process(proc)
+                raise ToolError("timeout", f"{spec.id} exceeded {spec.timeout_s}s", retryable=True)
+
+            if recv_conn.poll(min(0.05, remaining)):
+                try:
+                    message = recv_conn.recv()
+                except EOFError:
+                    raise ToolError("tool_failed", f"{spec.id} worker closed without a result") from None
+                break
+
+            if not proc.is_alive():
+                proc.join(timeout=0)
+                # The process can exit just before the pipe notification becomes visible.
+                if recv_conn.poll(min(0.2, max(0.0, deadline - time.monotonic()))):
+                    try:
+                        message = recv_conn.recv()
+                    except EOFError:
+                        pass
+                if message is None:
+                    raise ToolError("tool_failed", f"{spec.id} worker exited without a result")
+                break
+
+        # A child should exit immediately after sending. Do not leave it behind if it
+        # violates that contract; the result itself has already been received.
+        proc.join(0.2)
         if proc.is_alive():
-            proc.terminate()
-            proc.join(1.0)
-            if proc.is_alive():
-                proc.kill()
-                proc.join(1.0)
-            raise ToolError("timeout", f"{spec.id} exceeded {spec.timeout_s}s", retryable=True)
-        if not recv_conn.poll(0.2):
-            raise ToolError("tool_failed", f"{spec.id} worker exited without a result")
-        kind, payload = recv_conn.recv()
+            _stop_process(proc)
+
+        kind, payload = message
         if kind == "ok":
             return payload
         if kind == "tool_error":
-            code, message, retryable = payload
-            raise ToolError(code, message, retryable)
-        name, message = payload
-        raise RuntimeError(f"{name}: {message}")
+            code, message_text, retryable = payload
+            raise ToolError(code, message_text, retryable)
+        name, message_text = payload
+        raise RuntimeError(f"{name}: {message_text}")
     finally:
         recv_conn.close()
         if proc.is_alive():
-            proc.terminate()
-            proc.join(1.0)
+            _stop_process(proc)
 
 
 class Registry:
