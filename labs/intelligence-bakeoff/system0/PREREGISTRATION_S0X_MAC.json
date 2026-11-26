@@ -1,0 +1,55 @@
+{
+  "schema": "haven-s0x-prereg-1",
+  "id": "HARE-S0-2-MAC",
+  "amends": "HARE-S0-2 (Kaggle run 1 closed per issue #117)",
+  "registered_utc": "2026-11-22T18:40:00Z",
+  "registered_before_any_mac_inference": true,
+  "question": "On a candidate deployment host (Apple M4 MacBook Air, 16 GB), what are accuracy and warm latency for Qwen3.5-4B plain vs 4B full (advisory + gateway + verifier + one correction) on the 179 untouched episodes, and for the query-writing arms on the development suite?",
+  "why_this_host": "Slink (RTX 2070S) is offline. The 16 GB Mac cannot hold the 35B at Q4 (about 22 GB), so if the Mac is the target, the scaffolded 4B is the only local option.",
+  "arms": {
+    "hare": [
+      "4b-plain",
+      "4b-full"
+    ],
+    "querywriter_dev": [
+      "code",
+      "cypher",
+      "prose"
+    ]
+  },
+  "settings": {
+    "engine": "llama.cpp b11146 built with Metal (UI off)",
+    "temperature": 0,
+    "thinking": false,
+    "server_args": "-c 33280 -ngl 99 --jinja -np 1 -fa auto --fit off -cram 0 --no-webui",
+    "4b_sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+    "35b_sha256": "ac0e2c1189e055faa36eff361580e79c5bd6f8e76bffb4ce547f167d53e31a61"
+  },
+  "episode_sets": {
+    "untouched": {
+      "path": "system0/fresh-x-untouched.jsonl",
+      "seed": "s0x-untouched-20261121T2000Z",
+      "n": 179,
+      "sha256": "0ff820ff90a13ad4a5f0fd2332b06651eed651c73454bc8deae4b3fd46fbed65",
+      "note": "generated after development and before any extension inference; contents not inspected; same generator templates (tests world, not template, overfitting)"
+    }
+  },
+  "metrics": [
+    "system pass, raw pass, model-clean pass (as S0-2)",
+    "per-request wall seconds: mean and nearest-rank p95",
+    "cold server load seconds (reported separately)",
+    "query arms: exact, Jaccard, p95, model-call failures, type mismatches"
+  ],
+  "decision_rules": {
+    "latency_gate": "Issue #117 target: warm p95 <= 15 s per request on the named host. Report whether 4b-full meets it on this Mac.",
+    "accuracy": "Descriptive only. Compare with the Kaggle reference (4b-full 126/179; 35B full 146/179), noting that greedy outputs can differ across backends (Metal vs CUDA). No qualification claim: the reserve is not frozen.",
+    "query_arms": "Development suite only. code-alone is known to score 84/84; model arms are reported for plumbing and latency, not as evidence of value."
+  },
+  "code_sha256": {
+    "checks.py": "d8e5428f197476c028cbff65c761d9268454aee52e47eaceec25cee0ec4e370b",
+    "enforce.py": "0f32fafdad0c92236ed23df21763ff038a4ae653a618f58a7e7571b3c050e424",
+    "bench_x.py": "9817732ff4a8fcb3a1dcfc5435403ec6c4c4263876b725e0c8a2c28ff6d78b68",
+    "bench_s0.py": "63cf692c09f9835a7ddb7ebc513eb653fd5e0f8ee642a7b11fc26c42507e9f7b"
+  },
+  "note": "bench_x.py differs from HARE-S0-2's registered hash because of the post-run false-refusal field correction (commit 7244221); this registration pins the corrected file."
+}
