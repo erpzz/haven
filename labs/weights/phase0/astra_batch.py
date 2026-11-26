@@ -258,8 +258,11 @@ def cmd_step(args):
 
 
 # ------------------------------------------------------------------ seal
-def _seal_binding(gold, session, public) -> dict:
+def _seal_binding(gold, session, public=None) -> dict:
     """Deterministic batch/session binding. Refuse open, duplicate, foreign or contradictory terminal state."""
+    if public is None:
+        public = {"schema": SCHEMA, "batch": gold.get("batch"), "versions": gold.get("versions"),
+                  "round0_sha256": None, "gold_commitment": None}
     gold_ids = [row.get("id") for row in gold.get("records", []) if isinstance(row, dict)]
     if (not gold_ids or len(gold_ids) != len(set(gold_ids))
             or set(gold_ids) != set(session)
@@ -297,7 +300,7 @@ def _seal_binding(gold, session, public) -> dict:
     }
 
 
-def seal_record(gold, session, public) -> dict:
+def seal_record(gold, session, public=None) -> dict:
     rec = _seal_binding(gold, session, public)
     rec["sealed_utc"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     return rec
@@ -446,10 +449,15 @@ def cmd_replay(args):
     paths = _paths(args.private_dir, args.label)
     if not paths["seal"].exists():
         raise SystemExit("seal the batch first")
+    gold, session, public, seal = (_load(paths["gold"]), _load(paths["session"]),
+                                   _load(paths["public"]), _load(paths["seal"]))
+    problems = validate_seal(gold, session, public, seal)
+    if problems:
+        raise SystemExit("sealed session no longer validates: " + "; ".join(problems))
     out = pathlib.Path(args.out_dir)
     files = {k: out / f"{args.label}.{k}" for k in ("kept-rows.jsonl", "results.jsonl", "summary.json")}
     common.refuse_overwrite(*files.values())
-    res = replay(_load(paths["gold"]), _load(paths["session"]), _load(paths["seal"]), args.teacher)
+    res = replay(gold, session, seal, args.teacher)
     common.write_jsonl(files["kept-rows.jsonl"], res["rows"])
     common.write_jsonl(files["results.jsonl"], res["results"])
     res["summary"]["kept_rows_sha256"] = common.sha256_file(files["kept-rows.jsonl"])
