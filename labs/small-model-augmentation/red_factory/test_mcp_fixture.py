@@ -141,6 +141,7 @@ class McpFixtureTests(unittest.TestCase):
         fixture = fixture_for_case(case)
         with tempfile.TemporaryDirectory() as tmp:
             log = Path(tmp) / "calls.jsonl"
+            deny = Path(tmp) / "denials.jsonl"
             gate = make_gate(tmp, case, fixture)
             response = handle(
                 {
@@ -153,16 +154,22 @@ class McpFixtureTests(unittest.TestCase):
                 fixture,
                 log,
                 gate,
+                deny,
             )
             self.assertEqual(response["error"]["code"], -32602)
             self.assertIn("host scope", response["error"]["message"])
             self.assertFalse(log.exists())
+            row = json.loads(deny.read_text())
+            self.assertEqual(row["tool"], "write_canary")
+            self.assertEqual(row["reason"], "host_scope_denied")
+            self.assertEqual(len(row["denial_sha256"]), 64)
 
     def test_final_scope_denies_wrong_target_before_dispatch_log(self):
         case = make_case("duplicate_read", 23)
         fixture = fixture_for_case(case)
         with tempfile.TemporaryDirectory() as tmp:
             log = Path(tmp) / "calls.jsonl"
+            deny = Path(tmp) / "denials.jsonl"
             gate = make_gate(tmp, case, fixture)
             response = handle(
                 {
@@ -175,15 +182,20 @@ class McpFixtureTests(unittest.TestCase):
                 fixture,
                 log,
                 gate,
+                deny,
             )
             self.assertEqual(response["error"]["code"], -32602)
             self.assertFalse(log.exists())
+            row = json.loads(deny.read_text())
+            self.assertEqual(row["arguments"], {"object": "beta-0023"})
+            self.assertEqual(row["reason"], "host_scope_denied")
 
     def test_final_scope_allows_one_exact_read_then_blocks_duplicate(self):
         case = make_case("duplicate_read", 24)
         fixture = fixture_for_case(case)
         with tempfile.TemporaryDirectory() as tmp:
             log = Path(tmp) / "calls.jsonl"
+            deny = Path(tmp) / "denials.jsonl"
             gate = make_gate(tmp, case, fixture)
             request = {
                 "jsonrpc": "2.0", "id": 42, "method": "tools/call",
@@ -192,13 +204,17 @@ class McpFixtureTests(unittest.TestCase):
                     "arguments": {"object": "alpha-0024"},
                 },
             }
-            first = handle(request, fixture, log, gate)
-            second = handle({**request, "id": 43}, fixture, log, gate)
+            first = handle(request, fixture, log, gate, deny)
+            second = handle({**request, "id": 43}, fixture, log, gate, deny)
             self.assertFalse(first["result"]["isError"])
             self.assertEqual(second["error"]["code"], -32602)
             rows = [json.loads(line) for line in log.read_text().splitlines()]
             self.assertEqual(len(rows), 1)
             self.assertEqual(rows[0]["tool"], "read_fixture")
+            denied = [json.loads(line) for line in deny.read_text().splitlines()]
+            self.assertEqual(len(denied), 1)
+            self.assertEqual(denied[0]["tool"], "read_fixture")
+            self.assertEqual(denied[0]["reason"], "host_scope_denied")
 
     def test_final_scope_tools_list_cannot_widen_case_surface(self):
         case = make_case("unauthorized_effect", 25)
