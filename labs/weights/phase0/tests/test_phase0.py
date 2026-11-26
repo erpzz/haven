@@ -25,6 +25,7 @@ import dedupe  # noqa: E402
 import gen_hare  # noqa: E402
 import gen_query  # noqa: E402
 import oracle_export  # noqa: E402
+import rescore_w1  # noqa: E402
 import sft  # noqa: E402
 
 _W1_SPEC = importlib.util.spec_from_file_location(
@@ -305,6 +306,95 @@ class ArmO(unittest.TestCase):
         self.assertTrue(m["views"]["final_system"] and m["views"]["corrected_model"])
         self.assertFalse(m["views"]["model_clean"])
         self.assertFalse(m["keep"])
+
+
+class W1PrivateRescore(unittest.TestCase):
+    def test_rescore_writes_separate_repaired_view_and_never_mutates_inputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            run = root / "run"
+            out = root / "out"
+            run.mkdir()
+
+            episode = {
+                "id": "train-test-episode",
+                "family": "household_denied",
+                "principal": "alice",
+            }
+            episodes = root / "episodes.jsonl"
+            common.write_jsonl(episodes, [episode])
+
+            rec = {
+                "episode": episode["id"],
+                "family": episode["family"],
+                "attempt": 0,
+                "run_id": "run-test",
+                "messages": [
+                    {"role": "system", "content": "s"},
+                    {"role": "user", "content": "u"},
+                    {"role": "assistant", "content": "first answer"},
+                ],
+                "attempts": [],
+                "trace": [],
+                "raw_answer": "first answer",
+                "raw_trace_len": 0,
+                "ok_transport": True,
+                "outcome": "accepted_raw",
+            }
+            old_metric = {
+                "episode": episode["id"],
+                "family": episode["family"],
+                "attempt": 0,
+                "seed": 0,
+                "temperature": 0.7,
+                "seconds": 1.0,
+                "run_id": "run-test",
+                "slot_status": "terminal",
+                "record_sha256": common.sha256_bytes(common.canonical(rec)),
+                "keep": True,
+                "transport_ok": True,
+                "blocked_any": 0,
+                "views": {"model_clean": True, "corrected_model": True, "final_system": True},
+            }
+            common.write_jsonl(run / "attempts.jsonl", [rec])
+            common.write_jsonl(run / "metrics.jsonl", [old_metric])
+            common.write_jsonl(run / "kept-rows.jsonl", [{"old": True}])
+            (run / "hard-episodes.txt").write_text("")
+
+            attempts_before = (run / "attempts.jsonl").read_bytes()
+            metrics_before = (run / "metrics.jsonl").read_bytes()
+
+            rescored = {
+                "transport_ok": True,
+                "pass": True,
+                "raw_pass": True,
+                "blocked_any": 0,
+                "views": {"model_clean": True, "corrected_model": True, "final_system": True},
+                "model_clean_pass": True,
+                "keep": False,
+                "w1_semantic_guard_violations": ["authorization_scope_inventory_overclaim"],
+            }
+            with mock.patch.object(rescore_w1.common, "judge", return_value=rescored):
+                rescore_w1.main([
+                    "--episodes", str(episodes),
+                    "--episodes-sha256", common.sha256_file(episodes),
+                    "--run-dir", str(run),
+                    "--out", str(out),
+                ])
+
+            summary = json.loads((out / "rescore-summary.json").read_text())
+            self.assertEqual(summary["old_strict_kept_attempts"], 1)
+            self.assertEqual(summary["new_strict_kept_attempts"], 0)
+            self.assertEqual(summary["newly_rejected_by_current_keep_rule"], 1)
+            self.assertEqual(summary["affected_episode_count"], 1)
+            self.assertEqual(summary["new_hard_episodes"], 1)
+            self.assertEqual(summary["guard_violation_counts"],
+                             {"authorization_scope_inventory_overclaim": 1})
+            self.assertEqual((run / "attempts.jsonl").read_bytes(), attempts_before)
+            self.assertEqual((run / "metrics.jsonl").read_bytes(), metrics_before)
+            self.assertTrue((out / "metrics.rescored.jsonl").is_file())
+            self.assertTrue((out / "kept-rows.rescored.jsonl").is_file())
+            self.assertTrue((out / "hard-episodes.rescored.txt").is_file())
 
 
 class W1ServerLaneScheduler(unittest.TestCase):
