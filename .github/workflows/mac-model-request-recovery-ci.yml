@@ -1,0 +1,49 @@
+name: Mac model-request recovery evidence
+
+on:
+  push:
+    paths:
+      - 'labs/small-model-augmentation/checkpoint_journal.py'
+      - 'labs/small-model-augmentation/test_checkpoint_journal.py'
+      - 'labs/small-model-augmentation/test_checkpoint_process.py'
+      - 'labs/small-model-augmentation/test_mac_model_request_recovery.py'
+      - 'labs/small-model-augmentation/red_factory/mac_model_request_recovery.py'
+      - '.github/workflows/mac-model-request-recovery-ci.yml'
+  pull_request:
+    paths:
+      - 'labs/small-model-augmentation/checkpoint_journal.py'
+      - 'labs/small-model-augmentation/test_checkpoint_journal.py'
+      - 'labs/small-model-augmentation/test_checkpoint_process.py'
+      - 'labs/small-model-augmentation/test_mac_model_request_recovery.py'
+      - 'labs/small-model-augmentation/red_factory/mac_model_request_recovery.py'
+      - '.github/workflows/mac-model-request-recovery-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  recovery:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile recovery composition
+        run: |
+          python -m py_compile \
+            labs/small-model-augmentation/checkpoint_journal.py \
+            labs/small-model-augmentation/test_checkpoint_journal.py \
+            labs/small-model-augmentation/test_checkpoint_process.py \
+            labs/small-model-augmentation/test_mac_model_request_recovery.py \
+            labs/small-model-augmentation/red_factory/mac_model_request_recovery.py
+      - name: #218 checkpoint regression
+        working-directory: labs/small-model-augmentation
+        run: python -m unittest -v test_checkpoint_journal test_checkpoint_process
+      - name: Sent-request SIGKILL and resume composition
+        working-directory: labs/small-model-augmentation
+        run: python -m unittest -v test_mac_model_request_recovery
