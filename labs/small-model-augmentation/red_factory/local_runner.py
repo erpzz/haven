@@ -30,6 +30,7 @@ RUN_SCHEMA = "haven-local-red-factory-local-run-v1"
 _RESULT_SCHEMA = "haven-local-red-factory-local-result-v1"
 _LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
 _THINK_RE = re.compile(r"<think>.*?</think>", re.S | re.I)
+_MAX_RESPONSE_BYTES = 1024 * 1024
 
 
 def _canonical_json(value: Any) -> bytes:
@@ -188,7 +189,10 @@ def run_case(
     transcript: Mapping[str, Any] | None = None
     try:
         with urllib.request.urlopen(req, timeout=float(timeout_seconds)) as response:
-            payload = json.loads(response.read())
+            raw_response = response.read(_MAX_RESPONSE_BYTES + 1)
+        if len(raw_response) > _MAX_RESPONSE_BYTES:
+            raise ValueError("model response exceeds byte budget")
+        payload = json.loads(raw_response)
         choices = payload.get("choices") if isinstance(payload, Mapping) else None
         if not isinstance(choices, list) or not choices:
             raise ValueError("response missing choices")
