@@ -225,8 +225,28 @@ class MacRedCampaignTests(unittest.TestCase):
             }, 0)
 
         out_dir = Path(self.tmp.name) / "campaign"
+        manifest = {
+            "schema": "haven.hermes-core-source-manifest.v1",
+            "file_count": 1,
+            "files": [{"path": "hermes_cli/__init__.py", "sha256": "b" * 64}],
+        }
+        manifest["manifest_sha256"] = campaign._sha_obj(manifest)
+        provenance = {
+            "schema": "haven.hermes-runtime-provenance.v1",
+            "version": campaign.EXPECTED_HERMES_VERSION,
+            "release_date": campaign.EXPECTED_HERMES_RELEASE_DATE,
+            "git_commit": campaign.EXPECTED_HERMES_COMMIT,
+            "source_root": "/fixture/hermes",
+            "module_file": "/fixture/hermes/hermes_cli/__init__.py",
+            "core_source_manifest_sha256": manifest["manifest_sha256"],
+            "core_source_file_count": 1,
+        }
+        provenance["provenance_sha256"] = campaign._sha_obj(provenance)
+
         with mock.patch.object(
             campaign.supervisor, "run_supervisor", side_effect=fake_supervisor
+        ), mock.patch.object(
+            campaign, "_hermes_provenance", return_value=(provenance, manifest)
         ):
             result = campaign.run_campaign(
                 hermes=self.hermes,
