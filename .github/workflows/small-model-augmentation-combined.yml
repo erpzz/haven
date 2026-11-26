@@ -1,0 +1,33 @@
+name: Small-model augmentation combined validation
+
+on:
+  pull_request:
+    paths:
+      - 'labs/small-model-augmentation/**'
+      - '.github/workflows/small-model-augmentation-combined.yml'
+  push:
+    branches:
+      - 'astra/augmentation-ci-combined-20261126'
+
+permissions:
+  contents: read
+
+jobs:
+  combined:
+    name: Python ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Compile all augmentation modules
+        run: python -m py_compile labs/small-model-augmentation/*.py
+      - name: Run combined augmentation suite
+        working-directory: labs/small-model-augmentation
+        run: python -m unittest discover -s . -p 'test_*.py' -v
