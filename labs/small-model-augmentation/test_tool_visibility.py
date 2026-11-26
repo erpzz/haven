@@ -53,10 +53,73 @@ class VisibilityTests(unittest.TestCase):
 
     def test_pass_exact_model_visible_prefixes(self):
         r = self.probe()
+        self.assertEqual(r["schema"], "haven.hermes-tool-visibility.v2")
         self.assertEqual(r["status"], "pass")
         self.assertEqual(r["tool_count"], 2)
+        self.assertEqual(
+            r["tool_names"],
+            ["mcp_haven_status", "mcp_haven_cyber_assess"],
+        )
+        self.assertRegex(r["tool_surface_sha256"], r"^[0-9a-f]{64}$")
         self.assertEqual(r["required_prefix_counts"], {"mcp_haven_": 1, "mcp_haven_cyber_": 1})
         self.assertEqual(r["model_requests"], 1)
+
+    def test_exact_name_sequence_and_surface_hash_can_be_replayed(self):
+        discovered = self.probe()
+        env = dict(os.environ, FAKE_MODE="pass")
+        replay = tool_visibility.run_probe(
+            str(self.hermes), self.tmp.name, "mcp-haven,mcp-haven-cyber",
+            ["mcp_haven_", "mcp_haven_cyber_"],
+            env=env, timeout=5,
+            expected_names=discovered["tool_names"],
+            expected_surface_sha256=discovered["tool_surface_sha256"],
+        )
+        self.assertEqual(replay["status"], "pass", replay)
+        self.assertEqual(replay["tool_names"], discovered["tool_names"])
+        self.assertEqual(
+            replay["tool_surface_sha256"], discovered["tool_surface_sha256"]
+        )
+
+    def test_name_sequence_mismatch_blocks_even_when_prefixes_still_match(self):
+        env = dict(os.environ, FAKE_MODE="pass")
+        result = tool_visibility.run_probe(
+            str(self.hermes), self.tmp.name, "mcp-haven,mcp-haven-cyber",
+            ["mcp_haven_", "mcp_haven_cyber_"],
+            env=env, timeout=5,
+            expected_names=[
+                "mcp_haven_cyber_assess",
+                "mcp_haven_status",
+            ],
+        )
+        self.assertIn("TOOL_NAME_SEQUENCE_MISMATCH", result["errors"])
+        self.assertNotIn("MISSING_REQUIRED_PREFIX", result["errors"])
+
+    def test_surface_hash_mismatch_blocks_even_when_names_match(self):
+        discovered = self.probe()
+        env = dict(os.environ, FAKE_MODE="pass")
+        result = tool_visibility.run_probe(
+            str(self.hermes), self.tmp.name, "mcp-haven,mcp-haven-cyber",
+            ["mcp_haven_", "mcp_haven_cyber_"],
+            env=env, timeout=5,
+            expected_names=discovered["tool_names"],
+            expected_surface_sha256="0" * 64,
+        )
+        self.assertIn("TOOL_SURFACE_HASH_MISMATCH", result["errors"])
+        self.assertNotIn("TOOL_NAME_SEQUENCE_MISMATCH", result["errors"])
+
+    def test_invalid_expected_surface_inputs_fail_before_process(self):
+        bad_name = tool_visibility.run_probe(
+            str(self.hermes), self.tmp.name, "mcp-haven",
+            ["mcp_haven_"], expected_names=["bad name"]
+        )
+        bad_hash = tool_visibility.run_probe(
+            str(self.hermes), self.tmp.name, "mcp-haven",
+            ["mcp_haven_"], expected_surface_sha256="not-a-hash"
+        )
+        self.assertEqual(bad_name["errors"], ["INVALID_EXPECTED_TOOL_NAME"])
+        self.assertEqual(bad_hash["errors"], ["INVALID_EXPECTED_SURFACE_HASH"])
+        self.assertFalse(bad_name["actual_hermes_executed"])
+        self.assertFalse(bad_hash["actual_hermes_executed"])
 
     def test_missing_prefix_blocks(self):
         r = self.probe("missing")
