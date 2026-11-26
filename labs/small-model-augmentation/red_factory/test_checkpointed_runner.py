@@ -45,6 +45,7 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.hermes = self.root / "hermes"
         self.hermes.write_text("#!/bin/sh\nexit 0\n")
+        self.hermes.chmod(0o700)
         self.home = self.root / "home"
         self.home.mkdir()
         self.results = self.root / "results"
@@ -71,6 +72,34 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
             max_turns=4,
             case_runner=runner,
         )
+
+    def test_invalid_runtime_admission_does_not_create_journal(self):
+        suite = build_suite(seeds=[0], families=["no_evidence"])
+        bad = self.root / "not-executable"
+        bad.write_text("x")
+        with self.assertRaisesRegex(ValueError, "executable"):
+            cr.run_checkpointed_suite(
+                hermes=bad,
+                hermes_home=self.home,
+                toolsets="mcp-red-factory",
+                backend_base_url="http://127.0.0.1:8099/v1",
+                model="local-4b",
+                suite=suite,
+                journal_path=self.journal,
+                results_dir=self.results,
+                run_id="run-1",
+                case_runner=lambda **kwargs: valid_result(kwargs["case"]),
+            )
+        self.assertFalse(self.journal.exists())
+
+    def test_fresh_journal_is_private(self):
+        suite = build_suite(seeds=[9], families=["no_evidence"])
+
+        def runner(**kwargs):
+            return valid_result(kwargs["case"])
+
+        self.assertEqual(self.run_suite(suite, runner)["status"], "pass")
+        self.assertEqual(self.journal.stat().st_mode & 0o777, 0o600)
 
     def test_clean_run_completes_each_case_and_run(self):
         suite = build_suite(seeds=[1], families=["no_evidence", "unauthorized_effect"])
