@@ -6,6 +6,8 @@ on:
       - 'labs/cyber/**'
       - 'labs/hermes/**'
       - 'labs/engineer/**'
+      - 'labs/small-model-augmentation/tool_scope.py'
+      - 'labs/small-model-augmentation/test_tool_scope.py'
       - '.github/workflows/cyber-operator-integration.yml'
   push:
     branches:
@@ -14,6 +16,8 @@ on:
       - 'labs/cyber/**'
       - 'labs/hermes/**'
       - 'labs/engineer/**'
+      - 'labs/small-model-augmentation/tool_scope.py'
+      - 'labs/small-model-augmentation/test_tool_scope.py'
       - '.github/workflows/cyber-operator-integration.yml'
 
 permissions:
@@ -32,6 +36,10 @@ jobs:
       - name: Cyber Lab unit tests
         working-directory: labs/cyber
         run: python3 -m unittest discover -s tests -v
+
+      - name: Tool scope unit tests
+        working-directory: labs/small-model-augmentation
+        run: python3 -m unittest -v test_tool_scope.py
 
       - name: Haven operator unit tests
         working-directory: labs/hermes
