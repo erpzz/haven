@@ -121,6 +121,36 @@ class PretrainingContractCompositionTests(unittest.TestCase):
         self.assertAlmostEqual(item["rows"][0]["loss_weight"], 1.0)
         self.assertEqual(item["rows"][0]["target_tokens"], 2)
 
+    def test_encoded_surface_swap_blocks_before_loss_plan(self):
+        binding = tool_surface.make_binding(
+            self.world.TOOL_SCHEMAS, mode="fixed", collector_sha256=self.world_sha
+        )
+        bound = tool_surface.bind_rows([row("a", 0, "ok")], binding)
+        encoded = row_encoding.encode_bound_rows(FakeTokenizer(), bound, max_length=10000)
+        encoded[0]["tool_surface_sha256"] = "0" * 64
+        with self.assertRaisesRegex(weighting.WeightingError, "tool-surface hash mismatch"):
+            weighted_trainer.build_episode_items(bound, encoded)
+
+    def test_encoded_receipt_swap_blocks_before_loss_plan(self):
+        binding = tool_surface.make_binding(
+            self.world.TOOL_SCHEMAS, mode="fixed", collector_sha256=self.world_sha
+        )
+        bound = tool_surface.bind_rows([row("a", 0, "ok")], binding)
+        encoded = row_encoding.encode_bound_rows(FakeTokenizer(), bound, max_length=10000)
+        encoded[0]["tool_surface_receipt_sha256"] = "0" * 64
+        with self.assertRaisesRegex(weighting.WeightingError, "receipt mismatch"):
+            weighted_trainer.build_episode_items(bound, encoded)
+
+    def test_encoded_target_count_tamper_blocks_before_loss_plan(self):
+        binding = tool_surface.make_binding(
+            self.world.TOOL_SCHEMAS, mode="fixed", collector_sha256=self.world_sha
+        )
+        bound = tool_surface.bind_rows([row("a", 0, "okay")], binding)
+        encoded = row_encoding.encode_bound_rows(FakeTokenizer(), bound, max_length=10000)
+        encoded[0]["target_tokens"] += 1
+        with self.assertRaisesRegex(weighting.WeightingError, "target-token count mismatch"):
+            weighted_trainer.build_episode_items(bound, encoded)
+
     def test_surface_tamper_blocks_before_episode_weighting(self):
         binding = tool_surface.make_binding(
             self.world.TOOL_SCHEMAS, mode="fixed", collector_sha256=self.world_sha
