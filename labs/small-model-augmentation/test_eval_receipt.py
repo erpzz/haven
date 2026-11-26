@@ -44,13 +44,13 @@ def controls(tag="x"):
         "request_settings_sha256": H("stable-request-settings"),
         "world_sha256": H("stable-world"),
         "tool_policy_sha256": H(tag + "-policy"),
-        "catalog_sha256": H(tag + "-catalog"),
+        "catalog_sha256": H("stable-catalog"),
         "selection_receipt_sha256": H(tag + "-selection"),
         "claim_bundle_sha256": H(tag + "-claims"),
         "claim_policy_sha256": H(tag + "-claim-policy"),
         "renderer_sha256": H(tag + "-renderer"),
         "run_manifest_sha256": H(tag + "-run"),
-        "tool_implementation_sha256": H(tag + "-tools"),
+        "tool_implementation_sha256": H("stable-tools"),
     }
 
 
@@ -100,6 +100,18 @@ def private(arm="a", case_id="c1", tag=None):
         controls=controls(tag),
         sources=sources(tag),
     )
+
+
+def rehash(value):
+    body = copy.deepcopy(value)
+    body.pop("receipt_sha256", None)
+    value["receipt_sha256"] = hashlib.sha256(
+        json.dumps(
+            body, sort_keys=True, separators=(",", ":"),
+            ensure_ascii=False, allow_nan=False,
+        ).encode()
+    ).hexdigest()
+    return value
 
 
 class PrivateEvalReceiptTests(unittest.TestCase):
@@ -237,37 +249,35 @@ class PrivateEvalReceiptTests(unittest.TestCase):
             with self.assertRaisesRegex(receipt.ReceiptError, "non-symlink"):
                 receipt.load_private_receipt(link)
 
-    def test_private_pair_allows_named_e1_control_differences(self):
+    def test_private_pair_allows_only_named_e1_control_differences(self):
         a = private("a", "c1", "pair-a")
         b = private("b", "c1", "pair-b")
-        # Separate arm admission receipts are allowed; stable runtime_profile is the
-        # matched identity. E1 intentionally varies scope/selection/run manifest.
+        # E1 varies the selected/scope surface. Claim controls stay byte-identical.
+        for key in (
+            "claim_bundle_sha256", "claim_policy_sha256", "renderer_sha256"
+        ):
+            b["controls"][key] = a["controls"][key]
+        rehash(b)
         result = receipt.compare_private_receipt_sets(
             [a], [b],
             allowed_control_differences=[
                 "admission_receipt_sha256",
                 "tool_policy_sha256",
                 "selection_receipt_sha256",
-                "claim_bundle_sha256",
-                "claim_policy_sha256",
-                "renderer_sha256",
                 "run_manifest_sha256",
             ],
         )
-        # Our generic helper changes claim controls as well because tags differ.
         self.assertEqual(result["status"], "pass", result)
         self.assertIn("tool_policy_sha256", result["observed_control_differences"])
+        self.assertIn("selection_receipt_sha256", result["observed_control_differences"])
+        self.assertNotIn("claim_bundle_sha256", result["observed_control_differences"])
         self.assertNotIn("runtime_profile_sha256", result["observed_control_differences"])
 
     def test_private_pair_runtime_profile_can_never_be_waived(self):
         a = private("a", "c1", "runtime-a")
         b = private("b", "c1", "runtime-b")
         b["controls"]["runtime_profile_sha256"] = H("different-runtime")
-        body = copy.deepcopy(b)
-        body.pop("receipt_sha256")
-        b["receipt_sha256"] = hashlib.sha256(
-            json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
-        ).hexdigest()
+        rehash(b)
 
         result = receipt.compare_private_receipt_sets(
             [a], [b],
@@ -302,11 +312,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                     if control in receipt.ALWAYS_MATCH_CONTROLS:
                         b["controls"][control] = a["controls"][control]
                 b["controls"][key] = H("drift-" + key)
-                body = copy.deepcopy(b)
-                body.pop("receipt_sha256")
-                b["receipt_sha256"] = hashlib.sha256(
-                    json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
-                ).hexdigest()
+                rehash(b)
                 result = receipt.compare_private_receipt_sets(
                     [a], [b],
                     allowed_control_differences=[
