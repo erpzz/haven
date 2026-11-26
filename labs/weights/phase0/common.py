@@ -176,6 +176,7 @@ def judge(record: dict, episode: dict) -> dict:
     m["views"] = {"model_clean": bool(m["transport_ok"] and m["raw_pass"] and not blocked_main),
                   "corrected_model": bool(m["transport_ok"] and m["pass"] and not blocked),
                   "final_system": bool(m["transport_ok"] and m["pass"])}
+    m["model_clean_pass"] = m["views"]["model_clean"]  # overwrite the historical #115 derived field
     m["keep"] = bool(m["transport_ok"] and m["views"]["model_clean"] and not blocked)
     return m
 
