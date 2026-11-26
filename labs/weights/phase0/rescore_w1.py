@@ -8,7 +8,7 @@ episode ids, and a public-safe aggregate summary.
 
 Example:
   python3 rescore_w1.py \
-    --episodes ~/haven-private/weights/w1-pilot/w1-pilot.episodes.jsonl \
+    --episodes-root ~/haven-private/weights/w1-pilot \
     --episodes-sha256 HEX \
     --run-dir ~/haven-private/weights/w1-pilot/phase1/w1-phase1 \
     --out ~/haven-private/weights/w1-pilot/phase1/rescore-auth-guard-v1
@@ -64,19 +64,37 @@ def _family_summary(episodes, old_metrics, new_metrics):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--episodes", required=True)
+    ep = ap.add_mutually_exclusive_group(required=True)
+    ep.add_argument("--episodes")
+    ep.add_argument("--episodes-root", help="search recursively for the unique JSONL matching --episodes-sha256")
     ap.add_argument("--episodes-sha256", required=True)
     ap.add_argument("--run-dir", required=True)
     ap.add_argument("--out", required=True)
     args = ap.parse_args(argv)
 
     os.umask(0o077)
-    episodes_path = pathlib.Path(args.episodes).expanduser().resolve()
     run_dir = pathlib.Path(args.run_dir).expanduser().resolve()
     out = pathlib.Path(args.out).expanduser().resolve()
 
-    if common.sha256_file(episodes_path) != args.episodes_sha256:
-        raise SystemExit("episodes file does not match the frozen SHA-256")
+    if args.episodes:
+        episodes_path = pathlib.Path(args.episodes).expanduser().resolve()
+        if common.sha256_file(episodes_path) != args.episodes_sha256:
+            raise SystemExit("episodes file does not match the frozen SHA-256")
+    else:
+        root = pathlib.Path(args.episodes_root).expanduser().resolve()
+        candidates = []
+        for path in root.rglob("*.jsonl"):
+            try:
+                if common.sha256_file(path) == args.episodes_sha256:
+                    candidates.append(path.resolve())
+            except (OSError, PermissionError):
+                pass
+        if len(candidates) != 1:
+            raise SystemExit(
+                f"expected exactly one episode JSONL matching the frozen SHA under {root}; "
+                f"found {len(candidates)}"
+            )
+        episodes_path = candidates[0]
     if out.exists() and any(out.iterdir()):
         raise SystemExit(f"{out} is not empty; refusing to overwrite a prior rescore")
     out.mkdir(parents=True, exist_ok=True)
