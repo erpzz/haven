@@ -252,14 +252,16 @@ def w1_authorization_semantic_guard(record: dict, episode: dict) -> list[str]:
     return sorted(set(violations))
 
 
-def judge(record: dict, episode: dict) -> dict:
+def judge(record: dict, episode: dict, *, apply_w1_training_guard: bool = False) -> dict:
     """Score the three frozen views without inheriting #115's historical raw-trace bug.
 
     model-clean:     the model's first answer and the trace at that point pass, with no blocked call before it
     corrected-model: the final answer (after at most one verifier revision) passes, with no blocked call
     final-system:    the final answer passes, whatever the harness did
-    keep (W1/W2):    model-clean pass, zero blocked or duplicate calls anywhere, transport ok
-                     (Amendment 2, D1: a pass that needed a verifier correction is not training data)
+    keep:            model-clean pass, zero blocked or duplicate calls anywhere, transport ok.
+                     When apply_w1_training_guard=True, W1's versioned semantic veto is
+                     additionally applied before a trajectory may become training data.
+                     Shared oracle/flip validation leaves this mode off.
     """
     m = bench_x.episode_metrics(record, episode)
     raw_trace_len = record.get("raw_trace_len")
@@ -269,7 +271,8 @@ def judge(record: dict, episode: dict) -> dict:
                       trace=(record.get("trace") or [])[:raw_trace_len])
     raw = bench.score_records([raw_record], [episode])[0]
     m["raw_pass"] = bool(raw["pass"])
-    m["w1_semantic_guard_violations"] = w1_authorization_semantic_guard(raw_record, episode)
+    m["w1_semantic_guard_violations"] = (w1_authorization_semantic_guard(raw_record, episode)
+                                           if apply_w1_training_guard else [])
     attempts = record.get("attempts") or []
     blocked = [a for a in attempts if not a["executed"]]
     blocked_main = [a for a in blocked if a.get("phase") != "correction"]
