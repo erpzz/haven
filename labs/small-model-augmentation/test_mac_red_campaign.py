@@ -161,6 +161,7 @@ class MacRedCampaignTests(unittest.TestCase):
                     hermes=self.hermes,
                     hermes_home=self.home,
                     toolsets="mcp-red-factory",
+                    model_alias="qwythos-4b",
                     fixture_path=fixture_path,
                     call_log=root / "calls.jsonl",
                     discovery_policy=discovery,
