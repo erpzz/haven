@@ -131,7 +131,7 @@ def _validate_command_receipt(row: Mapping[str, Any]) -> dict[str, Any]:
     duration_ms = row.get("duration_ms")
     if not isinstance(recipe_id, str) or not recipe_id:
         raise ValueError("invalid receipt recipe_id")
-    if exit_code is not None and (isinstance(exit_code, bool) or not isinstance(exit_code, int)):
+    if isinstance(exit_code, bool) or not isinstance(exit_code, int):
         raise ValueError("invalid receipt exit_code")
     if not isinstance(timed_out, bool):
         raise ValueError("invalid receipt timed_out")
@@ -244,7 +244,6 @@ class DefenseWorkflowController:
         *,
         contract: Mapping[str, Any],
         receipt: Mapping[str, Any],
-        close_on_pass: bool = True,
     ) -> dict[str, Any]:
         contract = _validate_contract(contract)
         receipt = verify_run_receipt(receipt, contract)
@@ -287,15 +286,6 @@ class DefenseWorkflowController:
                 "workflow_contract_sha256": contract["workflow_contract_sha256"],
             },
         )
-        if receipt["passed"] and close_on_pass:
-            self.ledger.append(
-                finding_id=fid,
-                event="closed",
-                payload={
-                    "receipt_sha256": receipt_sha,
-                    "workflow_contract_sha256": contract["workflow_contract_sha256"],
-                },
-            )
         return {
             "finding_id": fid,
             "state": self.ledger.state(fid),
