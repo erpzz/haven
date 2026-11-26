@@ -428,8 +428,8 @@ def main(argv=None):
         "hard_episodes_sha256": common.sha256_file(out / "hard-episodes.txt"),
         "private_receipt_commitments": {
             "run_identity_sha256": common.sha256_file(identity_path),
-            "attempts_sha256": common.sha256_file(records_path),
-            "metrics_sha256": common.sha256_file(metrics_path),
+            "attempts_sha256": common.sha256_file(records_path) if records_path.is_file() else None,
+            "metrics_sha256": common.sha256_file(metrics_path) if metrics_path.is_file() else None,
         },
         "wall_seconds_this_invocation": round(allocation_seconds, 1),
         "telemetry": tel,
