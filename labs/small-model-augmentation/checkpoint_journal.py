@@ -322,18 +322,45 @@ def resume_plan(events, max_attempts=3):
     }
 
 
+def _fsync_directory(path: Path):
+    """Persist directory-entry changes on POSIX filesystems."""
+    if os.name != "posix":
+        return
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0)
+    flags |= getattr(os, "O_DIRECTORY", 0)
+    fd = os.open(path, flags)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
 @contextlib.contextmanager
-def _locked_file(path: Path):
+def _locked_file(path: Path, *, sync_parent=False):
     path.parent.mkdir(parents=True, exist_ok=True)
     with _thread_lock:
-        with path.open("a+b") as fh:
-            if _fcntl is not None:
-                _fcntl.flock(fh.fileno(), _fcntl.LOCK_EX)
-            try:
-                yield fh
-            finally:
+        flags = os.O_RDWR | os.O_APPEND | getattr(os, "O_CLOEXEC", 0)
+        if hasattr(os, "O_NOFOLLOW"):
+            flags |= os.O_NOFOLLOW
+        created = False
+        try:
+            fd = os.open(path, flags | os.O_CREAT | os.O_EXCL, 0o600)
+            created = True
+        except FileExistsError:
+            fd = os.open(path, flags)
+        try:
+            if created and sync_parent:
+                _fsync_directory(path.parent)
+            with os.fdopen(fd, "a+b", closefd=False) as fh:
                 if _fcntl is not None:
-                    _fcntl.flock(fh.fileno(), _fcntl.LOCK_UN)
+                    _fcntl.flock(fh.fileno(), _fcntl.LOCK_EX)
+                try:
+                    yield fh
+                finally:
+                    if _fcntl is not None:
+                        _fcntl.flock(fh.fileno(), _fcntl.LOCK_UN)
+        finally:
+            os.close(fd)
 
 
 class RunLease:
@@ -385,7 +412,7 @@ class Journal:
         self.fsync = fsync
 
     def open(self, resume=False):
-        with _locked_file(self.path) as fh:
+        with _locked_file(self.path, sync_parent=self.fsync) as fh:
             s = scan(self.path)
             if not s.ok:
                 raise ValueError("journal invalid: " + ",".join(s.errors))
@@ -441,7 +468,7 @@ class Journal:
         return e
 
     def append(self, event, unit="", attempt=0, op_id="", replay_safe=False, payload_sha256=ZERO):
-        with _locked_file(self.path) as fh:
+        with _locked_file(self.path, sync_parent=self.fsync) as fh:
             s = scan(self.path)
             if not s.ok:
                 raise ValueError("journal invalid: " + ",".join(s.errors))
