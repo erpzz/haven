@@ -8,6 +8,7 @@ import hashlib
 import importlib.util
 import json
 import pathlib
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -58,6 +59,23 @@ class Notebook(unittest.TestCase):
         cell = (HERE / "kaggle" / "llama_build_cell.py").read_text()
         self.assertIn('def build_llama(tag, prefix):', cell)
         self.assertIn('ENGINE = build_llama("b11146"', next(c["source"] for c in NB["cells"] if "def build_llama" in c["source"]))
+
+    def test_notebook_preflight_is_complete_fail_fast_and_before_engine_startup(self):
+        self.assertIn("tests/test_phase0.py", BUILD.CODE)
+        self.assertIn("tests/test_notebook_and_config.py", BUILD.CODE)
+        pre = next(i for i, cell in enumerate(NB["cells"])
+                   if cell["cell_type"] == "code" and "python3 -m unittest discover -s tests -v" in cell["source"])
+        eng = next(i for i, cell in enumerate(NB["cells"])
+                   if cell["cell_type"] == "code" and 'ENGINE = build_llama("b11146"' in cell["source"])
+        self.assertLess(pre, eng)
+        self.assertNotIn("| tail", NB["cells"][pre]["source"])
+        with tempfile.TemporaryDirectory() as tmp:
+            pathlib.Path(tmp, "test_harmless_failure.py").write_text(
+                "import unittest\nclass T(unittest.TestCase):\n"
+                "    def test_fail(self): self.fail('intentional preflight failure')\n")
+            proc = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", tmp, "-v"],
+                                  capture_output=True, text=True)
+            self.assertNotEqual(proc.returncode, 0)
 
 
 class FakeProc:
@@ -122,12 +140,88 @@ class Phase1DryRun(unittest.TestCase):
             self.assertEqual(s["views_over_attempts"]["final_system"], s["passing_attempts"])
             tel = first["telemetry"]
             self.assertEqual(tel["accelerators"], 2)
-            self.assertEqual(tel["attempts_this_session"], 4 * n)
-            self.assertIn("device_hours_this_session", tel)
-            self.assertEqual(second["telemetry"]["attempts_this_session"], 0)
+            self.assertEqual(len(tel["sessions"]), 1)
+            sess = tel["sessions"][0]
+            self.assertEqual((sess["queued"], sess["started"], sess["model_requested"], sess["terminal"]),
+                             (4 * n, 4 * n, 4 * n, 4 * n))
+            self.assertEqual((sess["skipped_before_start"], sess["timed_out"]), (0, 0))
+            self.assertIn("device_hours", sess)
+            self.assertEqual(second["telemetry"]["sessions"], tel["sessions"])
+            self.assertEqual(first["receipt_grid"]["complete"], True)
+            self.assertEqual(first["receipt_grid"]["terminal_pairs"], 4 * n)
+            self.assertTrue(first["summary"]["gate_G1"]["eligible"])
             self.assertTrue(all(abs(v - 1.0) < 1e-9 for v in __import__("sft").episode_weight_totals(rows).values()))
             self.assertEqual(sum(s["coverage_kept_attempts_per_episode"].values()), n)
             self.assertEqual(len(common.read_jsonl(tmp / "out" / "metrics.jsonl")), 4 * n)
+
+    def test_receipt_grid_rejects_missing_duplicate_foreign_and_hash_mismatch(self):
+        assigned = {("e", 0)}
+        run_id = "run-test"
+        record = {"episode": "e", "attempt": 0, "run_id": run_id}
+        metric = {"episode": "e", "attempt": 0, "run_id": run_id,
+                  "record_sha256": common.sha256_bytes(common.canonical(record))}
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = pathlib.Path(tmp)
+            rp, mp = tmp / "r.jsonl", tmp / "m.jsonl"
+            common.write_jsonl(rp, [record])
+            common.write_jsonl(mp, [metric])
+            records, metrics = W1._validate_receipts(rp, mp, assigned, run_id)
+            self.assertEqual(set(records), assigned)
+            self.assertEqual(set(metrics), assigned)
+
+            common.write_jsonl(mp, [metric, metric])
+            with self.assertRaises(SystemExit):
+                W1._validate_receipts(rp, mp, assigned, run_id)
+
+            common.write_jsonl(mp, [])
+            with self.assertRaises(SystemExit):
+                W1._validate_receipts(rp, mp, assigned, run_id)
+
+            foreign = {**record, "episode": "foreign"}
+            common.write_jsonl(rp, [foreign])
+            common.write_jsonl(mp, [{**metric, "episode": "foreign"}])
+            with self.assertRaises(SystemExit):
+                W1._validate_receipts(rp, mp, assigned, run_id)
+
+            common.write_jsonl(rp, [record])
+            common.write_jsonl(mp, [{**metric, "record_sha256": "0" * 64}])
+            with self.assertRaises(SystemExit):
+                W1._validate_receipts(rp, mp, assigned, run_id)
+
+    def test_resume_identity_refuses_changed_settings(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "run_identity.json"
+            one = {"schema": "x", "settings": {"attempts": 8}}
+            W1._freeze_identity(path, one)
+            with self.assertRaises(SystemExit):
+                W1._freeze_identity(path, {"schema": "x", "settings": {"attempts": 7}})
+
+    def test_deadline_skips_are_counted_but_cannot_make_g1_eligible(self):
+        eps, _, _ = gen_hare.make_episodes("deadline-seed", 1)
+        eps = eps[:2]
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = pathlib.Path(tmp)
+            ep_path, model = tmp / "eps.jsonl", tmp / "fake.gguf"
+            common.write_jsonl(ep_path, eps)
+            model.write_bytes(b"not a model")
+            argv = ["--engine", "none", "--model", str(model), "--model-sha256", common.sha256_file(model),
+                    "--episodes", str(ep_path), "--episodes-sha256", common.sha256_file(ep_path),
+                    "--out", str(tmp / "out"), "--gpus", "0", "--attempts", "2", "--deadline-minutes", "-1"]
+            with mock.patch.object(W1, "start_server", lambda *a: FakeProc()), \
+                    mock.patch.object(W1.agent, "OpenAIBackend",
+                                      side_effect=AssertionError("deadline-skipped slot reached model backend")):
+                W1.main(argv)
+            summary = json.loads((tmp / "out" / "summary.json").read_text())
+            sess = summary["telemetry"]["sessions"][0]
+            self.assertEqual(summary["status"], "PARTIAL")
+            self.assertFalse(summary["receipt_grid"]["complete"])
+            self.assertFalse(summary["summary"]["gate_G1"]["eligible"])
+            self.assertIsNone(summary["summary"]["gate_G1"]["in_band"])
+            self.assertEqual(sess["queued"], 4)
+            self.assertEqual(sess["started"], 4)
+            self.assertEqual(sess["model_requested"], 0)
+            self.assertEqual(sess["terminal"], 0)
+            self.assertEqual(sess["skipped_before_start"], 4)
 
     def test_refuses_a_mismatched_episode_file(self):
         eps, _, _ = gen_hare.make_episodes("dry-run-seed", 1)
