@@ -95,6 +95,29 @@ class RegistryTests(unittest.TestCase):
         finally:
             spec.prerequisites = original
 
+    def test_malformed_argument_hashing_and_object_keys_fail_closed(self):
+        mixed = {"snapshot_path": "fixtures/tenants/contoso-weak.json", 1: "bad"}
+        out = self.reg.invoke("entra.ca.assess", mixed)
+        self.assertEqual(out["error"]["code"], "invalid_input")
+
+        cyc = {}
+        cyc["self"] = cyc
+        out = self.reg.invoke("entra.ca.assess", cyc)
+        self.assertEqual(out["error"]["code"], "invalid_input")
+
+    def test_validator_depth_limit(self):
+        depth = 40
+        schema = {"type": "integer"}
+        value = 1
+        for _ in range(depth):
+            schema = {"type": "object", "properties": {"x": schema},
+                      "required": ["x"], "additionalProperties": False}
+            value = {"x": value}
+        r = Registry(None)
+        r.register(ToolSpec("x.deep", "d", schema, {}, lambda **kw: kw))
+        out = r.invoke("x.deep", value)
+        self.assertEqual(out["error"]["code"], "invalid_input")
+
     def test_live_tool_gated(self):
         with mock.patch.dict(os.environ, {"HAVEN_CYBER_ALLOW_LIVE": "", "HAVEN_GRAPH_TOKEN": ""}):
             self.assertEqual(self.reg.invoke("entra.graph.collect", {"emergency_account_ids": []})["error"]["code"], "prerequisite_failed")
