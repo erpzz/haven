@@ -354,7 +354,10 @@ class PrivateEvalReceiptTests(unittest.TestCase):
             [a], [b],
             allowed_control_differences=[
                 "admission_receipt_sha256",
+                "guard_preflight_receipt_sha256",
+                "guard_supervisor_receipt_sha256",
                 "tool_policy_sha256",
+                "final_dispatch_policy_sha256",
                 "selection_receipt_sha256",
                 "claim_bundle_sha256",
                 "claim_policy_sha256",
@@ -391,7 +394,10 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                     [a], [b],
                     allowed_control_differences=[
                         "admission_receipt_sha256",
+                        "guard_preflight_receipt_sha256",
+                        "guard_supervisor_receipt_sha256",
                         "tool_policy_sha256",
+                        "final_dispatch_policy_sha256",
                         "selection_receipt_sha256",
                         "claim_bundle_sha256",
                         "claim_policy_sha256",
