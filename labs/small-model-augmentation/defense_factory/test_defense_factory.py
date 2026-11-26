@@ -106,7 +106,12 @@ class DefenseFactoryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             ledger.append(finding_id=fid, event="closed")
         ledger.append(finding_id=fid, event="retested", payload={"passed": True, "receipt_sha256": "d" * 64})
-        ledger.append(finding_id=fid, event="closed")
+        with self.assertRaises(ValueError):
+            ledger.append(finding_id=fid, event="closed")
+        ledger.append(finding_id=fid, event="closed", payload={
+            "integration_receipt_sha256": "e" * 64,
+            "integration_commit": "f" * 40,
+        })
         self.assertEqual(ledger.state(fid), "closed")
 
     def test_ledger_round_trip_and_tamper_detection(self):
