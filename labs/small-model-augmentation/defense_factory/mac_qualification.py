@@ -198,6 +198,28 @@ def _validated_fix(base_text: str = "before", new_text: str = "after") -> dict[s
     }
 
 
+def _prove_hook_control(repo: Path, base: str, marker: Path, root: Path) -> str:
+    control = root / "hook-control-worktree"
+    cp = _run(
+        ["git", "worktree", "add", "--detach", str(control), base],
+        cwd=repo, timeout=30, check=False,
+    )
+    try:
+        if cp.returncode != 0:
+            raise MacDefenseQualificationError("HOOK_CONTROL_WORKTREE_FAILED")
+        if not marker.exists():
+            raise MacDefenseQualificationError("POST_CHECKOUT_HOOK_CONTROL_DID_NOT_FIRE")
+        value = marker.read_bytes()
+        return hashlib.sha256(value).hexdigest()
+    finally:
+        _run(
+            ["git", "-c", "core.hooksPath=/dev/null", "worktree", "remove", "--force", str(control)],
+            cwd=repo, timeout=15, check=False,
+        )
+        shutil.rmtree(control, ignore_errors=True)
+        marker.unlink(missing_ok=True)
+
+
 def _worktree_paths(repo: Path) -> list[str]:
     cp = _run(
         ["git", "-c", "core.hooksPath=/dev/null", "worktree", "list", "--porcelain"],
@@ -272,6 +294,9 @@ def run_qualification(*, out_dir: Path, require_apfs: bool = True) -> dict[str, 
     fixture_root.mkdir(mode=0o700)
     repo, base = _init_fixture_repo(fixture_root, hook_marker)
     expected_worktrees = [str(repo.resolve())]
+    hook_control_sha256 = _prove_hook_control(repo, base, hook_marker, fixture_root)
+    if _worktree_paths(repo) != expected_worktrees:
+        raise MacDefenseQualificationError("HOOK_CONTROL_WORKTREE_LEAK")
 
     temp_root = out_dir / "runner-temp"
     temp_root.mkdir(mode=0o700)
@@ -345,6 +370,8 @@ def run_qualification(*, out_dir: Path, require_apfs: bool = True) -> dict[str, 
         "timeout_recipe_policy_sha256": timed["recipe_policy_sha256"],
         "timeout_exit_code": rows[0].get("exit_code"),
         "timeout_observed": rows[0].get("timed_out"),
+        "post_checkout_hook_control_fired": True,
+        "post_checkout_hook_control_sha256": hook_control_sha256,
         "git_hook_suppressed": not hook_marker.exists(),
         "delayed_descendant_killed": not delayed_marker.exists(),
         "worktree_cleanup_verified": (
