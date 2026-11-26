@@ -41,6 +41,16 @@ The host then returns the exact selected records from the bundle in canonical id
 
 Use `required_ids` for conflicting evidence/counterevidence or other coverage that must not be cherry-picked away.
 
+For the Purple Tier Zero adapter, `required_ids` is now supplied by deterministic host policy rather than by the model or an ad-hoc caller:
+
+- overview: principals-with-direct-control, control-edge, and reachability totals are mandatory;
+- principal: held-control, gain-control, and all reachable-from family totals are mandatory;
+- changes: new, changed, and **missing** totals are mandatory even when zero;
+- search: match, holder, and Tier Zero target totals are mandatory;
+- detailed edges/holder rows remain optional bounded detail.
+
+The Purple policy binds bundle hash, tool, complete allowed IDs, required IDs, and release budget into `haven.purple-claim-coverage.v1`. The result then emits `haven.purple-claim-coverage-receipt.v1`, binding the policy hash, exact candidate bytes, generic release output hash, required IDs and selected IDs. This removes the “safe payload but cherry-picked headline” failure mode without forcing every detail claim into every answer.
+
 Global limitations are always returned independent of model selection.
 
 ## Author test evidence
@@ -79,7 +89,7 @@ A malformed-input fuzz probe exercised **30,000** randomized bundle/candidate/co
 2. Bundle scope and exact payload are hash-bound.
 3. Model ordering is discarded.
 4. Global limitations cannot be omitted.
-5. Host `required_ids` is the anti-cherry-picking mechanism for required conflicts/counterevidence.
+5. Host `required_ids` is the anti-cherry-picking mechanism; Purple now derives it deterministically for mandatory summary/change totals and hash-binds the coverage policy and release.
 6. Claim derivation is explicitly outside this boundary: the adapter must consume verified evidence.
 7. The hash is content integrity, not producer authentication.
 8. Final review corrected an over-permissive scope check: an empty `{}` scope is now invalid.
@@ -104,14 +114,14 @@ The existing prose verifier/fallback can remain for conversational framing until
 - SHA-256 does not authenticate a hostile bundle author.
 - It does not decide relevance; `allowed_ids` is host policy.
 - It does not sanitize sensitive payloads for disclosure.
-- It does not make optional claims complete; use `required_ids` when omission matters.
+- Optional detail claims remain intentionally incomplete. Purple's deterministic coverage policy makes summary/change totals mandatory, but it does not claim exhaustive disclosure of every detail edge unless a future host policy requires that.
 - It does not support arbitrary novel synthesis beyond the enumerated host claims.
 - The model must be shown enough claim content to choose ids; claim-context minimization is a separate #131-style problem.
 
 ## Not executed / not qualified
 
 - exact committed-head clean-checkout suite;
-- adapter from actual Purple Copilot results into claim bundles;
+- independent review of the actual Purple Copilot coverage-policy integration;
 - demonstration against real-model prose-verifier bypass cases;
 - Qwythos structured-claim selection accuracy;
 - full deterministic user-facing renderer;
