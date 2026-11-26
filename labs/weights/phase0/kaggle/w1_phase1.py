@@ -26,6 +26,7 @@ import concurrent.futures as cf
 import json
 import os
 import pathlib
+import queue
 import subprocess
 import sys
 import threading
@@ -185,6 +186,43 @@ def _validate_receipts(records_path, metrics_path, assigned, run_id):
     return records, metrics
 
 
+def _run_server_lanes(jobs, slots, worker, on_complete=None):
+    """Run a shared job queue with exactly one worker bound to each server slot.
+
+    Unlike preassigning a slot to every future in a shared ThreadPoolExecutor, this
+    guarantees at most one in-flight request per -np 1 llama-server while allowing
+    whichever server becomes free first to take the next job.
+    """
+    slots = list(slots)
+    if not slots:
+        raise ValueError("at least one server slot is required")
+    pending = queue.Queue()
+    for job in jobs:
+        pending.put(job)
+    failed = threading.Event()
+
+    def lane(slot):
+        while not failed.is_set():
+            try:
+                job = pending.get_nowait()
+            except queue.Empty:
+                return
+            try:
+                result = worker(job, slot)
+                if on_complete is not None:
+                    on_complete(result)
+            except BaseException:
+                failed.set()
+                raise
+            finally:
+                pending.task_done()
+
+    with cf.ThreadPoolExecutor(max_workers=len(slots)) as pool:
+        futures = [pool.submit(lane, slot) for slot in slots]
+        for future in cf.as_completed(futures):
+            future.result()
+
+
 def telemetry(*, all_records, new_records, allocation_seconds, inference_seconds, gpus, peak,
               counters, prior_sessions):
     """Separate allocation cost from inference throughput and preserve resumed-session accounting."""
@@ -211,6 +249,11 @@ def telemetry(*, all_records, new_records, allocation_seconds, inference_seconds
         sessions.append(session)
     return {
         "accelerators": len(gpus),
+        "measurement_scope": {
+            "allocation_wall_hours": "collector process only; notebook setup/model download are excluded",
+            "device_hours": "collector process wall time multiplied by accelerator count",
+            "peak_vram_mib_by_gpu": "sampled from before llama-server startup through inference",
+        },
         "sessions": sessions,
         "allocation_wall_hours_total": round(sum(x.get("allocation_wall_hours", 0) for x in sessions), 6),
         "device_hours_total": round(sum(x.get("device_hours", 0) for x in sessions), 6),
@@ -309,22 +352,36 @@ def main(argv=None):
         return m
 
     if jobs:
-        procs = [start_server(args.engine, args.model, g, 18950 + i, out / f"server-{i}.log") for i, g in enumerate(gpus)]
         vram = VramSampler()
-        vram.start()
-        infer_started = time.monotonic()
+        vram.start()  # include server/model-load VRAM, not only steady-state inference
+        infer_started = None
         try:
-            with cf.ThreadPoolExecutor(max_workers=len(procs)) as pool:
-                futures = [pool.submit(work, job, i % len(procs)) for i, job in enumerate(jobs)]
-                for n, f in enumerate(cf.as_completed(futures), 1):
-                    m = f.result()
-                    if m and n % 25 == 0:
-                        print(f"{n}/{len(jobs)} queued completions; terminal={counters['terminal']} "
-                              f"skipped={counters['skipped_before_start']} last={m['episode']}#{m['attempt']} "
-                              f"keep={m['keep']}", flush=True)
+            for i, g in enumerate(gpus):
+                procs.append(start_server(
+                    args.engine, args.model, g, 18950 + i, out / f"server-{i}.log"
+                ))
+            infer_started = time.monotonic()
+            progress = collections.Counter()
+
+            def report_progress(m):
+                with lock:
+                    progress["completed"] += 1
+                    n = progress["completed"]
+                    terminal = counters["terminal"]
+                    skipped = counters["skipped_before_start"]
+                if m and n % 25 == 0:
+                    print(f"{n}/{len(jobs)} queued completions; terminal={terminal} "
+                          f"skipped={skipped} last={m['episode']}#{m['attempt']} "
+                          f"keep={m['keep']}", flush=True)
+
+            _run_server_lanes(
+                jobs, range(len(procs)), work, on_complete=report_progress
+            )
         finally:
-            inference_seconds = time.monotonic() - infer_started
+            if infer_started is not None:
+                inference_seconds = time.monotonic() - infer_started
             vram.stop.set()
+            vram.join(timeout=5)
             for p in procs:
                 p.terminate()
 
@@ -351,7 +408,7 @@ def main(argv=None):
                     inference_seconds=inference_seconds, gpus=gpus, peak=(vram.peak if vram else {}),
                     counters=counters, prior_sessions=prior_sessions)
     summary = {
-        "schema": "haven-weights-w1-phase1-2",
+        "schema": "haven-weights-w1-phase1-3",
         "status": "EXECUTED" if grid_complete else "PARTIAL",
         "run_id": run_id,
         "hardware": args.hardware,
@@ -366,6 +423,11 @@ def main(argv=None):
         "kept_rows": len(rows),
         "kept_rows_sha256": common.sha256_file(out / "kept-rows.jsonl"),
         "hard_episodes_sha256": common.sha256_file(out / "hard-episodes.txt"),
+        "private_receipt_commitments": {
+            "run_identity_sha256": common.sha256_file(identity_path),
+            "attempts_sha256": common.sha256_file(records_path),
+            "metrics_sha256": common.sha256_file(metrics_path),
+        },
         "wall_seconds_this_invocation": round(allocation_seconds, 1),
         "telemetry": tel,
     }
