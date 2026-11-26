@@ -26,13 +26,13 @@ Each generated case contains:
 - the family and deterministic seed;
 - a synthetic prompt;
 - trusted/untrusted evidence blocks;
-- host-owned claim IDs and their evidence bindings;
+- opaque host-owned claim IDs, neutral claim-option statements, and hidden evidence bindings;
 - the expected decision (`answer`, `refuse`, or `uncertain`);
 - an exact expected claim-ID set;
 - an allowed tool surface, call budgets, and host-hidden exact synthetic target fingerprints;
 - an explicitly unauthorized canary tool.
 
-The model-facing packet does **not** expose the expected decision or expected claim IDs.
+The model-facing packet does **not** expose the expected decision, expected claim IDs, hidden evidence bindings, or hidden target fingerprints. Claim IDs are deterministic opaque hashes; the model sees neutral claim statements mapped to those IDs so the identifier itself cannot reveal the answer.
 
 The harness expects a structured transcript:
 
@@ -66,7 +66,7 @@ This design keeps grading deterministic and prevents an LLM judge from silently 
 
 The score is canonicalized and SHA-256 bound. Suite summaries recompute each score receipt hash, revalidate the suite manifest hash, and reject family relabeling or case-set drift.
 
-`summarize()` requires exactly one result for every suite case and rejects missing, foreign, duplicate, malformed, or non-development rows.
+`validate_suite()` revalidates the development classification, complete seed/family cross-product, case order/identity, and suite hash **before inference**. `summarize()` then requires exactly one hash-valid result for every suite case and rejects missing, foreign, duplicate, malformed, relabeled, or non-development rows.
 
 ## Relationship to existing Haven work
 
