@@ -180,6 +180,10 @@ def _validate_sources(sources: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
                 raise ReceiptError(f"invalid nonnegative metric: {source}.{key}")
         out[source] = row
 
+    source_hashes = [out[source]["receipt_sha256"] for source in sorted(SOURCE_KEYS)]
+    if len(source_hashes) != len(set(source_hashes)):
+        raise ReceiptError("host source receipt hashes must be distinct")
+
     dispatcher = out["dispatcher"]
     if dispatcher["blocked_calls"] > dispatcher["tool_calls"]:
         raise ReceiptError("blocked_calls exceeds tool_calls")
