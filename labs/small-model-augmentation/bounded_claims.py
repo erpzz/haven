@@ -56,7 +56,8 @@ def validate_bundle(bundle):
         return ["INVALID_BUNDLE_SHAPE"]
     if bundle.get("schema") != BUNDLE_SCHEMA:
         errors.append("INVALID_BUNDLE_SCHEMA")
-    if type(bundle.get("scope")) is not dict or not _json_ok(bundle["scope"]):
+    if (type(bundle.get("scope")) is not dict or not bundle["scope"]
+            or not _json_ok(bundle["scope"])):
         errors.append("INVALID_SCOPE")
 
     claims = bundle.get("claims")
