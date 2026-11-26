@@ -150,7 +150,7 @@ def main(argv=None):
     for key in ordered_keys:
         rec, old = records[key], old_metrics_map[key]
         e = episode_index[key[0]]
-        scored = common.judge(rec, e)
+        scored = common.judge(rec, e, apply_w1_training_guard=True)
         new = dict(old)
         new.update(scored)
         # Identity/receipt fields are immutable evidence from the frozen run.
