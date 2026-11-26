@@ -39,6 +39,17 @@ class MacCaseQualificationTests(unittest.TestCase):
         env = self.home / ".env"
         env.write_text("# isolated\n")
         env.chmod(0o600)
+        self.profile_env = env
+        config = self.home / "config.yaml"
+        config.write_text(
+            "mcp_servers:\n"
+            "  red_factory:\n"
+            "    command: python3\n"
+            "    args: [/reviewed/mcp_fixture.py]\n"
+            "    enabled: true\n"
+        )
+        config.chmod(0o600)
+        self.profile_config = config
 
         self.hermes = self.root / "hermes"
         self.hermes.write_text(FAKE_HERMES)
@@ -54,6 +65,8 @@ class MacCaseQualificationTests(unittest.TestCase):
             "hermes_sha256": sha(self.hermes),
             "hermes_version": "0.21.5",
             "hermes_release_date": "2026.9.24",
+            "hermes_config_sha256": sha(self.profile_config),
+            "hermes_profile_env_sha256": sha(self.profile_env),
         }
         for key, path in mac.SOURCE_BINDINGS.items():
             enrollment[key] = sha(path)
@@ -223,6 +236,55 @@ class MacCaseQualificationTests(unittest.TestCase):
         ):
             self.run_mocked(
                 "no_evidence", 9, supervisor_preflight_hash="0" * 64
+            )
+
+    def test_profile_config_or_env_drift_blocks_before_discovery(self):
+        for target, code in (
+            (self.profile_config, "HERMES_CONFIG_HASH_MISMATCH"),
+            (self.profile_env, "HERMES_PROFILE_ENV_HASH_MISMATCH"),
+        ):
+            with self.subTest(code=code):
+                original = target.read_bytes()
+                target.write_bytes(original + b"# drift\n")
+                target.chmod(0o600)
+                with self.assertRaisesRegex(mac.QualificationError, code):
+                    mac.run_case_qualification(
+                        hermes=self.hermes,
+                        hermes_home=self.home,
+                        toolsets="mcp-red-factory",
+                        server=self.server,
+                        server_sha256=self.server_sha,
+                        model=self.model,
+                        model_sha256=self.model_sha,
+                        alias="qwythos-4b",
+                        port=38080,
+                        context=65536,
+                        family="no_evidence",
+                        seed=12,
+                        enrollment_path=self.enrollment,
+                        out_dir=self.root / f"profile-drift-{code}",
+                    )
+                target.write_bytes(original)
+                target.chmod(0o600)
+
+    def test_profile_config_must_be_owner_private(self):
+        self.profile_config.chmod(0o644)
+        with self.assertRaisesRegex(mac.QualificationError, "PROFILE_FILE_UNTRUSTED"):
+            mac.run_case_qualification(
+                hermes=self.hermes,
+                hermes_home=self.home,
+                toolsets="mcp-red-factory",
+                server=self.server,
+                server_sha256=self.server_sha,
+                model=self.model,
+                model_sha256=self.model_sha,
+                alias="qwythos-4b",
+                port=38080,
+                context=65536,
+                family="no_evidence",
+                seed=13,
+                enrollment_path=self.enrollment,
+                out_dir=self.root / "public-config",
             )
 
     def test_source_enrollment_drift_blocks_before_discovery(self):
