@@ -1,0 +1,47 @@
+name: Small-model admission
+
+on:
+  pull_request:
+    paths:
+      - 'labs/small-model-augmentation/preflight.py'
+      - 'labs/small-model-augmentation/observe_llama.py'
+      - 'labs/small-model-augmentation/owned_llama.py'
+      - 'labs/small-model-augmentation/tool_visibility.py'
+      - 'labs/small-model-augmentation/test_preflight*.py'
+      - 'labs/small-model-augmentation/test_observe_llama.py'
+      - 'labs/small-model-augmentation/test_owned_llama.py'
+      - 'labs/small-model-augmentation/test_tool_visibility.py'
+      - '.github/workflows/small-model-admission.yml'
+  push:
+    branches:
+      - 'astra/small-model-preflight-20261125'
+
+permissions:
+  contents: read
+
+jobs:
+  linux-admission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile admission sources
+        working-directory: labs/small-model-augmentation
+        run: >-
+          python3 -m py_compile
+          preflight.py observe_llama.py owned_llama.py tool_visibility.py
+          test_preflight.py test_preflight_review.py test_observe_llama.py
+          test_owned_llama.py test_tool_visibility.py
+      - name: Admission, runtime, lease and tool-visibility regressions
+        working-directory: labs/small-model-augmentation
+        env:
+          HTTP_PROXY: http://127.0.0.1:9
+          HTTPS_PROXY: http://127.0.0.1:9
+          ALL_PROXY: http://127.0.0.1:9
+        run: >-
+          python3 -m unittest -v
+          test_preflight test_preflight_review test_observe_llama
+          test_owned_llama test_tool_visibility
