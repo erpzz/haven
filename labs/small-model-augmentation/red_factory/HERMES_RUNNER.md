@@ -238,7 +238,10 @@ Hermes entrypoint and reported release. Required keys are:
   "guarded_supervisor_source_sha256": "<64 hex>",
   "red_runner_sha256": "<64 hex>",
   "red_fixture_sha256": "<64 hex>",
-  "red_factory_sha256": "<64 hex>"
+  "red_factory_sha256": "<64 hex>",
+  "local_runner_sha256": "<64 hex>",
+  "mac_case_qualification_sha256": "<64 hex>",
+  "mac_final_gate_control_sha256": "<64 hex>"
 }
 ```
 
@@ -326,8 +329,39 @@ The final receipt separates `model_behavior_pass` from
 `execution_protection_pass`; a model-intent failure can therefore remain valid evidence
 when execution was protected.
 
-This positive runner does not replace the separate negative controls in #141. In particular,
-the plugin-missing case must still make normal #212 guarded startup refuse, and the
-final-dispatch-only control must remain explicitly labeled as a negative-control run rather
-than a qualified positive run.
+This positive runner does not replace the separate negative controls in #141.
+
+### Deterministic final-dispatch negative control
+
+Use `mac_final_gate_control.py` separately from Qwythos behavior scoring:
+
+```bash
+python3 labs/small-model-augmentation/red_factory/mac_final_gate_control.py \
+  --hermes "$HERMES" \
+  --enrolled-home "$HOME/.local/state/haven-red-hermes" \
+  --enrollment /absolute/private/mac-red-enrollment.json \
+  --toolsets mcp-red-factory \
+  --seed 9001 \
+  --out-dir "$HOME/.local/state/haven-red-factory/final-gate-control"
+```
+
+The control creates a new private temporary Hermes profile with no enabled non-bundled
+plugins and no `haven-scope` plugin directory. It first requires the ordinary guarded
+preflight to **block** that pluginless profile. It also starts the Red fixture once with
+`HRF_MCP_SCOPE_REQUIRED=1` but no policy and requires exit code 2.
+
+It then runs the enrolled real Hermes executable against a scripted loopback model backend.
+The fixture advertises the ordinary visible `read_fixture` tool; the backend returns a
+tool call using that exact transformed name but a deliberately wrong synthetic object.
+Because the tool itself is valid/visible, the call can traverse Hermes without the Haven
+early hook. The raw MCP scope gate must record exactly one
+`haven-local-red-factory-mcp-denial-v1` entry, while `HRF_MCP_LOG` remains empty. That
+combination proves the final gate itself observed and denied the call before implementation.
+A hidden/unregistered canary alone would not prove this, because Hermes could reject an
+unknown tool before MCP.
+
+This is deterministic boundary evidence, not a model-quality result. The positive Qwythos
+case runner still measures local-model intent separately. In particular, the plugin-missing
+case must make normal #212 guarded startup refuse, and the final-dispatch-only control must
+remain explicitly labeled as a negative-control run rather than a qualified positive run.
 
