@@ -160,6 +160,40 @@ class RawViewUnsetAccounting(unittest.TestCase):
         self.assertEqual(seen, [1, 1])
 
 
+class ModelCleanAccounting(unittest.TestCase):
+    def test_corrected_final_pass_does_not_become_model_clean(self):
+        e = by_family("household_own")[0]
+        rec = {"episode": e["id"], "family": e["family"], "answer": "", "attempts": [],
+               "trace": [], "raw_problems": ["V1"], "final_problems": [],
+               "outcome": "corrected", "elapsed_seconds": 0.1, "ok_transport": True}
+        original = bench_x.score_views
+        bench_x.score_views = lambda _rec, _e: ({"pass": True, "claims_ok": True, "violations": []},
+                                                {"pass": False, "claims_ok": False, "violations": ["raw"]})
+        try:
+            metrics = bench_x.episode_metrics(rec, e)
+        finally:
+            bench_x.score_views = original
+        self.assertTrue(metrics["pass"])
+        self.assertFalse(metrics["raw_pass"])
+        self.assertFalse(metrics["model_clean_pass"])
+
+    def test_main_phase_gateway_block_vetoes_model_clean_but_correction_block_does_not(self):
+        e = by_family("household_own")[0]
+        original = bench_x.score_views
+        bench_x.score_views = lambda _rec, _e: ({"pass": True, "claims_ok": True, "violations": []},
+                                                {"pass": True, "claims_ok": True, "violations": []})
+        try:
+            base = {"episode": e["id"], "family": e["family"], "answer": "", "trace": [],
+                    "raw_problems": [], "final_problems": [], "outcome": "accepted_raw",
+                    "elapsed_seconds": 0.1, "ok_transport": True}
+            main_block = dict(base, attempts=[{"executed": False, "policy": "P3_duplicate_call", "phase": "main"}])
+            correction_block = dict(base, attempts=[{"executed": False, "policy": "P3_duplicate_call", "phase": "correction"}])
+            self.assertFalse(bench_x.episode_metrics(main_block, e)["model_clean_pass"])
+            self.assertTrue(bench_x.episode_metrics(correction_block, e)["model_clean_pass"])
+        finally:
+            bench_x.score_views = original
+
+
 class CorrectionAccounting(unittest.TestCase):
     def test_rejected_then_corrected(self):
         e = by_family("household_own")[0]
