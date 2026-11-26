@@ -62,6 +62,7 @@ SOURCE_BINDINGS = {
 }
 ENROLLMENT_KEYS = {
     "schema", "hermes_sha256", "hermes_version", "hermes_release_date",
+    "hermes_config_sha256", "hermes_profile_env_sha256",
     *SOURCE_BINDINGS.keys(),
 }
 
@@ -146,7 +147,8 @@ def _load_enrollment(path: Path) -> tuple[dict[str, Any], str, dict[str, str]]:
     enrollment = _read_private_json(path, ENROLLMENT_SCHEMA)
     if set(enrollment) != ENROLLMENT_KEYS:
         raise QualificationError("ENROLLMENT_SHAPE_MISMATCH")
-    for key in ("hermes_sha256", *SOURCE_BINDINGS.keys()):
+    for key in ("hermes_sha256", "hermes_config_sha256",
+                "hermes_profile_env_sha256", *SOURCE_BINDINGS.keys()):
         value = enrollment.get(key)
         if not isinstance(value, str) or HEX64.fullmatch(value) is None:
             raise QualificationError("ENROLLMENT_HASH_INVALID")
@@ -163,6 +165,49 @@ def _load_enrollment(path: Path) -> tuple[dict[str, Any], str, dict[str, str]]:
         actual_sources[str(path_value.relative_to(AUG))] = digest
     implementation_sha256 = hashlib.sha256(_canon(actual_sources)).hexdigest()
     return enrollment, implementation_sha256, actual_sources
+
+
+def _sha_private_profile_file(path: Path, *, max_bytes: int = 1024 * 1024) -> str:
+    path = Path(path)
+    if not path.is_absolute():
+        path = path.resolve()
+    if not hasattr(os, "O_NOFOLLOW"):
+        raise QualificationError("NO_SYMLINK_GUARD")
+    try:
+        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | getattr(os, "O_CLOEXEC", 0))
+    except OSError as exc:
+        raise QualificationError("PROFILE_FILE_UNAVAILABLE") from exc
+    try:
+        info = os.fstat(fd)
+        if (not stat.S_ISREG(info.st_mode)
+                or info.st_uid != os.geteuid()
+                or info.st_mode & 0o077):
+            raise QualificationError("PROFILE_FILE_UNTRUSTED")
+        if info.st_size > max_bytes:
+            raise QualificationError("PROFILE_FILE_TOO_LARGE")
+        h = hashlib.sha256()
+        total = 0
+        with os.fdopen(os.dup(fd), "rb") as stream:
+            for block in iter(lambda: stream.read(128 * 1024), b""):
+                total += len(block)
+                if total > max_bytes:
+                    raise QualificationError("PROFILE_FILE_TOO_LARGE")
+                h.update(block)
+        return h.hexdigest()
+    finally:
+        os.close(fd)
+
+
+def _verify_profile_files(hermes_home: Path,
+                          enrollment: Mapping[str, Any]) -> dict[str, str]:
+    home = Path(hermes_home).expanduser().resolve()
+    config_sha = _sha_private_profile_file(home / "config.yaml")
+    env_sha = _sha_private_profile_file(home / ".env")
+    if config_sha != enrollment["hermes_config_sha256"]:
+        raise QualificationError("HERMES_CONFIG_HASH_MISMATCH")
+    if env_sha != enrollment["hermes_profile_env_sha256"]:
+        raise QualificationError("HERMES_PROFILE_ENV_HASH_MISMATCH")
+    return {"config_sha256": config_sha, "env_sha256": env_sha}
 
 
 def _version_probe(hermes: Path, hermes_home: Path, enrollment: Mapping[str, Any],
@@ -328,8 +373,10 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
     enrollment, implementation_sha256, source_hashes = _load_enrollment(
         Path(enrollment_path)
     )
+    profile_identity = _verify_profile_files(Path(hermes_home), enrollment)
     base_env = dict(os.environ if env is None else env)
     version = _version_probe(Path(hermes), Path(hermes_home), enrollment, base_env)
+    _verify_profile_files(Path(hermes_home), enrollment)
 
     case = make_case(family, seed)
     fixture = fixture_for_case(case)
@@ -363,6 +410,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         expected_tool_count=len(case.tool_policy.allowed_tools),
     )
     _write_private_json(out_dir / "surface-discovery.json", discovery)
+    _verify_profile_files(Path(hermes_home), enrollment)
     if discovery.get("status") != "pass":
         raise QualificationError("SURFACE_DISCOVERY_BLOCKED")
     names = discovery.get("tool_names")
@@ -388,6 +436,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         **preflight_args, env=guarded_env
     )
     _write_private_json(out_dir / "preflight.json", preflight)
+    _verify_profile_files(Path(hermes_home), enrollment)
     if preflight.get("status") != "pass":
         raise QualificationError("CASE_PREFLIGHT_BLOCKED")
 
@@ -399,6 +448,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         expected_tool_count=len(names),
     )
     _write_private_json(out_dir / "surface-replay.json", replay)
+    _verify_profile_files(Path(hermes_home), enrollment)
     if replay.get("status") != "pass":
         raise QualificationError("SURFACE_REPLAY_BLOCKED")
 
@@ -418,6 +468,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         "--final-mcp-policy-sha256", raw_policy_sha,
         "--out", str(red_out),
     ]
+    _verify_profile_files(Path(hermes_home), enrollment)
     supervisor, child_rc = guarded_model_supervisor.run_supervisor(
         plugin_args=preflight_args,
         owned_llama=AUG / "owned_llama.py",
@@ -437,6 +488,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         env=base_env,
     )
     _write_private_json(out_dir / "supervisor.json", supervisor)
+    _verify_profile_files(Path(hermes_home), enrollment)
     if supervisor.get("plugin_preflight_sha256") != _preflight_hash(preflight):
         raise QualificationError("SUPERVISOR_PREFLIGHT_BINDING_MISMATCH")
     if supervisor.get("status") != "pass" or child_rc != 0:
@@ -474,6 +526,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         ).hexdigest(),
         "tool_implementation_sha256": implementation_sha256,
         "source_hashes": source_hashes,
+        "hermes_profile": profile_identity,
         "surface_discovery": discovery,
         "surface_replay": replay,
         "model_scope_policy_sha256": model_policy_sha,
