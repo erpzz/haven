@@ -20,7 +20,7 @@ Nothing here may spend GPU time or send a teacher batch until all three of these
 | Arm O and training rows | `oracle_export.py`, `sft.py` | Scripted solver through the full harness. `--match` builds O_B and O_C on exactly B's or C's episode ids. **Rows stop at the model's first answer**, so verifier feedback is never training data (Amendment 2, D1). **Per-episode weight cap**: each episode's kept traces share a total weight of 1.0. |
 | Astra exchange | `astra_batch.py` | Stepwise, as Amendment 1 §5 requires (described below). |
 | Regression config | `regression/` | IFEval (541), BFCL non-live AST plus irrelevance (1,240), MMLU-Pro (1,400 by id). Revisions and file hashes pinned. Rule 4 reads "2 absolute points per benchmark vs a paired stock baseline". Config only. |
-| W1 Phase 1 notebook | `kaggle/` | Built, not run. 8 attempts per episode at T=0.7 in the full harness. Keeps only **model-clean** attempts, at most 2 per episode in attempt order, weight-capped. Lists hard episodes and reports G1 over all rollouts. Publishes throughput, peak VRAM, accelerator count, wall-hours, device-hours and per-episode coverage. Dry-run end to end on CPU against a fake server. |
+| W1 Phase 1 notebook | `kaggle/` | Built, not run. 8 attempts per episode at T=0.7 in the full harness. Resume is bound to a frozen run identity and exact `(episode, attempt)` grid; each metric hashes its matching transcript. G1 is ineligible until that grid is complete. Telemetry distinguishes queued, started, model-requested, terminal, deadline-skipped and timed-out slots and accumulates allocation/device time across resumes. The notebook runs the complete CPU preflight directly before engine startup. |
 | Manifest | `manifest.py`, `PHASE0_MANIFEST.json` | Hashes of everything above, tied to both preregistration commits. Also records the registered training seeds 1101, 2202 and 3303. |
 
 ## The stepwise teacher exchange (Amendment 1 §5)
@@ -28,7 +28,7 @@ Nothing here may spend GPU time or send a teacher batch until all three of these
 - **Round 0**, one record per opaque id. It holds the system prompt and user turn exactly as the 4B sees them in the full harness, the tool catalogue, and the initially visible observations (none for HARE). No tool output and no gold is included. A framed, separately salted commitment to the gold manifest is posted along with the round-0 sha256 and the schema and tool versions.
 - **Each round**, the teacher sends one line per open id: either one call, or its final record. `step` runs each call through the real gateway, dispatcher and advisory checks on the frozen fixture, and returns only that call's result, in the 4B's message format.
 - **Final record**: the ordered calls (they must equal the session's), a disposition (`answer`, `insufficient_evidence`, `no_action_needed` or `refusal`; `clarification` is not allowed for HARE), a conclusion, and claims whose citations must be records the session actually returned.
-- **Seal, then reveal.** After `seal`, no step is accepted, and gold can be revealed only after a seal exists. Replay recomputes every observation from the fixtures. A trace is kept only if it passes gold with zero blocked or duplicate calls, has no unreturned or future citation, its disposition agrees with its claims, and it matches its session. Correction is off, so a fallback rescue is never kept.
+- **Seal, then reveal.** `seal` refuses any open or contradictory session and binds the assigned opaque IDs, current session bytes, round-0 hash, gold commitment, schema/tool versions and batch identity. After sealing, no step is accepted; replay and reveal recompute and validate that binding before proceeding. Replay recomputes every observation from the fixtures. A trace is kept only if it passes gold with zero blocked or duplicate calls, has no unreturned or future citation, its disposition agrees with its claims, and it matches its session. Correction is off, so a fallback rescue is never kept.
 - **Audit**: `audit-sample` draws up to 50 kept traces without replacement, using an RNG keyed to the fixed kept-rows bytes.
 
 ## Run
@@ -37,7 +37,7 @@ Nothing here may spend GPU time or send a teacher batch until all three of these
 cd labs/weights/phase0
 python3 fetch_deps.py --regression        # pinned code, dev sets and regression files into _deps/ (gitignored)
 pip install kuzu pyarrow                  # optional: Cypher oracle check; regression-text loader
-python3 -m unittest discover -s tests -v  # 54 tests, CPU, about 12 s
+python3 -m unittest discover -s tests -v  # full CPU suite; exact count is recorded by CI
 python3 manifest.py --check && python3 pools.py --check && python3 flip_pairs.py check
 ```
 
@@ -70,7 +70,7 @@ python3 dedupe.py export-fingerprint --episodes ~/haven-private/weights/w1-pilot
   - D3: two-stage pass/fail reserve check; a FAIL regenerates the pool.
   - D4: the owner-held private store.
 - **Seeds are not drawn in Phase 0.** The pilot seed is drawn at Phase 1 start into the D4 store, and its commitment is posted before sampling.
-- **`bench_x.py` is pinned at the PR #115 head**, which carries the disclosed post-run false-refusal correction. `checks.py`, `enforce.py` and `bench_s0.py` match their registration.
+- **`bench_x.py` remains pinned at the historical PR #115 head for provenance**, including its disclosed false-refusal correction. Phase 0 does not inherit the later-discovered `raw_trace_len == 0` fallback bug: `common.judge()` independently rescored the first-answer trace with an explicit `None`/zero distinction before any W1 keep/G1 decision. `checks.py`, `enforce.py` and `bench_s0.py` remain pinned.
 
 ### Acceptance (CPU, Python 3.13, this sandbox; reproduced from a fresh clone)
 
