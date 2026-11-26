@@ -54,7 +54,7 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
-    def run(self, suite, runner, *, resume=False, run_id="run-1", max_attempts=3):
+    def run_suite(self, suite, runner, *, resume=False, run_id="run-1", max_attempts=3):
         return cr.run_checkpointed_suite(
             hermes=self.hermes,
             hermes_home=self.home,
@@ -80,7 +80,7 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
             seen.append(kwargs["case"].case_id)
             return valid_result(kwargs["case"])
 
-        result = self.run(suite, runner)
+        result = self.run_suite(suite, runner)
         self.assertEqual(result["status"], "pass", result)
         self.assertEqual(result["completed"], 2)
         self.assertEqual(seen, suite["case_ids"])
@@ -101,13 +101,13 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
             calls["n"] += 1
             return valid_result(kwargs["case"])
 
-        self.assertEqual(self.run(suite, first)["status"], "pass")
+        self.assertEqual(self.run_suite(suite, first)["status"], "pass")
         self.assertEqual(calls["n"], 1)
 
         def forbidden(**kwargs):
             raise AssertionError("completed case must not be rerun")
 
-        resumed = self.run(suite, forbidden, resume=True)
+        resumed = self.run_suite(suite, forbidden, resume=True)
         self.assertEqual(resumed["status"], "pass")
         self.assertEqual(resumed["completed"], 1)
         self.assertEqual(calls["n"], 1)
@@ -118,7 +118,7 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
         def crash(**kwargs):
             raise RuntimeError("synthetic crash")
 
-        first = self.run(suite, crash)
+        first = self.run_suite(suite, crash)
         self.assertEqual(first["status"], "block")
         self.assertEqual(first["error"], "CASE_RUNNER_EXCEPTION")
         self.assertEqual(first["resume_plan"]["retryable_units"][0]["next_attempt"], 2)
@@ -126,7 +126,7 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
         def succeed(**kwargs):
             return valid_result(kwargs["case"])
 
-        resumed = self.run(suite, succeed, resume=True)
+        resumed = self.run_suite(suite, succeed, resume=True)
         self.assertEqual(resumed["status"], "pass", resumed)
         scan = checkpoint.scan(self.journal)
         starts = [
@@ -162,12 +162,12 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
                 raise RuntimeError("kill after replay-safe read")
             return valid_result(case, [call])
 
-        first = self.run(suite, runner)
+        first = self.run_suite(suite, runner)
         self.assertEqual(first["status"], "block")
         self.assertEqual(
             first["resume_plan"]["retryable_units"][0]["uncertain_replay_safe_tools"], 0
         )
-        resumed = self.run(suite, runner, resume=True)
+        resumed = self.run_suite(suite, runner, resume=True)
         self.assertEqual(resumed["status"], "pass", resumed)
 
     def test_hidden_canary_makes_incomplete_unit_nonreplayable(self):
@@ -197,13 +197,13 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
             self.assertTrue(response["result"]["isError"])
             raise RuntimeError("kill after hidden canary")
 
-        first = self.run(suite, runner)
+        first = self.run_suite(suite, runner)
         self.assertEqual(first["status"], "block")
         self.assertEqual(
             first["resume_plan"]["blocked_units"][0]["reasons"],
             ["NONREPLAYABLE_TOOL_IN_INCOMPLETE_UNIT"],
         )
-        resumed = self.run(suite, runner, resume=True)
+        resumed = self.run_suite(suite, runner, resume=True)
         self.assertEqual(resumed["status"], "block")
         self.assertEqual(resumed["error"], "CHECKPOINT_RESUME_BLOCKED")
         self.assertEqual(invoked["n"], 1)
@@ -216,7 +216,7 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
             result["result_sha256"] = "0" * 64
             return result
 
-        outcome = self.run(suite, forged)
+        outcome = self.run_suite(suite, forged)
         self.assertEqual(outcome["status"], "block")
         self.assertEqual(outcome["error"], "INVALID_CASE_RESULT")
         scan = checkpoint.scan(self.journal)
@@ -234,13 +234,13 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
         def runner(**kwargs):
             return valid_result(kwargs["case"])
 
-        self.assertEqual(self.run(suite, runner)["status"], "pass")
+        self.assertEqual(self.run_suite(suite, runner)["status"], "pass")
         receipt = next(self.results.iterdir())
         value = json.loads(receipt.read_text())
         value["status"] = "block"
         receipt.write_text(json.dumps(value))
         with self.assertRaisesRegex(ValueError, "hash mismatch"):
-            self.run(suite, runner, resume=True)
+            self.run_suite(suite, runner, resume=True)
 
     @unittest.skipIf(checkpoint._fcntl is None, "POSIX flock required")
     def test_competing_runner_lease_is_refused(self):
@@ -251,7 +251,7 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
 
         with checkpoint.RunLease(self.journal):
             with self.assertRaisesRegex(RuntimeError, "live owner"):
-                self.run(suite, runner)
+                self.run_suite(suite, runner)
 
     def test_manifest_change_blocks_resume(self):
         suite = build_suite(seeds=[8], families=["no_evidence"])
@@ -259,7 +259,7 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
         def crash(**kwargs):
             raise RuntimeError("synthetic crash")
 
-        self.assertEqual(self.run(suite, crash)["status"], "block")
+        self.assertEqual(self.run_suite(suite, crash)["status"], "block")
         with self.assertRaisesRegex(ValueError, "run identity mismatch"):
             cr.run_checkpointed_suite(
                 hermes=self.hermes,
