@@ -62,9 +62,9 @@ class Notebook(unittest.TestCase):
 
     def test_notebook_preflight_is_complete_fail_fast_and_before_engine_startup(self):
         self.assertIn("tests/test_phase0.py", BUILD.CODE)
-        self.assertIn("tests/test_notebook_and_config.py", BUILD.CODE)
+        self.assertNotIn("tests/test_notebook_and_config.py", BUILD.CODE)  # structural self-tests stay build-time
         pre = next(i for i, cell in enumerate(NB["cells"])
-                   if cell["cell_type"] == "code" and "python3 -m unittest discover -s tests -v" in cell["source"])
+                   if cell["cell_type"] == "code" and "python3 -m unittest discover -s tests -p \\"test_phase0.py\\" -v" in cell["source"])
         eng = next(i for i, cell in enumerate(NB["cells"])
                    if cell["cell_type"] == "code" and 'ENGINE = build_llama("b11146"' in cell["source"])
         self.assertLess(pre, eng)
