@@ -32,3 +32,23 @@ jobs:
       - name: Unit and adversarial tests
         working-directory: labs/small-model-augmentation/defense_factory
         run: python -m unittest -v test_defense_factory.py test_runner.py test_controller.py test_integration.py
+
+
+  macos-apfs:
+    runs-on: macos-14
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require APFS workspace
+        run: |
+          diskutil info "$RUNNER_TEMP" | tee /tmp/haven-diskutil.txt
+          grep -Eiq 'File System Personality:[[:space:]]*APFS|Type \(Bundle\):[[:space:]]*apfs' /tmp/haven-diskutil.txt
+      - name: Compile Defense Factory
+        working-directory: labs/small-model-augmentation/defense_factory
+        run: python -m py_compile defense_factory.py runner.py controller.py integration.py test_defense_factory.py test_runner.py test_controller.py test_integration.py
+      - name: Worktree, Git, process-group and integration suite on APFS
+        working-directory: labs/small-model-augmentation/defense_factory
+        run: python -m unittest -v test_defense_factory.py test_runner.py test_controller.py test_integration.py
