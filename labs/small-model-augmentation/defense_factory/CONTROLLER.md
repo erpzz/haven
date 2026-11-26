@@ -46,11 +46,12 @@ Before a ledger transition, `verify_run_receipt()`:
 3. the runner receipt has never been consumed anywhere in the ledger;
 4. the receipt passes all cross-stage checks.
 
-Only after those checks does it append `fix_applied` and `retested`. A passing run may close the finding; closure can also be deliberately deferred for another human/independent review gate. A failed run remains revisable through the core's explicit revised-proposal transition.
+Only after those checks does it append `fix_applied` and `retested`. A passing disposable-worktree run stops at `verified`; it **cannot close the finding**. Actual `closed` status is reserved for a later landed-commit verification package that supplies the core-required integration receipt SHA-256 and exact integration commit. A failed run remains revisable through the core's explicit revised-proposal transition.
 
 ## Security and evidence limits
 
 - SHA-256 chaining and binding are tamper-evident, not authenticated against a hostile actor who can rewrite all local state and recompute hashes.
+- A verified candidate is not a repository remediation; this package intentionally has no closure method.
 - The controller proves consistency of host-provided artifacts; it does not prove scanner correctness, model quality, OS isolation, or that a repository commit is trustworthy.
 - Recipes remain host-owned policy and execution remains in #181.
 - Untrusted third-party repository execution remains under the existing secpatch disposable-runner contract rather than this package.
