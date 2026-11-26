@@ -50,7 +50,10 @@ def run_x(backend, episode, mechanisms):
 def score_views(rec, episode):
     """Adjudicator on (a) the final system output and (b) the raw first answer."""
     final = bench.score_records([rec], [episode])[0]
-    raw_rec = dict(rec, answer=rec.get("raw_answer") or "", trace=rec["trace"][:rec.get("raw_trace_len") or len(rec["trace"])])
+    raw_trace_len = rec.get("raw_trace_len")
+    if raw_trace_len is None:
+        raw_trace_len = len(rec["trace"])
+    raw_rec = dict(rec, answer=rec.get("raw_answer") or "", trace=rec["trace"][:raw_trace_len])
     raw = bench.score_records([raw_rec], [episode])[0]
     return final, raw
 
