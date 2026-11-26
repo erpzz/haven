@@ -48,6 +48,9 @@ class EvalTests(unittest.TestCase):
     def test_malformed_count_blocks_without_consistency_crash(self):
         r=report();r["rows"][0]["tool_calls"]="1"
         self.assertIn("INVALID_COUNT",e.validate(r))
+    def test_duplicate_receipt_hash_blocks(self):
+        r=report();r["rows"][1]["receipt_sha256"]=r["rows"][0]["receipt_sha256"]
+        self.assertIn("DUPLICATE_RECEIPT_HASH",e.validate(r))
     def test_report_hash_order_independent(self):
         r=report();x=e.report_sha256(r);r["rows"].reverse();self.assertEqual(x,e.report_sha256(r))
     def test_summarize(self):
