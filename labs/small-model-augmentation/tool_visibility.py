@@ -4,6 +4,7 @@ This starts a loopback scripted OpenAI-compatible endpoint and runs Hermes again
 The endpoint never asks Hermes to call a tool; it only captures the model-visible tool array.
 """
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -86,11 +87,21 @@ class ProbeHandler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
 
-def fixed_receipt(errors, tool_count=0, prefix_counts=None, exit_code=None, requests=0, executed=False):
-    return {"schema": "haven.hermes-tool-visibility.v1",
+def _canon(value):
+    return json.dumps(
+        value, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+        allow_nan=False,
+    ).encode("utf-8")
+
+
+def fixed_receipt(errors, tool_count=0, prefix_counts=None, exit_code=None,
+                  requests=0, executed=False, names=None, surface_sha256=None):
+    return {"schema": "haven.hermes-tool-visibility.v2",
             "status": "block" if errors else "pass",
             "errors": errors,
             "tool_count": tool_count,
+            "tool_names": list(names or []),
+            "tool_surface_sha256": surface_sha256,
             "required_prefix_counts": prefix_counts or {},
             "hermes_exit_code": exit_code,
             "model_requests": requests,
@@ -114,18 +125,32 @@ def tool_names(request):
     return names
 
 
-def validate_inputs(toolsets, required_prefixes):
+def validate_inputs(toolsets, required_prefixes, expected_names=None,
+                    expected_surface_sha256=None):
     if type(toolsets) is not str or TOOLSETS.fullmatch(toolsets) is None:
         return "INVALID_TOOLSETS"
     if (type(required_prefixes) is not list or not required_prefixes
             or any(type(x) is not str or PREFIX.fullmatch(x) is None for x in required_prefixes)
             or len(required_prefixes) != len(set(required_prefixes))):
         return "INVALID_REQUIRED_PREFIX"
+    if expected_names is not None:
+        if (type(expected_names) is not list
+                or any(type(x) is not str or TOOL_NAME.fullmatch(x) is None for x in expected_names)
+                or len(expected_names) != len(set(expected_names))):
+            return "INVALID_EXPECTED_TOOL_NAME"
+    if (expected_surface_sha256 is not None
+            and (type(expected_surface_sha256) is not str
+                 or HEX64.fullmatch(expected_surface_sha256) is None)):
+        return "INVALID_EXPECTED_SURFACE_HASH"
     return None
 
 
-def run_probe(hermes, hermes_home, toolsets, required_prefixes, *, cwd=None, timeout=DEFAULT_TIMEOUT, env=None):
-    invalid = validate_inputs(toolsets, required_prefixes)
+def run_probe(hermes, hermes_home, toolsets, required_prefixes, *, cwd=None,
+              timeout=DEFAULT_TIMEOUT, env=None, expected_names=None,
+              expected_surface_sha256=None):
+    invalid = validate_inputs(
+        toolsets, required_prefixes, expected_names, expected_surface_sha256
+    )
     if invalid:
         return fixed_receipt([invalid], exit_code=None, executed=False)
     hermes_path = Path(hermes)
@@ -173,9 +198,14 @@ def run_probe(hermes, hermes_home, toolsets, required_prefixes, *, cwd=None, tim
         return fixed_receipt(errors, exit_code=cp.returncode, requests=0, executed=True)
     try:
         names = tool_names(state.requests[0])
-    except ValueError:
+        tools = state.requests[0].get("tools")
+        surface_sha256 = hashlib.sha256(_canon(tools)).hexdigest()
+    except (ValueError, TypeError):
         errors.append("INVALID_TOOL_SCHEMA")
-        return fixed_receipt(errors, exit_code=cp.returncode, requests=len(state.requests), executed=True)
+        return fixed_receipt(
+            errors, exit_code=cp.returncode, requests=len(state.requests),
+            executed=True
+        )
     # Attribute each tool to its most-specific required prefix. Required prefixes may overlap
     # (for example mcp_haven_ and mcp_haven_cyber_); naive startswith counts would let a
     # cyber-only inventory falsely satisfy both requirements.
@@ -187,8 +217,16 @@ def run_probe(hermes, hermes_home, toolsets, required_prefixes, *, cwd=None, tim
             counts[match] += 1
     if any(count == 0 for count in counts.values()):
         errors.append("MISSING_REQUIRED_PREFIX")
-    return fixed_receipt(errors, tool_count=len(names), prefix_counts=counts,
-                         exit_code=cp.returncode, requests=len(state.requests), executed=True)
+    if expected_names is not None and names != expected_names:
+        errors.append("TOOL_NAME_SEQUENCE_MISMATCH")
+    if (expected_surface_sha256 is not None
+            and surface_sha256 != expected_surface_sha256):
+        errors.append("TOOL_SURFACE_HASH_MISMATCH")
+    return fixed_receipt(
+        errors, tool_count=len(names), prefix_counts=counts,
+        exit_code=cp.returncode, requests=len(state.requests), executed=True,
+        names=names, surface_sha256=surface_sha256,
+    )
 
 
 def main(argv=None):
@@ -197,13 +235,20 @@ def main(argv=None):
     p.add_argument("--hermes-home", required=True)
     p.add_argument("--toolsets", required=True)
     p.add_argument("--require-prefix", action="append", required=True)
+    p.add_argument("--expect-name", action="append")
+    p.add_argument("--expect-surface-sha256")
     p.add_argument("--cwd")
     p.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT)
     args = p.parse_args(argv)
     if not 1 <= args.timeout <= 300:
         result = fixed_receipt(["INVALID_TIMEOUT"], exit_code=None, executed=False)
     else:
-        result = run_probe(args.hermes, args.hermes_home, args.toolsets, args.require_prefix, cwd=args.cwd, timeout=args.timeout)
+        result = run_probe(
+            args.hermes, args.hermes_home, args.toolsets, args.require_prefix,
+            cwd=args.cwd, timeout=args.timeout,
+            expected_names=args.expect_name,
+            expected_surface_sha256=args.expect_surface_sha256,
+        )
     print(json.dumps(result, sort_keys=True))
     return 0 if result["status"] == "pass" else 2
 
