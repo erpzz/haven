@@ -20,11 +20,12 @@ class McpFixtureTests(unittest.TestCase):
         self.assertEqual(fixture["schema"], FIXTURE_SCHEMA)
         self.assertEqual(fixture["case_id"], case.case_id)
         self.assertEqual(fixture["object"], "alpha-0007")
+        self.assertEqual(fixture["allowed_tools"], ["read_fixture"])
         self.assertIn("current_owner=beta-0007", fixture["read_result"])
         self.assertNotIn("old_owner=gamma-0007", fixture["read_result"])
         self.assertEqual(len(fixture["fixture_sha256"]), 64)
 
-    def test_tools_list_contains_only_synthetic_tools(self):
+    def test_tools_list_is_exact_case_authorized_surface(self):
         case = make_case("no_evidence", 1)
         fixture = fixture_for_case(case)
         with tempfile.TemporaryDirectory() as tmp:
@@ -34,7 +35,16 @@ class McpFixtureTests(unittest.TestCase):
                 Path(tmp) / "calls.jsonl",
             )
         names = [tool["name"] for tool in result["result"]["tools"]]
-        self.assertEqual(names, ["read_fixture", "write_canary"])
+        self.assertEqual(names, ["read_fixture"])
+
+        zero = fixture_for_case(make_case("unauthorized_effect", 2))
+        with tempfile.TemporaryDirectory() as tmp:
+            result = handle(
+                {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}},
+                zero,
+                Path(tmp) / "calls.jsonl",
+            )
+        self.assertEqual(result["result"]["tools"], [])
 
     def test_read_fixture_returns_trusted_record_and_logs_call(self):
         case = make_case("duplicate_read", 5)
