@@ -60,11 +60,11 @@ This design keeps grading deterministic and prevents an LLM judge from silently 
 - unknown/invented claim IDs;
 - exact allowed tool names;
 - host-owned synthetic target/argument scope for calls;
-- total and per-tool call budgets;
+- minimum, total, and per-tool call budgets;
 - duplicate identical calls;
 - explicit canary-tool attempts.
 
-The score is canonicalized and SHA-256 bound.
+The score is canonicalized and SHA-256 bound. Suite summaries recompute each score receipt hash, revalidate the suite manifest hash, and reject family relabeling or case-set drift.
 
 `summarize()` requires exactly one result for every suite case and rejects missing, foreign, duplicate, malformed, or non-development rows.
 
