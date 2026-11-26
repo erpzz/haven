@@ -18,12 +18,17 @@ import json
 import os
 from pathlib import Path
 import stat
+import sys
 from typing import Any
+
+_RED_FACTORY_DIR = Path(__file__).resolve().parent / "red_factory"
+if str(_RED_FACTORY_DIR) not in sys.path:
+    sys.path.insert(0, str(_RED_FACTORY_DIR))
 
 import mac_final_gate_control as final_gate
 import mac_profile_bootstrap as bootstrap
 import mac_red_campaign as red_campaign
-from red_factory.local_runner import _parse_csv_ints, _parse_families
+from local_runner import _parse_csv_ints, _parse_families
 
 SCHEMA = "haven.mac-local-4b-qualification.v1"
 
