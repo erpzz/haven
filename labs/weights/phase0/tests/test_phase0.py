@@ -462,6 +462,9 @@ class AstraStepwise(unittest.TestCase):
             gold = json.loads((priv / "rt.gold.json").read_text())
             plans = {g["id"]: oracle_plan(g["episode"], True) for g in gold["records"]}
             with self.assertRaises(SystemExit):
+                astra_batch.main(["seal", "--private-dir", str(priv), "--label", "rt"])  # open ids cannot seal
+            self.assertFalse((priv / "rt.seal.json").exists())
+            with self.assertRaises(SystemExit):
                 astra_batch.main(["reveal", "--private-dir", str(priv), "--label", "rt", "--out", str(tmp / "g.json")])
             for rnd in range(astra_batch.MAX_CALLS + 2):
                 session = json.loads((priv / "rt.session.json").read_text())
@@ -487,6 +490,14 @@ class AstraStepwise(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 astra_batch.main(["reveal", "--private-dir", str(priv), "--label", "rt", "--out", str(tmp / "bad-gold.json")])
             (priv / "rt.session.json").write_text(original_session)
+            original_public = (priv / "rt.public.json").read_text()
+            wrong_public = json.loads(original_public)
+            wrong_public["batch"] = "wrong-batch"
+            (priv / "rt.public.json").write_text(json.dumps(wrong_public, sort_keys=True, indent=1) + "\n")
+            with self.assertRaises(SystemExit):
+                astra_batch.main(["reveal", "--private-dir", str(priv), "--label", "rt",
+                                  "--out", str(tmp / "wrong-batch-gold.json")])
+            (priv / "rt.public.json").write_text(original_public)
             common.write_jsonl(tmp / "late.jsonl", [])
             with self.assertRaises(SystemExit):
                 astra_batch.main(["step", "--private-dir", str(priv), "--label", "rt", "--reply", str(tmp / "late.jsonl"),
