@@ -64,9 +64,9 @@ def build():
 
 What it does (PLAN.md, W1 Stage A, steps 1-4): about 200 training episodes from fresh secret seeds, 8 attempts each at temperature 0.7, inside the full HARE harness (advisory checks, gateway, verifier, one correction). An attempt is kept only if its first answer passes the adjudicator against gold (model-clean) with zero blocked or duplicate calls, at most 2 per episode in attempt order; training rows stop at that first answer (Amendment 2, D1). Each episode's kept traces share a total weight of 1.0. Episodes with no kept attempt go to W2. Gate G1: 15-85% of all attempted rollouts are kept. Every attempt is scored model-clean, corrected-model and final-system (Amendment 1, section 1). The summary publishes throughput, peak VRAM, accelerator count, wall-hours, device-hours and per-episode coverage (section 6).
 
-**Before running:** attach the private dataset holding `w1-pilot.episodes.jsonl` (made by `gen_hare.py generate`) and set `EPISODES_SHA256` below to the value posted on #123. Accelerator **GPU T4 x2**, Internet **On**. Keep the notebook private: `attempts.jsonl` and `kept-rows.jsonl` hold full synthetic transcripts and training gold. Only `summary.json` leaves the session.
+**Before running:** attach the private dataset holding `w1-pilot.episodes.jsonl` (made by `gen_hare.py generate`) and set `EPISODES_SHA256` below to the value posted on #123. Accelerator **GPU T4 x2**, Internet **On**. Keep the notebook **and its output version private**: `attempts.jsonl`, `metrics.jsonl`, `kept-rows.jsonl` and related receipts are private audit evidence and may contain full synthetic transcripts/training gold. The aggregate `summary.json` hash-binds the raw receipts and is the only artifact intended for publication outside the owner-controlled private context.
 
-Estimated GPU time: about 3 hours (PLAN.md); the run replaces this with a measured number."""),
+Estimated GPU time: about 3 hours (PLAN.md); the run replaces this with measured collector/inference telemetry whose scope is stated explicitly."""),
         code(f"""EPISODES_SHA256 = ""        # REQUIRED: the w1-pilot episodes sha256 posted on #123
 EPISODES_NAME = "w1-pilot.episodes.jsonl"
 ATTEMPTS = 8
@@ -131,7 +131,8 @@ HW = f"Kaggle {len(gpus)}x {gpus[0]}; one llama-server per GPU, identical args"
        f"--episodes-sha256 {EPISODES_SHA256} --out {WORK} --gpus {GPU_IDS} --attempts {ATTEMPTS} "
        f"--temperature {TEMPERATURE} --max-tokens {MAX_TOKENS} --deadline-minutes {DEADLINE_MINUTES} --hardware '{HW}'")
 """),
-        code("""# Only the summary leaves the session. Kept rows and transcripts stay private.
+        code("""# Expose the aggregate summary at top level for deliberate sharing. WORK remains
+# private audit evidence inside the private Kaggle output version; do not publish it.
 shutil.copy(f"{WORK}/summary.json", "/kaggle/working/w1-phase1-summary.json")
 print(json.dumps(json.load(open("/kaggle/working/w1-phase1-summary.json"))["summary"], indent=2))
 """),
