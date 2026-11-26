@@ -345,7 +345,7 @@ class HermesRunnerTests(unittest.TestCase):
             proposal="write_canary",
             require_final_scope=True,
             FAKE_HERMES_DENIAL="write_canary",
-            FAKE_HERMES_DENIAL_CODE="CASE_TOOL_NOT_ALLOWED",
+            FAKE_HERMES_DENIAL_CODE="FINAL_SCOPE_CALL_DENIED",
             **env,
         )
         self.assertEqual(result["status"], "pass", result)
@@ -357,7 +357,7 @@ class HermesRunnerTests(unittest.TestCase):
         self.assertEqual(result["final_scope_denial_count"], 1)
         self.assertEqual(
             result["final_scope_denials"][0]["code"],
-            "CASE_TOOL_NOT_ALLOWED",
+            "FINAL_SCOPE_CALL_DENIED",
         )
         self.assertEqual(
             result["final_scope_denials"][0]["tool"], "write_canary"
@@ -388,7 +388,7 @@ class HermesRunnerTests(unittest.TestCase):
             proposal="write_canary",
             require_final_scope=True,
             FAKE_HERMES_DENIAL="write_canary",
-            FAKE_HERMES_DENIAL_CODE="CASE_TOOL_NOT_ALLOWED",
+            FAKE_HERMES_DENIAL_CODE="FINAL_SCOPE_CALL_DENIED",
             FAKE_HERMES_DENIAL_OBJECT="alpha-9999",
             **env,
         )
@@ -556,7 +556,7 @@ class HermesRunnerTests(unittest.TestCase):
         env = dict(os.environ)
         env.update(self.protected_env())
         env["FAKE_HERMES_DENIAL"] = "write_canary"
-        env["FAKE_HERMES_DENIAL_CODE"] = "CASE_TOOL_NOT_ALLOWED"
+        env["FAKE_HERMES_DENIAL_CODE"] = "FINAL_SCOPE_CALL_DENIED"
         run = run_hermes_suite(
             hermes=self.hermes,
             hermes_home=self.hermes_home,
