@@ -19,6 +19,14 @@ def _hard_timeout_side_effect(path: str, delay: float):
     return {"path": path}
 
 
+def _hard_large_result(size: int):
+    return {"blob": "x" * size}
+
+
+def _hard_worker_crash():
+    os._exit(7)
+
+
 class RegistryTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -146,6 +154,29 @@ class RegistryTests(unittest.TestCase):
             out = r.invoke("x.hard-fast", {"path": sentinel, "delay": 0.01})
             self.assertTrue(out["ok"], out)
             self.assertTrue(Path(sentinel).exists())
+
+    def test_hard_timeout_large_result_is_drained_before_child_exit(self):
+        r = Registry(None)
+        r.register(ToolSpec(
+            "x.hard-large", "h",
+            {"type": "object", "additionalProperties": False, "required": ["size"],
+             "properties": {"size": {"type": "integer", "minimum": 1, "maximum": 4000000}}},
+            {}, _hard_large_result, timeout_s=3.0, hard_timeout=True,
+        ))
+        out = r.invoke("x.hard-large", {"size": 2000000})
+        self.assertTrue(out["ok"], out)
+        self.assertEqual(len(out["result"]["blob"]), 2000000)
+
+    def test_hard_timeout_worker_crash_is_structured_failure(self):
+        r = Registry(None)
+        r.register(ToolSpec(
+            "x.hard-crash", "h",
+            {"type": "object", "properties": {}, "additionalProperties": False},
+            {}, _hard_worker_crash, timeout_s=2.0, hard_timeout=True,
+        ))
+        out = r.invoke("x.hard-crash", {})
+        self.assertFalse(out["ok"])
+        self.assertEqual(out["error"]["code"], "tool_failed")
 
     def test_write_tools_refused_timeout_and_rate_limit(self):
         r = Registry(None)
