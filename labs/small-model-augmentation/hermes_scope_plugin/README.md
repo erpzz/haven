@@ -78,9 +78,11 @@ then accepting them proves consistency, not provenance. The receipt binds the
 Hermes executable, plugin source + manifest, exact tool-scope engine, model-side
 scope policy, and raw-MCP final-dispatch policy. Both policy files must be
 owner-private and valid under the same enrolled engine. The strict preflight
-also rejects unexpected enabled user plugins; add another
+also rejects unexpected enabled non-bundled plugins; add another
 --allow-user-plugin only after explicitly reviewing why it belongs in that
-isolated profile.
+isolated profile. Guarded preflight and child launch additionally force
+HERMES_ENABLE_PROJECT_PLUGINS=0, because project-local plugins are a separate
+Hermes discovery path and must not be inherited from an ambient shell/cwd.
 
 The fixture-level test runs with:
 
