@@ -31,7 +31,7 @@ from typing import Any, Mapping, Sequence
 
 import augmentation_eval
 
-SCHEMA = "haven.augmentation-eval-private-receipt.v1"
+SCHEMA = "haven.augmentation-eval-private-receipt.v2"
 MAX_RECEIPT_BYTES = 1024 * 1024
 HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 TOKEN = re.compile(r"[A-Za-z0-9_.:@/+ -]{1,256}\Z", re.ASCII)
