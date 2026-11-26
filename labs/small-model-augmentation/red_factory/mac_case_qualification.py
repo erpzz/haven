@@ -210,6 +210,130 @@ def _load_enrollment(path: Path) -> tuple[dict[str, Any], str, dict[str, str]]:
     )
 
 
+def _sha_provenance_executable(path: Path, *, max_bytes: int = 128 * 1024 * 1024) -> str:
+    """Hash resolved executable bytes; root-owned/system interpreters are valid."""
+    try:
+        resolved = Path(path).expanduser().resolve(strict=True)
+    except (OSError, RuntimeError) as exc:
+        raise QualificationError("HERMES_INTERPRETER_UNAVAILABLE") from exc
+    if not hasattr(os, "O_NOFOLLOW"):
+        raise QualificationError("NO_SYMLINK_GUARD")
+    try:
+        fd = os.open(
+            resolved,
+            os.O_RDONLY | os.O_NOFOLLOW | getattr(os, "O_CLOEXEC", 0),
+        )
+    except OSError as exc:
+        raise QualificationError("HERMES_INTERPRETER_UNAVAILABLE") from exc
+    try:
+        info = os.fstat(fd)
+        if (not stat.S_ISREG(info.st_mode)
+                or not (info.st_mode & stat.S_IXUSR)
+                or info.st_mode & 0o022):
+            raise QualificationError("HERMES_INTERPRETER_UNTRUSTED")
+        if info.st_size > max_bytes:
+            raise QualificationError("HERMES_INTERPRETER_TOO_LARGE")
+        h = hashlib.sha256()
+        total = 0
+        with os.fdopen(os.dup(fd), "rb") as stream:
+            for block in iter(lambda: stream.read(256 * 1024), b""):
+                total += len(block)
+                if total > max_bytes:
+                    raise QualificationError("HERMES_INTERPRETER_TOO_LARGE")
+                h.update(block)
+        return h.hexdigest()
+    finally:
+        os.close(fd)
+
+
+def _hermes_interpreter(hermes: Path,
+                        enrollment: Mapping[str, Any]) -> Path:
+    try:
+        raw = Path(hermes).read_bytes()[:4096]
+    except OSError as exc:
+        raise QualificationError("HERMES_SHEBANG_UNAVAILABLE") from exc
+    try:
+        first = raw.splitlines()[0].decode("utf-8", "strict") if raw else ""
+    except UnicodeDecodeError as exc:
+        raise QualificationError("HERMES_SHEBANG_INVALID") from exc
+    if not first.startswith("#!"):
+        raise QualificationError("HERMES_SHEBANG_INVALID")
+    value = first[2:].strip()
+    if not value or any(ch.isspace() for ch in value):
+        raise QualificationError("HERMES_INTERPRETER_NOT_ABSOLUTE")
+    python = Path(value)
+    if not python.is_absolute():
+        raise QualificationError("HERMES_INTERPRETER_NOT_ABSOLUTE")
+    if _sha_provenance_executable(python) != enrollment["hermes_python_sha256"]:
+        raise QualificationError("HERMES_INTERPRETER_HASH_MISMATCH")
+    return python
+
+
+def _runtime_package_fingerprint(hermes: Path, enrollment: Mapping[str, Any],
+                                 env: Mapping[str, str]) -> dict[str, Any]:
+    """Hash the installed Hermes files that own this qualification's trust path."""
+    python = _hermes_interpreter(hermes, enrollment)
+    files_json = json.dumps(list(HERMES_RUNTIME_FILES))
+    code = f"""
+import hashlib, json, os, stat
+from pathlib import Path
+import hermes_cli
+files = {files_json}
+root = Path(hermes_cli.__file__).resolve().parents[1]
+rows = {{}}
+for rel in files:
+    path = (root / rel).resolve()
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0)
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    fd = os.open(path, flags)
+    try:
+        info = os.fstat(fd)
+        if not stat.S_ISREG(info.st_mode) or info.st_mode & 0o022:
+            raise RuntimeError("untrusted-runtime-source")
+        h = hashlib.sha256()
+        with os.fdopen(os.dup(fd), "rb") as stream:
+            for block in iter(lambda: stream.read(262144), b""):
+                h.update(block)
+        rows[rel] = h.hexdigest()
+    finally:
+        os.close(fd)
+canon = json.dumps(rows, sort_keys=True, separators=(",", ":")).encode()
+print(json.dumps({{
+    "version": hermes_cli.__version__,
+    "release_date": hermes_cli.__release_date__,
+    "source_sha256": hashlib.sha256(canon).hexdigest(),
+}}, sort_keys=True, separators=(",", ":")))
+"""
+    child_env = dict(env)
+    child_env.pop("PYTHONPATH", None)
+    child_env["HERMES_ENABLE_PROJECT_PLUGINS"] = "0"
+    try:
+        cp = subprocess.run(
+            [str(python), "-I", "-c", code],
+            env=child_env, text=True, capture_output=True, timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise QualificationError("HERMES_RUNTIME_FINGERPRINT_FAILED") from exc
+    if cp.returncode != 0 or len(cp.stdout.encode()) > 64 * 1024:
+        raise QualificationError("HERMES_RUNTIME_FINGERPRINT_FAILED")
+    try:
+        value = json.loads(cp.stdout)
+    except json.JSONDecodeError as exc:
+        raise QualificationError("HERMES_RUNTIME_FINGERPRINT_INVALID") from exc
+    if (not isinstance(value, dict)
+            or set(value) != {"version", "release_date", "source_sha256"}
+            or not isinstance(value.get("source_sha256"), str)
+            or HEX64.fullmatch(value["source_sha256"]) is None):
+        raise QualificationError("HERMES_RUNTIME_FINGERPRINT_INVALID")
+    if (value["version"] != enrollment["hermes_version"]
+            or value["release_date"] != enrollment["hermes_release_date"]):
+        raise QualificationError("HERMES_RUNTIME_VERSION_MISMATCH")
+    if value["source_sha256"] != enrollment["hermes_runtime_source_sha256"]:
+        raise QualificationError("HERMES_RUNTIME_SOURCE_HASH_MISMATCH")
+    return value
+
+
 def _sha_private_profile_file(path: Path, *, max_bytes: int = 1024 * 1024) -> str:
     path = Path(path)
     if not path.is_absolute():
