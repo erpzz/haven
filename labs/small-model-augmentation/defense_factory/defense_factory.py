@@ -301,6 +301,11 @@ class FindingLedger:
                 if not isinstance(receipt, str) or not _HASH_RE.fullmatch(receipt):
                     raise ValueError("retest must bind lowercase sha256")
                 return "verified" if passed else "fix_applied"
+            if event == "fix_proposed":
+                patch_sha = payload.get("patch_sha256")
+                if not isinstance(patch_sha, str) or not _HASH_RE.fullmatch(patch_sha):
+                    raise ValueError("revised fix proposal must bind lowercase sha256")
+                return "fix_proposed"
         elif current == "verified":
             if event == "closed":
                 return "closed"
@@ -364,6 +369,12 @@ def build_fix_packet(finding: Finding, allowed_paths: Iterable[str]) -> dict[str
         },
     }
 
+def fix_packet_sha256(packet: Mapping[str, Any]) -> str:
+    if not isinstance(packet, Mapping):
+        raise ValueError("fix packet must be an object")
+    return _sha256(_canonical_json(dict(packet)))
+
+
 def validate_fix_response(response: Mapping[str, Any], packet: Mapping[str, Any]) -> dict[str, Any]:
     """Validate a model fix proposal without applying it or trusting its success claim."""
     if not isinstance(response, Mapping):
@@ -389,5 +400,6 @@ def validate_fix_response(response: Mapping[str, Any], packet: Mapping[str, Any]
         "summary": summary.strip(),
         "patch": patch,
         "patch_sha256": _sha256(patch.encode("utf-8")),
+        "packet_sha256": fix_packet_sha256(packet),
         "touched_paths": list(touched),
     }
