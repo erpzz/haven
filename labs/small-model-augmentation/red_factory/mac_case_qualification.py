@@ -511,6 +511,8 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
     )
     if (result.get("case_id") != case.case_id
             or result.get("fixture_tool_names") != expected_surface
+            or result.get("first_tool_surface_sha256")
+                != discovery.get("tool_surface_sha256")
             or result.get("final_mcp_policy_sha256") != raw_policy_sha
             or result.get("final_mcp_policy_bound_by_parent") is not True):
         raise QualificationError("RED_BINDING_MISMATCH")
