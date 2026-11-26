@@ -10,6 +10,7 @@ The tested model never self-reports whether a tool was executed.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import os
@@ -26,9 +27,22 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Mapping
 
-from local_runner import normalize_loopback_base_url
+from local_runner import (
+    _parse_csv_ints,
+    _parse_families,
+    _write_private_json,
+    normalize_loopback_base_url,
+)
 from mcp_fixture import LOG_SCHEMA, fixture_for_case
-from red_factory import TRANSCRIPT_SCHEMA, RedCase, case_to_packet, score_transcript
+from red_factory import (
+    TRANSCRIPT_SCHEMA,
+    RedCase,
+    build_suite,
+    case_to_packet,
+    score_transcript,
+    summarize,
+    validate_suite,
+)
 
 RESULT_SCHEMA = "haven-local-red-factory-hermes-result-v1"
 FINAL_SCHEMA = "haven-local-red-factory-hermes-final-v1"
@@ -667,3 +681,118 @@ def run_hermes_case(
     except OSError:
         pass
     return body
+
+
+def run_hermes_suite(
+    *,
+    hermes: Path,
+    hermes_home: Path,
+    toolsets: str,
+    backend_base_url: str,
+    model: str,
+    suite: Mapping[str, Any],
+    backend_key: str | None = None,
+    timeout_seconds: float = 180.0,
+    max_turns: int = 8,
+    env: Mapping[str, str] | None = None,
+) -> dict[str, Any]:
+    """Run a complete development suite through separate, isolated Hermes invocations."""
+    cases = validate_suite(suite)
+    results = [
+        run_hermes_case(
+            hermes=hermes,
+            hermes_home=hermes_home,
+            toolsets=toolsets,
+            backend_base_url=backend_base_url,
+            model=model,
+            case=case,
+            backend_key=backend_key,
+            timeout_seconds=timeout_seconds,
+            max_turns=max_turns,
+            env=env,
+        )
+        for case in cases
+    ]
+    harness_passes = sum(row["status"] == "pass" for row in results)
+    all_valid = harness_passes == len(results)
+    model_summary = summarize([row["score"] for row in results], suite) if all_valid else None
+    execution_summary = summarize([row["execution_score"] for row in results], suite) if all_valid else None
+    body = {
+        "schema": "haven-local-red-factory-hermes-suite-v1",
+        "classification": "development",
+        "suite_sha256": suite["suite_sha256"],
+        "model": model,
+        "backend_base_url": normalize_loopback_base_url(backend_base_url),
+        "toolsets": toolsets,
+        "status": "pass" if all_valid else "block",
+        "n": len(results),
+        "harness_passes": harness_passes,
+        "result_sha256s": [row["result_sha256"] for row in results],
+        "model_summary": model_summary,
+        "execution_summary": execution_summary,
+    }
+    body["run_sha256"] = _sha256(body)
+    return {**body, "results": results}
+
+
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--hermes", type=Path, required=True)
+    parser.add_argument("--hermes-home", type=Path, required=True)
+    parser.add_argument("--toolsets", required=True)
+    parser.add_argument("--base-url", required=True, help="Numeric loopback backend, e.g. http://127.0.0.1:8080/v1")
+    parser.add_argument("--model", required=True)
+    parser.add_argument("--seeds", default="0")
+    parser.add_argument("--families", default="all")
+    parser.add_argument("--timeout", type=float, default=180.0)
+    parser.add_argument("--max-turns", type=int, default=8)
+    parser.add_argument("--api-key-env", help="Read optional backend key from this environment variable")
+    parser.add_argument("--out", type=Path, required=True)
+    args = parser.parse_args(argv)
+
+    # Fail before the first Hermes/model invocation if the receipt target is unsafe.
+    from local_runner import _validate_new_output_path
+    _validate_new_output_path(args.out)
+
+    backend_key = None
+    if args.api_key_env:
+        if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,127}", args.api_key_env):
+            raise ValueError("invalid api-key environment variable name")
+        backend_key = os.environ.get(args.api_key_env)
+        if backend_key is None:
+            raise ValueError("api-key environment variable is not set")
+
+    suite = build_suite(
+        seeds=_parse_csv_ints(args.seeds),
+        families=_parse_families(args.families),
+    )
+    run = run_hermes_suite(
+        hermes=args.hermes,
+        hermes_home=args.hermes_home,
+        toolsets=args.toolsets,
+        backend_base_url=args.base_url,
+        model=args.model,
+        suite=suite,
+        backend_key=backend_key,
+        timeout_seconds=args.timeout,
+        max_turns=args.max_turns,
+    )
+    _write_private_json(args.out, run)
+    print(json.dumps({
+        "schema": run["schema"],
+        "classification": run["classification"],
+        "status": run["status"],
+        "suite_sha256": run["suite_sha256"],
+        "run_sha256": run["run_sha256"],
+        "model": run["model"],
+        "n": run["n"],
+        "harness_passes": run["harness_passes"],
+        "model_passes": None if run["model_summary"] is None else run["model_summary"]["passes"],
+        "execution_passes": None if run["execution_summary"] is None else run["execution_summary"]["passes"],
+        "out": str(args.out),
+    }, sort_keys=True))
+    return 0 if run["status"] == "pass" else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
