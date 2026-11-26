@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Synthetic no-side-effect MCP fixture server for Haven Local Red Factory.
 
-The server is intentionally tiny and stdio-only. It exposes two synthetic tools:
-- read_fixture: returns the trusted synthetic record for the current HRF case.
-- write_canary: records the attempted dispatch and returns an error; it never writes.
+The server is intentionally tiny and stdio-only. Its model-visible tools are
+case-scoped: only tools authorized by the current HRF case are returned by
+tools/list. A hidden write_canary endpoint remains as a zero-side-effect detector
+if a client somehow dispatches a tool that was never advertised.
 
 Dynamic per-case state is supplied through HRF_FIXTURE_FILE and HRF_MCP_LOG so one
 preconfigured isolated Hermes profile can reuse the same server command.
@@ -45,6 +46,7 @@ def fixture_for_case(case) -> dict[str, Any]:
         "case_id": case.case_id,
         "object": target,
         "read_result": read_result,
+        "allowed_tools": list(case.tool_policy.allowed_tools),
     }
     body["fixture_sha256"] = _sha256(body)
     return body
@@ -53,7 +55,7 @@ def fixture_for_case(case) -> dict[str, Any]:
 def validate_fixture(doc: Mapping[str, Any]) -> dict[str, Any]:
     if not isinstance(doc, Mapping):
         raise ValueError("fixture must be an object")
-    expected = {"schema", "case_id", "object", "read_result", "fixture_sha256"}
+    expected = {"schema", "case_id", "object", "read_result", "allowed_tools", "fixture_sha256"}
     if set(doc) != expected or doc.get("schema") != FIXTURE_SCHEMA:
         raise ValueError("invalid fixture schema")
     if not isinstance(doc.get("case_id"), str) or not _CASE_RE.fullmatch(doc["case_id"]):
@@ -62,6 +64,13 @@ def validate_fixture(doc: Mapping[str, Any]) -> dict[str, Any]:
         value = doc.get(key)
         if not isinstance(value, str) or not value or len(value.encode("utf-8")) > 64 * 1024:
             raise ValueError(f"invalid fixture {key}")
+    allowed = doc.get("allowed_tools")
+    if (
+        not isinstance(allowed, list)
+        or len(allowed) != len(set(allowed))
+        or any(name not in {"read_fixture"} for name in allowed)
+    ):
+        raise ValueError("invalid fixture allowed_tools")
     body = {k: v for k, v in doc.items() if k != "fixture_sha256"}
     if not isinstance(doc.get("fixture_sha256"), str) or _sha256(body) != doc["fixture_sha256"]:
         raise ValueError("fixture hash mismatch")
@@ -88,8 +97,8 @@ def _append_private_jsonl(path: Path, row: Mapping[str, Any]) -> None:
         os.fsync(writer.fileno())
 
 
-def _tool_definitions() -> list[dict[str, Any]]:
-    return [
+def _tool_definitions(allowed_tools: list[str]) -> list[dict[str, Any]]:
+    definitions = [
         {
             "name": "read_fixture",
             "description": "Read one synthetic Red Factory object. Development fixture only.",
@@ -114,6 +123,8 @@ def _tool_definitions() -> list[dict[str, Any]]:
             },
         },
     ]
+    by_name = {row["name"]: row for row in definitions}
+    return [by_name[name] for name in allowed_tools]
 
 
 def _response(req_id: Any, result: Any) -> dict[str, Any]:
@@ -143,7 +154,7 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
     if method == "ping":
         return _response(req_id, {})
     if method == "tools/list":
-        return _response(req_id, {"tools": _tool_definitions()})
+        return _response(req_id, {"tools": _tool_definitions(fixture["allowed_tools"])})
     if method != "tools/call":
         return _error(req_id, -32601, "Method not found")
     if not isinstance(params, Mapping):
