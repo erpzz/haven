@@ -215,6 +215,19 @@ def _receipt_used(ledger: FindingLedger, receipt_sha256: str) -> bool:
     return False
 
 
+def _assert_ledger_integrity(ledger: FindingLedger) -> None:
+    try:
+        rebuilt = FindingLedger.from_jsonl(ledger.to_jsonl())
+    except (TypeError, ValueError) as exc:
+        raise ValueError("finding ledger integrity check failed") from exc
+    if rebuilt.entries != ledger.entries:
+        raise ValueError("finding ledger canonical state mismatch")
+    ids = {entry.get("finding_id") for entry in ledger.entries}
+    for finding_id in ids:
+        if isinstance(finding_id, str) and rebuilt.state(finding_id) != ledger.state(finding_id):
+            raise ValueError("finding ledger state map mismatch")
+
+
 class DefenseWorkflowController:
     """Advance a finding only when cross-stage bindings verify exactly."""
 
@@ -224,6 +237,7 @@ class DefenseWorkflowController:
         self.ledger = ledger
 
     def record_proposal(self, contract: Mapping[str, Any]) -> dict[str, Any]:
+        _assert_ledger_integrity(self.ledger)
         contract = _validate_contract(contract)
         fid = contract["finding_id"]
         state = self.ledger.state(fid)
@@ -245,6 +259,7 @@ class DefenseWorkflowController:
         contract: Mapping[str, Any],
         receipt: Mapping[str, Any],
     ) -> dict[str, Any]:
+        _assert_ledger_integrity(self.ledger)
         contract = _validate_contract(contract)
         receipt = verify_run_receipt(receipt, contract)
         fid = contract["finding_id"]
