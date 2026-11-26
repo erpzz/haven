@@ -65,6 +65,8 @@ Coverage includes:
 
 A 20,000-input random-byte parser fuzz probe produced **0 unhandled exceptions**.
 
+Clean GitHub Actions qualification was added on the current branch. Workflow run `45734464838` on Ubuntu/Python 3.11 compiled the recovery sources and passed **26/26 tests** in 0.656 s. In addition to the unit contract, that run executes real child processes and sends SIGKILL at six replay-safe model/tool boundaries, verifies completed-unit skip, blocks a non-replay-safe canary from replay, enforces the attempt cap, refuses a competing live owner, and proves the POSIX lease releases after owner death.
+
 Second-pass changes before publication:
 
 1. attempt N+1 initially lacked a trustworthy process/recovery boundary; added explicit `run_resumed` epochs;
@@ -83,9 +85,8 @@ The immutable run manifest should bind the exact model/admission receipt, execut
 
 ## Not executed / not qualified
 
-- exact final-head clean-checkout execution;
 - wiring into `h2h_run.py`, Haven Cyber eval, Hermes hooks or investigator runner;
-- real process kill/power-loss tests on macOS, including proof that the previous runner is dead before `resume=True`;
+- macOS/APFS process-kill qualification, including filesystem durability and supported-Python `flock` behavior;
 - recovery while an actual local model server is hung;
 - parent-directory fsync on first journal creation;
 - Windows multiprocess locking;
