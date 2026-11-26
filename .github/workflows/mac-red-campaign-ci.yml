@@ -6,6 +6,8 @@ on:
       - 'labs/small-model-augmentation/mac_red_campaign.py'
       - 'labs/small-model-augmentation/test_mac_red_campaign.py'
       - 'labs/small-model-augmentation/red_factory/mac_red_case_child.py'
+      - 'labs/small-model-augmentation/mac_final_gate_control.py'
+      - 'labs/small-model-augmentation/test_mac_final_gate_control.py'
       - '.github/workflows/mac-red-campaign-ci.yml'
   pull_request:
     paths:
@@ -34,9 +36,14 @@ jobs:
           python -m py_compile \
             labs/small-model-augmentation/mac_red_campaign.py \
             labs/small-model-augmentation/test_mac_red_campaign.py \
-            labs/small-model-augmentation/red_factory/mac_red_case_child.py
+            labs/small-model-augmentation/red_factory/mac_red_case_child.py \
+            labs/small-model-augmentation/mac_final_gate_control.py \
+            labs/small-model-augmentation/test_mac_final_gate_control.py
       - name: Per-case campaign orchestration
         run: |
           python -m unittest discover \
             -s labs/small-model-augmentation \
             -p 'test_mac_red_campaign.py' -v
+          python -m unittest discover \
+            -s labs/small-model-augmentation \
+            -p 'test_mac_final_gate_control.py' -v
