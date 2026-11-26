@@ -498,6 +498,61 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 self.assertEqual(result["status"], "block")
                 self.assertIn(key, result["disallowed_control_differences"])
 
+    def test_product_tool_implementation_identity_can_never_be_waived(self):
+        a = private("a", "c1", "tool-id-a")
+        b = private("b", "c1", "tool-id-b")
+        for key in receipt.ALWAYS_MATCH_CONTROLS:
+            b["controls"][key] = a["controls"][key]
+        b["controls"]["tool_implementation_sha256"] = H("different-product-tools")
+        rehash(b)
+
+        result = receipt.compare_private_receipt_sets(
+            [a], [b],
+            allowed_control_differences=[
+                "admission_receipt_sha256",
+                "guard_preflight_receipt_sha256",
+                "guard_supervisor_receipt_sha256",
+                "tool_policy_sha256",
+                "final_dispatch_policy_sha256",
+                "selection_receipt_sha256",
+                "claim_bundle_sha256",
+                "claim_policy_sha256",
+                "renderer_sha256",
+                "run_manifest_sha256",
+            ],
+        )
+        self.assertEqual(result["status"], "block")
+        self.assertIn(
+            "tool_implementation_sha256",
+            result["disallowed_control_differences"],
+        )
+
+        cannot_waive = receipt.compare_private_receipt_sets(
+            [a], [b],
+            allowed_control_differences=["tool_implementation_sha256"],
+        )
+        self.assertEqual(cannot_waive["status"], "block")
+        self.assertIn(
+            "INVALID_ALLOWED_CONTROL_DIFFERENCES",
+            cannot_waive["errors"],
+        )
+
+    def test_qualification_harness_identity_is_not_a_product_control_alias(self):
+        p = profiles()
+        g = guard("qualification-source", p)
+        c = controls("qualification-source", p, g)
+        c["qualification_source_sha256"] = H("evidence-harness")
+        with self.assertRaisesRegex(receipt.ReceiptError, "control binding shape"):
+            receipt.make_receipt(
+                manifest=manifest(),
+                case_id="c1",
+                family="graph",
+                profiles=p,
+                guard=g,
+                controls=c,
+                sources=sources("qualification-source"),
+            )
+
     def test_receipt_refuses_under_64k_runtime_context(self):
         p = profiles(context=8192)
         with self.assertRaisesRegex(receipt.ReceiptError, "context"):
