@@ -36,3 +36,23 @@ jobs:
       - name: Unit and SIGKILL process matrix
         working-directory: labs/small-model-augmentation
         run: python3 -m unittest -v test_checkpoint_journal test_checkpoint_process
+
+
+  macos-apfs-process-recovery:
+    runs-on: macos-14
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require APFS workspace
+        run: |
+          diskutil info "$RUNNER_TEMP" | tee /tmp/haven-diskutil.txt
+          grep -Eiq 'File System Personality:[[:space:]]*APFS|Type \(Bundle\):[[:space:]]*apfs' /tmp/haven-diskutil.txt
+      - name: Compile recovery sources
+        working-directory: labs/small-model-augmentation
+        run: python3 -m py_compile checkpoint_journal.py test_checkpoint_journal.py test_checkpoint_process.py
+      - name: Unit and SIGKILL process matrix on APFS
+        working-directory: labs/small-model-augmentation
+        run: python3 -m unittest -v test_checkpoint_journal test_checkpoint_process
