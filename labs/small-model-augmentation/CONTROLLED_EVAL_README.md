@@ -27,7 +27,7 @@ Each arm report has:
 - a manifest binding experiment/comparison group, dataset id/hash, exact model artifact/hash, engine, hardware, temperature, max tokens and arm code hash;
 - one row per case.
 
-Compared reports must match on every outcome-relevant manifest field except arm name and arm code hash.
+Compared reports must match on every outcome-relevant manifest field except arm name and arm code hash. The semantic grader/adjudicator has its own `grader_sha256` and must match exactly.
 
 `tool_calls` means **all model tool-call attempts**, including denied calls. Therefore:
 
@@ -35,7 +35,7 @@ Compared reports must match on every outcome-relevant manifest field except arm 
 - `unauthorized_attempts <= tool_calls`;
 - `unblocked_unauthorized <= unauthorized_attempts`.
 
-Rows carry only aggregate/control metrics and a SHA-256 of the private host-owned case receipt. The sidecar does not require raw transcripts or gold.
+Rows carry only aggregate/control metrics and a SHA-256 of the private host-owned case receipt. Receipt hashes are unique within each arm and must be disjoint across compared arms. The sidecar does not require raw transcripts or gold.
 
 ## Metric trust boundary
 
@@ -83,7 +83,7 @@ The CLI uses bounded reads, rejects duplicate JSON keys/non-finite JSON, emits a
 
 ## Author test evidence
 
-Author semantic suite after second-pass hardening: **33/33 PASS**.
+Author semantic suite before the final comparison-integrity refinement: **33/33 PASS**. Final review then added three committed regressions (matched grader hash, same-case cross-arm receipt reuse, and cross-case/swapped receipt reuse). **Exact final-head 36-test execution is NOT claimed here**; Codex/local validation must run the committed bytes.
 
 Coverage includes:
 
@@ -93,6 +93,8 @@ Coverage includes:
 - bool/string/negative counter rejection;
 - counter consistency;
 - unique per-case private receipt hashes;
+- disjoint private receipt hashes across compared arms;
+- matched semantic grader/adjudicator hash;
 - order-independent report hash;
 - matched-pair and manifest/case/family mismatch handling;
 - paired gained/lost and family net deltas;
@@ -109,15 +111,17 @@ Second-pass fuzzing after the final counter semantics:
 - **50,000** malformed report validations, 0 unhandled exceptions;
 - **20,000** malformed pair comparisons, 0 unhandled exceptions.
 
-Two fail-open-by-crash defects were found by fuzzing during author review and fixed before publication:
+Two fail-open-by-crash defects were found by fuzzing during the earlier author review and fixed before publication. Final comparison review additionally found two evidence-independence gaps: cross-arm receipt reuse was not rejected, and the supposedly unchanged semantic grader was not independently hash-bound. Both are now enforced:
 
 1. a malformed numeric counter could be flagged and then still participate in arithmetic consistency checks;
 2. an unhashable malformed case id could be flagged and then still be inserted into the duplicate-id set.
+3. receipt hashes could be reused (even swapped across case IDs) between compared arms; the two receipt sets must now be disjoint.
+4. arm manifests did not separately bind the unchanged semantic grader/adjudicator; `grader_sha256` is now mandatory and matched.
 
 Published blobs at this review point:
 
-- `augmentation_eval.py`: `3227355c6c602e239467dec9d3d54659946fd56d`
-- `test_augmentation_eval.py`: `f3567c7d53c1f3da421779c0259d411a4e4ecb0f`
+- `augmentation_eval.py`: `449046038a179f4de6a290961cb0c34469d1c284`
+- `test_augmentation_eval.py`: `9b63d25c8fd46ab127625987af1497152ded418a`
 - `CONTROLLED_EVAL_PLAN.md`: `2448b15775e535580deaf4666b2bf35d634840fc`
 
 ## Not executed / not qualified
