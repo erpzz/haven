@@ -54,7 +54,7 @@ def build_server():
     @srv.tool(description="Invoke a security tool by id with a JSON object of arguments. Read-only tools only; paths are limited to fixtures/, runs/ and $HAVEN_CYBER_DATA.",
               annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=True))
     def cyber_call(tool_id: str, arguments: dict | None = None) -> str:
-        out = reg.invoke(tool_id, arguments or {}, caller="mcp")
+        out = reg.invoke(tool_id, {} if arguments is None else arguments, caller="mcp")
         text = json.dumps(out, default=str)
         if len(text) > 60000:  # keep small-model context sane; findings.lookup gives a filtered view
             return json.dumps({"ok": out.get("ok"), "truncated": True, "chars": len(text),
