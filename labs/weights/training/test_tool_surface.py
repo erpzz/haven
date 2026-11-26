@@ -1,4 +1,6 @@
 import copy
+import hashlib
+import importlib.util
 import json
 import pathlib
 import sys
@@ -98,6 +100,24 @@ class FallbackTokenizer(FakeTokenizer):
 
 
 class ToolSurfaceBindingTests(unittest.TestCase):
+    def test_current_hare_surface_matches_phase0_pinned_source(self):
+        repo = HERE.parents[2]
+        world_path = repo / "labs" / "intelligence-bakeoff" / "distillation" / "tool_sft" / "world.py"
+        digest = hashlib.sha256(world_path.read_bytes()).hexdigest()
+        self.assertEqual(
+            digest,
+            "8d902631f10294339fa8bce242f1ccda58e269b1c675a8fe53a3ce0b226d02f7",
+        )
+        spec = importlib.util.spec_from_file_location("weights_surface_world", world_path)
+        world = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(world)
+        binding = surface.make_binding(
+            world.TOOL_SCHEMAS, mode="fixed", collector_sha256=digest
+        )
+        self.assertEqual(surface.validate_binding(binding), [])
+        self.assertEqual(binding["tool_names"], world.TOOL_NAMES)
+        self.assertEqual(len(binding["tools"]), 4)
+
     def test_fixed_binding_hashes_exact_ordered_surface(self):
         binding = surface.make_binding(
             [READ, WRITE], mode="fixed", collector_sha256="a" * 64
