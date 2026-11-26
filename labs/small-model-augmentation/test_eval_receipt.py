@@ -40,6 +40,9 @@ def manifest(arm="a"):
 def controls(tag="x"):
     return {
         "admission_receipt_sha256": H(tag + "-admission"),
+        "runtime_profile_sha256": H("stable-runtime"),
+        "request_settings_sha256": H("stable-request-settings"),
+        "world_sha256": H("stable-world"),
         "tool_policy_sha256": H(tag + "-policy"),
         "catalog_sha256": H(tag + "-catalog"),
         "selection_receipt_sha256": H(tag + "-selection"),
@@ -233,6 +236,98 @@ class PrivateEvalReceiptTests(unittest.TestCase):
             link.symlink_to(real)
             with self.assertRaisesRegex(receipt.ReceiptError, "non-symlink"):
                 receipt.load_private_receipt(link)
+
+    def test_private_pair_allows_named_e1_control_differences(self):
+        a = private("a", "c1", "pair-a")
+        b = private("b", "c1", "pair-b")
+        # Separate arm admission receipts are allowed; stable runtime_profile is the
+        # matched identity. E1 intentionally varies scope/selection/run manifest.
+        result = receipt.compare_private_receipt_sets(
+            [a], [b],
+            allowed_control_differences=[
+                "admission_receipt_sha256",
+                "tool_policy_sha256",
+                "selection_receipt_sha256",
+                "claim_bundle_sha256",
+                "claim_policy_sha256",
+                "renderer_sha256",
+                "run_manifest_sha256",
+            ],
+        )
+        # Our generic helper changes claim controls as well because tags differ.
+        self.assertEqual(result["status"], "pass", result)
+        self.assertIn("tool_policy_sha256", result["observed_control_differences"])
+        self.assertNotIn("runtime_profile_sha256", result["observed_control_differences"])
+
+    def test_private_pair_runtime_profile_can_never_be_waived(self):
+        a = private("a", "c1", "runtime-a")
+        b = private("b", "c1", "runtime-b")
+        b["controls"]["runtime_profile_sha256"] = H("different-runtime")
+        body = copy.deepcopy(b)
+        body.pop("receipt_sha256")
+        b["receipt_sha256"] = hashlib.sha256(
+            json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+        ).hexdigest()
+
+        result = receipt.compare_private_receipt_sets(
+            [a], [b],
+            allowed_control_differences=[
+                "admission_receipt_sha256",
+                "tool_policy_sha256",
+                "selection_receipt_sha256",
+                "claim_bundle_sha256",
+                "claim_policy_sha256",
+                "renderer_sha256",
+                "run_manifest_sha256",
+            ],
+        )
+        self.assertEqual(result["status"], "block")
+        self.assertIn("CONTROL_BINDING_MISMATCH", result["errors"])
+        self.assertIn("runtime_profile_sha256", result["disallowed_control_differences"])
+
+        invalid_allow = receipt.compare_private_receipt_sets(
+            [a], [b], allowed_control_differences=["runtime_profile_sha256"]
+        )
+        self.assertEqual(invalid_allow["status"], "block")
+        self.assertIn("INVALID_ALLOWED_CONTROL_DIFFERENCES", invalid_allow["errors"])
+
+    def test_private_pair_request_and_world_drift_block(self):
+        for key in ("request_settings_sha256", "world_sha256", "catalog_sha256", "tool_implementation_sha256"):
+            with self.subTest(key=key):
+                a = private("a", "c1", "stable-a")
+                b = private("b", "c1", "stable-b")
+                # First align every non-immutable control so only the selected stable
+                # binding plus unavoidable arm/run receipt identity can differ.
+                for control in receipt.CONTROL_KEYS:
+                    if control in receipt.ALWAYS_MATCH_CONTROLS:
+                        b["controls"][control] = a["controls"][control]
+                b["controls"][key] = H("drift-" + key)
+                body = copy.deepcopy(b)
+                body.pop("receipt_sha256")
+                b["receipt_sha256"] = hashlib.sha256(
+                    json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+                ).hexdigest()
+                result = receipt.compare_private_receipt_sets(
+                    [a], [b],
+                    allowed_control_differences=[
+                        "admission_receipt_sha256",
+                        "tool_policy_sha256",
+                        "selection_receipt_sha256",
+                        "claim_bundle_sha256",
+                        "claim_policy_sha256",
+                        "renderer_sha256",
+                        "run_manifest_sha256",
+                    ],
+                )
+                self.assertEqual(result["status"], "block")
+                self.assertIn(key, result["disallowed_control_differences"])
+
+    def test_profile_hash_is_order_independent_and_content_sensitive(self):
+        a = receipt.profile_sha256({"context": 65536, "alias": "q4b"})
+        b = receipt.profile_sha256({"alias": "q4b", "context": 65536})
+        c = receipt.profile_sha256({"alias": "q4b", "context": 8192})
+        self.assertEqual(a, b)
+        self.assertNotEqual(a, c)
 
     def test_cli_builds_public_report_from_private_receipts(self):
         r = private("a", "c1", "cli")
