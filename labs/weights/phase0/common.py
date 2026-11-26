@@ -152,6 +152,76 @@ def run_harness(backend, episode: dict, mechanisms: dict) -> dict:
     return bench_x.run_x(backend, episode, mechanisms)
 
 
+def w1_authorization_semantic_guard(record: dict, episode: dict) -> list[str]:
+    """W1-only veto for prose that overstates authorization-scoped note visibility.
+
+    The historical adjudicator is frozen. This guard only controls whether a raw
+    first-answer trajectory may become training data. haven_read_note deliberately
+    returns NOT_FOUND_OR_NOT_AUTHORIZED, and haven_list_resources(kind=notes)
+    lists only topics readable by the authenticated principal. Neither establishes
+    that a hidden record or an owner's private inventory does not exist.
+    """
+    trace = record.get("trace") or []
+    if not any(
+        t.get("name") == "haven_read_note"
+        and (t.get("output") or {}).get("error") == "NOT_FOUND_OR_NOT_AUTHORIZED"
+        for t in trace
+    ):
+        return []
+
+    _, prose, _ = adjudicator.extract_claims(record.get("answer") or "")
+    text = " ".join((prose or "").casefold().split())
+    if not text:
+        return []
+
+    violations = []
+
+    # The combined error may be reported verbatim. What is forbidden is collapsing
+    # it to a factual "not found"/"does not exist" claim without authorization scope.
+    for sentence in [s.strip() for s in __import__("re").split(r"(?<=[.!?])\\s+|\\n+", text) if s.strip()]:
+        scoped = any(p in sentence for p in (
+            "not authorized", "not accessible", "inaccessible", "unavailable to",
+            "available to me", "available to the authenticated", "readable to",
+            "visible to", "i cannot access", "i can't access", "i cannot determine",
+            "i can't determine", "could not determine", "couldn't determine",
+            "not found or not authorized",
+        ))
+        if ("not found" in sentence or "wasn't found" in sentence or "was not found" in sentence) and not scoped:
+            violations.append("authorization_scope_not_found_overclaim")
+        if any(p in sentence for p in (
+            "does not exist", "doesn't exist", "did not exist", "didn't exist",
+            "no such note", "no such record",
+        )):
+            violations.append("authorization_scope_nonexistence_overclaim")
+
+    # Empty foreign-owner note listings are visibility-scoped. Do not turn them into
+    # an owner-wide inventory fact. Scope-qualified statements ("no notes readable
+    # to me", "the list returned no readable topics") remain allowed.
+    empty_note_lists = [
+        t for t in trace
+        if t.get("name") == "haven_list_resources"
+        and (t.get("output") or {}).get("kind") == "notes"
+        and (t.get("output") or {}).get("topics") == []
+    ]
+    if empty_note_lists:
+        inventory_patterns = (
+            r"\\bthere (?:are|were) no (?:notes?|records?)(?: available)?\\b",
+            r"\\b(?:has|have|had) no (?:notes?|records?)\\b",
+            r"\\bno (?:notes?|records?) exist\\b",
+        )
+        for pat in inventory_patterns:
+            for m in __import__("re").finditer(pat, text):
+                window = text[max(0, m.start() - 45):m.end() + 65]
+                scoped = any(p in window for p in (
+                    "readable", "visible", "accessible", "to me", "to the authenticated",
+                    "for me", "returned", "listed", "the list", "i can access",
+                ))
+                if not scoped:
+                    violations.append("authorization_scope_inventory_overclaim")
+
+    return sorted(set(violations))
+
+
 def judge(record: dict, episode: dict) -> dict:
     """Score the three frozen views without inheriting #115's historical raw-trace bug.
 
@@ -169,6 +239,7 @@ def judge(record: dict, episode: dict) -> dict:
                       trace=(record.get("trace") or [])[:raw_trace_len])
     raw = bench.score_records([raw_record], [episode])[0]
     m["raw_pass"] = bool(raw["pass"])
+    m["w1_semantic_guard_violations"] = w1_authorization_semantic_guard(raw_record, episode)
     attempts = record.get("attempts") or []
     blocked = [a for a in attempts if not a["executed"]]
     blocked_main = [a for a in blocked if a.get("phase") != "correction"]
@@ -176,8 +247,9 @@ def judge(record: dict, episode: dict) -> dict:
     m["views"] = {"model_clean": bool(m["transport_ok"] and m["raw_pass"] and not blocked_main),
                   "corrected_model": bool(m["transport_ok"] and m["pass"] and not blocked),
                   "final_system": bool(m["transport_ok"] and m["pass"])}
-    m["model_clean_pass"] = m["views"]["model_clean"]  # overwrite the historical #115 derived field
-    m["keep"] = bool(m["transport_ok"] and m["views"]["model_clean"] and not blocked)
+    m["model_clean_pass"] = m["views"]["model_clean"]  # frozen diagnostic view remains unchanged
+    m["keep"] = bool(m["transport_ok"] and m["views"]["model_clean"] and not blocked
+                     and not m["w1_semantic_guard_violations"])
     return m
 
 
