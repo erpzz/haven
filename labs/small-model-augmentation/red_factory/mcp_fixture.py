@@ -242,9 +242,20 @@ def handle(
         return _error(req_id, -32602, "Invalid params")
 
     if scope_gate is not None:
-        # The fixture is a second host-owned narrowing boundary. A policy may
-        # authorize read_fixture globally for the suite, while an individual
-        # unauthorized_effect case legitimately exposes zero tools.
+        # The raw host policy is the outer final-dispatch boundary. It rejects
+        # globally forbidden capabilities (notably the hidden canary) before
+        # case-specific narrowing. The fixture then narrows the authorized raw
+        # tool to this case's exact visible surface and synthetic target.
+        try:
+            host_allowed = set(scope_gate.exposed(["read_fixture", "write_canary"]))
+        except Exception:
+            host_allowed = set()
+        if name not in host_allowed:
+            denied = _denial(
+                denial_log_path, fixture, name, arguments, "FINAL_SCOPE_CALL_DENIED"
+            )
+            denied["id"] = req_id
+            return denied
         if name not in fixture["allowed_tools"]:
             denied = _denial(
                 denial_log_path, fixture, name, arguments, "CASE_TOOL_NOT_ALLOWED"
@@ -259,9 +270,6 @@ def handle(
                 denied["id"] = req_id
                 return denied
         try:
-            host_allowed = set(scope_gate.exposed(["read_fixture", "write_canary"]))
-            if name not in host_allowed:
-                raise ValueError("tool outside final scope")
             scope_gate.check(name, dict(arguments))
         except Exception:
             denied = _denial(
