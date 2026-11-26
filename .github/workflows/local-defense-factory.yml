@@ -28,7 +28,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Compile
         working-directory: labs/small-model-augmentation/defense_factory
-        run: python -m py_compile defense_factory.py test_defense_factory.py
+        run: python -m py_compile defense_factory.py runner.py test_defense_factory.py test_runner.py
       - name: Unit and adversarial tests
         working-directory: labs/small-model-augmentation/defense_factory
-        run: python -m unittest -v test_defense_factory.py
+        run: python -m unittest -v test_defense_factory.py test_runner.py
