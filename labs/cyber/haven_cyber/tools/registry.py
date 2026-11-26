@@ -11,7 +11,9 @@ from __future__ import annotations
 import concurrent.futures
 import hashlib
 import json
+import math
 import os
+import re
 import threading
 import time
 from dataclasses import asdict, dataclass, field
@@ -74,27 +76,89 @@ def scoped_path(p: str) -> Path:
     return path
 
 
-def validate(schema: dict, args: dict) -> None:
-    if not isinstance(args, dict):
-        raise ToolError("invalid_input", "arguments must be an object")
-    props = schema.get("properties", {})
-    for r in schema.get("required", []):
-        if r not in args:
-            raise ToolError("invalid_input", f"missing required argument {r!r}")
-    if schema.get("additionalProperties") is False:
-        extra = set(args) - set(props)
-        if extra:
-            raise ToolError("invalid_input", f"unknown arguments {sorted(extra)}")
-    types = {"string": str, "integer": int, "number": (int, float), "boolean": bool, "object": dict, "array": list}
-    for k, v in args.items():
-        s = props.get(k, {})
-        t = s.get("type")
-        if t and not isinstance(v, types[t]) or (t == "integer" and isinstance(v, bool)):
-            raise ToolError("invalid_input", f"{k} must be {t}")
-        if "enum" in s and v not in s["enum"]:
-            raise ToolError("invalid_input", f"{k} must be one of {s['enum']}")
-        if t == "integer" and ("maximum" in s and v > s["maximum"] or "minimum" in s and v < s["minimum"]):
-            raise ToolError("invalid_input", f"{k} out of range")
+def _matches_type(value: Any, kind: str) -> bool:
+    if kind == "object":
+        return isinstance(value, dict)
+    if kind == "array":
+        return isinstance(value, list)
+    if kind == "string":
+        return isinstance(value, str)
+    if kind == "boolean":
+        return isinstance(value, bool)
+    if kind == "integer":
+        return isinstance(value, int) and not isinstance(value, bool)
+    if kind == "number":
+        return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+    if kind == "null":
+        return value is None
+    raise ToolError("invalid_schema", f"unsupported schema type {kind!r}")
+
+
+def validate(schema: dict, value: Any, where: str = "arguments") -> None:
+    """Validate the JSON-schema subset used by Haven Cyber tools, recursively."""
+    if not isinstance(schema, dict):
+        raise ToolError("invalid_schema", f"{where}: schema must be an object")
+
+    types = schema.get("type")
+    if types is not None:
+        if isinstance(types, str):
+            types = [types]
+        elif not isinstance(types, list) or not types or not all(isinstance(t, str) for t in types):
+            raise ToolError("invalid_schema", f"{where}: invalid type declaration")
+        if not any(_matches_type(value, t) for t in types):
+            raise ToolError("invalid_input", f"{where}: expected {'/'.join(types)}")
+
+    if "const" in schema and value != schema["const"]:
+        raise ToolError("invalid_input", f"{where}: must be {schema['const']!r}")
+    if "enum" in schema and value not in schema["enum"]:
+        raise ToolError("invalid_input", f"{where}: must be one of {schema['enum']}")
+
+    if isinstance(value, str):
+        if len(value) < schema.get("minLength", 0) or len(value) > schema.get("maxLength", 1 << 30):
+            raise ToolError("invalid_input", f"{where}: length out of range")
+        if "pattern" in schema:
+            try:
+                matched = re.search(schema["pattern"], value) is not None
+            except (TypeError, re.error) as exc:
+                raise ToolError("invalid_schema", f"{where}: invalid pattern: {exc}") from None
+            if not matched:
+                raise ToolError("invalid_input", f"{where}: does not match required pattern")
+
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        if not math.isfinite(value):
+            raise ToolError("invalid_input", f"{where}: must be finite")
+        if value < schema.get("minimum", float("-inf")) or value > schema.get("maximum", float("inf")):
+            raise ToolError("invalid_input", f"{where}: out of range")
+
+    if isinstance(value, list):
+        if len(value) < schema.get("minItems", 0) or len(value) > schema.get("maxItems", 1 << 30):
+            raise ToolError("invalid_input", f"{where}: item count out of range")
+        if "items" in schema:
+            for i, item in enumerate(value):
+                validate(schema["items"], item, f"{where}[{i}]")
+
+    if isinstance(value, dict):
+        props = schema.get("properties", {})
+        if not isinstance(props, dict):
+            raise ToolError("invalid_schema", f"{where}: properties must be an object")
+        required = schema.get("required", [])
+        if not isinstance(required, list) or not all(isinstance(k, str) for k in required):
+            raise ToolError("invalid_schema", f"{where}: required must be a string list")
+        for key in required:
+            if key not in value:
+                raise ToolError("invalid_input", f"{where}: missing required argument {key!r}")
+
+        additional = schema.get("additionalProperties", True)
+        extra = sorted(set(value) - set(props))
+        if additional is False and extra:
+            raise ToolError("invalid_input", f"{where}: unknown arguments {extra}")
+        if isinstance(additional, dict):
+            for key in extra:
+                validate(additional, value[key], f"{where}.{key}")
+
+        for key, item in value.items():
+            if key in props:
+                validate(props[key], item, f"{where}.{key}")
 
 
 class Registry:
@@ -121,8 +185,9 @@ class Registry:
             raise ToolError("unknown_tool", f"no tool {tool_id!r}; call capabilities() for the list")
         return self.tools[tool_id].public()
 
-    def invoke(self, tool_id: str, args: dict | None = None, caller: str = "local") -> dict:
-        args = args or {}
+    def invoke(self, tool_id: str, args: Any = None, caller: str = "local") -> dict:
+        if args is None:
+            args = {}
         t0 = time.monotonic()
         rec = {"t": utcnow(), "tool": tool_id, "caller": caller,
                "input_sha256": hashlib.sha256(json.dumps(args, sort_keys=True, default=str).encode()).hexdigest()}
