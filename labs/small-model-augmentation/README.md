@@ -24,6 +24,26 @@ The tool-visibility probe is written against Hermes `v2026.9.24`, the version pi
 - a changed model inventory during the check blocks;
 - a pass sets `live_endpoint_verified=true`, meaning only that the targeted local endpoints responded consistently and passed the contract, not that weights were authenticated.
 
+## Launcher-owned dedicated model lease
+
+`owned_llama.py` closes the largest gap between a good-looking loopback endpoint and the process the launcher actually intended to trust.
+
+For the strict profile it:
+
+1. refuses an already-occupied loopback port instead of reusing an unknown server;
+2. SHA-256 checks the exact llama-server executable and GGUF file before launch;
+3. launches a new session/process group with fixed model, loopback host, port, context, parallelism, Jinja mode and alias arguments;
+4. deliberately rejects an arbitrary llama-server argv tail, because a later `-m`, host, port, context or alias flag could override the values that were just admitted;
+5. waits for the same `/v1/models` + `/props` runtime admission used by `observe_llama.py`;
+6. requires the listening socket to belong exactly to the child PID (production probe: `lsof`);
+7. while the lease is active, rechecks child liveness, server/model file identity, listener ownership and runtime identity/context;
+8. can run a guarded Hermes command in its own process group; loss of the model lease blocks the run and terminates the guarded process group;
+9. stops the dedicated model server on every guarded-command validation/launch/guard exit.
+
+The strict helper currently rejects all `--server-extra` values. Performance flags can be added later as explicit typed launcher options after they have individual tests; an unstructured argv escape hatch is intentionally not part of the security boundary.
+
+This is stronger than an alias check, but it is not OS attestation. The initial port-free check has an ordinary bind TOCTOU window that is closed only by the later listener-PID check. A malicious same-user actor that can replace files while preserving identity metadata, interfere with `lsof`, ptrace/inject into the process, or otherwise race the launcher is outside this prototype's qualified threat model. The real Mac integration must test `lsof` behavior and the actual llama-server process architecture before this lease is called production-qualified.
+
 ## Model-visible Hermes tool probe
 
 `tool_visibility.py` answers a different question: **what tools did Hermes actually send to the model?** It does not infer success from process listings or `hermes mcp list`.
@@ -58,7 +78,9 @@ python3 -m py_compile *.py
 HTTP_PROXY=http://127.0.0.1:9 HTTPS_PROXY=http://127.0.0.1:9 ALL_PROXY=http://127.0.0.1:9 \
   python3 -m unittest -v
 ```
-Observed: **40/40 test methods pass in 26.493 s**.
+Observed for the original admission/observer/visibility package: **40/40 test methods pass in 26.493 s**.
+
+The launcher-owned lease was then added and tested separately from exact GitHub blobs. `git hash-object` matched the published blobs for `owned_llama.py`, `test_owned_llama.py`, `observe_llama.py` and `preflight.py`; `py_compile` passed and **19/19 lease tests passed** in the Linux sandbox. The prior 40-test files were unchanged, so this branch now has 59 recorded regression methods across two exact-blob author receipts rather than one claimed monolithic rerun.
 
 Published/tested Git blob IDs:
 - `preflight.py`: `c979fcf49a281c87ac18023a71a6842aad142670`
@@ -68,12 +90,14 @@ Published/tested Git blob IDs:
 - `test_observe_llama.py`: `acb32d97c3f2716464797ea16c13947ed7534598`
 - `tool_visibility.py`: `fdde655af8c00ebbe33d99ad8d17a7a8d0561402`
 - `test_tool_visibility.py`: `c06d126053d1015355b665df44797763c49a6227`
+- `owned_llama.py`: `e9b9e44103d32382bd94f02cc5666910859ef068`
+- `test_owned_llama.py`: `e0172cde565fa1c3042a414ed3f7cba833a8cd25`
 
 Tool-visibility adversarial coverage includes direct-family success; missing family; overlapping-prefix false-pass prevention; Tool Search-only rejection; unknown toolset; nonzero/no-request behavior; malformed and duplicate tool schemas; explicit-profile validation; timeout; exec failure; malformed model request; fixed/redacted CLI receipts; and the distinction between pre-launch validation and actual Hermes execution. These are producer tests, not independent qualification.
 
 ## Remaining blockers / next gates
 
-**Model/process binding:** none of this cryptographically authenticates weights or a pre-existing same-user server. A local process can claim the expected alias and a process can be replaced after the check. Product admission remains incomplete until the integration owner binds validation to the launcher-owned, hash-checked model process and tests it on the named Mac.
+**Model/process binding:** the dedicated-process lease prototype now rejects pre-existing ports, hash-checks the server/GGUF, proves listener ownership and supervises a guarded command. Product admission is still incomplete until the actual review launcher uses this path and the named Mac verifies real `lsof`, real llama-server startup/replacement/death behavior and the enrolled binary/model hashes. Same-user hostile races/OS injection remain out of scope for this prototype.
 
 **Actual Haven/Haven Cyber visibility:** the harness is implemented, but the real isolated profile has **NOT been probed from this environment**. Do not mark MCP availability complete until the Mac run captures the actual first model request and shows both intended families directly visible. A failed probe is a useful result and should remain failed until configuration is repaired and rerun.
 
