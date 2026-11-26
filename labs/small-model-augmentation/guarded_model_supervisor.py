@@ -126,7 +126,8 @@ def run_supervisor(*, plugin_args: dict, owned_llama: Path,
                    alias: str, port: int, context: int,
                    guarded_command, start_timeout=120.0,
                    server_log: Path | None = None, env=None):
-    pre = plugin_preflight.run_preflight(**plugin_args)
+    base_env = dict(os.environ if env is None else env)
+    pre = plugin_preflight.run_preflight(**plugin_args, env=base_env)
     pre_sha = hashlib.sha256(_canon(pre)).hexdigest()
     if pre.get("status") != "pass":
         return _receipt(
@@ -153,7 +154,7 @@ def run_supervisor(*, plugin_args: dict, owned_llama: Path,
                 or not 0.1 <= float(start_timeout) <= 600):
             raise SupervisorError("INVALID_START_TIMEOUT")
 
-        child_env = dict(os.environ if env is None else env)
+        child_env = dict(base_env)
         child_env.update({
             "HERMES_HOME": str(plugin_args["hermes_home"]),
             "HAVEN_AUGMENTATION_ROOT": str(plugin_args["augmentation_root"]),
