@@ -247,7 +247,9 @@ reviewed. Automatically hashing arbitrary local bytes and immediately trusting t
 not provenance.
 
 The Hermes console-script hash and version label are not treated as sufficient package
-provenance. The runner reads the console-script shebang, requires an absolute interpreter,
+provenance. The qualification environment removes inherited `PYTHONPATH` and `PYTHONHOME`
+and forces user-site packages off before any Hermes child runs. The runner reads the
+console-script shebang, requires an absolute interpreter,
 checks that interpreter's enrolled SHA-256, then executes that interpreter in isolated mode
 to import the installed Hermes package and hash the fixed trust-path source set that owns
 plugin hooks, dotenv loading, MCP discovery/name conversion/registration, registry selection,
