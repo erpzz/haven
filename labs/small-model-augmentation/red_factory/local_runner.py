@@ -7,8 +7,11 @@ those proposed calls.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
+import os
+from pathlib import Path
 import re
 import time
 import urllib.error
@@ -17,6 +20,7 @@ import urllib.request
 from typing import Any, Mapping
 
 from red_factory import (
+    FAMILIES,
     TRANSCRIPT_SCHEMA,
     RedCase,
     build_suite,
@@ -127,6 +131,51 @@ def _invalid_score(case: RedCase, violation: str) -> dict[str, Any]:
     }
     body["score_sha256"] = _sha256(body)
     return body
+
+
+def _write_private_json(path: Path, value: Mapping[str, Any]) -> None:
+    path = Path(path)
+    if path.exists() or path.is_symlink():
+        raise ValueError("output path must not already exist")
+    parent = path.parent
+    if not parent.is_dir():
+        raise ValueError("output parent directory does not exist")
+    tmp = path.with_name(path.name + ".tmp")
+    if tmp.exists() or tmp.is_symlink():
+        raise ValueError("temporary output path already exists")
+    data = json.dumps(value, ensure_ascii=False, sort_keys=True, indent=1, allow_nan=False).encode("utf-8") + b"\n"
+    fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    try:
+        with os.fdopen(fd, "wb") as writer:
+            writer.write(data)
+            writer.flush()
+            os.fsync(writer.fileno())
+        os.replace(tmp, path)
+    except BaseException:
+        try:
+            tmp.unlink()
+        except FileNotFoundError:
+            pass
+        raise
+
+
+def _parse_csv_ints(value: str) -> list[int]:
+    try:
+        rows = [int(x) for x in value.split(",") if x != ""]
+    except ValueError as exc:
+        raise ValueError("seeds must be comma-separated integers") from exc
+    if not rows:
+        raise ValueError("at least one seed required")
+    return rows
+
+
+def _parse_families(value: str) -> list[str]:
+    if value == "all":
+        return list(FAMILIES)
+    rows = [x for x in value.split(",") if x]
+    if not rows or any(x not in FAMILIES for x in rows):
+        raise ValueError("families must be 'all' or a comma-separated known family list")
+    return rows
 
 
 def run_case(
@@ -268,3 +317,58 @@ def run_suite(
     }
     body["run_sha256"] = _sha256(body)
     return {**body, "results": results}
+
+
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--base-url", required=True, help="Loopback OpenAI-compatible base, e.g. http://127.0.0.1:8080/v1")
+    parser.add_argument("--model", required=True)
+    parser.add_argument("--seeds", default="0", help="Comma-separated deterministic HRF seeds")
+    parser.add_argument("--families", default="all", help="'all' or comma-separated HRF families")
+    parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument("--max-tokens", type=int, default=512)
+    parser.add_argument("--request-seed", type=int, default=0)
+    parser.add_argument("--timeout", type=float, default=120.0)
+    parser.add_argument("--api-key-env", help="Read optional local API key from this environment variable")
+    parser.add_argument("--out", type=Path, required=True, help="New private JSON receipt path (must not exist)")
+    args = parser.parse_args(argv)
+
+    api_key = None
+    if args.api_key_env:
+        if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,127}", args.api_key_env):
+            raise ValueError("invalid api-key environment variable name")
+        api_key = os.environ.get(args.api_key_env)
+        if api_key is None:
+            raise ValueError("api-key environment variable is not set")
+
+    suite = build_suite(
+        seeds=_parse_csv_ints(args.seeds),
+        families=_parse_families(args.families),
+    )
+    run = run_suite(
+        base_url=args.base_url,
+        model=args.model,
+        suite=suite,
+        timeout_seconds=args.timeout,
+        temperature=args.temperature,
+        max_tokens=args.max_tokens,
+        seed=args.request_seed,
+        api_key=api_key,
+    )
+    _write_private_json(args.out, run)
+    print(json.dumps({
+        "schema": run["schema"],
+        "classification": run["classification"],
+        "suite_sha256": run["suite_sha256"],
+        "model": run["model"],
+        "n": run["summary"]["n"],
+        "passes": run["summary"]["passes"],
+        "rate": run["summary"]["rate"],
+        "run_sha256": run["run_sha256"],
+        "out": str(args.out),
+    }, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
