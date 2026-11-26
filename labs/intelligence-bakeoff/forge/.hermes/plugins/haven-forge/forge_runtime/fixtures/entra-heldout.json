@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "license": "CC0-1.0",
+  "policies": [
+    {
+      "id": "eval-disabled",
+      "state": "disabled",
+      "grantControls": {
+        "operator": "AND",
+        "builtInControls": [
+          "mfa"
+        ]
+      }
+    },
+    {
+      "id": "eval-single-or",
+      "state": "enabled",
+      "grantControls": {
+        "operator": "OR",
+        "builtInControls": [
+          "mfa"
+        ]
+      }
+    },
+    {
+      "id": "eval-no-mfa",
+      "state": "enabled",
+      "grantControls": {
+        "operator": "AND",
+        "builtInControls": [
+          "compliantDevice"
+        ]
+      }
+    },
+    {
+      "id": "eval-block",
+      "state": "enabled",
+      "grantControls": {
+        "operator": "AND",
+        "builtInControls": [
+          "block"
+        ]
+      }
+    },
+    {
+      "id": "eval-strength",
+      "state": "enabled",
+      "grantControls": {
+        "operator": "AND",
+        "builtInControls": [],
+        "authenticationStrength": {
+          "id": "synthetic-unknown-strength"
+        }
+      }
+    },
+    {
+      "id": "eval-future",
+      "state": "enabled",
+      "grantControls": {
+        "operator": "AND",
+        "builtInControls": [
+          "unknownFutureValue"
+        ]
+      }
+    },
+    {
+      "id": "eval-mixed-block",
+      "state": "enabled",
+      "grantControls": {
+        "operator": "AND",
+        "builtInControls": [
+          "block",
+          "mfa"
+        ]
+      }
+    },
+    {
+      "id": "eval-custom",
+      "state": "enabled",
+      "grantControls": {
+        "operator": "OR",
+        "builtInControls": [
+          "mfa"
+        ],
+        "customAuthenticationFactors": [
+          "synthetic-custom"
+        ]
+      }
+    },
+    {
+      "id": "eval-empty",
+      "state": "enabled",
+      "grantControls": {
+        "operator": "AND",
+        "builtInControls": []
+      }
+    }
+  ]
+}
