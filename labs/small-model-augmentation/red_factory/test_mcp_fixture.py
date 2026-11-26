@@ -1,4 +1,5 @@
 import json
+import stat
 import sys
 import tempfile
 import unittest
@@ -13,10 +14,12 @@ from mcp_scope_runtime import McpScopeGate
 from mcp_fixture import (
     DENIAL_SCHEMA,
     FIXTURE_SCHEMA,
+    GUARD_SCHEMA,
     LOG_SCHEMA,
     fixture_for_case,
     handle,
     load_fixture,
+    serve_stdio,
 )
 from red_factory import make_case
 
@@ -290,6 +293,70 @@ class McpFixtureTests(unittest.TestCase):
                 denial_log_path=root / "denials.jsonl",
             )
             self.assertEqual(listed["result"]["tools"], [])
+
+    def test_guarded_stdio_emits_bound_guard_receipt_before_requests(self):
+        case = make_case("no_evidence", 18)
+        fixture = fixture_for_case(case)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            fixture_path = root / "fixture.json"
+            fixture_path.write_text(json.dumps(fixture), encoding="utf-8")
+            call_log = root / "calls.jsonl"
+            denial_log = root / "denials.jsonl"
+            guard_log = root / "guard.json"
+            gate = guarded_gate(root)
+
+            # EOF immediately: startup itself must still produce guard evidence.
+            import io
+            old_stdin = sys.stdin
+            try:
+                sys.stdin = io.TextIOWrapper(io.BytesIO(b""), encoding="utf-8")
+                rc = serve_stdio(
+                    fixture_path,
+                    call_log,
+                    denial_log_path=denial_log,
+                    guard_log_path=guard_log,
+                    scope_gate=gate,
+                )
+            finally:
+                sys.stdin = old_stdin
+            self.assertEqual(rc, 0)
+            row = json.loads(guard_log.read_text())
+            self.assertEqual(row["schema"], GUARD_SCHEMA)
+            self.assertEqual(row["case_id"], fixture["case_id"])
+            self.assertEqual(row["fixture_sha256"], fixture["fixture_sha256"])
+            self.assertEqual(row["policy_sha256"], gate.policy_sha256)
+            self.assertEqual(row["allowed_tools"], ["read_fixture"])
+            body = {k: v for k, v in row.items() if k != "guard_sha256"}
+            from mcp_fixture import _sha256
+            self.assertEqual(row["guard_sha256"], _sha256(body))
+            self.assertEqual(stat.S_IMODE(guard_log.stat().st_mode), 0o600)
+
+    def test_guarded_stdio_refuses_missing_or_reused_guard_receipt(self):
+        case = make_case("no_evidence", 19)
+        fixture = fixture_for_case(case)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            fixture_path = root / "fixture.json"
+            fixture_path.write_text(json.dumps(fixture), encoding="utf-8")
+            gate = guarded_gate(root)
+            with self.assertRaisesRegex(ValueError, "guard receipt path required"):
+                serve_stdio(
+                    fixture_path,
+                    root / "calls.jsonl",
+                    denial_log_path=root / "denials.jsonl",
+                    scope_gate=gate,
+                )
+            guard_log = root / "guard.json"
+            guard_log.write_text("{}")
+            with self.assertRaisesRegex(ValueError, "already exists"):
+                serve_stdio(
+                    fixture_path,
+                    root / "calls.jsonl",
+                    denial_log_path=root / "denials.jsonl",
+                    guard_log_path=guard_log,
+                    scope_gate=gate,
+                )
 
     def test_fixture_file_hash_tamper_rejected(self):
         case = make_case("no_evidence", 3)
