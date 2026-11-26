@@ -42,6 +42,8 @@ class MacCaseQualificationTests(unittest.TestCase):
         self.profile_env = env
         config = self.home / "config.yaml"
         config.write_text(
+            "platform_toolsets:\n"
+            "  cli: []\n"
             "mcp_servers:\n"
             "  red_factory:\n"
             "    command: python3\n"
