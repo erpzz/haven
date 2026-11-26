@@ -140,6 +140,26 @@ class RawViewAccounting(unittest.TestCase):
         self.assertEqual(seen, [1, 0])
 
 
+class RawViewUnsetAccounting(unittest.TestCase):
+    def test_unset_raw_trace_len_preserves_legacy_full_trace(self):
+        e = by_family("household_own")[0]
+        seen = []
+        original = bench_x.bench.score_records
+
+        def capture(records, episodes):
+            seen.append(len(records[0]["trace"]))
+            return [{"pass": False, "claims_ok": True, "violations": []}]
+
+        bench_x.bench.score_records = capture
+        try:
+            rec = {"answer": "final", "raw_answer": "raw",
+                   "trace": [{"name": "pre_answer_tool", "arguments": {}, "output": {"ok": True}}]}
+            bench_x.score_views(rec, e)
+        finally:
+            bench_x.bench.score_records = original
+        self.assertEqual(seen, [1, 1])
+
+
 class CorrectionAccounting(unittest.TestCase):
     def test_rejected_then_corrected(self):
         e = by_family("household_own")[0]
