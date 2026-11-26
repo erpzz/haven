@@ -1,0 +1,104 @@
+{
+  "schema": "haven-weights-regression-config-1",
+  "status": "CONFIG ONLY. NOT_EXECUTED: no regression run has been made under this config.",
+  "purpose": "PLAN.md decision rule 4 (general skills hold): every trained arm must stay within 2 points of the stock Qwen3.5-4B on each benchmark's primary metric. This file fixes the datasets, revisions, slices, metrics and decoding before any training batch.",
+  "rule_4": {
+    "threshold_points": 2.0,
+    "applies_to": "primary_metric of each benchmark, trained arm minus stock 4B, same host, same session, same serving path",
+    "comparison": "point estimates as preregistered in PLAN.md; per-item paired outcomes are also saved so the noise can be reported beside each delta"
+  },
+  "serving": {
+    "engine": "llama.cpp b11146 llama-server (the production path)",
+    "model_stock": "unsloth/Qwen3.5-4B-GGUF@e87f176479d0855a907a41277aca2f8ee7a09523 Qwen3.5-4B-Q4_K_M.gguf (sha256 00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4)",
+    "model_trained": "the arm's LoRA merged into the same base checkpoint, converted and quantized to Q4_K_M by PR #95's merge-to-GGUF path, so stock and trained differ only in weights",
+    "server_args": "-c 33280 -ngl 99 --jinja -np 1 -fa auto --fit off -cram 0 --no-webui",
+    "temperature": 0,
+    "enable_thinking": false,
+    "seed": 0
+  },
+  "benchmarks": {
+    "ifeval": {
+      "dataset": {
+        "repo": "google/IFEval",
+        "revision": "966cd89545d6b6acfd7638bc708b98261ca58e84",
+        "file": "ifeval_input_data.jsonl",
+        "sha256": "6a85310ca8ce15eff755aa08a3a4ff931c7e273e7515ebb3c492ea85fd8288f2",
+        "license": "apache-2.0"
+      },
+      "slice": "all 541 prompts",
+      "harness": {
+        "package": "lm-eval==0.4.13",
+        "task": "ifeval",
+        "model_type": "local-chat-completions (llama-server /v1/chat/completions)",
+        "max_gen_tokens": 1280
+      },
+      "primary_metric": "prompt_level_strict_acc (percent)",
+      "also_reported": [
+        "prompt_level_loose_acc",
+        "inst_level_strict_acc",
+        "inst_level_loose_acc"
+      ]
+    },
+    "bfcl": {
+      "dataset": {
+        "repo": "gorilla-llm/Berkeley-Function-Calling-Leaderboard",
+        "revision": "61fc0608cfd831fcfbbaa676ebdfef0ed963eeda",
+        "license": "apache-2.0",
+        "files": {
+          "BFCL_v3_simple.json": "fbc37b2ad252bf9af985582e0e07b456173fe627d957491472ea9cef5fb83158",
+          "BFCL_v3_multiple.json": "aef168155ebd74b7ac2401198b201343bc7d16d7a3d7e0d4e6d8ee82c6969b2a",
+          "BFCL_v3_parallel.json": "fad375d68295776efb63e5aa331dd884f8635e7bb50e05908113c74f14281c3c",
+          "BFCL_v3_parallel_multiple.json": "8863ea8433239f55c5f016154cf0830853c89f693c6ea270396a2fa121960579",
+          "BFCL_v3_irrelevance.json": "975f51c51f688649fd190078efd87081241e0a326f9114a2ea3c1ca2440d8690",
+          "possible_answer/BFCL_v3_simple.json": "2911a2bc00df82c4f999ffa64fedb0164cb88e96212ffa5972087eb91fd496ee",
+          "possible_answer/BFCL_v3_multiple.json": "244e00ce9395df948bcafc7bee64e8f9c87ef70887587d83cae45b13699f3047",
+          "possible_answer/BFCL_v3_parallel.json": "3af54bf04e5b7640b03a9b6a82440f52474feb24b398f94435fd2b155c7727de",
+          "possible_answer/BFCL_v3_parallel_multiple.json": "df4d2c16238c1465dc04697c273cf3ab4a450075fcd274e3dc86ad5bf0049b75"
+        }
+      },
+      "slice": {
+        "simple": 400,
+        "multiple": 200,
+        "parallel": 200,
+        "parallel_multiple": 200,
+        "irrelevance": 240,
+        "total": 1240
+      },
+      "why_this_slice": "non-live single-turn AST categories plus irrelevance: they need no executable APIs or network, and irrelevance catches a tuned model that calls tools when none apply (the over-calling failure W1 could teach)",
+      "harness": {
+        "package": "bfcl-eval==2026.3.23",
+        "checker": "AST checker (ast_checker) and irrelevance rule from the package; generation through native tool calling on llama-server with the dataset's function docs as tools",
+        "runner": "to be written in Phase 3 and preregistered with its hash before the first regression run"
+      },
+      "primary_metric": "micro accuracy over the 1,240 items (percent)",
+      "also_reported": [
+        "accuracy per category"
+      ]
+    },
+    "mmlu_pro": {
+      "dataset": {
+        "repo": "TIGER-Lab/MMLU-Pro",
+        "revision": "b189ec765aa7ed75c8acfea42df31fdae71f97be",
+        "file": "data/test-00000-of-00001.parquet",
+        "sha256": "0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8",
+        "license": "mit"
+      },
+      "slice": "1,400 test questions: 100 per category x 14 categories, ids in mmlu_pro_subset.json (rule inside the file)",
+      "harness": {
+        "package": "lm-eval==0.4.13",
+        "task": "mmlu_pro (5-shot chain of thought from the validation split, answer extracted by the task's regex)",
+        "model_type": "local-chat-completions",
+        "max_gen_tokens": 2048,
+        "subset": "the task restricted to the listed question_ids"
+      },
+      "primary_metric": "exact-match accuracy over the 1,400 questions (percent)",
+      "also_reported": [
+        "accuracy per category",
+        "share of answers the regex could not extract"
+      ]
+    }
+  },
+  "general_data_mix": "PLAN.md mixes about 25% general data into training. None of these regression items, and nothing from these dataset repositories, may be in that mix; the Phase 3 data builder must check it.",
+  "records": "per-item outputs stay private (outside Git); only summaries with per-item pass vectors' sha256 are committed",
+  "cost_note": "Not in PLAN.md's 36 GPU-hour estimate as a separate line. Rough count: 3,181 items per model; at the round-2 4B decode rate about 0.5-1 GPU-hour per model on a T4, so about 3-6 hours for base plus five arms. To be measured on the first run."
+}
