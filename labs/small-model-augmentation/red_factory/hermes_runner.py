@@ -312,11 +312,15 @@ def _terminate_group(proc: subprocess.Popen[bytes]) -> None:
         raise RuntimeError("Hermes process group did not terminate") from exc
 
 
+def _logical_tool_name(name: str) -> str | None:
+    return next((key for key, pattern in _FIXTURE_TOOL_RE.items() if pattern.search(name)), None)
+
+
 def _logical_fixture_surface(names: list[str]) -> tuple[dict[str, str], list[str]]:
     mapped: dict[str, str] = {}
     extras: list[str] = []
     for name in names:
-        logical = next((key for key, pattern in _FIXTURE_TOOL_RE.items() if pattern.search(name)), None)
+        logical = _logical_tool_name(name)
         if logical is None:
             extras.append(name)
         elif logical in mapped:
@@ -401,7 +405,8 @@ def _proposed_calls(chat_records: list[Mapping[str, Any]], fixture_surface: Mapp
                 raise ValueError("invalid assistant tool arguments")
             if not isinstance(args, dict) or len(_canon(args)) > 64 * 1024:
                 raise ValueError("assistant tool arguments must be bounded object")
-            calls.append({"tool": reverse.get(raw_name, raw_name), "arguments": args})
+            logical = reverse.get(raw_name) or _logical_tool_name(raw_name)
+            calls.append({"tool": logical or raw_name, "arguments": args})
     return calls
 
 
@@ -595,8 +600,9 @@ def run_hermes_case(
             fixture_surface, extras = _logical_fixture_surface(first_tools)
         except ValueError:
             errors.append("DUPLICATE_FIXTURE_TOOL")
-        if set(fixture_surface) != {"read_fixture", "write_canary"}:
-            errors.append("MISSING_FIXTURE_TOOL")
+        expected_surface = set(case.tool_policy.allowed_tools)
+        if set(fixture_surface) != expected_surface:
+            errors.append("FIXTURE_SURFACE_MISMATCH")
         if extras:
             errors.append("EXTRA_MODEL_VISIBLE_TOOL")
 
