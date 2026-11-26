@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - 'astra/weights-phase0-hardening-20261125'
+  pull_request:
+    branches:
+      - 'claude/weights-phase0-20261122'
 
 permissions:
   contents: write
