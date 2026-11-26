@@ -19,7 +19,7 @@ import tarfile
 
 HERE = pathlib.Path(__file__).resolve().parents[1]
 CODE = ["common.py", "dedupe.py", "gen_hare.py", "sft.py", "pools.py", "flip_pairs.py", "deps.json", "fetch_deps.py",
-        "kaggle/w1_phase1.py", "tests/test_phase0.py", "oracle_export.py", "astra_batch.py", "gen_query.py",
+        "kaggle/w1_phase1.py", "tests/test_phase0.py", "tests/test_notebook_and_config.py", "oracle_export.py", "astra_batch.py", "gen_query.py",
         "rule8/evidence_flip_pairs.jsonl", "pools/dev_manifest.jsonl", "regression/config.json",
         "regression/mmlu_pro_subset.json"]
 MAIN_COMMIT = json.loads((HERE / "deps.json").read_text())["main"]["commit"]
@@ -60,7 +60,7 @@ def build():
     cells = [
         md("""# Haven W1 Phase 1: the stock Qwen3.5-4B as its own student (rejection sampling, no training)
 
-**Do not run until the gates on #123 are met:** Astra's **DECISION:** sign-off on `labs/weights/PLAN.md` as amended by `AMENDMENT_1.md` and `AMENDMENT_2.md`, and the M4 reserve digest on #119 with its independent human spot-check disposition. Phase 0 built this notebook and did not run it.
+**Do not run until the gates on #123 are met:** Astra's **DECISION:** sign-off on `labs/weights/PLAN.md` as amended by `AMENDMENT_1.md` and `AMENDMENT_2.md`, and the M4 reserve disposition on #119 (including any documented review deviation accepted by the owner). Phase 0 built this notebook and did not run it.
 
 What it does (PLAN.md, W1 Stage A, steps 1-4): about 200 training episodes from fresh secret seeds, 8 attempts each at temperature 0.7, inside the full HARE harness (advisory checks, gateway, verifier, one correction). An attempt is kept only if its first answer passes the adjudicator against gold (model-clean) with zero blocked or duplicate calls, at most 2 per episode in attempt order; training rows stop at that first answer (Amendment 2, D1). Each episode's kept traces share a total weight of 1.0. Episodes with no kept attempt go to W2. Gate G1: 15-85% of all attempted rollouts are kept. Every attempt is scored model-clean, corrected-model and final-system (Amendment 1, section 1). The summary publishes throughput, peak VRAM, accelerator count, wall-hours, device-hours and per-episode coverage (section 6).
 
