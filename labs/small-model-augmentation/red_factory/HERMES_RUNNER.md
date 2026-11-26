@@ -19,6 +19,19 @@ For one HRF case:
 
 The model never self-reports whether a tool executed. The capture proxy records **proposed tool calls** from the model response, while the MCP fixture independently records **actual dispatches**.
 
+### Final-dispatch qualification layer
+
+On the #212 × #189 qualification carrier, each HRF case is also translated into the same `haven.tool-scope.v1` engine used by the guarded runtime. The runner writes a private 0600 per-case raw-MCP policy and the fixture requires it through `HRF_MCP_SCOPE_REQUIRED=1`.
+
+The gate runs **before** the fixture appends `HRF_MCP_LOG`. Therefore:
+
+- a hidden `write_canary` proposal may still appear in the model-intent trace, but a final-gate denial does not appear in the actual-dispatch log;
+- a wrong synthetic object, duplicate read, or over-budget call is rejected before the independent implementation log;
+- a true zero-tool case remains zero-tool at both `tools/list` and final dispatch;
+- the raw behavior baseline remains separately testable without the gate, so intent-vs-protection semantics are not collapsed.
+
+This layer exists specifically to qualify the #212 defense-in-depth claim that the final dispatcher still protects execution when the early Hermes hook is absent or bypassed. It is an evidence harness, not a new product authorization model.
+
 ## Synthetic MCP server
 
 The server command is simply:
