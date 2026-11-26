@@ -8,7 +8,8 @@ import unittest
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from hermes_runner import FINAL_SCHEMA, main, run_hermes_case, run_hermes_suite
+from hermes_runner import FINAL_SCHEMA, _mcp_scope_policy, main, run_hermes_case, run_hermes_suite
+from mcp_fixture import fixture_for_case
 from red_factory import make_case
 
 
@@ -168,6 +169,7 @@ class HermesRunnerTests(unittest.TestCase):
         BackendHandler.requests = []
         self.tmp = tempfile.TemporaryDirectory()
         root = Path(self.tmp.name)
+        self.root = root
         self.hermes_home = root / "hermes-home"
         self.hermes_home.mkdir()
         self.hermes = root / "fake-hermes"
@@ -202,6 +204,16 @@ class HermesRunnerTests(unittest.TestCase):
             }]
         return message
 
+    def bound_policy(self, case, name="bound-mcp.json"):
+        path = (self.root / name).resolve()
+        policy = _mcp_scope_policy(case, fixture_for_case(case))
+        path.write_text(
+            json.dumps(policy, sort_keys=True, separators=(",", ":")) + "\n"
+        )
+        path.chmod(0o600)
+        import hashlib
+        return path, hashlib.sha256(path.read_bytes()).hexdigest()
+
     def run_case(self, case, proposal=None, **env_updates):
         BackendHandler.responses.append(self.model_response(case, proposal))
         env = dict(os.environ)
@@ -216,6 +228,93 @@ class HermesRunnerTests(unittest.TestCase):
             timeout_seconds=5,
             env=env,
         )
+
+    def test_parent_bound_final_policy_is_reused_and_preserved(self):
+        case = make_case("no_evidence", 61)
+        policy, digest = self.bound_policy(case)
+        BackendHandler.responses.append(self.model_response(case))
+        result = run_hermes_case(
+            hermes=self.hermes,
+            hermes_home=self.hermes_home,
+            toolsets="mcp-red-factory",
+            backend_base_url=self.backend,
+            model="local-4b",
+            case=case,
+            timeout_seconds=5,
+            bound_mcp_policy=policy,
+            bound_mcp_policy_sha256=digest,
+        )
+        self.assertEqual(result["status"], "pass", result)
+        self.assertTrue(result["final_mcp_policy_bound_by_parent"])
+        self.assertEqual(result["final_mcp_policy_sha256"], digest)
+        self.assertTrue(policy.exists())
+
+    def test_parent_bound_policy_hash_or_case_mismatch_fails_before_hermes(self):
+        case = make_case("no_evidence", 62)
+        policy, digest = self.bound_policy(case)
+        with self.assertRaisesRegex(ValueError, "hash mismatch"):
+            run_hermes_case(
+                hermes=self.hermes,
+                hermes_home=self.hermes_home,
+                toolsets="mcp-red-factory",
+                backend_base_url=self.backend,
+                model="local-4b",
+                case=case,
+                timeout_seconds=5,
+                bound_mcp_policy=policy,
+                bound_mcp_policy_sha256="0" * 64,
+            )
+        other = make_case("no_evidence", 63)
+        with self.assertRaisesRegex(ValueError, "does not match HRF case"):
+            run_hermes_case(
+                hermes=self.hermes,
+                hermes_home=self.hermes_home,
+                toolsets="mcp-red-factory",
+                backend_base_url=self.backend,
+                model="local-4b",
+                case=other,
+                timeout_seconds=5,
+                bound_mcp_policy=policy,
+                bound_mcp_policy_sha256=digest,
+            )
+        self.assertEqual(BackendHandler.requests, [])
+
+    def test_bound_final_policy_is_single_case_only(self):
+        c1 = make_case("no_evidence", 64)
+        c2 = make_case("no_evidence", 65)
+        policy, digest = self.bound_policy(c1)
+        suite = {
+            "schema": "haven-local-red-factory-suite-v1",
+            "classification": "development",
+            "families": ["no_evidence"],
+            "seeds": [64, 65],
+            "case_ids": [c1.case_id, c2.case_id],
+            "n": 2,
+            "cases": [c1, c2],
+        }
+        import hashlib
+        body = {k: suite[k] for k in (
+            "schema", "classification", "families", "seeds", "case_ids", "n"
+        )}
+        suite["suite_sha256"] = hashlib.sha256(
+            json.dumps(
+                body, sort_keys=True, separators=(",", ":"),
+                ensure_ascii=False, allow_nan=False,
+            ).encode()
+        ).hexdigest()
+        with self.assertRaisesRegex(ValueError, "exactly one HRF case"):
+            run_hermes_suite(
+                hermes=self.hermes,
+                hermes_home=self.hermes_home,
+                toolsets="mcp-red-factory",
+                backend_base_url=self.backend,
+                model="local-4b",
+                suite=suite,
+                timeout_seconds=5,
+                bound_mcp_policy=policy,
+                bound_mcp_policy_sha256=digest,
+            )
+        self.assertEqual(BackendHandler.requests, [])
 
     def test_valid_hermes_evidence_and_no_call_case(self):
         case = make_case("no_evidence", 1)
