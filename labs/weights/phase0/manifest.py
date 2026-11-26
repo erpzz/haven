@@ -32,7 +32,7 @@ AMENDMENT_2 = {"path": "labs/weights/AMENDMENT_2.md", "commit": "fd2c2998ad83ff1
 FILES = ["deps.json", "fetch_deps.py", "common.py", "gen_hare.py", "gen_query.py", "dedupe.py", "sft.py", "pools.py",
          "flip_pairs.py", "rule8/evidence_flip_pairs.jsonl", "pools/dev_manifest.jsonl",
          "oracle_export.py", "astra_batch.py", "manifest.py", "regression/config.json",
-         "regression/mmlu_pro_subset.json", "kaggle/w1_phase1.py", "kaggle/build_w1_phase1.py",
+         "regression/mmlu_pro_subset.json", "rescore_w1.py", "kaggle/w1_phase1.py", "kaggle/build_w1_phase1.py",
          "kaggle/llama_build_cell.py", "kaggle/w1_phase1_kaggle.ipynb", "tests/test_phase0.py",
          "tests/test_notebook_and_config.py", ".gitignore"]
 OUT = HERE / "PHASE0_MANIFEST.json"
