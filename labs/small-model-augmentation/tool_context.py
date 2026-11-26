@@ -134,7 +134,7 @@ def route(cards, query, *, authorized, required=(), allowed_effects=("read",),
         return {"schema": RECEIPT, "status": "block", "errors": errors}
     if type(query) is not str or len(query) > MAX_QUERY or "\x00" in query:
         return _blocked("INVALID_QUERY")
-    if (type(authorized) not in (list, tuple, set) or not authorized
+    if (type(authorized) not in (list, tuple, set)
             or not all(_name(x) for x in authorized)):
         return _blocked("INVALID_AUTHORIZED_SET")
     if len(authorized) != len(set(authorized)):
