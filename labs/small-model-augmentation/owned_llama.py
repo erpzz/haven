@@ -141,14 +141,43 @@ def listener_pids_lsof(port, expected_pid=None):
 def _safe_server_args(values):
     if type(values) is not list:
         raise LeaseError("INVALID_SERVER_ARGS")
-    for value in values:
-        if (type(value) is not str or not value or len(value) > MAX_ARG
-                or "\x00" in value or "\n" in value or "\r" in value):
-            raise LeaseError("INVALID_SERVER_ARGS")
-    return list(values)
+    # Strict profile: arbitrary llama-server flags can override security-critical
+    # -m/host/port/context/alias settings after they have been hash/admission checked.
+    # Add explicit typed launcher options later instead of accepting a raw argv tail.
+    if values:
+        raise LeaseError("SERVER_EXTRA_ARGS_NOT_ALLOWED")
+    return []
 
 
 @dataclass
+def _terminate_group(process, timeout=2.0):
+    if process.poll() is not None:
+        return
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except (ProcessLookupError, PermissionError, OSError):
+        try:
+            process.terminate()
+        except OSError:
+            pass
+    try:
+        process.wait(timeout=timeout)
+        return
+    except subprocess.TimeoutExpired:
+        pass
+    try:
+        os.killpg(process.pid, signal.SIGKILL)
+    except (ProcessLookupError, PermissionError, OSError):
+        try:
+            process.kill()
+        except OSError:
+            pass
+    try:
+        process.wait(timeout=2)
+    except subprocess.TimeoutExpired:
+        pass
+
+
 class Lease:
     process: subprocess.Popen
     port: int
@@ -187,31 +216,7 @@ class Lease:
         return True
 
     def stop(self, timeout=DEFAULT_STOP_TIMEOUT):
-        if self.process.poll() is not None:
-            return
-        try:
-            os.killpg(self.process.pid, signal.SIGTERM)
-        except (ProcessLookupError, PermissionError, OSError):
-            try:
-                self.process.terminate()
-            except OSError:
-                pass
-        try:
-            self.process.wait(timeout=timeout)
-            return
-        except subprocess.TimeoutExpired:
-            pass
-        try:
-            os.killpg(self.process.pid, signal.SIGKILL)
-        except (ProcessLookupError, PermissionError, OSError):
-            try:
-                self.process.kill()
-            except OSError:
-                pass
-        try:
-            self.process.wait(timeout=2)
-        except subprocess.TimeoutExpired:
-            pass
+        _terminate_group(self.process, timeout=timeout)
 
 
 def launch(server, server_sha256, model, model_sha256, *,
@@ -301,22 +306,29 @@ def run_guarded(lease, command, *, cwd=None, env=None,
                 guard_interval=DEFAULT_GUARD_INTERVAL):
     if not isinstance(lease, Lease):
         return None, "INVALID_LEASE"
+    # run_guarded consumes a valid lease: every validation/launch/guard outcome
+    # after this point stops the dedicated server before returning.
     if (type(command) is not list or not command
             or any(type(x) is not str or not x or len(x) > MAX_ARG or "\x00" in x
                    for x in command)):
+        lease.stop()
         return None, "INVALID_COMMAND"
     if (type(guard_interval) not in (int, float) or type(guard_interval) is bool
             or not 0.05 <= float(guard_interval) <= 30):
+        lease.stop()
         return None, "INVALID_GUARD_INTERVAL"
     if cwd is not None and not Path(cwd).is_dir():
+        lease.stop()
         return None, "INVALID_WORKING_DIRECTORY"
     try:
         lease.guard()
     except LeaseError as exc:
+        lease.stop()
         return None, exc.code
     try:
-        child = subprocess.Popen(command, cwd=cwd, env=env)
+        child = subprocess.Popen(command, cwd=cwd, env=env, start_new_session=True)
     except OSError:
+        lease.stop()
         return None, "GUARDED_COMMAND_EXEC_FAILED"
     error = None
     try:
@@ -326,21 +338,7 @@ def run_guarded(lease, command, *, cwd=None, env=None,
                 lease.guard()
             except LeaseError as exc:
                 error = exc.code
-                try:
-                    child.terminate()
-                except OSError:
-                    pass
-                try:
-                    child.wait(timeout=2)
-                except subprocess.TimeoutExpired:
-                    try:
-                        child.kill()
-                    except OSError:
-                        pass
-                    try:
-                        child.wait(timeout=2)
-                    except subprocess.TimeoutExpired:
-                        pass
+                _terminate_group(child, timeout=2)
                 break
         rc = child.poll()
         if error is None:
@@ -348,6 +346,7 @@ def run_guarded(lease, command, *, cwd=None, env=None,
                 lease.guard()
             except LeaseError as exc:
                 error = exc.code
+                _terminate_group(child, timeout=2)
         return rc, error
     finally:
         lease.stop()
