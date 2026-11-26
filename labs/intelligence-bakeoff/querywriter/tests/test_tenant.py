@@ -53,13 +53,13 @@ class Suite(unittest.TestCase):
             'RETURN "drop install attach"',
             "MATCH (n) // create delete set\nRETURN n.id",
             "MATCH (n) /* create delete set */ RETURN n.id",
-            "MATCH (n {\`set\`: 'create'}) RETURN n.id",
+            "MATCH (n {`set`: 'create'}) RETURN n.id",
         ):
             with self.subTest(good=good):
                 T.assert_read_only(good)
 
     def test_read_only_guard_rejects_malformed_lexical_state(self):
-        for bad in ("RETURN 'unterminated", "MATCH (n) /* unterminated", "RETURN \`unterminated"):
+        for bad in ("RETURN 'unterminated", "MATCH (n) /* unterminated", "RETURN `unterminated"):
             with self.subTest(bad=bad):
                 with self.assertRaises(ValueError):
                     T.assert_read_only(bad)
