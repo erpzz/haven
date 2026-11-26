@@ -148,7 +148,8 @@ def run_probe(hermes, hermes_home, toolsets, required_prefixes, *, cwd=None, tim
                "--base-url", f"http://127.0.0.1:{port}/v1", "--api-key", "local-probe",
                "--model", PROBE_MODEL, "-q", "Reply exactly OK. Do not call any tool."]
     child_env = dict(os.environ if env is None else env)
-    child_env.update({"HERMES_HOME": str(home_path), "OPENAI_API_KEY": "local-probe", "NO_COLOR": "1"})
+    child_env.update({"HERMES_HOME": str(home_path), "OPENAI_API_KEY": "local-probe", "NO_COLOR": "1",
+                      "NO_PROXY": "127.0.0.1,localhost", "no_proxy": "127.0.0.1,localhost"})
     try:
         cp = subprocess.run(command, cwd=cwd, env=child_env, text=True, capture_output=True, timeout=timeout)
     except subprocess.TimeoutExpired:
