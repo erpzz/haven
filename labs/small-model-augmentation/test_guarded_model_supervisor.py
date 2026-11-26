@@ -24,6 +24,8 @@ required = [
 ]
 if any(not os.environ.get(key) for key in required):
     raise SystemExit(21)
+if os.environ.get("HERMES_ENABLE_PROJECT_PLUGINS") != "0":
+    raise SystemExit(24)
 args = sys.argv[1:]
 if "--server" not in args or "--model" not in args or "--alias" not in args:
     raise SystemExit(22)
@@ -205,6 +207,7 @@ class GuardedModelSupervisorTests(unittest.TestCase):
             "HAVEN_SCOPE_POLICY_FILE": "/wrong",
             "HAVEN_MCP_SCOPE_POLICY_FILE": "/wrong",
             "HAVEN_MCP_SCOPE_REQUIRED": "0",
+            "HERMES_ENABLE_PROJECT_PLUGINS": "1",
         }
         receipt, rc = self.call(env=env)
         self.assertEqual(receipt["status"], "pass", receipt)
