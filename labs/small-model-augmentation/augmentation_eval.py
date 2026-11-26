@@ -63,6 +63,7 @@ def validate(report):
     if type(rows) is not list or not rows or len(rows)>MAX_ROWS:
         return sorted(set(errors+["INVALID_ROWS"]))
     seen=set()
+    receipt_seen=set()
     for r in rows:
         if type(r) is not dict or set(r)!=ROW_KEYS:
             errors.append("INVALID_ROW"); continue
@@ -82,6 +83,10 @@ def validate(report):
                 counts_ok = False
         if not _hash(r["receipt_sha256"]):
             errors.append("INVALID_RECEIPT_HASH")
+        elif r["receipt_sha256"] in receipt_seen:
+            errors.append("DUPLICATE_RECEIPT_HASH")
+        else:
+            receipt_seen.add(r["receipt_sha256"])
         if counts_ok:
             if r["blocked_calls"] > r["tool_calls"]:
                 errors.append("INCONSISTENT_BLOCKED_CALLS")
