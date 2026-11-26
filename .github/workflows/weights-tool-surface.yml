@@ -1,0 +1,42 @@
+name: Weights training tool-surface contract
+
+on:
+  pull_request:
+    paths:
+      - 'labs/weights/training/tool_surface.py'
+      - 'labs/weights/training/row_encoding.py'
+      - 'labs/weights/training/test_tool_surface.py'
+      - 'labs/weights/training/TOOL_SURFACE.md'
+      - 'labs/intelligence-bakeoff/distillation/tool_sft/world.py'
+      - '.github/workflows/weights-tool-surface.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'labs/weights/training/tool_surface.py'
+      - 'labs/weights/training/row_encoding.py'
+      - 'labs/weights/training/test_tool_surface.py'
+      - 'labs/weights/training/TOOL_SURFACE.md'
+      - 'labs/intelligence-bakeoff/distillation/tool_sft/world.py'
+      - '.github/workflows/weights-tool-surface.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  cpu:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.13']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile tool-surface contract
+        working-directory: labs/weights/training
+        run: python -m py_compile tool_surface.py row_encoding.py test_tool_surface.py
+      - name: Run CPU tool-surface suite
+        working-directory: labs/weights/training
+        run: python -m unittest -v test_tool_surface.py

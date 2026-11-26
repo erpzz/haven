@@ -1,0 +1,72 @@
+name: Hermes pre-tool scope gate
+on:
+  push:
+    paths:
+      - 'labs/small-model-augmentation/hermes_scope_plugin/**'
+      - 'labs/small-model-augmentation/test_hermes_scope_plugin.py'
+      - 'labs/small-model-augmentation/hermes_plugin_preflight.py'
+      - 'labs/small-model-augmentation/test_hermes_plugin_preflight.py'
+      - 'labs/small-model-augmentation/guarded_model_supervisor.py'
+      - 'labs/small-model-augmentation/test_guarded_model_supervisor.py'
+      - 'labs/small-model-augmentation/mcp_scope_runtime.py'
+      - 'labs/small-model-augmentation/test_mcp_scope_runtime.py'
+      - 'labs/hermes/haven_hermes/mcp_stdio.py'
+      - 'labs/hermes/haven_hermes/server.py'
+      - 'labs/cyber/haven_cyber/mcp_server.py'
+      - '.github/workflows/hermes-scope-hook.yml'
+  pull_request:
+    paths:
+      - 'labs/small-model-augmentation/hermes_scope_plugin/**'
+      - 'labs/small-model-augmentation/test_hermes_scope_plugin.py'
+      - 'labs/small-model-augmentation/hermes_plugin_preflight.py'
+      - 'labs/small-model-augmentation/test_hermes_plugin_preflight.py'
+      - 'labs/small-model-augmentation/guarded_model_supervisor.py'
+      - 'labs/small-model-augmentation/test_guarded_model_supervisor.py'
+      - 'labs/small-model-augmentation/mcp_scope_runtime.py'
+      - 'labs/small-model-augmentation/test_mcp_scope_runtime.py'
+      - 'labs/hermes/haven_hermes/mcp_stdio.py'
+      - 'labs/hermes/haven_hermes/server.py'
+      - 'labs/cyber/haven_cyber/mcp_server.py'
+      - '.github/workflows/hermes-scope-hook.yml'
+permissions:
+  contents: read
+jobs:
+  synthetic-hook:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile hook and policy
+        run: |
+          python -m py_compile \
+            labs/small-model-augmentation/hermes_scope_plugin/__init__.py \
+            labs/small-model-augmentation/tool_scope.py \
+            labs/small-model-augmentation/tool_context.py \
+            labs/small-model-augmentation/test_hermes_scope_plugin.py \
+            labs/small-model-augmentation/hermes_plugin_preflight.py \
+            labs/small-model-augmentation/test_hermes_plugin_preflight.py \
+            labs/small-model-augmentation/guarded_model_supervisor.py \
+            labs/small-model-augmentation/test_guarded_model_supervisor.py \
+            labs/small-model-augmentation/mcp_scope_runtime.py \
+            labs/small-model-augmentation/test_mcp_scope_runtime.py \
+            labs/hermes/haven_hermes/mcp_stdio.py \
+            labs/hermes/haven_hermes/server.py \
+            labs/cyber/haven_cyber/mcp_server.py
+      - name: Native scope and route suites
+        run: |
+          python -m unittest discover -s labs/small-model-augmentation -p 'test_tool_scope.py' -v
+          python -m unittest discover -s labs/small-model-augmentation -p 'test_tool_context.py' -v
+      - name: Synthetic Hermes pre-dispatch canaries
+        run: python -m unittest discover -s labs/small-model-augmentation -p 'test_hermes_scope_plugin.py' -v
+      - name: Guarded Hermes plugin preflight
+        run: python -m unittest discover -s labs/small-model-augmentation -p 'test_hermes_plugin_preflight.py' -v
+      - name: Guarded model supervisor composition
+        run: python -m unittest discover -s labs/small-model-augmentation -p 'test_guarded_model_supervisor.py' -v
+      - name: Final MCP dispatcher canaries
+        run: python -m unittest discover -s labs/small-model-augmentation -p 'test_mcp_scope_runtime.py' -v

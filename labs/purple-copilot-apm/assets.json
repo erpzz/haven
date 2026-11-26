@@ -1,0 +1,5 @@
+[
+  {"key":"phantom-admins","platform":"ad","target":"PHANTOM.CORP-S-1-5-32-544","sensitivity":"critical","privileged":true},
+  {"key":"resource-admins","platform":"entra","target":"D9EEF709-975D-4EE0-8D84-FFA9A1BAB9DD","sensitivity":"high","privileged":true},
+  {"key":"consent-review","platform":"entra","target":"99A4EC05-C325-4513-A48D-E0D394FA6049","sensitivity":"high","privileged":false}
+]

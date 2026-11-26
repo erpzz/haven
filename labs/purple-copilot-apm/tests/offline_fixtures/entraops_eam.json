@@ -1,0 +1,33 @@
+[
+  {
+    "ObjectType": "User",
+    "ObjectId": "7DEAB91D-E1A0-497F-8651-AE2C36082E66",
+    "ObjectAdminTierLevel": 0,
+    "Classification": [
+      {
+        "AdminTierLevel": 0,
+        "AdminTierLevelName": "Control plane",
+        "Service": "synthetic",
+        "TaggedByRoleSystem": "EntraID"
+      }
+    ],
+    "RoleAssignments": [
+      {
+        "RoleAssignmentId": "00000000-0000-4000-8000-000000000011",
+        "RoleAssignmentInstanceId": "00000000-0000-4000-8000-000000000011",
+        "RoleDefinitionId": "00000000-0000-4000-8000-000000000010",
+        "RoleAssignmentScopeId": "/",
+        "RoleAssignmentType": "Direct",
+        "PIMAssignmentType": "Eligible",
+        "Classification": [
+          {
+            "AdminTierLevel": 0,
+            "AdminTierLevelName": "Control plane",
+            "Service": "synthetic",
+            "TaggedByRoleSystem": "EntraID"
+          }
+        ]
+      }
+    ]
+  }
+]

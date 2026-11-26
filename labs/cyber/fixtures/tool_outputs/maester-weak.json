@@ -1,0 +1,135 @@
+{
+  "Result": "Failed",
+  "FailedCount": 2,
+  "PassedCount": 1,
+  "ErrorCount": 0,
+  "InvestigateCount": 0,
+  "SkippedCount": 1,
+  "NotRunCount": 0,
+  "TotalCount": 4,
+  "ExecutedAt": "2026-10-31T12:05:00Z",
+  "TotalDuration": "00:00:41",
+  "TenantId": "c7f3c2b5-5c1d-5d0e-8f43-2b6f8f2c9a11",
+  "TenantName": "Contoso (synthetic)",
+  "Account": "auditor@contoso.example",
+  "CurrentVersion": "2.3.0",
+  "LatestVersion": "2.3.0",
+  "Tests": [
+    {
+      "Index": 1,
+      "Id": "MT.1005",
+      "Title": "All Conditional Access policies are configured to exclude at least one emergency/break glass account or group",
+      "Name": "MT.1005: All Conditional Access policies are configured to exclude at least one emergency/break glass account or group",
+      "HelpUrl": "https://maester.dev/docs/tests/maester/MT.1005",
+      "Severity": "High",
+      "Tag": [
+        "Maester",
+        "Entra",
+        "CA"
+      ],
+      "Result": "Failed",
+      "ScriptBlock": "",
+      "ScriptBlockFile": "tests/maester/entra/Test.MT.1005.ps1",
+      "ErrorRecord": [],
+      "Block": "Maester/Entra",
+      "Duration": "00:00:01.204",
+      "ResultDetail": {
+        "TestTitle": "All Conditional Access policies are configured to exclude at least one emergency/break glass account or group",
+        "TestDescription": "Exclude emergency access accounts from all Conditional Access policies.",
+        "TestResult": "Policy 'CA002 Require MFA for administrators' does not exclude an emergency access account or group.",
+        "TestSkipped": null,
+        "SkippedReason": null,
+        "TestInvestigate": null,
+        "Severity": "High",
+        "Service": "Entra ID"
+      }
+    },
+    {
+      "Index": 2,
+      "Id": "MT.1006",
+      "Title": "At least one Conditional Access policy is configured to require MFA for admins",
+      "Name": "MT.1006: At least one Conditional Access policy is configured to require MFA for admins",
+      "HelpUrl": "https://maester.dev/docs/tests/maester/MT.1006",
+      "Severity": "High",
+      "Tag": [
+        "Maester",
+        "Entra",
+        "CA"
+      ],
+      "Result": "Passed",
+      "ScriptBlock": "",
+      "ScriptBlockFile": "tests/maester/entra/Test.MT.1006.ps1",
+      "ErrorRecord": [],
+      "Block": "Maester/Entra",
+      "Duration": "00:00:01.204",
+      "ResultDetail": {
+        "TestTitle": "At least one Conditional Access policy is configured to require MFA for admins",
+        "TestDescription": "Require MFA for admin roles for all cloud apps.",
+        "TestResult": "Conditional Access policy 'CA002 Require MFA for administrators' requires MFA for admin roles.",
+        "TestSkipped": null,
+        "SkippedReason": null,
+        "TestInvestigate": null,
+        "Severity": "High",
+        "Service": "Entra ID"
+      }
+    },
+    {
+      "Index": 3,
+      "Id": "MT.1007",
+      "Title": "At least one Conditional Access policy is configured to require MFA for all users",
+      "Name": "MT.1007: At least one Conditional Access policy is configured to require MFA for all users",
+      "HelpUrl": "https://maester.dev/docs/tests/maester/MT.1007",
+      "Severity": "High",
+      "Tag": [
+        "Maester",
+        "Entra",
+        "CA"
+      ],
+      "Result": "Failed",
+      "ScriptBlock": "",
+      "ScriptBlockFile": "tests/maester/entra/Test.MT.1007.ps1",
+      "ErrorRecord": [],
+      "Block": "Maester/Entra",
+      "Duration": "00:00:01.204",
+      "ResultDetail": {
+        "TestTitle": "At least one Conditional Access policy is configured to require MFA for all users",
+        "TestDescription": "Require MFA for all users for all cloud apps.",
+        "TestResult": "No enabled policy requires MFA for all users (one is report-only).",
+        "TestSkipped": null,
+        "SkippedReason": null,
+        "TestInvestigate": null,
+        "Severity": "High",
+        "Service": "Entra ID"
+      }
+    },
+    {
+      "Index": 4,
+      "Id": "EIDSCA.AP01",
+      "Title": "Default Authorization Settings - Enabled Self service password reset for administrators",
+      "Name": "EIDSCA.AP01: Default Authorization Settings - Enabled Self service password reset for administrators",
+      "HelpUrl": "https://maester.dev/docs/tests/eidsca/EIDSCA.AP01",
+      "Severity": "Medium",
+      "Tag": [
+        "EIDSCA",
+        "Entra"
+      ],
+      "Result": "Skipped",
+      "ScriptBlock": "",
+      "ScriptBlockFile": "tests/maester/entra/Test.EIDSCA.AP01.ps1",
+      "ErrorRecord": [],
+      "Block": "Maester/Entra",
+      "Duration": "00:00:01.204",
+      "ResultDetail": {
+        "TestTitle": "Default Authorization Settings - Enabled Self service password reset for administrators",
+        "TestDescription": "",
+        "TestResult": "",
+        "TestSkipped": null,
+        "SkippedReason": "Not connected to the required service",
+        "TestInvestigate": null,
+        "Severity": "Medium",
+        "Service": "Entra ID"
+      }
+    }
+  ],
+  "Blocks": []
+}

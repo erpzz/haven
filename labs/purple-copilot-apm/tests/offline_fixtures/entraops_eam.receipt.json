@@ -1,0 +1,19 @@
+{
+  "contract": "purple-apm-evidence/v1",
+  "dataset": "specterops-entra-sample",
+  "tenant": "6c12b0b0-b2cc-4a73-8252-0b94bfca2145",
+  "run": "fixture-entraops_eam",
+  "format": "entraops_eam",
+  "producer_revision": "5bdaebd1f8c4d8a037025b312e9a05405649e378",
+  "collected_utc": "2026-11-21T19:00:00Z",
+  "received_utc": "2026-11-21T19:01:00Z",
+  "complete": true,
+  "partitions": [
+    "role-assignments"
+  ],
+  "warnings": [],
+  "sha256": "c089d756428a0bafa046db0a81e788a16b0b1ab148e217f01db324a1f0ae394b",
+  "rbac_system": "EntraID",
+  "origin": "offline-fixture",
+  "identity_basis": "native"
+}

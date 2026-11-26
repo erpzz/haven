@@ -1,0 +1,73 @@
+{
+  "archive": "77c457ae41698844b28441827ca9c0ae74b6d1a3d47bfeea96ab7894aaa94662",
+  "asset": {
+    "key": "resource-admins",
+    "platform": "entra",
+    "privileged": true,
+    "sensitivity": "high",
+    "target": "D9EEF709-975D-4EE0-8D84-FFA9A1BAB9DD"
+  },
+  "graph": {
+    "edges": [
+      {
+        "id": "15040",
+        "kind": "AZMemberOf",
+        "label": "AZMemberOf",
+        "lastSeen": "2026-11-21T18:26:46.893066066Z",
+        "source": "4869",
+        "target": "4689"
+      }
+    ],
+    "literals": [],
+    "nodes": {
+      "4689": {
+        "isOwnedObject": false,
+        "isTierZero": false,
+        "kind": "AZGroup",
+        "kinds": [
+          "AZBase",
+          "AZGroup"
+        ],
+        "lastSeen": "2026-11-21T18:26:46.893066066Z",
+        "objectId": "D9EEF709-975D-4EE0-8D84-FFA9A1BAB9DD"
+      },
+      "4869": {
+        "isOwnedObject": false,
+        "isTierZero": true,
+        "kind": "AZUser",
+        "kinds": [
+          "Tag_Tier_Zero",
+          "AZBase",
+          "AZUser"
+        ],
+        "lastSeen": "2026-11-21T18:26:46.893066066Z",
+        "objectId": "7DEAB91D-E1A0-497F-8651-AE2C36082E66"
+      }
+    }
+  },
+  "issues": [],
+  "observed": "2026-11-21T19:20:15.983172+00:00",
+  "origin": "ce-sample",
+  "paths": [
+    [
+      [
+        "7DEAB91D-E1A0-497F-8651-AE2C36082E66",
+        "AZMemberOf",
+        "D9EEF709-975D-4EE0-8D84-FFA9A1BAB9DD"
+      ]
+    ]
+  ],
+  "query": "MATCH p=(a)-[:AZMemberOf*1..4]->(b:AZGroup {objectid: 'D9EEF709-975D-4EE0-8D84-FFA9A1BAB9DD'}) RETURN p LIMIT 129",
+  "receipt": {
+    "collector": "official-archive",
+    "complete": false,
+    "completed": null,
+    "ingest_job": 1,
+    "ingested": "2026-11-21T18:27:28.854252Z",
+    "run": null
+  },
+  "removals": [],
+  "source_files": [
+    "azurehound_example.json"
+  ]
+}

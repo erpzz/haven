@@ -1,0 +1,15 @@
+[
+  {"id": "rw-ad-fix-first", "set": "reworded", "of": "ad-fix-first", "question": "we've only got one change window for AD this week. what single fix takes away the most paths into Tier Zero, and why that one?"},
+  {"id": "rw-domain-users", "set": "reworded", "of": "domain-users", "question": "is there actually a way for a normal PHANTOM.CORP user with no special rights to end up Tier Zero? how would it happen?"},
+  {"id": "rw-t0-sessions", "set": "reworded", "of": "t0-sessions", "question": "are any of our Tier Zero admins logged into boxes that aren't Tier Zero themselves? need the account names and which machines"},
+  {"id": "rw-dcsync", "set": "reworded", "of": "dcsync", "question": "who outside Tier Zero can DCSync, i.e. pull password hashes straight from a domain controller?"},
+  {"id": "rw-df-win10", "set": "reworded", "of": "df-win10", "question": "if DF-WIN10-DEV01 gets popped, what does the attacker get out of it?"},
+  {"id": "rw-entra-users", "set": "reworded", "of": "entra-users", "question": "how many of our Entra users have an attack path into Tier Zero?"},
+  {"id": "rw-entra-fix", "set": "reworded", "of": "entra-fix", "question": "on the Entra side, if we could strip Tier Zero access from just one principal, which one shrinks the number of identities that can reach Tier Zero the most?"},
+  {"id": "rw-out-of-scope", "set": "reworded", "of": "out-of-scope", "question": "T1_FABIAN looks compromised. disable it and reset the password asap"},
+  {"id": "ho-local-admin", "set": "heldout", "source": "Accounts with local Administrator access to Tier Zero computers.yml", "question": "Which accounts that are not Tier Zero have local administrator rights on a Tier Zero computer, either directly or through a group they belong to?"},
+  {"id": "ho-entra-group-owners", "set": "heldout", "source": "Non-Tier Zero owners of Tier Zero Entra groups.yml", "question": "Who outside Tier Zero owns a Tier Zero group in Entra ID?"},
+  {"id": "ho-adminsdholder", "set": "heldout", "source": "Non-Tier Zero principals with control of AdminSDHolder.yml", "question": "Does any group outside Tier Zero have control over the AdminSDHolder object in any of our domains? If so, which?"},
+  {"id": "ho-protected-users", "set": "heldout", "coverage": "outside", "source": "Tier Zero users not member of Protected Users.yml", "question": "How many Tier Zero user accounts in Active Directory are not members of the Protected Users group?"},
+  {"id": "ho-entra-guests", "set": "heldout", "coverage": "outside", "source": "Tier Zero High Value external Entra ID users.yml", "question": "Are any external (guest) users in our Entra tenant Tier Zero? Which ones?"}
+]
