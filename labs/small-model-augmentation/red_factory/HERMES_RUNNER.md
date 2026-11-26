@@ -274,10 +274,19 @@ python3 labs/small-model-augmentation/red_factory/mac_case_qualification.py \
   --out-dir "$HOME/.local/state/haven-red-factory/case-duplicate-read-2"
 ```
 
+For this isolated qualification profile, review `config.yaml` with
+`platform_toolsets.cli: []`. Nonzero HRF cases explicitly select the Red MCP toolset.
+A true zero-tool case instead passes an empty CLI toolset value; pinned Hermes then uses the
+enrolled empty CLI default, avoiding an `mcp-<server>` alias that does not exist when the
+server registered zero tools. The discovery and actual Qwythos request must both attest
+exactly zero model-visible tools for that case.
+
 The output directory is created new with mode 0700 and is never reused. It contains the
 discovery fixture/policies, surface discovery + replay receipts, the actual model/raw scope
 policies, #212 preflight + supervisor receipts, llama log, one-case Red receipt, and final
-qualification receipt. The final receipt separates `model_behavior_pass` from
+qualification receipt. The actual Qwythos request must reproduce the discovery/replay
+SHA-256 of the complete model-visible tool-definition array, not merely the same tool names.
+The final receipt separates `model_behavior_pass` from
 `execution_protection_pass`; a model-intent failure can therefore remain valid evidence
 when execution was protected.
 
