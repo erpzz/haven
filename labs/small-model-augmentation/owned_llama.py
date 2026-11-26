@@ -149,7 +149,6 @@ def _safe_server_args(values):
     return []
 
 
-@dataclass
 def _terminate_group(process, timeout=2.0):
     if process.poll() is not None:
         return
@@ -178,6 +177,7 @@ def _terminate_group(process, timeout=2.0):
         pass
 
 
+@dataclass
 class Lease:
     process: subprocess.Popen
     port: int
