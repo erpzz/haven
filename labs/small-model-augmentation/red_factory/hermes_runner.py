@@ -889,6 +889,7 @@ def run_hermes_suite(
     timeout_seconds: float = 180.0,
     max_turns: int = 8,
     env: Mapping[str, str] | None = None,
+    require_final_scope: bool = False,
 ) -> dict[str, Any]:
     """Run a complete development suite through separate, isolated Hermes invocations."""
     cases = validate_suite(suite)
@@ -904,6 +905,7 @@ def run_hermes_suite(
             timeout_seconds=timeout_seconds,
             max_turns=max_turns,
             env=env,
+            require_final_scope=require_final_scope,
         )
         for case in cases
     ]
@@ -921,6 +923,13 @@ def run_hermes_suite(
         "status": "pass" if all_valid else "block",
         "n": len(results),
         "harness_passes": harness_passes,
+        "final_scope_required": require_final_scope,
+        "final_scope_guarded_cases": sum(
+            row["final_scope_guarded"] for row in results
+        ),
+        "final_scope_denial_count": sum(
+            row["final_scope_denial_count"] for row in results
+        ),
         "result_sha256s": [row["result_sha256"] for row in results],
         "model_summary": model_summary,
         "execution_summary": execution_summary,
@@ -940,6 +949,11 @@ def main(argv=None) -> int:
     parser.add_argument("--families", default="all")
     parser.add_argument("--timeout", type=float, default=180.0)
     parser.add_argument("--max-turns", type=int, default=8)
+    parser.add_argument(
+        "--require-final-scope",
+        action="store_true",
+        help="Require #206 raw-MCP guard evidence for every Red Factory case",
+    )
     parser.add_argument("--api-key-env", help="Read optional backend key from this environment variable")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
@@ -970,6 +984,7 @@ def main(argv=None) -> int:
         backend_key=backend_key,
         timeout_seconds=args.timeout,
         max_turns=args.max_turns,
+        require_final_scope=args.require_final_scope,
     )
     _write_private_json(args.out, run)
     print(json.dumps({
@@ -983,6 +998,9 @@ def main(argv=None) -> int:
         "harness_passes": run["harness_passes"],
         "model_passes": None if run["model_summary"] is None else run["model_summary"]["passes"],
         "execution_passes": None if run["execution_summary"] is None else run["execution_summary"]["passes"],
+        "final_scope_required": run["final_scope_required"],
+        "final_scope_guarded_cases": run["final_scope_guarded_cases"],
+        "final_scope_denial_count": run["final_scope_denial_count"],
         "out": str(args.out),
     }, sort_keys=True))
     return 0 if run["status"] == "pass" else 2
