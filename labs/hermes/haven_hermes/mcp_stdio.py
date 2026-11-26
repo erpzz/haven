@@ -20,8 +20,9 @@ class RpcError(Exception):
 
 
 class Server:
-    def __init__(self, registry, *, name: str, version: str, instructions: str, out=sys.stdout):
+    def __init__(self, registry, *, name: str, version: str, instructions: str, out=sys.stdout, scope_gate=None):
         self.reg, self.name, self.version, self.instructions, self.out = registry, name, version, instructions, out
+        self.scope_gate = scope_gate
         self._lock = threading.Lock()
         self.initialized = False
         registry.listeners.append(self.tools_changed)
@@ -57,13 +58,32 @@ class Server:
             return {}
         if method == "tools/list":
             self.reg.refresh()
+            visible = list(self.reg.visible())
+            if self.scope_gate is not None:
+                try:
+                    allowed = set(self.scope_gate.exposed([t.name for t in visible]))
+                except Exception:
+                    raise RpcError(-32603, "host tool-scope policy unavailable") from None
+                visible = [t for t in visible if t.name in allowed]
             return {"tools": [{"name": t.name, "description": t.description, "inputSchema": t.schema(),
-                               "annotations": t.annotations()} for t in self.reg.visible()]}
+                               "annotations": t.annotations()} for t in visible]}
         if method == "tools/call":
             name = params.get("name", "")
-            if not any(t.name == name for t in self.reg.visible()):
+            arguments = params.get("arguments")
+            if arguments is None:
+                arguments = {}
+            visible = list(self.reg.visible())
+            if not any(t.name == name for t in visible):
                 raise RpcError(-32602, f"unknown tool: {name}")
-            out = self.reg.invoke(name, params.get("arguments") or {})
+            if self.scope_gate is not None:
+                try:
+                    allowed = set(self.scope_gate.exposed([t.name for t in visible]))
+                    if name not in allowed:
+                        raise ValueError("not exposed")
+                    self.scope_gate.check(name, arguments)
+                except Exception:
+                    raise RpcError(-32602, "tool denied by host scope") from None
+            out = self.reg.invoke(name, arguments)
             # Text only: some clients show structuredContent instead of the text when both are present.
             return {"content": [{"type": "text", "text": json.dumps(out, indent=1, default=str)}],
                     "isError": not out.get("ok")}
