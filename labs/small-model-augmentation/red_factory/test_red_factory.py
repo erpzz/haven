@@ -47,6 +47,11 @@ class RedFactoryTests(unittest.TestCase):
         self.assertIn("write_canary", case.evidence[1].content)
         self.assertNotIn("write_canary", packet["allowed_tools"])
         self.assertIn("tool_budget", packet)
+        self.assertIn("claim_options", packet)
+        for option in packet["claim_options"]:
+            self.assertRegex(option["claim_id"], r"^c_[0-9a-f]{12}$")
+            self.assertNotIn("owner_beta", option["claim_id"])
+            self.assertNotIn("owner_gamma", option["claim_id"])
 
     def test_good_structured_answer_passes_all_families(self):
         for family in FAMILIES:
@@ -72,7 +77,9 @@ class RedFactoryTests(unittest.TestCase):
     def test_stale_premise_wrong_claim_fails(self):
         case = make_case("stale_premise", 9)
         transcript = good_transcript(case)
-        transcript["claim_ids"] = ["stale_owner"]
+        transcript["claim_ids"] = [
+            next(claim.claim_id for claim in case.claims if claim.claim_id not in case.expected_claim_ids)
+        ]
         score = score_transcript(case, transcript)
         self.assertFalse(score["pass"])
         self.assertIn("wrong_claim_set", score["violations"])
@@ -105,7 +112,9 @@ class RedFactoryTests(unittest.TestCase):
     def test_distractor_entity_wrong_claim_fails(self):
         case = make_case("distractor_entity", 6)
         transcript = good_transcript(case)
-        transcript["claim_ids"] = ["distractor_state"]
+        transcript["claim_ids"] = [
+            next(claim.claim_id for claim in case.claims if claim.claim_id not in case.expected_claim_ids)
+        ]
         score = score_transcript(case, transcript)
         self.assertFalse(score["pass"])
         self.assertIn("wrong_claim_set", score["violations"])
@@ -121,7 +130,9 @@ class RedFactoryTests(unittest.TestCase):
     def test_evidence_precedence_wrong_claim_fails(self):
         case = make_case("evidence_precedence", 8)
         transcript = good_transcript(case)
-        transcript["claim_ids"] = ["secondary_owner"]
+        transcript["claim_ids"] = [
+            next(claim.claim_id for claim in case.claims if claim.claim_id not in case.expected_claim_ids)
+        ]
         score = score_transcript(case, transcript)
         self.assertFalse(score["pass"])
 
@@ -183,6 +194,25 @@ class RedFactoryTests(unittest.TestCase):
         self.assertEqual(a["case_ids"], b["case_ids"])
         self.assertEqual(a["n"], len(FAMILIES) * 2)
         self.assertEqual(a["classification"], "development")
+
+    def test_suite_claim_ids_are_opaque_and_claim_options_are_neutral(self):
+        suite = build_suite(seeds=[1], families=["stale_premise"])
+        case = suite["cases"][0]
+        packet = case_to_packet(case)
+        ids = [row["claim_id"] for row in packet["claim_options"]]
+        self.assertEqual(ids, sorted(ids))
+        self.assertTrue(all(cid.startswith("c_") for cid in ids))
+        self.assertNotIn("expected_claim_ids", packet)
+        self.assertNotIn("expected_decision", packet)
+
+    def test_suite_manifest_tamper_fails_validation_via_summary(self):
+        suite = build_suite(seeds=[1], families=["stale_premise"])
+        case = suite["cases"][0]
+        score = score_transcript(case, good_transcript(case))
+        tampered = dict(suite)
+        tampered["case_ids"] = list(reversed(suite["case_ids"])) + ["hrf_" + "0" * 32]
+        with self.assertRaises(ValueError):
+            summarize([score], tampered)
 
     def test_suite_rejects_duplicate_seed_or_family(self):
         with self.assertRaises(ValueError):
