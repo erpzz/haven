@@ -131,7 +131,7 @@ python3 /path/to/127/owned_llama.py \
   --port 8080 \
   --context 65536 \
   -- \
-  python3 /path/to/188/red_factory/hermes_runner.py \
+  python3 /path/to/189/red_factory/hermes_runner.py \
     --hermes /absolute/path/to/hermes \
     --hermes-home "$HOME/.local/state/haven-red-hermes" \
     --toolsets mcp-red-factory \
