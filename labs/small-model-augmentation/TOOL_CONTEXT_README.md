@@ -50,11 +50,12 @@ Individual definitions and the whole catalog are bounded before routing.
 
 ## Author test evidence
 
-Author-side semantic reproduction after second-pass refinements: **24/24 PASS**.
+Author-side semantic reproduction before the final zero-tool refinement: **24/24 PASS**. The final review then added an explicit zero-authorized-surface regression; exact final-head clean-checkout execution is intentionally left to Codex/local validation rather than claimed here.
 
 Coverage includes:
 
 - selection is a subset of authorization;
+- an explicitly empty authorized surface is valid and remains zero-tool;
 - an unauthorized matching tool is never added;
 - tool description text cannot cause routing;
 - unknown/duplicate authorized names fail closed;
@@ -85,11 +86,12 @@ Second-pass refinements before publication:
 4. required tools were made fail-closed under count/byte budgets;
 5. optional budget omissions were made explicit;
 6. effect filtering was separated from relevance;
-7. byte accounting was defined over the exact returned model-visible definitions, not an estimated token count.
+7. byte accounting was defined over the exact returned model-visible definitions, not an estimated token count;
+8. final review corrected an over-strict validator that rejected a legitimate empty authorized tool surface.
 
 Published code/test blobs at this review point:
-- `tool_context.py`: `6327637aaa7ff3bf057b7b51ed49a7fc113e8516`
-- `test_tool_context.py`: `b444b10d1dbd2b1057ab9d548fbb2e2c6be35d88`
+- `tool_context.py`: `f2a23c7de281944d2b3fdaab2fe13b40b493338e`
+- `test_tool_context.py`: `7127c27bec27c6f59e05098ef0c49cdce3d8ad92`
 
 **Exact committed-head clean-checkout execution is NOT claimed.** Git/raw GitHub resolution is unavailable from this sandbox; Codex/local validation must run the committed bytes.
 
