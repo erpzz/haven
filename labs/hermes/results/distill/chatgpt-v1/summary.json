@@ -1,0 +1,51 @@
+{
+ "set": "distill",
+ "model": "chatgpt-plan:gpt-6.1-terra",
+ "think": false,
+ "n": 42,
+ "of": 42,
+ "pass": 42,
+ "heldout_pass": 0,
+ "heldout_n": 0,
+ "scenarios_with_any_tool_call": 42,
+ "errors": 0,
+ "stopped": null,
+ "by_category": {
+  "read": {
+   "pass": 10,
+   "n": 10
+  },
+  "gpu-busy": {
+   "pass": 5,
+   "n": 5
+  },
+  "switch": {
+   "pass": 4,
+   "n": 4
+  },
+  "strata": {
+   "pass": 3,
+   "n": 3
+  },
+  "job": {
+   "pass": 5,
+   "n": 5
+  },
+  "approval": {
+   "pass": 2,
+   "n": 2
+  },
+  "forge": {
+   "pass": 5,
+   "n": 5
+  },
+  "receipts": {
+   "pass": 2,
+   "n": 2
+  },
+  "load": {
+   "pass": 6,
+   "n": 6
+  }
+ }
+}
