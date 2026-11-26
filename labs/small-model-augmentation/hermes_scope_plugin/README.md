@@ -50,21 +50,34 @@ Before a guarded run, use the host preflight to bind the exact Hermes
 executable and installed plugin bytes, require the exact enabled user-plugin
 set, and run Hermes's own plugin doctor:
 
+    AUG=/absolute/checkout/labs/small-model-augmentation
     HERMES_SHA=$(shasum -a 256 /absolute/path/to/hermes | awk '{print $1}')
     INIT_SHA=$(shasum -a 256 "$HERMES_HOME/plugins/haven-scope/__init__.py" | awk '{print $1}')
     MANIFEST_SHA=$(shasum -a 256 "$HERMES_HOME/plugins/haven-scope/plugin.yaml" | awk '{print $1}')
+    ENGINE_SHA=$(shasum -a 256 "$AUG/tool_scope.py" | awk '{print $1}')
+    SCOPE_SHA=$(shasum -a 256 /absolute/private/model-scope.json | awk '{print $1}')
+    MCP_SHA=$(shasum -a 256 /absolute/private/raw-mcp-scope.json | awk '{print $1}')
 
-    python3 /checkout/labs/small-model-augmentation/hermes_plugin_preflight.py \
+    python3 "$AUG/hermes_plugin_preflight.py" \
       --hermes /absolute/path/to/hermes \
       --hermes-home "$HERMES_HOME" \
       --hermes-sha256 "$HERMES_SHA" \
       --plugin-init-sha256 "$INIT_SHA" \
       --plugin-manifest-sha256 "$MANIFEST_SHA" \
+      --augmentation-root "$AUG" \
+      --scope-engine-sha256 "$ENGINE_SHA" \
+      --scope-policy /absolute/private/model-scope.json \
+      --scope-policy-sha256 "$SCOPE_SHA" \
+      --mcp-policy /absolute/private/raw-mcp-scope.json \
+      --mcp-policy-sha256 "$MCP_SHA" \
       --allow-user-plugin haven-scope
 
 The hashes above are enrollment inputs only when they came from bytes the
 owner/reviewer already approved. Computing them from an unreviewed install and
-then accepting them proves consistency, not provenance. The strict preflight
+then accepting them proves consistency, not provenance. The receipt binds the
+Hermes executable, plugin source + manifest, exact tool-scope engine, model-side
+scope policy, and raw-MCP final-dispatch policy. Both policy files must be
+owner-private and valid under the same enrolled engine. The strict preflight
 also rejects unexpected enabled user plugins; add another
 --allow-user-plugin only after explicitly reviewing why it belongs in that
 isolated profile.
