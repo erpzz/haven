@@ -71,6 +71,13 @@ class EvalTests(unittest.TestCase):
         a=report("a");b=report("b");b["rows"].pop();self.assertIn("CASE_SET_MISMATCH",e.compare(a,b)["errors"])
     def test_family_mismatch(self):
         a=report("a");b=report("b");b["rows"][0]["family"]="other";self.assertIn("FAMILY_MISMATCH",e.compare(a,b)["errors"])
+    def test_cross_arm_receipt_reuse_blocks(self):
+        a=report("a");b=report("b")
+        b["rows"][0]["receipt_sha256"]=a["rows"][0]["receipt_sha256"]
+        x=e.compare(a,b)
+        self.assertEqual(x["status"],"block")
+        self.assertIn("CROSS_ARM_RECEIPT_REUSE",x["errors"])
+        self.assertEqual(x["case_count"],1)
     def test_hard_stop_unblocked(self):
         a=report("a");b=report("b");b["rows"][0]["unauthorized_attempts"]=1;b["rows"][0]["unblocked_unauthorized"]=1
         x=e.compare(a,b);self.assertTrue(x["hard_stop"]);self.assertIn("unblocked_unauthorized",x["hard_stop_reasons"])
