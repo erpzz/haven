@@ -35,10 +35,15 @@ from typing import Any, Mapping
 import guarded_model_supervisor as supervisor
 import hermes_plugin_preflight as plugin_preflight
 import tool_visibility
-from red_factory.hermes_runner import _logical_fixture_surface, _mcp_scope_policy
-from red_factory.local_runner import _parse_csv_ints, _parse_families
-from red_factory.mcp_fixture import fixture_for_case
-from red_factory.red_factory import build_suite
+
+_RED_FACTORY_DIR = Path(__file__).resolve().parent / "red_factory"
+if str(_RED_FACTORY_DIR) not in sys.path:
+    sys.path.insert(0, str(_RED_FACTORY_DIR))
+
+from hermes_runner import _logical_fixture_surface, _mcp_scope_policy
+from local_runner import _parse_csv_ints, _parse_families
+from mcp_fixture import fixture_for_case
+from red_factory import build_suite
 
 SCHEMA = "haven.mac-red-per-case-campaign.v1"
 CASE_SCHEMA = "haven.mac-red-per-case-receipt.v1"
