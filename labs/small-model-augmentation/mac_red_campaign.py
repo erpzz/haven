@@ -50,6 +50,9 @@ CASE_SCHEMA = "haven.mac-red-per-case-receipt.v1"
 MAX_HASH_BYTES = 64 * 1024 * 1024 * 1024
 HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 TOOLSETS = re.compile(r"[A-Za-z0-9_.:-]+(?:,[A-Za-z0-9_.:-]+)*\Z", re.ASCII)
+EXPECTED_HERMES_VERSION = "0.21.5"
+EXPECTED_HERMES_RELEASE_DATE = "2026.9.24"
+EXPECTED_HERMES_COMMIT = "f97608f178d1ffeca59860195ab7da295f7c8e5f"
 
 
 class _DiscoveryState:
