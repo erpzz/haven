@@ -74,27 +74,91 @@ def scoped_path(p: str) -> Path:
     return path
 
 
+def _validate_value(schema: dict, value: Any, path: str) -> None:
+    """Validate the JSON-Schema subset used by registry tool inputs.
+
+    This intentionally supports a small, explicit subset rather than pretending to
+    be a general JSON Schema implementation: type, enum, object properties/required/
+    additionalProperties, array items, numeric bounds, item bounds and string bounds.
+    """
+    t = schema.get("type")
+    label = path or "arguments"
+    if t == "integer":
+        ok = type(value) is int
+    elif t == "number":
+        ok = type(value) in (int, float) and type(value) is not bool
+        if ok and isinstance(value, float):
+            import math
+            ok = math.isfinite(value)
+    elif t == "string":
+        ok = type(value) is str
+    elif t == "boolean":
+        ok = type(value) is bool
+    elif t == "object":
+        ok = type(value) is dict
+    elif t == "array":
+        ok = type(value) is list
+    elif t is None:
+        ok = True
+    else:
+        raise ToolError("invalid_input", f"{label} uses unsupported schema type {t!r}")
+    if not ok:
+        raise ToolError("invalid_input", f"{label} must be {t}")
+
+    if "enum" in schema and value not in schema["enum"]:
+        raise ToolError("invalid_input", f"{label} must be one of {schema['enum']}")
+
+    if t in ("integer", "number"):
+        if "maximum" in schema and value > schema["maximum"]:
+            raise ToolError("invalid_input", f"{label} out of range")
+        if "minimum" in schema and value < schema["minimum"]:
+            raise ToolError("invalid_input", f"{label} out of range")
+
+    if t == "string":
+        if "maxLength" in schema and len(value) > schema["maxLength"]:
+            raise ToolError("invalid_input", f"{label} too long")
+        if "minLength" in schema and len(value) < schema["minLength"]:
+            raise ToolError("invalid_input", f"{label} too short")
+
+    if t == "array":
+        if "maxItems" in schema and len(value) > schema["maxItems"]:
+            raise ToolError("invalid_input", f"{label} has too many items")
+        if "minItems" in schema and len(value) < schema["minItems"]:
+            raise ToolError("invalid_input", f"{label} has too few items")
+        item_schema = schema.get("items")
+        if item_schema is not None:
+            if type(item_schema) is not dict:
+                raise ToolError("invalid_input", f"{label} has invalid item schema")
+            for i, item in enumerate(value):
+                _validate_value(item_schema, item, f"{label}[{i}]")
+
+    if t == "object":
+        props = schema.get("properties", {})
+        if type(props) is not dict:
+            raise ToolError("invalid_input", f"{label} has invalid property schema")
+        required = schema.get("required", [])
+        if type(required) is not list or not all(type(x) is str for x in required):
+            raise ToolError("invalid_input", f"{label} has invalid required schema")
+        for key in required:
+            if key not in value:
+                raise ToolError("invalid_input", f"missing required argument {label + '.' if path else ''}{key!r}")
+        if schema.get("additionalProperties") is False:
+            extra = set(value) - set(props)
+            if extra:
+                raise ToolError("invalid_input", f"unknown arguments at {label}: {sorted(extra)}")
+        for key, item in value.items():
+            child = props.get(key)
+            if child is not None:
+                if type(child) is not dict:
+                    raise ToolError("invalid_input", f"{label}.{key} has invalid schema")
+                _validate_value(child, item, f"{label}.{key}" if path else key)
+
+
 def validate(schema: dict, args: dict) -> None:
-    if not isinstance(args, dict):
-        raise ToolError("invalid_input", "arguments must be an object")
-    props = schema.get("properties", {})
-    for r in schema.get("required", []):
-        if r not in args:
-            raise ToolError("invalid_input", f"missing required argument {r!r}")
-    if schema.get("additionalProperties") is False:
-        extra = set(args) - set(props)
-        if extra:
-            raise ToolError("invalid_input", f"unknown arguments {sorted(extra)}")
-    types = {"string": str, "integer": int, "number": (int, float), "boolean": bool, "object": dict, "array": list}
-    for k, v in args.items():
-        s = props.get(k, {})
-        t = s.get("type")
-        if t and not isinstance(v, types[t]) or (t == "integer" and isinstance(v, bool)):
-            raise ToolError("invalid_input", f"{k} must be {t}")
-        if "enum" in s and v not in s["enum"]:
-            raise ToolError("invalid_input", f"{k} must be one of {s['enum']}")
-        if t == "integer" and ("maximum" in s and v > s["maximum"] or "minimum" in s and v < s["minimum"]):
-            raise ToolError("invalid_input", f"{k} out of range")
+    if type(schema) is not dict:
+        raise ToolError("invalid_input", "tool input schema must be an object")
+    _validate_value(schema, args, "")
+
 
 
 class Registry:
@@ -122,7 +186,7 @@ class Registry:
         return self.tools[tool_id].public()
 
     def invoke(self, tool_id: str, args: dict | None = None, caller: str = "local") -> dict:
-        args = args or {}
+        args = {} if args is None else args
         t0 = time.monotonic()
         rec = {"t": utcnow(), "tool": tool_id, "caller": caller,
                "input_sha256": hashlib.sha256(json.dumps(args, sort_keys=True, default=str).encode()).hexdigest()}
