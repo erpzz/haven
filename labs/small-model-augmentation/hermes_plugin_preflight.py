@@ -25,6 +25,8 @@ PLUGIN_VERSION = "0.1.0"
 MAX_OUTPUT = 1024 * 1024
 MAX_FILE = 1024 * 1024
 MAX_POLICY = 256 * 1024
+MAX_PROFILE_ENV = 1024 * 1024
+PROJECT_PLUGIN_ENV = re.compile(rb"(?m)^[ \\t]*(?:export[ \\t]+)?HERMES_ENABLE_PROJECT_PLUGINS[ \\t]*=")
 HEX64 = re.compile(r"[0-9a-f]{64}$")
 NAME = re.compile(r"[A-Za-z0-9_.:/-]{1,256}$", re.ASCII)
 
@@ -134,6 +136,35 @@ def _verify_policy(engine, path: Path, expected_sha256: str, code: str):
     if invalid or policy is None:
         raise PreflightError(code + "_INVALID")
     return actual, len(policy["allowed_tools"])
+
+
+def _verify_profile_env(home: Path) -> None:
+    """Require a private profile .env that cannot override the project-plugin kill switch."""
+    path = home / ".env"
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0)
+    if not hasattr(os, "O_NOFOLLOW"):
+        raise PreflightError("NO_SYMLINK_GUARD")
+    flags |= os.O_NOFOLLOW
+    try:
+        fd = os.open(path, flags)
+    except OSError as exc:
+        raise PreflightError("PROFILE_ENV_REQUIRED") from exc
+    try:
+        info = os.fstat(fd)
+        if (not stat.S_ISREG(info.st_mode)
+                or info.st_uid != os.geteuid()
+                or info.st_mode & 0o077):
+            raise PreflightError("PROFILE_ENV_UNTRUSTED")
+        if info.st_size > MAX_PROFILE_ENV:
+            raise PreflightError("PROFILE_ENV_TOO_LARGE")
+        with os.fdopen(os.dup(fd), "rb") as stream:
+            raw = stream.read(MAX_PROFILE_ENV + 1)
+        if len(raw) > MAX_PROFILE_ENV:
+            raise PreflightError("PROFILE_ENV_TOO_LARGE")
+        if PROJECT_PLUGIN_ENV.search(raw):
+            raise PreflightError("PROFILE_ENV_PROJECT_PLUGINS_FORBIDDEN")
+    finally:
+        os.close(fd)
 
 
 def _plugin_dir(home: Path) -> Path:
@@ -269,6 +300,7 @@ def run_preflight(*, hermes: Path, hermes_home: Path, hermes_sha256: str,
         if (not stat.S_ISDIR(home_info.st_mode) or stat.S_ISLNK(home_info.st_mode)
                 or home_info.st_uid != os.geteuid()):
             raise PreflightError("HERMES_HOME_UNTRUSTED")
+        _verify_profile_env(hermes_home)
         actual_hermes = _hash_regular(hermes, executable=True)
         if actual_hermes != hermes_sha256:
             raise PreflightError("HERMES_HASH_MISMATCH")
