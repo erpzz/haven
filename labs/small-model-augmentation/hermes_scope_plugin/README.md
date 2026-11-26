@@ -25,6 +25,10 @@ model to report which tools were visible or which calls executed.
   disabled, not loaded, registered on the wrong execution path, bypassed,
   or if multiple Hermes processes share one session ID and do not share
   budget state. Those are host-launcher/admission obligations.
+* A different Hermes pre_tool_call hook returning a tool-argument modify directive
+  may change arguments after this veto has examined them. Host launch must
+  exclude such modifier hooks or independently reauthorize final arguments at
+  the actual dispatcher. This plugin alone does not prove hook ordering safety.
 
 ## Installation (isolated profile only)
 
