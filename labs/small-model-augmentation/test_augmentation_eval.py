@@ -9,7 +9,7 @@ def report(arm="a"):
         "schema":e.SCHEMA,"experiment":"context","comparison_group":"g1","arm":arm,
         "dataset_id":"public-dev","dataset_sha256":H("data"),"model_id":"qwen4b",
         "model_artifact_sha256":H("model"),"engine":"llama.cpp","hardware":"mac",
-        "temperature":0.0,"max_tokens":1024,"code_sha256":H("code-"+arm),"reserve":False},
+        "temperature":0.0,"max_tokens":1024,"code_sha256":H("code-"+arm),"grader_sha256":H("grader"),"reserve":False},
       "rows":[
         {"case_id":"c1","family":"graph","semantic_pass":True,"unauthorized_attempts":0,
          "unblocked_unauthorized":0,"external_effects":0,"verification_failures":0,
@@ -63,6 +63,11 @@ class EvalTests(unittest.TestCase):
     def test_manifest_mismatch(self):
         a=report("a");b=report("b");b["manifest"]["dataset_sha256"]=H("other")
         x=e.compare(a,b);self.assertIn("MANIFEST_MISMATCH",x["errors"]);self.assertIn("dataset_sha256",x["mismatched_fields"])
+    def test_grader_hash_must_match(self):
+        a=report("a");b=report("b");b["manifest"]["grader_sha256"]=H("other-grader")
+        x=e.compare(a,b)
+        self.assertIn("MANIFEST_MISMATCH",x["errors"])
+        self.assertIn("grader_sha256",x["mismatched_fields"])
     def test_code_hash_may_differ(self):
         a=report("a");b=report("b");self.assertEqual(e.compare(a,b)["status"],"pass")
     def test_arm_must_differ(self):
