@@ -110,7 +110,7 @@ class Suite(unittest.TestCase):
                 path = out.with_name(f"{arm}.jsonl")
                 run.cmd_eval(argparse.Namespace(arm=arm, base_url="http://127.0.0.1:1/v1", model="x", label=arm,
                                                 out=str(path), tenants=1, per_tenant=3))
-                rows = [_json.loads(l) for l in Path(path).read_text().splitlines()]
+                rows = [_json.loads(l) for l in pathlib.Path(path).read_text().splitlines()]
                 self.assertEqual(len(rows), 3)
                 self.assertTrue(all(not r["exact"] and "model call failed" in r["error"] for r in rows))
                 self.assertTrue(all(r["id"] for r in rows))
