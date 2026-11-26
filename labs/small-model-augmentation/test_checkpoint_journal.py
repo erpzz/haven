@@ -1,4 +1,4 @@
-import hashlib, json, tempfile, threading, unittest
+import hashlib, json, subprocess, sys, tempfile, threading, time, unittest
 from pathlib import Path
 import checkpoint_journal as c
 
@@ -180,6 +180,61 @@ class JournalTests(unittest.TestCase):
             j.append("run_completed")
             with self.assertRaises(ValueError):
                 j.append("unit_started", "q1", 1)
+
+    @unittest.skipIf(c._fcntl is None, "POSIX flock required")
+    def test_run_lease_blocks_competing_process_and_releases(self):
+        with tempfile.TemporaryDirectory() as d:
+            journal = Path(d, "run.jsonl")
+            script = (
+                "import sys\n"
+                "from checkpoint_journal import RunLease\n"
+                "try:\n"
+                "  with RunLease(sys.argv[1]): pass\n"
+                "except RuntimeError:\n"
+                "  raise SystemExit(7)\n"
+            )
+            with c.RunLease(journal):
+                blocked = subprocess.run(
+                    [sys.executable, "-c", script, str(journal)],
+                    cwd=Path(c.__file__).parent, capture_output=True, text=True,
+                )
+                self.assertEqual(blocked.returncode, 7, blocked.stderr)
+            allowed = subprocess.run(
+                [sys.executable, "-c", script, str(journal)],
+                cwd=Path(c.__file__).parent, capture_output=True, text=True,
+            )
+            self.assertEqual(allowed.returncode, 0, allowed.stderr)
+
+    @unittest.skipIf(c._fcntl is None, "POSIX flock required")
+    def test_run_lease_is_released_when_owner_process_is_killed(self):
+        with tempfile.TemporaryDirectory() as d:
+            journal = Path(d, "run.jsonl")
+            marker_path = Path(d, "owned")
+            script = (
+                "import sys,time\n"
+                "from pathlib import Path\n"
+                "from checkpoint_journal import RunLease\n"
+                "with RunLease(sys.argv[1]):\n"
+                "  Path(sys.argv[2]).write_text('owned')\n"
+                "  time.sleep(60)\n"
+            )
+            proc = subprocess.Popen(
+                [sys.executable, "-c", script, str(journal), str(marker_path)],
+                cwd=Path(c.__file__).parent,
+            )
+            try:
+                deadline = time.time() + 5
+                while time.time() < deadline and not marker_path.exists():
+                    time.sleep(0.02)
+                self.assertTrue(marker_path.exists())
+                proc.kill()
+                proc.wait(timeout=5)
+                with c.RunLease(journal):
+                    pass
+            finally:
+                if proc.poll() is None:
+                    proc.kill()
+                    proc.wait(timeout=5)
 
     def test_concurrent_appends_preserve_sequence(self):
         with tempfile.TemporaryDirectory() as d:
