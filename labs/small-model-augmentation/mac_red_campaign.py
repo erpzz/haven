@@ -162,6 +162,123 @@ def _sha_obj(value: Any) -> str:
     return hashlib.sha256(_canon(value)).hexdigest()
 
 
+def _hermes_shebang_python(hermes: Path) -> Path:
+    try:
+        first = Path(hermes).read_bytes().splitlines()[0]
+    except (OSError, IndexError) as exc:
+        raise CampaignError("HERMES_SHEBANG_UNAVAILABLE") from exc
+    if not first.startswith(b"#!"):
+        raise CampaignError("HERMES_SHEBANG_INVALID")
+    try:
+        value = first[2:].decode("utf-8").strip()
+    except UnicodeDecodeError as exc:
+        raise CampaignError("HERMES_SHEBANG_INVALID") from exc
+    # Qualification requires the concrete interpreter embedded by the venv
+    # console-script install, not /usr/bin/env indirection.
+    if not value.startswith("/") or " " in value or "\t" in value:
+        raise CampaignError("HERMES_INTERPRETER_NOT_PINNED")
+    python = Path(value)
+    if not python.exists() or not os.access(python, os.X_OK):
+        raise CampaignError("HERMES_INTERPRETER_UNAVAILABLE")
+    return python
+
+
+def _core_source_manifest(root: Path) -> dict[str, Any]:
+    root = Path(root).resolve()
+    entries: list[dict[str, str]] = []
+    locations = [root / "hermes_cli", root / "agent", root / "tools"]
+    singles = [root / "model_tools.py", root / "run_agent.py"]
+    files: list[Path] = []
+    for directory in locations:
+        if not directory.is_dir() or directory.is_symlink():
+            raise CampaignError("HERMES_CORE_SOURCE_MISSING")
+        files.extend(directory.rglob("*.py"))
+    files.extend(path for path in singles if path.is_file())
+    for file in sorted(set(files), key=lambda p: str(p.relative_to(root))):
+        if file.is_symlink() or not file.is_file():
+            raise CampaignError("HERMES_CORE_SOURCE_UNTRUSTED")
+        relative = file.relative_to(root).as_posix()
+        # Core source files are intentionally small; refuse generated blobs or
+        # unexpected giant Python files instead of silently hashing arbitrary data.
+        if file.stat().st_size > 4 * 1024 * 1024:
+            raise CampaignError("HERMES_CORE_SOURCE_TOO_LARGE")
+        h = hashlib.sha256()
+        with file.open("rb") as stream:
+            for block in iter(lambda: stream.read(256 * 1024), b""):
+                h.update(block)
+        entries.append({"path": relative, "sha256": h.hexdigest()})
+    if not entries:
+        raise CampaignError("HERMES_CORE_SOURCE_MISSING")
+    body = {
+        "schema": "haven.hermes-core-source-manifest.v1",
+        "file_count": len(entries),
+        "files": entries,
+    }
+    body["manifest_sha256"] = _sha_obj(body)
+    return body
+
+
+def _hermes_provenance(hermes: Path) -> tuple[dict[str, Any], dict[str, Any]]:
+    python = _hermes_shebang_python(hermes)
+    probe = (
+        "import json,pathlib,hermes_cli;"
+        "p=pathlib.Path(hermes_cli.__file__).resolve();"
+        "print(json.dumps({"
+        "'version':getattr(hermes_cli,'__version__',None),"
+        "'release_date':getattr(hermes_cli,'__release_date__',None),"
+        "'module_file':str(p),"
+        "'source_root':str(p.parent.parent)"
+        "},sort_keys=True))"
+    )
+    try:
+        cp = subprocess.run(
+            [str(python), "-c", probe],
+            text=True, capture_output=True, timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise CampaignError("HERMES_PROVENANCE_PROBE_FAILED") from exc
+    if cp.returncode != 0:
+        raise CampaignError("HERMES_PROVENANCE_PROBE_FAILED")
+    try:
+        meta = json.loads(cp.stdout)
+    except json.JSONDecodeError as exc:
+        raise CampaignError("HERMES_PROVENANCE_INVALID") from exc
+    if (
+        meta.get("version") != EXPECTED_HERMES_VERSION
+        or meta.get("release_date") != EXPECTED_HERMES_RELEASE_DATE
+    ):
+        raise CampaignError("HERMES_RELEASE_MISMATCH")
+    root = Path(meta.get("source_root", "")).resolve()
+    module_file = Path(meta.get("module_file", "")).resolve()
+    if not module_file.is_file() or root not in module_file.parents:
+        raise CampaignError("HERMES_PROVENANCE_INVALID")
+
+    try:
+        git = subprocess.run(
+            ["git", "-C", str(root), "rev-parse", "HEAD"],
+            text=True, capture_output=True, timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise CampaignError("HERMES_GIT_PROVENANCE_UNAVAILABLE") from exc
+    head = git.stdout.strip() if git.returncode == 0 else ""
+    if head != EXPECTED_HERMES_COMMIT:
+        raise CampaignError("HERMES_COMMIT_MISMATCH")
+
+    manifest = _core_source_manifest(root)
+    provenance = {
+        "schema": "haven.hermes-runtime-provenance.v1",
+        "version": meta["version"],
+        "release_date": meta["release_date"],
+        "git_commit": head,
+        "source_root": str(root),
+        "module_file": str(module_file),
+        "core_source_manifest_sha256": manifest["manifest_sha256"],
+        "core_source_file_count": manifest["file_count"],
+    }
+    provenance["provenance_sha256"] = _sha_obj(provenance)
+    return provenance, manifest
+
+
 def _hash_file(path: Path, *, executable: bool | None = None) -> str:
     path = Path(path)
     flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0)
@@ -460,6 +577,8 @@ def run_campaign(*, hermes: Path, hermes_home: Path, toolsets: str,
         raise CampaignError("OUTPUT_DIR_NOT_PRIVATE")
 
     source = _assert_source_layout(augmentation_root)
+    hermes_provenance, hermes_manifest = _hermes_provenance(hermes)
+    _write_private(out_dir / "hermes-core-source-manifest.json", hermes_manifest)
     hermes = Path(hermes)
     hermes_home = Path(hermes_home)
     server = Path(server)
@@ -477,6 +596,8 @@ def run_campaign(*, hermes: Path, hermes_home: Path, toolsets: str,
         "plugin_init_sha256": init_hash,
         "plugin_manifest_sha256": manifest_hash,
         "case_child_sha256": _hash_file(source["child"]),
+        "hermes_provenance_sha256": hermes_provenance["provenance_sha256"],
+        "hermes_core_source_manifest_sha256": hermes_manifest["manifest_sha256"],
     }
 
     suite = build_suite(seeds=list(seeds), families=list(families))
@@ -628,6 +749,7 @@ def run_campaign(*, hermes: Path, hermes_home: Path, toolsets: str,
         "status": "pass" if all(r["status"] == "pass" for r in receipts) else "block",
         "suite_sha256": suite["suite_sha256"],
         "runtime": hashes,
+        "hermes_provenance": hermes_provenance,
         "model_alias": alias,
         "context_tokens": context,
         "toolsets": toolsets,
