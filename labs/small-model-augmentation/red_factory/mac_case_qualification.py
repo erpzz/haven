@@ -172,7 +172,7 @@ def _read_private_json(path: Path, expected_schema: str | None = None) -> dict[s
     return value
 
 
-def _load_enrollment(path: Path) -> tuple[dict[str, Any], str, dict[str, str]]:
+def _load_enrollment(path: Path) -> tuple[dict[str, Any], str, str, dict[str, str]]:
     enrollment = _read_private_json(path, ENROLLMENT_SCHEMA)
     if set(enrollment) != ENROLLMENT_KEYS:
         raise QualificationError("ENROLLMENT_SHAPE_MISMATCH")
