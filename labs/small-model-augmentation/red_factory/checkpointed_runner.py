@@ -13,9 +13,13 @@ import hashlib
 import json
 import os
 import re
+import sys
 from pathlib import Path
 from typing import Any, Callable, Mapping
 
+_AUG = Path(__file__).resolve().parent.parent
+if str(_AUG) not in sys.path:
+    sys.path.insert(0, str(_AUG))
 import checkpoint_journal as checkpoint
 from hermes_runner import run_hermes_case
 from local_runner import (
