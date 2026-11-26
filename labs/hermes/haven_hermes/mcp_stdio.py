@@ -68,6 +68,7 @@ class Server:
             return {"tools": [{"name": t.name, "description": t.description, "inputSchema": t.schema(),
                                "annotations": t.annotations()} for t in visible]}
         if method == "tools/call":
+            self.reg.refresh()
             name = params.get("name", "")
             arguments = params.get("arguments")
             if arguments is None:
