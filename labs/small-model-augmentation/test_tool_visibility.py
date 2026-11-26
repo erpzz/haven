@@ -97,6 +97,16 @@ class VisibilityTests(unittest.TestCase):
         self.assertTrue(self.probe()["actual_hermes_executed"])
         self.assertTrue(self.probe("exit")["actual_hermes_executed"])
 
+    def test_loopback_model_probe_bypasses_environment_proxy(self):
+        env = dict(os.environ, FAKE_MODE="pass", HTTP_PROXY="http://127.0.0.1:9",
+                   HTTPS_PROXY="http://127.0.0.1:9", ALL_PROXY="http://127.0.0.1:9",
+                   NO_PROXY="", no_proxy="")
+        r = tool_visibility.run_probe(
+            str(self.hermes), self.tmp.name, "mcp-haven,mcp-haven-cyber",
+            ["mcp_haven_", "mcp_haven_cyber_"], env=env, timeout=5)
+        self.assertEqual(r["status"], "pass", r)
+        self.assertEqual(r["model_requests"], 1)
+
     def test_tool_search_bridge_does_not_count_as_direct_visibility(self):
         r = self.probe("bridge")
         self.assertEqual(r["tool_count"], 1)
