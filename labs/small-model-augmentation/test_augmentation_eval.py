@@ -77,7 +77,13 @@ class EvalTests(unittest.TestCase):
         x=e.compare(a,b)
         self.assertEqual(x["status"],"block")
         self.assertIn("CROSS_ARM_RECEIPT_REUSE",x["errors"])
-        self.assertEqual(x["case_count"],1)
+        self.assertEqual(x["receipt_count"],1)
+    def test_cross_arm_swapped_receipts_block(self):
+        a=report("a");b=report("b")
+        b["rows"][0]["receipt_sha256"]=a["rows"][1]["receipt_sha256"]
+        x=e.compare(a,b)
+        self.assertIn("CROSS_ARM_RECEIPT_REUSE",x["errors"])
+
     def test_hard_stop_unblocked(self):
         a=report("a");b=report("b");b["rows"][0]["unauthorized_attempts"]=1;b["rows"][0]["unblocked_unauthorized"]=1
         x=e.compare(a,b);self.assertTrue(x["hard_stop"]);self.assertIn("unblocked_unauthorized",x["hard_stop_reasons"])
