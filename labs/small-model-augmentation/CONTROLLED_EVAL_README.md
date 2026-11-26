@@ -37,17 +37,18 @@ Compared reports must match on every outcome-relevant manifest field except arm 
 
 Rows carry only aggregate/control metrics and a SHA-256 of the private host-owned case receipt. Receipt hashes are unique within each arm and must be disjoint across compared arms. The sidecar does not require raw transcripts or gold.
 
-`eval_receipt.py` now defines that private receipt rather than leaving `receipt_sha256` opaque. One receipt is one arm/case execution and binds:
+`eval_receipt.py` now defines that private receipt rather than leaving `receipt_sha256` opaque. The current guarded shape is `haven.augmentation-eval-private-receipt.v2`; v1 receipts predate #199 final-dispatch/supervisor binding and are intentionally rejected. One receipt is one arm/case execution and binds:
 
 - the exact sidecar manifest identity/settings;
 - #127 admission receipt plus an explicit private runtime profile: exact Hermes/server/model hashes, exact model alias, effective context (>=64K), provider and owned-loopback mode; the stable runtime-profile hash is derived from those fields;
 - an explicit private request profile: temperature/max tokens (which must match the public manifest), request seed, max turns and stream mode; the stable request-settings hash is derived from those fields;
 - stable private world hash;
-- #129 tool-policy hash;
+- #129 model-visible tool-policy hash;
+- #199 guarded-Hermes preflight receipt, guarded supervisor receipt, and the separate raw-MCP/final-dispatch policy hash;
 - #131 catalogue hash and selection receipt;
 - #132 claim bundle, claim policy and deterministic renderer;
 - #130 run-manifest hash;
-- the exact tool/MCP implementation revision;
+- the exact tool/enforcement implementation revision. When #199 is active, this non-waiverable identity must cover the guard plugin, scope engine, final MCP dispatcher/server implementation, and supervisor path rather than only the domain tool implementation;
 - distinct host-source receipt hashes for grader, dispatcher, independent effect observer, verifier/claim boundary, recovery runner and backend/timer.
 
 The public sidecar row is deterministically derived from those fixed host source fields. It is not separately authored.
@@ -60,7 +61,7 @@ The private receipt provides content and cross-control binding only. It does **n
 
 The fixed source domains make provenance mistakes visible: semantic correctness comes only from the grader source, call/safety counters only from the dispatcher source, external effects only from the observer source, verifier/release counters only from the verifier source, recovery counters only from the recovery source, and token/timing/schema metrics only from the backend source. Their source receipt hashes must be distinct.
 
-Matched arms also require a **private control preflight**. The public sidecar manifest alone cannot prove identical local runtime/context/world/request settings. `compare_private_receipt_sets()` therefore compares the private receipts case-for-case before the public report comparison. The runner explicitly names the control hashes that the experiment is allowed to vary. Stable runtime profile, request settings, world, full catalogue and tool implementation are never waiverable; they must match. This lets E1 vary selection/scope and E2 vary claim handling without accidentally accepting runtime drift.
+Matched arms also require a **private control preflight**. The public sidecar manifest alone cannot prove identical local runtime/context/world/request settings. `compare_private_receipt_sets()` therefore compares the private receipts case-for-case before the public report comparison. The runner explicitly names the control hashes that the experiment is allowed to vary. Stable runtime profile, request settings, world, full catalogue and tool/enforcement implementation are never waiverable; they must match. E1 may explicitly vary the #129 model-side policy, #199 raw final-dispatch policy, selection, admission and the resulting #199 preflight/supervisor receipt hashes, but that does not permit enforcement-code drift. E2 keeps those guard controls fixed while varying only the claim path.
 
 ## Comparison
 
@@ -102,7 +103,7 @@ Build a public arm report from one or more private receipts:
 
 Preflight matched private arms before the public comparison, naming only the intended experimental control differences. Example E1 shape:
 
-`python eval_receipt.py compare-private --a a-c1.json --b b-c1.json --allow-control-difference admission_receipt_sha256 --allow-control-difference tool_policy_sha256 --allow-control-difference selection_receipt_sha256 --allow-control-difference run_manifest_sha256`
+`python eval_receipt.py compare-private --a a-c1.json --b b-c1.json --allow-control-difference admission_receipt_sha256 --allow-control-difference guard_preflight_receipt_sha256 --allow-control-difference guard_supervisor_receipt_sha256 --allow-control-difference tool_policy_sha256 --allow-control-difference final_dispatch_policy_sha256 --allow-control-difference selection_receipt_sha256 --allow-control-difference run_manifest_sha256`
 
 The private compare output contains field names/counts only, not the private hashes. It hard-blocks stable runtime-profile/request/world/catalog/tool-implementation drift even if a caller tries to put one of those fields on the allowlist.
 
