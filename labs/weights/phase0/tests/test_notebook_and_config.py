@@ -55,6 +55,35 @@ class Notebook(unittest.TestCase):
         self.assertIn("Do not run until the gates on #123 are met", NB["cells"][0]["source"])
         self.assertIn("AMENDMENT_1.md", NB["cells"][0]["source"])
 
+    def test_notebook_allocation_timer_wraps_setup_and_public_summary(self):
+        code_cells = [(i, c["source"]) for i, c in enumerate(NB["cells"]) if c["cell_type"] == "code"]
+        first_i, first_src = code_cells[0]
+        self.assertIn("NOTEBOOK_STARTED_MONOTONIC = time.monotonic()", first_src)
+
+        setup_i = next(i for i, src in code_cells if "git clone -q --filter=blob:none" in src)
+        engine_i = next(i for i, src in code_cells if 'ENGINE = build_llama("b11146"' in src)
+        model_i = next(i for i, src in code_cells if "M4 = fetch(MODEL)" in src)
+        run_i = next(i for i, src in code_cells if "kaggle/w1_phase1.py --engine" in src)
+        final_i, final_src = code_cells[-1]
+        self.assertLess(first_i, setup_i)
+        self.assertLess(first_i, engine_i)
+        self.assertLess(first_i, model_i)
+        self.assertLess(first_i, run_i)
+        self.assertGreater(final_i, run_i)
+        self.assertIn("NOTEBOOK_ENDED_MONOTONIC = time.monotonic()", final_src)
+        self.assertIn("collector_summary_sha256", final_src)
+        self.assertIn("notebook_device_hours", BUILD.NOTEBOOK_TIMING_HELPER)
+        self.assertIn("public_receipt_schema", final_src)
+
+        ns = {}
+        exec(BUILD.NOTEBOOK_TIMING_HELPER, ns)
+        receipt = ns["notebook_timing_receipt"](100.0, 7300.0, 2, 1.5)
+        self.assertEqual(receipt["notebook_wall_hours"], 2.0)
+        self.assertEqual(receipt["notebook_device_hours"], 4.0)
+        self.assertEqual(receipt["collector_wall_hours_bound"], 1.5)
+        with self.assertRaises(RuntimeError):
+            ns["notebook_timing_receipt"](100.0, 3700.0, 2, 1.5)
+
     def test_engine_cell_is_the_run1_helper(self):
         cell = (HERE / "kaggle" / "llama_build_cell.py").read_text()
         self.assertIn('def build_llama(tag, prefix):', cell)

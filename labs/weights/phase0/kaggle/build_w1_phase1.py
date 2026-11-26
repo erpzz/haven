@@ -27,6 +27,24 @@ MODEL_4B = {"repo": "unsloth/Qwen3.5-4B-GGUF", "revision": "e87f176479d0855a907a
             "file": "Qwen3.5-4B-Q4_K_M.gguf", "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4"}
 OUT = HERE / "kaggle" / "w1_phase1_kaggle.ipynb"
 
+NOTEBOOK_TIMING_HELPER = '''def notebook_timing_receipt(started_monotonic, ended_monotonic, accelerator_count, collector_wall_hours):
+    elapsed_seconds = max(0.0, float(ended_monotonic) - float(started_monotonic))
+    notebook_wall_hours = elapsed_seconds / 3600.0
+    collector_wall_hours = float(collector_wall_hours or 0.0)
+    if notebook_wall_hours + 1e-12 < collector_wall_hours:
+        raise RuntimeError("notebook wall time shorter than collector-process wall time")
+    return {
+        "measurement_scope": {
+            "notebook_wall_hours": "first executable notebook cell through a completed public-summary write; includes setup, tests, llama.cpp build, model download, server/model load and inference",
+            "notebook_device_hours": "notebook wall time multiplied by accelerator count",
+            "collector_wall_hours_bound": "collector-process allocation_wall_hours_total copied from the bound collector summary for scope reconciliation",
+        },
+        "notebook_wall_hours": round(notebook_wall_hours, 6),
+        "notebook_device_hours": round(notebook_wall_hours * int(accelerator_count), 6),
+        "collector_wall_hours_bound": round(collector_wall_hours, 6),
+    }
+'''
+
 
 def md(s):
     return {"cell_type": "markdown", "metadata": {}, "source": s}
@@ -64,10 +82,12 @@ def build():
 
 What it does (PLAN.md, W1 Stage A, steps 1-4): about 200 training episodes from fresh secret seeds, 8 attempts each at temperature 0.7, inside the full HARE harness (advisory checks, gateway, verifier, one correction). An attempt is kept only if its first answer passes the adjudicator against gold (model-clean) with zero blocked or duplicate calls, at most 2 per episode in attempt order; training rows stop at that first answer (Amendment 2, D1). Each episode's kept traces share a total weight of 1.0. Episodes with no kept attempt go to W2. Gate G1: 15-85% of all attempted rollouts are kept. Every attempt is scored model-clean, corrected-model and final-system (Amendment 1, section 1). The summary publishes throughput, peak VRAM, accelerator count, wall-hours, device-hours and per-episode coverage (section 6).
 
-**Before running:** attach the private dataset holding `w1-pilot.episodes.jsonl` (made by `gen_hare.py generate`) and set `EPISODES_SHA256` below to the value posted on #123. Accelerator **GPU T4 x2**, Internet **On**. Keep the notebook private: `attempts.jsonl` and `kept-rows.jsonl` hold full synthetic transcripts and training gold. Only `summary.json` leaves the session.
+**Before running:** attach the private dataset holding `w1-pilot.episodes.jsonl` (made by `gen_hare.py generate`) and set `EPISODES_SHA256` below to the value posted on #123. Accelerator **GPU T4 x2**, Internet **On**. Keep the notebook **and its output version private**: `attempts.jsonl`, `metrics.jsonl`, `kept-rows.jsonl` and related receipts are private audit evidence and may contain full synthetic transcripts/training gold. The aggregate `summary.json` hash-binds the raw receipts and is the only artifact intended for publication outside the owner-controlled private context.
 
-Estimated GPU time: about 3 hours (PLAN.md); the run replaces this with a measured number."""),
-        code(f"""EPISODES_SHA256 = ""        # REQUIRED: the w1-pilot episodes sha256 posted on #123
+Estimated GPU time: about 3 hours (PLAN.md); the run replaces this with separately scoped all-in notebook allocation, collector-process and inference telemetry."""),
+        code(f"""import time
+NOTEBOOK_STARTED_MONOTONIC = time.monotonic()  # all-in allocation timer: before setup/tests/build/download
+EPISODES_SHA256 = ""        # REQUIRED: the w1-pilot episodes sha256 posted on #123
 EPISODES_NAME = "w1-pilot.episodes.jsonl"
 ATTEMPTS = 8
 TEMPERATURE = 0.7
@@ -131,9 +151,29 @@ HW = f"Kaggle {len(gpus)}x {gpus[0]}; one llama-server per GPU, identical args"
        f"--episodes-sha256 {EPISODES_SHA256} --out {WORK} --gpus {GPU_IDS} --attempts {ATTEMPTS} "
        f"--temperature {TEMPERATURE} --max-tokens {MAX_TOKENS} --deadline-minutes {DEADLINE_MINUTES} --hardware '{HW}'")
 """),
-        code("""# Only the summary leaves the session. Kept rows and transcripts stay private.
-shutil.copy(f"{WORK}/summary.json", "/kaggle/working/w1-phase1-summary.json")
-print(json.dumps(json.load(open("/kaggle/working/w1-phase1-summary.json"))["summary"], indent=2))
+        code(NOTEBOOK_TIMING_HELPER + """
+# Expose one public-safe aggregate wrapper at top level. WORK remains private audit evidence.
+collector_summary_path = pathlib.Path(f"{WORK}/summary.json")
+collector_summary_bytes = collector_summary_path.read_bytes()
+public_summary_path = pathlib.Path("/kaggle/working/w1-phase1-summary.json")
+public_doc = json.loads(collector_summary_bytes)
+public_doc["public_receipt_schema"] = "haven-weights-w1-phase1-public-receipt-1"
+public_doc["notebook_telemetry"] = {
+    "status": "MEASURING",
+    "collector_summary_sha256": hashlib.sha256(collector_summary_bytes).hexdigest(),
+}
+# Complete one full public-summary write before taking the all-in end timestamp, so the
+# measured scope includes setup/build/download/inference and an actual summary publication.
+public_summary_path.write_text(json.dumps(public_doc, indent=2) + "\\n")
+NOTEBOOK_ENDED_MONOTONIC = time.monotonic()
+collector_wall_hours = (public_doc.get("telemetry") or {}).get("allocation_wall_hours_total", 0.0)
+notebook_receipt = notebook_timing_receipt(
+    NOTEBOOK_STARTED_MONOTONIC, NOTEBOOK_ENDED_MONOTONIC, len(gpus), collector_wall_hours
+)
+notebook_receipt["collector_summary_sha256"] = hashlib.sha256(collector_summary_bytes).hexdigest()
+public_doc["notebook_telemetry"] = notebook_receipt
+public_summary_path.write_text(json.dumps(public_doc, indent=2) + "\\n")
+print(json.dumps({"summary": public_doc["summary"], "notebook_telemetry": notebook_receipt}, indent=2))
 """),
     ]
     nb = {"cells": cells, "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
