@@ -132,7 +132,7 @@ class VisibilityTests(unittest.TestCase):
     def test_zero_tool_surface_is_a_valid_exact_capture(self):
         env = dict(os.environ, FAKE_MODE="zero")
         r = tool_visibility.run_probe(
-            str(self.hermes), self.tmp.name, "mcp-red-factory", [],
+            str(self.hermes), self.tmp.name, "", [],
             env=env, timeout=5, expected_names=[], expected_tool_count=0,
         )
         self.assertEqual(r["status"], "pass", r)
@@ -140,6 +140,21 @@ class VisibilityTests(unittest.TestCase):
         self.assertEqual(r["tool_names"], [])
         self.assertRegex(r["tool_surface_sha256"], r"^[0-9a-f]{64}$")
         self.assertEqual(r["required_prefix_counts"], {})
+
+    def test_empty_toolsets_is_rejected_without_explicit_zero_contract(self):
+        for kwargs in (
+            {},
+            {"expected_tool_count": 1},
+            {"expected_tool_count": 0, "expected_names": ["mcp__x__y"]},
+        ):
+            with self.subTest(kwargs=kwargs):
+                r = tool_visibility.run_probe(
+                    str(self.hermes), self.tmp.name, "", [], **kwargs
+                )
+                self.assertEqual(
+                    r["errors"], ["EMPTY_TOOLSETS_REQUIRE_ZERO_EXPECTATION"]
+                )
+                self.assertFalse(r["actual_hermes_executed"])
 
     def test_expected_tool_count_mismatch_blocks(self):
         env = dict(os.environ, FAKE_MODE="zero")
