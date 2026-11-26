@@ -8,19 +8,21 @@ import unittest
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from hermes_runner import FINAL_SCHEMA, run_hermes_case
+from hermes_runner import FINAL_SCHEMA, main, run_hermes_case, run_hermes_suite
 from red_factory import make_case
 
 
 class BackendHandler(BaseHTTPRequestHandler):
     responses = []
+    requests = []
 
     def log_message(self, *args):
         pass
 
     def do_POST(self):
         length = int(self.headers.get("Content-Length", "0"))
-        self.rfile.read(length)
+        raw = self.rfile.read(length)
+        type(self).requests.append(json.loads(raw))
         response = type(self).responses.pop(0)
         message = {"role": "assistant"}
         if isinstance(response, dict):
@@ -162,6 +164,7 @@ class HermesRunnerTests(unittest.TestCase):
 
     def setUp(self):
         BackendHandler.responses = []
+        BackendHandler.requests = []
         self.tmp = tempfile.TemporaryDirectory()
         root = Path(self.tmp.name)
         self.hermes_home = root / "hermes-home"
@@ -324,6 +327,75 @@ class HermesRunnerTests(unittest.TestCase):
         self.assertIn("HERMES_TIMEOUT", result["errors"])
         time.sleep(0.9)
         self.assertFalse(marker.exists())
+
+    def test_suite_summary_separates_model_and_execution(self):
+        case = make_case("unauthorized_effect", 41)
+        suite = {
+            "schema": "haven-local-red-factory-suite-v1",
+            "classification": "development",
+            "families": ["unauthorized_effect"],
+            "seeds": [41],
+            "case_ids": [case.case_id],
+            "n": 1,
+            "cases": [case],
+        }
+        import hashlib
+        body = {k: suite[k] for k in ("schema", "classification", "families", "seeds", "case_ids", "n")}
+        suite["suite_sha256"] = hashlib.sha256(
+            json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode()
+        ).hexdigest()
+        BackendHandler.responses.append(self.model_response(case, "write_canary"))
+        run = run_hermes_suite(
+            hermes=self.hermes,
+            hermes_home=self.hermes_home,
+            toolsets="mcp-red-factory",
+            backend_base_url=self.backend,
+            model="local-4b",
+            suite=suite,
+            timeout_seconds=5,
+        )
+        self.assertEqual(run["status"], "pass")
+        self.assertEqual(run["model_summary"]["passes"], 0)
+        self.assertEqual(run["execution_summary"]["passes"], 1)
+
+    def test_cli_writes_private_suite_receipt(self):
+        case = make_case("no_evidence", 51)
+        BackendHandler.responses.append(self.model_response(case))
+        out = Path(self.tmp.name) / "hermes-red.json"
+        rc = main([
+            "--hermes", str(self.hermes),
+            "--hermes-home", str(self.hermes_home),
+            "--toolsets", "mcp-red-factory",
+            "--base-url", self.backend,
+            "--model", "local-4b",
+            "--seeds", "51",
+            "--families", "no_evidence",
+            "--timeout", "5",
+            "--out", str(out),
+        ])
+        self.assertEqual(rc, 0)
+        self.assertTrue(out.is_file())
+        self.assertEqual(stat.S_IMODE(out.stat().st_mode), 0o600)
+        receipt = json.loads(out.read_text())
+        self.assertEqual(receipt["harness_passes"], 1)
+        self.assertEqual(receipt["model_summary"]["passes"], 1)
+        self.assertEqual(receipt["execution_summary"]["passes"], 1)
+
+    def test_cli_existing_output_refuses_before_model_request(self):
+        out = Path(self.tmp.name) / "exists.json"
+        out.write_text("{}")
+        with self.assertRaises(ValueError):
+            main([
+                "--hermes", str(self.hermes),
+                "--hermes-home", str(self.hermes_home),
+                "--toolsets", "mcp-red-factory",
+                "--base-url", self.backend,
+                "--model", "local-4b",
+                "--seeds", "1",
+                "--families", "no_evidence",
+                "--out", str(out),
+            ])
+        self.assertEqual(BackendHandler.requests, [])
 
     def test_non_loopback_backend_refused_before_hermes(self):
         case = make_case("no_evidence", 8)
