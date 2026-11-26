@@ -106,7 +106,7 @@ shutil.rmtree(dest / "phase0", ignore_errors=True)
 tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz").extractall(dest, filter="data")
 P0 = dest / "phase0"
 sh(f"cd {{P0}} && python3 fetch_deps.py --verify")
-sh(f"cd {{P0}} && python3 -m unittest discover -s tests 2>&1 | tail -4")
+sh(f"cd {{P0}} && python3 -m unittest discover -s tests -p 'test_phase0.py' -v")
 """),
         code(llama_cell + '\nENGINE = build_llama("b11146", "/tmp/llama.cpp")   # the run-1 engine\n'),
         code("""def fetch(spec):
