@@ -53,6 +53,21 @@ TOOLSETS = re.compile(r"[A-Za-z0-9_.:-]+(?:,[A-Za-z0-9_.:-]+)*\Z", re.ASCII)
 EXPECTED_HERMES_VERSION = "0.21.5"
 EXPECTED_HERMES_RELEASE_DATE = "2026.9.24"
 EXPECTED_HERMES_COMMIT = "f97608f178d1ffeca59860195ab7da295f7c8e5f"
+IMPLEMENTATION_PATHS = (
+    "hermes_scope_plugin/__init__.py",
+    "hermes_scope_plugin/plugin.yaml",
+    "tool_scope.py",
+    "mcp_scope_runtime.py",
+    "hermes_plugin_preflight.py",
+    "guarded_model_supervisor.py",
+    "owned_llama.py",
+    "observe_llama.py",
+    "preflight.py",
+    "red_factory/red_factory.py",
+    "red_factory/mcp_fixture.py",
+    "red_factory/hermes_runner.py",
+    "red_factory/mac_red_case_child.py",
+)
 
 
 class _DiscoveryState:
@@ -163,6 +178,25 @@ def _canon(value: Any) -> bytes:
 
 def _sha_obj(value: Any) -> str:
     return hashlib.sha256(_canon(value)).hexdigest()
+
+
+def _implementation_manifest(augmentation_root: Path) -> dict[str, Any]:
+    root = Path(augmentation_root).resolve()
+    rows = []
+    for relative in IMPLEMENTATION_PATHS:
+        path = root / relative
+        if path.is_symlink() or not path.is_file():
+            raise CampaignError("IMPLEMENTATION_SOURCE_MISSING")
+        if path.stat().st_size > 4 * 1024 * 1024:
+            raise CampaignError("IMPLEMENTATION_SOURCE_TOO_LARGE")
+        rows.append({"path": relative, "sha256": _hash_file(path)})
+    body = {
+        "schema": "haven.red-tool-implementation-manifest.v1",
+        "files": rows,
+        "file_count": len(rows),
+    }
+    body["tool_implementation_sha256"] = _sha_obj(body)
+    return body
 
 
 def _hermes_shebang_python(hermes: Path) -> Path:
@@ -583,6 +617,8 @@ def run_campaign(*, hermes: Path, hermes_home: Path, toolsets: str,
         raise CampaignError("OUTPUT_DIR_NOT_PRIVATE")
 
     source = _assert_source_layout(augmentation_root)
+    implementation_manifest = _implementation_manifest(augmentation_root)
+    _write_private(out_dir / "tool-implementation-manifest.json", implementation_manifest)
     hermes_provenance, hermes_manifest = _hermes_provenance(hermes)
     _write_private(out_dir / "hermes-core-source-manifest.json", hermes_manifest)
     hermes = Path(hermes)
@@ -602,6 +638,7 @@ def run_campaign(*, hermes: Path, hermes_home: Path, toolsets: str,
         "plugin_init_sha256": init_hash,
         "plugin_manifest_sha256": manifest_hash,
         "case_child_sha256": _hash_file(source["child"]),
+        "tool_implementation_sha256": implementation_manifest["tool_implementation_sha256"],
         "hermes_provenance_sha256": hermes_provenance["provenance_sha256"],
         "hermes_core_source_manifest_sha256": hermes_manifest["manifest_sha256"],
     }
@@ -757,6 +794,7 @@ def run_campaign(*, hermes: Path, hermes_home: Path, toolsets: str,
         "status": "pass" if all(r["status"] == "pass" for r in receipts) else "block",
         "suite_sha256": suite["suite_sha256"],
         "runtime": hashes,
+        "tool_implementation_sha256": implementation_manifest["tool_implementation_sha256"],
         "hermes_provenance": hermes_provenance,
         "model_alias": alias,
         "context_tokens": context,
