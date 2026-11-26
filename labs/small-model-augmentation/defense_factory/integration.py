@@ -240,7 +240,9 @@ _EXPECTED_KEYS = {
 def verify_integration_receipt(
     receipt: Mapping[str, Any],
     contract: Mapping[str, Any],
+    repo: Path,
 ) -> dict[str, Any]:
+    repo = _require_repo(Path(repo))
     contract = _validate_contract(contract)
     if not isinstance(receipt, Mapping) or set(receipt) != _EXPECTED_KEYS:
         raise ValueError("integration receipt keys do not match schema")
@@ -277,6 +279,41 @@ def verify_integration_receipt(
             raise ValueError("noncanonical integration receipt path")
         if not isinstance(digest, str) or not _HASH_RE.fullmatch(digest):
             raise ValueError("invalid touched file hash")
+        tree = subprocess.run(
+            _GIT + ("ls-tree", commit, "--", path),
+            cwd=repo,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+            text=True,
+            timeout=10.0,
+        )
+        if tree.returncode != 0 or not tree.stdout.strip():
+            raise ValueError("touched path is absent from integration commit")
+        first = tree.stdout.strip().split("\t", 1)[0].split()
+        if len(first) < 2 or first[0] not in {"100644", "100755"} or first[1] != "blob":
+            raise ValueError("touched integration path is not a regular file")
+        shown = _run(
+            _GIT + ("show", f"{commit}:{path}"),
+            cwd=repo,
+            timeout=15.0,
+            recipe_id="git_show_touched",
+        )
+        if shown.timed_out or shown.exit_code != 0:
+            raise ValueError("failed to read touched file from integration commit")
+        if shown.stdout_sha256 != digest:
+            raise ValueError("integration receipt file hash does not match commit")
+
+    ancestor = subprocess.run(
+        _GIT + ("merge-base", "--is-ancestor", contract["base_commit"], commit),
+        cwd=repo,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+        timeout=10.0,
+    )
+    if ancestor.returncode != 0:
+        raise ValueError("integration receipt commit is not a descendant of workflow base")
 
     rows = body.get("recipes")
     if not isinstance(rows, list) or len(rows) != len(contract["recipe_ids"]):
@@ -297,11 +334,12 @@ def close_verified_finding(
     ledger: FindingLedger,
     contract: Mapping[str, Any],
     receipt: Mapping[str, Any],
+    repo: Path,
 ) -> dict[str, Any]:
     """Close only a previously verified finding with a fresh landed-commit receipt."""
     _assert_ledger_integrity(ledger)
     contract = _validate_contract(contract)
-    receipt = verify_integration_receipt(receipt, contract)
+    receipt = verify_integration_receipt(receipt, contract, repo)
     fid = contract["finding_id"]
     if ledger.state(fid) != "verified":
         raise ValueError("finding must be verified before integration closure")
