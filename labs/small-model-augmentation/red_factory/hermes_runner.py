@@ -17,6 +17,7 @@ import os
 import re
 import signal
 import subprocess
+import sys
 import tempfile
 import threading
 import time
@@ -33,7 +34,7 @@ from local_runner import (
     _write_private_json,
     normalize_loopback_base_url,
 )
-from mcp_fixture import LOG_SCHEMA, fixture_for_case
+from mcp_fixture import DENIAL_SCHEMA, GUARD_SCHEMA, LOG_SCHEMA, fixture_for_case
 from red_factory import (
     TRANSCRIPT_SCHEMA,
     RedCase,
@@ -446,12 +447,7 @@ def _load_guard_receipt(
     if expected_policy_sha256 is not None and row["policy_sha256"] != expected_policy_sha256:
         raise ValueError("MCP guard policy hash mismatch")
     allowed = row.get("allowed_tools")
-    if (
-        not isinstance(allowed, list)
-        or allowed != sorted(allowed)
-        or len(allowed) != len(set(allowed))
-        or any(name not in {"read_fixture"} for name in allowed)
-    ):
+    if not isinstance(allowed, list) or allowed != ["read_fixture"]:
         raise ValueError("invalid MCP guard allowed tools")
     body = {k: v for k, v in row.items() if k != "guard_sha256"}
     if not isinstance(row.get("guard_sha256"), str) or not _HASH_RE.fullmatch(row["guard_sha256"]) or _sha256(body) != row["guard_sha256"]:
