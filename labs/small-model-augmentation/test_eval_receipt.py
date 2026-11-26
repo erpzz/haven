@@ -441,12 +441,14 @@ class PrivateEvalReceiptTests(unittest.TestCase):
 
     def test_cli_private_compare_blocks_runtime_drift(self):
         a = private("a", "c1", "drift-a")
-        b = private("b", "c1", "drift-b")
+        b = private(
+            "b", "c1", "drift-b",
+            private_profiles=profiles(context=131072),
+        )
         for key in (
             "claim_bundle_sha256", "claim_policy_sha256", "renderer_sha256"
         ):
             b["controls"][key] = a["controls"][key]
-        b["controls"]["runtime_profile_sha256"] = H("runtime-drift")
         rehash(b)
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
