@@ -1,4 +1,4 @@
-import copy, hashlib, json, subprocess, sys, tempfile, unittest
+import copy, hashlib, json, random, subprocess, sys, tempfile, unittest
 from pathlib import Path
 import augmentation_eval as e
 
@@ -115,6 +115,68 @@ class EvalTests(unittest.TestCase):
     def test_invalid_report_blocks_compare(self):
         a=report("a");b=report("b");b["manifest"]["reserve"]=True
         x=e.compare(a,b);self.assertEqual(x["status"],"block");self.assertTrue(any("RESERVE_FORBIDDEN" in z for z in x["errors"]))
+    def test_final_head_malformed_report_property_fuzz_is_fail_closed(self):
+        rng=random.Random(0x133C0DE)
+
+        def value(depth=0):
+            if depth>=3:
+                leaf=rng.randrange(6)
+                if leaf==0: return None
+                if leaf==1: return bool(rng.randrange(2))
+                if leaf==2: return rng.randrange(-5,6)
+                if leaf==3: return rng.random()
+                if leaf==4: return "".join(rng.choice("ab_-/:\x00") for _ in range(rng.randrange(0,12)))
+                return []
+            kind=rng.randrange(8)
+            if kind<5:
+                return value(3)
+            if kind==5:
+                return [value(depth+1) for _ in range(rng.randrange(0,5))]
+            if kind==6:
+                return {
+                    "".join(rng.choice("abc_-/") for _ in range(rng.randrange(0,8))):
+                    value(depth+1)
+                    for _ in range(rng.randrange(0,5))
+                }
+            base=copy.deepcopy(report(rng.choice(["a","b"])))
+            # Mutate a random top-level or row field to an arbitrary value.
+            if rng.randrange(2):
+                key=rng.choice(list(base["manifest"]))
+                base["manifest"][key]=value(depth+1)
+            else:
+                row=rng.choice(base["rows"])
+                key=rng.choice(list(row))
+                row[key]=value(depth+1)
+            return base
+
+        good=report("a")
+        for _ in range(4096):
+            candidate=value()
+            errors=e.validate(candidate)
+            self.assertIs(type(errors),list)
+            self.assertTrue(all(type(x) is str for x in errors))
+            if errors:
+                compared=e.compare(candidate,good)
+                self.assertEqual(compared["status"],"block")
+            else:
+                # A random mutation may accidentally leave a structurally valid report.
+                self.assertEqual(len(e.report_sha256(candidate)),64)
+                self.assertEqual(e.summarize(candidate)["cases"],len(candidate["rows"]))
+
+        alphabet='{}[]":,0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-/ \n\t'
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d,"fuzz.json")
+            for _ in range(512):
+                raw="".join(rng.choice(alphabet) for _ in range(rng.randrange(0,513)))
+                p.write_text(raw)
+                loaded,errors=e.load_report(p)
+                self.assertIs(type(errors),list)
+                if loaded is None:
+                    self.assertTrue(errors)
+                else:
+                    self.assertEqual(errors,[])
+                    self.assertEqual(e.validate(loaded),[])
+
     def test_load_report_rejects_duplicate_json_keys(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d,"r.json");p.write_text('{"manifest":{},"manifest":{},"rows":[]}')
