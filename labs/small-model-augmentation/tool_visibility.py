@@ -19,7 +19,9 @@ PROBE_MODEL = "haven-tool-visibility-probe"
 MAX_REQUEST_BYTES = 2 * 1024 * 1024
 DEFAULT_TIMEOUT = 60
 PREFIX = re.compile(r"[A-Za-z0-9_]{1,128}\Z", re.ASCII)
-TOOL_NAME = re.compile(r"[A-Za-z0-9_.:-]{1,256}\Z", re.ASCII)\nHEX64 = re.compile(r"[0-9a-f]{64}\Z", re.ASCII)\nTOOLSETS = re.compile(r"[A-Za-z0-9_.:-]+(?:,[A-Za-z0-9_.:-]+)*\Z", re.ASCII)
+TOOL_NAME = re.compile(r"[A-Za-z0-9_.:-]{1,256}\Z", re.ASCII)
+HEX64 = re.compile(r"[0-9a-f]{64}\Z", re.ASCII)
+TOOLSETS = re.compile(r"[A-Za-z0-9_.:-]+(?:,[A-Za-z0-9_.:-]+)*\Z", re.ASCII)
 
 
 class ProbeState:
