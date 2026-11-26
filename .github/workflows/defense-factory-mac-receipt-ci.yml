@@ -1,0 +1,38 @@
+name: Defense Factory target-Mac receipt harness
+
+on:
+  push:
+    paths:
+      - 'labs/small-model-augmentation/defense_factory/mac_qualification.py'
+      - 'labs/small-model-augmentation/defense_factory/test_mac_qualification.py'
+      - '.github/workflows/defense-factory-mac-receipt-ci.yml'
+  pull_request:
+    paths:
+      - 'labs/small-model-augmentation/defense_factory/mac_qualification.py'
+      - 'labs/small-model-augmentation/defense_factory/test_mac_qualification.py'
+      - '.github/workflows/defense-factory-mac-receipt-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  evidence-harness:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile target-Mac evidence runner
+        working-directory: labs/small-model-augmentation/defense_factory
+        run: python -m py_compile mac_qualification.py test_mac_qualification.py
+      - name: Defense Factory regression
+        working-directory: labs/small-model-augmentation/defense_factory
+        run: python -m unittest -v test_defense_factory.py test_runner.py test_controller.py test_integration.py
+      - name: Target-Mac receipt orchestration on POSIX fixture
+        working-directory: labs/small-model-augmentation/defense_factory
+        run: python -m unittest -v test_mac_qualification.py
