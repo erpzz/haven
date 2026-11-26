@@ -51,6 +51,12 @@ def _authorize(gate, name, args):
         raise ToolError("scope_denied", "tool denied by host scope") from exc
 
 
+def _dispatch_cyber_call(reg, gate, tool_id, arguments):
+    final_arguments = {} if arguments is None else arguments
+    _authorize(gate, "cyber_call", {"tool_id": tool_id, "arguments": final_arguments})
+    return reg.invoke(tool_id, final_arguments, caller="mcp")
+
+
 def build_server(scope_gate=None):
     try:
         from mcp.server.mcpserver import MCPServer as Server
@@ -93,9 +99,7 @@ def build_server(scope_gate=None):
         @srv.tool(description="Invoke an authorized read-only security tool.",
                   annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=True))
         def cyber_call(tool_id: str, arguments: dict | None = None) -> str:
-            final_arguments = {} if arguments is None else arguments
-            _authorize(gate, "cyber_call", {"tool_id": tool_id, "arguments": final_arguments})
-            out = reg.invoke(tool_id, final_arguments, caller="mcp")
+            out = _dispatch_cyber_call(reg, gate, tool_id, arguments)
             text = json.dumps(out, default=str)
             if len(text) > 60000:
                 return json.dumps({"ok": out.get("ok"), "truncated": True, "chars": len(text),
