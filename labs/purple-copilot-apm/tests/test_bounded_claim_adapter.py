@@ -1,5 +1,6 @@
 import copy
 import json
+import random
 import sys
 import tempfile
 import unittest
@@ -169,6 +170,324 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
         )
         self.assertFalse(released["released"])
         self.assertIn("REQUIRED_CLAIM_MISSING", released["errors"])
+
+    def covered_release(self, bundle, ids, policy=None):
+        policy = policy or adapter.coverage_policy(bundle)
+        return adapter.release_with_coverage(
+            bundle, candidate(bundle, ids), policy, bounded.release
+        )
+
+    def test_overview_coverage_requires_all_host_summary_counts(self):
+        _, bundle = self.bundle("purple_tier_zero_overview", {"platform": "ad"})
+        policy = adapter.coverage_policy(bundle)
+        required_metrics = {
+            c["payload"]["metric"]
+            for c in bundle["claims"]
+            if c["id"] in policy["required_ids"]
+        }
+        self.assertEqual(
+            required_metrics,
+            {
+                "principals_with_direct_control",
+                "control_edges",
+                "identities_able_to_reach_tier_zero",
+            },
+        )
+        one = policy["required_ids"][0]
+        released, coverage = self.covered_release(bundle, [one], policy)
+        self.assertFalse(released["released"])
+        self.assertIn("REQUIRED_CLAIM_MISSING", released["errors"])
+        self.assertEqual(coverage["status"], "block")
+
+        released, coverage = self.covered_release(
+            bundle, policy["required_ids"], policy
+        )
+        self.assertTrue(released["released"], released)
+        self.assertEqual(coverage["status"], "pass")
+        self.assertEqual(
+            set(coverage["selected_ids"]), set(policy["required_ids"])
+        )
+
+    def test_principal_coverage_requires_all_subject_summary_counts(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_principal",
+            {"platform": "ad", "principal": "G1@SAMPLE"},
+        )
+        policy = adapter.coverage_policy(bundle)
+        required_metrics = {
+            c["payload"]["metric"]
+            for c in bundle["claims"]
+            if c["id"] in policy["required_ids"]
+        }
+        self.assertEqual(
+            required_metrics,
+            {
+                "tier_zero_controls_held",
+                "identities_able_to_gain_control",
+                "reachable_from_users",
+                "reachable_from_computers",
+                "reachable_from_workloads",
+                "reachable_from_groups",
+            },
+        )
+        optional_edge = claims_of(bundle, "edge")[0]
+        released, coverage = self.covered_release(
+            bundle, [optional_edge["id"]], policy
+        )
+        self.assertFalse(released["released"])
+        self.assertIn("REQUIRED_CLAIM_MISSING", released["errors"])
+        self.assertEqual(coverage["selected_ids"], [])
+
+        selected = policy["required_ids"] + [optional_edge["id"]]
+        released, coverage = self.covered_release(bundle, selected, policy)
+        self.assertTrue(released["released"], released)
+        self.assertEqual(set(coverage["selected_ids"]), set(selected))
+
+    def test_changes_coverage_always_requires_missing_total_even_when_zero(self):
+        _, zero_bundle = self.bundle(
+            "purple_tier_zero_changes", {"platform": "ad"}
+        )
+        zero_policy = adapter.coverage_policy(zero_bundle)
+        zero_missing = next(
+            c for c in claims_of(zero_bundle, "count", "change_total_missing")
+        )
+        self.assertEqual(zero_missing["payload"]["value"], 0)
+        self.assertIn(zero_missing["id"], zero_policy["required_ids"])
+
+        self.ce.edges.remove(("C1", "HasSession", "T0A"))
+        record_paths(tz.evidence("ad", self.ce.run))
+        _, changed_bundle = self.bundle(
+            "purple_tier_zero_changes", {"platform": "ad"}
+        )
+        changed_policy = adapter.coverage_policy(changed_bundle)
+        changed_missing = next(
+            c for c in claims_of(
+                changed_bundle, "count", "change_total_missing"
+            )
+        )
+        self.assertGreater(changed_missing["payload"]["value"], 0)
+        self.assertIn(changed_missing["id"], changed_policy["required_ids"])
+
+        other_required = [
+            cid for cid in changed_policy["required_ids"]
+            if cid != changed_missing["id"]
+        ]
+        released, coverage = self.covered_release(
+            changed_bundle, other_required, changed_policy
+        )
+        self.assertFalse(released["released"])
+        self.assertIn("REQUIRED_CLAIM_MISSING", released["errors"])
+        self.assertEqual(coverage["status"], "block")
+
+    def test_search_coverage_requires_totals_but_details_remain_optional(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_search",
+            {"platform": "ad", "relationship": "genericall"},
+        )
+        policy = adapter.coverage_policy(bundle)
+        required_metrics = {
+            c["payload"]["metric"]
+            for c in bundle["claims"]
+            if c["id"] in policy["required_ids"]
+        }
+        self.assertEqual(
+            required_metrics,
+            {"matches_total", "holders_total", "tier_zero_targets_total"},
+        )
+        detail_ids = [
+            c["id"] for c in bundle["claims"]
+            if c["id"] not in policy["required_ids"]
+        ]
+        self.assertTrue(detail_ids)
+        released, coverage = self.covered_release(
+            bundle, policy["required_ids"], policy
+        )
+        self.assertTrue(released["released"], released)
+        self.assertEqual(coverage["status"], "pass")
+        self.assertFalse(set(detail_ids) & set(coverage["selected_ids"]))
+
+    def test_coverage_policy_tamper_and_bundle_mismatch_block(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_overview", {"platform": "ad"}
+        )
+        policy = adapter.coverage_policy(bundle)
+
+        tampered = copy.deepcopy(policy)
+        tampered["required_ids"] = tampered["required_ids"][:-1]
+        released, coverage = self.covered_release(
+            bundle, policy["required_ids"], tampered
+        )
+        self.assertFalse(released["released"])
+        self.assertIn("COVERAGE_REQUIRED_IDS_MISMATCH", released["errors"])
+        self.assertEqual(coverage["status"], "block")
+
+        changed = copy.deepcopy(bundle)
+        changed["scope"]["snapshot"] += 1
+        released, coverage = self.covered_release(
+            changed, policy["required_ids"], policy
+        )
+        self.assertFalse(released["released"])
+        self.assertIn("COVERAGE_BUNDLE_MISMATCH", released["errors"])
+        self.assertEqual(coverage["status"], "block")
+
+    def test_coverage_receipt_binds_policy_candidate_and_release(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_overview", {"platform": "ad"}
+        )
+        policy = adapter.coverage_policy(bundle)
+        raw = candidate(bundle, policy["required_ids"])
+        released, coverage = adapter.release_with_coverage(
+            bundle, raw, policy, bounded.release
+        )
+        self.assertTrue(released["released"])
+        expected = copy.deepcopy(coverage)
+        digest = expected.pop("receipt_sha256")
+        self.assertEqual(
+            digest,
+            __import__("hashlib").sha256(
+                json.dumps(
+                    expected, sort_keys=True, separators=(",", ":"),
+                    ensure_ascii=False, allow_nan=False,
+                ).encode()
+            ).hexdigest(),
+        )
+        changed_raw = candidate(bundle, policy["required_ids"][::-1])
+        _, changed_coverage = adapter.release_with_coverage(
+            bundle, changed_raw, policy, bounded.release
+        )
+        self.assertNotEqual(
+            coverage["candidate_sha256"], changed_coverage["candidate_sha256"]
+        )
+        self.assertNotEqual(
+            coverage["receipt_sha256"], changed_coverage["receipt_sha256"]
+        )
+
+    def test_final_head_malformed_candidate_fuzz_is_fail_closed(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_overview", {"platform": "ad"}
+        )
+        policy = adapter.coverage_policy(bundle)
+        rng = random.Random(0x132C0DE)
+        alphabet = '{}[]":,0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-/ \n\t'
+        host_by_id = {claim["id"]: claim for claim in bundle["claims"]}
+
+        corpus = [
+            "",
+            "null",
+            "[]",
+            "{}",
+            '{"bundle_sha256":"x","claims":[]}',
+            '{"bundle_sha256":"' + policy["bundle_sha256"] + '","claims":[]}',
+            '{"bundle_sha256":"' + policy["bundle_sha256"] + '","claims":[],"claims":[]}',
+            '{"bundle_sha256":"' + policy["bundle_sha256"] + '","claims":[null]}',
+            '{"bundle_sha256":"' + policy["bundle_sha256"] + '","claims":["../x"]}',
+            '{"bundle_sha256":"' + policy["bundle_sha256"] + '","claims":["' +
+                policy["required_ids"][0] + '","' + policy["required_ids"][0] + '"]}',
+        ]
+        for _ in range(4096):
+            n = rng.randrange(0, 257)
+            corpus.append("".join(rng.choice(alphabet) for _ in range(n)))
+
+        for raw in corpus:
+            released, coverage = adapter.release_with_coverage(
+                bundle, raw, policy, bounded.release
+            )
+            self.assertIs(type(released), dict)
+            self.assertEqual(released.get("schema"), bounded.RECEIPT_SCHEMA)
+            self.assertIs(type(released.get("released")), bool)
+            self.assertIs(type(released.get("errors")), list)
+            self.assertIs(type(coverage), dict)
+            self.assertIn(coverage["status"], {"pass", "block"})
+            self.assertEqual(
+                coverage["status"],
+                "pass" if released["released"] else "block",
+            )
+            if released["released"]:
+                ids = {claim["id"] for claim in released["claims"]}
+                self.assertTrue(set(policy["required_ids"]) <= ids)
+                for claim in released["claims"]:
+                    self.assertEqual(claim, host_by_id[claim["id"]])
+
+    def test_claim_checkpoint_binding_changes_with_bundle_policy_renderer_or_run(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_overview", {"platform": "ad"}
+        )
+        policy = adapter.coverage_policy(bundle)
+        base = adapter.claim_checkpoint_binding(
+            bundle,
+            policy,
+            renderer_sha256="1" * 64,
+            run_manifest_sha256="2" * 64,
+        )
+        self.assertEqual(base["bundle_sha256"], policy["bundle_sha256"])
+        self.assertEqual(
+            base["coverage_policy_sha256"], policy["policy_sha256"]
+        )
+        self.assertEqual(len(base["binding_sha256"]), 64)
+
+        renderer_changed = adapter.claim_checkpoint_binding(
+            bundle,
+            policy,
+            renderer_sha256="3" * 64,
+            run_manifest_sha256="2" * 64,
+        )
+        run_changed = adapter.claim_checkpoint_binding(
+            bundle,
+            policy,
+            renderer_sha256="1" * 64,
+            run_manifest_sha256="4" * 64,
+        )
+        self.assertNotEqual(
+            base["binding_sha256"], renderer_changed["binding_sha256"]
+        )
+        self.assertNotEqual(
+            base["binding_sha256"], run_changed["binding_sha256"]
+        )
+
+        self.ce.edges.add(("U2", "GenericAll", "T0B"))
+        changed_result = tz.overview("ad", self.ce.run)
+        changed_bundle = adapter.build_bundle_from_result(
+            "purple_tier_zero_overview",
+            {"platform": "ad"},
+            changed_result,
+        )
+        changed_policy = adapter.coverage_policy(changed_bundle)
+        bundle_changed = adapter.claim_checkpoint_binding(
+            changed_bundle,
+            changed_policy,
+            renderer_sha256="1" * 64,
+            run_manifest_sha256="2" * 64,
+        )
+        self.assertNotEqual(
+            base["binding_sha256"], bundle_changed["binding_sha256"]
+        )
+        self.assertNotEqual(
+            base["coverage_policy_sha256"],
+            bundle_changed["coverage_policy_sha256"],
+        )
+
+    def test_claim_checkpoint_binding_rejects_policy_tamper_and_zero_hashes(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_search",
+            {"platform": "ad", "relationship": "genericall"},
+        )
+        policy = adapter.coverage_policy(bundle)
+        tampered = copy.deepcopy(policy)
+        tampered["required_ids"] = tampered["required_ids"][:-1]
+        with self.assertRaises(adapter.ClaimAdapterError):
+            adapter.claim_checkpoint_binding(
+                bundle,
+                tampered,
+                renderer_sha256="1" * 64,
+                run_manifest_sha256="2" * 64,
+            )
+        with self.assertRaises(adapter.ClaimAdapterError):
+            adapter.claim_checkpoint_binding(
+                bundle,
+                policy,
+                renderer_sha256="0" * 64,
+                run_manifest_sha256="2" * 64,
+            )
 
     def test_host_field_mutations_change_bundle_hash(self):
         original = self.result(
