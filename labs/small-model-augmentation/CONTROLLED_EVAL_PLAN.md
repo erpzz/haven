@@ -68,7 +68,8 @@ Before any model A/B, the integrated candidate must pass deterministic canaries 
 
 - #127 model/context admission and first-request visibility;
 - #128 evidence structural/lineage admission;
-- #129 unexpected tool, wrong target, duplicate and over-budget blocking with proof denied calls never execute;
+- #129 model-visible unexpected tool, wrong target, duplicate and over-budget blocking;
+- #199 guarded-Hermes preflight/supervisor plus raw-MCP final-dispatch enforcement, including proof that a denied or rewritten out-of-scope call never reaches implementation and that a missing required guard refuses startup;
 - #130 interruption/restart and non-replay-safe refusal;
 - #132 false predicate/value/time/splicing rejection.
 
@@ -82,8 +83,8 @@ Development set: #115 fresh 179 episodes (`9646aaaf…`), unchanged adjudicator.
 
 Matched arms on the same admitted model artifact and host:
 
-- **A — full authorized surface:** existing development tool definitions, subject to the same authorization/scope gate.
-- **B — narrowed surface:** #131 router selects from the same authorized surface; #129 binds exactly that selection; #127 verifies the first model request contains it.
+- **A — full authorized surface:** existing development tool definitions, subject to the same #129/#199 model-side and raw-MCP authorization boundaries.
+- **B — narrowed surface:** #131 router selects from the same authorized surface; #129 binds exactly that selection; #199 binds the corresponding raw final-dispatch scope; #127 verifies the first model request contains it.
 
 The model, temperature, token limit, engine, hardware, task text, world and scorer are identical.
 
@@ -163,7 +164,7 @@ Then repeat the model-request interruption case against the actual admitted Mac 
 
 Run only after E0–E3 meet their development gates.
 
-Use the #113 public 24 cases as a cheap integrated smoke test, then the #115 fresh 179 set if the adapter applies cleanly. Compare the unaugmented development path with the integrated #127/#128/#129/#130/#131/#132 path under matched model/runtime settings.
+Use the #113 public 24 cases as a cheap integrated smoke test, then the #115 fresh 179 set if the adapter applies cleanly. Compare the unaugmented development path with the integrated #127/#128/#129/#199/#130/#131/#132 path under matched model/runtime settings.
 
 E4 is **report-only for interactions**. Report:
 
@@ -213,4 +214,4 @@ Each arm report must bind:
 - experiment/comparison-group id;
 - per-case private receipt hash.
 
-The runner should additionally bind #127 admission, #129 policy, #131 catalog selection and #132 claim bundle hashes inside the private receipt/run manifest even though the sidecar schema keeps those details out of the public summary.
+The runner must additionally bind #127 admission, #129 model-visible policy, #199 guarded preflight/supervisor receipts and raw final-dispatch policy, #131 catalog selection, #132 claim bundle/policy/renderer, #130 run manifest, and a non-waiverable tool/enforcement implementation identity inside the private receipt even though the public sidecar keeps those details private. The current private receipt schema is v2; v1 receipts predate #199 binding and are not valid evidence for E0–E4 after this amendment.
