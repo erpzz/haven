@@ -336,6 +336,44 @@ def _locked_file(path: Path):
                     _fcntl.flock(fh.fileno(), _fcntl.LOCK_UN)
 
 
+class RunLease:
+    """Exclusive POSIX ownership lease held for the lifetime of one runner process.
+
+    The lock file's contents are diagnostic only; the kernel-held flock is the
+    authority. POSIX releases it automatically if the owner process dies.
+    """
+
+    def __init__(self, journal_path):
+        self.path = Path(str(journal_path) + ".owner.lock")
+        self._fh = None
+
+    def __enter__(self):
+        if _fcntl is None:
+            raise RuntimeError("exclusive run lease unsupported on this platform")
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        fh = self.path.open("a+", encoding="utf-8")
+        try:
+            _fcntl.flock(fh.fileno(), _fcntl.LOCK_EX | _fcntl.LOCK_NB)
+        except (BlockingIOError, OSError):
+            fh.close()
+            raise RuntimeError("run already has a live owner") from None
+        fh.seek(0)
+        fh.truncate()
+        fh.write(json.dumps({"pid": os.getpid()}, sort_keys=True) + "\n")
+        fh.flush()
+        os.fsync(fh.fileno())
+        self._fh = fh
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        fh, self._fh = self._fh, None
+        if fh is not None:
+            try:
+                _fcntl.flock(fh.fileno(), _fcntl.LOCK_UN)
+            finally:
+                fh.close()
+
+
 class Journal:
     def __init__(self, path, run_id, manifest_sha256, fsync=True):
         if (not _valid_token(run_id) or type(manifest_sha256) is not str
@@ -418,6 +456,13 @@ class Journal:
             if s.events[0]["run_id"] != self.run_id or s.events[0]["manifest_sha256"] != self.manifest_sha256:
                 raise ValueError("run identity mismatch")
             return self._append_locked(fh, s, event, unit, attempt, op_id, replay_safe, payload_sha256)
+
+    @contextlib.contextmanager
+    def owned(self, resume=False):
+        """Acquire exclusive runner ownership, open/resume, and hold it until exit."""
+        with RunLease(self.path):
+            self.open(resume=resume)
+            yield self
 
     def state(self, max_attempts=3):
         s = scan(self.path)
