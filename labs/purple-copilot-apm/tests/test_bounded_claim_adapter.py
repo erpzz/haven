@@ -8,6 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 LABS = Path(__file__).resolve().parents[2]
+PURPLE = Path(__file__).resolve().parents[1]
 AUG = LABS / "small-model-augmentation"
 sys.path.insert(0, str(AUG))
 
@@ -444,7 +445,7 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
             base["binding_sha256"], run_changed["binding_sha256"]
         )
 
-        self.ce.edges.add(("U2", "GenericAll", "T0B"))
+        self.ce.edges.append(("U2", "GenericAll", "T0B"))
         changed_result = tz.overview("ad", self.ce.run)
         changed_bundle = adapter.build_bundle_from_result(
             "purple_tier_zero_overview",
@@ -524,7 +525,7 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
         )
         bundle = copy.deepcopy(bundle)
         bundle["claims"][0]["payload"]["private_note"] = "PAYLOAD-SENTINEL-7731"
-        bundle["claims"][0]["citations"][0]["private_note"] = "CITATION-SENTINEL-8842"
+        bundle["claims"][0]["citation"] = "CITATION-SENTINEL-8842"
         bundle["limitations"].append("LIMITATION-SENTINEL-9953")
         policy = adapter.coverage_policy(bundle)
         view = adapter.selector_view(bundle, policy)
@@ -579,12 +580,12 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
             ).hexdigest(),
         )
         self.assertIn("claims[].payload", policy["model_hidden_fields"])
-        self.assertIn("claims[].citations", policy["model_hidden_fields"])
+        self.assertIn("claims[].citation", policy["model_hidden_fields"])
         self.assertIn("candidate_raw", policy["user_hidden_fields"])
         self.assertIn("host_rendered_claim_text", policy["user_surface"])
 
     def test_bounded_claims_are_not_silently_activated_in_runtime(self):
-        apm_dir = _LAB / "apm"
+        apm_dir = PURPLE / "apm"
         consumers = []
         for path in sorted(apm_dir.glob("*.py")):
             if path.name == "bounded_claim_adapter.py":
