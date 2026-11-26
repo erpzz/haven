@@ -509,8 +509,8 @@ def _read_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def _case_receipt(*, case, discovery, preflight, supervisor_receipt,
-                  result, hashes, model_policy_sha, raw_policy_sha):
+def _case_receipt(*, case, discovery, discovery_preflight, preflight, supervisor_receipt,
+                  result, hashes, model_policy_sha, raw_policy_sha, discovery_policy_sha):
     errors: list[str] = []
     pre_hash = _sha_obj(preflight)
     if supervisor_receipt.get("plugin_preflight_sha256") != pre_hash:
@@ -542,8 +542,11 @@ def _case_receipt(*, case, discovery, preflight, supervisor_receipt,
             "logical_surface": discovery["logical_surface"],
             "surface_sha256": discovery["surface_sha256"],
             "tool_count": discovery["tool_count"],
+            "preflight": discovery_preflight,
+            "preflight_sha256": _sha_obj(discovery_preflight),
         },
         "policy": {
+            "discovery_model_scope_sha256": discovery_policy_sha,
             "model_scope_sha256": model_policy_sha,
             "raw_mcp_scope_sha256": raw_policy_sha,
         },
@@ -733,12 +736,14 @@ def run_campaign(*, hermes: Path, hermes_home: Path, toolsets: str,
         receipt = _case_receipt(
             case=case,
             discovery=discovery,
+            discovery_preflight=discovery_pre,
             preflight=preflight,
             supervisor_receipt=sup,
             result=result,
             hashes=hashes,
             model_policy_sha=model_policy_sha,
             raw_policy_sha=raw_policy_sha,
+            discovery_policy_sha=discovery_policy_sha,
         )
         _write_private(case_dir / "case-receipt.json", receipt)
         receipts.append(receipt)
@@ -778,7 +783,7 @@ def main(argv=None) -> int:
     p.add_argument("--families", default="all")
     p.add_argument("--out-dir", type=Path, required=True)
     p.add_argument("--augmentation-root", type=Path, default=Path(__file__).resolve().parent)
-    p.add_argument("--allow-user-plugin", action="append", default=["haven-scope"])
+    p.add_argument("--allow-user-plugin", action="append")
     p.add_argument("--discovery-timeout", type=float, default=60.0)
     p.add_argument("--case-timeout", type=float, default=180.0)
     p.add_argument("--max-turns", type=int, default=8)
@@ -798,7 +803,7 @@ def main(argv=None) -> int:
         families=_parse_families(args.families),
         out_dir=args.out_dir,
         augmentation_root=args.augmentation_root,
-        allowed_user_plugins=args.allow_user_plugin,
+        allowed_user_plugins=args.allow_user_plugin or ["haven-scope"],
         discovery_timeout=args.discovery_timeout,
         case_timeout=args.case_timeout,
         max_turns=args.max_turns,
