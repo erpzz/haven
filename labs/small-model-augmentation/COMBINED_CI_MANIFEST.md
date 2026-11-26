@@ -14,3 +14,5 @@ Source heads:
 Base main: `53387e74a0ad90786ac3ea16753c8ad99142e9df`.
 
 The files are copied from those exact refs without integrating them into product/runtime paths. Passing this CI proves only clean Linux/Python regression and cross-package coexistence. It does **not** satisfy Mac/Hermes/llama.cpp/APFS/MCP/live integration or independent-review requirements.
+
+CI carrier PR: #143 (test-only; do not merge).
