@@ -16,6 +16,7 @@ import json
 import os
 import re
 import signal
+import stat
 import subprocess
 import tempfile
 import threading
@@ -491,6 +492,45 @@ def _mcp_scope_policy(case, fixture: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
+def _validate_bound_mcp_policy(path: Path, expected_sha256: str,
+                               expected_policy: Mapping[str, Any]) -> str:
+    path = Path(path)
+    if not path.is_absolute():
+        raise ValueError("bound final MCP policy path must be absolute")
+    if not isinstance(expected_sha256, str) or _HASH_RE.fullmatch(expected_sha256) is None:
+        raise ValueError("invalid bound final MCP policy hash")
+    if not hasattr(os, "O_NOFOLLOW"):
+        raise ValueError("no symlink guard for bound final MCP policy")
+    flags = os.O_RDONLY | os.O_NOFOLLOW | getattr(os, "O_CLOEXEC", 0)
+    try:
+        fd = os.open(path, flags)
+    except OSError as exc:
+        raise ValueError("bound final MCP policy unavailable") from exc
+    try:
+        info = os.fstat(fd)
+        if (not stat.S_ISREG(info.st_mode)
+                or info.st_uid != os.geteuid()
+                or info.st_mode & 0o077
+                or info.st_size > 256 * 1024):
+            raise ValueError("bound final MCP policy is not private")
+        with os.fdopen(os.dup(fd), "rb") as stream:
+            raw = stream.read(256 * 1024 + 1)
+    finally:
+        os.close(fd)
+    if len(raw) > 256 * 1024:
+        raise ValueError("bound final MCP policy is too large")
+    actual = hashlib.sha256(raw).hexdigest()
+    if actual != expected_sha256:
+        raise ValueError("bound final MCP policy hash mismatch")
+    try:
+        parsed = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError("bound final MCP policy is invalid JSON") from exc
+    if parsed != expected_policy:
+        raise ValueError("bound final MCP policy does not match HRF case")
+    return actual
+
+
 def run_hermes_case(
     *,
     hermes: Path,
@@ -503,6 +543,8 @@ def run_hermes_case(
     timeout_seconds: float = 180.0,
     max_turns: int = 8,
     env: Mapping[str, str] | None = None,
+    bound_mcp_policy: Path | None = None,
+    bound_mcp_policy_sha256: str | None = None,
 ) -> dict[str, Any]:
     """Run one HRF case through real Hermes while keeping all tools synthetic."""
     case.validate()
@@ -527,7 +569,6 @@ def run_hermes_case(
 
     root = Path(tempfile.mkdtemp(prefix="haven-red-hermes-"))
     fixture_path = root / "fixture.json"
-    mcp_policy_path = root / "mcp-scope.json"
     call_log = root / "mcp-calls.jsonl"
     fixture = fixture_for_case(case)
     mcp_policy = _mcp_scope_policy(case, fixture)
@@ -535,11 +576,26 @@ def run_hermes_case(
     with os.fdopen(fd, "w", encoding="utf-8") as writer:
         json.dump(fixture, writer, sort_keys=True, separators=(",", ":"))
         writer.write("\n")
-    fd = os.open(mcp_policy_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-    with os.fdopen(fd, "w", encoding="utf-8") as writer:
-        json.dump(mcp_policy, writer, sort_keys=True, separators=(",", ":"))
-        writer.write("\n")
-    mcp_policy_sha256 = hashlib.sha256(mcp_policy_path.read_bytes()).hexdigest()
+
+    bound_policy = bound_mcp_policy is not None or bound_mcp_policy_sha256 is not None
+    if (bound_mcp_policy is None) != (bound_mcp_policy_sha256 is None):
+        raise ValueError("bound final MCP policy path and hash must be supplied together")
+    if bound_policy:
+        mcp_policy_path = Path(bound_mcp_policy)
+        mcp_policy_sha256 = _validate_bound_mcp_policy(
+            mcp_policy_path, bound_mcp_policy_sha256, mcp_policy
+        )
+        cleanup_mcp_policy = False
+    else:
+        mcp_policy_path = root / "mcp-scope.json"
+        fd = os.open(
+            mcp_policy_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600
+        )
+        with os.fdopen(fd, "w", encoding="utf-8") as writer:
+            json.dump(mcp_policy, writer, sort_keys=True, separators=(",", ":"))
+            writer.write("\n")
+        mcp_policy_sha256 = hashlib.sha256(mcp_policy_path.read_bytes()).hexdigest()
+        cleanup_mcp_policy = True
 
     state = CaptureState(backend_base_url, backend_key)
     server = ThreadingHTTPServer(("127.0.0.1", 0), CaptureHandler)
@@ -708,6 +764,7 @@ def run_hermes_case(
         "dispatch_alignment": _dispatches_align(proposed_calls, actual_calls),
         "final_mcp_scope_required": True,
         "final_mcp_policy_sha256": mcp_policy_sha256,
+        "final_mcp_policy_bound_by_parent": bool(bound_policy),
         "stdout_sha256": stdout_hash.hexdigest(),
         "stderr_sha256": stderr_hash.hexdigest(),
         "stdout_bytes": stdout_bytes,
@@ -718,7 +775,8 @@ def run_hermes_case(
     body["result_sha256"] = _sha256(body)
     try:
         fixture_path.unlink(missing_ok=True)
-        mcp_policy_path.unlink(missing_ok=True)
+        if cleanup_mcp_policy:
+            mcp_policy_path.unlink(missing_ok=True)
         call_log.unlink(missing_ok=True)
         root.rmdir()
     except OSError:
@@ -738,9 +796,13 @@ def run_hermes_suite(
     timeout_seconds: float = 180.0,
     max_turns: int = 8,
     env: Mapping[str, str] | None = None,
+    bound_mcp_policy: Path | None = None,
+    bound_mcp_policy_sha256: str | None = None,
 ) -> dict[str, Any]:
-    """Run a complete development suite through separate, isolated Hermes invocations."""
+    """Run a development suite; a bound final policy is single-case only."""
     cases = validate_suite(suite)
+    if (bound_mcp_policy is not None or bound_mcp_policy_sha256 is not None) and len(cases) != 1:
+        raise ValueError("bound final MCP policy requires exactly one HRF case")
     results = [
         run_hermes_case(
             hermes=hermes,
@@ -753,6 +815,8 @@ def run_hermes_suite(
             timeout_seconds=timeout_seconds,
             max_turns=max_turns,
             env=env,
+            bound_mcp_policy=bound_mcp_policy,
+            bound_mcp_policy_sha256=bound_mcp_policy_sha256,
         )
         for case in cases
     ]
@@ -790,6 +854,8 @@ def main(argv=None) -> int:
     parser.add_argument("--timeout", type=float, default=180.0)
     parser.add_argument("--max-turns", type=int, default=8)
     parser.add_argument("--api-key-env", help="Read optional backend key from this environment variable")
+    parser.add_argument("--final-mcp-policy", type=Path)
+    parser.add_argument("--final-mcp-policy-sha256")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
 
@@ -819,6 +885,8 @@ def main(argv=None) -> int:
         backend_key=backend_key,
         timeout_seconds=args.timeout,
         max_turns=args.max_turns,
+        bound_mcp_policy=args.final_mcp_policy,
+        bound_mcp_policy_sha256=args.final_mcp_policy_sha256,
     )
     _write_private_json(args.out, run)
     print(json.dumps({
