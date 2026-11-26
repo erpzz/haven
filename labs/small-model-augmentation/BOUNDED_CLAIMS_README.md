@@ -152,3 +152,31 @@ The existing prose verifier/fallback can remain for conversational framing until
 - checkpoint/run-manifest integration;
 - macOS integration;
 - independent review.
+
+
+## Activation, rollback, and authenticity decision
+
+Bounded claims are **not a runtime activation in this candidate**. The current Purple `apm/` package has no non-test consumer of `bounded_claim_adapter`; CI asserts that remains true.
+
+The merge/activation split is intentional:
+
+- merging the adapter makes the reviewed host-owned boundary available;
+- a later, separate activation PR must explicitly wire it into the runtime;
+- until that activation passes its gates, the legacy structured-JSON/runtime output path remains the only active path and therefore the rollback path;
+- no merge of this adapter may silently change production/user output semantics.
+
+Minimum activation criteria:
+1. #127/E0 local admission and actual first-request evidence is green;
+2. controlled E2 mutation evaluation shows zero released-claim mutation failures and no unacceptable semantic regression;
+3. the GitGuardian incidents on the Purple candidate are dispositioned;
+4. the activation PR has independent review and explicit rollback tests preserving the legacy structured-JSON path.
+
+If activation later fails those criteria or produces unacceptable behavior, disable/remove the bounded-claim runtime consumer and return to the preserved legacy path; the adapter/data structures need not be deleted.
+
+### Authenticity threat-model decision
+
+Current development qualification treats the host-owned producer/process boundary as trusted against **accidental drift and model-originated manipulation**. SHA-256 receipts are content/provenance bindings under that model.
+
+They are **not authentication against a hostile same-user/local writer**. If the deployment threat model includes a process that can forge host-owned files/receipts, activation must add a stronger authenticity layer (for example a keyed MAC/signature backed by a secret unavailable to that writer, or an immutable/external content-addressed provenance service). Hash-only evidence must not be re-labeled as authenticated evidence.
+
+This is an explicit trust decision, not an implicit claim that hashes solve hostile-writer authenticity.
