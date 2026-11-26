@@ -109,7 +109,7 @@ class Harness(unittest.TestCase):
                "--export", str(self.tmp / "export"), "--stock-dir", str(self.tmp / "stock"), "--out", str(out),
                "--arms", arms, "--questions", str(LAB / "eval" / "round3" / "questions.json"), *extra]
         subprocess.run(cmd, check=True, capture_output=True, text=True, env=dict(os.environ), timeout=120)
-        return [json.loads(line) for line in out.open()]
+        return [json.loads(line) for line in out.read_text().splitlines()]
 
     def test_questions_file_and_repetition_labels(self):
         rows = self.run_h2h("stock-model", "--reps", "1", "--rep-start", "2")
