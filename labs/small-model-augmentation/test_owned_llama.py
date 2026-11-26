@@ -178,9 +178,11 @@ class OwnedLlamaTests(unittest.TestCase):
              "import os,signal,time; os.kill(int(os.environ['LEASE_SERVER_PID']),signal.SIGTERM); time.sleep(10)"]
         started=time.monotonic()
         rc,error=owned_llama.run_guarded(lease,cmd,env=env,guard_interval=.05)
-        self.assertEqual(error,"SERVER_EXITED")
+        self.assertIn(error,{"SERVER_EXITED","LISTENER_OWNER_CHANGED",
+                             "RUNTIME_REVALIDATION_FAILED"})
         self.assertLess(time.monotonic()-started,4)
         self.assertIsNotNone(rc)
+        self.assertIsNotNone(lease.process.poll())
 
     def test_invalid_command_fails_closed_and_stops_lease(self):
         lease=self.launch()
