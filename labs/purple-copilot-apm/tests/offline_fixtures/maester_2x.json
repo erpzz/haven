@@ -1,0 +1,39 @@
+{
+  "Result": "Failed",
+  "TotalCount": 1,
+  "ExecutedAt": "2026-11-21T19:00:00Z",
+  "TenantId": "6c12b0b0-b2cc-4a73-8252-0b94bfca2145",
+  "CurrentVersion": {
+    "Major": 2,
+    "Minor": 3,
+    "Build": 0
+  },
+  "Tests": [
+    {
+      "Index": 0,
+      "Id": "MT.SYN.001",
+      "Result": "Failed",
+      "Title": "Synthetic posture check",
+      "Block": "Synthetic",
+      "Severity": "High",
+      "Tag": [],
+      "ResultDetail": {}
+    }
+  ],
+  "AffectedObjects": [
+    {
+      "System": "EntraID",
+      "AnchorKind": "Instance",
+      "Type": "Group",
+      "Id": "D9EEF709-975D-4EE0-8D84-FFA9A1BAB9DD",
+      "UniqueId": "object-0f0917a183712ec3",
+      "Tests": [
+        "MT.SYN.001"
+      ],
+      "Sources": [
+        "GraphObjects"
+      ]
+    }
+  ],
+  "EndOfJson": "EndOfJson"
+}

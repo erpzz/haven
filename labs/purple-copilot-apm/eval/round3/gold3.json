@@ -1,0 +1,74 @@
+{
+ "ho-adminsdholder": {
+  "adminsdholder": [
+   "ADMINSDHOLDER@GHOST.CORP",
+   "ADMINSDHOLDER@PHANTOM.CORP",
+   "ADMINSDHOLDER@WRAITH.CORP"
+  ],
+  "principals": []
+ },
+ "ho-entra-group-owners": {
+  "principals": [
+   "ThisSPOwnsTheGAGroup@PhantomCorp",
+   "ThisUserOwnsTheGAGroup@phantomcorp.onmicrosoft.com"
+  ]
+ },
+ "ho-entra-guests": {
+  "principals": [
+   "asadmin_phantomcorp.onmicrosoft.com#EXT#@phantomcorp.onmicrosoft.com",
+   "rhadmin_phantomcorp.onmicrosoft.com#EXT#@phantomcorp.onmicrosoft.com"
+  ]
+ },
+ "ho-local-admin": {
+  "kinds": {
+   "DAVID@PHANTOM.CORP": "User",
+   "HELPDESK@PHANTOM.CORP": "Group",
+   "SCOTT@PHANTOM.CORP": "User",
+   "TRUSTER@WRAITH.CORP": "User",
+   "Tier2Support@PHANTOM.CORP": "Group"
+  },
+  "principals": [
+   "DAVID@PHANTOM.CORP",
+   "HELPDESK@PHANTOM.CORP",
+   "SCOTT@PHANTOM.CORP",
+   "TRUSTER@WRAITH.CORP",
+   "Tier2Support@PHANTOM.CORP"
+  ]
+ },
+ "ho-protected-users": {
+  "count": 30,
+  "principals": [
+   "ADDSELF@PHANTOM.CORP",
+   "ADMINISTRATOR@GHOST.CORP",
+   "ADMINISTRATOR@PHANTOM.CORP",
+   "ADMINISTRATOR@WRAITH.CORP",
+   "ALICE@PHANTOM.CORP",
+   "ANDY@PHANTOM.CORP",
+   "BH@GHOST.CORP",
+   "BM@WRAITH.CORP",
+   "BOB@PHANTOM.CORP",
+   "CERTEXT@PHANTOM.CORP",
+   "CERTMAN@PHANTOM.CORP",
+   "CHARLIE@PHANTOM.CORP",
+   "DA-NOPW2@PHANTOM.CORP",
+   "DU001@PHANTOM.CORP",
+   "DU@WRAITH.CORP",
+   "EXCHANGE-ADMIN@WRAITH.CORP",
+   "FABIAN@PHANTOM.CORP",
+   "GMSA_SHS8$@PHANTOM.CORP",
+   "HACKERDA@PHANTOM.CORP",
+   "HAYDEN@PHANTOM.CORP",
+   "JACK@WRAITH.CORP",
+   "JD@PHANTOM.CORP",
+   "KRBTGT@GHOST.CORP",
+   "KRBTGT@PHANTOM.CORP",
+   "KRBTGT@WRAITH.CORP",
+   "RODCMANAGER@WRAITH.CORP",
+   "ROSHI@PHANTOM.CORP",
+   "TOM@GHOST.CORP",
+   "WALTER@GHOST.CORP",
+   "XADMIN@WRAITH.CORP"
+  ],
+  "tier_zero_users": 31
+ }
+}

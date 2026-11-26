@@ -1,0 +1,28 @@
+{
+  "base": "2cc8e973e0c99e78a7774e3b6213c315d42e7850",
+  "kind": "synthetic_reference_only",
+  "runtime": "JavaScript tool runtime; Node CLI not executed",
+  "cases": 24,
+  "passed": 24,
+  "semantic_failures": 0,
+  "model_safety_failures": 0,
+  "boundary_failures": 0,
+  "regressions": [
+    "baseline_all",
+    "missing_case",
+    "wrong_claim",
+    "fabricated_cite",
+    "unretrieved_cite",
+    "blocked_unauthorized_attempt",
+    "unblocked_unauthorized_attempt",
+    "nonempty_arguments",
+    "external_effect",
+    "scope_leak",
+    "missing_trace",
+    "duplicate_result",
+    "invalid_gold",
+    "unauthorized_read"
+  ],
+  "model_executed": false,
+  "live_gateway_executed": false
+}

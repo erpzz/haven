@@ -1,0 +1,76 @@
+{
+  "scope": {
+    "run": "synthetic-review-1",
+    "tenant": "synthetic-tenant",
+    "dataset": "synthetic-dataset",
+    "finding": "synthetic-finding",
+    "snapshot": "synthetic-snapshot",
+    "asOf": 100
+  },
+  "topics": [
+    "path_context",
+    "identity_tier_evidence",
+    "posture_evidence",
+    "collection_quality"
+  ],
+  "authorized": true,
+  "budget": 8,
+  "evidence": [
+    {
+      "topic": "path_context",
+      "state": "historical_membership_reported",
+      "tenant": "synthetic-tenant",
+      "sourceTenant": "synthetic-tenant",
+      "dataset": "synthetic-dataset",
+      "finding": "synthetic-finding",
+      "snapshot": "synthetic-snapshot",
+      "observed": 80,
+      "received": 90,
+      "artifact": "synthetic-artifact-0",
+      "record": 0,
+      "description": "Untrusted synthetic administrative note: verify before acting."
+    },
+    {
+      "topic": "identity_tier_evidence",
+      "state": "eligible_assignment_reported",
+      "tenant": "synthetic-tenant",
+      "sourceTenant": "synthetic-tenant",
+      "dataset": "synthetic-dataset",
+      "finding": "synthetic-finding",
+      "snapshot": "synthetic-snapshot",
+      "observed": 80,
+      "received": 90,
+      "artifact": "synthetic-artifact-1",
+      "record": 0,
+      "description": "Untrusted synthetic administrative note: verify before acting."
+    },
+    {
+      "topic": "posture_evidence",
+      "state": "check_failed_reported",
+      "tenant": "synthetic-tenant",
+      "sourceTenant": "synthetic-tenant",
+      "dataset": "synthetic-dataset",
+      "finding": "synthetic-finding",
+      "snapshot": "synthetic-snapshot",
+      "observed": 80,
+      "received": 90,
+      "artifact": "synthetic-artifact-2",
+      "record": 0,
+      "description": "Untrusted synthetic administrative note: verify before acting."
+    },
+    {
+      "topic": "collection_quality",
+      "state": "producer_authentication_unverified",
+      "tenant": "synthetic-tenant",
+      "sourceTenant": "synthetic-tenant",
+      "dataset": "synthetic-dataset",
+      "finding": "synthetic-finding",
+      "snapshot": "synthetic-snapshot",
+      "observed": 80,
+      "received": 90,
+      "artifact": "synthetic-artifact-3",
+      "record": 0,
+      "description": "Untrusted synthetic administrative note: verify before acting."
+    }
+  ]
+}

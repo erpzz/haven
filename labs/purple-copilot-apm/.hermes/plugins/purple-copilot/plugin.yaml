@@ -1,0 +1,13 @@
+name: purple-copilot
+version: "0.1.0"
+description: Read-only Purple Copilot Tier Zero review tools with an evidence gateway and answer verifier
+provides_tools:
+  - purple_tier_zero_overview
+  - purple_tier_zero_principal
+  - purple_tier_zero_changes
+  - purple_tier_zero_search
+provides_hooks:
+  - pre_llm_call
+  - pre_tool_call
+  - post_tool_call
+  - transform_llm_output
