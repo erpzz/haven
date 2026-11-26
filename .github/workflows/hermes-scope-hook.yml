@@ -4,6 +4,8 @@ on:
     paths:
       - 'labs/small-model-augmentation/hermes_scope_plugin/**'
       - 'labs/small-model-augmentation/test_hermes_scope_plugin.py'
+      - 'labs/small-model-augmentation/hermes_plugin_preflight.py'
+      - 'labs/small-model-augmentation/test_hermes_plugin_preflight.py'
       - 'labs/small-model-augmentation/mcp_scope_runtime.py'
       - 'labs/small-model-augmentation/test_mcp_scope_runtime.py'
       - 'labs/hermes/haven_hermes/mcp_stdio.py'
@@ -14,6 +16,8 @@ on:
     paths:
       - 'labs/small-model-augmentation/hermes_scope_plugin/**'
       - 'labs/small-model-augmentation/test_hermes_scope_plugin.py'
+      - 'labs/small-model-augmentation/hermes_plugin_preflight.py'
+      - 'labs/small-model-augmentation/test_hermes_plugin_preflight.py'
       - 'labs/small-model-augmentation/mcp_scope_runtime.py'
       - 'labs/small-model-augmentation/test_mcp_scope_runtime.py'
       - 'labs/hermes/haven_hermes/mcp_stdio.py'
@@ -41,6 +45,8 @@ jobs:
             labs/small-model-augmentation/tool_scope.py \
             labs/small-model-augmentation/tool_context.py \
             labs/small-model-augmentation/test_hermes_scope_plugin.py \
+            labs/small-model-augmentation/hermes_plugin_preflight.py \
+            labs/small-model-augmentation/test_hermes_plugin_preflight.py \
             labs/small-model-augmentation/mcp_scope_runtime.py \
             labs/small-model-augmentation/test_mcp_scope_runtime.py \
             labs/hermes/haven_hermes/mcp_stdio.py \
@@ -52,5 +58,7 @@ jobs:
           python -m unittest discover -s labs/small-model-augmentation -p 'test_tool_context.py' -v
       - name: Synthetic Hermes pre-dispatch canaries
         run: python -m unittest discover -s labs/small-model-augmentation -p 'test_hermes_scope_plugin.py' -v
+      - name: Guarded Hermes plugin preflight
+        run: python -m unittest discover -s labs/small-model-augmentation -p 'test_hermes_plugin_preflight.py' -v
       - name: Final MCP dispatcher canaries
         run: python -m unittest discover -s labs/small-model-augmentation -p 'test_mcp_scope_runtime.py' -v
