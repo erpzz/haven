@@ -140,6 +140,7 @@ class DefenseFactoryTests(unittest.TestCase):
         }, packet)
         self.assertEqual(result["touched_paths"], ["src/app.py"])
         self.assertEqual(len(result["patch_sha256"]), 64)
+        self.assertEqual(len(result["packet_sha256"]), 64)
 
     def test_fix_response_rejects_extra_keys_wrong_id_and_extra_file(self):
         finding = findings_from_sarif(self.sarif(), self.files.__getitem__)[0]
@@ -160,6 +161,17 @@ class DefenseFactoryTests(unittest.TestCase):
         ledger.append(finding_id=fid, event="triaged")
         with self.assertRaises(ValueError):
             ledger.append(finding_id=fid, event="fix_proposed", payload={"patch_sha256": "z" * 64})
+
+    def test_failed_retest_can_accept_revised_fix(self):
+        fid = "hdf_" + "4" * 32
+        ledger = FindingLedger()
+        ledger.append(finding_id=fid, event="detected")
+        ledger.append(finding_id=fid, event="triaged")
+        ledger.append(finding_id=fid, event="fix_proposed", payload={"patch_sha256": "a" * 64})
+        ledger.append(finding_id=fid, event="fix_applied", payload={"applied_patch_sha256": "a" * 64})
+        ledger.append(finding_id=fid, event="retested", payload={"passed": False, "receipt_sha256": "b" * 64})
+        ledger.append(finding_id=fid, event="fix_proposed", payload={"patch_sha256": "c" * 64})
+        self.assertEqual(ledger.state(fid), "fix_proposed")
 
     def test_suppression_needs_reason(self):
         fid = "hdf_" + "2" * 32
