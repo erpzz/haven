@@ -7,7 +7,9 @@ on:
       - 'labs/small-model-augmentation/test_checkpoint_journal.py'
       - 'labs/small-model-augmentation/test_checkpoint_process.py'
       - 'labs/small-model-augmentation/test_mac_model_request_recovery.py'
+      - 'labs/small-model-augmentation/test_mac_model_server_hang_recovery.py'
       - 'labs/small-model-augmentation/red_factory/mac_model_request_recovery.py'
+      - 'labs/small-model-augmentation/red_factory/mac_model_server_hang_recovery.py'
       - '.github/workflows/mac-model-request-recovery-ci.yml'
   pull_request:
     paths:
@@ -15,7 +17,9 @@ on:
       - 'labs/small-model-augmentation/test_checkpoint_journal.py'
       - 'labs/small-model-augmentation/test_checkpoint_process.py'
       - 'labs/small-model-augmentation/test_mac_model_request_recovery.py'
+      - 'labs/small-model-augmentation/test_mac_model_server_hang_recovery.py'
       - 'labs/small-model-augmentation/red_factory/mac_model_request_recovery.py'
+      - 'labs/small-model-augmentation/red_factory/mac_model_server_hang_recovery.py'
       - '.github/workflows/mac-model-request-recovery-ci.yml'
 
 permissions:
@@ -40,10 +44,15 @@ jobs:
             labs/small-model-augmentation/test_checkpoint_journal.py \
             labs/small-model-augmentation/test_checkpoint_process.py \
             labs/small-model-augmentation/test_mac_model_request_recovery.py \
-            labs/small-model-augmentation/red_factory/mac_model_request_recovery.py
+            labs/small-model-augmentation/test_mac_model_server_hang_recovery.py \
+            labs/small-model-augmentation/red_factory/mac_model_request_recovery.py \
+            labs/small-model-augmentation/red_factory/mac_model_server_hang_recovery.py
       - name: #218 checkpoint regression
         working-directory: labs/small-model-augmentation
         run: python -m unittest -v test_checkpoint_journal test_checkpoint_process
       - name: Sent-request SIGKILL and resume composition
         working-directory: labs/small-model-augmentation
         run: python -m unittest -v test_mac_model_request_recovery
+      - name: Injected owned-server SIGSTOP and resume composition
+        working-directory: labs/small-model-augmentation
+        run: python -m unittest -v test_mac_model_server_hang_recovery
