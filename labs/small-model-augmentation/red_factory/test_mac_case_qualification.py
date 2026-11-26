@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import stat
+import sys
 import tempfile
 import unittest
 from unittest import mock
@@ -13,9 +14,7 @@ import mac_case_qualification as mac
 from red_factory import make_case
 
 
-FAKE_HERMES = """#!/usr/bin/env python3
-print("Hermes Agent v0.21.5 (2026.9.24)")
-"""
+FAKE_HERMES_BODY = 'print("Hermes Agent v0.21.5 (2026.9.24)")\\n'
 
 
 def sha(path: Path) -> str:
@@ -54,7 +53,8 @@ class MacCaseQualificationTests(unittest.TestCase):
         self.profile_config = config
 
         self.hermes = self.root / "hermes"
-        self.hermes.write_text(FAKE_HERMES)
+        self.python = Path(sys.executable).resolve()
+        self.hermes.write_text(f"#!{self.python}\\n" + FAKE_HERMES_BODY)
         self.hermes.chmod(0o700)
         self.server = self.root / "llama-server"
         self.server.write_text("server")
@@ -67,6 +67,8 @@ class MacCaseQualificationTests(unittest.TestCase):
             "hermes_sha256": sha(self.hermes),
             "hermes_version": "0.21.5",
             "hermes_release_date": "2026.9.24",
+            "hermes_python_sha256": mac._sha_provenance_executable(self.python),
+            "hermes_runtime_source_sha256": "c" * 64,
             "hermes_config_sha256": sha(self.profile_config),
             "hermes_profile_env_sha256": sha(self.profile_env),
         }
@@ -173,6 +175,14 @@ class MacCaseQualificationTests(unittest.TestCase):
             mock.patch.object(
                 mac.guarded_model_supervisor, "run_supervisor",
                 side_effect=supervisor,
+            ),
+            mock.patch.object(
+                mac, "_runtime_package_fingerprint",
+                return_value={
+                    "version": "0.21.5",
+                    "release_date": "2026.9.24",
+                    "source_sha256": "c" * 64,
+                },
             ),
         ):
             result = mac.run_case_qualification(
