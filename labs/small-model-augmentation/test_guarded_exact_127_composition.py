@@ -88,6 +88,10 @@ class ExactGuardedCompositionTests(unittest.TestCase):
         root = Path(self.tmp.name)
 
         self.home = root / "home"
+        self.home.mkdir()
+        profile_env = self.home / ".env"
+        profile_env.write_text("# isolated guarded profile\n")
+        profile_env.chmod(0o600)
         plugin = self.home / "plugins" / "haven-scope"
         plugin.mkdir(parents=True)
         shutil.copyfile(PLUGIN_SOURCE / "__init__.py", plugin / "__init__.py")
