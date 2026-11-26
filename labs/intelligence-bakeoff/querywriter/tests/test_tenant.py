@@ -33,10 +33,36 @@ class Suite(unittest.TestCase):
     def test_write_queries_refused(self):
         item = T.make_suite(run.SUITE_SEED, 1)[0]
         _, conn = T.load_kuzu(item["tenant"], os.path.join(tempfile.mkdtemp(), "g"))
-        for bad in ("CREATE (:User {id: 'x', enabled: true})", "MATCH (u:User) DELETE u",
-                    "MATCH (u:User) SET u.enabled = false"):
-            with self.assertRaises(ValueError):
-                T.run_query(conn, bad, "set")
+        for bad in (
+            "CREATE (:User {id: 'x', enabled: true})",
+            "CREATE\n(:User {id: 'x', enabled: true})",
+            "MATCH (u:User) DELETE u",
+            "MATCH (u:User) /* split */\nDELETE u",
+            "MATCH (u:User) SET\nu.enabled = false",
+            "MATCH (u:User) REMOVE u.enabled",
+            "CALL current_setting('x')",
+            "MATCH (u) RETURN u; DROP TABLE User",
+        ):
+            with self.subTest(bad=bad):
+                with self.assertRaises(ValueError):
+                    T.run_query(conn, bad, "set")
+
+    def test_read_only_guard_ignores_literals_comments_and_quoted_identifiers(self):
+        for good in (
+            "RETURN 'create delete set merge'",
+            'RETURN "drop install attach"',
+            "MATCH (n) // create delete set\nRETURN n.id",
+            "MATCH (n) /* create delete set */ RETURN n.id",
+            "MATCH (n {\`set\`: 'create'}) RETURN n.id",
+        ):
+            with self.subTest(good=good):
+                T.assert_read_only(good)
+
+    def test_read_only_guard_rejects_malformed_lexical_state(self):
+        for bad in ("RETURN 'unterminated", "MATCH (n) /* unterminated", "RETURN \`unterminated"):
+            with self.subTest(bad=bad):
+                with self.assertRaises(ValueError):
+                    T.assert_read_only(bad)
 
     def test_answer_extraction(self):
         self.assertEqual(run.extract_answer('ok {"answer": ["b", "a"]}'), ("set", ["a", "b"]))
