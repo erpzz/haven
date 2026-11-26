@@ -14,6 +14,7 @@ import json
 import os
 import re
 import sys
+import urllib.parse
 from pathlib import Path
 from typing import Any, Callable, Mapping
 
@@ -21,7 +22,7 @@ _AUG = Path(__file__).resolve().parent.parent
 if str(_AUG) not in sys.path:
     sys.path.insert(0, str(_AUG))
 import checkpoint_journal as checkpoint
-from hermes_runner import run_hermes_case
+from hermes_runner import TOOLSETS_RE, run_hermes_case
 from local_runner import (
     _parse_csv_ints,
     _parse_families,
@@ -52,6 +53,55 @@ def _hash_file(path: Path) -> str:
         for block in iter(lambda: reader.read(1024 * 1024), b""):
             h.update(block)
     return h.hexdigest()
+
+
+def _validate_runtime_inputs(
+    *, hermes: Path, hermes_home: Path, toolsets: str, backend_base_url: str,
+    model: str, timeout_seconds: float, max_turns: int,
+) -> str:
+    hermes = Path(hermes)
+    hermes_home = Path(hermes_home)
+    if hermes.is_symlink() or not hermes.is_file() or not os.access(hermes, os.X_OK):
+        raise ValueError("Hermes executable must be an executable non-symlink file")
+    if hermes_home.is_symlink() or not hermes_home.is_dir():
+        raise ValueError("Hermes home must be an existing non-symlink directory")
+    if not isinstance(toolsets, str) or TOOLSETS_RE.fullmatch(toolsets) is None:
+        raise ValueError("invalid toolsets")
+    base = normalize_loopback_base_url(backend_base_url)
+    if urllib.parse.urlparse(base).hostname not in {"127.0.0.1", "::1"}:
+        raise ValueError("checkpointed Hermes lane requires numeric loopback")
+    if not isinstance(model, str) or not model or len(model) > 256:
+        raise ValueError("invalid model alias")
+    if (
+        isinstance(timeout_seconds, bool)
+        or not isinstance(timeout_seconds, (int, float))
+        or not 0.1 <= float(timeout_seconds) <= 900
+    ):
+        raise ValueError("invalid timeout")
+    if (
+        isinstance(max_turns, bool)
+        or not isinstance(max_turns, int)
+        or not 2 <= max_turns <= 32
+    ):
+        raise ValueError("invalid max_turns")
+    return base
+
+
+def _prepare_journal(path: Path, *, resume: bool) -> None:
+    path = Path(path)
+    parent = path.parent
+    if parent.is_symlink() or not parent.is_dir():
+        raise ValueError("journal parent must be an existing non-symlink directory")
+    if resume:
+        if path.is_symlink() or not path.is_file():
+            raise ValueError("resume journal must be an existing non-symlink file")
+        if path.stat().st_mode & 0o077:
+            raise ValueError("resume journal permissions are not private")
+        return
+    if path.exists() or path.is_symlink():
+        raise ValueError("fresh journal path must not already exist")
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    os.close(fd)
 
 
 def _manifest(
@@ -184,6 +234,15 @@ def run_checkpointed_suite(
 ) -> dict[str, Any]:
     """Run or resume one HRF suite under #130's unit-level journal contract."""
     cases = validate_suite(suite)
+    backend_base_url = _validate_runtime_inputs(
+        hermes=Path(hermes),
+        hermes_home=Path(hermes_home),
+        toolsets=toolsets,
+        backend_base_url=backend_base_url,
+        model=model,
+        timeout_seconds=timeout_seconds,
+        max_turns=max_turns,
+    )
     if not isinstance(run_id, str) or _RUN_ID.fullmatch(run_id) is None:
         raise ValueError("invalid run_id")
     if isinstance(max_attempts, bool) or not isinstance(max_attempts, int) or not 1 <= max_attempts <= 20:
@@ -192,8 +251,7 @@ def run_checkpointed_suite(
     if results_dir.is_symlink() or not results_dir.is_dir():
         raise ValueError("results_dir must be an existing non-symlink directory")
     journal_path = Path(journal_path)
-    if journal_path.is_symlink():
-        raise ValueError("journal must not be a symlink")
+    _prepare_journal(journal_path, resume=resume)
 
     _, manifest_sha256 = _manifest(
         suite=suite,
