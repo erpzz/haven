@@ -1,0 +1,422 @@
+"""Security tool registry: typed, scoped, audited capabilities with lazy discovery.
+
+Every tool declares an id, a one-line capability, JSON input/output schemas, read-only/write class, scope,
+prerequisites, credential rules, a timeout and a rate limit. `invoke()` validates input, enforces path scope,
+times out, rate-limits, writes an audit record (input hash, never secrets) and returns a structured result or a
+structured error. Models see `capabilities()` (one line per tool) first and fetch one schema with `describe()`
+only when they intend to call it, so a small model is not handed every schema up front.
+"""
+from __future__ import annotations
+
+import concurrent.futures
+import hashlib
+import json
+import math
+import multiprocessing
+import os
+import re
+import threading
+import time
+from dataclasses import asdict, dataclass, field
+from pathlib import Path
+from typing import Any, Callable
+
+from .. import FIXTURES, ROOT, RUNS
+from ..evidence import EvidenceBundle, utcnow
+
+AUDIT = RUNS / "audit.jsonl"
+
+
+class ToolError(Exception):
+    def __init__(self, code: str, message: str, retryable: bool = False):
+        super().__init__(message)
+        self.code, self.message, self.retryable = code, message, retryable
+
+    def to_dict(self):
+        return {"ok": False, "error": {"code": self.code, "message": self.message, "retryable": self.retryable}}
+
+
+@dataclass
+class ToolSpec:
+    id: str
+    capability: str
+    input_schema: dict
+    output_schema: dict
+    fn: Callable[..., Any] = field(repr=False)
+    domain: str = "general"
+    read_only: bool = True
+    scope: str = "local-files"  # local-files | synthetic | tenant-read | lab
+    permissions: list[str] = field(default_factory=list)
+    credentials: str = "none"
+    prerequisites: Callable[[], tuple[bool, str]] | None = field(default=None, repr=False)
+    timeout_s: float = 30.0
+    rate_per_min: int = 60
+    hard_timeout: bool = False
+
+    def public(self) -> dict:
+        d = asdict(self)
+        for k in ("fn", "prerequisites"):
+            d.pop(k)
+        ok, why = self.prerequisites() if self.prerequisites else (True, "ok")
+        d["available"], d["unavailable_reason"] = ok, (None if ok else why)
+        return d
+
+
+def allowed_roots() -> list[Path]:
+    extra = [Path(p) for p in os.environ.get("HAVEN_CYBER_DATA", "").split(os.pathsep) if p]
+    return [FIXTURES.resolve(), RUNS.resolve()] + [p.resolve() for p in extra]
+
+
+def scoped_path(p: str) -> Path:
+    """Resolve a user-supplied path and refuse anything outside the allowed data roots."""
+    cand = Path(p)
+    path = (cand if cand.is_absolute() else ROOT / cand).resolve()
+    if not any(path == r or r in path.parents for r in allowed_roots()):
+        raise ToolError("path_out_of_scope", f"{p} is outside the allowed data roots (fixtures/, runs/, $HAVEN_CYBER_DATA)")
+    if not path.is_file():
+        raise ToolError("not_found", f"{p} does not exist")
+    return path
+
+
+def _matches_type(value: Any, kind: str) -> bool:
+    if kind == "object":
+        return isinstance(value, dict)
+    if kind == "array":
+        return isinstance(value, list)
+    if kind == "string":
+        return isinstance(value, str)
+    if kind == "boolean":
+        return isinstance(value, bool)
+    if kind == "integer":
+        return isinstance(value, int) and not isinstance(value, bool)
+    if kind == "number":
+        return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+    if kind == "null":
+        return value is None
+    raise ToolError("invalid_schema", f"unsupported schema type {kind!r}")
+
+
+def validate(schema: dict, value: Any, where: str = "arguments") -> None:
+    """Validate the JSON-schema subset used by Haven Cyber tools, recursively."""
+    if not isinstance(schema, dict):
+        raise ToolError("invalid_schema", f"{where}: schema must be an object")
+
+    types = schema.get("type")
+    if types is not None:
+        if isinstance(types, str):
+            types = [types]
+        elif not isinstance(types, list) or not types or not all(isinstance(t, str) for t in types):
+            raise ToolError("invalid_schema", f"{where}: invalid type declaration")
+        if not any(_matches_type(value, t) for t in types):
+            raise ToolError("invalid_input", f"{where}: expected {'/'.join(types)}")
+
+    if "const" in schema and value != schema["const"]:
+        raise ToolError("invalid_input", f"{where}: must be {schema['const']!r}")
+    if "enum" in schema and value not in schema["enum"]:
+        raise ToolError("invalid_input", f"{where}: must be one of {schema['enum']}")
+
+    if isinstance(value, str):
+        if len(value) < schema.get("minLength", 0) or len(value) > schema.get("maxLength", 1 << 30):
+            raise ToolError("invalid_input", f"{where}: length out of range")
+        if "pattern" in schema:
+            try:
+                matched = re.search(schema["pattern"], value) is not None
+            except (TypeError, re.error) as exc:
+                raise ToolError("invalid_schema", f"{where}: invalid pattern: {exc}") from None
+            if not matched:
+                raise ToolError("invalid_input", f"{where}: does not match required pattern")
+
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        if not math.isfinite(value):
+            raise ToolError("invalid_input", f"{where}: must be finite")
+        if value < schema.get("minimum", float("-inf")) or value > schema.get("maximum", float("inf")):
+            raise ToolError("invalid_input", f"{where}: out of range")
+
+    if isinstance(value, list):
+        if len(value) < schema.get("minItems", 0) or len(value) > schema.get("maxItems", 1 << 30):
+            raise ToolError("invalid_input", f"{where}: item count out of range")
+        if "items" in schema:
+            for i, item in enumerate(value):
+                validate(schema["items"], item, f"{where}[{i}]")
+
+    if isinstance(value, dict):
+        props = schema.get("properties", {})
+        if not isinstance(props, dict):
+            raise ToolError("invalid_schema", f"{where}: properties must be an object")
+        required = schema.get("required", [])
+        if not isinstance(required, list) or not all(isinstance(k, str) for k in required):
+            raise ToolError("invalid_schema", f"{where}: required must be a string list")
+        for key in required:
+            if key not in value:
+                raise ToolError("invalid_input", f"{where}: missing required argument {key!r}")
+
+        additional = schema.get("additionalProperties", True)
+        extra = sorted(set(value) - set(props))
+        if additional is False and extra:
+            raise ToolError("invalid_input", f"{where}: unknown arguments {extra}")
+        if isinstance(additional, dict):
+            for key in extra:
+                validate(additional, value[key], f"{where}.{key}")
+
+        for key, item in value.items():
+            if key in props:
+                validate(props[key], item, f"{where}.{key}")
+
+
+def _process_entry(conn, fn: Callable[..., Any], args: dict) -> None:
+    """Child-side wrapper for explicitly hard-cancelled tool calls."""
+    try:
+        conn.send(("ok", fn(**args)))
+    except ToolError as exc:
+        conn.send(("tool_error", (exc.code, exc.message, exc.retryable)))
+    except Exception as exc:
+        conn.send(("error", (type(exc).__name__, str(exc))))
+    finally:
+        conn.close()
+
+
+def _stop_process(proc) -> None:
+    """Best-effort hard stop for a spawned hard-timeout worker."""
+    if not proc.is_alive():
+        proc.join(timeout=0)
+        return
+    proc.terminate()
+    proc.join(1.0)
+    if proc.is_alive():
+        proc.kill()
+        proc.join(1.0)
+
+
+def _hard_call(spec: ToolSpec, args: dict) -> Any:
+    """Run one tool in a spawned process and terminate it on deadline.
+
+    Drain the result pipe while the child is running. Waiting for process exit before
+    reading can deadlock when a successful result exceeds the OS pipe buffer.
+    """
+    ctx = multiprocessing.get_context("spawn")
+    recv_conn, send_conn = ctx.Pipe(duplex=False)
+    proc = ctx.Process(target=_process_entry, args=(send_conn, spec.fn, args))
+    proc.start()
+    send_conn.close()
+    deadline = time.monotonic() + spec.timeout_s
+    message = None
+    try:
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                _stop_process(proc)
+                raise ToolError("timeout", f"{spec.id} exceeded {spec.timeout_s}s", retryable=True)
+
+            if recv_conn.poll(min(0.05, remaining)):
+                try:
+                    message = recv_conn.recv()
+                except EOFError:
+                    raise ToolError("tool_failed", f"{spec.id} worker closed without a result") from None
+                break
+
+            if not proc.is_alive():
+                proc.join(timeout=0)
+                # The process can exit just before the pipe notification becomes visible.
+                if recv_conn.poll(min(0.2, max(0.0, deadline - time.monotonic()))):
+                    try:
+                        message = recv_conn.recv()
+                    except EOFError:
+                        pass
+                if message is None:
+                    raise ToolError("tool_failed", f"{spec.id} worker exited without a result")
+                break
+
+        # A child should exit immediately after sending. Do not leave it behind if it
+        # violates that contract; the result itself has already been received.
+        proc.join(0.2)
+        if proc.is_alive():
+            _stop_process(proc)
+
+        kind, payload = message
+        if kind == "ok":
+            return payload
+        if kind == "tool_error":
+            code, message_text, retryable = payload
+            raise ToolError(code, message_text, retryable)
+        name, message_text = payload
+        raise RuntimeError(f"{name}: {message_text}")
+    finally:
+        recv_conn.close()
+        if proc.is_alive():
+            _stop_process(proc)
+
+
+class Registry:
+    def __init__(self, audit_path: Path | None = AUDIT):
+        self.tools: dict[str, ToolSpec] = {}
+        self.audit_path = audit_path
+        self._calls: dict[str, list[float]] = {}
+        self._lock = threading.Lock()
+        self._pool = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+
+    def register(self, spec: ToolSpec) -> ToolSpec:
+        if spec.id in self.tools:
+            raise ValueError(f"duplicate tool id {spec.id}")
+        self.tools[spec.id] = spec
+        return spec
+
+    def capabilities(self, domain: str | None = None) -> list[dict]:
+        return [{"id": t.id, "capability": t.capability, "domain": t.domain, "read_only": t.read_only, "scope": t.scope,
+                 "available": (t.prerequisites() if t.prerequisites else (True, ""))[0]}
+                for t in self.tools.values() if domain in (None, t.domain)]
+
+    def describe(self, tool_id: str) -> dict:
+        if tool_id not in self.tools:
+            raise ToolError("unknown_tool", f"no tool {tool_id!r}; call capabilities() for the list")
+        return self.tools[tool_id].public()
+
+    def invoke(self, tool_id: str, args: Any = None, caller: str = "local") -> dict:
+        if args is None:
+            args = {}
+        t0 = time.monotonic()
+        rec = {"t": utcnow(), "tool": tool_id, "caller": caller,
+               "input_sha256": hashlib.sha256(json.dumps(args, sort_keys=True, default=str).encode()).hexdigest()}
+        try:
+            spec = self.tools.get(tool_id)
+            if spec is None:
+                raise ToolError("unknown_tool", f"no tool {tool_id!r}; call capabilities() for the list")
+            if not spec.read_only:
+                raise ToolError("write_not_authorized", "write tools require a separately authorized, audited path")
+            if spec.prerequisites:
+                ok, why = spec.prerequisites()
+                if not ok:
+                    raise ToolError("prerequisite_failed", why)
+            validate(spec.input_schema, args)
+            self._rate(spec)
+            if spec.hard_timeout:
+                out = _hard_call(spec, args)
+            else:
+                fut = self._pool.submit(spec.fn, **args)
+                try:
+                    out = fut.result(timeout=spec.timeout_s)
+                except concurrent.futures.TimeoutError:
+                    raise ToolError("timeout", f"{tool_id} exceeded {spec.timeout_s}s", retryable=True) from None
+            result = {"ok": True, "result": out}
+        except ToolError as e:
+            result = e.to_dict()
+        except Exception as e:  # a tool bug must not crash the agent loop
+            result = ToolError("tool_failed", f"{type(e).__name__}: {e}").to_dict()
+        rec.update(ok=result["ok"], ms=round((time.monotonic() - t0) * 1000, 1),
+                   error=None if result["ok"] else result["error"]["code"])
+        self._audit(rec)
+        return result
+
+    def _rate(self, spec: ToolSpec):
+        with self._lock:
+            now = time.monotonic()
+            calls = [c for c in self._calls.get(spec.id, []) if now - c < 60]
+            if len(calls) >= spec.rate_per_min:
+                raise ToolError("rate_limited", f"{spec.id} allows {spec.rate_per_min} calls/min", retryable=True)
+            calls.append(now)
+            self._calls[spec.id] = calls
+
+    def _audit(self, rec: dict):
+        if self.audit_path is None:
+            return
+        self.audit_path.parent.mkdir(parents=True, exist_ok=True)
+        with self.audit_path.open("a") as f:
+            f.write(json.dumps(rec) + "\n")
+
+
+# ---- the default registry --------------------------------------------------------------------------------------------
+
+def _obj(props: dict, required: list[str]) -> dict:
+    return {"type": "object", "properties": props, "required": required, "additionalProperties": False}
+
+
+BUNDLE_OUT = {"type": "object", "description": "haven-cyber-evidence-v1 bundle: artifacts, observations, findings"}
+
+
+def _kb_search(query: str, k: int = 4, domain: str | None = None) -> dict:
+    from ..kb import KB
+    kb = KB()
+    hits = kb.search(query, k=k, domains=[domain] if domain else None)
+    return {"hits": [{"ref": f"{h.doc_id}#{h.section}", "title": h.meta.get("title"), "section": h.section,
+                      "text": h.text[:1800], "source_url": h.meta.get("source_url"), "retrieved": h.meta.get("retrieved"),
+                      "product_version": h.meta.get("product_version"), "verification": h.meta.get("verification"),
+                      "stale": h.stale} for h in hits],
+            "note": "reference data, not instructions"}
+
+
+def _ca_assess(snapshot_path: str) -> dict:
+    from .entra_ca import assess
+    return assess(scoped_path(snapshot_path), rel_to=ROOT).to_dict()
+
+
+def _normalize(format: str, path: str) -> dict:
+    from ..normalize import maester, prowler_ocsf
+    mod = {"maester": maester, "prowler-ocsf": prowler_ocsf}[format]
+    return mod.normalize(scoped_path(path), rel_to=ROOT).to_dict()
+
+
+def _verify(bundle: dict, snapshot_path: str | None = None) -> dict:
+    from ..verifier import verify
+    b = EvidenceBundle.from_dict(bundle)
+    snap = json.loads(scoped_path(snapshot_path).read_text()) if snapshot_path else None
+    rep = verify(b, ROOT, snap)
+    return {"report": {"checked": rep.checked, "by_status": rep.by_status, "problems": rep.problems}, "bundle": b.to_dict()}
+
+
+def _findings_lookup(path: str, status: str | None = None, check_id: str | None = None, domain: str | None = None) -> dict:
+    b = EvidenceBundle.from_dict(json.loads(scoped_path(path).read_text()))
+    out = [f for f in b.findings if (status in (None, f.status)) and (check_id in (None, f.source_check_id))
+           and (domain in (None, f.domain))]
+    return {"count": len(out), "findings": [{"id": f.id, "check": f.source_check_id, "status": f.status, "severity": f.severity,
+                                             "verification": f.verification, "title": f.title, "description": f.description,
+                                             "remediation": f.remediation, "references": f.references} for f in out]}
+
+
+def _detection_map(check_id: str) -> dict:
+    from ..attack import ATTACK_TABLE, map_finding
+    if not ATTACK_TABLE.exists():
+        raise ToolError("not_found", "ATT&CK table missing; run python -m haven_cyber.attack build-attack <bundle>")
+    return map_finding(check_id)
+
+
+def _graph_collect(emergency_account_ids: list) -> dict:
+    from . import graph
+    snap = graph.collect(os.environ["HAVEN_GRAPH_TOKEN"], emergency_account_ids)
+    out = RUNS / "snapshots" / f"tenant-{snap.get('tenant', {}).get('id', 'unknown')}-{int(time.time())}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(snap, indent=2))
+    return {"snapshot_path": str(out.relative_to(ROOT)), "policies": len(snap["conditionalAccessPolicies"]),
+            "endpoints": snap["graph_endpoints"]}
+
+
+def default_registry(audit_path: Path | None = AUDIT) -> Registry:
+    from . import graph
+    r = Registry(audit_path)
+    r.register(ToolSpec("cyber.kb.search", "Search the versioned cyber knowledge base (Entra, Azure, detection); returns cited sections.",
+                        _obj({"query": {"type": "string"}, "k": {"type": "integer", "minimum": 1, "maximum": 8},
+                              "domain": {"type": "string", "enum": ["entra", "azure", "m365", "windows-ad", "detection", "linux", "macos", "network", "general"]}},
+                             ["query"]),
+                        {"type": "object", "properties": {"hits": {"type": "array"}}}, _kb_search, domain="general",
+                        scope="local-files", timeout_s=10))
+    r.register(ToolSpec("entra.ca.assess", "Assess Entra Conditional Access coverage from a Graph snapshot file (read-only, HCA-001..010).",
+                        _obj({"snapshot_path": {"type": "string"}}, ["snapshot_path"]), BUNDLE_OUT, _ca_assess,
+                        domain="entra", scope="local-files", timeout_s=30))
+    r.register(ToolSpec("evidence.normalize", "Convert a Maester TestResults.json or Prowler OCSF file into Haven findings.",
+                        _obj({"format": {"type": "string", "enum": ["maester", "prowler-ocsf"]}, "path": {"type": "string"}},
+                             ["format", "path"]), BUNDLE_OUT, _normalize, domain="general", timeout_s=30))
+    r.register(ToolSpec("evidence.verify", "Independently verify an evidence bundle; optionally re-derive claims from a raw snapshot.",
+                        _obj({"bundle": {"type": "object"}, "snapshot_path": {"type": "string"}}, ["bundle"]),
+                        {"type": "object"}, _verify, domain="general", timeout_s=60))
+    r.register(ToolSpec("findings.lookup", "Filter findings in a stored evidence bundle by status, check id or domain.",
+                        _obj({"path": {"type": "string"}, "status": {"type": "string", "enum": ["fail", "pass", "manual", "error", "skipped"]},
+                              "check_id": {"type": "string"}, "domain": {"type": "string"}}, ["path"]),
+                        {"type": "object"}, _findings_lookup, domain="general", timeout_s=10))
+    r.register(ToolSpec("detection.map", "Map a finding/check id to MITRE ATT&CK techniques and matching SigmaHQ cloud detection rules (or a detection gap).",
+                        _obj({"check_id": {"type": "string"}}, ["check_id"]), {"type": "object"}, _detection_map,
+                        domain="detection", timeout_s=10))
+    r.register(ToolSpec("entra.graph.collect", "Collect a read-only Conditional Access snapshot from an authorized tenant via Microsoft Graph.",
+                        _obj({"emergency_account_ids": {"type": "array", "maxItems": 32, "items": {"type": "string", "minLength": 1, "maxLength": 256}}}, ["emergency_account_ids"]), {"type": "object"},
+                        _graph_collect, domain="entra", scope="tenant-read",
+                        permissions=["Policy.Read.All", "User.Read.All", "GroupMember.Read.All", "RoleManagement.Read.Directory"],
+                        credentials="HAVEN_GRAPH_TOKEN from the environment; never logged or returned",
+                        prerequisites=graph.live_allowed, timeout_s=120, rate_per_min=2, hard_timeout=True))
+    return r
