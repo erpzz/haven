@@ -135,6 +135,8 @@ def _validate_value(schema: dict, value: Any, path: str, depth: int = 0) -> None
                 _validate_value(item_schema, item, f"{label}[{i}]", depth + 1)
 
     if t == "object":
+        if not all(type(key) is str for key in value):
+            raise ToolError("invalid_input", f"{label} object keys must be strings")
         props = schema.get("properties", {})
         if type(props) is not dict:
             raise ToolError("invalid_input", f"{label} has invalid property schema")
