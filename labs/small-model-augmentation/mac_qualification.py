@@ -19,6 +19,7 @@ import os
 from pathlib import Path
 import stat
 import sys
+import socket
 from typing import Any
 
 _RED_FACTORY_DIR = Path(__file__).resolve().parent / "red_factory"
@@ -48,6 +49,19 @@ def _canon(value: Any) -> bytes:
 
 def _sha(value: Any) -> str:
     return hashlib.sha256(_canon(value)).hexdigest()
+
+
+def _select_loopback_port(port: int) -> int:
+    if isinstance(port, bool) or not isinstance(port, int) or not 0 <= port <= 65535:
+        raise QualificationError("INVALID_PORT")
+    if port:
+        return port
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        sock.bind(("127.0.0.1", 0))
+        return int(sock.getsockname()[1])
+    finally:
+        sock.close()
 
 
 def _write_private(path: Path, value: Any) -> None:
@@ -87,6 +101,8 @@ def run_qualification(*, hermes: Path, server: Path, model: Path,
     if stat.S_IMODE(out_root.stat().st_mode) & 0o077:
         raise QualificationError("OUTPUT_ROOT_NOT_PRIVATE")
 
+    selected_port = _select_loopback_port(port)
+
     # Attest before creating any runtime state or invoking Hermes.
     provenance, source_manifest = red_campaign._hermes_provenance(Path(hermes))
     red_campaign._write_private(
@@ -125,7 +141,7 @@ def run_qualification(*, hermes: Path, server: Path, model: Path,
         server=Path(server),
         model=Path(model),
         alias=alias,
-        port=port,
+        port=selected_port,
         context=context,
         seeds=list(seeds),
         families=list(families),
@@ -160,6 +176,7 @@ def run_qualification(*, hermes: Path, server: Path, model: Path,
         "runtime": campaign["runtime"],
         "model_alias": alias,
         "context_tokens": context,
+        "loopback_port": selected_port,
         "n": campaign["n"],
         "harness_passes": campaign["harness_passes"],
         "model_passes": campaign["model_passes"],
@@ -184,7 +201,7 @@ def main(argv=None) -> int:
     p.add_argument("--profile-python", type=Path)
     p.add_argument("--seeds", default="0,1,2,3")
     p.add_argument("--families", default="all")
-    p.add_argument("--port", type=int, default=8080)
+    p.add_argument("--port", type=int, default=0)
     p.add_argument("--context", type=int, default=65536)
     p.add_argument("--discovery-timeout", type=float, default=60.0)
     p.add_argument("--case-timeout", type=float, default=180.0)
