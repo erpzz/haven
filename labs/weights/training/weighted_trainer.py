@@ -125,8 +125,40 @@ def make_episode_weighted_trainer_class(Trainer):
                 raise weighting.WeightingError(
                     "episode-weighted trainer requires remove_unused_columns=False"
                 )
-            # Our scalar is already one normalized episode loss. Do not let Trainer
-            # infer a token/item denominator and re-normalize it.
+            world_size = getattr(self.args, "world_size", 1)
+            grad_accum = getattr(self.args, "gradient_accumulation_steps", 1)
+            max_steps = getattr(self.args, "max_steps", -1)
+            epochs = getattr(self.args, "num_train_epochs", 1.0)
+            if (
+                isinstance(world_size, bool) or not isinstance(world_size, int) or world_size < 1
+                or isinstance(grad_accum, bool) or not isinstance(grad_accum, int) or grad_accum < 1
+            ):
+                raise weighting.WeightingError("invalid distributed/accumulation schedule")
+            if isinstance(max_steps, bool) or not isinstance(max_steps, int):
+                raise weighting.WeightingError("invalid max_steps")
+            if max_steps > 0:
+                raise weighting.WeightingError(
+                    "exact episode weighting requires complete epochs, not max_steps truncation"
+                )
+            if (
+                isinstance(epochs, bool)
+                or not isinstance(epochs, (int, float))
+                or float(epochs) <= 0
+                or not float(epochs).is_integer()
+            ):
+                raise weighting.WeightingError(
+                    "exact episode weighting requires a positive integer number of epochs"
+                )
+            if self.train_dataset is None:
+                raise weighting.WeightingError("episode-weighted trainer requires a train dataset")
+            group = world_size * grad_accum
+            if len(self.train_dataset) % group:
+                raise weighting.WeightingError(
+                    "episode count must be divisible by world_size * gradient_accumulation_steps"
+                )
+            # Our scalar is already one normalized episode loss. Complete groups ensure
+            # DDP/gradient accumulation apply only a common batch-average factor to each
+            # episode, with no DistributedSampler padding or partial final group.
             self.model_accepts_loss_kwargs = False
 
         def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
