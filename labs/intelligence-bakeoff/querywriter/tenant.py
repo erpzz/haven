@@ -199,8 +199,8 @@ def load_kuzu(t: dict, path: str):
 
 
 _FORBIDDEN_CYPHER = re.compile(
-    r"\\b(?:create|delete|detach|set|remove|merge|drop|alter|rename|truncate|copy|load|install|"
-    r"attach|import|export|call|begin|commit|rollback|use)\\b",
+    r"\b(?:create|delete|detach|set|remove|merge|drop|alter|rename|truncate|copy|load|install|"
+    r"attach|import|export|call|begin|commit|rollback|use)\b",
     re.I,
 )
 
