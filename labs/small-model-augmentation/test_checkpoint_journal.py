@@ -1,5 +1,6 @@
-import hashlib, json, subprocess, sys, tempfile, threading, time, unittest
+import hashlib, json, os, stat, subprocess, sys, tempfile, threading, time, unittest
 from pathlib import Path
+from unittest import mock
 import checkpoint_journal as c
 
 MANIFEST = hashlib.sha256(b"manifest").hexdigest()
@@ -8,6 +9,30 @@ MANIFEST = hashlib.sha256(b"manifest").hexdigest()
 class JournalTests(unittest.TestCase):
     def make(self, d):
         return c.Journal(Path(d, "run.jsonl"), "run-1", MANIFEST, fsync=False).open()
+
+    @unittest.skipUnless(os.name == "posix", "directory fsync is POSIX qualification")
+    def test_first_creation_fsyncs_parent_and_uses_private_mode(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d, "run.jsonl")
+            calls = []
+            real_fsync = os.fsync
+
+            def spy(fd):
+                mode = os.fstat(fd).st_mode
+                calls.append("dir" if stat.S_ISDIR(mode) else "file")
+                return real_fsync(fd)
+
+            with mock.patch.object(c.os, "fsync", side_effect=spy):
+                c.Journal(path, "run-1", MANIFEST, fsync=True).open()
+
+            self.assertEqual(stat.S_IMODE(path.stat().st_mode), 0o600)
+            self.assertIn("file", calls)
+            self.assertIn("dir", calls)
+
+            calls.clear()
+            with mock.patch.object(c.os, "fsync", side_effect=spy):
+                c.Journal(path, "run-1", MANIFEST, fsync=True).open()
+            self.assertNotIn("dir", calls)
 
     def test_new_journal_and_complete_unit(self):
         with tempfile.TemporaryDirectory() as d:
