@@ -164,6 +164,8 @@ If #132 is not adopted, the existing #123 conclusion+claim format remains.
 
 Run the stock 4B through E0–E2 **before GPU training** after the intended inference controls are integrated. This becomes the new engineering baseline for residual-error attribution. It does not replace #123's development decision rules or #119 M4.
 
+For every matched comparison, bind the exact unchanged semantic grader/adjudicator revision (`grader_sha256`) separately from the arm code hash, and require distinct host-owned private receipts per arm/case. Receipt hashes must be unique within an arm and disjoint across compared arms. Otherwise an apparent model delta can be a grader/instrumentation or evidence-reuse artifact.
+
 ## Residual-error taxonomy before training
 
 Every stock-4B development failure should be assigned to one primary class from host evidence, not model self-report:
@@ -226,9 +228,11 @@ A trained-vs-stock claim is valid only when both are evaluated under the same:
 - evidence verifier/admission path;
 - claim/output contract;
 - deterministic renderer/fallback policy;
-- model engine/decoding settings.
+- model engine/decoding settings;
+- exact semantic grader/adjudicator revision;
+- per-arm instrumentation/receipt provenance, with no cross-arm receipt reuse.
 
-If a runtime control changes after training, rerun the paired development comparison under the new harness before reserve qualification. Do not attribute a harness improvement to weights.
+If a runtime control, grader or output contract changes after training, rerun the paired development comparison under the new harness before reserve qualification. Do not attribute a harness improvement to weights.
 
 ## No-duplicate-stack boundary
 
@@ -253,3 +257,14 @@ All such work stays in #123/#124/#125 under Claude's training lead. #126 may pro
 - GitGuardian finding on #125: requires maintainer/security disposition without copying the flagged value.
 
 The next training action is not a GPU run. It is a revised #125 head that closes the four CPU operational defects, updates its manifest/receipts, preserves the amended plan, and leaves the actual loss-weight reduction check scheduled before training.
+
+## Second-pass state recheck — 2026-11-26
+
+Re-read #123's current comments and PR heads before handback:
+- #124 remains open/draft at `fd2c2998ad83ff1e7da49d7ce8ca461e40d4c867`; the amended plan remains approved.
+- #125 remains open/draft at `a7abd59aa130333b49e0338078e01bab86e5f26a`; no revised implementation has closed the operational hold.
+- #123's latest Astra coordination decision still withholds GPU collection and teacher-batch export.
+- The M4 v3 AI-reviewer ACCEPT remains an owner-documented deviation from the earlier human-review requirement; this memo does not reinterpret it.
+- #133's final comparison contract now additionally binds the unchanged grader and rejects receipt reuse across arms; those constraints are incorporated above.
+
+No training, inference, teacher exchange, reserve inspection, GPU work or GitGuardian disposition was performed in this second pass.
