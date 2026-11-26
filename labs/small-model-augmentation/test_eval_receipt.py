@@ -62,10 +62,13 @@ def controls(tag="x", private_profiles=None):
     private_profiles = private_profiles or profiles()
     return {
         "admission_receipt_sha256": H(tag + "-admission"),
+        "guard_preflight_receipt_sha256": H(tag + "-guard-preflight"),
+        "guard_supervisor_receipt_sha256": H(tag + "-guard-supervisor"),
         "runtime_profile_sha256": receipt.profile_sha256(private_profiles["runtime"]),
         "request_settings_sha256": receipt.profile_sha256(private_profiles["request"]),
         "world_sha256": H("stable-world"),
         "tool_policy_sha256": H(tag + "-policy"),
+        "final_dispatch_policy_sha256": H(tag + "-final-dispatch-policy"),
         "catalog_sha256": H("stable-catalog"),
         "selection_receipt_sha256": H(tag + "-selection"),
         "claim_bundle_sha256": H(tag + "-claims"),
@@ -167,6 +170,39 @@ class PrivateEvalReceiptTests(unittest.TestCase):
             {x["receipt_sha256"] for x in report["rows"]},
             {r1["receipt_sha256"], r2["receipt_sha256"]},
         )
+
+    def test_guard_stack_controls_are_required(self):
+        c = controls()
+        for key in (
+            "guard_preflight_receipt_sha256",
+            "guard_supervisor_receipt_sha256",
+            "final_dispatch_policy_sha256",
+        ):
+            with self.subTest(key=key):
+                broken = dict(c)
+                broken.pop(key)
+                with self.assertRaisesRegex(receipt.ReceiptError, "control binding shape"):
+                    receipt.make_receipt(
+                        manifest=manifest(),
+                        case_id="c1",
+                        family="graph",
+                        profiles=profiles(),
+                        controls=broken,
+                        sources=sources(),
+                    )
+
+    def test_guard_stack_control_mutation_breaks_receipt_hash(self):
+        for key in (
+            "guard_preflight_receipt_sha256",
+            "guard_supervisor_receipt_sha256",
+            "final_dispatch_policy_sha256",
+        ):
+            with self.subTest(key=key):
+                r = private()
+                r["controls"][key] = H("changed-" + key)
+                self.assertIn(
+                    "RECEIPT_HASH_MISMATCH", receipt.validate_receipt(r)
+                )
 
     def test_control_binding_mutation_breaks_receipt_hash(self):
         r = private()
@@ -290,13 +326,19 @@ class PrivateEvalReceiptTests(unittest.TestCase):
             [a], [b],
             allowed_control_differences=[
                 "admission_receipt_sha256",
+                "guard_preflight_receipt_sha256",
+                "guard_supervisor_receipt_sha256",
                 "tool_policy_sha256",
+                "final_dispatch_policy_sha256",
                 "selection_receipt_sha256",
                 "run_manifest_sha256",
             ],
         )
         self.assertEqual(result["status"], "pass", result)
         self.assertIn("tool_policy_sha256", result["observed_control_differences"])
+        self.assertIn("final_dispatch_policy_sha256", result["observed_control_differences"])
+        self.assertIn("guard_preflight_receipt_sha256", result["observed_control_differences"])
+        self.assertIn("guard_supervisor_receipt_sha256", result["observed_control_differences"])
         self.assertIn("selection_receipt_sha256", result["observed_control_differences"])
         self.assertNotIn("claim_bundle_sha256", result["observed_control_differences"])
         self.assertNotIn("runtime_profile_sha256", result["observed_control_differences"])
@@ -426,7 +468,10 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                     "--a", str(a_path),
                     "--b", str(b_path),
                     "--allow-control-difference", "admission_receipt_sha256",
+                    "--allow-control-difference", "guard_preflight_receipt_sha256",
+                    "--allow-control-difference", "guard_supervisor_receipt_sha256",
                     "--allow-control-difference", "tool_policy_sha256",
+                    "--allow-control-difference", "final_dispatch_policy_sha256",
                     "--allow-control-difference", "selection_receipt_sha256",
                     "--allow-control-difference", "run_manifest_sha256",
                 ],
@@ -463,7 +508,10 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                     "--a", str(a_path),
                     "--b", str(b_path),
                     "--allow-control-difference", "admission_receipt_sha256",
+                    "--allow-control-difference", "guard_preflight_receipt_sha256",
+                    "--allow-control-difference", "guard_supervisor_receipt_sha256",
                     "--allow-control-difference", "tool_policy_sha256",
+                    "--allow-control-difference", "final_dispatch_policy_sha256",
                     "--allow-control-difference", "selection_receipt_sha256",
                     "--allow-control-difference", "run_manifest_sha256",
                 ],
