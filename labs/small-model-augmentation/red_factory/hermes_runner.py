@@ -419,7 +419,7 @@ def run_hermes_case(
     backend_base_url = normalize_loopback_base_url(backend_base_url)
     if not isinstance(model, str) or not model or len(model) > 256:
         raise ValueError("invalid model alias")
-    if isinstance(timeout_seconds, bool) or not isinstance(timeout_seconds, (int, float)) or not 1 <= timeout_seconds <= 900:
+    if isinstance(timeout_seconds, bool) or not isinstance(timeout_seconds, (int, float)) or not 0.1 <= timeout_seconds <= 900:
         raise ValueError("invalid timeout")
     if isinstance(max_turns, bool) or not isinstance(max_turns, int) or not 2 <= max_turns <= 32:
         raise ValueError("invalid max_turns")
@@ -463,28 +463,43 @@ def run_hermes_case(
 
     started = time.monotonic()
     timed_out = False
-    stdout = b""
-    stderr = b""
-    proc = subprocess.Popen(
-        command,
-        env=child_env,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        start_new_session=True,
-    )
-    try:
-        stdout, stderr = proc.communicate(timeout=float(timeout_seconds))
-    except subprocess.TimeoutExpired:
-        timed_out = True
-        _terminate_group(proc)
-        stdout, stderr = proc.communicate()
-    finally:
-        server.shutdown()
-        server.server_close()
-        thread.join(timeout=2)
+    with tempfile.TemporaryFile() as stdout_file, tempfile.TemporaryFile() as stderr_file:
+        proc = subprocess.Popen(
+            command,
+            env=child_env,
+            stdout=stdout_file,
+            stderr=stderr_file,
+            stdin=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+        try:
+            proc.wait(timeout=float(timeout_seconds))
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            _terminate_group(proc)
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
+        stdout_file.seek(0)
+        stderr_file.seek(0)
+        stdout_hash = hashlib.sha256()
+        stderr_hash = hashlib.sha256()
+        stdout_bytes = 0
+        stderr_bytes = 0
+        for block in iter(lambda: stdout_file.read(1024 * 1024), b""):
+            stdout_hash.update(block)
+            stdout_bytes += len(block)
+        stderr_file.seek(0)
+        stderr_prefix = stderr_file.read(256 * 1024)
+        stderr_hash.update(stderr_prefix)
+        stderr_bytes += len(stderr_prefix)
+        for block in iter(lambda: stderr_file.read(1024 * 1024), b""):
+            stderr_hash.update(block)
+            stderr_bytes += len(block)
 
     errors: list[str] = []
-    stderr_text = stderr.decode("utf-8", "replace")
+    stderr_text = stderr_prefix.decode("utf-8", "replace")
     if timed_out:
         errors.append("HERMES_TIMEOUT")
     if proc.returncode != 0:
@@ -560,8 +575,10 @@ def run_hermes_case(
         "fixture_tool_names": fixture_surface,
         "extra_visible_tool_count": len(extras),
         "actual_fixture_calls": actual_calls,
-        "stdout_sha256": hashlib.sha256(stdout).hexdigest(),
-        "stderr_sha256": hashlib.sha256(stderr).hexdigest(),
+        "stdout_sha256": stdout_hash.hexdigest(),
+        "stderr_sha256": stderr_hash.hexdigest(),
+        "stdout_bytes": stdout_bytes,
+        "stderr_bytes": stderr_bytes,
         "score": score,
     }
     body["result_sha256"] = _sha256(body)
