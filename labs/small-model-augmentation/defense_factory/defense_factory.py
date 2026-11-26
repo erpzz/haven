@@ -17,6 +17,7 @@ from typing import Any, Callable, Iterable, Mapping
 SCHEMA = "haven-local-defense-factory-v1"
 MAX_PATCH_BYTES = 64 * 1024
 _HASH_RE = re.compile(r"^[0-9a-f]{64}$")
+_COMMIT_RE = re.compile(r"^[0-9a-f]{40,64}$")
 
 _SEVERITY = {
     "error": "high",
@@ -308,6 +309,12 @@ class FindingLedger:
                 return "fix_proposed"
         elif current == "verified":
             if event == "closed":
+                receipt = payload.get("integration_receipt_sha256")
+                commit = payload.get("integration_commit")
+                if not isinstance(receipt, str) or not _HASH_RE.fullmatch(receipt):
+                    raise ValueError("closure must bind integration receipt sha256")
+                if not isinstance(commit, str) or not _COMMIT_RE.fullmatch(commit):
+                    raise ValueError("closure must bind exact integration commit")
                 return "closed"
         raise ValueError(f"invalid transition: {current} -> {event}")
 
