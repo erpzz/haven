@@ -42,6 +42,9 @@ MANIFEST_BINDING_KEYS = {
 }
 CONTROL_KEYS = {
     "admission_receipt_sha256",
+    "runtime_profile_sha256",
+    "request_settings_sha256",
+    "world_sha256",
     "tool_policy_sha256",
     "catalog_sha256",
     "selection_receipt_sha256",
@@ -70,6 +73,15 @@ SOURCE_FIELDS = {
         "completion_tokens", "latency_ms",
     },
 }
+ALWAYS_MATCH_CONTROLS = {
+    "runtime_profile_sha256",
+    "request_settings_sha256",
+    "world_sha256",
+    "catalog_sha256",
+    "tool_implementation_sha256",
+}
+PRIVATE_COMPARE_SCHEMA = "haven.augmentation-eval-private-compare.v1"
+
 RECEIPT_KEYS = {
     "schema", "manifest", "case_id", "family", "controls", "sources",
     "receipt_sha256",
@@ -193,6 +205,16 @@ def _validate_sources(sources: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
     if dispatcher["unblocked_unauthorized"] > dispatcher["unauthorized_attempts"]:
         raise ReceiptError("unblocked_unauthorized exceeds unauthorized_attempts")
     return out
+
+
+def profile_sha256(private_profile: Mapping[str, Any]) -> str:
+    """Hash a private stable runtime/settings/world profile without publishing it."""
+    if not isinstance(private_profile, Mapping) or not private_profile:
+        raise ReceiptError("profile must be a non-empty object")
+    digest = _sha(dict(private_profile))
+    if digest == "0" * 64:
+        raise ReceiptError("invalid profile hash")
+    return digest
 
 
 def make_receipt(
@@ -325,6 +347,127 @@ def report_from_receipts(
     if errors:
         raise ReceiptError("derived public report invalid: " + ",".join(errors))
     return report
+
+
+def compare_private_receipt_sets(
+    a_receipts: Sequence[Mapping[str, Any]],
+    b_receipts: Sequence[Mapping[str, Any]],
+    *,
+    allowed_control_differences: Sequence[str] = (),
+) -> dict[str, Any]:
+    """Preflight matched arms before producing/accepting the public comparison.
+
+    Stable runtime/settings/world/catalog/tool-implementation identities can never be
+    waived. Other control bindings may differ only when the caller explicitly names
+    them as the experiment's intended manipulation.
+    """
+    if not isinstance(allowed_control_differences, Sequence) or isinstance(
+        allowed_control_differences, (str, bytes)
+    ):
+        return {
+            "schema": PRIVATE_COMPARE_SCHEMA,
+            "status": "block",
+            "errors": ["INVALID_ALLOWED_CONTROL_DIFFERENCES"],
+        }
+    allowed = list(allowed_control_differences)
+    if (
+        len(allowed) != len(set(allowed))
+        or any(key not in CONTROL_KEYS for key in allowed)
+        or set(allowed) & ALWAYS_MATCH_CONTROLS
+    ):
+        return {
+            "schema": PRIVATE_COMPARE_SCHEMA,
+            "status": "block",
+            "errors": ["INVALID_ALLOWED_CONTROL_DIFFERENCES"],
+        }
+
+    for label, rows in (("A", a_receipts), ("B", b_receipts)):
+        if not isinstance(rows, Sequence) or isinstance(rows, (str, bytes)) or not rows:
+            return {
+                "schema": PRIVATE_COMPARE_SCHEMA,
+                "status": "block",
+                "errors": [f"{label}:INVALID_RECEIPT_SET"],
+            }
+        for value in rows:
+            errors = validate_receipt(value)
+            if errors:
+                return {
+                    "schema": PRIVATE_COMPARE_SCHEMA,
+                    "status": "block",
+                    "errors": [f"{label}:{error}" for error in errors],
+                }
+
+    a_by_case = {r["case_id"]: r for r in a_receipts}
+    b_by_case = {r["case_id"]: r for r in b_receipts}
+    if len(a_by_case) != len(a_receipts) or len(b_by_case) != len(b_receipts):
+        return {
+            "schema": PRIVATE_COMPARE_SCHEMA,
+            "status": "block",
+            "errors": ["DUPLICATE_CASE_ID"],
+        }
+    if set(a_by_case) != set(b_by_case):
+        return {
+            "schema": PRIVATE_COMPARE_SCHEMA,
+            "status": "block",
+            "errors": ["CASE_SET_MISMATCH"],
+        }
+
+    # Sidecar public match fields must match at the private receipt layer too.
+    first_a = next(iter(a_by_case.values()))
+    first_b = next(iter(b_by_case.values()))
+    public_mismatch = sorted(
+        key for key in augmentation_eval.MATCH_FIELDS
+        if first_a["manifest"].get(key) != first_b["manifest"].get(key)
+    )
+    if public_mismatch:
+        return {
+            "schema": PRIVATE_COMPARE_SCHEMA,
+            "status": "block",
+            "errors": ["MANIFEST_MISMATCH"],
+            "mismatched_fields": public_mismatch,
+        }
+    if first_a["manifest"]["arm"] == first_b["manifest"]["arm"]:
+        return {
+            "schema": PRIVATE_COMPARE_SCHEMA,
+            "status": "block",
+            "errors": ["ARMS_NOT_DISTINCT"],
+        }
+
+    observed = set()
+    disallowed = set()
+    family_mismatch = 0
+    reused_receipts = 0
+    for case_id in sorted(a_by_case):
+        a = a_by_case[case_id]
+        b = b_by_case[case_id]
+        if a["family"] != b["family"]:
+            family_mismatch += 1
+        if a["receipt_sha256"] == b["receipt_sha256"]:
+            reused_receipts += 1
+        for key in CONTROL_KEYS:
+            if a["controls"][key] != b["controls"][key]:
+                observed.add(key)
+                if key not in allowed:
+                    disallowed.add(key)
+
+    errors = []
+    if family_mismatch:
+        errors.append("FAMILY_MISMATCH")
+    if reused_receipts:
+        errors.append("CROSS_ARM_RECEIPT_REUSE")
+    if disallowed:
+        errors.append("CONTROL_BINDING_MISMATCH")
+    return {
+        "schema": PRIVATE_COMPARE_SCHEMA,
+        "status": "block" if errors else "pass",
+        "errors": errors,
+        "cases": len(a_by_case),
+        "allowed_control_differences": sorted(allowed),
+        "observed_control_differences": sorted(observed),
+        "disallowed_control_differences": sorted(disallowed),
+        "family_mismatch_count": family_mismatch,
+        "reused_receipt_count": reused_receipts,
+    }
 
 
 def write_private_receipt(path: Path, receipt: Mapping[str, Any]) -> None:
