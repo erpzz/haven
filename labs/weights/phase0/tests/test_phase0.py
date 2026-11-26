@@ -149,7 +149,7 @@ class Pins(unittest.TestCase):
         with mock.patch.object(common.bench_x, "episode_metrics",
                                return_value={"transport_ok": True, "pass": True, "raw_pass": True}), \
                 mock.patch.object(common.bench, "score_records", return_value=[{"pass": True}]):
-            m = common.judge(record, episode)
+            m = common.judge(record, episode, apply_w1_training_guard=True)
         self.assertTrue(m["raw_pass"])
         self.assertTrue(m["views"]["model_clean"])  # frozen diagnostic view
         self.assertFalse(m["keep"])                 # W1 training-selection veto
