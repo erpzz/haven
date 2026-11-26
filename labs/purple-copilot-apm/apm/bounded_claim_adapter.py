@@ -12,6 +12,9 @@ import re
 from typing import Any
 
 BUNDLE_SCHEMA = "haven.claim-bundle.v1"
+COVERAGE_SCHEMA = "haven.purple-claim-coverage.v1"
+COVERAGE_RECEIPT_SCHEMA = "haven.purple-claim-coverage-receipt.v1"
+MAX_RELEASE_CLAIMS = 64
 TOOLS = {
     "purple_tier_zero_overview",
     "purple_tier_zero_principal",
@@ -233,6 +236,224 @@ def build_bundle(tool: str, result: dict) -> dict:
         "claims": claims,
         "global_limitations": limitations,
     }
+
+
+
+_REQUIRED_METRICS = {
+    "purple_tier_zero_overview": {
+        "principals_with_direct_control",
+        "control_edges",
+        "identities_able_to_reach_tier_zero",
+    },
+    "purple_tier_zero_principal": {
+        "tier_zero_controls_held",
+        "identities_able_to_gain_control",
+        "reachable_from_users",
+        "reachable_from_computers",
+        "reachable_from_workloads",
+        "reachable_from_groups",
+    },
+    "purple_tier_zero_changes": {
+        "change_total_new",
+        "change_total_changed",
+        "change_total_missing",
+    },
+    "purple_tier_zero_search": {
+        "matches_total",
+        "holders_total",
+        "tier_zero_targets_total",
+    },
+}
+
+
+def _bundle_sha256(bundle: dict) -> str:
+    if type(bundle) is not dict or bundle.get("schema") != BUNDLE_SCHEMA:
+        raise ClaimAdapterError("invalid claim bundle")
+    claims = bundle.get("claims")
+    if type(claims) is not list:
+        raise ClaimAdapterError("invalid claim bundle")
+    normalized = {**bundle, "claims": sorted(claims, key=lambda claim: claim.get("id", ""))}
+    return hashlib.sha256(_canon(normalized)).hexdigest()
+
+
+def _required_claim_ids(bundle: dict) -> list[str]:
+    scope = bundle.get("scope")
+    claims = bundle.get("claims")
+    if type(scope) is not dict or type(claims) is not list:
+        raise ClaimAdapterError("invalid claim bundle")
+    tool = scope.get("tool")
+    required_metrics = _REQUIRED_METRICS.get(tool)
+    if required_metrics is None:
+        raise ClaimAdapterError("unsupported Purple tool in claim bundle")
+
+    found: dict[str, str] = {}
+    for claim in claims:
+        if type(claim) is not dict or not _text(claim.get("id"), 256):
+            raise ClaimAdapterError("invalid claim in bundle")
+        payload = claim.get("payload")
+        if type(payload) is not dict or payload.get("claim_type") != "count":
+            continue
+        metric = payload.get("metric")
+        # Overview/principal can contain additional subject-specific counts. Required
+        # metrics are identified by exact metric name; build_bundle guarantees one
+        # canonical claim for each required metric in these host result shapes.
+        if metric in required_metrics:
+            if metric in found:
+                raise ClaimAdapterError("duplicate required coverage metric")
+            found[metric] = claim["id"]
+
+    missing = required_metrics - set(found)
+    if missing:
+        raise ClaimAdapterError(
+            "missing required coverage metric: " + ",".join(sorted(missing))
+        )
+    return sorted(found.values())
+
+
+def coverage_policy(bundle: dict) -> dict:
+    """Build deterministic host coverage policy for one Purple claim bundle.
+
+    Summary/count claims are mandatory. Detailed edges/holders remain model-selectable.
+    This prevents a model from hiding the high-level result by choosing only favorable
+    detail claims while preserving bounded optional detail selection.
+    """
+    bundle_hash = _bundle_sha256(bundle)
+    scope = bundle.get("scope")
+    claims = bundle.get("claims")
+    if type(scope) is not dict or type(claims) is not list:
+        raise ClaimAdapterError("invalid claim bundle")
+    tool = scope.get("tool")
+    if tool not in TOOLS:
+        raise ClaimAdapterError("unsupported Purple tool in claim bundle")
+
+    allowed_ids = []
+    for claim in claims:
+        if type(claim) is not dict:
+            raise ClaimAdapterError("invalid claim in bundle")
+        cid = claim.get("id")
+        if type(cid) is not str or TOKEN.fullmatch(cid) is None:
+            raise ClaimAdapterError("invalid claim id in bundle")
+        allowed_ids.append(cid)
+    if len(allowed_ids) != len(set(allowed_ids)):
+        raise ClaimAdapterError("duplicate claim id in bundle")
+
+    required_ids = _required_claim_ids(bundle)
+    max_claims = min(MAX_RELEASE_CLAIMS, len(allowed_ids))
+    if len(required_ids) > max_claims:
+        raise ClaimAdapterError("required claims exceed release budget")
+
+    body = {
+        "schema": COVERAGE_SCHEMA,
+        "bundle_sha256": bundle_hash,
+        "tool": tool,
+        "allowed_ids": sorted(allowed_ids),
+        "required_ids": required_ids,
+        "max_claims": max_claims,
+    }
+    body["policy_sha256"] = hashlib.sha256(_canon(body)).hexdigest()
+    return body
+
+
+def validate_coverage_policy(bundle: dict, policy: dict) -> list[str]:
+    if type(policy) is not dict or set(policy) != {
+        "schema", "bundle_sha256", "tool", "allowed_ids",
+        "required_ids", "max_claims", "policy_sha256",
+    }:
+        return ["INVALID_COVERAGE_POLICY_SHAPE"]
+    try:
+        expected = coverage_policy(bundle)
+    except ClaimAdapterError:
+        return ["INVALID_CLAIM_BUNDLE"]
+    errors = []
+    if policy.get("schema") != COVERAGE_SCHEMA:
+        errors.append("INVALID_COVERAGE_POLICY_SCHEMA")
+    if policy.get("bundle_sha256") != expected["bundle_sha256"]:
+        errors.append("COVERAGE_BUNDLE_MISMATCH")
+    if policy.get("tool") != expected["tool"]:
+        errors.append("COVERAGE_TOOL_MISMATCH")
+    if policy.get("allowed_ids") != expected["allowed_ids"]:
+        errors.append("COVERAGE_ALLOWED_IDS_MISMATCH")
+    if policy.get("required_ids") != expected["required_ids"]:
+        errors.append("COVERAGE_REQUIRED_IDS_MISMATCH")
+    if policy.get("max_claims") != expected["max_claims"]:
+        errors.append("COVERAGE_BUDGET_MISMATCH")
+    if policy.get("policy_sha256") != expected["policy_sha256"]:
+        errors.append("COVERAGE_POLICY_HASH_MISMATCH")
+    return sorted(set(errors))
+
+
+def release_with_coverage(bundle: dict, candidate_raw: str, policy: dict, release_fn):
+    """Apply the deterministic coverage policy through the generic bounded releaser.
+
+    release_fn is injected so this Purple package does not grow a second copy of the
+    generic small-model bounded-claims implementation.
+    """
+    errors = validate_coverage_policy(bundle, policy)
+    if errors:
+        blocked = {"schema": "haven.claim-release.v1", "released": False, "errors": errors}
+        receipt = _coverage_receipt(policy, candidate_raw, blocked, [])
+        return blocked, receipt
+    if not callable(release_fn):
+        raise ClaimAdapterError("release function is not callable")
+
+    released = release_fn(
+        bundle,
+        candidate_raw,
+        allowed_ids=policy["allowed_ids"],
+        required_ids=policy["required_ids"],
+        max_claims=policy["max_claims"],
+        expected_bundle_sha256=policy["bundle_sha256"],
+    )
+    if type(released) is not dict or type(released.get("released")) is not bool:
+        raise ClaimAdapterError("invalid bounded release result")
+
+    selected_ids = []
+    if released["released"]:
+        claims = released.get("claims")
+        if type(claims) is not list:
+            raise ClaimAdapterError("successful release omitted claims")
+        for claim in claims:
+            if type(claim) is not dict:
+                raise ClaimAdapterError("invalid released claim")
+            cid = claim.get("id")
+            if type(cid) is not str or cid not in policy["allowed_ids"]:
+                raise ClaimAdapterError("released claim outside coverage policy")
+            selected_ids.append(cid)
+        selected_ids = sorted(selected_ids)
+        if not set(policy["required_ids"]) <= set(selected_ids):
+            raise ClaimAdapterError("generic release violated required coverage")
+        if len(selected_ids) > policy["max_claims"]:
+            raise ClaimAdapterError("generic release violated claim budget")
+
+    receipt = _coverage_receipt(policy, candidate_raw, released, selected_ids)
+    return released, receipt
+
+
+def _coverage_receipt(
+    policy: dict, candidate_raw: str, released: dict, selected_ids: list[str]
+) -> dict:
+    if type(candidate_raw) is not str:
+        raise ClaimAdapterError("candidate must be text")
+    if type(policy) is not dict:
+        raise ClaimAdapterError("coverage policy must be an object")
+    if type(released) is not dict:
+        raise ClaimAdapterError("release must be an object")
+    release_errors = released.get("errors")
+    if type(release_errors) is not list or not all(type(x) is str for x in release_errors):
+        raise ClaimAdapterError("invalid release errors")
+    body = {
+        "schema": COVERAGE_RECEIPT_SCHEMA,
+        "status": "pass" if released.get("released") is True else "block",
+        "policy_sha256": policy.get("policy_sha256"),
+        "bundle_sha256": policy.get("bundle_sha256"),
+        "candidate_sha256": hashlib.sha256(candidate_raw.encode("utf-8")).hexdigest(),
+        "release_sha256": hashlib.sha256(_canon(released)).hexdigest(),
+        "required_ids": list(policy.get("required_ids", [])),
+        "selected_ids": list(selected_ids),
+        "errors": list(release_errors),
+    }
+    body["receipt_sha256"] = hashlib.sha256(_canon(body)).hexdigest()
+    return body
 
 
 _COUNT_TEXT = {
