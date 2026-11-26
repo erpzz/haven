@@ -299,6 +299,7 @@ def run_preflight(*, hermes: Path, hermes_home: Path, hermes_sha256: str,
             "HAVEN_SCOPE_POLICY_FILE": str(scope_policy),
             "HAVEN_MCP_SCOPE_POLICY_FILE": str(mcp_policy),
             "HAVEN_MCP_SCOPE_REQUIRED": "1",
+            "HERMES_ENABLE_PROJECT_PLUGINS": "0",
         })
         listed = _run(
             [str(hermes), "plugins", "list", "--enabled", "--user", "--json"],
