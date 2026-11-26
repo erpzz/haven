@@ -65,6 +65,13 @@ class ToolContextTests(unittest.TestCase):
         self.assertEqual(r["selected"], ["haven_status"])
         self.assertNotIn("skill_scan", r["selected"])
 
+    def test_empty_authorized_surface_is_valid_and_stays_empty(self):
+        r = t.route(cards(), "status", authorized=[])
+        self.assertEqual(r["status"], "pass")
+        self.assertEqual(r["selected"], [])
+        self.assertEqual(r["authorized_count"], 0)
+        self.assertEqual(r["schema_bytes"], 2)
+
     def test_cannot_add_unauthorized_tool(self):
         r = t.route(cards(), "jobs", authorized=["haven_status"])
         self.assertEqual(r["selected"], [])
