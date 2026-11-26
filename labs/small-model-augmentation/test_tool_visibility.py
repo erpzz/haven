@@ -25,6 +25,7 @@ tools=[{"type":"function","function":{"name":"mcp_haven_status","description":"x
        {"type":"function","function":{"name":"mcp_haven_cyber_assess","description":"x","parameters":{"type":"object"}}}]
 if mode == "missing": tools=tools[:1]
 if mode == "modern": tools=[{"type":"function","function":{"name":"mcp__red_factory__read_fixture","description":"x","parameters":{"type":"object"}}}]
+if mode == "zero": tools=[]
 if mode == "bridge": tools=[{"type":"function","function":{"name":"tool_search","description":"x","parameters":{"type":"object"}}}]
 if mode == "cyber-only": tools=tools[1:]
 if mode == "duplicate": tools=tools+tools[:1]
@@ -117,10 +118,36 @@ class VisibilityTests(unittest.TestCase):
             str(self.hermes), self.tmp.name, "mcp-haven",
             ["mcp_haven_"], expected_surface_sha256="not-a-hash"
         )
+        bad_count = tool_visibility.run_probe(
+            str(self.hermes), self.tmp.name, "mcp-haven",
+            ["mcp_haven_"], expected_tool_count=-1
+        )
         self.assertEqual(bad_name["errors"], ["INVALID_EXPECTED_TOOL_NAME"])
         self.assertEqual(bad_hash["errors"], ["INVALID_EXPECTED_SURFACE_HASH"])
+        self.assertEqual(bad_count["errors"], ["INVALID_EXPECTED_TOOL_COUNT"])
         self.assertFalse(bad_name["actual_hermes_executed"])
         self.assertFalse(bad_hash["actual_hermes_executed"])
+        self.assertFalse(bad_count["actual_hermes_executed"])
+
+    def test_zero_tool_surface_is_a_valid_exact_capture(self):
+        env = dict(os.environ, FAKE_MODE="zero")
+        r = tool_visibility.run_probe(
+            str(self.hermes), self.tmp.name, "mcp-red-factory", [],
+            env=env, timeout=5, expected_names=[], expected_tool_count=0,
+        )
+        self.assertEqual(r["status"], "pass", r)
+        self.assertEqual(r["tool_count"], 0)
+        self.assertEqual(r["tool_names"], [])
+        self.assertRegex(r["tool_surface_sha256"], r"^[0-9a-f]{64}$")
+        self.assertEqual(r["required_prefix_counts"], {})
+
+    def test_expected_tool_count_mismatch_blocks(self):
+        env = dict(os.environ, FAKE_MODE="zero")
+        r = tool_visibility.run_probe(
+            str(self.hermes), self.tmp.name, "mcp-red-factory", [],
+            env=env, timeout=5, expected_tool_count=1,
+        )
+        self.assertIn("TOOL_COUNT_MISMATCH", r["errors"])
 
     def test_current_hermes_double_underscore_mcp_name_is_attested(self):
         r = self.probe(
