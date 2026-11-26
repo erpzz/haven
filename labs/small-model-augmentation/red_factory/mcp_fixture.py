@@ -22,6 +22,7 @@ from typing import Any, Mapping
 FIXTURE_SCHEMA = "haven-local-red-factory-mcp-fixture-v1"
 LOG_SCHEMA = "haven-local-red-factory-mcp-call-v1"
 DENIAL_SCHEMA = "haven-local-red-factory-mcp-denial-v1"
+GUARD_SCHEMA = "haven-local-red-factory-mcp-guard-v1"
 MAX_LINE_BYTES = 1024 * 1024
 _CASE_RE = re.compile(r"^hrf_[0-9a-f]{32}$")
 
@@ -70,6 +71,31 @@ def _denial(log_path: Path | None, fixture: Mapping[str, Any],
             "isError": True,
         },
     )
+
+
+def _write_guard_receipt(
+    path: Path,
+    fixture: Mapping[str, Any],
+    scope_gate,
+) -> dict[str, Any]:
+    body = {
+        "schema": GUARD_SCHEMA,
+        "case_id": fixture["case_id"],
+        "fixture_sha256": fixture["fixture_sha256"],
+        "policy_sha256": scope_gate.policy_sha256,
+        "allowed_tools": sorted(scope_gate.allowed_tools),
+    }
+    event = {**body, "guard_sha256": _sha256(body)}
+    if path.exists() or path.is_symlink():
+        raise ValueError("guard receipt path already exists")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    raw = _canon(event) + b"\n"
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, "wb") as writer:
+        writer.write(raw)
+        writer.flush()
+        os.fsync(writer.fileno())
+    return event
 
 
 def fixture_for_case(case) -> dict[str, Any]:
@@ -273,9 +299,14 @@ def serve_stdio(
     log_path: Path,
     *,
     denial_log_path: Path | None = None,
+    guard_log_path: Path | None = None,
     scope_gate=None,
 ) -> int:
     fixture = load_fixture(fixture_path)
+    if scope_gate is not None:
+        if guard_log_path is None:
+            raise ValueError("guard receipt path required")
+        _write_guard_receipt(guard_log_path, fixture, scope_gate)
     while True:
         raw = sys.stdin.buffer.readline(MAX_LINE_BYTES + 1)
         if not raw:
@@ -302,16 +333,18 @@ def main() -> int:
     fixture = os.environ.get("HRF_FIXTURE_FILE")
     log = os.environ.get("HRF_MCP_LOG")
     denial_log = os.environ.get("HRF_MCP_DENIAL_LOG")
+    guard_log = os.environ.get("HRF_MCP_GUARD_LOG")
     if not fixture or not log:
         return 2
     try:
         scope_gate = _scope_gate_from_env()
-        if scope_gate is not None and not denial_log:
+        if scope_gate is not None and (not denial_log or not guard_log):
             return 2
         return serve_stdio(
             Path(fixture),
             Path(log),
             denial_log_path=Path(denial_log) if denial_log else None,
+            guard_log_path=Path(guard_log) if guard_log else None,
             scope_gate=scope_gate,
         )
     except (OSError, ValueError, json.JSONDecodeError):
