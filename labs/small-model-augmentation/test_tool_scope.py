@@ -20,6 +20,47 @@ class ScopeTests(unittest.TestCase):
         self.assertIn("VISIBLE_TOOL_EXTRA",s.bind_surface(p,p["allowed_tools"]+["terminal"])["errors"])
         self.assertIn("VISIBLE_TOOL_MISSING",s.bind_surface(p,["mcp_haven_status"])["errors"])
 
+    def test_zero_tool_surface_is_valid_and_fail_closed(self):
+        p={
+          "schema":s.SCHEMA,
+          "allowed_tools":[],
+          "max_calls":0,
+          "per_tool_max":{},
+          "unique_calls":True,
+          "argument_rules":{},
+        }
+        self.assertEqual(s.validate_policy(p), [])
+        self.assertEqual(s.bind_surface(p,[]), {
+          "schema":"haven.tool-scope-receipt.v1",
+          "status":"pass",
+          "errors":[],
+          "calls_allowed":0,
+          "visible_tool_count":0,
+          "policy_tool_count":0,
+        })
+        extra=s.bind_surface(p,["write_canary"])
+        self.assertEqual(extra["status"],"block")
+        self.assertIn("VISIBLE_TOOL_EXTRA",extra["errors"])
+        st=s.State()
+        denied=s.check_call(p,st,"write_canary",{"object":"alpha-0001"})
+        self.assertEqual(denied["status"],"block")
+        self.assertIn("TOOL_NOT_ALLOWED",denied["errors"])
+        self.assertEqual(st.total,0)
+        self.assertEqual(s.evaluate(p,[],[])["status"],"pass")
+
+    def test_zero_tool_surface_requires_zero_budget(self):
+        p={
+          "schema":s.SCHEMA,
+          "allowed_tools":[],
+          "max_calls":1,
+          "per_tool_max":{},
+          "unique_calls":True,
+          "argument_rules":{},
+        }
+        self.assertIn("INVALID_MAX_CALLS",s.validate_policy(p))
+        q=policy(); q["max_calls"]=0
+        self.assertIn("INVALID_MAX_CALLS",s.validate_policy(q))
+
     def test_duplicate_visible(self):
         self.assertIn("DUPLICATE_VISIBLE_TOOL",s.bind_surface(policy(),["mcp_haven_status"]*2)["errors"])
 
