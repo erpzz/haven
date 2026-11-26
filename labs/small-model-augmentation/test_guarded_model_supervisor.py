@@ -164,6 +164,40 @@ class GuardedModelSupervisorTests(unittest.TestCase):
         self.assertTrue(receipt["owned_llama_started"])
         self.assertTrue(self.marker.exists())
 
+    def test_same_host_environment_reaches_preflight_and_owned_child(self):
+        child_env = dict(os.environ)
+        child_env["SUPERVISOR_MARKER"] = str(self.marker)
+        child_env["SAME_ENV_SENTINEL"] = "bound"
+        seen = {}
+
+        def capture(**kwargs):
+            seen["env"] = kwargs.get("env")
+            return self.preflight_receipt
+
+        with mock.patch.object(
+            supervisor.plugin_preflight, "run_preflight", side_effect=capture
+        ):
+            receipt, rc = supervisor.run_supervisor(
+                plugin_args=self.plugin_args,
+                owned_llama=self.owned,
+                owned_llama_sha256=sha(self.owned),
+                observe_llama_sha256=sha(self.observe),
+                model_preflight_sha256=sha(self.model_preflight),
+                server=self.server,
+                server_sha256="1" * 64,
+                model=self.model,
+                model_sha256="2" * 64,
+                alias="qwythos-4b",
+                port=38080,
+                context=65536,
+                guarded_command=["fake-hermes-runner"],
+                env=child_env,
+            )
+        self.assertEqual(receipt["status"], "pass", receipt)
+        self.assertEqual(rc, 0)
+        self.assertEqual(seen["env"]["SAME_ENV_SENTINEL"], "bound")
+        self.assertTrue(self.marker.exists())
+
     def test_required_guard_environment_is_forced_into_child(self):
         env = {
             "HERMES_HOME": "/wrong",
