@@ -252,6 +252,25 @@ class MacCaseQualificationTests(unittest.TestCase):
                 "no_evidence", 9, supervisor_preflight_hash="0" * 64
             )
 
+    def test_hermes_interpreter_hash_mismatch_blocks(self):
+        enrollment = json.loads(self.enrollment.read_text())
+        enrollment["hermes_python_sha256"] = "0" * 64
+        with self.assertRaisesRegex(
+            mac.QualificationError, "HERMES_INTERPRETER_HASH_MISMATCH"
+        ):
+            mac._hermes_interpreter(self.hermes, enrollment)
+
+    def test_env_style_hermes_shebang_is_not_accepted_for_attestation(self):
+        self.hermes.write_text(
+            "#!/usr/bin/env python3\n" + FAKE_HERMES_BODY
+        )
+        self.hermes.chmod(0o700)
+        enrollment = json.loads(self.enrollment.read_text())
+        with self.assertRaisesRegex(
+            mac.QualificationError, "HERMES_INTERPRETER_NOT_ABSOLUTE"
+        ):
+            mac._hermes_interpreter(self.hermes, enrollment)
+
     def test_profile_config_or_env_drift_blocks_before_discovery(self):
         for target, code in (
             (self.profile_config, "HERMES_CONFIG_HASH_MISMATCH"),
