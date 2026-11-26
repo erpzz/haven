@@ -157,6 +157,14 @@ class LocalRunnerTests(unittest.TestCase):
         self.assertEqual(len(result["output_sha256"]), 64)
         self.assertEqual(len(result["result_sha256"]), 64)
 
+    def test_oversized_loopback_response_becomes_failed_receipt(self):
+        case = make_case("no_evidence", 10)
+        ScriptedHandler.responses.append("x" * (1024 * 1024 + 100))
+        result = run_case(base_url=self.base_url, model="local-4b", case=case)
+        self.assertFalse(result["score"]["pass"])
+        self.assertIn("invalid_model_result", result["score"]["violations"])
+        self.assertIn("byte budget", result["error"])
+
     def test_optional_api_key_is_sent_but_not_persisted_in_result(self):
         case = make_case("no_evidence", 7)
         ScriptedHandler.responses.append(self.response_for(case))
