@@ -41,6 +41,60 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(len(lines), 5)
         self.assertTrue(all("input_sha256" in x and "snapshot_path" not in json.dumps(x) for x in lines))
 
+    def test_falsey_nonobjects_are_not_normalized_to_empty_arguments(self):
+        for args in ([], "", 0, False):
+            out = self.reg.invoke("entra.ca.assess", args)
+            self.assertEqual(out["error"]["code"], "invalid_input", repr(args))
+
+    def test_recursive_nested_schema_validation(self):
+        r = Registry(None)
+        schema = {
+            "type": "object",
+            "properties": {
+                "nested": {
+                    "type": "object",
+                    "properties": {
+                        "count": {"type": "integer", "minimum": 0, "maximum": 5},
+                        "names": {"type": "array", "items": {"type": "string"},
+                                  "minItems": 1, "maxItems": 3},
+                    },
+                    "required": ["count", "names"],
+                    "additionalProperties": False,
+                }
+            },
+            "required": ["nested"],
+            "additionalProperties": False,
+        }
+        r.register(ToolSpec("x.nested", "n", schema, {}, lambda nested: nested))
+        self.assertTrue(r.invoke("x.nested", {"nested": {"count": 2, "names": ["a"]}})["ok"])
+        bad = [
+            {"nested": {"count": True, "names": ["a"]}},
+            {"nested": {"count": 2, "names": [1]}},
+            {"nested": {"count": 2, "names": []}},
+            {"nested": {"count": 6, "names": ["a"]}},
+            {"nested": {"count": 2, "names": ["a"], "extra": 1}},
+            {"nested": {"count": 2}},
+        ]
+        for args in bad:
+            self.assertEqual(r.invoke("x.nested", args)["error"]["code"], "invalid_input", repr(args))
+
+        number_schema = {"type": "object", "properties": {"x": {"type": "number"}},
+                         "required": ["x"], "additionalProperties": False}
+        r.register(ToolSpec("x.number", "n", number_schema, {}, lambda x: x))
+        for value in (True, float("nan"), float("inf"), float("-inf")):
+            self.assertEqual(r.invoke("x.number", {"x": value})["error"]["code"],
+                             "invalid_input", repr(value))
+
+    def test_graph_emergency_account_items_are_typed_before_execution(self):
+        spec = self.reg.tools["entra.graph.collect"]
+        original = spec.prerequisites
+        spec.prerequisites = lambda: (True, "ok")
+        try:
+            out = self.reg.invoke("entra.graph.collect", {"emergency_account_ids": [True]})
+            self.assertEqual(out["error"]["code"], "invalid_input")
+        finally:
+            spec.prerequisites = original
+
     def test_live_tool_gated(self):
         with mock.patch.dict(os.environ, {"HAVEN_CYBER_ALLOW_LIVE": "", "HAVEN_GRAPH_TOKEN": ""}):
             self.assertEqual(self.reg.invoke("entra.graph.collect", {"emergency_account_ids": []})["error"]["code"], "prerequisite_failed")
