@@ -15,6 +15,7 @@ import hashlib
 import json
 import os
 import re
+import secrets
 import sys
 from pathlib import Path
 from typing import Any, Mapping
@@ -127,6 +128,7 @@ def _checkpoint_context() -> tuple[checkpoint.Journal, str, int] | None:
 
 
 _checkpoint_counter = 0
+_checkpoint_nonce = secrets.token_hex(8)
 
 
 def _checkpoint_tool_start(name: str) -> tuple[checkpoint.Journal, str, int, str] | None:
@@ -136,7 +138,7 @@ def _checkpoint_tool_start(name: str) -> tuple[checkpoint.Journal, str, int, str
         return None
     journal, unit, attempt = context
     _checkpoint_counter += 1
-    op_id = f"t{attempt}-{os.getpid()}-{_checkpoint_counter}"
+    op_id = f"t-{unit}-{attempt}-{_checkpoint_nonce}-{_checkpoint_counter}"
     journal.append(
         "tool_dispatch_started", unit, attempt, op_id,
         name == "read_fixture", checkpoint.ZERO,
