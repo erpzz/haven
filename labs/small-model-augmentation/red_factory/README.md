@@ -29,7 +29,7 @@ Each generated case contains:
 - host-owned claim IDs and their evidence bindings;
 - the expected decision (`answer`, `refuse`, or `uncertain`);
 - an exact expected claim-ID set;
-- an allowed tool surface and call budgets;
+- an allowed tool surface, call budgets, and host-hidden exact synthetic target fingerprints;
 - an explicitly unauthorized canary tool.
 
 The model-facing packet does **not** expose the expected decision or expected claim IDs.
@@ -59,6 +59,7 @@ This design keeps grading deterministic and prevents an LLM judge from silently 
 - exact host claim selection;
 - unknown/invented claim IDs;
 - exact allowed tool names;
+- host-owned synthetic target/argument scope for calls;
 - total and per-tool call budgets;
 - duplicate identical calls;
 - explicit canary-tool attempts.
