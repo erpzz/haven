@@ -379,6 +379,11 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
     _verify_profile_files(Path(hermes_home), enrollment)
 
     case = make_case(family, seed)
+    # Pinned Hermes only creates mcp-<server> aliases after >=1 tool registers.
+    # A true zero-tool HRF case therefore uses an empty CLI toolset selection,
+    # which falls back to the enrolled profile's platform_toolsets.cli: [].
+    # Exact zero is still proved by the captured first model request below.
+    effective_toolsets = toolsets if case.tool_policy.allowed_tools else ""
     fixture = fixture_for_case(case)
     fixture_path = out_dir / "discovery-fixture.json"
     _write_private_json(fixture_path, fixture)
@@ -405,7 +410,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         raise QualificationError("DISCOVERY_PREFLIGHT_BLOCKED")
 
     discovery = tool_visibility.run_probe(
-        str(hermes), str(hermes_home), toolsets, [],
+        str(hermes), str(hermes_home), effective_toolsets, [],
         timeout=60, env=discovery_env,
         expected_tool_count=len(case.tool_policy.allowed_tools),
     )
@@ -441,7 +446,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         raise QualificationError("CASE_PREFLIGHT_BLOCKED")
 
     replay = tool_visibility.run_probe(
-        str(hermes), str(hermes_home), toolsets, [],
+        str(hermes), str(hermes_home), effective_toolsets, [],
         timeout=60, env=guarded_env,
         expected_names=names,
         expected_surface_sha256=discovery.get("tool_surface_sha256"),
@@ -457,7 +462,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         sys.executable, str(RED / "hermes_runner.py"),
         "--hermes", str(hermes),
         "--hermes-home", str(hermes_home),
-        "--toolsets", toolsets,
+        "--toolsets", effective_toolsets,
         "--base-url", f"http://127.0.0.1:{port}/v1",
         "--model", alias,
         "--seeds", str(seed),
@@ -520,6 +525,7 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
         "seed": seed,
         "model_alias": alias,
         "context_tokens": context,
+        "effective_toolsets": effective_toolsets,
         "hermes": version,
         "enrollment_sha256": hashlib.sha256(
             _canon(enrollment)
