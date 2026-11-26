@@ -269,6 +269,27 @@ enrolled `config.yaml` itself to ensure the Red MCP server is a fixed local stdi
 for this checkout's `mcp_fixture.py`; do not use a shell wrapper, remote URL, workspace
 substitution, or environment-expanded command path for this qualification profile.
 
+### Preparing enrollment candidates
+
+To avoid hand-calculating the enrollment hashes, the branch includes
+`mac_enrollment_candidate.py`:
+
+```bash
+python3 labs/small-model-augmentation/red_factory/mac_enrollment_candidate.py \
+  --hermes "$HERMES" \
+  --hermes-home "$HOME/.local/state/haven-red-hermes" \
+  --out "$HOME/.local/state/haven-red-factory/enrollment-candidate.json"
+```
+
+That file is deliberately **not** an accepted enrollment. Its schema is
+`haven.mac-red-case-enrollment-candidate.v1`, its status is `unreviewed`,
+and the qualification runner rejects the wrapper by schema. It contains a nested
+candidate object plus source/path metadata to review. Review the checkout/profile,
+the pinned Hermes package provenance, MCP command and hashes first; only then create
+the owner-private `haven.mac-red-case-enrollment.v1` file used by the run. This
+separation is intentional: measuring the local bytes is not the same thing as
+establishing that they are the approved bytes.
+
 Example shape:
 
 ```bash
