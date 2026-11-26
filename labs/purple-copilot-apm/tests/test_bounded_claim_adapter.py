@@ -583,6 +583,21 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
         self.assertIn("candidate_raw", policy["user_hidden_fields"])
         self.assertIn("host_rendered_claim_text", policy["user_surface"])
 
+    def test_bounded_claims_are_not_silently_activated_in_runtime(self):
+        apm_dir = _LAB / "apm"
+        consumers = []
+        for path in sorted(apm_dir.glob("*.py")):
+            if path.name == "bounded_claim_adapter.py":
+                continue
+            text = path.read_text(encoding="utf-8")
+            if "bounded_claim_adapter" in text or "bounded_claims" in text:
+                consumers.append(path.name)
+        self.assertEqual(
+            consumers,
+            [],
+            "bounded claims must remain opt-in until a separately reviewed activation PR",
+        )
+
     def test_host_field_mutations_change_bundle_hash(self):
         original = self.result(
             "purple_tier_zero_principal",
