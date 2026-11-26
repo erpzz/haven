@@ -72,7 +72,7 @@ def _post_tool_call(tool_name=None, result=None, session_id=None, **kwargs):
 def _transform_llm_output(response_text=None, session_id=None, turn_id=None, model=None, **kwargs):
     turn = _turn(session_id)
     problems = VERIFIER.problems(turn, response_text or "")
-    if turn.results or turn.blocked:
+    if turn.results or turn.blocked or problems:
         review.receipt({"at": time.time(), "session": session_id, "turn": turn_id, "model": model,
                         "question": turn.question, "calls": [{"tool": n, "args": json.loads(a)} for n, a in turn.calls],
                         "blocked": turn.blocked, "problems": problems, "replaced": bool(problems),
