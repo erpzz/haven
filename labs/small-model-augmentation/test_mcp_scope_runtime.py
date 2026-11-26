@@ -157,8 +157,9 @@ class FinalDispatcherScopeTests(unittest.TestCase):
         reg = FakeRegistry([])
         gate = self.gate(cyber_policy())
         wrong = {"snapshot_path": "/etc/hosts"}
-        with self.assertRaisesRegex(Exception, "scope_denied"):
+        with self.assertRaises(cyber_mcp.ToolError) as caught:
             cyber_mcp._dispatch_cyber_call(reg, gate, "entra.ca.assess", wrong)
+        self.assertEqual(caught.exception.code, "scope_denied")
         self.assertEqual(reg.calls, [])
 
         good = {"snapshot_path": "fixtures/tenants/contoso-weak.json"}
@@ -171,8 +172,9 @@ class FinalDispatcherScopeTests(unittest.TestCase):
         reg = FakeRegistry([])
         gate = self.gate(cyber_policy())
         good = {"snapshot_path": "fixtures/tenants/contoso-weak.json"}
-        with self.assertRaisesRegex(Exception, "scope_denied"):
+        with self.assertRaises(cyber_mcp.ToolError) as caught:
             cyber_mcp._dispatch_cyber_call(reg, gate, "findings.lookup", good)
+        self.assertEqual(caught.exception.code, "scope_denied")
         self.assertEqual(reg.calls, [])
 
     def test_cyber_duplicate_final_dispatch_blocks(self):
@@ -180,8 +182,9 @@ class FinalDispatcherScopeTests(unittest.TestCase):
         gate = self.gate(cyber_policy())
         good = {"snapshot_path": "fixtures/tenants/contoso-weak.json"}
         cyber_mcp._dispatch_cyber_call(reg, gate, "entra.ca.assess", good)
-        with self.assertRaisesRegex(Exception, "scope_denied"):
+        with self.assertRaises(cyber_mcp.ToolError) as caught:
             cyber_mcp._dispatch_cyber_call(reg, gate, "entra.ca.assess", good)
+        self.assertEqual(caught.exception.code, "scope_denied")
         self.assertEqual(len(reg.calls), 1)
 
     def test_required_guarded_mode_refuses_missing_policy(self):
