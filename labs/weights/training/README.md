@@ -60,7 +60,9 @@ The trainer class refuses any configuration where:
 
 It also disables Trainer's inferred item/token denominator because the returned scalar is already the frozen episode objective.
 
-Gradient accumulation is therefore accumulation over equal-weight **episodes**, not over arbitrary rows. Under DDP, each rank still contributes one episode scalar per microstep and the ordinary DDP average preserves equal episode weighting.
+Gradient accumulation is therefore accumulation over equal-weight **episodes**, not over arbitrary rows.
+
+The adapter also refuses schedules that would make epoch accounting ambiguous: max_steps truncation, fractional epochs, or an episode count not divisible by world_size × gradient_accumulation_steps. With complete groups, DistributedSampler does not need padding and every accumulation group contains the same number of episode scalars. DDP/accumulation therefore apply only a common batch-average factor to every episode.
 
 ## Why not patch row weights onto the legacy trainers?
 
@@ -82,7 +84,8 @@ test_episode_weighting.py verifies, without torch, transformers, or model loadin
 - different trace losses reduce as the equal-weight trace objective;
 - mixed episodes, zero target counts and malformed causal rows fail closed;
 - row weights are derived after tokenization;
-- the Trainer adapter requires one episode per device batch and preserves its own loss normalization.
+- the Trainer adapter requires one episode per device batch and preserves its own loss normalization;
+- uneven DDP/gradient-accumulation schedules, max-steps truncation, and fractional epochs fail closed.
 
 ## Gate semantics
 
