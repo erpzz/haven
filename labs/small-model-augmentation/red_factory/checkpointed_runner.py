@@ -81,6 +81,23 @@ def _case_path(results_dir: Path, case_id: str, attempt: int) -> Path:
     return results_dir / f"result-{case_id}-a{attempt}.json"
 
 
+def _validate_case_result(
+    value: Mapping[str, Any], *, case_id: str, expected_sha256: str | None = None
+) -> dict[str, Any]:
+    if not isinstance(value, Mapping) or value.get("case_id") != case_id:
+        raise ValueError("case receipt identity mismatch")
+    normalized = dict(value)
+    claimed = normalized.get("result_sha256")
+    if not isinstance(claimed, str) or not re.fullmatch(r"[0-9a-f]{64}", claimed):
+        raise ValueError("case receipt missing hash")
+    body = {k: v for k, v in normalized.items() if k != "result_sha256"}
+    if _sha256(body) != claimed:
+        raise ValueError("case receipt hash mismatch")
+    if expected_sha256 is not None and claimed != expected_sha256:
+        raise ValueError("case receipt committed hash mismatch")
+    return normalized
+
+
 def _read_case_result(path: Path, *, expected_sha256: str, case_id: str) -> dict[str, Any]:
     path = Path(path)
     if path.is_symlink() or not path.is_file() or path.stat().st_size > MAX_RESULT_BYTES:
@@ -89,14 +106,9 @@ def _read_case_result(path: Path, *, expected_sha256: str, case_id: str) -> dict
         value = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise ValueError("invalid completed-case receipt") from exc
-    if not isinstance(value, dict) or value.get("case_id") != case_id:
-        raise ValueError("completed-case receipt identity mismatch")
-    claimed = value.get("result_sha256")
-    if not isinstance(claimed, str) or not re.fullmatch(r"[0-9a-f]{64}", claimed):
-        raise ValueError("completed-case receipt missing hash")
-    body = {k: v for k, v in value.items() if k != "result_sha256"}
-    if _sha256(body) != claimed or claimed != expected_sha256:
-        raise ValueError("completed-case receipt hash mismatch")
+    value = _validate_case_result(
+        value, case_id=case_id, expected_sha256=expected_sha256
+    )
     if value.get("status") != "pass":
         raise ValueError("completed-case receipt was not a passing result")
     return value
@@ -304,7 +316,9 @@ def run_checkpointed_suite(
                     error="CASE_RUNNER_EXCEPTION",
                 )
 
-            if not isinstance(result, dict) or not isinstance(result.get("result_sha256"), str):
+            try:
+                result = _validate_case_result(result, case_id=case.case_id)
+            except (TypeError, ValueError):
                 plan = j.state(max_attempts=max_attempts)
                 ordered = [results_by_id[c.case_id] for c in cases if c.case_id in results_by_id]
                 return _result_body(
