@@ -325,6 +325,7 @@ class HermesRunnerTests(unittest.TestCase):
         self.assertEqual(result["first_visible_tool_count"], 1)
         self.assertEqual(set(result["fixture_tool_names"]), {"read_fixture"})
         self.assertEqual(result["actual_fixture_calls"], [])
+        self.assertRegex(result["first_tool_surface_sha256"], r"^[0-9a-f]{64}$")
         self.assertEqual(len(result["result_sha256"]), 64)
 
     def test_zero_tool_case_accepts_empty_cli_toolset_selection(self):
