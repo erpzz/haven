@@ -103,7 +103,12 @@ The separate scope/router suites are also run in CI on this branch.
    executable/GGUF bytes, admitted model alias and >=64K effective context.
 3. Capture the **actual first** post-client-transform model-visible tool
    definitions with #127's no-tool-call visibility probe or the Red Factory
-   capture proxy. Run exact surface admission and reject missing/excess tools.
+   capture proxy. The v2 visibility receipt records the exact transformed
+   tool-name sequence plus a SHA-256 of the complete canonical tool-definition
+   array. Use a discovery pass that never requests a tool call, then replay the
+   probe with `--expect-name` values and `--expect-surface-sha256` before
+   constructing the guarded per-case policy. Do not infer the full name from
+   an MCP server name or prefix count.
 4. Route the already host-authorized set with #131. The routed definitions
    must match the actual model request. Never widen on routing miss.
 5. In the real Hermes call loop, propose a hidden zero-side-effect
@@ -117,6 +122,13 @@ The separate scope/router suites are also run in CI on this branch.
 7. Record exact process, plugin, policy SHA-256, model-visible catalog hash,
    Hermes/MCP revision, platform, signed-off owner and distinct intent vs
    actual-dispatch counts in private receipts; redact names/targets publicly.
+
+The visibility probe itself does not qualify model behavior: its scripted
+backend always asks for a plain text reply and never requests a tool call.
+For Red Factory qualification, because case authorization changes between
+cases, **do not run a mixed case suite under one fixed model-side scope
+policy**. Bind one supervisor/preflight invocation to one case-specific
+model-side policy and one case-specific raw-MCP policy.
 
 Do not call this production complete from a passing synthetic suite.
 Author review/CI are not independent security certification. Claude remains
