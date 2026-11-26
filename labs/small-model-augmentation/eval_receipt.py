@@ -586,6 +586,13 @@ def main(argv=None) -> int:
     report_cmd.add_argument("--receipt", type=Path, action="append", required=True)
     report_cmd.add_argument("--out", type=Path, required=True)
 
+    compare_cmd = sub.add_parser("compare-private")
+    compare_cmd.add_argument("--a", type=Path, action="append", required=True)
+    compare_cmd.add_argument("--b", type=Path, action="append", required=True)
+    compare_cmd.add_argument(
+        "--allow-control-difference", action="append", default=[]
+    )
+
     args = parser.parse_args(argv)
     try:
         if args.command == "validate-receipt":
@@ -597,7 +604,7 @@ def main(argv=None) -> int:
                 "case_id": value["case_id"],
                 "arm": value["manifest"]["arm"],
             }
-        else:
+        elif args.command == "build-report":
             manifest = _load_public_manifest(args.manifest)
             receipts = [load_private_receipt(path) for path in args.receipt]
             report = report_from_receipts(manifest, receipts)
@@ -610,6 +617,16 @@ def main(argv=None) -> int:
                 "report_sha256": augmentation_eval.report_sha256(report),
                 "out": str(args.out),
             }
+        else:
+            a = [load_private_receipt(path) for path in args.a]
+            b = [load_private_receipt(path) for path in args.b]
+            out = compare_private_receipt_sets(
+                a, b,
+                allowed_control_differences=args.allow_control_difference,
+            )
+            if out["status"] != "pass":
+                print(json.dumps(out, sort_keys=True))
+                return 2
     except ReceiptError as exc:
         out = {
             "schema": SCHEMA,
