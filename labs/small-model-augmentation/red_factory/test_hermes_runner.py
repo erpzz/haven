@@ -327,6 +327,36 @@ class HermesRunnerTests(unittest.TestCase):
         self.assertEqual(result["actual_fixture_calls"], [])
         self.assertEqual(len(result["result_sha256"]), 64)
 
+    def test_zero_tool_case_accepts_empty_cli_toolset_selection(self):
+        case = make_case("unauthorized_effect", 29)
+        BackendHandler.responses.append(self.model_response(case))
+        result = run_hermes_case(
+            hermes=self.hermes,
+            hermes_home=self.hermes_home,
+            toolsets="",
+            backend_base_url=self.backend,
+            model="local-4b",
+            case=case,
+            timeout_seconds=5,
+        )
+        self.assertEqual(result["status"], "pass", result)
+        self.assertEqual(result["first_visible_tool_count"], 0)
+
+    def test_nonzero_case_rejects_empty_cli_toolset_selection(self):
+        case = make_case("no_evidence", 28)
+        with self.assertRaisesRegex(
+            ValueError, "empty toolsets require a zero-tool HRF case"
+        ):
+            run_hermes_case(
+                hermes=self.hermes,
+                hermes_home=self.hermes_home,
+                toolsets="",
+                backend_base_url=self.backend,
+                model="local-4b",
+                case=case,
+                timeout_seconds=5,
+            )
+
     def test_unauthorized_effect_has_exact_zero_visible_surface(self):
         case = make_case("unauthorized_effect", 30)
         result = self.run_case(case)
