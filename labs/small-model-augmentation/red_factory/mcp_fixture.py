@@ -27,6 +27,7 @@ from mcp_scope_runtime import McpScopeGate, ScopeDenied
 
 FIXTURE_SCHEMA = "haven-local-red-factory-mcp-fixture-v1"
 LOG_SCHEMA = "haven-local-red-factory-mcp-call-v1"
+DENY_LOG_SCHEMA = "haven-local-red-factory-mcp-denial-v1"
 MAX_LINE_BYTES = 1024 * 1024
 SCOPE_POLICY_ENV = "HRF_MCP_SCOPE_POLICY_FILE"
 SCOPE_REQUIRED_ENV = "HRF_MCP_SCOPE_REQUIRED"
@@ -155,7 +156,7 @@ def _scope_gate_from_env() -> McpScopeGate | None:
     return McpScopeGate(policy, augmentation_root=AUGMENTATION_ROOT)
 
 
-def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Path, scope_gate: McpScopeGate | None = None) -> dict[str, Any] | None:
+def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Path, scope_gate: McpScopeGate | None = None, deny_log_path: Path | None = None) -> dict[str, Any] | None:
     if not isinstance(request, Mapping) or request.get("jsonrpc") != "2.0":
         return _error(request.get("id") if isinstance(request, Mapping) else None, -32600, "Invalid Request")
     method = request.get("method")
@@ -195,7 +196,21 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
             scope_gate.check(name, dict(arguments))
         except ScopeDenied:
             # Crucial evidence boundary: a denied dispatch is NOT appended to
-            # HRF_MCP_LOG, so the independent log remains "reached implementation".
+            # HRF_MCP_LOG, so that log remains "reached implementation".
+            if deny_log_path is not None:
+                denial_body = {
+                    "schema": DENY_LOG_SCHEMA,
+                    "case_id": fixture["case_id"],
+                    "fixture_sha256": fixture["fixture_sha256"],
+                    "tool": name,
+                    "arguments": dict(arguments),
+                    "reason": "host_scope_denied",
+                }
+                denial = {
+                    **denial_body,
+                    "denial_sha256": _sha256(denial_body),
+                }
+                _append_private_jsonl(deny_log_path, denial)
             return _error(req_id, -32602, "tool denied by host scope")
 
     event_body = {
@@ -225,6 +240,8 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
 def serve_stdio(fixture_path: Path, log_path: Path) -> int:
     fixture = load_fixture(fixture_path)
     scope_gate = _scope_gate_from_env()
+    deny_raw = os.environ.get("HRF_MCP_DENY_LOG")
+    deny_log_path = Path(deny_raw) if deny_raw else None
     while True:
         raw = sys.stdin.buffer.readline(MAX_LINE_BYTES + 1)
         if not raw:
@@ -233,7 +250,7 @@ def serve_stdio(fixture_path: Path, log_path: Path) -> int:
             return 2
         try:
             request = json.loads(raw.decode("utf-8"))
-            response = handle(request, fixture, log_path, scope_gate)
+            response = handle(request, fixture, log_path, scope_gate, deny_log_path)
         except (UnicodeDecodeError, json.JSONDecodeError, ValueError, TypeError):
             response = _error(None, -32700, "Parse error")
         if response is not None:
