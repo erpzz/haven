@@ -58,17 +58,53 @@ def profiles(*, context=65536, seed=0, max_turns=8, stream=False):
     }
 
 
-def controls(tag="x", private_profiles=None):
+def guard(tag="x", private_profiles=None):
     private_profiles = private_profiles or profiles()
+    preflight = {
+        "schema": receipt.GUARD_PREFLIGHT_SCHEMA,
+        "status": "pass",
+        "errors": [],
+        "hermes_sha256": private_profiles["runtime"]["hermes_sha256"],
+        "plugin_init_sha256": H("stable-guard-plugin"),
+        "plugin_manifest_sha256": H("stable-guard-manifest"),
+        "scope_engine_sha256": H("stable-scope-engine"),
+        "scope_policy_sha256": H(tag + "-policy"),
+        "mcp_policy_sha256": H(tag + "-final-dispatch-policy"),
+        "scope_policy_tool_count": 1,
+        "mcp_policy_tool_count": 1,
+        "enabled_user_plugin_count": 1,
+        "doctor_passed": True,
+    }
+    supervisor = {
+        "schema": receipt.GUARD_SUPERVISOR_SCHEMA,
+        "status": "pass",
+        "errors": [],
+        "plugin_preflight_sha256": receipt.profile_sha256(preflight),
+        "owned_llama_sha256": H("stable-owned-llama"),
+        "observe_llama_sha256": H("stable-observe-llama"),
+        "model_preflight_sha256": H("stable-model-preflight"),
+        "owned_llama_started": True,
+        "owned_llama_exit": 0,
+    }
+    return {"preflight": preflight, "supervisor": supervisor}
+
+
+def controls(tag="x", private_profiles=None, guard_binding=None):
+    private_profiles = private_profiles or profiles()
+    guard_binding = guard_binding or guard(tag, private_profiles)
     return {
         "admission_receipt_sha256": H(tag + "-admission"),
-        "guard_preflight_receipt_sha256": H(tag + "-guard-preflight"),
-        "guard_supervisor_receipt_sha256": H(tag + "-guard-supervisor"),
+        "guard_preflight_receipt_sha256": receipt.profile_sha256(
+            guard_binding["preflight"]
+        ),
+        "guard_supervisor_receipt_sha256": receipt.profile_sha256(
+            guard_binding["supervisor"]
+        ),
         "runtime_profile_sha256": receipt.profile_sha256(private_profiles["runtime"]),
         "request_settings_sha256": receipt.profile_sha256(private_profiles["request"]),
         "world_sha256": H("stable-world"),
-        "tool_policy_sha256": H(tag + "-policy"),
-        "final_dispatch_policy_sha256": H(tag + "-final-dispatch-policy"),
+        "tool_policy_sha256": guard_binding["preflight"]["scope_policy_sha256"],
+        "final_dispatch_policy_sha256": guard_binding["preflight"]["mcp_policy_sha256"],
         "catalog_sha256": H("stable-catalog"),
         "selection_receipt_sha256": H(tag + "-selection"),
         "claim_bundle_sha256": H(tag + "-claims"),
@@ -119,12 +155,14 @@ def sources(tag="x", *, semantic_pass=True):
 def private(arm="a", case_id="c1", tag=None, private_profiles=None):
     tag = tag or f"{arm}-{case_id}"
     private_profiles = private_profiles or profiles()
+    guard_binding = guard(tag, private_profiles)
     return receipt.make_receipt(
         manifest=manifest(arm),
         case_id=case_id,
         family="graph",
         profiles=private_profiles,
-        controls=controls(tag, private_profiles),
+        guard=guard_binding,
+        controls=controls(tag, private_profiles, guard_binding),
         sources=sources(tag),
     )
 
@@ -160,6 +198,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
             case_id="c2",
             family="priv",
             profiles=profiles(),
+            guard=guard("a-c2", profiles()),
             controls=controls("a-c2", profiles()),
             sources=sources("a-c2", semantic_pass=False),
         )
@@ -187,6 +226,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                         case_id="c1",
                         family="graph",
                         profiles=profiles(),
+                        guard=guard(),
                         controls=broken,
                         sources=sources(),
                     )
@@ -224,6 +264,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 case_id="c1",
                 family="graph",
                 profiles=profiles(),
+                guard=guard(),
                 controls=controls(),
                 sources=s,
             )
@@ -237,6 +278,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 case_id="c1",
                 family="graph",
                 profiles=profiles(),
+                guard=guard(),
                 controls=controls(),
                 sources=sources(),
             )
@@ -250,6 +292,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 case_id="c1",
                 family="graph",
                 profiles=profiles(),
+                guard=guard(),
                 controls=c,
                 sources=sources(),
             )
@@ -416,6 +459,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 case_id="c1",
                 family="graph",
                 profiles=p,
+                guard=guard("small-context", p),
                 controls=controls("small-context", p),
                 sources=sources("small-context"),
             )
@@ -429,6 +473,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 case_id="c1",
                 family="graph",
                 profiles=p,
+                guard=guard("wrong-alias", p),
                 controls=controls("wrong-alias", p),
                 sources=sources("wrong-alias"),
             )
@@ -442,6 +487,7 @@ class PrivateEvalReceiptTests(unittest.TestCase):
                 case_id="c1",
                 family="graph",
                 profiles=p,
+                guard=guard("wrong-request", p),
                 controls=controls("wrong-request", p),
                 sources=sources("wrong-request"),
             )
