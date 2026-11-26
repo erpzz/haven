@@ -33,7 +33,7 @@ from local_runner import (
     _write_private_json,
     normalize_loopback_base_url,
 )
-from mcp_fixture import LOG_SCHEMA, fixture_for_case
+from mcp_fixture import DENIAL_SCHEMA, LOG_SCHEMA, fixture_for_case
 from red_factory import (
     TRANSCRIPT_SCHEMA,
     RedCase,
@@ -377,6 +377,49 @@ def _load_call_log(path: Path, fixture_sha256: str, case_id: str) -> list[dict[s
     return calls
 
 
+def _load_denial_log(path: Path, fixture_sha256: str, case_id: str) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > 4 * 1024 * 1024:
+        raise ValueError("unsafe MCP denial log")
+    rows = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        expected = {
+            "schema", "case_id", "fixture_sha256", "tool", "arguments",
+            "reason", "denial_sha256",
+        }
+        if (
+            not isinstance(row, dict)
+            or set(row) != expected
+            or row.get("schema") != DENIAL_SCHEMA
+        ):
+            raise ValueError("malformed MCP denial event")
+        if row.get("case_id") != case_id or row.get("fixture_sha256") != fixture_sha256:
+            raise ValueError("MCP denial event identity mismatch")
+        body = {k: v for k, v in row.items() if k != "denial_sha256"}
+        if (
+            not isinstance(row.get("denial_sha256"), str)
+            or not _HASH_RE.fullmatch(row["denial_sha256"])
+            or _sha256(body) != row["denial_sha256"]
+        ):
+            raise ValueError("MCP denial event hash mismatch")
+        if (
+            row.get("tool") not in {"read_fixture", "write_canary"}
+            or not isinstance(row.get("arguments"), dict)
+            or row.get("reason") != "host_scope_denied"
+        ):
+            raise ValueError("invalid MCP denial event")
+        rows.append({
+            "tool": row["tool"],
+            "arguments": row["arguments"],
+            "reason": row["reason"],
+        })
+    return rows
+
+
 def _proposed_calls(chat_records: list[Mapping[str, Any]], fixture_surface: Mapping[str, str]) -> list[dict[str, Any]]:
     reverse = {raw: logical for logical, raw in fixture_surface.items()}
     calls: list[dict[str, Any]] = []
@@ -529,6 +572,7 @@ def run_hermes_case(
     fixture_path = root / "fixture.json"
     mcp_policy_path = root / "mcp-scope.json"
     call_log = root / "mcp-calls.jsonl"
+    deny_log = root / "mcp-denials.jsonl"
     fixture = fixture_for_case(case)
     mcp_policy = _mcp_scope_policy(case, fixture)
     fd = os.open(fixture_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
@@ -553,6 +597,7 @@ def run_hermes_case(
         "HERMES_HOME": str(hermes_home),
         "HRF_FIXTURE_FILE": str(fixture_path),
         "HRF_MCP_LOG": str(call_log),
+        "HRF_MCP_DENY_LOG": str(deny_log),
         "HRF_MCP_SCOPE_POLICY_FILE": str(mcp_policy_path),
         "HRF_MCP_SCOPE_REQUIRED": "1",
         "OPENAI_API_KEY": "local-red-factory-proxy",
@@ -647,6 +692,12 @@ def run_hermes_case(
         errors.append("INVALID_MCP_CALL_LOG")
 
     try:
+        denied_calls = _load_denial_log(deny_log, fixture["fixture_sha256"], case.case_id)
+    except (OSError, ValueError, json.JSONDecodeError):
+        denied_calls = []
+        errors.append("INVALID_MCP_DENIAL_LOG")
+
+    try:
         proposed_calls = _proposed_calls(chat_records, fixture_surface)
     except (ValueError, TypeError, json.JSONDecodeError):
         proposed_calls = []
@@ -705,6 +756,7 @@ def run_hermes_case(
         "extra_visible_tool_count": len(extras),
         "proposed_fixture_calls": proposed_calls,
         "actual_fixture_calls": actual_calls,
+        "denied_fixture_calls": denied_calls,
         "dispatch_alignment": _dispatches_align(proposed_calls, actual_calls),
         "final_mcp_scope_required": True,
         "final_mcp_policy_sha256": mcp_policy_sha256,
@@ -720,6 +772,7 @@ def run_hermes_case(
         fixture_path.unlink(missing_ok=True)
         mcp_policy_path.unlink(missing_ok=True)
         call_log.unlink(missing_ok=True)
+        deny_log.unlink(missing_ok=True)
         root.rmdir()
     except OSError:
         pass
