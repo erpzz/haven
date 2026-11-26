@@ -325,7 +325,7 @@ def default_registry(audit_path: Path | None = AUDIT) -> Registry:
                         _obj({"check_id": {"type": "string"}}, ["check_id"]), {"type": "object"}, _detection_map,
                         domain="detection", timeout_s=10))
     r.register(ToolSpec("entra.graph.collect", "Collect a read-only Conditional Access snapshot from an authorized tenant via Microsoft Graph.",
-                        _obj({"emergency_account_ids": {"type": "array"}}, ["emergency_account_ids"]), {"type": "object"},
+                        _obj({"emergency_account_ids": {"type": "array", "items": {"type": "string"}}}, ["emergency_account_ids"]), {"type": "object"},
                         _graph_collect, domain="entra", scope="tenant-read",
                         permissions=["Policy.Read.All", "User.Read.All", "GroupMember.Read.All", "RoleManagement.Read.Directory"],
                         credentials="HAVEN_GRAPH_TOKEN from the environment; never logged or returned",
