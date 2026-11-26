@@ -152,6 +152,53 @@ def cmd_eval(args):
     print(json.dumps({k: v for k, v in report["summary"].items() if k != "by_family"}, indent=2))
 
 
+def load_records_exact(path, expected_ids):
+    """Load one committed record per expected episode; refuse ambiguous post-hoc inputs."""
+    records, seen = [], set()
+    with open(path, encoding="utf-8") as stream:
+        for line_no, line in enumerate(stream, 1):
+            if not line.strip():
+                continue
+            try:
+                rec = json.loads(line)
+            except ValueError as exc:
+                raise SystemExit(f"Refusing post-hoc rescore: malformed JSON at line {line_no}") from exc
+            eid = rec.get("episode") if isinstance(rec, dict) else None
+            if eid not in expected_ids:
+                raise SystemExit(f"Refusing post-hoc rescore: foreign/unknown episode at line {line_no}")
+            if eid in seen:
+                raise SystemExit(f"Refusing post-hoc rescore: duplicate episode {eid}")
+            seen.add(eid)
+            records.append(rec)
+    missing = expected_ids - seen
+    if missing:
+        raise SystemExit(f"Refusing post-hoc rescore: {len(missing)} expected episodes are missing")
+    return records
+
+
+def cmd_rescore(args):
+    """Post-hoc accounting correction on original records; performs no inference."""
+    episodes = bench.load_episodes(args.episodes)
+    index = {e["id"]: e for e in episodes}
+    records = load_records_exact(args.records, set(index))
+    rows = [episode_metrics(rec, index[rec["episode"]]) for rec in records]
+    out = pathlib.Path(args.out)
+    if out.exists():
+        raise SystemExit("Refusing to overwrite a post-hoc receipt.")
+    report = {
+        "schema": "haven-s0x-posthoc-rescore-1",
+        "status": "POSTHOC_ACCOUNTING_CORRECTION_NOT_PREREGISTERED_RERUN",
+        "source_records_sha256": bench_s0.sha256_file(args.records),
+        "episode_set_sha256": bench_s0.sha256_file(args.episodes) if args.episodes else bench_s0.sha256_file(bench.FROZEN),
+        "scorer_code_sha256": {p: bench_s0.sha256_file(HERE / p) for p in ("bench_x.py", "enforce.py", "checks.py")},
+        "episodes": len(rows),
+        "summary": summarize_x(rows),
+        "scores": rows,
+    }
+    out.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    print(json.dumps({"status": report["status"], "episodes": len(rows), "summary": report["summary"]}, indent=2))
+
+
 def cmd_offline_verify(args):
     """Verifier accuracy on existing plain-arm records: no new inference."""
     episodes = {e["id"]: e for e in bench.load_episodes(args.episodes)}
@@ -211,6 +258,11 @@ def main(argv=None):
     e.add_argument("--max-tokens", type=int, default=1024)
     e.add_argument("--hardware", default="unknown")
     e.set_defaults(func=cmd_eval)
+    r = sub.add_parser("rescore", help="post-hoc accounting correction on original JSONL records; no inference")
+    r.add_argument("--records", required=True)
+    r.add_argument("--episodes", default=None)
+    r.add_argument("--out", required=True)
+    r.set_defaults(func=cmd_rescore)
     o = sub.add_parser("offline-verify")
     o.add_argument("--records", required=True)
     o.add_argument("--episodes", default=None)
