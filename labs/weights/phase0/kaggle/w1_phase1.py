@@ -340,7 +340,7 @@ def main(argv=None):
         backend = agent.OpenAIBackend(f"http://127.0.0.1:{18950 + slot}/v1", "qwen35-4b", None,
                                       temperature=args.temperature, max_tokens=args.max_tokens, seed=k)
         rec = common.run_harness(backend, index[eid], common.FULL)
-        m = common.judge(rec, index[eid])
+        m = common.judge(rec, index[eid], apply_w1_training_guard=True)
         rec.update({"attempt": k, "run_id": run_id})
         error = str(rec.get("error") or "")
         slot_status = "timed_out" if (not rec.get("ok_transport") and "timeout" in error.casefold()) else "terminal"
