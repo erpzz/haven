@@ -229,6 +229,11 @@ class BoundedClaimsTests(unittest.TestCase):
         self.assertTrue(r["released"])
         self.assertEqual(r["claims"], [])
 
+    def test_empty_scope_is_rejected(self):
+        x = bundle()
+        x["scope"] = {}
+        self.assertIn("INVALID_SCOPE", b.validate_bundle(x))
+
     def test_malformed_bundle_payload_fails_closed(self):
         x = bundle()
         x["claims"][0]["payload"]["value"] = float("nan")
