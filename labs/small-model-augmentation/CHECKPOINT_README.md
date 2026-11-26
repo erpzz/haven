@@ -29,6 +29,7 @@ Recovery is deliberately **unit-level**, not opaque conversation restoration:
 - A malformed **committed** line blocks recovery.
 - Duplicate JSON keys, sequence gaps, event-hash changes, hash-chain changes, run/manifest changes and invalid state transitions block.
 - File writes flush and `fsync()` by default.
+- First journal creation uses an atomic private `0600` create and fsyncs the parent directory before the journal is treated as durable.
 - POSIX `flock` plus an in-process lock serializes cooperative writers on macOS/Linux.
 
 The hash chain is an integrity signal, **not authentication** against an attacker who can rewrite the whole file.
@@ -88,7 +89,6 @@ The immutable run manifest should bind the exact model/admission receipt, execut
 - wiring into `h2h_run.py`, Haven Cyber eval, Hermes hooks or investigator runner;
 - macOS/APFS process-kill qualification, including filesystem durability and supported-Python `flock` behavior;
 - recovery while an actual local model server is hung;
-- parent-directory fsync on first journal creation;
 - Windows multiprocess locking;
 - NFS/network filesystem semantics;
 - rotation/compaction after the 64 MiB journal bound;
