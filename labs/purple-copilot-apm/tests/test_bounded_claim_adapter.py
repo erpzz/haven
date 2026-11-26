@@ -1,5 +1,6 @@
 import copy
 import json
+import random
 import sys
 import tempfile
 import unittest
@@ -360,6 +361,52 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
         self.assertNotEqual(
             coverage["receipt_sha256"], changed_coverage["receipt_sha256"]
         )
+
+    def test_final_head_malformed_candidate_fuzz_is_fail_closed(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_overview", {"platform": "ad"}
+        )
+        policy = adapter.coverage_policy(bundle)
+        rng = random.Random(0x132C0DE)
+        alphabet = '{}[]":,0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-/ \n\t'
+        host_by_id = {claim["id"]: claim for claim in bundle["claims"]}
+
+        corpus = [
+            "",
+            "null",
+            "[]",
+            "{}",
+            '{"bundle_sha256":"x","claims":[]}',
+            '{"bundle_sha256":"' + policy["bundle_sha256"] + '","claims":[]}',
+            '{"bundle_sha256":"' + policy["bundle_sha256"] + '","claims":[],"claims":[]}',
+            '{"bundle_sha256":"' + policy["bundle_sha256"] + '","claims":[null]}',
+            '{"bundle_sha256":"' + policy["bundle_sha256"] + '","claims":["../x"]}',
+            '{"bundle_sha256":"' + policy["bundle_sha256"] + '","claims":["' +
+                policy["required_ids"][0] + '","' + policy["required_ids"][0] + '"]}',
+        ]
+        for _ in range(4096):
+            n = rng.randrange(0, 257)
+            corpus.append("".join(rng.choice(alphabet) for _ in range(n)))
+
+        for raw in corpus:
+            released, coverage = adapter.release_with_coverage(
+                bundle, raw, policy, bounded.release
+            )
+            self.assertIs(type(released), dict)
+            self.assertEqual(released.get("schema"), bounded.RECEIPT_SCHEMA)
+            self.assertIs(type(released.get("released")), bool)
+            self.assertIs(type(released.get("errors")), list)
+            self.assertIs(type(coverage), dict)
+            self.assertIn(coverage["status"], {"pass", "block"})
+            self.assertEqual(
+                coverage["status"],
+                "pass" if released["released"] else "block",
+            )
+            if released["released"]:
+                ids = {claim["id"] for claim in released["claims"]}
+                self.assertTrue(set(policy["required_ids"]) <= ids)
+                for claim in released["claims"]:
+                    self.assertEqual(claim, host_by_id[claim["id"]])
 
     def test_host_field_mutations_change_bundle_hash(self):
         original = self.result(
