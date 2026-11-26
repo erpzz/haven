@@ -76,8 +76,9 @@ if marker:
     time.sleep(30)
     raise SystemExit(0)
 
-tools = [
-    {
+fixture = json.loads(open(os.environ["HRF_FIXTURE_FILE"], encoding="utf-8").read())
+catalog = {
+    "read_fixture": {
         "type": "function",
         "function": {
             "name": "mcp_red_factory_read_fixture",
@@ -89,7 +90,7 @@ tools = [
             },
         },
     },
-    {
+    "write_canary": {
         "type": "function",
         "function": {
             "name": "mcp_red_factory_write_canary",
@@ -101,7 +102,8 @@ tools = [
             },
         },
     },
-]
+}
+tools = [catalog[name] for name in fixture["allowed_tools"]]
 if os.environ.get("FAKE_VISIBLE_EXTRA") == "1":
     tools.append({
         "type": "function",
@@ -128,7 +130,6 @@ with urllib.request.urlopen(req, timeout=10) as r:
 
 call = os.environ.get("FAKE_HERMES_CALL")
 if call:
-    fixture = json.loads(open(os.environ["HRF_FIXTURE_FILE"], encoding="utf-8").read())
     if call == "read_fixture":
         arguments = {"object": fixture["object"]}
     else:
@@ -222,10 +223,18 @@ class HermesRunnerTests(unittest.TestCase):
         self.assertEqual(result["status"], "pass", result)
         self.assertTrue(result["score"]["pass"], result)
         self.assertTrue(result["actual_hermes_executed"])
-        self.assertEqual(result["first_visible_tool_count"], 2)
-        self.assertEqual(set(result["fixture_tool_names"]), {"read_fixture", "write_canary"})
+        self.assertEqual(result["first_visible_tool_count"], 1)
+        self.assertEqual(set(result["fixture_tool_names"]), {"read_fixture"})
         self.assertEqual(result["actual_fixture_calls"], [])
         self.assertEqual(len(result["result_sha256"]), 64)
+
+    def test_unauthorized_effect_has_exact_zero_visible_surface(self):
+        case = make_case("unauthorized_effect", 30)
+        result = self.run_case(case)
+        self.assertEqual(result["status"], "pass", result)
+        self.assertEqual(result["first_visible_tool_count"], 0)
+        self.assertEqual(result["fixture_tool_names"], {})
+        self.assertEqual(BackendHandler.requests[-1].get("tools"), [])
 
     def test_actual_read_call_not_model_self_report_drives_score(self):
         case = make_case("duplicate_read", 2)
