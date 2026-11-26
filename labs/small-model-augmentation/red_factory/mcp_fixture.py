@@ -19,9 +19,17 @@ import sys
 from pathlib import Path
 from typing import Any, Mapping
 
+AUGMENTATION_ROOT = Path(__file__).resolve().parents[1]
+if str(AUGMENTATION_ROOT) not in sys.path:
+    sys.path.insert(0, str(AUGMENTATION_ROOT))
+
+from mcp_scope_runtime import McpScopeGate, ScopeDenied
+
 FIXTURE_SCHEMA = "haven-local-red-factory-mcp-fixture-v1"
 LOG_SCHEMA = "haven-local-red-factory-mcp-call-v1"
 MAX_LINE_BYTES = 1024 * 1024
+SCOPE_POLICY_ENV = "HRF_MCP_SCOPE_POLICY_FILE"
+SCOPE_REQUIRED_ENV = "HRF_MCP_SCOPE_REQUIRED"
 _CASE_RE = re.compile(r"^hrf_[0-9a-f]{32}$")
 
 
@@ -135,7 +143,19 @@ def _error(req_id: Any, code: int, message: str) -> dict[str, Any]:
     return {"jsonrpc": "2.0", "id": req_id, "error": {"code": code, "message": message}}
 
 
-def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Path) -> dict[str, Any] | None:
+def _scope_gate_from_env() -> McpScopeGate | None:
+    required = os.environ.get(SCOPE_REQUIRED_ENV, "0")
+    if required not in {"0", "1"}:
+        raise ValueError("invalid HRF MCP scope required flag")
+    policy = os.environ.get(SCOPE_POLICY_ENV)
+    if not policy:
+        if required == "1":
+            raise ValueError("HRF MCP scope policy required")
+        return None
+    return McpScopeGate(policy, augmentation_root=AUGMENTATION_ROOT)
+
+
+def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Path, scope_gate: McpScopeGate | None = None) -> dict[str, Any] | None:
     if not isinstance(request, Mapping) or request.get("jsonrpc") != "2.0":
         return _error(request.get("id") if isinstance(request, Mapping) else None, -32600, "Invalid Request")
     method = request.get("method")
@@ -154,7 +174,14 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
     if method == "ping":
         return _response(req_id, {})
     if method == "tools/list":
-        return _response(req_id, {"tools": _tool_definitions(fixture["allowed_tools"])})
+        visible = list(fixture["allowed_tools"])
+        if scope_gate is not None:
+            try:
+                admitted = set(scope_gate.exposed(["read_fixture", "write_canary"]))
+            except ScopeDenied:
+                return _error(req_id, -32603, "host tool-scope policy unavailable")
+            visible = [name for name in visible if name in admitted]
+        return _response(req_id, {"tools": _tool_definitions(visible)})
     if method != "tools/call":
         return _error(req_id, -32601, "Method not found")
     if not isinstance(params, Mapping):
@@ -163,6 +190,13 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
     arguments = params.get("arguments", {})
     if name not in {"read_fixture", "write_canary"} or not isinstance(arguments, Mapping):
         return _error(req_id, -32602, "Invalid params")
+    if scope_gate is not None:
+        try:
+            scope_gate.check(name, dict(arguments))
+        except ScopeDenied:
+            # Crucial evidence boundary: a denied dispatch is NOT appended to
+            # HRF_MCP_LOG, so the independent log remains "reached implementation".
+            return _error(req_id, -32602, "tool denied by host scope")
 
     event_body = {
         "schema": LOG_SCHEMA,
@@ -190,6 +224,7 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
 
 def serve_stdio(fixture_path: Path, log_path: Path) -> int:
     fixture = load_fixture(fixture_path)
+    scope_gate = _scope_gate_from_env()
     while True:
         raw = sys.stdin.buffer.readline(MAX_LINE_BYTES + 1)
         if not raw:
@@ -198,7 +233,7 @@ def serve_stdio(fixture_path: Path, log_path: Path) -> int:
             return 2
         try:
             request = json.loads(raw.decode("utf-8"))
-            response = handle(request, fixture, log_path)
+            response = handle(request, fixture, log_path, scope_gate)
         except (UnicodeDecodeError, json.JSONDecodeError, ValueError, TypeError):
             response = _error(None, -32700, "Parse error")
         if response is not None:
