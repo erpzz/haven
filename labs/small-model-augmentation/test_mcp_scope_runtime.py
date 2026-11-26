@@ -5,7 +5,9 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+import types
 import unittest
+from unittest import mock
 
 AUG = Path(__file__).resolve().parent
 LABS = AUG.parent
@@ -87,6 +89,24 @@ def cyber_policy(max_calls=1):
     }
 
 
+class FakeFastMCP:
+    def __init__(self, name, instructions=None):
+        self.name = name
+        self.instructions = instructions
+        self.tools = {}
+
+    def tool(self, **metadata):
+        def decorate(fn):
+            self.tools[fn.__name__] = (fn, metadata)
+            return fn
+        return decorate
+
+
+class FakeAnnotations:
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+
+
 class FinalDispatcherScopeTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -152,6 +172,36 @@ class FinalDispatcherScopeTests(unittest.TestCase):
         with self.assertRaisesRegex(RpcError, "host scope"):
             srv.dispatch("tools/call", {"name": "haven_status", "arguments": {}})
         self.assertEqual(reg.calls, [])
+
+    def _build_fake_cyber_server(self, gate):
+        mcp = types.ModuleType("mcp")
+        server = types.ModuleType("mcp.server")
+        mcpserver = types.ModuleType("mcp.server.mcpserver")
+        types_mod = types.ModuleType("mcp.types")
+        mcpserver.MCPServer = FakeFastMCP
+        types_mod.ToolAnnotations = FakeAnnotations
+        modules = {
+            "mcp": mcp,
+            "mcp.server": server,
+            "mcp.server.mcpserver": mcpserver,
+            "mcp.types": types_mod,
+        }
+        with mock.patch.dict(sys.modules, modules), \
+                mock.patch.object(cyber_mcp, "_scope_gate_from_env", return_value=gate), \
+                mock.patch.object(cyber_mcp, "default_registry", return_value=FakeRegistry([])):
+            return cyber_mcp.build_server()
+
+    def test_cyber_raw_surface_is_narrowed_before_hermes_sees_it(self):
+        server = self._build_fake_cyber_server(self.gate(cyber_policy()))
+        self.assertEqual(set(server.tools), {"cyber_call"})
+
+    def test_cyber_zero_tool_surface_registers_nothing(self):
+        zero = {
+            "schema": scope.SCHEMA, "allowed_tools": [], "max_calls": 0,
+            "per_tool_max": {}, "unique_calls": True, "argument_rules": {},
+        }
+        server = self._build_fake_cyber_server(self.gate(zero))
+        self.assertEqual(server.tools, {})
 
     def test_cyber_final_nested_target_rechecked_before_registry(self):
         reg = FakeRegistry([])
