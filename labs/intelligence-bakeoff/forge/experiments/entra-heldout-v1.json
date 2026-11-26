@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "description": "Original synthetic per-policy requirements, fixed before model evaluation. No tenant data.",
+  "fixture": "entra-heldout",
+  "cases": [
+    {"policy_id": "eval-disabled", "expected": "not_enforced_by_policy"},
+    {"policy_id": "eval-single-or", "expected": "mfa_required_by_policy"},
+    {"policy_id": "eval-no-mfa", "expected": "mfa_not_required_by_policy"},
+    {"policy_id": "eval-block", "expected": "access_blocked_by_policy"}
+  ]
+}
