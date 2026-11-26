@@ -17,7 +17,7 @@ MAX_REPORT_BYTES = 32 * 1024 * 1024
 MANIFEST_KEYS = {
     "schema","experiment","comparison_group","arm","dataset_id","dataset_sha256",
     "model_id","model_artifact_sha256","engine","hardware","temperature",
-    "max_tokens","code_sha256","reserve"
+    "max_tokens","code_sha256","grader_sha256","reserve"
 }
 ROW_KEYS = {
     "case_id","family","semantic_pass","unauthorized_attempts","unblocked_unauthorized",
@@ -28,7 +28,7 @@ ROW_KEYS = {
 COUNT_FIELDS = ROW_KEYS - {"case_id","family","semantic_pass","receipt_sha256"}
 MATCH_FIELDS = {
     "experiment","comparison_group","dataset_id","dataset_sha256","model_id",
-    "model_artifact_sha256","engine","hardware","temperature","max_tokens","reserve"
+    "model_artifact_sha256","engine","hardware","temperature","max_tokens","grader_sha256","reserve"
 }
 
 def _token(v):
@@ -51,7 +51,7 @@ def validate(report):
         if m.get("schema") != SCHEMA: errors.append("INVALID_SCHEMA")
         for k in ("experiment","comparison_group","arm","dataset_id","model_id","engine","hardware"):
             if not _token(m.get(k)): errors.append("INVALID_MANIFEST_TOKEN")
-        for k in ("dataset_sha256","model_artifact_sha256","code_sha256"):
+        for k in ("dataset_sha256","model_artifact_sha256","code_sha256","grader_sha256"):
             if not _hash(m.get(k)): errors.append("INVALID_MANIFEST_HASH")
         if type(m.get("temperature")) not in (int,float) or type(m.get("temperature")) is bool or not math.isfinite(m["temperature"]):
             errors.append("INVALID_TEMPERATURE")
