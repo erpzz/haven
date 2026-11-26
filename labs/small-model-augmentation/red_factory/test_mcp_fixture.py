@@ -202,7 +202,7 @@ class McpFixtureTests(unittest.TestCase):
             row = json.loads(denial_log.read_text())
             self.assertEqual(row["schema"], DENIAL_SCHEMA)
             self.assertEqual(row["tool"], "write_canary")
-            self.assertEqual(row["code"], "CASE_TOOL_NOT_ALLOWED")
+            self.assertEqual(row["code"], "FINAL_SCOPE_CALL_DENIED")
             self.assertNotIn(str(marker), denial_log.read_text())
             self.assertEqual(len(row["arguments_sha256"]), 64)
             self.assertEqual(len(row["denial_sha256"]), 64)
