@@ -120,6 +120,26 @@ class VerifierCatches(unittest.TestCase):
         self.assertTrue(any(p.startswith("V3") for p in enforce.verify(e["prompt"], rec["trace"], ans)))
 
 
+class RawViewAccounting(unittest.TestCase):
+    def test_zero_length_raw_trace_does_not_include_correction_tools(self):
+        e = by_family("household_own")[0]
+        seen = []
+        original = bench_x.bench.score_records
+
+        def capture(records, episodes):
+            seen.append(len(records[0]["trace"]))
+            return [{"pass": False, "claims_ok": True, "violations": []}]
+
+        bench_x.bench.score_records = capture
+        try:
+            rec = {"answer": "final", "raw_answer": "raw", "raw_trace_len": 0,
+                   "trace": [{"name": "correction_only_tool", "arguments": {}, "output": {"ok": True}}]}
+            bench_x.score_views(rec, e)
+        finally:
+            bench_x.bench.score_records = original
+        self.assertEqual(seen, [1, 0])
+
+
 class CorrectionAccounting(unittest.TestCase):
     def test_rejected_then_corrected(self):
         e = by_family("household_own")[0]
