@@ -23,6 +23,7 @@ from red_factory import (
     case_to_packet,
     score_transcript,
     summarize,
+    validate_suite,
 )
 
 RUN_SCHEMA = "haven-local-red-factory-local-run-v1"
@@ -95,20 +96,20 @@ def _extract_object(text: str) -> Mapping[str, Any]:
     if not isinstance(text, str) or not text.strip():
         raise ValueError("model returned empty content")
     cleaned = _THINK_RE.sub("", text).strip()
-    decoder = json.JSONDecoder()
-    for i, char in enumerate(cleaned):
-        if char != "{":
-            continue
-        try:
-            value, end = decoder.raw_decode(cleaned[i:])
-        except json.JSONDecodeError:
-            continue
-        if isinstance(value, dict):
-            trailing = cleaned[i + end :].strip()
-            if trailing:
-                raise ValueError("model returned trailing content after JSON object")
-            return value
-    raise ValueError("model did not return a JSON object")
+    lowered = cleaned.lower()
+    if "<think" in lowered or "</think" in lowered:
+        raise ValueError("model returned incomplete or residual think markup")
+    if not cleaned.startswith("{"):
+        raise ValueError("model returned leading content before JSON object")
+    try:
+        value, end = json.JSONDecoder().raw_decode(cleaned)
+    except json.JSONDecodeError as exc:
+        raise ValueError("model did not return a valid JSON object") from exc
+    if not isinstance(value, dict):
+        raise ValueError("model result must be a JSON object")
+    if cleaned[end:].strip():
+        raise ValueError("model returned trailing content after JSON object")
+    return value
 
 
 def _invalid_score(case: RedCase, violation: str) -> dict[str, Any]:
@@ -233,11 +234,7 @@ def run_suite(
     api_key: str | None = None,
 ) -> dict[str, Any]:
     """Run a complete HRF development suite and return bound per-case receipts + summary."""
-    if not isinstance(suite, Mapping) or suite.get("classification") != "development":
-        raise ValueError("local runner accepts development suite only")
-    cases = suite.get("cases")
-    if not isinstance(cases, list) or not cases:
-        raise ValueError("suite cases required")
+    cases = validate_suite(suite)
     results = [
         run_case(
             base_url=base_url,
