@@ -161,6 +161,7 @@ def run_supervisor(*, plugin_args: dict, owned_llama: Path,
             "HAVEN_SCOPE_POLICY_FILE": str(plugin_args["scope_policy"]),
             "HAVEN_MCP_SCOPE_POLICY_FILE": str(plugin_args["mcp_policy"]),
             "HAVEN_MCP_SCOPE_REQUIRED": "1",
+            "HERMES_ENABLE_PROJECT_PLUGINS": "0",
             "NO_COLOR": "1",
         })
         command = [
