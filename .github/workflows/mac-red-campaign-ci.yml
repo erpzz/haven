@@ -10,6 +10,8 @@ on:
       - 'labs/small-model-augmentation/test_mac_final_gate_control.py'
       - 'labs/small-model-augmentation/mac_profile_bootstrap.py'
       - 'labs/small-model-augmentation/test_mac_profile_bootstrap.py'
+      - 'labs/small-model-augmentation/mac_qualification.py'
+      - 'labs/small-model-augmentation/test_mac_qualification.py'
       - '.github/workflows/mac-red-campaign-ci.yml'
   pull_request:
     paths:
@@ -42,7 +44,9 @@ jobs:
             labs/small-model-augmentation/mac_final_gate_control.py \
             labs/small-model-augmentation/test_mac_final_gate_control.py \
             labs/small-model-augmentation/mac_profile_bootstrap.py \
-            labs/small-model-augmentation/test_mac_profile_bootstrap.py
+            labs/small-model-augmentation/test_mac_profile_bootstrap.py \
+            labs/small-model-augmentation/mac_qualification.py \
+            labs/small-model-augmentation/test_mac_qualification.py
       - name: Per-case campaign orchestration
         run: |
           python -m unittest discover \
@@ -54,3 +58,6 @@ jobs:
           python -m unittest discover \
             -s labs/small-model-augmentation \
             -p 'test_mac_profile_bootstrap.py' -v
+          python -m unittest discover \
+            -s labs/small-model-augmentation \
+            -p 'test_mac_qualification.py' -v
