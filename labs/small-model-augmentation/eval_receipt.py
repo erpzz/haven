@@ -17,6 +17,7 @@ A receipt is one arm/case execution. It binds:
 """
 from __future__ import annotations
 
+import argparse
 import copy
 import hashlib
 import json
@@ -375,3 +376,108 @@ def load_private_receipt(path: Path) -> dict[str, Any]:
     if errors:
         raise ReceiptError(",".join(errors))
     return value
+
+
+def _load_public_manifest(path: Path) -> dict[str, Any]:
+    path = Path(path)
+    try:
+        st = path.lstat()
+    except OSError as exc:
+        raise ReceiptError("manifest read failed") from exc
+    if stat.S_ISLNK(st.st_mode) or not stat.S_ISREG(st.st_mode) or st.st_size > 256 * 1024:
+        raise ReceiptError("manifest must be a bounded regular non-symlink file")
+
+    def unique(pairs):
+        out = {}
+        for key, value in pairs:
+            if key in out:
+                raise ValueError("duplicate JSON key")
+            out[key] = value
+        return out
+
+    def reject(_):
+        raise ValueError("nonfinite")
+
+    try:
+        value = json.loads(
+            path.read_text(encoding="utf-8"),
+            object_pairs_hook=unique,
+            parse_constant=reject,
+        )
+    except (OSError, UnicodeDecodeError, ValueError, RecursionError) as exc:
+        raise ReceiptError("invalid manifest JSON") from exc
+    _manifest_binding(value)
+    return value
+
+
+def _write_new_json(path: Path, value: Mapping[str, Any]) -> None:
+    path = Path(path)
+    if path.exists() or path.is_symlink():
+        raise ReceiptError("output path already exists")
+    if path.parent.is_symlink() or not path.parent.is_dir():
+        raise ReceiptError("output parent must be an existing non-symlink directory")
+    raw = _canon(dict(value)) + b"\n"
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    try:
+        with os.fdopen(fd, "wb", closefd=True) as writer:
+            writer.write(raw)
+            writer.flush()
+            os.fsync(writer.fileno())
+    except Exception:
+        try:
+            path.unlink()
+        except OSError:
+            pass
+        raise
+
+
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    validate_cmd = sub.add_parser("validate-receipt")
+    validate_cmd.add_argument("receipt", type=Path)
+
+    report_cmd = sub.add_parser("build-report")
+    report_cmd.add_argument("--manifest", type=Path, required=True)
+    report_cmd.add_argument("--receipt", type=Path, action="append", required=True)
+    report_cmd.add_argument("--out", type=Path, required=True)
+
+    args = parser.parse_args(argv)
+    try:
+        if args.command == "validate-receipt":
+            value = load_private_receipt(args.receipt)
+            out = {
+                "schema": SCHEMA,
+                "status": "pass",
+                "receipt_sha256": value["receipt_sha256"],
+                "case_id": value["case_id"],
+                "arm": value["manifest"]["arm"],
+            }
+        else:
+            manifest = _load_public_manifest(args.manifest)
+            receipts = [load_private_receipt(path) for path in args.receipt]
+            report = report_from_receipts(manifest, receipts)
+            _write_new_json(args.out, report)
+            out = {
+                "schema": augmentation_eval.SCHEMA,
+                "status": "pass",
+                "arm": manifest["arm"],
+                "cases": len(report["rows"]),
+                "report_sha256": augmentation_eval.report_sha256(report),
+                "out": str(args.out),
+            }
+    except ReceiptError as exc:
+        out = {
+            "schema": SCHEMA,
+            "status": "block",
+            "error": str(exc),
+        }
+        print(json.dumps(out, sort_keys=True))
+        return 2
+    print(json.dumps(out, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
