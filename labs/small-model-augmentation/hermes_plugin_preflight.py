@@ -23,8 +23,8 @@ PLUGIN_NAME = "haven-scope"
 PLUGIN_VERSION = "0.1.0"
 MAX_OUTPUT = 1024 * 1024
 MAX_FILE = 1024 * 1024
-HEX64 = re.compile(r"[0-9a-f]{64}\\Z")
-NAME = re.compile(r"[A-Za-z0-9_.:/-]{1,256}\\Z", re.ASCII)
+HEX64 = re.compile(r"[0-9a-f]{64}$")
+NAME = re.compile(r"[A-Za-z0-9_.:/-]{1,256}$", re.ASCII)
 
 
 class PreflightError(RuntimeError):
