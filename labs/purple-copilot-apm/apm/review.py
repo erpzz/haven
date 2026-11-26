@@ -9,6 +9,7 @@ the retrieved evidence. Nothing here writes to CE, the history database or the d
 """
 import hashlib
 import json
+import os
 import re
 from collections import Counter
 from contextlib import closing
@@ -581,7 +582,7 @@ class Verifier:
 
     def problems(self, turn, answer):
         if not turn.results:
-            return []
+            return ["no evidence retrieved"]
         found = []
         cited = CITATION.findall(answer)
         known = turn.citations()
@@ -635,6 +636,9 @@ def fallback(turn, problems):
     """A deterministic answer assembled only from this turn's evidence."""
     # Name the failure categories only; the rejected values stay in the private receipt, never in front of the user.
     categories = sorted({p.split(":", 1)[0] for p in problems})
+    if not turn.results:
+        return ("The model's answer was withheld because no Tier Zero evidence was retrieved in this turn. "
+                "No factual Tier Zero claim can be verified without a current purple_tier_zero_* result.")
     lines = ["The model's answer was withheld because it failed evidence verification ("
              + "; ".join(categories) + "). Retrieved evidence:"]
     for name, data in turn.results:
@@ -677,11 +681,20 @@ def fallback(turn, problems):
 
 
 def receipt(record):
-    """Append-only private review receipts under the lab state directory."""
+    """Append-only owner-only review receipts under the lab state directory."""
     path = Path(ROOT) / "agent-reviews.jsonl"
     path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
-    with path.open("a") as f:
-        f.write(json.dumps(record, sort_keys=True) + "\n")
+    path.parent.chmod(0o700)
+    flags = os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_NOFOLLOW", 0)
+    fd = os.open(path, flags, 0o600)
+    try:
+        os.fchmod(fd, 0o600)
+        with os.fdopen(fd, "a", encoding="utf-8") as f:
+            fd = -1
+            f.write(json.dumps(record, sort_keys=True) + "\n")
+    finally:
+        if fd >= 0:
+            os.close(fd)
 
 
 __all__ = ["Gate", "Turn", "Verifier", "call", "fallback", "receipt", "schema", "TOOLS"]
