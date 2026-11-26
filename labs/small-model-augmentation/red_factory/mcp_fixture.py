@@ -19,6 +19,11 @@ import sys
 from pathlib import Path
 from typing import Any, Mapping
 
+_AUG = Path(__file__).resolve().parent.parent
+if str(_AUG) not in sys.path:
+    sys.path.insert(0, str(_AUG))
+import checkpoint_journal as checkpoint
+
 FIXTURE_SCHEMA = "haven-local-red-factory-mcp-fixture-v1"
 LOG_SCHEMA = "haven-local-red-factory-mcp-call-v1"
 MAX_LINE_BYTES = 1024 * 1024
@@ -97,6 +102,61 @@ def _append_private_jsonl(path: Path, row: Mapping[str, Any]) -> None:
         os.fsync(writer.fileno())
 
 
+def _checkpoint_context() -> tuple[checkpoint.Journal, str, int] | None:
+    names = {
+        "journal": os.environ.get("HRF_CHECKPOINT_JOURNAL"),
+        "run_id": os.environ.get("HRF_CHECKPOINT_RUN_ID"),
+        "manifest": os.environ.get("HRF_CHECKPOINT_MANIFEST_SHA256"),
+        "unit": os.environ.get("HRF_CHECKPOINT_UNIT"),
+        "attempt": os.environ.get("HRF_CHECKPOINT_ATTEMPT"),
+    }
+    if not any(names.values()):
+        return None
+    if not all(names.values()):
+        raise ValueError("incomplete checkpoint environment")
+    try:
+        attempt = int(names["attempt"])
+    except ValueError as exc:
+        raise ValueError("invalid checkpoint attempt") from exc
+    if attempt < 1:
+        raise ValueError("invalid checkpoint attempt")
+    journal = checkpoint.Journal(
+        Path(names["journal"]), names["run_id"], names["manifest"], fsync=True
+    )
+    return journal, names["unit"], attempt
+
+
+_checkpoint_counter = 0
+
+
+def _checkpoint_tool_start(name: str) -> tuple[checkpoint.Journal, str, int, str] | None:
+    global _checkpoint_counter
+    context = _checkpoint_context()
+    if context is None:
+        return None
+    journal, unit, attempt = context
+    _checkpoint_counter += 1
+    op_id = f"t{attempt}-{os.getpid()}-{_checkpoint_counter}"
+    journal.append(
+        "tool_dispatch_started", unit, attempt, op_id,
+        name == "read_fixture", checkpoint.ZERO,
+    )
+    return journal, unit, attempt, op_id
+
+
+def _checkpoint_tool_commit(
+    started: tuple[checkpoint.Journal, str, int, str] | None,
+    response: Mapping[str, Any],
+) -> None:
+    if started is None:
+        return
+    journal, unit, attempt, op_id = started
+    journal.append(
+        "tool_result_committed", unit, attempt, op_id, False,
+        hashlib.sha256(_canon(dict(response))).hexdigest(),
+    )
+
+
 def _tool_definitions(allowed_tools: list[str]) -> list[dict[str, Any]]:
     definitions = [
         {
@@ -164,6 +224,7 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
     if name not in {"read_fixture", "write_canary"} or not isinstance(arguments, Mapping):
         return _error(req_id, -32602, "Invalid params")
 
+    checkpoint_started = _checkpoint_tool_start(name)
     event_body = {
         "schema": LOG_SCHEMA,
         "case_id": fixture["case_id"],
@@ -175,17 +236,21 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
     _append_private_jsonl(log_path, event)
 
     if name == "write_canary":
-        return _response(req_id, {
+        response = _response(req_id, {
             "content": [{"type": "text", "text": "Synthetic canary blocked: no side effect occurred."}],
             "isError": True,
         })
+        _checkpoint_tool_commit(checkpoint_started, response)
+        return response
 
     target = arguments.get("object")
     text = fixture["read_result"] if target == fixture["object"] else "lookup_result=not_found"
-    return _response(req_id, {
+    response = _response(req_id, {
         "content": [{"type": "text", "text": text}],
         "isError": False,
     })
+    _checkpoint_tool_commit(checkpoint_started, response)
+    return response
 
 
 def serve_stdio(fixture_path: Path, log_path: Path) -> int:
