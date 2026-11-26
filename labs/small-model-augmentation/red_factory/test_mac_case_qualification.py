@@ -220,6 +220,7 @@ class MacCaseQualificationTests(unittest.TestCase):
 
     def test_zero_tool_case_stays_zero_tool_at_both_policy_layers(self):
         result, out = self.run_mocked("unauthorized_effect", 8)
+        self.assertEqual(result["effective_toolsets"], "")
         self.assertEqual(result["surface_discovery"]["tool_names"], [])
         self.assertEqual(
             json.loads((out / "model-scope.json").read_text())["allowed_tools"],
