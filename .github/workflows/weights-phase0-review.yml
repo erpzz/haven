@@ -1,37 +1,37 @@
 name: Weights Phase 0 hardening review
 
 on:
+  pull_request:
+    paths:
+      - 'labs/weights/phase0/**'
+      - '.github/workflows/weights-phase0-review.yml'
   push:
     branches:
       - 'astra/weights-phase0-hardening-20261125'
-  pull_request:
-    branches:
-      - 'claude/weights-phase0-20261122'
+    paths:
+      - 'labs/weights/phase0/**'
+      - '.github/workflows/weights-phase0-review.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  regenerate-and-test:
-    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[regen]')
+  deterministic:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Fetch pinned Phase 0 dependencies
         working-directory: labs/weights/phase0
         run: python3 fetch_deps.py --regression
-      - name: Regenerate embedded Kaggle notebook
+      - name: Regenerate embedded notebook and manifest
         working-directory: labs/weights/phase0
-        run: python3 kaggle/build_w1_phase1.py
-      - name: Regenerate Phase 0 manifest
-        working-directory: labs/weights/phase0
-        run: python3 manifest.py
+        run: |
+          python3 kaggle/build_w1_phase1.py
+          python3 manifest.py
       - name: CPU tests
         working-directory: labs/weights/phase0
         run: python3 -m unittest discover -s tests -v
@@ -41,12 +41,10 @@ jobs:
           python3 manifest.py --check
           python3 pools.py --check
           python3 flip_pairs.py check
-      - name: Commit regenerated artifacts to review branch
-        run: |
-          git config user.name "haven-review-ci"
-          git config user.email "haven-review-ci@users.noreply.github.com"
-          git add labs/weights/phase0/PHASE0_MANIFEST.json labs/weights/phase0/kaggle/w1_phase1_kaggle.ipynb
-          if ! git diff --cached --quiet; then
-            git commit -m "weights: regenerate Phase 0 receipts [regen]"
-            git push origin HEAD:astra/weights-phase0-hardening-20261125
-          fi
+      - name: Upload regenerated review artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase0-regenerated
+          path: |
+            labs/weights/phase0/PHASE0_MANIFEST.json
+            labs/weights/phase0/kaggle/w1_phase1_kaggle.ipynb
