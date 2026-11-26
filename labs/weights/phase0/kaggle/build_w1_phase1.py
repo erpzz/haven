@@ -19,7 +19,7 @@ import tarfile
 
 HERE = pathlib.Path(__file__).resolve().parents[1]
 CODE = ["common.py", "dedupe.py", "gen_hare.py", "sft.py", "pools.py", "flip_pairs.py", "deps.json", "fetch_deps.py",
-        "kaggle/w1_phase1.py", "tests/test_phase0.py", "tests/test_notebook_and_config.py", "oracle_export.py", "astra_batch.py", "gen_query.py",
+        "kaggle/w1_phase1.py", "tests/test_phase0.py", "oracle_export.py", "astra_batch.py", "gen_query.py",
         "rule8/evidence_flip_pairs.jsonl", "pools/dev_manifest.jsonl", "regression/config.json",
         "regression/mmlu_pro_subset.json"]
 MAIN_COMMIT = json.loads((HERE / "deps.json").read_text())["main"]["commit"]
