@@ -12,7 +12,7 @@ Small local models should not receive a whole repository and then be trusted to 
 4. a model may propose a unified diff only within that contract;
 5. HDF validates the proposal but **does not apply it**;
 6. a separate host-owned runner applies the patch, executes tests/re-scan, and records an external receipt hash;
-7. the finding lifecycle cannot close until a passing retest receipt has been recorded.
+7. a passing disposable-worktree retest can advance the finding to `verified`, but `closed` additionally requires a host integration receipt bound to an exact integration commit.
 
 The 4B is therefore a bounded patch proposer, not its own scanner, authorization layer, or judge.
 
@@ -24,7 +24,7 @@ The 4B is therefore a bounded patch proposer, not its own scanner, authorization
 - Host-owned fix packets with exact allowed files and response schema.
 - Unified-diff gate that rejects creates/deletes, renames/copies, binary patches, duplicate sections, paths outside the allowlist, and oversized patches.
 - Hash-chained append-only finding lifecycle ledger.
-- State machine: `detected -> triaged -> fix_proposed -> fix_applied -> retested(pass) -> closed`; failed retests remain at `fix_applied`; suppression requires an explicit reason.
+- State machine: `detected -> triaged -> fix_proposed -> fix_applied -> retested(pass) -> verified`; failed retests remain at `fix_applied`; `closed` from `verified` requires an integration receipt SHA-256 plus exact integration commit; suppression requires an explicit reason.
 - No model-authored "pass", "verified", or "closed" field is trusted.
 
 ## Explicitly not implemented yet
@@ -83,4 +83,4 @@ Build a host-owned runner that composes existing Haven controls instead of bypas
 - optional 4B fix proposal followed by deterministic retest and independent verifier/adjudicator;
 - development evaluation in #133, reserve forbidden.
 
-The success criterion is not "generate plausible fixes." It is: a finding with exact evidence can move to closed only after the host proves the authorized patch was applied and the prescribed retest passed.
+The success criterion is not "generate plausible fixes." A disposable-worktree pass only proves a candidate fix is `verified`. Actual `closed` status additionally requires later host evidence that the fix landed in an exact authoritative commit and passed the prescribed integrated retest.
