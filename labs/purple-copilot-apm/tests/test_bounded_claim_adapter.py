@@ -408,6 +408,87 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
                 for claim in released["claims"]:
                     self.assertEqual(claim, host_by_id[claim["id"]])
 
+    def test_claim_checkpoint_binding_changes_with_bundle_policy_renderer_or_run(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_overview", {"platform": "ad"}
+        )
+        policy = adapter.coverage_policy(bundle)
+        base = adapter.claim_checkpoint_binding(
+            bundle,
+            policy,
+            renderer_sha256="1" * 64,
+            run_manifest_sha256="2" * 64,
+        )
+        self.assertEqual(base["bundle_sha256"], policy["bundle_sha256"])
+        self.assertEqual(
+            base["coverage_policy_sha256"], policy["policy_sha256"]
+        )
+        self.assertEqual(len(base["binding_sha256"]), 64)
+
+        renderer_changed = adapter.claim_checkpoint_binding(
+            bundle,
+            policy,
+            renderer_sha256="3" * 64,
+            run_manifest_sha256="2" * 64,
+        )
+        run_changed = adapter.claim_checkpoint_binding(
+            bundle,
+            policy,
+            renderer_sha256="1" * 64,
+            run_manifest_sha256="4" * 64,
+        )
+        self.assertNotEqual(
+            base["binding_sha256"], renderer_changed["binding_sha256"]
+        )
+        self.assertNotEqual(
+            base["binding_sha256"], run_changed["binding_sha256"]
+        )
+
+        self.ce.edges.add(("U2", "GenericAll", "T0B"))
+        changed_result = tz.overview("ad", self.ce.run)
+        changed_bundle = adapter.build_bundle_from_result(
+            "purple_tier_zero_overview",
+            {"platform": "ad"},
+            changed_result,
+        )
+        changed_policy = adapter.coverage_policy(changed_bundle)
+        bundle_changed = adapter.claim_checkpoint_binding(
+            changed_bundle,
+            changed_policy,
+            renderer_sha256="1" * 64,
+            run_manifest_sha256="2" * 64,
+        )
+        self.assertNotEqual(
+            base["binding_sha256"], bundle_changed["binding_sha256"]
+        )
+        self.assertNotEqual(
+            base["coverage_policy_sha256"],
+            bundle_changed["coverage_policy_sha256"],
+        )
+
+    def test_claim_checkpoint_binding_rejects_policy_tamper_and_zero_hashes(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_search",
+            {"platform": "ad", "relationship": "genericall"},
+        )
+        policy = adapter.coverage_policy(bundle)
+        tampered = copy.deepcopy(policy)
+        tampered["required_ids"] = tampered["required_ids"][:-1]
+        with self.assertRaises(adapter.ClaimAdapterError):
+            adapter.claim_checkpoint_binding(
+                bundle,
+                tampered,
+                renderer_sha256="1" * 64,
+                run_manifest_sha256="2" * 64,
+            )
+        with self.assertRaises(adapter.ClaimAdapterError):
+            adapter.claim_checkpoint_binding(
+                bundle,
+                policy,
+                renderer_sha256="0" * 64,
+                run_manifest_sha256="2" * 64,
+            )
+
     def test_host_field_mutations_change_bundle_hash(self):
         original = self.result(
             "purple_tier_zero_principal",
