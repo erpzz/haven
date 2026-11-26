@@ -83,6 +83,10 @@ also rejects unexpected enabled non-bundled plugins; add another
 isolated profile. Guarded preflight and child launch additionally force
 HERMES_ENABLE_PROJECT_PLUGINS=0, because project-local plugins are a separate
 Hermes discovery path and must not be inherited from an ambient shell/cwd.
+The isolated HERMES_HOME must contain an owner-private regular 0600 `.env`;
+preflight rejects the profile if that file defines `HERMES_ENABLE_PROJECT_PLUGINS`
+at all. Hermes loads the profile `.env` with override semantics, so merely setting
+`0` in the parent environment is not a sufficient guard by itself.
 
 The fixture-level test runs with:
 
