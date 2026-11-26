@@ -3,6 +3,8 @@ import hashlib
 import json
 import os
 import stat
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -231,6 +233,106 @@ class PrivateEvalReceiptTests(unittest.TestCase):
             link.symlink_to(real)
             with self.assertRaisesRegex(receipt.ReceiptError, "non-symlink"):
                 receipt.load_private_receipt(link)
+
+    def test_cli_builds_public_report_from_private_receipts(self):
+        r = private("a", "c1", "cli")
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            manifest_path = root / "manifest.json"
+            receipt_path = root / "receipt.json"
+            output_path = root / "arm.json"
+            manifest_path.write_text(json.dumps(manifest("a")))
+            receipt.write_private_receipt(receipt_path, r)
+
+            cp = subprocess.run(
+                [
+                    sys.executable, str(Path(receipt.__file__)),
+                    "build-report",
+                    "--manifest", str(manifest_path),
+                    "--receipt", str(receipt_path),
+                    "--out", str(output_path),
+                ],
+                text=True, capture_output=True,
+            )
+            self.assertEqual(cp.returncode, 0, cp.stderr + cp.stdout)
+            summary = json.loads(cp.stdout)
+            self.assertEqual(summary["status"], "pass")
+            self.assertEqual(summary["cases"], 1)
+            self.assertEqual(stat.S_IMODE(output_path.stat().st_mode), 0o600)
+            report = json.loads(output_path.read_text())
+            self.assertEqual(report["rows"], [receipt.row_from_receipt(r)])
+            self.assertEqual(
+                summary["report_sha256"], sidecar.report_sha256(report)
+            )
+
+    def test_cli_existing_output_refuses_without_overwrite(self):
+        r = private("a", "c1", "existing")
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            manifest_path = root / "manifest.json"
+            receipt_path = root / "receipt.json"
+            output_path = root / "arm.json"
+            manifest_path.write_text(json.dumps(manifest("a")))
+            receipt.write_private_receipt(receipt_path, r)
+            output_path.write_text("sentinel")
+
+            cp = subprocess.run(
+                [
+                    sys.executable, str(Path(receipt.__file__)),
+                    "build-report",
+                    "--manifest", str(manifest_path),
+                    "--receipt", str(receipt_path),
+                    "--out", str(output_path),
+                ],
+                text=True, capture_output=True,
+            )
+            self.assertEqual(cp.returncode, 2)
+            self.assertEqual(output_path.read_text(), "sentinel")
+
+    def test_cli_manifest_duplicate_json_key_refused(self):
+        r = private("a", "c1", "dupe-manifest")
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            manifest_path = root / "manifest.json"
+            receipt_path = root / "receipt.json"
+            output_path = root / "arm.json"
+            good = json.dumps(manifest("a"))
+            manifest_path.write_text('{"schema":"x","schema":"y"}')
+            receipt.write_private_receipt(receipt_path, r)
+
+            cp = subprocess.run(
+                [
+                    sys.executable, str(Path(receipt.__file__)),
+                    "build-report",
+                    "--manifest", str(manifest_path),
+                    "--receipt", str(receipt_path),
+                    "--out", str(output_path),
+                ],
+                text=True, capture_output=True,
+            )
+            self.assertEqual(cp.returncode, 2)
+            self.assertFalse(output_path.exists())
+
+    def test_cli_validate_receipt_prints_only_fixed_metadata(self):
+        r = private("a", "c1", "validate-cli")
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "receipt.json"
+            receipt.write_private_receipt(path, r)
+            cp = subprocess.run(
+                [
+                    sys.executable, str(Path(receipt.__file__)),
+                    "validate-receipt", str(path),
+                ],
+                text=True, capture_output=True,
+            )
+            self.assertEqual(cp.returncode, 0)
+            value = json.loads(cp.stdout)
+            self.assertEqual(
+                set(value),
+                {"schema", "status", "receipt_sha256", "case_id", "arm"},
+            )
+            self.assertNotIn("controls", cp.stdout)
+            self.assertNotIn("sources", cp.stdout)
 
     def test_sidecar_cross_arm_reuse_still_hard_blocks(self):
         a = private("a", "c1", "a")
