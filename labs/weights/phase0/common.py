@@ -76,7 +76,6 @@ import bench_x  # noqa: E402,F401  (PR #115, pinned)
 
 FULL = dict(bench_x.ARMS["full"])          # advisory + gateway + verifier + one correction
 REPLAY = dict(FULL, correction=False)      # a fixed answer cannot revise itself
-AUTH_POLICIES = ("P1_proposal_requires_request", "P2_named_owner_only")
 
 
 # ------------------------------------------------------------------ JSONL
