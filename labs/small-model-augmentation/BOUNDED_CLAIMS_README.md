@@ -53,6 +53,8 @@ The Purple policy binds bundle hash, tool, complete allowed IDs, required IDs, a
 
 Global limitations are always returned independent of model selection.
 
+For checkpoint/resume, the Purple adapter also emits `haven.purple-claim-checkpoint-binding.v1`. Its binding SHA covers the exact bundle SHA, coverage-policy SHA, deterministic renderer SHA and #130 run-manifest SHA. #130 remains the recovery authority; the composed runner must use this binding as part of its immutable checkpoint identity. A changed bundle, coverage policy, renderer or underlying run manifest therefore cannot be resumed under the old claim execution identity.
+
 ## Author test evidence
 
 Author semantic reproduction before the final scope-hardening refinement: **26/26 PASS**. Final review then added a regression requiring a non-empty host scope; exact final-head clean-checkout execution is intentionally left to Codex/local validation rather than claimed here.
@@ -122,6 +124,7 @@ The existing prose verifier/fallback can remain for conversational framing until
 
 - exact committed-head clean-checkout suite;
 - independent review of the actual Purple Copilot coverage-policy integration;
+- target-Mac proof that any checkpointed production runner uses the claim checkpoint binding as part of its immutable #130 identity;
 - demonstration against real-model prose-verifier bypass cases;
 - Qwythos structured-claim selection accuracy;
 - full deterministic user-facing renderer;
