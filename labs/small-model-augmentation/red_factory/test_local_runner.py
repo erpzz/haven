@@ -1,11 +1,13 @@
 import json
+import os
+import stat
 import tempfile
 import threading
 import unittest
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from local_runner import normalize_loopback_base_url, run_case, run_suite
+from local_runner import main, normalize_loopback_base_url, run_case, run_suite
 from red_factory import TRANSCRIPT_SCHEMA, build_suite, make_case
 
 
@@ -205,6 +207,45 @@ class LocalRunnerTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             run_suite(base_url=self.base_url, model="local-4b", suite=tampered)
         self.assertEqual(ScriptedHandler.requests, [])
+
+    def test_cli_writes_private_receipt_and_reads_key_from_environment(self):
+        case = make_case("no_evidence", 11)
+        ScriptedHandler.responses.append(self.response_for(case))
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "red-run.json"
+            os.environ["HRF_TEST_LOCAL_KEY"] = "cli-secret"
+            try:
+                rc = main([
+                    "--base-url", self.base_url,
+                    "--model", "local-4b",
+                    "--seeds", "11",
+                    "--families", "no_evidence",
+                    "--api-key-env", "HRF_TEST_LOCAL_KEY",
+                    "--out", str(out),
+                ])
+            finally:
+                os.environ.pop("HRF_TEST_LOCAL_KEY", None)
+            self.assertEqual(rc, 0)
+            self.assertTrue(out.is_file())
+            self.assertEqual(stat.S_IMODE(out.stat().st_mode), 0o600)
+            data = json.loads(out.read_text())
+            self.assertEqual(data["summary"]["passes"], 1)
+            self.assertNotIn("cli-secret", out.read_text())
+            self.assertEqual(ScriptedHandler.requests[0]["authorization"], "Bearer cli-secret")
+
+    def test_cli_existing_output_refuses_before_model_request(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "exists.json"
+            out.write_text("{}")
+            with self.assertRaises(ValueError):
+                main([
+                    "--base-url", self.base_url,
+                    "--model", "local-4b",
+                    "--seeds", "1",
+                    "--families", "no_evidence",
+                    "--out", str(out),
+                ])
+            self.assertEqual(ScriptedHandler.requests, [])
 
     def test_retain_raw_is_explicit(self):
         case = make_case("no_evidence", 9)
