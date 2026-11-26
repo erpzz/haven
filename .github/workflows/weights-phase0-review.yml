@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - 'astra/weights-phase0-hardening-20261125'
+      - 'astra/w1-phase1-post-pilot-hardening-20261126'
     paths:
       - 'labs/weights/phase0/**'
       - '.github/workflows/weights-phase0-review.yml'
@@ -52,7 +53,7 @@ jobs:
           git add labs/weights/phase0/PHASE0_MANIFEST.json labs/weights/phase0/kaggle/w1_phase1_kaggle.ipynb
           if ! git diff --cached --quiet; then
             git commit -m "weights: regenerate hardened Phase 0 receipts [regen]"
-            git push origin HEAD:astra/weights-phase0-hardening-20261125
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
       - name: Upload regenerated review artifacts
         uses: actions/upload-artifact@v4
