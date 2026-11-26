@@ -113,6 +113,35 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
         self.assertIn("relationships: GenericAll=1", text)
         self.assertNotIn("T0B@SAMPLE", text)  # compact result did not expose per-edge target detail
 
+    def test_current_prose_verifier_semantic_gap_is_documented(self):
+        result = self.result(
+            "purple_tier_zero_principal",
+            {"platform": "ad", "principal": "G1@SAMPLE"},
+        )
+        turn = review.Turn("What control does G1 hold?")
+        turn.results.append(("purple_tier_zero_principal", json.dumps(result, sort_keys=True)))
+        citation = result["edges"][0]["citation"]
+
+        # All names and citations are real. The current prose verifier is intentionally
+        # lexical, so it does not bind arbitrary predicates/relationships/timestamps.
+        false_semantics = [
+            f"G1@SAMPLE has DCSync over T0B@SAMPLE [{citation}].",
+            f"G1@SAMPLE compromised T0B@SAMPLE [{citation}].",
+            f"Observed 2099-01-01T00:00:00Z: G1@SAMPLE controls T0B@SAMPLE [{citation}].",
+        ]
+        for text in false_semantics:
+            with self.subTest(text=text):
+                self.assertEqual(review.Verifier().problems(turn, text), [])
+
+        bundle = adapter.build_bundle("purple_tier_zero_principal", result)
+        edge = claims_of(bundle, "edge")[0]
+        released = self.release(bundle, [edge["id"]])
+        rendered = adapter.render_release(released)
+        self.assertIn("-[GenericAll]->", rendered)
+        self.assertNotIn("DCSync", rendered)
+        self.assertNotIn("compromised", rendered.lower())
+        self.assertNotIn("2099-01-01", rendered)
+
     def test_model_candidate_has_no_narrative_or_predicate_channel(self):
         _, bundle = self.bundle("purple_tier_zero_overview", {"platform": "ad"})
         cid = bundle["claims"][0]["id"]
