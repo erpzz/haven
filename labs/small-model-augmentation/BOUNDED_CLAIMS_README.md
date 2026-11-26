@@ -53,6 +53,25 @@ The Purple policy binds bundle hash, tool, complete allowed IDs, required IDs, a
 
 Global limitations are always returned independent of model selection.
 
+### Disclosure surfaces
+
+Purple now has a fixed hash-bound disclosure policy.
+
+The **selector model** receives only:
+- bundle/policy hashes;
+- tool name and release budget;
+- opaque claim ID;
+- coarse claim kind;
+- mandatory/optional bit.
+
+It does **not** receive claim payload values, citations, limitations, platform/snapshot provenance, raw host results, or provenance paths through this selector view.
+
+The **audit/log surface** is the hash/count coverage receipt: status/error codes, bundle/policy/candidate/release/receipt hashes, and required/selected counts/IDs. Raw candidate text and claim payload/provenance are not logged by this receipt.
+
+The **user surface** is the deterministic host renderer: host-rendered claim text, host-rendered citations and global limitations. Raw model candidate text, selector view, coverage policy, raw bundle and raw host result are not user output.
+
+CI injects payload/citation/limitation and malformed-candidate sentinels and proves they cannot appear in selector or coverage/error receipts. This is a disclosure contract for this pipeline, not a claim that the underlying host/source data itself is non-sensitive.
+
 For checkpoint/resume, the Purple adapter also emits `haven.purple-claim-checkpoint-binding.v1`. Its binding SHA covers the exact bundle SHA, coverage-policy SHA, deterministic renderer SHA and #130 run-manifest SHA. #130 remains the recovery authority; the composed runner must use this binding as part of its immutable checkpoint identity. A changed bundle, coverage policy, renderer or underlying run manifest therefore cannot be resumed under the old claim execution identity.
 
 ## Author test evidence
