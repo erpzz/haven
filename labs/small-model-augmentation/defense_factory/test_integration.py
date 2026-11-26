@@ -127,6 +127,7 @@ class IntegrationTests(unittest.TestCase):
             ledger=ledger,
             contract=self.contract,
             receipt=receipt,
+            repo=self.repo,
         )
         self.assertEqual(result["state"], "closed")
         self.assertEqual(result["integration_commit"], self.integration_commit)
@@ -179,7 +180,7 @@ class IntegrationTests(unittest.TestCase):
         )
         self.assertFalse(receipt["passed"])
         with self.assertRaises(ValueError):
-            verify_integration_receipt(receipt, bad_contract)
+            verify_integration_receipt(receipt, bad_contract, self.repo)
 
     def test_receipt_tamper_rejected(self):
         receipt = verify_landed_fix(
@@ -192,7 +193,7 @@ class IntegrationTests(unittest.TestCase):
         tampered = dict(receipt)
         tampered["integration_commit"] = "f" * 40
         with self.assertRaises(ValueError):
-            verify_integration_receipt(tampered, self.contract)
+            verify_integration_receipt(tampered, self.contract, self.repo)
 
     def test_wrong_contract_binding_rejected(self):
         receipt = verify_landed_fix(
@@ -209,7 +210,7 @@ class IntegrationTests(unittest.TestCase):
             recipes=self.recipes,
         )
         with self.assertRaises(ValueError):
-            verify_integration_receipt(receipt, other_contract)
+            verify_integration_receipt(receipt, other_contract, self.repo)
 
     def test_unverified_finding_cannot_close(self):
         receipt = verify_landed_fix(
@@ -227,6 +228,7 @@ class IntegrationTests(unittest.TestCase):
                 ledger=ledger,
                 contract=self.contract,
                 receipt=receipt,
+                repo=self.repo,
             )
 
     def test_integration_receipt_file_hash_tamper_rejected_even_if_rehashed(self):
@@ -243,10 +245,8 @@ class IntegrationTests(unittest.TestCase):
         tampered["integration_receipt_sha256"] = hashlib.sha256(
             json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode()
         ).hexdigest()
-        # The receipt is structurally self-consistent; this verifier is a receipt/contract verifier.
-        # The byte-level claim is established by verify_landed_fix at creation time, not re-opened here.
-        verified = verify_integration_receipt(tampered, self.contract)
-        self.assertEqual(verified["touched_file_sha256"]["app.txt"], "0" * 64)
+        with self.assertRaises(ValueError):
+            verify_integration_receipt(tampered, self.contract, self.repo)
 
 
 if __name__ == "__main__":
