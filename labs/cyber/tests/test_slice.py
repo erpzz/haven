@@ -58,12 +58,15 @@ class SliceTests(unittest.TestCase):
             "Also HCA-099 and policy 11111111-2222-3333-4444-555555555555 [R9].",
         ]
         srv = HTTPServer(("127.0.0.1", 0), Stub)
-        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        thread = threading.Thread(target=srv.serve_forever, daemon=True)
+        thread.start()
         try:
             rec = run("Is MFA enforced for Global Administrators under conditional access?", "fixtures/tenants/contoso-weak.json", [],
                       f"http://127.0.0.1:{srv.server_port}/v1", "stub", False, out_root=self.out)
         finally:
             srv.shutdown()
+            thread.join(timeout=1)
+            srv.server_close()
         g = rec["steps"]["grounding"]
         self.assertEqual(rec["outcome"], "grounding_failed")  # the stub invented a rule, an id and a reference
         self.assertEqual(g["unknown_rules"], ["HCA-099"])
@@ -75,12 +78,15 @@ class SliceTests(unittest.TestCase):
         Stub.seen = []
         Stub.replies = ['{"tool_id": "entra.ca.assess", "arguments": {"snapshot_path": "/etc/passwd"}}']
         srv = HTTPServer(("127.0.0.1", 0), Stub)
-        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        thread = threading.Thread(target=srv.serve_forever, daemon=True)
+        thread.start()
         try:
             rec = run("conditional access mfa", "fixtures/tenants/contoso-weak.json", [], f"http://127.0.0.1:{srv.server_port}/v1",
                       "stub", False, out_root=self.out)
         finally:
             srv.shutdown()
+            thread.join(timeout=1)
+            srv.server_close()
         self.assertEqual(rec["outcome"], "tool_selection_or_execution_failed")
         self.assertEqual(rec["steps"]["tool"]["error"]["code"], "path_out_of_scope")
 
