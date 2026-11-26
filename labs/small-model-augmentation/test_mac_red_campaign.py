@@ -271,6 +271,22 @@ class MacRedCampaignTests(unittest.TestCase):
         self.assertEqual(result["status"], "pass", result)
         self.assertEqual(result["n"], 2)
         self.assertEqual(len(supervisor_calls), 2)
+        self.assertRegex(result["tool_implementation_sha256"], r"^[0-9a-f]{64}$")
+        implementation = json.loads(
+            (out_dir / "tool-implementation-manifest.json").read_text()
+        )
+        self.assertEqual(
+            implementation["tool_implementation_sha256"],
+            result["tool_implementation_sha256"],
+        )
+        self.assertIn(
+            "mcp_scope_runtime.py",
+            {row["path"] for row in implementation["files"]},
+        )
+        self.assertIn(
+            "red_factory/mcp_fixture.py",
+            {row["path"] for row in implementation["files"]},
+        )
 
         policy_docs = []
         for call in supervisor_calls:
