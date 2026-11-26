@@ -13,8 +13,8 @@ This plan evaluates the small-model augmentation controls without touching the #
 3. **No training in this issue.** #123 owns weight training, teacher data, training batches and promotion through M4.
 4. **Development evidence stays development evidence.** Results from the public #113 suite or #115 development sets may guide engineering only. They do not qualify a release.
 5. If a development set is later used for training or selection, results on that set must be labeled training-contaminated and cannot be upgraded into independent evidence.
-6. Compared arms must use the same dataset/hash, model artifact/hash, engine, hardware, temperature and max-token setting. The scorer refuses mismatches. Arm code hashes may differ by design.
-7. Raw model transcripts and private runtime receipts are not required by the sidecar scorer and should not be committed. Each row carries a SHA-256 pointer to its host-owned private receipt.
+6. Compared arms must use the same dataset/hash, model artifact/hash, **semantic grader/adjudicator hash**, engine, hardware, temperature and max-token setting. The scorer refuses mismatches. Arm code hashes may differ by design.
+7. Raw model transcripts and private runtime receipts are not required by the sidecar scorer and should not be committed. Each row carries a SHA-256 pointer to its host-owned private receipt. Receipt hashes must be unique within an arm **and disjoint across compared arms**, so one private receipt cannot be reused or swapped between baseline and candidate.
 
 ## Exact development references reviewed
 
@@ -206,6 +206,7 @@ Each arm report must bind:
 
 - dataset id/hash;
 - exact model artifact/hash;
+- exact semantic grader/adjudicator hash;
 - engine and hardware;
 - temperature/max tokens;
 - arm code hash;
