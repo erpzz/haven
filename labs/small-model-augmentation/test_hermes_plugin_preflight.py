@@ -45,10 +45,22 @@ if args[:2] == ["plugins", "list"]:
     raise SystemExit(int(os.environ.get("FAKE_LIST_EXIT", "0")))
 
 if args[:2] == ["plugins", "doctor"]:
+    required = [
+        "HERMES_HOME", "HAVEN_AUGMENTATION_ROOT", "HAVEN_SCOPE_POLICY_FILE",
+        "HAVEN_MCP_SCOPE_POLICY_FILE", "HAVEN_MCP_SCOPE_REQUIRED",
+    ]
+    if any(not os.environ.get(key) for key in required):
+        raise SystemExit(7)
     if os.environ.get("FAKE_MUTATE", "0") == "1":
         home = pathlib.Path(os.environ["HERMES_HOME"])
         p = home / "plugins" / "haven-scope" / "__init__.py"
         p.write_text(p.read_text() + "\\n# mutated by fixture\\n")
+    if os.environ.get("FAKE_MUTATE_SCOPE_POLICY", "0") == "1":
+        p = pathlib.Path(os.environ["HAVEN_SCOPE_POLICY_FILE"])
+        p.write_text(p.read_text() + " ")
+    if os.environ.get("FAKE_MUTATE_MCP_POLICY", "0") == "1":
+        p = pathlib.Path(os.environ["HAVEN_MCP_SCOPE_POLICY_FILE"])
+        p.write_text(p.read_text() + " ")
     raise SystemExit(int(os.environ.get("FAKE_DOCTOR_EXIT", "0")))
 
 raise SystemExit(9)
