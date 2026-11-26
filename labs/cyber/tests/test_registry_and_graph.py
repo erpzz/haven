@@ -41,6 +41,72 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(len(lines), 5)
         self.assertTrue(all("input_sha256" in x and "snapshot_path" not in json.dumps(x) for x in lines))
 
+    def test_falsey_non_object_arguments_are_not_normalized_to_empty_object(self):
+        r = Registry(None)
+        calls = []
+        r.register(ToolSpec("x.empty", "e",
+                            {"type": "object", "properties": {}, "additionalProperties": False},
+                            {}, lambda: calls.append("called") or 1))
+        self.assertTrue(r.invoke("x.empty", None)["ok"])  # omitted arguments legitimately mean {}
+        self.assertEqual(calls, ["called"])
+        for bad in ([], "", False, 0):
+            with self.subTest(bad=bad):
+                self.assertEqual(r.invoke("x.empty", bad)["error"]["code"], "invalid_input")
+        self.assertEqual(calls, ["called"])
+
+    def test_recursive_schema_validation_blocks_nested_bad_values_before_dispatch(self):
+        r = Registry(None)
+        calls = []
+        schema = {
+            "type": "object", "additionalProperties": False,
+            "required": ["config", "ids"],
+            "properties": {
+                "config": {
+                    "type": "object", "additionalProperties": False,
+                    "required": ["enabled"],
+                    "properties": {"enabled": {"type": "boolean"}},
+                },
+                "ids": {
+                    "type": "array", "minItems": 1, "maxItems": 2,
+                    "items": {"type": "integer", "minimum": 1},
+                },
+            },
+        }
+        r.register(ToolSpec("x.nested", "n", schema, {},
+                            lambda config, ids: calls.append((config, ids)) or 1))
+        self.assertTrue(r.invoke("x.nested", {"config": {"enabled": True}, "ids": [1, 2]})["ok"])
+        self.assertEqual(len(calls), 1)
+        bad = [
+            {"config": {"enabled": 1}, "ids": [1]},
+            {"config": {"enabled": True, "extra": 1}, "ids": [1]},
+            {"config": {"enabled": True}, "ids": [True]},
+            {"config": {"enabled": True}, "ids": []},
+            {"config": {"enabled": True}, "ids": [1], "extra": 1},
+        ]
+        for value in bad:
+            with self.subTest(value=value):
+                self.assertEqual(r.invoke("x.nested", value)["error"]["code"], "invalid_input")
+        self.assertEqual(len(calls), 1)
+
+    def test_graph_collect_validates_nested_id_items(self):
+        self.assertEqual(
+            self.reg.invoke("entra.graph.collect", {"emergency_account_ids": [True]})["error"]["code"],
+            "prerequisite_failed",
+        )
+        # Validation occurs after the live-tool prerequisite; exercise the same public schema in an available stub.
+        spec = self.reg.tools["entra.graph.collect"]
+        r = Registry(None)
+        r.register(ToolSpec("x.graph-shape", "g", spec.input_schema, {}, lambda emergency_account_ids: 1))
+        for bad in ([True], [""], ["x"] * 33):
+            with self.subTest(bad=bad):
+                self.assertEqual(r.invoke("x.graph-shape", {"emergency_account_ids": bad})["error"]["code"], "invalid_input")
+        self.assertTrue(r.invoke("x.graph-shape", {"emergency_account_ids": ["u1"]})["ok"])
+
+    def test_invalid_host_schema_fails_cleanly_before_dispatch(self):
+        r = Registry(None)
+        r.register(ToolSpec("x.bad-schema", "b", {"type": "date"}, {}, lambda: 1))
+        self.assertEqual(r.invoke("x.bad-schema", "2026-01-01")["error"]["code"], "invalid_schema")
+
     def test_live_tool_gated(self):
         with mock.patch.dict(os.environ, {"HAVEN_CYBER_ALLOW_LIVE": "", "HAVEN_GRAPH_TOKEN": ""}):
             self.assertEqual(self.reg.invoke("entra.graph.collect", {"emergency_account_ids": []})["error"]["code"], "prerequisite_failed")
