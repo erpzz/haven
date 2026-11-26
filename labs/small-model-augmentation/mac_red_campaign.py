@@ -29,7 +29,7 @@ import sys
 import tempfile
 import threading
 import time
-from http.server import ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any, Mapping
 
 import guarded_model_supervisor as supervisor
@@ -50,6 +50,99 @@ CASE_SCHEMA = "haven.mac-red-per-case-receipt.v1"
 MAX_HASH_BYTES = 64 * 1024 * 1024 * 1024
 HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 TOOLSETS = re.compile(r"[A-Za-z0-9_.:-]+(?:,[A-Za-z0-9_.:-]+)*\Z", re.ASCII)
+
+
+class _DiscoveryState:
+    def __init__(self, expected_model: str):
+        self.expected_model = expected_model
+        self.requests: list[dict[str, Any]] = []
+        self.invalid_request = False
+
+
+class _DiscoveryHandler(BaseHTTPRequestHandler):
+    protocol_version = "HTTP/1.0"
+    server_version = "haven-mac-red-discovery"
+    sys_version = ""
+
+    def log_message(self, *args):
+        pass
+
+    def _json(self, code, value):
+        body = json.dumps(value).encode("utf-8")
+        self.send_response(code)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def do_GET(self):
+        if self.path.rstrip("/").endswith("/models"):
+            model = self.server.state.expected_model
+            return self._json(200, {
+                "object": "list",
+                "data": [{"id": model, "object": "model"}],
+            })
+        self._json(404, {"error": "not found"})
+
+    def do_POST(self):
+        try:
+            length = int(self.headers.get("Content-Length", "-1"))
+        except ValueError:
+            length = -1
+        if length < 0 or length > tool_visibility.MAX_REQUEST_BYTES:
+            self.server.state.invalid_request = True
+            return self._json(413, {"error": "invalid request"})
+        try:
+            request = json.loads(self.rfile.read(length).decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            self.server.state.invalid_request = True
+            return self._json(400, {"error": "invalid request"})
+        if (
+            type(request) is not dict
+            or request.get("model") != self.server.state.expected_model
+            or "messages" not in request
+        ):
+            self.server.state.invalid_request = True
+            return self._json(400, {"error": "invalid request"})
+        self.server.state.requests.append(request)
+        model = self.server.state.expected_model
+        message = {"role": "assistant", "content": "OK"}
+        usage = {"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2}
+        if not request.get("stream"):
+            return self._json(200, {
+                "id": "probe", "object": "chat.completion",
+                "created": int(time.time()), "model": model, "usage": usage,
+                "choices": [{
+                    "index": 0, "message": message, "finish_reason": "stop"
+                }],
+            })
+        chunks = [
+            {
+                "id": "probe", "object": "chat.completion.chunk",
+                "created": 0, "model": model,
+                "choices": [{
+                    "index": 0,
+                    "delta": {"role": "assistant", "content": "OK"},
+                    "finish_reason": None,
+                }],
+            },
+            {
+                "id": "probe", "object": "chat.completion.chunk",
+                "created": 0, "model": model, "usage": usage,
+                "choices": [{
+                    "index": 0, "delta": {}, "finish_reason": "stop"
+                }],
+            },
+        ]
+        body = (
+            "".join("data: " + json.dumps(row) + "\\n\\n" for row in chunks)
+            + "data: [DONE]\\n\\n"
+        ).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
 
 
 class CampaignError(RuntimeError):
@@ -180,12 +273,12 @@ def _model_policy(case, fixture: Mapping[str, Any], logical_surface: Mapping[str
 
 
 def _capture_surface(*, hermes: Path, hermes_home: Path, toolsets: str,
-                     fixture_path: Path, call_log: Path, discovery_policy: Path,
+                     model_alias: str, fixture_path: Path, call_log: Path, discovery_policy: Path,
                      raw_mcp_policy: Path, augmentation_root: Path,
                      timeout: float, env: Mapping[str, str] | None = None):
     """Capture exact first model-visible tool names from pinned real Hermes."""
-    state = tool_visibility.ProbeState()
-    server = ThreadingHTTPServer(("127.0.0.1", 0), tool_visibility.ProbeHandler)
+    state = _DiscoveryState(model_alias)
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _DiscoveryHandler)
     server.state = state
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
@@ -194,7 +287,7 @@ def _capture_surface(*, hermes: Path, hermes_home: Path, toolsets: str,
         str(hermes), "chat", "--oneshot", "--format", "stream-json",
         "--toolsets", toolsets, "--max-turns", "1", "--provider", "custom",
         "--base-url", f"http://127.0.0.1:{port}/v1",
-        "--api-key", "local-probe", "--model", tool_visibility.PROBE_MODEL,
+        "--api-key", "local-probe", "--model", model_alias,
         "-q", "Reply exactly OK. Do not call any tool.",
     ]
     child_env = dict(os.environ if env is None else env)
@@ -427,6 +520,7 @@ def run_campaign(*, hermes: Path, hermes_home: Path, toolsets: str,
             hermes=hermes,
             hermes_home=hermes_home,
             toolsets=toolsets,
+            model_alias=alias,
             fixture_path=fixture_path,
             call_log=discovery_log,
             discovery_policy=discovery_policy_path,
