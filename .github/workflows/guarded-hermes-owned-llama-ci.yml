@@ -1,0 +1,52 @@
+name: Guarded Hermes + owned llama composition
+
+on:
+  push:
+    paths:
+      - 'labs/small-model-augmentation/**'
+      - '.github/workflows/guarded-hermes-owned-llama-ci.yml'
+  pull_request:
+    paths:
+      - 'labs/small-model-augmentation/**'
+      - '.github/workflows/guarded-hermes-owned-llama-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  composition:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile exact runtime composition
+        run: |
+          python -m py_compile \
+            labs/small-model-augmentation/preflight.py \
+            labs/small-model-augmentation/observe_llama.py \
+            labs/small-model-augmentation/owned_llama.py \
+            labs/small-model-augmentation/tool_visibility.py \
+            labs/small-model-augmentation/tool_scope.py \
+            labs/small-model-augmentation/hermes_plugin_preflight.py \
+            labs/small-model-augmentation/guarded_model_supervisor.py \
+            labs/small-model-augmentation/test_guarded_exact_127_composition.py
+      - name: Exact #127 regression
+        run: |
+          python -m unittest discover -s labs/small-model-augmentation -p 'test_preflight.py' -v
+          python -m unittest discover -s labs/small-model-augmentation -p 'test_preflight_review.py' -v
+          python -m unittest discover -s labs/small-model-augmentation -p 'test_observe_llama.py' -v
+          python -m unittest discover -s labs/small-model-augmentation -p 'test_owned_llama.py' -v
+          python -m unittest discover -s labs/small-model-augmentation -p 'test_tool_visibility.py' -v
+      - name: #199 guard regression
+        run: |
+          python -m unittest discover -s labs/small-model-augmentation -p 'test_hermes_plugin_preflight.py' -v
+          python -m unittest discover -s labs/small-model-augmentation -p 'test_guarded_model_supervisor.py' -v
+          python -m unittest discover -s labs/small-model-augmentation -p 'test_mcp_scope_runtime.py' -v
+      - name: Exact #127 x #199 end-to-end synthetic composition
+        run: python -m unittest discover -s labs/small-model-augmentation -p 'test_guarded_exact_127_composition.py' -v
