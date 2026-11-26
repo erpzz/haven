@@ -43,6 +43,11 @@ INSTRUCTIONS = (
     "cyber_call. A tool's 'fail' finding is a claim until evidence.verify corroborates it. Never invent tool ids.")
 
 
+def _dispatch_cyber_call(reg, gate, tool_id: str, arguments: dict | None = None):
+    final_arguments = {} if arguments is None else arguments
+    _authorize(gate, "cyber_call", {"tool_id": tool_id, "arguments": final_arguments})
+    return reg.invoke(tool_id, final_arguments, caller="mcp")
+
 def build_server():
     try:
         from mcp.server.mcpserver import MCPServer as Server  # mcp >= 2
@@ -80,9 +85,7 @@ def build_server():
     @srv.tool(description="Invoke a security tool by id with a JSON object of arguments. Read-only tools only; paths are limited to fixtures/, runs/ and $HAVEN_CYBER_DATA.",
               annotations=ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=True))
     def cyber_call(tool_id: str, arguments: dict | None = None) -> str:
-        final_arguments = {} if arguments is None else arguments
-        _authorize(gate, "cyber_call", {"tool_id": tool_id, "arguments": final_arguments})
-        out = reg.invoke(tool_id, final_arguments, caller="mcp")
+        out = _dispatch_cyber_call(reg, gate, tool_id, arguments)
         text = json.dumps(out, default=str)
         if len(text) > 60000:  # keep small-model context sane; findings.lookup gives a filtered view
             return json.dumps({"ok": out.get("ok"), "truncated": True, "chars": len(text),
