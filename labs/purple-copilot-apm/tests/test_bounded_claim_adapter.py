@@ -446,11 +446,12 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
         )
 
         self.ce.edges.append(("U2", "GenericAll", "T0B"))
-        changed_result = tz.overview("ad", self.ce.run)
-        changed_bundle = adapter.build_bundle_from_result(
-            "purple_tier_zero_overview",
-            {"platform": "ad"},
-            changed_result,
+        record_paths(tz.evidence("ad", self.ce.run))
+        changed_result = self.result(
+            "purple_tier_zero_overview", {"platform": "ad"}
+        )
+        changed_bundle = adapter.build_bundle(
+            "purple_tier_zero_overview", changed_result
         )
         changed_policy = adapter.coverage_policy(changed_bundle)
         bundle_changed = adapter.claim_checkpoint_binding(
@@ -526,7 +527,7 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
         bundle = copy.deepcopy(bundle)
         bundle["claims"][0]["payload"]["private_note"] = "PAYLOAD-SENTINEL-7731"
         bundle["claims"][0]["citation"] = "CITATION-SENTINEL-8842"
-        bundle["limitations"].append("LIMITATION-SENTINEL-9953")
+        bundle["global_limitations"].append("LIMITATION-SENTINEL-9953")
         policy = adapter.coverage_policy(bundle)
         view = adapter.selector_view(bundle, policy)
         selector_json = json.dumps(view, sort_keys=True)
