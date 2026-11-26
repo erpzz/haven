@@ -129,6 +129,11 @@ class HermesPluginPreflightTests(unittest.TestCase):
         self.assertEqual(result["hermes_sha256"], self.hermes_sha)
         self.assertEqual(result["plugin_init_sha256"], self.init_sha)
         self.assertEqual(result["plugin_manifest_sha256"], self.manifest_sha)
+        self.assertEqual(result["scope_engine_sha256"], self.engine_sha)
+        self.assertEqual(result["scope_policy_sha256"], self.scope_policy_sha)
+        self.assertEqual(result["mcp_policy_sha256"], self.mcp_policy_sha)
+        self.assertEqual(result["scope_policy_tool_count"], 1)
+        self.assertEqual(result["mcp_policy_tool_count"], 1)
         self.assertEqual(result["enabled_user_plugin_count"], 1)
         self.assertTrue(result["doctor_passed"])
 
@@ -205,6 +210,48 @@ class HermesPluginPreflightTests(unittest.TestCase):
             **{**self.base_kwargs(), "hermes_sha256": "nope"}
         )
         self.assertEqual(bad_hash["errors"], ["INVALID_ENROLLED_HASH"])
+
+    def test_scope_engine_hash_is_enrolled(self):
+        result = preflight.run_preflight(
+            **{**self.base_kwargs(), "scope_engine_sha256": "4" * 64}
+        )
+        self.assertEqual(result["errors"], ["SCOPE_ENGINE_HASH_MISMATCH"])
+
+    def test_both_policy_hashes_are_enrolled(self):
+        scope_bad = preflight.run_preflight(
+            **{**self.base_kwargs(), "scope_policy_sha256": "5" * 64}
+        )
+        self.assertEqual(scope_bad["errors"], ["SCOPE_POLICY_HASH_MISMATCH"])
+        mcp_bad = preflight.run_preflight(
+            **{**self.base_kwargs(), "mcp_policy_sha256": "6" * 64}
+        )
+        self.assertEqual(mcp_bad["errors"], ["MCP_POLICY_HASH_MISMATCH"])
+
+    def test_invalid_policy_bytes_fail_even_when_hash_matches(self):
+        self.scope_policy.write_text("{}")
+        self.scope_policy.chmod(0o600)
+        bad_hash = sha(self.scope_policy)
+        result = preflight.run_preflight(
+            **{**self.base_kwargs(), "scope_policy_sha256": bad_hash}
+        )
+        self.assertEqual(result["errors"], ["SCOPE_POLICY_INVALID"])
+
+    def test_policy_files_must_be_owner_private(self):
+        self.scope_policy.chmod(0o644)
+        result = self.preflight()
+        self.assertEqual(result["errors"], ["POLICY_FILE_UNTRUSTED"])
+
+    def test_doctor_time_policy_mutation_is_detected(self):
+        scope = self.preflight(FAKE_MUTATE_SCOPE_POLICY=1)
+        self.assertEqual(
+            scope["errors"], ["SCOPE_POLICY_CHANGED_DURING_PREFLIGHT"]
+        )
+        self._write_policy(self.scope_policy, "mcp_haven_status")
+        self.scope_policy_sha = sha(self.scope_policy)
+        mcp = self.preflight(FAKE_MUTATE_MCP_POLICY=1)
+        self.assertEqual(
+            mcp["errors"], ["MCP_POLICY_CHANGED_DURING_PREFLIGHT"]
+        )
 
     def test_receipt_does_not_echo_cli_output_or_home(self):
         result = self.preflight(FAKE_DOCTOR_EXIT=3)
