@@ -40,8 +40,9 @@ Rows carry only aggregate/control metrics and a SHA-256 of the private host-owne
 `eval_receipt.py` now defines that private receipt rather than leaving `receipt_sha256` opaque. One receipt is one arm/case execution and binds:
 
 - the exact sidecar manifest identity/settings;
-- #127 admission receipt plus a stable private runtime-profile hash;
-- stable private request-settings and world hashes;
+- #127 admission receipt plus an explicit private runtime profile: exact Hermes/server/model hashes, exact model alias, effective context (>=64K), provider and owned-loopback mode; the stable runtime-profile hash is derived from those fields;
+- an explicit private request profile: temperature/max tokens (which must match the public manifest), request seed, max turns and stream mode; the stable request-settings hash is derived from those fields;
+- stable private world hash;
 - #129 tool-policy hash;
 - #131 catalogue hash and selection receipt;
 - #132 claim bundle, claim policy and deterministic renderer;
