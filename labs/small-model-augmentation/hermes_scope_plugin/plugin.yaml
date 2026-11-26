@@ -1,0 +1,5 @@
+name: haven-scope
+version: "0.1.0"
+description: Host-owned, fail-closed pre-dispatch tool-scope veto for isolated Hermes sessions
+provides_hooks:
+  - pre_tool_call
