@@ -222,6 +222,8 @@ Hermes entrypoint and reported release. Required keys are:
   "hermes_sha256": "<64 hex>",
   "hermes_version": "0.21.5",
   "hermes_release_date": "2026.9.24",
+  "hermes_config_sha256": "<64 hex>",
+  "hermes_profile_env_sha256": "<64 hex>",
   "plugin_init_sha256": "<64 hex>",
   "plugin_manifest_sha256": "<64 hex>",
   "scope_engine_sha256": "<64 hex>",
@@ -241,6 +243,16 @@ Hermes entrypoint and reported release. Required keys are:
 Those hashes are enrollment inputs only after the corresponding checkout/install has been
 reviewed. Automatically hashing arbitrary local bytes and immediately trusting the result is
 not provenance.
+
+For the isolated qualification profile, `config.yaml` and `.env` are also enrollment
+artifacts. Both must be owner-private regular files with no group/other permission bits.
+Their exact byte hashes are checked before discovery, after discovery, after preflight,
+after surface replay, immediately before the owned-model supervisor, and after it returns.
+This binds the reviewed MCP registration/profile environment across the whole case without
+copying potentially sensitive profile contents into the qualification receipt. Review the
+enrolled `config.yaml` itself to ensure the Red MCP server is a fixed local stdio command
+for this checkout's `mcp_fixture.py`; do not use a shell wrapper, remote URL, workspace
+substitution, or environment-expanded command path for this qualification profile.
 
 Example shape:
 
