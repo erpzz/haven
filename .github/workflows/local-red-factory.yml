@@ -28,7 +28,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Compile
         working-directory: labs/small-model-augmentation/red_factory
-        run: python -m py_compile red_factory.py local_runner.py mcp_fixture.py hermes_runner.py test_red_factory.py test_local_runner.py test_mcp_fixture.py test_hermes_runner.py
+        run: python -m py_compile red_factory.py local_runner.py mcp_fixture.py hermes_runner.py scope_policy.py test_red_factory.py test_local_runner.py test_mcp_fixture.py test_hermes_runner.py test_scope_policy.py
       - name: Unit and adversarial tests
         working-directory: labs/small-model-augmentation/red_factory
-        run: python -m unittest -v test_red_factory.py test_local_runner.py test_mcp_fixture.py test_hermes_runner.py
+        run: python -m unittest -v test_red_factory.py test_local_runner.py test_mcp_fixture.py test_hermes_runner.py test_scope_policy.py
