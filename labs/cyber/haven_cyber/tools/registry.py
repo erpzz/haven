@@ -74,13 +74,15 @@ def scoped_path(p: str) -> Path:
     return path
 
 
-def _validate_value(schema: dict, value: Any, path: str) -> None:
+def _validate_value(schema: dict, value: Any, path: str, depth: int = 0) -> None:
     """Validate the JSON-Schema subset used by registry tool inputs.
 
     This intentionally supports a small, explicit subset rather than pretending to
     be a general JSON Schema implementation: type, enum, object properties/required/
     additionalProperties, array items, numeric bounds, item bounds and string bounds.
     """
+    if depth > 32:
+        raise ToolError("invalid_input", "arguments nested too deeply")
     t = schema.get("type")
     label = path or "arguments"
     if t == "integer":
@@ -130,7 +132,7 @@ def _validate_value(schema: dict, value: Any, path: str) -> None:
             if type(item_schema) is not dict:
                 raise ToolError("invalid_input", f"{label} has invalid item schema")
             for i, item in enumerate(value):
-                _validate_value(item_schema, item, f"{label}[{i}]")
+                _validate_value(item_schema, item, f"{label}[{i}]", depth + 1)
 
     if t == "object":
         props = schema.get("properties", {})
@@ -151,13 +153,23 @@ def _validate_value(schema: dict, value: Any, path: str) -> None:
             if child is not None:
                 if type(child) is not dict:
                     raise ToolError("invalid_input", f"{label}.{key} has invalid schema")
-                _validate_value(child, item, f"{label}.{key}" if path else key)
+                _validate_value(child, item, f"{label}.{key}" if path else key, depth + 1)
 
 
 def validate(schema: dict, args: dict) -> None:
     if type(schema) is not dict:
         raise ToolError("invalid_input", "tool input schema must be an object")
     _validate_value(schema, args, "")
+
+
+def _audit_input_sha256(args: Any) -> str:
+    """Hash arguments without letting malformed input crash before validation."""
+    try:
+        raw = json.dumps(args, sort_keys=True, separators=(",", ":"), default=str,
+                         allow_nan=False).encode()
+    except (TypeError, ValueError, RecursionError):
+        raw = ("<invalid-json:" + type(args).__name__ + ">").encode()
+    return hashlib.sha256(raw).hexdigest()
 
 
 
@@ -189,7 +201,7 @@ class Registry:
         args = {} if args is None else args
         t0 = time.monotonic()
         rec = {"t": utcnow(), "tool": tool_id, "caller": caller,
-               "input_sha256": hashlib.sha256(json.dumps(args, sort_keys=True, default=str).encode()).hexdigest()}
+               "input_sha256": _audit_input_sha256(args)}
         try:
             spec = self.tools.get(tool_id)
             if spec is None:
