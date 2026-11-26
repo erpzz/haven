@@ -129,8 +129,17 @@ def tool_names(request):
 
 def validate_inputs(toolsets, required_prefixes, expected_names=None,
                     expected_surface_sha256=None, expected_tool_count=None):
-    if type(toolsets) is not str or TOOLSETS.fullmatch(toolsets) is None:
+    if type(toolsets) is not str:
         return "INVALID_TOOLSETS"
+    if toolsets:
+        if TOOLSETS.fullmatch(toolsets) is None:
+            return "INVALID_TOOLSETS"
+    elif not (
+        expected_tool_count == 0
+        and (expected_names is None or expected_names == [])
+        and required_prefixes == []
+    ):
+        return "EMPTY_TOOLSETS_REQUIRE_ZERO_EXPECTATION"
     if (type(required_prefixes) is not list
             or any(type(x) is not str or PREFIX.fullmatch(x) is None for x in required_prefixes)
             or len(required_prefixes) != len(set(required_prefixes))):
