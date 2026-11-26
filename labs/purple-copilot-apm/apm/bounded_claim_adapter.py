@@ -402,7 +402,7 @@ def disclosure_policy() -> dict:
         ],
         "model_hidden_fields": [
             "claims[].payload",
-            "claims[].citations",
+            "claims[].citation",
             "limitations",
             "scope.platform",
             "scope.snapshot",
@@ -453,11 +453,11 @@ def selector_view(bundle: dict, policy: dict) -> dict:
         if type(claim) is not dict:
             raise ClaimAdapterError("invalid claim in selector bundle")
         cid = claim.get("id")
-        kind = claim.get("kind")
+        payload = claim.get("payload")
+        kind = payload.get("claim_type") if type(payload) is dict else None
         if type(cid) is not str or cid not in policy["allowed_ids"]:
             raise ClaimAdapterError("selector claim outside policy")
-        if not _text(kind, 128):
-            raise ClaimAdapterError("invalid selector claim kind")
+        kind = _text(kind, 128)
         by_id[cid] = kind
     if set(by_id) != set(policy["allowed_ids"]):
         raise ClaimAdapterError("selector claim set mismatch")
