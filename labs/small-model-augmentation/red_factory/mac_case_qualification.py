@@ -75,6 +75,9 @@ SOURCE_BINDINGS = {
     "red_runner_sha256": RED / "hermes_runner.py",
     "red_fixture_sha256": RED / "mcp_fixture.py",
     "red_factory_sha256": RED / "red_factory.py",
+    "local_runner_sha256": RED / "local_runner.py",
+    "mac_case_qualification_sha256": RED / "mac_case_qualification.py",
+    "mac_final_gate_control_sha256": RED / "mac_final_gate_control.py",
 }
 TOOL_IMPLEMENTATION_KEYS = (
     "plugin_init_sha256",
