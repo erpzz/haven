@@ -335,6 +335,76 @@ class PrivateEvalReceiptTests(unittest.TestCase):
         self.assertEqual(a, b)
         self.assertNotEqual(a, c)
 
+    def test_cli_private_compare_reports_only_field_names(self):
+        a = private("a", "c1", "cli-a")
+        b = private("b", "c1", "cli-b")
+        for key in (
+            "claim_bundle_sha256", "claim_policy_sha256", "renderer_sha256"
+        ):
+            b["controls"][key] = a["controls"][key]
+        rehash(b)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            a_path = root / "a.json"
+            b_path = root / "b.json"
+            receipt.write_private_receipt(a_path, a)
+            receipt.write_private_receipt(b_path, b)
+            cp = subprocess.run(
+                [
+                    sys.executable, str(Path(receipt.__file__)),
+                    "compare-private",
+                    "--a", str(a_path),
+                    "--b", str(b_path),
+                    "--allow-control-difference", "admission_receipt_sha256",
+                    "--allow-control-difference", "tool_policy_sha256",
+                    "--allow-control-difference", "selection_receipt_sha256",
+                    "--allow-control-difference", "run_manifest_sha256",
+                ],
+                text=True, capture_output=True,
+            )
+            self.assertEqual(cp.returncode, 0, cp.stdout + cp.stderr)
+            value = json.loads(cp.stdout)
+            self.assertEqual(value["status"], "pass")
+            self.assertIn("tool_policy_sha256", value["observed_control_differences"])
+            self.assertNotIn(a["controls"]["tool_policy_sha256"], cp.stdout)
+            self.assertNotIn(b["controls"]["tool_policy_sha256"], cp.stdout)
+
+    def test_cli_private_compare_blocks_runtime_drift(self):
+        a = private("a", "c1", "drift-a")
+        b = private("b", "c1", "drift-b")
+        for key in (
+            "claim_bundle_sha256", "claim_policy_sha256", "renderer_sha256"
+        ):
+            b["controls"][key] = a["controls"][key]
+        b["controls"]["runtime_profile_sha256"] = H("runtime-drift")
+        rehash(b)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            a_path = root / "a.json"
+            b_path = root / "b.json"
+            receipt.write_private_receipt(a_path, a)
+            receipt.write_private_receipt(b_path, b)
+            cp = subprocess.run(
+                [
+                    sys.executable, str(Path(receipt.__file__)),
+                    "compare-private",
+                    "--a", str(a_path),
+                    "--b", str(b_path),
+                    "--allow-control-difference", "admission_receipt_sha256",
+                    "--allow-control-difference", "tool_policy_sha256",
+                    "--allow-control-difference", "selection_receipt_sha256",
+                    "--allow-control-difference", "run_manifest_sha256",
+                ],
+                text=True, capture_output=True,
+            )
+            self.assertEqual(cp.returncode, 2)
+            value = json.loads(cp.stdout)
+            self.assertEqual(value["status"], "block")
+            self.assertIn(
+                "runtime_profile_sha256",
+                value["disallowed_control_differences"],
+            )
+
     def test_cli_builds_public_report_from_private_receipts(self):
         r = private("a", "c1", "cli")
         with tempfile.TemporaryDirectory() as d:
