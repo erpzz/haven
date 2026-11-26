@@ -24,6 +24,7 @@ base=args[args.index("--base-url")+1]
 tools=[{"type":"function","function":{"name":"mcp_haven_status","description":"x","parameters":{"type":"object"}}},
        {"type":"function","function":{"name":"mcp_haven_cyber_assess","description":"x","parameters":{"type":"object"}}}]
 if mode == "missing": tools=tools[:1]
+if mode == "modern": tools=[{"type":"function","function":{"name":"mcp__red_factory__read_fixture","description":"x","parameters":{"type":"object"}}}]
 if mode == "bridge": tools=[{"type":"function","function":{"name":"tool_search","description":"x","parameters":{"type":"object"}}}]
 if mode == "cyber-only": tools=tools[1:]
 if mode == "duplicate": tools=tools+tools[:1]
@@ -120,6 +121,16 @@ class VisibilityTests(unittest.TestCase):
         self.assertEqual(bad_hash["errors"], ["INVALID_EXPECTED_SURFACE_HASH"])
         self.assertFalse(bad_name["actual_hermes_executed"])
         self.assertFalse(bad_hash["actual_hermes_executed"])
+
+    def test_current_hermes_double_underscore_mcp_name_is_attested(self):
+        r = self.probe(
+            "modern",
+            prefixes=["mcp__red_factory__"],
+            toolsets="mcp-red-factory",
+        )
+        self.assertEqual(r["status"], "pass", r)
+        self.assertEqual(r["tool_names"], ["mcp__red_factory__read_fixture"])
+        self.assertRegex(r["tool_surface_sha256"], r"^[0-9a-f]{64}$")
 
     def test_missing_prefix_blocks(self):
         r = self.probe("missing")
