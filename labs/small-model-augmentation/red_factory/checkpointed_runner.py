@@ -284,7 +284,7 @@ def run_checkpointed_suite(
                 attempt = 1
 
             j.append("unit_started", case.case_id, attempt)
-            model_op = f"m{attempt}"
+            model_op = f"m-{case.case_id}-{attempt}"
             j.append(
                 "model_request_started", case.case_id, attempt,
                 model_op, True, checkpoint.ZERO,
