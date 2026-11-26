@@ -128,10 +128,10 @@ def tool_names(request):
 
 
 def validate_inputs(toolsets, required_prefixes, expected_names=None,
-                    expected_surface_sha256=None):
+                    expected_surface_sha256=None, expected_tool_count=None):
     if type(toolsets) is not str or TOOLSETS.fullmatch(toolsets) is None:
         return "INVALID_TOOLSETS"
-    if (type(required_prefixes) is not list or not required_prefixes
+    if (type(required_prefixes) is not list
             or any(type(x) is not str or PREFIX.fullmatch(x) is None for x in required_prefixes)
             or len(required_prefixes) != len(set(required_prefixes))):
         return "INVALID_REQUIRED_PREFIX"
@@ -144,14 +144,20 @@ def validate_inputs(toolsets, required_prefixes, expected_names=None,
             and (type(expected_surface_sha256) is not str
                  or HEX64.fullmatch(expected_surface_sha256) is None)):
         return "INVALID_EXPECTED_SURFACE_HASH"
+    if (expected_tool_count is not None
+            and (type(expected_tool_count) is not int
+                 or isinstance(expected_tool_count, bool)
+                 or not 0 <= expected_tool_count <= 4096)):
+        return "INVALID_EXPECTED_TOOL_COUNT"
     return None
 
 
 def run_probe(hermes, hermes_home, toolsets, required_prefixes, *, cwd=None,
               timeout=DEFAULT_TIMEOUT, env=None, expected_names=None,
-              expected_surface_sha256=None):
+              expected_surface_sha256=None, expected_tool_count=None):
     invalid = validate_inputs(
-        toolsets, required_prefixes, expected_names, expected_surface_sha256
+        toolsets, required_prefixes, expected_names, expected_surface_sha256,
+        expected_tool_count,
     )
     if invalid:
         return fixed_receipt([invalid], exit_code=None, executed=False)
@@ -219,6 +225,8 @@ def run_probe(hermes, hermes_home, toolsets, required_prefixes, *, cwd=None,
             counts[match] += 1
     if any(count == 0 for count in counts.values()):
         errors.append("MISSING_REQUIRED_PREFIX")
+    if expected_tool_count is not None and len(names) != expected_tool_count:
+        errors.append("TOOL_COUNT_MISMATCH")
     if expected_names is not None and names != expected_names:
         errors.append("TOOL_NAME_SEQUENCE_MISMATCH")
     if (expected_surface_sha256 is not None
@@ -236,9 +244,10 @@ def main(argv=None):
     p.add_argument("--hermes", required=True)
     p.add_argument("--hermes-home", required=True)
     p.add_argument("--toolsets", required=True)
-    p.add_argument("--require-prefix", action="append", required=True)
+    p.add_argument("--require-prefix", action="append", default=[])
     p.add_argument("--expect-name", action="append")
     p.add_argument("--expect-surface-sha256")
+    p.add_argument("--expect-tool-count", type=int)
     p.add_argument("--cwd")
     p.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT)
     args = p.parse_args(argv)
@@ -250,6 +259,7 @@ def main(argv=None):
             cwd=args.cwd, timeout=args.timeout,
             expected_names=args.expect_name,
             expected_surface_sha256=args.expect_surface_sha256,
+            expected_tool_count=args.expect_tool_count,
         )
     print(json.dumps(result, sort_keys=True))
     return 0 if result["status"] == "pass" else 2
