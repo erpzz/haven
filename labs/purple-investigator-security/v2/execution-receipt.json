@@ -1,0 +1,108 @@
+{
+  "base": "b46c64e8e0f3876baa24c91ecfb9e4a4332a7e8d",
+  "environment": "isolated Linux Node v22.16.0; native executable files verified against GitHub blob SHA",
+  "blobs": {
+    "hypotheses.mjs": "5a39e311917044042d0138957f23eb31818120ef",
+    "security.mjs": "61231908ec8e9afce3859fbe310ba7152f603ccd",
+    "test-campaign.mjs": "4a77970c6044b7a3077101c38ff0a25b4d1c49ad",
+    "test-v2.mjs": "29d902ddfefd9deaf2cc15e87be03b5deac24bcf",
+    "run-v2.mjs": "f0f27e21710f7c64787e79722e7ed79820f4f36b"
+  },
+  "native_original": {
+    "checks_passed": 101,
+    "checks_total": 101,
+    "mutants_detected": 9,
+    "mutants_total": 9
+  },
+  "native_v2": {
+    "checks_passed": 18,
+    "checks_total": 18,
+    "mutants_detected": 9,
+    "mutants_total": 9,
+    "mutants": [
+      "coverage",
+      "model_identity",
+      "duplicate_id",
+      "refusal",
+      "json_duplicate",
+      "authorization",
+      "usage",
+      "release_brand",
+      "hypothesis_premises"
+    ]
+  },
+  "actual_loopback_scripted": {
+    "mock_model": {
+      "status": "released",
+      "tokens": 50,
+      "token_kind": "synthetic mock counters"
+    },
+    "duplicate_json": {
+      "status": "protocol_json",
+      "tokens": null
+    },
+    "wrong_model": {
+      "status": "model_identity_mismatch",
+      "tokens": null
+    }
+  },
+  "deterministic_cli": {
+    "claims": 4,
+    "verification_tasks": 4,
+    "enumerated_hypothesis_kinds": 4,
+    "baseline_wall_ms": 1.911676,
+    "process_peak_rss_kib": 26228,
+    "model_calls": 0,
+    "measurement_runs": 1
+  },
+  "public_utility": {
+    "source": "scripted subset versus deterministic exhaustive rule-kind enumeration; no model inference",
+    "cases": [
+      {
+        "variant": "base",
+        "plan_tasks": 4,
+        "enumerated_kinds": 4,
+        "scripted_kinds": 1,
+        "scripted_novel_kinds": 0
+      },
+      {
+        "variant": "conflict",
+        "plan_tasks": 6,
+        "enumerated_kinds": 5,
+        "scripted_kinds": 1,
+        "scripted_novel_kinds": 0
+      },
+      {
+        "variant": "partial",
+        "plan_tasks": 5,
+        "enumerated_kinds": 4,
+        "scripted_kinds": 1,
+        "scripted_novel_kinds": 0
+      },
+      {
+        "variant": "missing",
+        "plan_tasks": 4,
+        "enumerated_kinds": 3,
+        "scripted_kinds": 1,
+        "scripted_novel_kinds": 0
+      },
+      {
+        "variant": "passing_posture",
+        "plan_tasks": 4,
+        "enumerated_kinds": 3,
+        "scripted_kinds": 1,
+        "scripted_novel_kinds": 0
+      }
+    ]
+  },
+  "not_executed": [
+    "live local models",
+    "backend memory",
+    "actual inference tokens",
+    "actual false refusal rates",
+    "PyRIT/garak framework runs",
+    "HARE integration",
+    "production adapters"
+  ],
+  "independence": "Author self-review; independent second-agent qualification pending"
+}

@@ -1,0 +1,36 @@
+Runtime
+Python 3.12.14; synthetic sample lab; 2026-11-21 UTC
+
+python3 -m unittest discover -s tests -q
+----------------------------------------------------------------------
+Ran 32 tests in 0.354s
+
+OK
+
+python3 -m unittest discover -s phase3_contract -q
+----------------------------------------------------------------------
+Ran 8 tests in 0.003s
+
+OK
+
+Fresh independent JSONL vs frozen oracle (also byte-compared to actual.jsonl)
+{
+  "cases": 20,
+  "oracle_passed": 20,
+  "failures": []
+}
+
+CLI demo, replay, repeat link and full show at the fixture clock
+Replay returned replayed; full show output matched demo output byte-for-byte.
+
+Live CE sample + synthetic exporter fixtures, tests/live_offline.py
+{"graph_observed": "2026-11-21T20:40:16.132755+00:00", "graph_source": "ce-sample", "history_sha256_after": "dc250e44de3cc0d4f32a525f6c4eefcb33cc8c1751744ce5eed0dfad09b9d9e8", "history_sha256_before": "dc250e44de3cc0d4f32a525f6c4eefcb33cc8c1751744ce5eed0dfad09b9d9e8", "membership_fingerprint": "7e42f73dc23b5126b825aa4f0e04a9bb4c3b9c5e8614fcb5104402dae37c2da2", "posture_rows": 2, "privilege_rows": 4, "source": "four generated fixtures"}
+
+Live sample paths by hop count, tests/live_paths.py
+{"asset": "phantom-admins", "run": 2, "hops": {"1": 8, "2": 12, "3": 1}, "seconds": 0.034}
+{"asset": "resource-admins", "run": 3, "hops": {"1": 1}, "seconds": 1.336}
+{"asset": "consent-review", "run": 4, "hops": {"1": 4, "2": 1}, "seconds": 0.017}
+
+Existing stdio authorization regressions
+MCP tool inventory, two denials and both sample graph reads passed
+Two-tool inventory and five authorization denials passed

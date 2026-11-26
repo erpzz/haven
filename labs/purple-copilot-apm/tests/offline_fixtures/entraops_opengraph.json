@@ -1,0 +1,44 @@
+{
+  "graph": {
+    "nodes": [
+      {
+        "id": "7DEAB91D-E1A0-497F-8651-AE2C36082E66",
+        "kinds": [
+          "AZUser"
+        ],
+        "properties": {
+          "entraopsadmintierlevel": "0"
+        }
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000000010@6C12B0B0-B2CC-4A73-8252-0B94BFCA2145",
+        "kinds": [
+          "AZRole"
+        ],
+        "properties": {
+          "rbacsystem": "EntraID"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "kind": "EO_EligibleForEntraRole",
+        "start": {
+          "match_by": "id",
+          "value": "7DEAB91D-E1A0-497F-8651-AE2C36082E66"
+        },
+        "end": {
+          "match_by": "id",
+          "value": "00000000-0000-4000-8000-000000000010@6C12B0B0-B2CC-4A73-8252-0B94BFCA2145"
+        },
+        "properties": {
+          "rbacsystem": "EntraID",
+          "roleassignmentscopeid": "/",
+          "roleassignmenttype": "Direct",
+          "pimassignmenttype": "Eligible",
+          "admintierlevel": "0"
+        }
+      }
+    ]
+  }
+}

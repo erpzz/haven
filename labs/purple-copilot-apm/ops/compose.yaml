@@ -1,0 +1,60 @@
+# Copyright 2023 Specter Ops, Inc.
+#
+# Licensed under the Apache License, Version 2.0
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+services:
+  app-db:
+    labels:
+      name: "bhce_postgres"
+    image: docker.io/library/postgres:18@sha256:eb63372c1e05c755f55fa30cbd07aecc443676fc6c0fa90b9002d01537841e1a
+    environment:
+      - PGUSER=${POSTGRES_USER:-bloodhound}
+      - POSTGRES_USER=${POSTGRES_USER:-bloodhound}
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB=${POSTGRES_DB:-bloodhound}
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-bloodhound} -d ${POSTGRES_DB:-bloodhound} -h 127.0.0.1 -p 5432"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  bloodhound:
+    labels:
+      name: bhce_bloodhound
+    image: docker.io/specterops/bloodhound:9.10.1@sha256:75c3b4c2c9213981d13e36520db4a2d66a9a290abd9ad93db29dd3564a70deac
+    environment:
+      - bhe_graph_driver=pg
+      - bhe_disable_cypher_complexity_limit=${bhe_disable_cypher_complexity_limit:-false}
+      - bhe_enable_cypher_mutations=false
+      - bhe_graph_query_memory_limit=${bhe_graph_query_memory_limit:-2}
+      - bhe_database_connection
+      - bhe_enable_text_logger=${bhe_enable_text_logger:-true}
+    ports:
+      - 127.0.0.1:8080:8080
+    volumes:
+      - ${BH_CONFIG:?set BH_CONFIG}:/bloodhound.config.json:ro
+    depends_on:
+      app-db:
+        condition: service_healthy
+
+volumes:
+  postgres-data:

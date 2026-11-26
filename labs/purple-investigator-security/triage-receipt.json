@@ -1,0 +1,59 @@
+{
+  "executed": "Exact triage and test function bodies in isolated JS using synthetic released-report fixtures",
+  "total": 13,
+  "passed": 13,
+  "tests": [
+    {
+      "name": "closed_release_has_no_plan",
+      "pass": true
+    },
+    {
+      "name": "historical_path_not_current",
+      "pass": true
+    },
+    {
+      "name": "eligible_requires_activation_review",
+      "pass": true
+    },
+    {
+      "name": "active_still_requires_owner_review",
+      "pass": true
+    },
+    {
+      "name": "mixed_mode_not_assumed_same_entitlement",
+      "pass": true
+    },
+    {
+      "name": "passing_check_not_remediation",
+      "pass": true
+    },
+    {
+      "name": "failing_check_not_compromise",
+      "pass": true
+    },
+    {
+      "name": "inapplicable_or_error_no_pass",
+      "pass": true
+    },
+    {
+      "name": "source_claim_not_provenance",
+      "pass": true
+    },
+    {
+      "name": "coverage_priority",
+      "pass": true
+    },
+    {
+      "name": "missing_data_explicit",
+      "pass": true
+    },
+    {
+      "name": "all_task_refs_exist",
+      "pass": true
+    },
+    {
+      "name": "arbitrary_text_not_rendered",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "executed": "Exact runner and regression function bodies in isolated JS; scripted model responses, NOT inference",
+  "total": 15,
+  "passed": 15,
+  "tests": [
+    {
+      "name": "native_tool_round_trip",
+      "pass": true
+    },
+    {
+      "name": "no_model_invocation_when_unauthorized",
+      "pass": true
+    },
+    {
+      "name": "early_answer_without_reads",
+      "pass": true
+    },
+    {
+      "name": "out_of_scope_native_call",
+      "pass": true
+    },
+    {
+      "name": "argument_scope_override",
+      "pass": true
+    },
+    {
+      "name": "invalid_json_arguments",
+      "pass": true
+    },
+    {
+      "name": "multiple_parallel_calls_blocked",
+      "pass": true
+    },
+    {
+      "name": "truncated_response",
+      "pass": true
+    },
+    {
+      "name": "transport_failure",
+      "pass": true
+    },
+    {
+      "name": "invented_activation_blocked",
+      "pass": true
+    },
+    {
+      "name": "assistant_prose_not_forwarded",
+      "pass": true
+    },
+    {
+      "name": "duplicates_denied_and_stop",
+      "pass": true
+    },
+    {
+      "name": "model cannot manufacture receipt",
+      "pass": true
+    },
+    {
+      "name": "mutating model transport input cannot alter transcript",
+      "pass": true
+    },
+    {
+      "name": "model refusal explicit rejection",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{"actual": {"decisions": ["accepted", "replayed"], "distinct_artifacts": 1}, "id": "P3-01"}
+{"actual": {"decisions": ["accepted", "conflict_rejected"], "distinct_artifacts": 1}, "id": "P3-02"}
+{"actual": {"join": "cross_dataset_rejected"}, "id": "P3-03"}
+{"actual": {"join": "unmatched"}, "id": "P3-04"}
+{"actual": {"join": "unmatched", "retained_stub": true}, "id": "P3-05"}
+{"actual": {"active_privilege_proven": false, "observed": ["eligible"]}, "id": "P3-06"}
+{"actual": {"collapsed": false, "scoped_tiers": [["AzureRBAC", 2], ["EntraRole", 0]]}, "id": "P3-07"}
+{"actual": {"traversable": false}, "id": "P3-08"}
+{"actual": {"variants": ["maester_2x", "maester_3_preview"]}, "id": "P3-09"}
+{"actual": {"resolution": "unresolved"}, "id": "P3-10"}
+{"actual": {"link": "tenant_context"}, "id": "P3-11"}
+{"actual": {"match": "unknown"}, "id": "P3-12"}
+{"actual": {"confidence": "limited"}, "id": "P3-13"}
+{"actual": {"finding_state_unchanged": true}, "id": "P3-14"}
+{"actual": {"executed_tools": [], "exposed_tools": ["path_context", "identity_tier_evidence", "posture_evidence", "collection_quality"], "text_is_data": true}, "id": "P3-15"}
+{"actual": {"accepted": false, "invalid": ["oversized", "malformed_json", "duplicate_ids", "bad_timestamp"]}, "id": "P3-16"}
+{"actual": {"public_text": "Fixture contact: [REDACTED_EMAIL]; state=Failed", "raw_export_public": false}, "id": "P3-17"}
+{"actual": {"deterministic_import": "unaffected", "model_claim": "unavailable"}, "id": "P3-18"}
+{"actual": {"maester_status": "Passed", "privilege": "unknown"}, "id": "P3-19"}
+{"actual": {"assessment": "historical_only"}, "id": "P3-20"}

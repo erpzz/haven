@@ -1,0 +1,51 @@
+{
+  "executed": "Exact transport and test function bodies with scripted fetch, signal and decoder; real Node networking and timers NOT_EXECUTED",
+  "total": 11,
+  "passed": 11,
+  "tests": [
+    {
+      "name": "fixed_loopback_and_no_redirect",
+      "pass": true
+    },
+    {
+      "name": "exact_model_and_native_tools",
+      "pass": true
+    },
+    {
+      "name": "omit_tools_after_last_read",
+      "pass": true
+    },
+    {
+      "name": "reject_invalid_port",
+      "pass": true
+    },
+    {
+      "name": "reject_header_injection",
+      "pass": true
+    },
+    {
+      "name": "optional_token_stays_header_only",
+      "pass": true
+    },
+    {
+      "name": "response_chunk_limit",
+      "pass": true
+    },
+    {
+      "name": "response_stream_reassembly",
+      "pass": true
+    },
+    {
+      "name": "non_success_http_rejected",
+      "pass": true
+    },
+    {
+      "name": "invalid_json_rejected",
+      "pass": true
+    },
+    {
+      "name": "oversize_request_rejected_before_fetch",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "executed": "Exact fetched branch source function bodies, targeted in-memory code mutations and synthetic fixture; scripted transport only, native file CLI not executed",
+  "mutation": {
+    "baseline": 54,
+    "baseline_total": 54,
+    "mutants": 9,
+    "killed": 9,
+    "details": [
+      {
+        "name": "source_tenant_ignored",
+        "killed": true,
+        "failed_tests": [
+          "foreign_source_tenant",
+          "unresolved_source_tenant",
+          "missing_source_tenant"
+        ]
+      },
+      {
+        "name": "dataset_ignored",
+        "killed": true,
+        "failed_tests": [
+          "foreign_dataset"
+        ]
+      },
+      {
+        "name": "future_receipt_allowed",
+        "killed": true,
+        "failed_tests": [
+          "future_receipt",
+          "future_observation"
+        ]
+      },
+      {
+        "name": "raw_evidence_forwarded",
+        "killed": true,
+        "failed_tests": [
+          "no_raw_instructions_projected",
+          "source_lineage_only_in_host_report"
+        ]
+      },
+      {
+        "name": "unsupported_claim_allowed",
+        "killed": true,
+        "failed_tests": [
+          "eligibility_not_activation",
+          "posture_not_remediation",
+          "exposure_not_compromise",
+          "returned_projection_is_copy"
+        ]
+      },
+      {
+        "name": "forged_trace_accepted",
+        "killed": true,
+        "failed_tests": [
+          "fabricated_trace_rejected",
+          "forged_effects_rejected",
+          "raw_text_answer_rejected"
+        ]
+      },
+      {
+        "name": "mutable_scope",
+        "killed": true,
+        "failed_tests": [
+          "host_scope_mutation_does_not_change_receipt"
+        ]
+      },
+      {
+        "name": "duplicates_accepted",
+        "killed": true,
+        "failed_tests": [
+          "duplicate_lineage_fails_closed"
+        ]
+      },
+      {
+        "name": "authorization_bypassed",
+        "killed": true,
+        "failed_tests": [
+          "unauthorized_read"
+        ]
+      }
+    ]
+  },
+  "integration": {
+    "checks": {
+      "deterministic_released": true,
+      "scripted_model_released": true,
+      "exact_report_parity": true,
+      "exact_plan_parity": true,
+      "four_independent_reads": true,
+      "five_scripted_model_calls": true,
+      "all_task_refs_present": true,
+      "no_untrusted_description_in_report": true
+    },
+    "passed": 8,
+    "total": 8,
+    "baseline_model_calls": 0,
+    "scripted_model_calls": 5,
+    "report": {
+      "run": "synthetic-review-1",
+      "scope": {
+        "tenant": "synthetic-tenant",
+        "dataset": "synthetic-dataset",
+        "finding": "synthetic-finding",
+        "snapshot": "synthetic-snapshot",
+        "asOf": 100
+      },
+      "assessment": "source_observations_only",
+      "claims": [
+        {
+          "ref": "e1_1",
+          "state": "historical_membership_reported",
+          "observed": 80,
+          "topic": "path_context",
+          "lineage": {
+            "artifact": "synthetic-artifact-0",
+            "record": 0
+          }
+        },
+        {
+          "ref": "e2_1",
+          "state": "eligible_assignment_reported",
+          "observed": 80,
+          "topic": "identity_tier_evidence",
+          "lineage": {
+            "artifact": "synthetic-artifact-1",
+            "record": 0
+          }
+        },
+        {
+          "ref": "e3_1",
+          "state": "check_failed_reported",
+          "observed": 80,
+          "topic": "posture_evidence",
+          "lineage": {
+            "artifact": "synthetic-artifact-2",
+            "record": 0
+          }
+        },
+        {
+          "ref": "e4_1",
+          "state": "producer_authentication_unverified",
+          "observed": 80,
+          "topic": "collection_quality",
+          "lineage": {
+            "artifact": "synthetic-artifact-3",
+            "record": 0
+          }
+        }
+      ],
+      "limitations": [
+        "receipt_claims_are_not_producer_authentication",
+        "membership_is_not_compromise",
+        "eligibility_is_not_activation",
+        "posture_is_not_remediation"
+      ],
+      "next_step": "verify_current_evidence_with_authorized_owner"
+    },
+    "plan": {
+      "status": "verification_plan_only",
+      "tasks": [
+        {
+          "id": "validate-provenance",
+          "priority": 1,
+          "action": "Establish source provenance independently; receipt completeness is not producer authentication.",
+          "references": [
+            "e4_1"
+          ]
+        },
+        {
+          "id": "check-activation",
+          "priority": 2,
+          "action": "Check for a separately recorded activation and verify assignment scope; eligibility does not establish effective access.",
+          "references": [
+            "e2_1"
+          ]
+        },
+        {
+          "id": "review-failed-posture",
+          "priority": 2,
+          "action": "Review the failed configuration assessment with its source owner; do not infer compromise.",
+          "references": [
+            "e3_1"
+          ]
+        },
+        {
+          "id": "verify-membership",
+          "priority": 2,
+          "action": "Verify current membership and the path's scope with the authorized identity owner.",
+          "references": [
+            "e1_1"
+          ]
+        }
+      ],
+      "limitations": [
+        "priority_is_verification_order_not_exposure_severity",
+        "no_remediation_or_external_action_authorized",
+        "references_resolve_to_host_report_claims"
+      ]
+    }
+  }
+}
