@@ -1,0 +1,49 @@
+name: HARE System 0
+on:
+  pull_request:
+    paths:
+      - 'labs/intelligence-bakeoff/system0/**'
+      - 'labs/small-model-augmentation/**'
+      - '.github/workflows/hare-system0.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'labs/intelligence-bakeoff/system0/**'
+      - '.github/workflows/hare-system0.yml'
+permissions:
+  contents: read
+jobs:
+  deterministic:
+    # Preserve #115's existing deterministic validation unchanged.
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: System 0 checks and enforcement tests
+        working-directory: labs/intelligence-bakeoff
+        run: python -m unittest discover -s system0/tests -v
+      - name: Preregistered code hashes still match
+        working-directory: labs/intelligence-bakeoff
+        run: python system0/bench_s0.py check
+
+  augmentation:
+    name: Augmentation Python ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Compile augmentation modules
+        run: python -m py_compile labs/small-model-augmentation/*.py
+      - name: Run combined augmentation suite
+        working-directory: labs/small-model-augmentation
+        run: python -m unittest discover -s . -p 'test_*.py' -v
