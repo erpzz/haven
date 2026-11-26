@@ -313,6 +313,8 @@ print(json.dumps({{
 """
     child_env = dict(env)
     child_env.pop("PYTHONPATH", None)
+    child_env.pop("PYTHONHOME", None)
+    child_env["PYTHONNOUSERSITE"] = "1"
     child_env["HERMES_ENABLE_PROJECT_PLUGINS"] = "0"
     try:
         cp = subprocess.run(
