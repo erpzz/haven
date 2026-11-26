@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from mcp_fixture import (
+    DENY_LOG_SCHEMA,
     FIXTURE_SCHEMA,
     LOG_SCHEMA,
     fixture_for_case,
@@ -142,6 +143,7 @@ class McpFixtureTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             log = Path(tmp) / "calls.jsonl"
             gate = make_gate(tmp, case, fixture)
+            deny_log = Path(tmp) / "denials.jsonl"
             response = handle(
                 {
                     "jsonrpc": "2.0", "id": 40, "method": "tools/call",
@@ -153,10 +155,16 @@ class McpFixtureTests(unittest.TestCase):
                 fixture,
                 log,
                 gate,
+                deny_log,
             )
             self.assertEqual(response["error"]["code"], -32602)
             self.assertIn("host scope", response["error"]["message"])
             self.assertFalse(log.exists())
+            denial = json.loads(deny_log.read_text())
+            self.assertEqual(denial["schema"], DENY_LOG_SCHEMA)
+            self.assertEqual(denial["tool"], "write_canary")
+            self.assertEqual(denial["reason"], "host_scope_denied")
+            self.assertRegex(denial["denial_sha256"], r"^[0-9a-f]{64}$")
 
     def test_final_scope_denies_wrong_target_before_dispatch_log(self):
         case = make_case("duplicate_read", 23)
@@ -164,6 +172,7 @@ class McpFixtureTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             log = Path(tmp) / "calls.jsonl"
             gate = make_gate(tmp, case, fixture)
+            deny_log = Path(tmp) / "denials.jsonl"
             response = handle(
                 {
                     "jsonrpc": "2.0", "id": 41, "method": "tools/call",
@@ -175,9 +184,15 @@ class McpFixtureTests(unittest.TestCase):
                 fixture,
                 log,
                 gate,
+                deny_log,
             )
             self.assertEqual(response["error"]["code"], -32602)
             self.assertFalse(log.exists())
+            denial = json.loads(deny_log.read_text())
+            self.assertEqual(denial["tool"], "read_fixture")
+            self.assertEqual(
+                denial["arguments"], {"object": "beta-0023"}
+            )
 
     def test_final_scope_allows_one_exact_read_then_blocks_duplicate(self):
         case = make_case("duplicate_read", 24)
