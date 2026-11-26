@@ -605,15 +605,20 @@ class Executor:
             entry["status"] = "live"
             if prev:
                 prev["status"] = "superseded"
+            _reap_background(new)
             log.append(f"health ok: {detail}; live as pid {new.pid}")
         else:
-            _kill_pid(new.pid)
+            _stop_and_reap(new)
             entry["status"] = "failed"
             log.append(f"health FAILED: {detail}")
             if prev:
                 back = self._start_detached(prev.get("start_cmd") or spec["start"], f"rollback-{target}-{rid}",
                                             commit=prev["commit"], ports=ports)
                 ok_back, d2 = self._health(spec, back)
+                if ok_back:
+                    _reap_background(back)
+                else:
+                    _stop_and_reap(back)
                 rb = {**prev, "t": time.time(), "pid": back.pid, "status": "live" if ok_back else "failed",
                       "rollback_of": rid}
                 hist.append(rb)
@@ -819,6 +824,27 @@ def _kill_group(proc):
             return
         except subprocess.TimeoutExpired:
             continue
+
+
+def _reap_background(proc):
+    """Retain a long-lived detached process until it exits, then reap it."""
+    def wait():
+        try:
+            proc.wait()
+        except Exception:
+            pass
+    threading.Thread(target=wait, name=f"haven-detached-reap-{proc.pid}", daemon=True).start()
+
+
+def _stop_and_reap(proc):
+    """Terminate a detached process group and reap the direct child."""
+    if proc.poll() is None:
+        _kill_pid(proc.pid)
+    try:
+        proc.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        _kill_pid(proc.pid)
+        proc.wait(timeout=5)
 
 
 def _kill_pid(pid):
