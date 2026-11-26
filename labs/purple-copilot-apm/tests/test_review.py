@@ -138,7 +138,11 @@ class Review(unittest.TestCase):
                                "holders": ["0aa94d8a-Application.ReadWrite.All@PhantomCorp"]})))
         self.assertEqual(v.problems(family, "Several Application.ReadWrite.All@PhantomCorp apps [T0-3]."), [])
         self.assertIn("principals absent", v.problems(family, "Mallory@PhantomCorp [T0-3].")[0])
-        self.assertEqual(v.problems(review.Turn(), "Nothing retrieved, 12 claims."), [])
+        empty = review.Turn("Who controls Tier Zero?")
+        self.assertEqual(v.problems(empty, "Nothing retrieved, 12 claims."), ["no evidence retrieved"])
+        withheld = review.fallback(empty, ["no evidence retrieved"])
+        self.assertIn("no Tier Zero evidence was retrieved", withheld)
+        self.assertNotIn("12 claims", withheld)
         # A number that exists in the evidence, but for another principal or only as a headline, is misattributed.
         bound = review.Turn()
         bound.results.append(("purple_tier_zero_overview", json.dumps({
@@ -177,6 +181,14 @@ class Review(unittest.TestCase):
         self.assertTrue(sentences)
         quoted = " ".join(sentences) + " [T0-1]"
         self.assertEqual(review.Verifier().problems(turn, quoted), [])
+
+    def test_receipts_are_owner_only(self):
+        review.receipt({"answer": "synthetic", "problems": ["test"]})
+        path = Path(review.ROOT) / "agent-reviews.jsonl"
+        self.assertEqual(path.stat().st_mode & 0o777, 0o600)
+        self.assertEqual(path.parent.stat().st_mode & 0o777, 0o700)
+        review.receipt({"answer": "second"})
+        self.assertEqual(len(path.read_text().splitlines()), 2)
 
     def test_fallback_passes_its_own_verifier(self):
         with patch.object(review, "COMPACT", 1):
