@@ -13,7 +13,7 @@ import mac_case_qualification as mac
 from red_factory import make_case
 
 
-FAKE_HERMES_BODY = 'echo "Hermes Agent v0.21.5 (2026.9.24)"\\n'
+FAKE_HERMES_BODY = 'echo "Hermes Agent v0.21.5 (2026.9.24)"' + chr(10)
 
 
 def sha(path: Path) -> str:
@@ -53,7 +53,7 @@ class MacCaseQualificationTests(unittest.TestCase):
 
         self.hermes = self.root / "hermes"
         self.python = Path("/bin/sh").resolve()
-        self.hermes.write_text(f"#!{self.python}\\n" + FAKE_HERMES_BODY)
+        self.hermes.write_text("#!" + str(self.python) + chr(10) + FAKE_HERMES_BODY)
         self.hermes.chmod(0o700)
         self.server = self.root / "llama-server"
         self.server.write_text("server")
