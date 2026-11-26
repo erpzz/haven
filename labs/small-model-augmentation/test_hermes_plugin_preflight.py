@@ -74,7 +74,7 @@ class HermesPluginPreflightTests(unittest.TestCase):
         self.init_sha = sha(self.plugin / "__init__.py")
         self.manifest_sha = sha(self.plugin / "plugin.yaml")
 
-    def run(self, **env):
+    def preflight(self, **env):
         child = dict(os.environ)
         child.update({k: str(v) for k, v in env.items()})
         return preflight.run_preflight(
@@ -89,7 +89,7 @@ class HermesPluginPreflightTests(unittest.TestCase):
         )
 
     def test_exact_profile_passes_and_receipt_binds_bytes(self):
-        result = self.run()
+        result = self.preflight()
         self.assertEqual(result["status"], "pass", result)
         self.assertEqual(result["errors"], [])
         self.assertEqual(result["hermes_sha256"], self.hermes_sha)
@@ -99,12 +99,12 @@ class HermesPluginPreflightTests(unittest.TestCase):
         self.assertTrue(result["doctor_passed"])
 
     def test_unexpected_enabled_user_plugin_blocks(self):
-        result = self.run(FAKE_EXTRA=1)
+        result = self.preflight(FAKE_EXTRA=1)
         self.assertEqual(result["status"], "block")
         self.assertEqual(result["errors"], ["UNEXPECTED_ENABLED_USER_PLUGIN"])
 
     def test_duplicate_plugin_row_blocks_malformed_listing(self):
-        result = self.run(FAKE_DUP=1)
+        result = self.preflight(FAKE_DUP=1)
         self.assertEqual(result["errors"], ["INVALID_PLUGIN_LIST"])
 
     def test_scope_plugin_status_version_source_and_removed_are_bound(self):
@@ -116,11 +116,11 @@ class HermesPluginPreflightTests(unittest.TestCase):
         ]
         for env, code in cases:
             with self.subTest(code=code):
-                self.assertEqual(self.run(**env)["errors"], [code])
+                self.assertEqual(self.preflight(**env)["errors"], [code])
 
     def test_list_or_doctor_failure_blocks(self):
-        self.assertEqual(self.run(FAKE_LIST_EXIT=3)["errors"], ["PLUGIN_LIST_FAILED"])
-        self.assertEqual(self.run(FAKE_DOCTOR_EXIT=3)["errors"], ["PLUGIN_DOCTOR_FAILED"])
+        self.assertEqual(self.preflight(FAKE_LIST_EXIT=3)["errors"], ["PLUGIN_LIST_FAILED"])
+        self.assertEqual(self.preflight(FAKE_DOCTOR_EXIT=3)["errors"], ["PLUGIN_DOCTOR_FAILED"])
 
     def test_plugin_code_and_manifest_hash_mismatch_block(self):
         self.assertEqual(
@@ -144,14 +144,14 @@ class HermesPluginPreflightTests(unittest.TestCase):
 
     def test_unexpected_plugin_source_file_blocks(self):
         (self.plugin / "backdoor.py").write_text("raise SystemExit\n")
-        self.assertEqual(self.run()["errors"], ["UNEXPECTED_PLUGIN_FILE"])
+        self.assertEqual(self.preflight()["errors"], ["UNEXPECTED_PLUGIN_FILE"])
 
     def test_symlinked_plugin_code_blocks(self):
         target = Path(self.tmp.name) / "elsewhere.py"
         target.write_text((self.plugin / "__init__.py").read_text())
         (self.plugin / "__init__.py").unlink()
         (self.plugin / "__init__.py").symlink_to(target)
-        self.assertEqual(self.run()["errors"], ["ENROLLED_FILE_UNAVAILABLE"])
+        self.assertEqual(self.preflight()["errors"], ["ENROLLED_FILE_UNAVAILABLE"])
 
     def test_hermes_hash_and_executable_are_enrolled(self):
         bad = preflight.run_preflight(
@@ -171,7 +171,7 @@ class HermesPluginPreflightTests(unittest.TestCase):
         self.assertEqual(not_exec["errors"], ["HERMES_NOT_EXECUTABLE"])
 
     def test_doctor_time_mutation_is_detected(self):
-        result = self.run(FAKE_MUTATE=1)
+        result = self.preflight(FAKE_MUTATE=1)
         self.assertEqual(result["errors"], ["PLUGIN_CODE_HASH_MISMATCH"])
 
     def test_invalid_allowlist_or_hash_fails_without_exec(self):
@@ -191,7 +191,7 @@ class HermesPluginPreflightTests(unittest.TestCase):
         self.assertEqual(bad_hash["errors"], ["INVALID_ENROLLED_HASH"])
 
     def test_receipt_does_not_echo_cli_output_or_home(self):
-        result = self.run(FAKE_DOCTOR_EXIT=3)
+        result = self.preflight(FAKE_DOCTOR_EXIT=3)
         encoded = json.dumps(result)
         self.assertNotIn(str(self.home), encoded)
         self.assertNotIn("fixture", encoded)
