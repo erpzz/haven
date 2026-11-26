@@ -146,16 +146,42 @@ class EpisodeWeightingInvariantTests(unittest.TestCase):
                 [{"input_ids": [1, 2], "labels": [-100, -100]}],
             )
 
+    def test_encoded_row_requires_masked_causal_prefix(self):
+        with self.assertRaises(w.WeightingError):
+            t.build_episode_items(
+                [row("ep", "a", 0)],
+                [{"input_ids": [1, 2], "labels": [1, 2]}],
+            )
+
     def test_episode_batching_contract_is_explicit(self):
+        class Args:
+            per_device_train_batch_size = 1
+            remove_unused_columns = False
+
         class DummyTrainer:
-            pass
+            def __init__(self, args=None):
+                self.args = args or Args()
+                self.model_accepts_loss_kwargs = True
 
         Weighted = t.make_episode_weighted_trainer_class(DummyTrainer)
         self.assertTrue(issubclass(Weighted, DummyTrainer))
         self.assertEqual(Weighted.__name__, "EpisodeWeightedTrainer")
+        instance = Weighted()
+        self.assertFalse(instance.model_accepts_loss_kwargs)
+
         collator = t.make_episode_collator(0)
         with self.assertRaises(w.WeightingError):
             collator([])
+
+        bad_batch = Args()
+        bad_batch.per_device_train_batch_size = 2
+        with self.assertRaisesRegex(w.WeightingError, "batch_size=1"):
+            Weighted(args=bad_batch)
+
+        bad_columns = Args()
+        bad_columns.remove_unused_columns = True
+        with self.assertRaisesRegex(w.WeightingError, "remove_unused_columns=False"):
+            Weighted(args=bad_columns)
 
 
 if __name__ == "__main__":
