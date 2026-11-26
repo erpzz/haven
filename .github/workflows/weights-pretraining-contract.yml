@@ -1,0 +1,42 @@
+name: Weights pre-training contract integration
+
+on:
+  pull_request:
+    paths:
+      - 'labs/weights/training/**'
+      - '.github/workflows/weights-pretraining-contract.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'labs/weights/training/**'
+      - '.github/workflows/weights-pretraining-contract.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  cpu:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.13']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile complete pre-training contract
+        working-directory: labs/weights/training
+        run: >-
+          python -m py_compile
+          episode_weighting.py weighted_trainer.py
+          tool_surface.py row_encoding.py
+          test_episode_weighting.py test_tool_surface.py test_pretraining_contract.py
+      - name: Run complete CPU contract
+        working-directory: labs/weights/training
+        run: >-
+          python -m unittest -v
+          test_episode_weighting.py
+          test_tool_surface.py
+          test_pretraining_contract.py
