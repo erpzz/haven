@@ -35,6 +35,8 @@ class RunnerTests(unittest.TestCase):
         ])
         touched = validate_unified_diff(self.patch, ["app.txt"])
         self.fix = {
+            "finding_id": "hdf_" + "a" * 32,
+            "packet_sha256": "b" * 64,
             "patch": self.patch,
             "patch_sha256": hashlib.sha256(self.patch.encode()).hexdigest(),
             "touched_paths": list(touched),
@@ -49,6 +51,9 @@ class RunnerTests(unittest.TestCase):
         self.assertTrue(result["passed"])
         self.assertEqual(result["touched_paths"], ["app.txt"])
         self.assertEqual(len(result["receipt_sha256"]), 64)
+        self.assertEqual(result["finding_id"], self.fix["finding_id"])
+        self.assertEqual(result["fix_packet_sha256"], self.fix["packet_sha256"])
+        self.assertEqual(len(result["recipe_policy_sha256"]), 64)
         recipe_receipt = result["recipes"][0]
         self.assertNotIn("stdout", recipe_receipt)
         self.assertNotIn("stderr", recipe_receipt)
@@ -64,6 +69,12 @@ class RunnerTests(unittest.TestCase):
 
     def test_patch_hash_tamper_rejected(self):
         bad = dict(self.fix, patch_sha256="0" * 64)
+        with self.assertRaises(ValueError):
+            run_fix(repo=self.repo, base_commit=self.base, validated_fix=bad, recipes=[Recipe("x", (sys.executable, "-c", "pass"), 5)])
+
+    def test_missing_packet_binding_rejected(self):
+        bad = dict(self.fix)
+        bad.pop("packet_sha256")
         with self.assertRaises(ValueError):
             run_fix(repo=self.repo, base_commit=self.base, validated_fix=bad, recipes=[Recipe("x", (sys.executable, "-c", "pass"), 5)])
 
@@ -94,7 +105,7 @@ class RunnerTests(unittest.TestCase):
         subprocess.run(("git", "commit", "-qm", "symlink"), cwd=self.repo, check=True)
         base = subprocess.check_output(("git", "rev-parse", "HEAD"), cwd=self.repo, text=True).strip()
         patch = "diff --git a/link.txt b/link.txt\n--- a/link.txt\n+++ b/link.txt\n@@ -1 +1 @@\n-target.txt\n+other.txt\n"
-        fix = {"patch": patch, "patch_sha256": hashlib.sha256(patch.encode()).hexdigest(), "touched_paths": ["link.txt"]}
+        fix = {"finding_id": self.fix["finding_id"], "packet_sha256": self.fix["packet_sha256"], "patch": patch, "patch_sha256": hashlib.sha256(patch.encode()).hexdigest(), "touched_paths": ["link.txt"]}
         with self.assertRaises(ValueError):
             run_fix(repo=self.repo, base_commit=base, validated_fix=fix, recipes=[Recipe("x", (sys.executable, "-c", "pass"), 5)])
 
