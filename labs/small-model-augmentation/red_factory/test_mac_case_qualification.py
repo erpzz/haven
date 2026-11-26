@@ -126,6 +126,7 @@ class MacCaseQualificationTests(unittest.TestCase):
                 "fixture_tool_names": (
                     {} if not visible else {"read_fixture": visible[0]}
                 ),
+                "first_tool_surface_sha256": surface_hash,
                 "final_mcp_policy_sha256": raw_hash,
                 "final_mcp_policy_bound_by_parent": True,
                 "result_sha256": "a" * 64,
