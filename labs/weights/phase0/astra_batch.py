@@ -262,7 +262,8 @@ def _seal_binding(gold, session, public=None) -> dict:
     """Deterministic batch/session binding. Refuse open, duplicate, foreign or contradictory terminal state."""
     if public is None:
         public = {"schema": SCHEMA, "batch": gold.get("batch"), "versions": gold.get("versions"),
-                  "round0_sha256": None, "gold_commitment": None}
+                  "episodes": len(gold.get("records") or []),
+                  "round0_sha256": "0" * 64, "gold_commitment": "0" * 64}
     gold_ids = [row.get("id") for row in gold.get("records", []) if isinstance(row, dict)]
     if (not gold_ids or any(not isinstance(x, str) or not x for x in gold_ids)
             or len(gold_ids) != len(set(gold_ids))
