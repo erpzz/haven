@@ -12,6 +12,7 @@ import concurrent.futures
 import hashlib
 import json
 import math
+import multiprocessing
 import os
 import re
 import threading
@@ -50,6 +51,7 @@ class ToolSpec:
     prerequisites: Callable[[], tuple[bool, str]] | None = field(default=None, repr=False)
     timeout_s: float = 30.0
     rate_per_min: int = 60
+    hard_timeout: bool = False
 
     def public(self) -> dict:
         d = asdict(self)
@@ -161,6 +163,51 @@ def validate(schema: dict, value: Any, where: str = "arguments") -> None:
                 validate(props[key], item, f"{where}.{key}")
 
 
+def _process_entry(conn, fn: Callable[..., Any], args: dict) -> None:
+    """Child-side wrapper for explicitly hard-cancelled tool calls."""
+    try:
+        conn.send(("ok", fn(**args)))
+    except ToolError as exc:
+        conn.send(("tool_error", (exc.code, exc.message, exc.retryable)))
+    except Exception as exc:
+        conn.send(("error", (type(exc).__name__, str(exc))))
+    finally:
+        conn.close()
+
+
+def _hard_call(spec: ToolSpec, args: dict) -> Any:
+    """Run one tool in a spawned process and terminate it on deadline."""
+    ctx = multiprocessing.get_context("spawn")
+    recv_conn, send_conn = ctx.Pipe(duplex=False)
+    proc = ctx.Process(target=_process_entry, args=(send_conn, spec.fn, args))
+    proc.start()
+    send_conn.close()
+    try:
+        proc.join(spec.timeout_s)
+        if proc.is_alive():
+            proc.terminate()
+            proc.join(1.0)
+            if proc.is_alive():
+                proc.kill()
+                proc.join(1.0)
+            raise ToolError("timeout", f"{spec.id} exceeded {spec.timeout_s}s", retryable=True)
+        if not recv_conn.poll(0.2):
+            raise ToolError("tool_failed", f"{spec.id} worker exited without a result")
+        kind, payload = recv_conn.recv()
+        if kind == "ok":
+            return payload
+        if kind == "tool_error":
+            code, message, retryable = payload
+            raise ToolError(code, message, retryable)
+        name, message = payload
+        raise RuntimeError(f"{name}: {message}")
+    finally:
+        recv_conn.close()
+        if proc.is_alive():
+            proc.terminate()
+            proc.join(1.0)
+
+
 class Registry:
     def __init__(self, audit_path: Path | None = AUDIT):
         self.tools: dict[str, ToolSpec] = {}
@@ -203,11 +250,14 @@ class Registry:
                     raise ToolError("prerequisite_failed", why)
             validate(spec.input_schema, args)
             self._rate(spec)
-            fut = self._pool.submit(spec.fn, **args)
-            try:
-                out = fut.result(timeout=spec.timeout_s)
-            except concurrent.futures.TimeoutError:
-                raise ToolError("timeout", f"{tool_id} exceeded {spec.timeout_s}s", retryable=True) from None
+            if spec.hard_timeout:
+                out = _hard_call(spec, args)
+            else:
+                fut = self._pool.submit(spec.fn, **args)
+                try:
+                    out = fut.result(timeout=spec.timeout_s)
+                except concurrent.futures.TimeoutError:
+                    raise ToolError("timeout", f"{tool_id} exceeded {spec.timeout_s}s", retryable=True) from None
             result = {"ok": True, "result": out}
         except ToolError as e:
             result = e.to_dict()
@@ -330,5 +380,5 @@ def default_registry(audit_path: Path | None = AUDIT) -> Registry:
                         _graph_collect, domain="entra", scope="tenant-read",
                         permissions=["Policy.Read.All", "User.Read.All", "GroupMember.Read.All", "RoleManagement.Read.Directory"],
                         credentials="HAVEN_GRAPH_TOKEN from the environment; never logged or returned",
-                        prerequisites=graph.live_allowed, timeout_s=120, rate_per_min=2))
+                        prerequisites=graph.live_allowed, timeout_s=120, rate_per_min=2, hard_timeout=True))
     return r
