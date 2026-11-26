@@ -208,6 +208,26 @@ class CheckpointedHermesRedFactoryTests(unittest.TestCase):
         self.assertEqual(resumed["error"], "CHECKPOINT_RESUME_BLOCKED")
         self.assertEqual(invoked["n"], 1)
 
+    def test_forged_live_result_hash_never_completes_unit(self):
+        suite = build_suite(seeds=[61], families=["no_evidence"])
+
+        def forged(**kwargs):
+            result = valid_result(kwargs["case"])
+            result["result_sha256"] = "0" * 64
+            return result
+
+        outcome = self.run(suite, forged)
+        self.assertEqual(outcome["status"], "block")
+        self.assertEqual(outcome["error"], "INVALID_CASE_RESULT")
+        scan = checkpoint.scan(self.journal)
+        self.assertTrue(scan.ok, scan.errors)
+        self.assertEqual(
+            [e for e in scan.events if e["event"] == "unit_completed"], []
+        )
+        self.assertEqual(
+            outcome["resume_plan"]["retryable_units"][0]["next_attempt"], 2
+        )
+
     def test_completed_receipt_tamper_blocks_resume(self):
         suite = build_suite(seeds=[6], families=["no_evidence"])
 
