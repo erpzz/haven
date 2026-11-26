@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 import json
 import os
 from pathlib import Path
+from unittest import mock
 import sys
 import tempfile
 import unittest
@@ -125,8 +126,6 @@ class HookIntegrationTests(unittest.TestCase):
         self.assertEqual(calls, ["yes"])
 
     def test_parallel_budget_is_atomic(self):
-        self.write_policy(policy(max_calls=2))
-        gate = plugin.Gate(policy_path=str(self.path), augmentation_root=AUG)
         # Distinct allowed calls must win at most two budget slots.
         p = policy(max_calls=2, allowed=("read_fixture",))
         p["unique_calls"] = False
@@ -188,6 +187,35 @@ class HookIntegrationTests(unittest.TestCase):
         failed = plugin.Gate(policy_path=str(symlink), augmentation_root=AUG)
         self.assertEqual(failed.pre_tool_call(tool_name="cyber_call",
                                              args=ARGS, session_id="s1")["action"], "block")
+
+    def test_engine_load_exception_does_not_remove_veto(self):
+        with mock.patch.object(plugin, "_scope_engine", side_effect=SyntaxError("bad module")):
+            failed = plugin.Gate(policy_path=str(self.path), augmentation_root=AUG)
+        self.assertEqual(
+            failed.pre_tool_call(tool_name="cyber_call", args=ARGS, session_id="s1")["action"],
+            "block",
+        )
+
+    def test_register_valid_hook_and_enforce_dispatch(self):
+        old_path = os.environ.get(plugin.POLICY_ENV)
+        old_root = os.environ.get(plugin.ROOT_ENV)
+        try:
+            os.environ[plugin.POLICY_ENV] = str(self.path)
+            os.environ[plugin.ROOT_ENV] = str(AUG)
+            ctx = FakeHermesContext()
+            plugin.register(ctx)
+            done = []
+            self.assertTrue(ctx.dispatch("terminal", {"command": "id"},
+                                         lambda: done.append(1))["blocked"])
+            self.assertFalse(ctx.dispatch("cyber_call", ARGS,
+                                          lambda: done.append(2))["blocked"])
+            self.assertEqual(done, [2])
+        finally:
+            for key, old in ((plugin.POLICY_ENV, old_path), (plugin.ROOT_ENV, old_root)):
+                if old is None:
+                    os.environ.pop(key, None)
+                else:
+                    os.environ[key] = old
 
     def test_missing_invalid_policy_still_registers_veto(self):
         old = os.environ.get(plugin.POLICY_ENV)
