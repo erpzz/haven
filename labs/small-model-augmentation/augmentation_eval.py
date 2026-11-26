@@ -163,13 +163,12 @@ def compare(a,b):
     fam_mismatch=sorted(cid for cid in ia if ia[cid]["family"]!=ib[cid]["family"])
     if fam_mismatch:
         return {"schema":RECEIPT,"status":"block","errors":["FAMILY_MISMATCH"],"case_count":len(fam_mismatch)}
-    reused_receipts=sorted(
-        cid for cid in ia
-        if ia[cid]["receipt_sha256"] == ib[cid]["receipt_sha256"]
-    )
+    receipts_a={row["receipt_sha256"] for row in a["rows"]}
+    receipts_b={row["receipt_sha256"] for row in b["rows"]}
+    reused_receipts=receipts_a & receipts_b
     if reused_receipts:
         return {"schema":RECEIPT,"status":"block","errors":["CROSS_ARM_RECEIPT_REUSE"],
-                "case_count":len(reused_receipts)}
+                "receipt_count":len(reused_receipts)}
 
     ids=sorted(ia)
     gained=sum(ib[i]["semantic_pass"] and not ia[i]["semantic_pass"] for i in ids)
