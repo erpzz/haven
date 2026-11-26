@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import collections
 import random
+import re
 
 ROLES = [  # (name, tier)
     ("Global Administrator", 0), ("Privileged Role Administrator", 0), ("User Access Administrator", 0),
@@ -197,11 +198,65 @@ def load_kuzu(t: dict, path: str):
     return db, c
 
 
+_FORBIDDEN_CYPHER = re.compile(
+    r"\\b(?:create|delete|detach|set|remove|merge|drop|alter|rename|truncate|copy|load|install|"
+    r"attach|import|export|call|begin|commit|rollback|use)\\b",
+    re.I,
+)
+
+
+def _cypher_code_only(text: str) -> str:
+    """Replace strings, quoted identifiers and comments with spaces before policy scanning."""
+    if not isinstance(text, str) or len(text) > 65536:
+        raise ValueError("invalid query")
+    out, i, state = [], 0, "code"
+    while i < len(text):
+        ch = text[i]
+        nxt = text[i + 1] if i + 1 < len(text) else ""
+        if state == "code":
+            if ch == "/" and nxt == "/":
+                out.extend("  "); i += 2; state = "line_comment"; continue
+            if ch == "/" and nxt == "*":
+                out.extend("  "); i += 2; state = "block_comment"; continue
+            if ch in ("'", '"', "`"):
+                out.append(" "); i += 1
+                state = {"'": "single", '"': "double", "`": "backtick"}[ch]
+                continue
+            out.append(ch); i += 1; continue
+        if state == "line_comment":
+            if ch == "\n":
+                out.append("\n"); state = "code"
+            else:
+                out.append(" ")
+            i += 1; continue
+        if state == "block_comment":
+            if ch == "*" and nxt == "/":
+                out.extend("  "); i += 2; state = "code"
+            else:
+                out.append("\n" if ch == "\n" else " "); i += 1
+            continue
+        quote = {"single": "'", "double": '"', "backtick": "`"}[state]
+        if ch == "\\" and state != "backtick" and nxt:
+            out.extend("  "); i += 2; continue
+        if ch == quote:
+            if nxt == quote:  # doubled quote/backtick escape
+                out.extend("  "); i += 2; continue
+            out.append(" "); i += 1; state = "code"; continue
+        out.append("\n" if ch == "\n" else " "); i += 1
+    if state not in ("code", "line_comment"):
+        raise ValueError("malformed query refused")
+    return "".join(out)
+
+
+def assert_read_only(cypher: str) -> None:
+    """Fail closed on Cypher write/admin clauses outside strings/comments/quoted identifiers."""
+    if _FORBIDDEN_CYPHER.search(_cypher_code_only(cypher)):
+        raise ValueError("write or admin statement refused")
+
+
 def execute(conn, cypher: str, timeout_ms: int = 5000):
     """Execute model- or rule-written Cypher read-only; return raw rows."""
-    lowered = cypher.casefold()
-    if any(w in lowered for w in ("create ", "delete ", "set ", "merge ", "drop ", "copy ", "load ", "install ", "attach ")):
-        raise ValueError("write or admin statement refused")
+    assert_read_only(cypher)
     conn.set_query_timeout(timeout_ms)
     return conn.execute(cypher).get_all()
 
