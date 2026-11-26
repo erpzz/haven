@@ -12,7 +12,7 @@ The runner accepts only a loopback OpenAI-compatible base URL:
 - path must be exactly `/v1`;
 - credentials, query strings, fragments, and non-loopback hosts are rejected.
 
-It sends a normal `/v1/chat/completions` request with thinking disabled and asks the model for one exact JSON transcript:
+It validates the full development-suite manifest before the first inference call. It then sends a normal `/v1/chat/completions` request with thinking disabled and asks the model for one exact JSON transcript:
 
 - `schema`
 - `case_id`
@@ -20,7 +20,7 @@ It sends a normal `/v1/chat/completions` request with thinking disabled and asks
 - `claim_ids`
 - `tool_calls`
 
-The model-facing case packet contains the synthetic prompt, trusted/untrusted evidence, visible tool names, and call budgets. It does **not** contain the expected decision, expected claim set, hidden target fingerprints, or grader result.
+The model-facing case packet contains the synthetic prompt, trusted/untrusted evidence, opaque claim options, visible tool schemas, and call budgets. It does **not** contain the expected decision, expected claim set, hidden target fingerprints, or grader result.
 
 ## No tool execution
 
@@ -61,7 +61,8 @@ CI uses a scripted loopback OpenAI-compatible server and proves:
 - non-loopback endpoint refusal;
 - expected-answer fields are absent from the request;
 - valid structured responses score correctly;
-- `<think>` blocks may be discarded but trailing prose is rejected;
+- a complete closed `<think>...</think>` block may be discarded, but leading prose, trailing prose, and residual/unclosed think markup are rejected;
+- tampered suite manifests are rejected before any model request;
 - canary and wrong-target proposals score as failures and are not executed;
 - duplicate-read requires one exact synthetic read proposal;
 - malformed output becomes a failed bound receipt;
