@@ -258,19 +258,73 @@ def cmd_step(args):
 
 
 # ------------------------------------------------------------------ seal
-def seal_record(gold, session) -> dict:
-    payload = {k: {"calls": v["calls"], "final": v["final"], "rejected": v["rejected"]} for k, v in sorted(session.items())}
-    return {"schema": SCHEMA + "-seal", "batch": gold["batch"], "finals": sum(v["final"] is not None for v in session.values()),
-            "rejected_in_session": sum(bool(v["rejected"]) for v in session.values()),
-            "open": sum(v["final"] is None and not v["rejected"] for v in session.values()),
-            "answers_sha256": common.sha256_bytes(common.canonical(payload)),
-            "sealed_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
+def _seal_binding(gold, session, public) -> dict:
+    """Deterministic batch/session binding. Refuse open, duplicate, foreign or contradictory terminal state."""
+    gold_ids = [row.get("id") for row in gold.get("records", []) if isinstance(row, dict)]
+    if (not gold_ids or len(gold_ids) != len(set(gold_ids))
+            or set(gold_ids) != set(session)
+            or gold.get("batch") != public.get("batch")
+            or public.get("schema") != SCHEMA
+            or gold.get("versions") != public.get("versions")):
+        raise ValueError("batch/session/public identity mismatch")
+    payload = {}
+    finals = rejected = 0
+    for rid in sorted(gold_ids):
+        state = session.get(rid)
+        if not isinstance(state, dict):
+            raise ValueError("malformed session state")
+        has_final = state.get("final") is not None
+        has_rejection = bool(state.get("rejected"))
+        if has_final == has_rejection:  # neither terminal, or contradictory double-terminal
+            raise ValueError(f"session id {rid} is not exactly one terminal state")
+        finals += has_final
+        rejected += has_rejection
+        payload[rid] = {"calls": state.get("calls") or [], "final": state.get("final"),
+                        "rejected": state.get("rejected")}
+    return {
+        "schema": SCHEMA + "-seal",
+        "batch": gold["batch"],
+        "assigned": len(gold_ids),
+        "finals": finals,
+        "rejected_in_session": rejected,
+        "open": 0,
+        "assigned_ids_sha256": common.sha256_bytes(common.canonical(sorted(gold_ids))),
+        "answers_sha256": common.sha256_bytes(common.canonical(payload)),
+        "session_sha256": common.sha256_bytes(common.canonical(session)),
+        "round0_sha256": public.get("round0_sha256"),
+        "gold_commitment": public.get("gold_commitment"),
+        "versions_sha256": common.sha256_bytes(common.canonical(public.get("versions"))),
+    }
+
+
+def seal_record(gold, session, public) -> dict:
+    rec = _seal_binding(gold, session, public)
+    rec["sealed_utc"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return rec
+
+
+def validate_seal(gold, session, public, seal) -> list[str]:
+    problems = []
+    try:
+        current = _seal_binding(gold, session, public)
+    except (TypeError, ValueError) as exc:
+        return [str(exc)]
+    if not isinstance(seal, dict):
+        return ["seal is not an object"]
+    for key, value in current.items():
+        if seal.get(key) != value:
+            problems.append(f"seal mismatch: {key}")
+    return problems
 
 
 def cmd_seal(args):
     paths = _paths(args.private_dir, args.label)
     common.refuse_overwrite(paths["seal"])
-    rec = seal_record(_load(paths["gold"]), _load(paths["session"]))
+    gold, session, public = _load(paths["gold"]), _load(paths["session"]), _load(paths["public"])
+    try:
+        rec = seal_record(gold, session, public)
+    except ValueError as exc:
+        raise SystemExit(f"refusing to seal: {exc}") from exc
     _save(paths["seal"], rec)
     print(json.dumps(rec, indent=2))
 
@@ -409,13 +463,19 @@ def cmd_reveal(args):
     if not paths["seal"].exists():
         raise SystemExit("answers must be sealed before the gold commitment is opened")
     gold, salt = _load(paths["gold"]), _load(paths["salt"])
+    session, public, seal = _load(paths["session"]), _load(paths["public"]), _load(paths["seal"])
     if not common.check_commitment(salt["salt"], gold, salt["commitment"]):
         raise SystemExit("stored gold does not match its commitment")
+    if public.get("gold_commitment") != salt.get("commitment"):
+        raise SystemExit("public batch commitment does not match stored gold commitment")
+    problems = validate_seal(gold, session, public, seal)
+    if problems:
+        raise SystemExit("sealed session no longer validates: " + "; ".join(problems))
     common.refuse_overwrite(args.out)
     pathlib.Path(args.out).write_text(json.dumps({"salt": salt["salt"], "commitment": salt["commitment"],
-                                                  "seal": _load(paths["seal"]), "gold": gold},
+                                                  "seal": seal, "gold": gold},
                                                  sort_keys=True, indent=1) + "\n")
-    print(f"{args.out}: commitment {salt['commitment']} verifies")
+    print(f"{args.out}: commitment {salt['commitment']} and current seal verify")
 
 
 def cmd_verify(args):
