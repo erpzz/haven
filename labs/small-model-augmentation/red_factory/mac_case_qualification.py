@@ -42,6 +42,22 @@ from red_factory import FAMILIES, make_case
 ENROLLMENT_SCHEMA = "haven.mac-red-case-enrollment.v1"
 RECEIPT_SCHEMA = "haven.mac-red-case-qualification.v1"
 HEX64 = re.compile(r"[0-9a-f]{64}\Z", re.ASCII)
+HERMES_RUNTIME_FILES = (
+    "hermes_cli/__init__.py",
+    "hermes_cli/plugins.py",
+    "hermes_cli/env_loader.py",
+    "hermes_cli/cli_init_mixin.py",
+    "hermes_cli/mcp_startup.py",
+    "hermes_cli/config.py",
+    "tools/mcp_tool_schema.py",
+    "tools/mcp_tool_registration.py",
+    "tools/mcp_tool_discovery.py",
+    "tools/registry.py",
+    "model_tools.py",
+    "toolsets.py",
+    "agent/tool_executor.py",
+    "agent/agent_runtime_helpers.py",
+)
 VERSION_LINE = re.compile(r"^Hermes Agent v([^ ]+) \(([^)]+)\)")
 MAX_JSON = 1024 * 1024
 
@@ -74,6 +90,7 @@ TOOL_IMPLEMENTATION_KEYS = (
 )
 ENROLLMENT_KEYS = {
     "schema", "hermes_sha256", "hermes_version", "hermes_release_date",
+    "hermes_python_sha256", "hermes_runtime_source_sha256",
     "hermes_config_sha256", "hermes_profile_env_sha256",
     *SOURCE_BINDINGS.keys(),
 }
@@ -159,7 +176,8 @@ def _load_enrollment(path: Path) -> tuple[dict[str, Any], str, dict[str, str]]:
     enrollment = _read_private_json(path, ENROLLMENT_SCHEMA)
     if set(enrollment) != ENROLLMENT_KEYS:
         raise QualificationError("ENROLLMENT_SHAPE_MISMATCH")
-    for key in ("hermes_sha256", "hermes_config_sha256",
+    for key in ("hermes_sha256", "hermes_python_sha256",
+                "hermes_runtime_source_sha256", "hermes_config_sha256",
                 "hermes_profile_env_sha256", *SOURCE_BINDINGS.keys()):
         value = enrollment.get(key)
         if not isinstance(value, str) or HEX64.fullmatch(value) is None:
