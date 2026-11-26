@@ -21,6 +21,7 @@ from typing import Any, Mapping
 
 FIXTURE_SCHEMA = "haven-local-red-factory-mcp-fixture-v1"
 LOG_SCHEMA = "haven-local-red-factory-mcp-call-v1"
+DENIAL_SCHEMA = "haven-local-red-factory-mcp-denial-v1"
 MAX_LINE_BYTES = 1024 * 1024
 _CASE_RE = re.compile(r"^hrf_[0-9a-f]{32}$")
 
@@ -33,6 +34,42 @@ def _canon(value: Any) -> bytes:
 
 def _sha256(value: Any) -> str:
     return hashlib.sha256(_canon(value)).hexdigest()
+
+
+def _scope_gate_from_env():
+    if not (os.environ.get("HAVEN_MCP_SCOPE_POLICY_FILE")
+            or os.environ.get("HAVEN_MCP_SCOPE_REQUIRED")):
+        return None
+    root = os.environ.get("HAVEN_AUGMENTATION_ROOT")
+    if not root:
+        raise ValueError("HAVEN_AUGMENTATION_ROOT is required for guarded Red Factory MCP")
+    root_path = str(Path(root))
+    if root_path not in sys.path:
+        sys.path.insert(0, root_path)
+    from mcp_scope_runtime import from_env
+    return from_env()
+
+
+def _denial(log_path: Path | None, fixture: Mapping[str, Any],
+            tool: Any, arguments: Mapping[str, Any], code: str) -> dict[str, Any]:
+    event_body = {
+        "schema": DENIAL_SCHEMA,
+        "case_id": fixture["case_id"],
+        "fixture_sha256": fixture["fixture_sha256"],
+        "tool": tool if isinstance(tool, str) else "",
+        "arguments_sha256": _sha256(dict(arguments)),
+        "code": code,
+    }
+    event = {**event_body, "denial_sha256": _sha256(event_body)}
+    if log_path is not None:
+        _append_private_jsonl(log_path, event)
+    return _response(
+        None,
+        {
+            "content": [{"type": "text", "text": "Synthetic call blocked by host scope."}],
+            "isError": True,
+        },
+    )
 
 
 def fixture_for_case(case) -> dict[str, Any]:
@@ -135,7 +172,14 @@ def _error(req_id: Any, code: int, message: str) -> dict[str, Any]:
     return {"jsonrpc": "2.0", "id": req_id, "error": {"code": code, "message": message}}
 
 
-def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Path) -> dict[str, Any] | None:
+def handle(
+    request: Mapping[str, Any],
+    fixture: Mapping[str, Any],
+    log_path: Path,
+    *,
+    scope_gate=None,
+    denial_log_path: Path | None = None,
+) -> dict[str, Any] | None:
     if not isinstance(request, Mapping) or request.get("jsonrpc") != "2.0":
         return _error(request.get("id") if isinstance(request, Mapping) else None, -32600, "Invalid Request")
     method = request.get("method")
@@ -154,7 +198,14 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
     if method == "ping":
         return _response(req_id, {})
     if method == "tools/list":
-        return _response(req_id, {"tools": _tool_definitions(fixture["allowed_tools"])})
+        allowed = list(fixture["allowed_tools"])
+        if scope_gate is not None:
+            try:
+                host_allowed = set(scope_gate.exposed(["read_fixture", "write_canary"]))
+            except Exception:
+                return _error(req_id, -32603, "host scope policy unavailable")
+            allowed = [name for name in allowed if name in host_allowed]
+        return _response(req_id, {"tools": _tool_definitions(allowed)})
     if method != "tools/call":
         return _error(req_id, -32601, "Method not found")
     if not isinstance(params, Mapping):
@@ -163,6 +214,35 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
     arguments = params.get("arguments", {})
     if name not in {"read_fixture", "write_canary"} or not isinstance(arguments, Mapping):
         return _error(req_id, -32602, "Invalid params")
+
+    if scope_gate is not None:
+        # The fixture is a second host-owned narrowing boundary. A policy may
+        # authorize read_fixture globally for the suite, while an individual
+        # unauthorized_effect case legitimately exposes zero tools.
+        if name not in fixture["allowed_tools"]:
+            denied = _denial(
+                denial_log_path, fixture, name, arguments, "CASE_TOOL_NOT_ALLOWED"
+            )
+            denied["id"] = req_id
+            return denied
+        if name == "read_fixture":
+            if set(arguments) != {"object"} or arguments.get("object") != fixture["object"]:
+                denied = _denial(
+                    denial_log_path, fixture, name, arguments, "CASE_TARGET_DENIED"
+                )
+                denied["id"] = req_id
+                return denied
+        try:
+            host_allowed = set(scope_gate.exposed(["read_fixture", "write_canary"]))
+            if name not in host_allowed:
+                raise ValueError("tool outside final scope")
+            scope_gate.check(name, dict(arguments))
+        except Exception:
+            denied = _denial(
+                denial_log_path, fixture, name, arguments, "FINAL_SCOPE_CALL_DENIED"
+            )
+            denied["id"] = req_id
+            return denied
 
     event_body = {
         "schema": LOG_SCHEMA,
@@ -188,7 +268,13 @@ def handle(request: Mapping[str, Any], fixture: Mapping[str, Any], log_path: Pat
     })
 
 
-def serve_stdio(fixture_path: Path, log_path: Path) -> int:
+def serve_stdio(
+    fixture_path: Path,
+    log_path: Path,
+    *,
+    denial_log_path: Path | None = None,
+    scope_gate=None,
+) -> int:
     fixture = load_fixture(fixture_path)
     while True:
         raw = sys.stdin.buffer.readline(MAX_LINE_BYTES + 1)
@@ -198,7 +284,13 @@ def serve_stdio(fixture_path: Path, log_path: Path) -> int:
             return 2
         try:
             request = json.loads(raw.decode("utf-8"))
-            response = handle(request, fixture, log_path)
+            response = handle(
+                request,
+                fixture,
+                log_path,
+                scope_gate=scope_gate,
+                denial_log_path=denial_log_path,
+            )
         except (UnicodeDecodeError, json.JSONDecodeError, ValueError, TypeError):
             response = _error(None, -32700, "Parse error")
         if response is not None:
@@ -209,10 +301,19 @@ def serve_stdio(fixture_path: Path, log_path: Path) -> int:
 def main() -> int:
     fixture = os.environ.get("HRF_FIXTURE_FILE")
     log = os.environ.get("HRF_MCP_LOG")
+    denial_log = os.environ.get("HRF_MCP_DENIAL_LOG")
     if not fixture or not log:
         return 2
     try:
-        return serve_stdio(Path(fixture), Path(log))
+        scope_gate = _scope_gate_from_env()
+        if scope_gate is not None and not denial_log:
+            return 2
+        return serve_stdio(
+            Path(fixture),
+            Path(log),
+            denial_log_path=Path(denial_log) if denial_log else None,
+            scope_gate=scope_gate,
+        )
     except (OSError, ValueError, json.JSONDecodeError):
         return 2
 
