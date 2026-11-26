@@ -489,6 +489,100 @@ class PurpleBoundedClaimsIntegration(unittest.TestCase):
                 run_manifest_sha256="2" * 64,
             )
 
+    def test_selector_view_exposes_only_opaque_ids_kinds_and_required_bits(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_overview", {"platform": "ad"}
+        )
+        policy = adapter.coverage_policy(bundle)
+        view = adapter.selector_view(bundle, policy)
+        self.assertEqual(
+            set(view),
+            {
+                "schema", "bundle_sha256", "coverage_policy_sha256",
+                "tool", "max_claims", "claims", "selector_sha256",
+            },
+        )
+        self.assertEqual(
+            [claim["id"] for claim in view["claims"]],
+            policy["allowed_ids"],
+        )
+        for claim in view["claims"]:
+            self.assertEqual(set(claim), {"id", "kind", "required"})
+            self.assertEqual(
+                claim["required"], claim["id"] in policy["required_ids"]
+            )
+        encoded = json.dumps(view, sort_keys=True)
+        self.assertNotIn("payload", encoded)
+        self.assertNotIn("citations", encoded)
+        self.assertNotIn("limitations", encoded)
+        self.assertNotIn('"platform"', encoded)
+        self.assertNotIn('"snapshot"', encoded)
+
+    def test_hidden_claim_and_provenance_sentinels_cannot_leak_to_selector_or_log(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_overview", {"platform": "ad"}
+        )
+        bundle = copy.deepcopy(bundle)
+        bundle["claims"][0]["payload"]["private_note"] = "PAYLOAD-SENTINEL-7731"
+        bundle["claims"][0]["citations"][0]["private_note"] = "CITATION-SENTINEL-8842"
+        bundle["limitations"].append("LIMITATION-SENTINEL-9953")
+        policy = adapter.coverage_policy(bundle)
+        view = adapter.selector_view(bundle, policy)
+        selector_json = json.dumps(view, sort_keys=True)
+        for secret in (
+            "PAYLOAD-SENTINEL-7731",
+            "CITATION-SENTINEL-8842",
+            "LIMITATION-SENTINEL-9953",
+        ):
+            self.assertNotIn(secret, selector_json)
+
+        released, coverage = self.covered_release(
+            bundle, policy["required_ids"], policy
+        )
+        self.assertTrue(released["released"], released)
+        coverage_json = json.dumps(coverage, sort_keys=True)
+        for secret in (
+            "PAYLOAD-SENTINEL-7731",
+            "CITATION-SENTINEL-8842",
+            "LIMITATION-SENTINEL-9953",
+        ):
+            self.assertNotIn(secret, coverage_json)
+
+    def test_malformed_candidate_text_cannot_leak_through_error_receipt(self):
+        _, bundle = self.bundle(
+            "purple_tier_zero_overview", {"platform": "ad"}
+        )
+        policy = adapter.coverage_policy(bundle)
+        raw = "MALFORMED-PRIVATE-SENTINEL-2291"
+        released, coverage = adapter.release_with_coverage(
+            bundle, raw, policy, bounded.release
+        )
+        self.assertFalse(released["released"])
+        self.assertNotIn(raw, json.dumps(released, sort_keys=True))
+        self.assertNotIn(raw, json.dumps(coverage, sort_keys=True))
+        self.assertEqual(
+            coverage["candidate_sha256"],
+            __import__("hashlib").sha256(raw.encode()).hexdigest(),
+        )
+
+    def test_disclosure_policy_is_hash_bound_and_declares_hidden_surfaces(self):
+        policy = adapter.disclosure_policy()
+        body = copy.deepcopy(policy)
+        digest = body.pop("policy_sha256")
+        self.assertEqual(
+            digest,
+            __import__("hashlib").sha256(
+                json.dumps(
+                    body, sort_keys=True, separators=(",", ":"),
+                    ensure_ascii=False, allow_nan=False,
+                ).encode()
+            ).hexdigest(),
+        )
+        self.assertIn("claims[].payload", policy["model_hidden_fields"])
+        self.assertIn("claims[].citations", policy["model_hidden_fields"])
+        self.assertIn("candidate_raw", policy["user_hidden_fields"])
+        self.assertIn("host_rendered_claim_text", policy["user_surface"])
+
     def test_host_field_mutations_change_bundle_hash(self):
         original = self.result(
             "purple_tier_zero_principal",
