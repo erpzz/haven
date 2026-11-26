@@ -6,6 +6,8 @@ on:
       - 'labs/small-model-augmentation/test_hermes_scope_plugin.py'
       - 'labs/small-model-augmentation/hermes_plugin_preflight.py'
       - 'labs/small-model-augmentation/test_hermes_plugin_preflight.py'
+      - 'labs/small-model-augmentation/guarded_model_supervisor.py'
+      - 'labs/small-model-augmentation/test_guarded_model_supervisor.py'
       - 'labs/small-model-augmentation/mcp_scope_runtime.py'
       - 'labs/small-model-augmentation/test_mcp_scope_runtime.py'
       - 'labs/hermes/haven_hermes/mcp_stdio.py'
@@ -18,6 +20,8 @@ on:
       - 'labs/small-model-augmentation/test_hermes_scope_plugin.py'
       - 'labs/small-model-augmentation/hermes_plugin_preflight.py'
       - 'labs/small-model-augmentation/test_hermes_plugin_preflight.py'
+      - 'labs/small-model-augmentation/guarded_model_supervisor.py'
+      - 'labs/small-model-augmentation/test_guarded_model_supervisor.py'
       - 'labs/small-model-augmentation/mcp_scope_runtime.py'
       - 'labs/small-model-augmentation/test_mcp_scope_runtime.py'
       - 'labs/hermes/haven_hermes/mcp_stdio.py'
@@ -47,6 +51,8 @@ jobs:
             labs/small-model-augmentation/test_hermes_scope_plugin.py \
             labs/small-model-augmentation/hermes_plugin_preflight.py \
             labs/small-model-augmentation/test_hermes_plugin_preflight.py \
+            labs/small-model-augmentation/guarded_model_supervisor.py \
+            labs/small-model-augmentation/test_guarded_model_supervisor.py \
             labs/small-model-augmentation/mcp_scope_runtime.py \
             labs/small-model-augmentation/test_mcp_scope_runtime.py \
             labs/hermes/haven_hermes/mcp_stdio.py \
@@ -60,5 +66,7 @@ jobs:
         run: python -m unittest discover -s labs/small-model-augmentation -p 'test_hermes_scope_plugin.py' -v
       - name: Guarded Hermes plugin preflight
         run: python -m unittest discover -s labs/small-model-augmentation -p 'test_hermes_plugin_preflight.py' -v
+      - name: Guarded model supervisor composition
+        run: python -m unittest discover -s labs/small-model-augmentation -p 'test_guarded_model_supervisor.py' -v
       - name: Final MCP dispatcher canaries
         run: python -m unittest discover -s labs/small-model-augmentation -p 'test_mcp_scope_runtime.py' -v
