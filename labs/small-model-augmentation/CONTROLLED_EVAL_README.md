@@ -83,7 +83,7 @@ The CLI uses bounded reads, rejects duplicate JSON keys/non-finite JSON, emits a
 
 ## Author test evidence
 
-Author semantic suite after second-pass hardening: **32/32 PASS**.
+Author semantic suite after second-pass hardening: **33/33 PASS**.
 
 Coverage includes:
 
@@ -92,6 +92,7 @@ Coverage includes:
 - duplicate/malformed case ids;
 - bool/string/negative counter rejection;
 - counter consistency;
+- unique per-case private receipt hashes;
 - order-independent report hash;
 - matched-pair and manifest/case/family mismatch handling;
 - paired gained/lost and family net deltas;
@@ -115,8 +116,8 @@ Two fail-open-by-crash defects were found by fuzzing during author review and fi
 
 Published blobs at this review point:
 
-- `augmentation_eval.py`: `f27b311f67dd38543d5bdd1c9029db2dcc54c47f`
-- `test_augmentation_eval.py`: `62f06ad70e65b9715a8a56aefe83396c54e3b372`
+- `augmentation_eval.py`: `3227355c6c602e239467dec9d3d54659946fd56d`
+- `test_augmentation_eval.py`: `f3567c7d53c1f3da421779c0259d411a4e4ecb0f`
 - `CONTROLLED_EVAL_PLAN.md`: `2448b15775e535580deaf4666b2bf35d634840fc`
 
 ## Not executed / not qualified
