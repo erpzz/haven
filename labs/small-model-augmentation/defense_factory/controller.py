@@ -177,8 +177,8 @@ def verify_run_receipt(
             raise ValueError(f"runner receipt binding mismatch: {receipt_key}")
 
     rows = body.get("recipes")
-    if not isinstance(rows, list):
-        raise ValueError("runner recipes must be an array")
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("runner recipes must be a non-empty array")
     checked = [_validate_command_receipt(row) for row in rows]
     expected_ids = contract["recipe_ids"]
     actual_ids = [row["recipe_id"] for row in checked]
@@ -186,6 +186,10 @@ def verify_run_receipt(
         raise ValueError("runner recipe order/id mismatch")
     if len(actual_ids) > len(expected_ids):
         raise ValueError("runner contains extra recipe receipts")
+    if len(checked) < len(expected_ids):
+        last = checked[-1]
+        if not last["timed_out"] and last["exit_code"] == 0:
+            raise ValueError("incomplete runner receipt stopped after a successful recipe")
 
     recomputed_pass = (
         len(checked) == len(expected_ids)
