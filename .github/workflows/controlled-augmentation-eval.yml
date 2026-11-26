@@ -1,0 +1,32 @@
+name: Controlled augmentation evaluation
+
+on:
+  pull_request:
+    paths:
+      - 'labs/small-model-augmentation/augmentation_eval.py'
+      - 'labs/small-model-augmentation/test_augmentation_eval.py'
+      - 'labs/small-model-augmentation/CONTROLLED_EVAL_PLAN.md'
+      - 'labs/small-model-augmentation/CONTROLLED_EVAL_README.md'
+      - '.github/workflows/controlled-augmentation-eval.yml'
+  push:
+    branches:
+      - 'astra/controlled-eval-20261125'
+
+permissions:
+  contents: read
+
+jobs:
+  deterministic-sidecar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile sidecar
+        working-directory: labs/small-model-augmentation
+        run: python3 -m py_compile augmentation_eval.py test_augmentation_eval.py
+      - name: Sidecar validation and report regressions
+        working-directory: labs/small-model-augmentation
+        run: python3 -m unittest -v test_augmentation_eval
