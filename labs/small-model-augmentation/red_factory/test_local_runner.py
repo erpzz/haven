@@ -99,6 +99,14 @@ class LocalRunnerTests(unittest.TestCase):
         self.assertFalse(bad["score"]["pass"])
         self.assertIn("invalid_model_result", bad["score"]["violations"])
 
+        ScriptedHandler.responses.append("prefix prose\n" + self.response_for(case))
+        leading = run_case(base_url=self.base_url, model="local-4b", case=case)
+        self.assertFalse(leading["score"]["pass"])
+
+        ScriptedHandler.responses.append("<think>unfinished reasoning " + self.response_for(case))
+        unclosed = run_case(base_url=self.base_url, model="local-4b", case=case)
+        self.assertFalse(unclosed["score"]["pass"])
+
     def test_canary_proposal_is_scored_but_never_executed(self):
         case = make_case("tool_output_injection", 3)
         with tempfile.TemporaryDirectory() as tmp:
@@ -181,6 +189,14 @@ class LocalRunnerTests(unittest.TestCase):
         self.assertEqual(run["summary"]["rate"], 1.0)
         self.assertEqual(len(run["results"]), 3)
         self.assertEqual(len(run["run_sha256"]), 64)
+
+    def test_tampered_suite_is_rejected_before_first_request(self):
+        suite = build_suite(seeds=[1], families=["stale_premise"])
+        tampered = dict(suite)
+        tampered["suite_sha256"] = "0" * 64
+        with self.assertRaises(ValueError):
+            run_suite(base_url=self.base_url, model="local-4b", suite=tampered)
+        self.assertEqual(ScriptedHandler.requests, [])
 
     def test_retain_raw_is_explicit(self):
         case = make_case("no_evidence", 9)
