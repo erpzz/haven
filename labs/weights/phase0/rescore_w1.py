@@ -125,8 +125,11 @@ def main(argv=None):
     guard_counts = collections.Counter()
     newly_rejected = []
     newly_accepted = []
+    diagnostic_drift = []
+    episode_order = {e["id"]: i for i, e in enumerate(episodes)}
+    ordered_keys = sorted(records, key=lambda x: (x[1], episode_order[x[0]]))
 
-    for key in sorted(records, key=lambda x: (x[1], x[0])):
+    for key in ordered_keys:
         rec, old = records[key], old_metrics_map[key]
         e = episode_index[key[0]]
         scored = common.judge(rec, e)
@@ -138,6 +141,8 @@ def main(argv=None):
             if field in old:
                 new[field] = old[field]
         new_metrics_map[key] = new
+        if old.get("views") != new.get("views") or bool(old.get("raw_pass")) != bool(new.get("raw_pass")):
+            diagnostic_drift.append(key)
         for v in new.get("w1_semantic_guard_violations") or []:
             guard_counts[v] += 1
         if bool(old.get("keep")) and not bool(new.get("keep")):
@@ -147,8 +152,11 @@ def main(argv=None):
 
     if newly_accepted:
         raise SystemExit("guard-only rescore unexpectedly accepted previously unkept trajectories")
+    if diagnostic_drift:
+        raise SystemExit(
+            f"guard-only rescore changed frozen diagnostic scoring at {len(diagnostic_drift)} slots"
+        )
 
-    ordered_keys = sorted(records, key=lambda x: (x[1], x[0]))
     old_metrics = [old_metrics_map[k] for k in ordered_keys]
     new_metrics = [new_metrics_map[k] for k in ordered_keys]
 
@@ -203,6 +211,7 @@ def main(argv=None):
         "new_strict_kept_attempts": new_kept,
         "newly_rejected_by_current_keep_rule": len(newly_rejected),
         "affected_episode_count": len({eid for eid, _ in newly_rejected}),
+        "diagnostic_view_drift_slots": 0,
         "guard_violation_counts": dict(sorted(guard_counts.items())),
         "old_solved_episodes": old_solved,
         "new_solved_episodes": new_solved,
