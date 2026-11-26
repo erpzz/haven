@@ -40,7 +40,8 @@ Rows carry only aggregate/control metrics and a SHA-256 of the private host-owne
 `eval_receipt.py` now defines that private receipt rather than leaving `receipt_sha256` opaque. One receipt is one arm/case execution and binds:
 
 - the exact sidecar manifest identity/settings;
-- #127 admission receipt;
+- #127 admission receipt plus a stable private runtime-profile hash;
+- stable private request-settings and world hashes;
 - #129 tool-policy hash;
 - #131 catalogue hash and selection receipt;
 - #132 claim bundle, claim policy and deterministic renderer;
@@ -57,6 +58,8 @@ The model must not author these fields. They come from the existing grader, disp
 The private receipt provides content and cross-control binding only. It does **not** authenticate the instrumentation producer. If a hostile same-user/local writer is in scope, a MAC/signature or immutable external provenance is still required before calling the receipt authenticated.
 
 The fixed source domains make provenance mistakes visible: semantic correctness comes only from the grader source, call/safety counters only from the dispatcher source, external effects only from the observer source, verifier/release counters only from the verifier source, recovery counters only from the recovery source, and token/timing/schema metrics only from the backend source. Their source receipt hashes must be distinct.
+
+Matched arms also require a **private control preflight**. The public sidecar manifest alone cannot prove identical local runtime/context/world/request settings. `compare_private_receipt_sets()` therefore compares the private receipts case-for-case before the public report comparison. The runner explicitly names the control hashes that the experiment is allowed to vary. Stable runtime profile, request settings, world, full catalogue and tool implementation are never waiverable; they must match. This lets E1 vary selection/scope and E2 vary claim handling without accidentally accepting runtime drift.
 
 ## Comparison
 
@@ -95,6 +98,12 @@ Validate one private receipt without printing controls/source content:
 Build a public arm report from one or more private receipts:
 
 `python eval_receipt.py build-report --manifest arm-manifest.json --receipt c1.json --receipt c2.json --out arm.json`
+
+Preflight matched private arms before the public comparison, naming only the intended experimental control differences. Example E1 shape:
+
+`python eval_receipt.py compare-private --a a-c1.json --b b-c1.json --allow-control-difference admission_receipt_sha256 --allow-control-difference tool_policy_sha256 --allow-control-difference selection_receipt_sha256 --allow-control-difference run_manifest_sha256`
+
+The private compare output contains field names/counts only, not the private hashes. It hard-blocks stable runtime-profile/request/world/catalog/tool-implementation drift even if a caller tries to put one of those fields on the allowlist.
 
 The builder refuses manifest mismatch, duplicate cases/receipts, reserve-tagged manifests, tampered receipt hashes and pre-existing output paths. Stdout contains only fixed summary metadata and the public report hash.
 
