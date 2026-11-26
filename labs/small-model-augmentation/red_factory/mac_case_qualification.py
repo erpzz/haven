@@ -382,6 +382,9 @@ def _version_probe(hermes: Path, hermes_home: Path, enrollment: Mapping[str, Any
     if _sha_file(hermes, executable=True) != enrollment["hermes_sha256"]:
         raise QualificationError("HERMES_HASH_MISMATCH")
     child_env = dict(env)
+    child_env.pop("PYTHONPATH", None)
+    child_env.pop("PYTHONHOME", None)
+    child_env["PYTHONNOUSERSITE"] = "1"
     child_env.update({
         "HERMES_HOME": str(hermes_home),
         "HERMES_ENABLE_PROJECT_PLUGINS": "0",
@@ -543,6 +546,9 @@ def run_case_qualification(*, hermes: Path, hermes_home: Path, toolsets: str,
     ) = _load_enrollment(Path(enrollment_path))
     profile_identity = _verify_profile_files(Path(hermes_home), enrollment)
     base_env = dict(os.environ if env is None else env)
+    base_env.pop("PYTHONPATH", None)
+    base_env.pop("PYTHONHOME", None)
+    base_env["PYTHONNOUSERSITE"] = "1"
     runtime_fingerprint = _runtime_package_fingerprint(
         Path(hermes), enrollment, base_env
     )
