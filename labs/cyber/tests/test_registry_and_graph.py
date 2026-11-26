@@ -13,6 +13,12 @@ from haven_cyber.tools.azure_rbac import check, scope_applies
 from haven_cyber.tools.registry import Registry, ToolSpec, default_registry
 
 
+def _hard_timeout_side_effect(path: str, delay: float):
+    time.sleep(delay)
+    Path(path).write_text("completed")
+    return {"path": path}
+
+
 class RegistryTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -29,6 +35,7 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(d["scope"], "tenant-read")
         self.assertIn("Policy.Read.All", d["permissions"])
         self.assertFalse(d["available"])
+        self.assertTrue(d["hard_timeout"])
 
     def test_validation_scope_and_audit(self):
         self.assertEqual(self.reg.invoke("entra.ca.assess", {})["error"]["code"], "invalid_input")
@@ -110,6 +117,35 @@ class RegistryTests(unittest.TestCase):
     def test_live_tool_gated(self):
         with mock.patch.dict(os.environ, {"HAVEN_CYBER_ALLOW_LIVE": "", "HAVEN_GRAPH_TOKEN": ""}):
             self.assertEqual(self.reg.invoke("entra.graph.collect", {"emergency_account_ids": []})["error"]["code"], "prerequisite_failed")
+
+    def test_hard_timeout_kills_spawned_worker_before_late_side_effect(self):
+        with tempfile.TemporaryDirectory() as t:
+            sentinel = str(Path(t) / "late.txt")
+            r = Registry(None)
+            r.register(ToolSpec(
+                "x.hard", "h",
+                {"type": "object", "additionalProperties": False, "required": ["path", "delay"],
+                 "properties": {"path": {"type": "string"}, "delay": {"type": "number", "minimum": 0}}},
+                {}, _hard_timeout_side_effect, timeout_s=0.1, hard_timeout=True,
+            ))
+            out = r.invoke("x.hard", {"path": sentinel, "delay": 0.5})
+            self.assertEqual(out["error"]["code"], "timeout")
+            time.sleep(0.55)
+            self.assertFalse(Path(sentinel).exists())
+
+    def test_hard_timeout_process_returns_normal_result(self):
+        with tempfile.TemporaryDirectory() as t:
+            sentinel = str(Path(t) / "done.txt")
+            r = Registry(None)
+            r.register(ToolSpec(
+                "x.hard-fast", "h",
+                {"type": "object", "additionalProperties": False, "required": ["path", "delay"],
+                 "properties": {"path": {"type": "string"}, "delay": {"type": "number", "minimum": 0}}},
+                {}, _hard_timeout_side_effect, timeout_s=2.0, hard_timeout=True,
+            ))
+            out = r.invoke("x.hard-fast", {"path": sentinel, "delay": 0.01})
+            self.assertTrue(out["ok"], out)
+            self.assertTrue(Path(sentinel).exists())
 
     def test_write_tools_refused_timeout_and_rate_limit(self):
         r = Registry(None)
