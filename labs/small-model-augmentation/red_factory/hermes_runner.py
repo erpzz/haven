@@ -359,6 +359,60 @@ def _load_call_log(path: Path, fixture_sha256: str, case_id: str) -> list[dict[s
     return calls
 
 
+def _proposed_calls(chat_records: list[Mapping[str, Any]], fixture_surface: Mapping[str, str]) -> list[dict[str, Any]]:
+    reverse = {raw: logical for logical, raw in fixture_surface.items()}
+    calls: list[dict[str, Any]] = []
+    for record in chat_records:
+        rows = record.get("assistant_tool_calls")
+        if not isinstance(rows, list):
+            continue
+        for row in rows:
+            if not isinstance(row, Mapping):
+                raise ValueError("malformed assistant tool call")
+            fn = row.get("function")
+            if not isinstance(fn, Mapping):
+                raise ValueError("malformed assistant tool function")
+            raw_name = fn.get("name")
+            if not isinstance(raw_name, str) or not raw_name or len(raw_name) > 256:
+                raise ValueError("invalid assistant tool name")
+            raw_args = fn.get("arguments", "{}")
+            if isinstance(raw_args, str):
+                try:
+                    args = json.loads(raw_args)
+                except json.JSONDecodeError as exc:
+                    raise ValueError("invalid assistant tool arguments") from exc
+            elif isinstance(raw_args, Mapping):
+                args = dict(raw_args)
+            else:
+                raise ValueError("invalid assistant tool arguments")
+            if not isinstance(args, dict) or len(_canon(args)) > 64 * 1024:
+                raise ValueError("assistant tool arguments must be bounded object")
+            calls.append({"tool": reverse.get(raw_name, raw_name), "arguments": args})
+    return calls
+
+
+def _call_fingerprint(call: Mapping[str, Any]) -> str:
+    return _sha256({"tool": call.get("tool"), "arguments": call.get("arguments")})
+
+
+def _dispatches_align(proposed: list[dict[str, Any]], actual: list[dict[str, Any]]) -> bool:
+    """Every actual dispatch must be attributable to a prior model proposal, in order.
+
+    Proposed calls may be absent from actual dispatches when a host authorization gate
+    blocks them before MCP execution.
+    """
+    cursor = 0
+    proposed_fp = [_call_fingerprint(row) for row in proposed]
+    for row in actual:
+        target = _call_fingerprint(row)
+        while cursor < len(proposed_fp) and proposed_fp[cursor] != target:
+            cursor += 1
+        if cursor >= len(proposed_fp):
+            return False
+        cursor += 1
+    return True
+
+
 def _invalid_score(case: RedCase, violation: str) -> dict[str, Any]:
     body = {
         "schema": "haven-local-red-factory-score-v1",
@@ -417,6 +471,9 @@ def run_hermes_case(
     if not isinstance(toolsets, str) or TOOLSETS_RE.fullmatch(toolsets) is None:
         raise ValueError("invalid toolsets")
     backend_base_url = normalize_loopback_base_url(backend_base_url)
+    backend_host = urllib.parse.urlparse(backend_base_url).hostname
+    if backend_host not in {"127.0.0.1", "::1"}:
+        raise ValueError("Hermes lane requires a numeric loopback backend")
     if not isinstance(model, str) or not model or len(model) > 256:
         raise ValueError("invalid model alias")
     if isinstance(timeout_seconds, bool) or not isinstance(timeout_seconds, (int, float)) or not 0.1 <= timeout_seconds <= 900:
@@ -535,26 +592,44 @@ def run_hermes_case(
         actual_calls = []
         errors.append("INVALID_MCP_CALL_LOG")
 
+    try:
+        proposed_calls = _proposed_calls(chat_records, fixture_surface)
+    except (ValueError, TypeError, json.JSONDecodeError):
+        proposed_calls = []
+        errors.append("INVALID_MODEL_TOOL_CALL")
+    if not _dispatches_align(proposed_calls, actual_calls):
+        errors.append("UNATTRIBUTED_MCP_DISPATCH")
+
     final_text = ""
     for row in reversed(chat_records):
         content = row.get("assistant_content")
         if isinstance(content, str) and content.strip():
             final_text = content
             break
-    score: dict[str, Any]
+    model_score: dict[str, Any]
+    execution_score: dict[str, Any]
     try:
         final = _strict_final(final_text, case)
-        transcript = {
+        model_transcript = {
+            "schema": TRANSCRIPT_SCHEMA,
+            "case_id": case.case_id,
+            "decision": final["decision"],
+            "claim_ids": final["claim_ids"],
+            "tool_calls": proposed_calls,
+        }
+        execution_transcript = {
             "schema": TRANSCRIPT_SCHEMA,
             "case_id": case.case_id,
             "decision": final["decision"],
             "claim_ids": final["claim_ids"],
             "tool_calls": actual_calls,
         }
-        score = score_transcript(case, transcript)
+        model_score = score_transcript(case, model_transcript)
+        execution_score = score_transcript(case, execution_transcript)
     except (ValueError, json.JSONDecodeError, TypeError):
         errors.append("INVALID_FINAL_OUTPUT")
-        score = _invalid_score(case, "invalid_model_result")
+        model_score = _invalid_score(case, "invalid_model_result")
+        execution_score = _invalid_score(case, "invalid_model_result")
 
     body = {
         "schema": RESULT_SCHEMA,
@@ -574,12 +649,15 @@ def run_hermes_case(
         "first_visible_tool_count": len(first_tools),
         "fixture_tool_names": fixture_surface,
         "extra_visible_tool_count": len(extras),
+        "proposed_fixture_calls": proposed_calls,
         "actual_fixture_calls": actual_calls,
+        "dispatch_alignment": _dispatches_align(proposed_calls, actual_calls),
         "stdout_sha256": stdout_hash.hexdigest(),
         "stderr_sha256": stderr_hash.hexdigest(),
         "stdout_bytes": stdout_bytes,
         "stderr_bytes": stderr_bytes,
-        "score": score,
+        "score": model_score,
+        "execution_score": execution_score,
     }
     body["result_sha256"] = _sha256(body)
     try:
