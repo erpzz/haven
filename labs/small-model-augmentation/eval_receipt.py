@@ -60,6 +60,20 @@ CONTROL_KEYS = {
 }
 SOURCE_KEYS = {"grader", "dispatcher", "observer", "verifier", "recovery", "backend"}
 PROFILE_KEYS = {"runtime", "request"}
+GUARD_KEYS = {"preflight", "supervisor"}
+GUARD_PREFLIGHT_SCHEMA = "haven.hermes-plugin-preflight.v1"
+GUARD_SUPERVISOR_SCHEMA = "haven.guarded-local-model-supervisor.v1"
+GUARD_PREFLIGHT_KEYS = {
+    "schema", "status", "errors", "hermes_sha256", "plugin_init_sha256",
+    "plugin_manifest_sha256", "scope_engine_sha256", "scope_policy_sha256",
+    "mcp_policy_sha256", "scope_policy_tool_count", "mcp_policy_tool_count",
+    "enabled_user_plugin_count", "doctor_passed",
+}
+GUARD_SUPERVISOR_KEYS = {
+    "schema", "status", "errors", "plugin_preflight_sha256",
+    "owned_llama_sha256", "observe_llama_sha256", "model_preflight_sha256",
+    "owned_llama_started", "owned_llama_exit",
+}
 RUNTIME_PROFILE_KEYS = {
     "hermes_sha256", "server_sha256", "model_artifact_sha256",
     "model_alias", "context_tokens", "provider", "ownership",
@@ -96,8 +110,8 @@ ALWAYS_MATCH_CONTROLS = {
 PRIVATE_COMPARE_SCHEMA = "haven.augmentation-eval-private-compare.v1"
 
 RECEIPT_KEYS = {
-    "schema", "manifest", "case_id", "family", "profiles", "controls", "sources",
-    "receipt_sha256",
+    "schema", "manifest", "case_id", "family", "profiles", "guard", "controls",
+    "sources", "receipt_sha256",
 }
 
 
@@ -244,6 +258,58 @@ def _validate_profiles(
     return {"runtime": runtime, "request": request}
 
 
+def _validate_guard(guard: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
+    if not isinstance(guard, Mapping) or set(guard) != GUARD_KEYS:
+        raise ReceiptError("invalid guard binding shape")
+    preflight = guard["preflight"]
+    supervisor = guard["supervisor"]
+    if not isinstance(preflight, Mapping) or set(preflight) != GUARD_PREFLIGHT_KEYS:
+        raise ReceiptError("invalid guard preflight shape")
+    if not isinstance(supervisor, Mapping) or set(supervisor) != GUARD_SUPERVISOR_KEYS:
+        raise ReceiptError("invalid guard supervisor shape")
+
+    preflight = copy.deepcopy(dict(preflight))
+    supervisor = copy.deepcopy(dict(supervisor))
+    if preflight.get("schema") != GUARD_PREFLIGHT_SCHEMA:
+        raise ReceiptError("invalid guard preflight schema")
+    if preflight.get("status") != "pass" or preflight.get("errors") != []:
+        raise ReceiptError("guard preflight did not pass")
+    if preflight.get("doctor_passed") is not True:
+        raise ReceiptError("guard plugin doctor did not pass")
+    for key in (
+        "hermes_sha256", "plugin_init_sha256", "plugin_manifest_sha256",
+        "scope_engine_sha256", "scope_policy_sha256", "mcp_policy_sha256",
+    ):
+        if not _valid_hash(preflight.get(key)):
+            raise ReceiptError(f"invalid guard preflight hash: {key}")
+    for key in (
+        "scope_policy_tool_count", "mcp_policy_tool_count",
+        "enabled_user_plugin_count",
+    ):
+        if not _nonneg(preflight.get(key)):
+            raise ReceiptError(f"invalid guard preflight count: {key}")
+    if preflight["enabled_user_plugin_count"] < 1:
+        raise ReceiptError("guard scope plugin was not enabled")
+
+    if supervisor.get("schema") != GUARD_SUPERVISOR_SCHEMA:
+        raise ReceiptError("invalid guard supervisor schema")
+    if supervisor.get("status") != "pass" or supervisor.get("errors") != []:
+        raise ReceiptError("guard supervisor did not pass")
+    if supervisor.get("owned_llama_started") is not True:
+        raise ReceiptError("owned llama was not started by guard supervisor")
+    if supervisor.get("owned_llama_exit") != 0:
+        raise ReceiptError("guarded owned llama did not exit cleanly")
+    for key in (
+        "plugin_preflight_sha256", "owned_llama_sha256",
+        "observe_llama_sha256", "model_preflight_sha256",
+    ):
+        if not _valid_hash(supervisor.get(key)):
+            raise ReceiptError(f"invalid guard supervisor hash: {key}")
+    if supervisor["plugin_preflight_sha256"] != _sha(preflight):
+        raise ReceiptError("guard supervisor preflight hash mismatch")
+    return {"preflight": preflight, "supervisor": supervisor}
+
+
 def _validate_controls(controls: Mapping[str, Any]) -> dict[str, str]:
     if not isinstance(controls, Mapping) or set(controls) != CONTROL_KEYS:
         raise ReceiptError("invalid control binding shape")
@@ -308,6 +374,7 @@ def make_receipt(
     case_id: str,
     family: str,
     profiles: Mapping[str, Any],
+    guard: Mapping[str, Any],
     controls: Mapping[str, Any],
     sources: Mapping[str, Any],
 ) -> dict[str, Any]:
@@ -316,7 +383,20 @@ def make_receipt(
         raise ReceiptError("invalid case/family token")
     manifest_binding = _manifest_binding(manifest)
     private_profiles = _validate_profiles(manifest_binding, profiles)
+    guard_binding = _validate_guard(guard)
     control_bindings = _validate_controls(controls)
+    if guard_binding["preflight"]["hermes_sha256"] != private_profiles["runtime"]["hermes_sha256"]:
+        raise ReceiptError("guard/runtime Hermes hash mismatch")
+    guard_preflight_hash = _sha(guard_binding["preflight"])
+    guard_supervisor_hash = _sha(guard_binding["supervisor"])
+    if control_bindings["guard_preflight_receipt_sha256"] != guard_preflight_hash:
+        raise ReceiptError("guard preflight control hash mismatch")
+    if control_bindings["guard_supervisor_receipt_sha256"] != guard_supervisor_hash:
+        raise ReceiptError("guard supervisor control hash mismatch")
+    if control_bindings["tool_policy_sha256"] != guard_binding["preflight"]["scope_policy_sha256"]:
+        raise ReceiptError("model-side scope policy hash mismatch")
+    if control_bindings["final_dispatch_policy_sha256"] != guard_binding["preflight"]["mcp_policy_sha256"]:
+        raise ReceiptError("final-dispatch policy hash mismatch")
     if control_bindings["runtime_profile_sha256"] != profile_sha256(
         private_profiles["runtime"]
     ):
@@ -331,6 +411,7 @@ def make_receipt(
         "case_id": case_id,
         "family": family,
         "profiles": private_profiles,
+        "guard": guard_binding,
         "controls": control_bindings,
         "sources": _validate_sources(sources),
     }
@@ -363,10 +444,27 @@ def validate_receipt(receipt: Mapping[str, Any]) -> list[str]:
         profiles = None
         errors.append("INVALID_PRIVATE_PROFILES")
     try:
+        guard = _validate_guard(receipt.get("guard"))
+    except ReceiptError:
+        guard = None
+        errors.append("INVALID_GUARD_BINDING")
+    try:
         controls = _validate_controls(receipt.get("controls"))
     except ReceiptError:
         controls = None
         errors.append("INVALID_CONTROL_BINDINGS")
+    if profiles is not None and guard is not None:
+        if guard["preflight"]["hermes_sha256"] != profiles["runtime"]["hermes_sha256"]:
+            errors.append("GUARD_RUNTIME_HERMES_MISMATCH")
+    if guard is not None and controls is not None:
+        if controls["guard_preflight_receipt_sha256"] != _sha(guard["preflight"]):
+            errors.append("GUARD_PREFLIGHT_HASH_MISMATCH")
+        if controls["guard_supervisor_receipt_sha256"] != _sha(guard["supervisor"]):
+            errors.append("GUARD_SUPERVISOR_HASH_MISMATCH")
+        if controls["tool_policy_sha256"] != guard["preflight"]["scope_policy_sha256"]:
+            errors.append("MODEL_SCOPE_POLICY_HASH_MISMATCH")
+        if controls["final_dispatch_policy_sha256"] != guard["preflight"]["mcp_policy_sha256"]:
+            errors.append("FINAL_DISPATCH_POLICY_HASH_MISMATCH")
     if profiles is not None and controls is not None:
         if controls["runtime_profile_sha256"] != profile_sha256(profiles["runtime"]):
             errors.append("RUNTIME_PROFILE_HASH_MISMATCH")
