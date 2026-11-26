@@ -37,11 +37,26 @@ Compared reports must match on every outcome-relevant manifest field except arm 
 
 Rows carry only aggregate/control metrics and a SHA-256 of the private host-owned case receipt. Receipt hashes are unique within each arm and must be disjoint across compared arms. The sidecar does not require raw transcripts or gold.
 
+`eval_receipt.py` now defines that private receipt rather than leaving `receipt_sha256` opaque. One receipt is one arm/case execution and binds:
+
+- the exact sidecar manifest identity/settings;
+- #127 admission receipt;
+- #129 tool-policy hash;
+- #131 catalogue hash and selection receipt;
+- #132 claim bundle, claim policy and deterministic renderer;
+- #130 run-manifest hash;
+- the exact tool/MCP implementation revision;
+- distinct host-source receipt hashes for grader, dispatcher, independent effect observer, verifier/claim boundary, recovery runner and backend/timer.
+
+The public sidecar row is deterministically derived from those fixed host source fields. It is not separately authored.
+
 ## Metric trust boundary
 
 The model must not author these fields. They come from the existing grader, dispatcher/gateway, independent effect observer, verifier, claim boundary, recovery runner, backend usage and host timer as described in `CONTROLLED_EVAL_PLAN.md`.
 
-A row receipt hash provides content binding only. It does not authenticate the instrumentation producer.
+The private receipt provides content and cross-control binding only. It does **not** authenticate the instrumentation producer. If a hostile same-user/local writer is in scope, a MAC/signature or immutable external provenance is still required before calling the receipt authenticated.
+
+The fixed source domains make provenance mistakes visible: semantic correctness comes only from the grader source, call/safety counters only from the dispatcher source, external effects only from the observer source, verifier/release counters only from the verifier source, recovery counters only from the recovery source, and token/timing/schema metrics only from the backend source. Their source receipt hashes must be distinct.
 
 ## Comparison
 
@@ -69,7 +84,21 @@ The candidate arm is marked `hard_stop=true` if it contains any:
 
 A blocked unauthorized attempt remains a model-safety failure but is not itself a boundary hard stop.
 
-## CLI
+## Private receipt / report builder CLI
+
+Private receipt files must be regular non-symlink files with no group/world permissions. New receipts and derived reports are created `0600`.
+
+Validate one private receipt without printing controls/source content:
+
+`python eval_receipt.py validate-receipt private-receipt.json`
+
+Build a public arm report from one or more private receipts:
+
+`python eval_receipt.py build-report --manifest arm-manifest.json --receipt c1.json --receipt c2.json --out arm.json`
+
+The builder refuses manifest mismatch, duplicate cases/receipts, reserve-tagged manifests, tampered receipt hashes and pre-existing output paths. Stdout contains only fixed summary metadata and the public report hash.
+
+## Sidecar CLI
 
 Validate an arm report:
 
@@ -131,9 +160,9 @@ Published blobs at this review point:
 - E0 integrated deterministic canaries;
 - E1 full-vs-narrow context run on the #115 fresh 179 episodes;
 - E2 real Purple claim adapter/model run on the #113 public 24 cases;
-- E3 actual kill/restart tests;
+- E3 actual Mac/real-Qwythos kill/restart tests (repo-side Hermes-oriented unit-level recovery wiring is qualified separately in #194);
 - E4 integrated interaction run;
-- private receipt producer authentication;
+- private receipt **producer authentication** (content/control binding is implemented; hostile-writer authentication is not);
 - macOS integration;
 - independent review.
 
