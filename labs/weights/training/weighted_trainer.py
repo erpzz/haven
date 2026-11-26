@@ -27,6 +27,8 @@ def _target_count(encoded: dict) -> int:
     input_ids = encoded.get("input_ids")
     if not isinstance(labels, list) or not isinstance(input_ids, list) or len(labels) != len(input_ids):
         raise weighting.WeightingError("encoded row needs aligned input_ids and labels")
+    if not labels or labels[0] != -100:
+        raise weighting.WeightingError("causal-LM row must begin with a masked prefix token")
     count = sum(label != -100 for label in labels)
     if count <= 0:
         raise weighting.WeightingError("encoded row has no supervised target tokens")
@@ -113,6 +115,20 @@ def make_episode_weighted_trainer_class(Trainer):
         raise weighting.WeightingError("Trainer must be a class")
 
     class EpisodeWeightedTrainer(Trainer):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            if getattr(self.args, "per_device_train_batch_size", None) != 1:
+                raise weighting.WeightingError(
+                    "episode-weighted trainer requires per_device_train_batch_size=1"
+                )
+            if getattr(self.args, "remove_unused_columns", None) is not False:
+                raise weighting.WeightingError(
+                    "episode-weighted trainer requires remove_unused_columns=False"
+                )
+            # Our scalar is already one normalized episode loss. Do not let Trainer
+            # infer a token/item denominator and re-normalize it.
+            self.model_accepts_loss_kwargs = False
+
         def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
             import torch
 
