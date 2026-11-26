@@ -25,10 +25,10 @@ model to report which tools were visible or which calls executed.
   disabled, not loaded, registered on the wrong execution path, bypassed,
   or if multiple Hermes processes share one session ID and do not share
   budget state. Those are host-launcher/admission obligations.
-* A different Hermes pre_tool_call hook returning a tool-argument modify directive
-  may change arguments after this veto has examined them. Host launch must
-  exclude such modifier hooks or independently reauthorize final arguments at
-  the actual dispatcher. This plugin alone does not prove hook ordering safety.
+* Hermes hooks or middleware can rewrite arguments after an early veto. Guarded
+  Haven/Haven-Cyber MCP servers therefore independently narrow their raw tool
+  surface and reauthorize the exact final raw tool + arguments immediately
+  before implementation dispatch. The early hook remains defense in depth.
 
 ## Installation (isolated profile only)
 
@@ -46,6 +46,29 @@ run/session configuration. Tool names must be the *exact post-transform names*
 observed in the OpenAI model request (e.g. MCP-prefixed names if Hermes
 actually prefixes them), not guesses from MCP tools/list.
 
+Before a guarded run, use the host preflight to bind the exact Hermes
+executable and installed plugin bytes, require the exact enabled user-plugin
+set, and run Hermes's own plugin doctor:
+
+    HERMES_SHA=$(shasum -a 256 /absolute/path/to/hermes | awk '{print $1}')
+    INIT_SHA=$(shasum -a 256 "$HERMES_HOME/plugins/haven-scope/__init__.py" | awk '{print $1}')
+    MANIFEST_SHA=$(shasum -a 256 "$HERMES_HOME/plugins/haven-scope/plugin.yaml" | awk '{print $1}')
+
+    python3 /checkout/labs/small-model-augmentation/hermes_plugin_preflight.py \
+      --hermes /absolute/path/to/hermes \
+      --hermes-home "$HERMES_HOME" \
+      --hermes-sha256 "$HERMES_SHA" \
+      --plugin-init-sha256 "$INIT_SHA" \
+      --plugin-manifest-sha256 "$MANIFEST_SHA" \
+      --allow-user-plugin haven-scope
+
+The hashes above are enrollment inputs only when they came from bytes the
+owner/reviewer already approved. Computing them from an unreviewed install and
+then accepting them proves consistency, not provenance. The strict preflight
+also rejects unexpected enabled user plugins; add another
+--allow-user-plugin only after explicitly reviewing why it belongs in that
+isolated profile.
+
 The fixture-level test runs with:
 
     python3 -m unittest discover -s labs/small-model-augmentation -p 'test_hermes_scope_plugin.py' -v
@@ -55,7 +78,8 @@ The separate scope/router suites are also run in CI on this branch.
 ## Required real-Mac demonstration (NOT EXECUTED HERE)
 
 1. Start from an isolated HERMES_HOME and exact pinned Hermes v2026.9.24;
-   show that the plugin is discovered and the pre_tool_call callback fires.
+   pass hermes_plugin_preflight.py using previously enrolled hashes, then show
+   that the same guarded chat process actually loads the pre_tool_call callback.
 2. Guard the run under #127's owned llama-server process with enrolled
    executable/GGUF bytes, admitted model alias and >=64K effective context.
 3. Capture the **actual first** post-client-transform model-visible tool
@@ -67,10 +91,10 @@ The separate scope/router suites are also run in CI on this branch.
    write_canary plus wrong nested target, duplicate and over-budget calls.
    Prove no denied dispatch appears in the independent synthetic MCP log,
    including concurrent requests; verify an approved read still works.
-6. Check the plugin-load-negative test: disable the plugin deliberately,
-   verify the *supervisor* refuses to start the supposedly guarded session,
-   and retain an explicit block receipt. A callback alone cannot detect
-   its own absence.
+6. Check the plugin-load-negative test: disable the plugin, alter one enrolled
+   plugin byte, or enable an unexpected user plugin and verify the *supervisor*
+   refuses to start the supposedly guarded session. Preflight/doctor are still
+   not substitutes for proving the later chat process actually loaded the hook.
 7. Record exact process, plugin, policy SHA-256, model-visible catalog hash,
    Hermes/MCP revision, platform, signed-off owner and distinct intent vs
    actual-dispatch counts in private receipts; redact names/targets publicly.
