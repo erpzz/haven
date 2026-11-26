@@ -217,7 +217,9 @@ class Lease:
 def launch(server, server_sha256, model, model_sha256, *,
            alias, port, context_tokens=65536, log_path=None,
            extra_args=None, start_timeout=DEFAULT_START_TIMEOUT,
-           owner_probe=listener_pids_lsof):
+           owner_probe=None):
+    if owner_probe is None:
+        owner_probe = listener_pids_lsof
     if not preflight.valid_id(alias):
         raise LeaseError("INVALID_ALIAS")
     if (type(context_tokens) is not int or type(context_tokens) is bool
