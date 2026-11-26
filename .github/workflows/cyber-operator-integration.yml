@@ -1,0 +1,46 @@
+name: Cyber + Haven operator integration
+
+on:
+  pull_request:
+    paths:
+      - 'labs/cyber/**'
+      - 'labs/hermes/**'
+      - 'labs/engineer/**'
+      - '.github/workflows/cyber-operator-integration.yml'
+  push:
+    branches:
+      - 'integration/cyber-operator-combined-20261125'
+    paths:
+      - 'labs/cyber/**'
+      - 'labs/hermes/**'
+      - 'labs/engineer/**'
+      - '.github/workflows/cyber-operator-integration.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  deterministic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cyber Lab unit tests
+        working-directory: labs/cyber
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Haven operator unit tests
+        working-directory: labs/hermes
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Haven operator offline MCP smoke
+        working-directory: labs/hermes
+        run: python3 scripts/smoke.py
+
+      - name: Engineer core + fleet scheduler regression
+        working-directory: labs/engineer
+        run: python3 -m unittest tests.test_engineer tests.test_fleet_sched -v
