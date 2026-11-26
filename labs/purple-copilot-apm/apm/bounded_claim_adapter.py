@@ -403,7 +403,7 @@ def disclosure_policy() -> dict:
         "model_hidden_fields": [
             "claims[].payload",
             "claims[].citation",
-            "limitations",
+            "global_limitations",
             "scope.platform",
             "scope.snapshot",
             "candidate_raw",
