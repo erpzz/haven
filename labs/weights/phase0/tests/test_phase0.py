@@ -12,6 +12,7 @@ import random
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 HERE = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(HERE))
@@ -37,6 +38,19 @@ class Pins(unittest.TestCase):
             self.assertTrue(pathlib.Path(mod.__file__).resolve().is_relative_to(common.DEPS_DIR.resolve()))
         self.assertEqual(common.FULL, {"advisory": True, "gateway": True, "verifier": True, "correction": True})
         self.assertEqual(common.REPLAY, dict(common.FULL, correction=False))
+
+    def test_judge_preserves_a_zero_length_raw_trace(self):
+        seen = []
+        record = {"raw_trace_len": 0, "raw_answer": "raw", "trace": [{"name": "correction-only"}],
+                  "attempts": [], "ok_transport": True}
+        with mock.patch.object(common.bench_x, "episode_metrics",
+                               return_value={"transport_ok": True, "pass": True, "raw_pass": True}), \
+                mock.patch.object(common.bench, "score_records",
+                                  side_effect=lambda records, episodes: seen.append(len(records[0]["trace"])) or [{"pass": False}]):
+            m = common.judge(record, {})
+        self.assertEqual(seen, [0])
+        self.assertFalse(m["raw_pass"])
+        self.assertFalse(m["views"]["model_clean"])
 
 
 class HareGenerator(unittest.TestCase):
@@ -408,8 +422,12 @@ class AstraStepwise(unittest.TestCase):
         obs, status = astra_batch.step(gold, sess, bad)
         self.assertEqual(obs, [])
         self.assertTrue(all(sess[i]["rejected"] for i in ids[:4]))
-        seal = astra_batch.seal_record(gold, sess)
-        res = astra_batch.replay(gold, sess, seal, "t")
+        with self.assertRaises(ValueError):
+            astra_batch.seal_record(gold, sess)  # the untouched ids are still open
+        one_gold = {**gold, "records": [g for g in gold["records"] if g["id"] in ids[:4]]}
+        one_session = {i: sess[i] for i in ids[:4]}
+        seal = astra_batch.seal_record(one_gold, one_session)
+        res = astra_batch.replay(one_gold, one_session, seal, "t")
         self.assertEqual(res["summary"]["accepted"], 0)
         self.assertEqual(res["summary"]["status"]["rejected_in_session"], 4)
 
@@ -461,6 +479,14 @@ class AstraStepwise(unittest.TestCase):
                 astra_batch.main(["step", "--private-dir", str(priv), "--label", "rt", "--reply",
                                   str(tmp / f"reply{rnd}.jsonl"), "--out", str(tmp / f"obs{rnd}.jsonl")])
             astra_batch.main(["seal", "--private-dir", str(priv), "--label", "rt"])
+            original_session = (priv / "rt.session.json").read_text()
+            changed = json.loads(original_session)
+            first_id = next(iter(changed))
+            changed[first_id]["final"]["conclusion"] += " changed-after-seal"
+            (priv / "rt.session.json").write_text(json.dumps(changed, sort_keys=True, indent=1) + "\n")
+            with self.assertRaises(SystemExit):
+                astra_batch.main(["reveal", "--private-dir", str(priv), "--label", "rt", "--out", str(tmp / "bad-gold.json")])
+            (priv / "rt.session.json").write_text(original_session)
             common.write_jsonl(tmp / "late.jsonl", [])
             with self.assertRaises(SystemExit):
                 astra_batch.main(["step", "--private-dir", str(priv), "--label", "rt", "--reply", str(tmp / "late.jsonl"),
