@@ -13,14 +13,17 @@ on:
       - '.github/workflows/weights-phase0-review.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   deterministic:
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[regen]')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -41,6 +44,16 @@ jobs:
           python3 manifest.py --check
           python3 pools.py --check
           python3 flip_pairs.py check
+      - name: Commit regenerated artifacts back to review branch
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "haven-review-ci"
+          git config user.email "haven-review-ci@users.noreply.github.com"
+          git add labs/weights/phase0/PHASE0_MANIFEST.json labs/weights/phase0/kaggle/w1_phase1_kaggle.ipynb
+          if ! git diff --cached --quiet; then
+            git commit -m "weights: regenerate hardened Phase 0 receipts [regen]"
+            git push origin HEAD:astra/weights-phase0-hardening-20261125
+          fi
       - name: Upload regenerated review artifacts
         uses: actions/upload-artifact@v4
         with:
