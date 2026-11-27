@@ -4,6 +4,7 @@ import io
 import json
 import pathlib
 import tempfile
+import types
 import unittest
 from unittest import mock
 
@@ -31,6 +32,45 @@ def synthetic_population():
 
 def dummy_identity(batch="b", token="one"):
     return {"schema": "identity", "batch": batch, "token": token}
+
+
+def valid_hardware(token="0"):
+    return {"provider": "nvidia-smi", "gpu_count": 2,
+            "gpu_models": ["NVIDIA T4", "NVIDIA T4"],
+            "gpu_uuids": [f"GPU-{token}-a", f"GPU-{token}-b"],
+            "query_sha256": f"hardware-{token}"}
+
+
+def full_membership(ids=None):
+    ids = list(ids or ["e0"])
+    return {"commitment": "c", "payload": {"selected_count": len(ids),
+            "family_counts": {"f": len(ids)}, "episode_ids": ids}}
+
+
+def full_runtime():
+    return {"batch": "b", "membership_file_sha256": "membership-sha",
+            "episodes_sha256": "episodes-sha", "teacher": w2.TEACHER,
+            "model": {"repo": w2.MODEL_REPO, "file": w2.MODEL_FILE,
+                      "revision": w2.MODEL_REVISION, "sha256": None,
+                      "sha256_status": "bind-before-inference"},
+            "engine": {"tag": w2.ENGINE_TAG, "binary_sha256": None,
+                       "binary_sha256_status": "bind-before-inference"},
+            "sampling": dict(w2.SAMPLING), "server": dict(w2.SERVER),
+            "harness": {"correction": False}, "runner_code_sha256": {"runner": "sha"}}
+
+
+def full_identity(token="0"):
+    runtime = full_runtime()
+    return {"schema": w2.BOUND_IDENTITY_SCHEMA, "batch": "b",
+            "membership_commitment": "c", "membership_file_sha256": "membership-sha",
+            "episodes_sha256": "episodes-sha", "teacher": w2.TEACHER,
+            "model": {**runtime["model"], "sha256": f"model-{token}", "sha256_status": "bound"},
+            "engine": {**runtime["engine"], "binary_sha256": f"engine-{token}",
+                       "binary_sha256_status": "bound", "reported_version": "build 11146",
+                       "reported_version_sha256": f"version-{token}"},
+            "hardware": valid_hardware(token), "sampling": runtime["sampling"],
+            "server": runtime["server"], "harness": runtime["harness"],
+            "runner_code_sha256": runtime["runner_code_sha256"]}
 
 
 class W2LocalTeacherTests(unittest.TestCase):
@@ -217,17 +257,188 @@ class W2LocalTeacherTests(unittest.TestCase):
             model, engine = root / w2.MODEL_FILE, root / "llama-server"
             model.write_bytes(b"model")
             engine.write_bytes(b"engine")
-            runtime = {"batch": "b", "model": {"repo": w2.MODEL_REPO, "file": w2.MODEL_FILE,
-                       "revision": w2.MODEL_REVISION, "sha256": None},
-                       "engine": {"tag": w2.ENGINE_TAG, "binary_sha256": None},
-                       "sampling": w2.SAMPLING, "server": w2.SERVER, "harness": {},
-                       "runner_code_sha256": {}}
+            runtime = full_runtime()
             version = mock.Mock(returncode=0, stdout="llama.cpp build 11146 (frozen)\n")
             with mock.patch.object(w2.subprocess, "run", return_value=version):
-                identity = w2.execution_identity(runtime, {"commitment": "c"}, model, engine)
+                identity = w2.execution_identity(runtime, {"commitment": "c"}, model, engine,
+                                                 hardware=valid_hardware())
             self.assertEqual(identity["model"]["sha256"], w2.sha256_file(model))
             self.assertEqual(identity["engine"]["binary_sha256"], w2.sha256_file(engine))
             self.assertEqual(identity["engine"]["reported_version"], "llama.cpp build 11146 (frozen)")
+
+    def test_bind_preflight_writes_receipts_without_model_request(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            runtime_path = root / "runtime.json"
+            runtime_path.write_text("{}")
+            identity_path, receipt_path = root / "identity.json", root / "bound.json"
+            membership, identity = full_membership(), full_identity()
+            args = types.SimpleNamespace(runtime=runtime_path, membership=root / "membership.json",
+                                         episodes=root / "episodes.jsonl", model_file=root / w2.MODEL_FILE,
+                                         engine_binary=root / "llama-server",
+                                         bound_identity=identity_path, bound_receipt=receipt_path)
+            with mock.patch.object(w2, "verify_runtime", return_value=membership), \
+                    mock.patch.object(w2, "execution_identity", return_value=identity), \
+                    mock.patch.object(w2, "frozen_backend") as backend, \
+                    mock.patch.object(w2.common, "run_harness") as harness, \
+                    mock.patch("sys.stdout", new=io.StringIO()):
+                w2.cmd_bind(args)
+            backend.assert_not_called()
+            harness.assert_not_called()
+            self.assertEqual(identity_path.read_bytes(), w2.json_blob(identity))
+            self.assertEqual(receipt_path.read_bytes(),
+                             w2.pretty_json_blob(w2.bound_public_receipt(identity, membership)))
+
+    def test_run_refuses_without_bound_identity(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            runtime_path = root / "runtime.json"
+            runtime_path.write_text("{}")
+            args = types.SimpleNamespace(runtime=runtime_path, membership=root / "membership.json",
+                                         episodes=root / "episodes.jsonl", model_file="missing-model",
+                                         engine_binary="missing-engine", bound_identity=root / "missing-id",
+                                         bound_receipt=root / "missing-receipt", run_dir=root / "run",
+                                         base_url="http://127.0.0.1:8096/v1")
+            with mock.patch.object(w2, "verify_runtime", return_value=full_membership()):
+                with self.assertRaisesRegex(w2.LocalTeacherError, "required before run"):
+                    w2.cmd_run(args)
+
+    def test_run_refuses_changed_bound_identity(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            runtime_path = root / "runtime.json"
+            runtime_path.write_text("{}")
+            membership, old, fresh = full_membership(), full_identity("old"), full_identity("new")
+            identity_path, receipt_path = root / "identity.json", root / "receipt.json"
+            identity_path.write_bytes(w2.json_blob(old))
+            receipt_path.write_bytes(w2.pretty_json_blob(w2.bound_public_receipt(old, membership)))
+            args = types.SimpleNamespace(runtime=runtime_path, membership=root / "membership.json",
+                                         episodes=root / "episodes.jsonl", model_file="model",
+                                         engine_binary="engine", bound_identity=identity_path,
+                                         bound_receipt=receipt_path, run_dir=root / "run",
+                                         base_url="http://127.0.0.1:8096/v1")
+            with mock.patch.object(w2, "verify_runtime", return_value=membership), \
+                    mock.patch.object(w2, "execution_identity", return_value=fresh):
+                with self.assertRaisesRegex(w2.LocalTeacherError, "identity bytes/hash differ"):
+                    w2.cmd_run(args)
+
+    def test_model_and_engine_byte_changes_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            model, engine = root / w2.MODEL_FILE, root / "llama-server"
+            model.write_bytes(b"model-v1")
+            engine.write_bytes(b"engine-v1")
+            runtime, membership = full_runtime(), full_membership()
+            version = mock.Mock(returncode=0, stdout="llama.cpp build 11146\n")
+            with mock.patch.object(w2.subprocess, "run", return_value=version):
+                identity = w2.execution_identity(runtime, membership, model, engine,
+                                                 hardware=valid_hardware())
+            identity_path, receipt_path = root / "identity.json", root / "receipt.json"
+            identity_path.write_bytes(w2.json_blob(identity))
+            receipt_path.write_bytes(w2.pretty_json_blob(w2.bound_public_receipt(identity, membership)))
+            model.write_bytes(b"model-v2")
+            with mock.patch.object(w2.subprocess, "run", return_value=version):
+                with self.assertRaisesRegex(w2.LocalTeacherError, "identity bytes/hash differ"):
+                    w2.verify_bound_artifacts(runtime, membership, model_file=model,
+                                              engine_binary=engine, identity_path=identity_path,
+                                              receipt_path=receipt_path, hardware=valid_hardware())
+            model.write_bytes(b"model-v1")
+            engine.write_bytes(b"engine-v2")
+            with mock.patch.object(w2.subprocess, "run", return_value=version):
+                with self.assertRaisesRegex(w2.LocalTeacherError, "identity bytes/hash differ"):
+                    w2.verify_bound_artifacts(runtime, membership, model_file=model,
+                                              engine_binary=engine, identity_path=identity_path,
+                                              receipt_path=receipt_path, hardware=valid_hardware())
+
+    def test_wrong_engine_version_and_non_2xt4_hardware_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            model, engine = root / w2.MODEL_FILE, root / "llama-server"
+            model.write_bytes(b"model")
+            engine.write_bytes(b"engine")
+            wrong = mock.Mock(returncode=0, stdout="llama.cpp build 11145\n")
+            with mock.patch.object(w2.subprocess, "run", return_value=wrong):
+                with self.assertRaisesRegex(w2.LocalTeacherError, "b11146"):
+                    w2.execution_identity(full_runtime(), full_membership(), model, engine,
+                                          hardware=valid_hardware())
+            version = mock.Mock(returncode=0, stdout="llama.cpp build 11146\n")
+            bad_hardware = {**valid_hardware(), "gpu_count": 1, "gpu_models": ["NVIDIA T4"],
+                            "gpu_uuids": ["GPU-one"]}
+            with mock.patch.object(w2.subprocess, "run", return_value=version):
+                with self.assertRaisesRegex(w2.LocalTeacherError, "exactly 2x NVIDIA T4"):
+                    w2.execution_identity(full_runtime(), full_membership(), model, engine,
+                                          hardware=bad_hardware)
+
+    def test_bound_public_receipt_has_required_public_safe_identity(self):
+        receipt = w2.bound_public_receipt(full_identity(), full_membership())
+        required = {"schema", "batch", "offered", "membership_commitment",
+                    "execution_identity_sha256", "teacher", "model", "engine", "hardware",
+                    "sampling", "server", "harness_sha256", "runner_code_sha256"}
+        self.assertTrue(required.issubset(receipt))
+        self.assertEqual(receipt["offered"], 1)
+        self.assertEqual(receipt["hardware"],
+                         {"gpu_count": 2, "gpu_models": ["NVIDIA T4", "NVIDIA T4"]})
+        self.assertNotIn("episode_ids", json.dumps(receipt))
+        self.assertNotIn("gpu_uuids", receipt["hardware"])
+
+    def test_execution_receipt_fields_and_aggregate_commitment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            membership, identity = full_membership(["e0", "e1"]), full_identity()
+            episodes = {eid: {"id": eid, "family": "f"} for eid in membership["payload"]["episode_ids"]}
+
+            def trajectory(ep):
+                return {"episode": ep["id"], "family": "f", "ok_transport": ep["id"] == "e0",
+                        "messages": [], "trace": [], "attempts": [], "answer": "x",
+                        "elapsed_seconds": 2.5, "steps": [{"usage": {"prompt_tokens": 10,
+                                                                       "completion_tokens": 4}}]}
+
+            grid = w2.run_grid(root, membership, identity, episodes, trajectory=trajectory)
+            bound = root / "bound.json"
+            bound.write_bytes(b"bound\n")
+            first = w2.build_execution_receipt(root, grid, identity, membership, bound)
+            second = w2.build_execution_receipt(root, grid, identity, membership, bound)
+            required = {"batch", "membership_commitment", "execution_identity_sha256",
+                        "model_sha256", "engine", "hardware", "sampling", "server",
+                        "harness_sha256", "runner_code_sha256", "offered_slots",
+                        "terminal_slots", "open_slots", "transport_success", "transport_failure",
+                        "aggregate_completion_tokens", "aggregate_prompt_tokens",
+                        "wall_clock_execution_seconds", "gpu_device_hours", "terminal_grid_sha256",
+                        "slot_receipts_aggregate_sha256"}
+            self.assertTrue(required.issubset(first))
+            self.assertEqual(first, second)
+            self.assertEqual((first["offered_slots"], first["terminal_slots"], first["open_slots"]),
+                             (2, 2, 0))
+            self.assertEqual((first["transport_success"], first["transport_failure"]), (1, 1))
+            self.assertEqual((first["aggregate_prompt_tokens"],
+                              first["aggregate_completion_tokens"]), (20, 8))
+            slot = w2.slot_path(root, 1)
+            changed = w2.load_json(slot)
+            changed["raw_attempt"]["answer"] = "changed"
+            changed["raw_attempt_sha256"] = w2.sha256_bytes(w2.canonical(changed["raw_attempt"]))
+            w2.atomic_write(slot, w2.json_blob(changed))
+            third = w2.build_execution_receipt(root, grid, identity, membership, bound)
+            self.assertNotEqual(first["slot_receipts_aggregate_sha256"],
+                                third["slot_receipts_aggregate_sha256"])
+
+    def test_persisted_summary_binds_finalized_audit_packet(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            rows = [{"episode": "e0", "teacher": w2.TEACHER, "messages": []}]
+            results = [{"episode": "e0", "status": "accepted"}]
+            summary = {"schema": w2.FINALIZATION_SCHEMA, "offered": 1, "accepted": 1,
+                       "zero_pass": 0, "by_family": {"f": {"offered": 1, "accepted": 1,
+                                                              "zero_pass": 0}},
+                       "kept_sft_rows": 1, "execution_identity_sha256": "identity"}
+            packet = {"schema": w2.AUDIT_SCHEMA,
+                      "audit_sample": {"traces": 1, "sampled": 1}, "records": []}
+            final = w2.persist_filter_outputs(out_dir=root, rows=rows, results=results,
+                                              summary=summary, packet_builder=lambda kept: packet)
+            persisted = w2.load_json(root / "summary.json")
+            self.assertEqual(persisted, final)
+            self.assertIn("audit_packet_sha256", persisted)
+            self.assertEqual(persisted["audit_packet_sha256"],
+                             w2.sha256_file(root / "audit-v1.private.json"))
 
 
 if __name__ == "__main__":

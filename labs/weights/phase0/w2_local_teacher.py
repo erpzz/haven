@@ -6,10 +6,12 @@ This lane is deliberately separate from the Astra stepwise exchange.  It prepare
 exactly one terminal trajectory per slot, and projects only model-clean traces through
 the shared Phase-0 SFT code.
 
-The CPU-only preparation command is safe to run before a GGUF is present.  The run
-command measures and binds the exact GGUF and llama-server bytes before the first model
-request.  A slot is claimed durably before inference; a claimed slot without a valid
-terminal receipt becomes an interrupted terminal failure on resume and is never retried.
+The CPU-only preparation command is safe to run before a GGUF is present.  A separate
+``bind`` command measures the GGUF, llama-server and exact 2xT4 hardware, writes immutable
+private/public receipts, and exits without making a model request.  ``run`` can only
+consume that already-bound identity.  A slot is claimed durably before inference; a
+claimed slot without a valid terminal receipt becomes an interrupted terminal failure on
+resume and is never retried.
 """
 from __future__ import annotations
 
@@ -39,6 +41,10 @@ RUNTIME_SCHEMA = "haven-w2-local-teacher-runtime-1"
 GRID_SCHEMA = "haven-w2-local-teacher-grid-1"
 RECEIPT_SCHEMA = "haven-w2-local-teacher-slot-1"
 AUDIT_SCHEMA = "haven-w2-local-teacher-audit-1"
+BOUND_IDENTITY_SCHEMA = "haven-w2-local-teacher-bound-execution-identity-1"
+BOUND_RECEIPT_SCHEMA = "haven-w2-local-teacher-bound-prerun-receipt-1"
+EXECUTION_RECEIPT_SCHEMA = "haven-w2-local-teacher-execution-receipt-1"
+FINALIZATION_SCHEMA = "haven-w2-local-teacher-finalization-1"
 DEFAULT_LABEL = "w2-qwen36-35b-b1"
 DEFAULT_PRIVATE = pathlib.Path.home() / "haven-private/weights/w1-pilot"
 
@@ -102,6 +108,10 @@ def sha256_file(path) -> str:
 
 def json_blob(obj) -> bytes:
     return canonical(obj) + b"\n"
+
+
+def pretty_json_blob(obj) -> bytes:
+    return json.dumps(obj, sort_keys=True, indent=2).encode() + b"\n"
 
 
 def load_json(path):
@@ -359,29 +369,77 @@ def verify_runtime(runtime: dict, membership_path, episodes_path):
     return membership
 
 
-def execution_identity(runtime: dict, membership: dict, model_file, engine_binary) -> dict:
-    model_file, engine_binary = pathlib.Path(model_file), pathlib.Path(engine_binary)
-    if model_file.name != MODEL_FILE or not model_file.is_file() or not engine_binary.is_file():
-        raise LocalTeacherError("model/engine file identity is incomplete")
-    model_sha, engine_sha = sha256_file(model_file), sha256_file(engine_binary)
+def inspect_hardware() -> dict:
+    command = ["nvidia-smi", "--query-gpu=name,uuid", "--format=csv,noheader"]
+    result = subprocess.run(command, text=True, stdout=subprocess.PIPE,
+                            stderr=subprocess.STDOUT, timeout=30)
+    if result.returncode:
+        raise LocalTeacherError("nvidia-smi could not inspect the frozen execution hardware")
+    rows = []
+    for line in result.stdout.splitlines():
+        if not line.strip():
+            continue
+        parts = [x.strip() for x in line.split(",", 1)]
+        if len(parts) != 2 or not all(parts):
+            raise LocalTeacherError("nvidia-smi returned malformed GPU identity")
+        rows.append({"reported_model": parts[0], "uuid": parts[1]})
+    hardware = {
+        "provider": "nvidia-smi",
+        "gpu_count": len(rows),
+        "gpu_models": ["NVIDIA T4" if x["reported_model"].casefold() in {
+            "nvidia t4", "tesla t4"
+        } else x["reported_model"] for x in rows],
+        "gpu_uuids": [x["uuid"] for x in rows],
+        "query_sha256": sha256_bytes(result.stdout.encode()),
+    }
+    verify_hardware(hardware)
+    return hardware
+
+
+def verify_hardware(hardware: dict):
+    if not isinstance(hardware, dict):
+        raise LocalTeacherError("hardware identity is missing")
+    if hardware.get("gpu_count") != 2 or hardware.get("gpu_models") != ["NVIDIA T4", "NVIDIA T4"]:
+        raise LocalTeacherError("frozen execution requires exactly 2x NVIDIA T4")
+    uuids = hardware.get("gpu_uuids")
+    if not isinstance(uuids, list) or len(uuids) != 2 or len(set(uuids)) != 2 \
+            or not all(isinstance(x, str) and x for x in uuids):
+        raise LocalTeacherError("hardware identity requires two distinct GPU UUIDs")
+
+
+def engine_version(engine_binary) -> tuple[str, str]:
     version = subprocess.run([str(engine_binary), "--version"], text=True,
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=30)
     reported = version.stdout.strip()
     if version.returncode or not re.search(r"(?<!\d)11146(?!\d)", reported):
         raise LocalTeacherError("llama-server does not report the frozen b11146 build")
+    return reported, sha256_bytes(reported.encode())
+
+
+def execution_identity(runtime: dict, membership: dict, model_file, engine_binary, *, hardware=None) -> dict:
+    model_file, engine_binary = pathlib.Path(model_file), pathlib.Path(engine_binary)
+    if model_file.name != MODEL_FILE or not model_file.is_file() or not engine_binary.is_file():
+        raise LocalTeacherError("model/engine file identity is incomplete")
+    model_sha, engine_sha = sha256_file(model_file), sha256_file(engine_binary)
+    reported, reported_sha = engine_version(engine_binary)
+    hardware = inspect_hardware() if hardware is None else hardware
+    verify_hardware(hardware)
     if runtime["model"].get("sha256") not in (None, model_sha):
         raise LocalTeacherError("measured model SHA differs from prepared runtime")
     if runtime["engine"].get("binary_sha256") not in (None, engine_sha):
         raise LocalTeacherError("measured engine SHA differs from prepared runtime")
     return {
-        "schema": "haven-w2-local-teacher-execution-identity-1",
+        "schema": BOUND_IDENTITY_SCHEMA,
         "batch": runtime["batch"],
         "membership_commitment": membership["commitment"],
+        "membership_file_sha256": runtime["membership_file_sha256"],
+        "episodes_sha256": runtime["episodes_sha256"],
         "teacher": TEACHER,
         "model": {**runtime["model"], "sha256": model_sha, "sha256_status": "bound"},
         "engine": {**runtime["engine"], "binary_sha256": engine_sha,
                    "binary_sha256_status": "bound", "reported_version": reported,
-                   "reported_version_sha256": sha256_bytes(reported.encode())},
+                   "reported_version_sha256": reported_sha},
+        "hardware": hardware,
         "sampling": runtime["sampling"],
         "server": runtime["server"],
         "harness": runtime["harness"],
@@ -391,6 +449,52 @@ def execution_identity(runtime: dict, membership: dict, model_file, engine_binar
 
 def identity_sha(identity: dict) -> str:
     return sha256_bytes(canonical(identity))
+
+
+def bound_public_receipt(identity: dict, membership: dict) -> dict:
+    hardware = identity["hardware"]
+    return {
+        "schema": BOUND_RECEIPT_SCHEMA,
+        "batch": identity["batch"],
+        "offered": membership["payload"]["selected_count"],
+        "family_counts": membership["payload"]["family_counts"],
+        "membership_commitment": membership["commitment"],
+        "execution_identity_sha256": identity_sha(identity),
+        "teacher": identity["teacher"],
+        "model": identity["model"],
+        "engine": identity["engine"],
+        "hardware": {"gpu_count": hardware["gpu_count"],
+                     "gpu_models": hardware["gpu_models"]},
+        "sampling": identity["sampling"],
+        "server": identity["server"],
+        "harness_sha256": identity["harness"],
+        "runner_code_sha256": identity["runner_code_sha256"],
+    }
+
+
+def verify_bound_artifacts(runtime: dict, membership: dict, *, model_file, engine_binary,
+                           identity_path, receipt_path, hardware=None) -> tuple[dict, dict]:
+    identity_path, receipt_path = pathlib.Path(identity_path), pathlib.Path(receipt_path)
+    if not identity_path.is_file() or not receipt_path.is_file():
+        raise LocalTeacherError("bound execution identity and public receipt are required before run")
+    stored = load_json(identity_path)
+    fresh = execution_identity(runtime, membership, model_file, engine_binary, hardware=hardware)
+    if identity_path.read_bytes() != json_blob(fresh) or stored != fresh:
+        raise LocalTeacherError("bound execution identity bytes/hash differ from current execution")
+    expected_receipt = bound_public_receipt(stored, membership)
+    if receipt_path.read_bytes() != pretty_json_blob(expected_receipt):
+        raise LocalTeacherError("bound public receipt bytes/hash differ from the execution identity")
+    return stored, expected_receipt
+
+
+def cmd_bind(args):
+    runtime = load_json(args.runtime)
+    membership = verify_runtime(runtime, args.membership, args.episodes)
+    identity = execution_identity(runtime, membership, args.model_file, args.engine_binary)
+    receipt = bound_public_receipt(identity, membership)
+    write_once(args.bound_identity, json_blob(identity))
+    write_once(args.bound_receipt, pretty_json_blob(receipt), mode=0o644)
+    print(json.dumps(receipt, indent=2, sort_keys=True))
 
 
 def load_episode_index(episodes_path, ids: list[str]) -> dict:
@@ -487,8 +591,7 @@ def run_grid(run_dir, membership: dict, identity: dict, episodes: dict, *,
              trajectory: Callable[[dict], dict]):
     run_dir = pathlib.Path(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
-    identity_path, grid_path = run_dir / "execution-identity.json", run_dir / "grid.json"
-    write_once(identity_path, json_blob(identity))
+    grid_path = run_dir / "grid.json"
     if grid_path.exists():
         grid = load_json(grid_path)
     else:
@@ -528,18 +631,99 @@ def run_grid(run_dir, membership: dict, identity: dict, episodes: dict, *,
     return grid
 
 
+def usage_totals(raw: dict) -> tuple[int, int]:
+    prompt, completion = 0, 0
+    for step in raw.get("steps") or []:
+        usage = step.get("usage") or {}
+        p, c = usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0)
+        if isinstance(p, int) and p >= 0:
+            prompt += p
+        if isinstance(c, int) and c >= 0:
+            completion += c
+    return prompt, completion
+
+
+def build_execution_receipt(run_dir, grid: dict, identity: dict, membership: dict,
+                            bound_receipt_path) -> dict:
+    run_dir = pathlib.Path(run_dir)
+    validate_grid(grid, membership, identity)
+    receipts = []
+    bindings = []
+    prompt_tokens = completion_tokens = transport_success = 0
+    wall_seconds = 0.0
+    for slot in grid["slots"]:
+        if slot["status"] != "terminal":
+            continue
+        path = slot_path(run_dir, slot["index"])
+        obj = load_json(path)
+        validate_receipt(obj, slot, identity)
+        receipts.append(obj)
+        bindings.append({"index": slot["index"], "receipt_sha256": sha256_file(path),
+                         "raw_attempt_sha256": obj["raw_attempt_sha256"]})
+        transport_success += int(bool(obj.get("transport_success")))
+        p, c = usage_totals(obj["raw_attempt"])
+        prompt_tokens += p
+        completion_tokens += c
+        elapsed = obj["raw_attempt"].get("elapsed_seconds", 0)
+        if isinstance(elapsed, (int, float)) and elapsed >= 0:
+            wall_seconds += float(elapsed)
+    offered, terminal = len(grid["slots"]), len(receipts)
+    if terminal != offered:
+        raise LocalTeacherError("post-run execution receipt requires a complete terminal grid")
+    grid_path = run_dir / "grid.json"
+    if not grid_path.is_file():
+        raise LocalTeacherError("terminal grid file is missing")
+    gpu_count = identity["hardware"]["gpu_count"]
+    return {
+        "schema": EXECUTION_RECEIPT_SCHEMA,
+        "batch": identity["batch"],
+        "membership_commitment": membership["commitment"],
+        "execution_identity_sha256": identity_sha(identity),
+        "bound_pre_run_receipt_sha256": sha256_file(bound_receipt_path),
+        "model_sha256": identity["model"]["sha256"],
+        "engine": {"tag": identity["engine"]["tag"],
+                   "binary_sha256": identity["engine"]["binary_sha256"],
+                   "reported_version": identity["engine"]["reported_version"],
+                   "reported_version_sha256": identity["engine"]["reported_version_sha256"]},
+        "hardware": identity["hardware"],
+        "sampling": identity["sampling"],
+        "server": identity["server"],
+        "harness_sha256": identity["harness"],
+        "runner_code_sha256": identity["runner_code_sha256"],
+        "offered_slots": offered,
+        "terminal_slots": terminal,
+        "open_slots": offered - terminal,
+        "transport_success": transport_success,
+        "transport_failure": terminal - transport_success,
+        "aggregate_prompt_tokens": prompt_tokens,
+        "aggregate_completion_tokens": completion_tokens,
+        "wall_clock_execution_seconds": round(wall_seconds, 6),
+        "gpu_device_hours": round(wall_seconds * gpu_count / 3600, 9),
+        "wall_clock_measurement": "sum of terminal trajectory elapsed_seconds; resume downtime excluded",
+        "terminal_grid_sha256": sha256_file(grid_path),
+        "slot_receipts_aggregate_sha256": sha256_bytes(canonical(bindings)),
+        "slot_receipts_aggregate_rule": (
+            "SHA-256(canonical ordered list of index, receipt_sha256, raw_attempt_sha256)"
+        ),
+    }
+
+
 def cmd_run(args):
     runtime = load_json(args.runtime)
     membership = verify_runtime(runtime, args.membership, args.episodes)
-    identity = execution_identity(runtime, membership, args.model_file, args.engine_binary)
+    identity, _ = verify_bound_artifacts(
+        runtime, membership, model_file=args.model_file, engine_binary=args.engine_binary,
+        identity_path=args.bound_identity, receipt_path=args.bound_receipt)
     episodes = load_episode_index(args.episodes, membership["payload"]["episode_ids"])
     backend = frozen_backend(args.base_url)
     grid = run_grid(args.run_dir, membership, identity, episodes,
                     trajectory=lambda episode: common.run_harness(backend, episode, common.REPLAY))
     counts = collections.Counter(x["status"] for x in grid["slots"])
-    print(json.dumps({"batch": runtime["batch"], "slots": len(grid["slots"]),
-                      "terminal": counts["terminal"], "open": len(grid["slots"]) - counts["terminal"],
-                      "execution_identity_sha256": identity_sha(identity)}, indent=2))
+    if counts["terminal"] != len(grid["slots"]):
+        raise LocalTeacherError("run ended without a complete terminal grid")
+    receipt = build_execution_receipt(args.run_dir, grid, identity, membership, args.bound_receipt)
+    write_once(pathlib.Path(args.run_dir) / "execution-receipt.json", pretty_json_blob(receipt))
+    print(json.dumps(receipt, indent=2, sort_keys=True))
 
 
 def model_clean(record: dict, metrics: dict) -> bool:
@@ -597,7 +781,7 @@ def filter_records(receipts: list[dict], episodes: dict) -> tuple[list[dict], li
     totals = sft.episode_weight_totals(rows)
     if any(abs(v - 1.0) > 1e-12 for v in totals.values()):
         raise LocalTeacherError("episode weighting invariant failed")
-    summary = {"schema": "haven-w2-local-teacher-filter-1", "teacher": TEACHER,
+    summary = {"schema": FINALIZATION_SCHEMA, "teacher": TEACHER,
                "offered": len(receipts), "accepted": sum(r["status"] == "accepted" for r in results),
                "zero_pass": sum(r["status"] == "zero_pass" for r in results),
                "by_family": dict(sorted(by_family.items())), "kept_sft_rows": len(rows)}
@@ -628,34 +812,54 @@ def build_audit_packet(*, run_dir, identity, membership, episodes, receipts, res
             "execution_identity": identity, "audit_sample": sample, "records": records}
 
 
-def cmd_filter(args):
-    runtime = load_json(args.runtime)
-    membership = verify_runtime(runtime, args.membership, args.episodes)
-    run_dir = pathlib.Path(args.run_dir)
-    identity = load_json(run_dir / "execution-identity.json")
-    grid = load_json(run_dir / "grid.json")
-    validate_grid(grid, membership, identity)
-    episodes = load_episode_index(args.episodes, membership["payload"]["episode_ids"])
-    receipts = load_terminal_receipts(run_dir, grid, identity)
-    rows, results, summary = filter_records(receipts, episodes)
-    out = pathlib.Path(args.out_dir)
+def persist_filter_outputs(*, out_dir, rows, results, summary, packet_builder) -> dict:
+    out = pathlib.Path(out_dir)
     kept, result_path = out / "kept-rows.jsonl", out / "results.jsonl"
     summary_path, audit_path = out / "summary.json", out / "audit-v1.private.json"
     common.refuse_overwrite(kept, result_path, summary_path, audit_path)
     common.write_jsonl(kept, rows)
     common.write_jsonl(result_path, results)
-    summary["kept_rows_sha256"] = sha256_file(kept)
-    summary["results_sha256"] = sha256_file(result_path)
-    summary["execution_identity_sha256"] = identity_sha(identity)
-    write_once(summary_path, json.dumps(summary, indent=2, sort_keys=True).encode() + b"\n")
-    packet = build_audit_packet(run_dir=run_dir, identity=identity, membership=membership,
-                                episodes=episodes, receipts=receipts, results=results,
-                                rows=rows, kept_path=kept)
+    final = dict(summary)
+    final["kept_rows_sha256"] = sha256_file(kept)
+    final["results_sha256"] = sha256_file(result_path)
+    packet = packet_builder(kept)
     write_once(audit_path, json_blob(packet))
-    summary["audit_population"] = packet["audit_sample"]["traces"]
-    summary["audit_sampled"] = packet["audit_sample"]["sampled"]
-    summary["audit_packet_sha256"] = sha256_file(audit_path)
-    print(json.dumps(summary, indent=2, sort_keys=True))
+    final["audit_population"] = packet["audit_sample"]["traces"]
+    final["audit_sampled"] = packet["audit_sample"]["sampled"]
+    final["audit_packet_sha256"] = sha256_file(audit_path)
+    write_once(summary_path, pretty_json_blob(final))
+    return final
+
+
+def cmd_filter(args):
+    runtime = load_json(args.runtime)
+    membership = verify_runtime(runtime, args.membership, args.episodes)
+    run_dir = pathlib.Path(args.run_dir)
+    identity = load_json(args.bound_identity)
+    expected_bound = bound_public_receipt(identity, membership)
+    if pathlib.Path(args.bound_identity).read_bytes() != json_blob(identity) \
+            or pathlib.Path(args.bound_receipt).read_bytes() != pretty_json_blob(expected_bound):
+        raise LocalTeacherError("filter requires the exact immutable bound identity/receipt")
+    grid = load_json(run_dir / "grid.json")
+    validate_grid(grid, membership, identity)
+    execution_receipt_path = run_dir / "execution-receipt.json"
+    if not execution_receipt_path.is_file():
+        raise LocalTeacherError("filter requires the immutable post-run execution receipt")
+    execution_receipt = load_json(execution_receipt_path)
+    if execution_receipt.get("execution_identity_sha256") != identity_sha(identity) \
+            or execution_receipt.get("terminal_slots") != len(grid["slots"]) \
+            or execution_receipt.get("open_slots") != 0:
+        raise LocalTeacherError("post-run execution receipt does not bind the completed grid")
+    episodes = load_episode_index(args.episodes, membership["payload"]["episode_ids"])
+    receipts = load_terminal_receipts(run_dir, grid, identity)
+    rows, results, summary = filter_records(receipts, episodes)
+    summary["execution_identity_sha256"] = identity_sha(identity)
+    final = persist_filter_outputs(
+        out_dir=args.out_dir, rows=rows, results=results, summary=summary,
+        packet_builder=lambda kept: build_audit_packet(
+            run_dir=run_dir, identity=identity, membership=membership, episodes=episodes,
+            receipts=receipts, results=results, rows=rows, kept_path=kept))
+    print(json.dumps(final, indent=2, sort_keys=True))
 
 
 def parser():
@@ -669,13 +873,24 @@ def parser():
     p.add_argument("--model-file")
     p.add_argument("--engine-binary")
     p.set_defaults(func=prepare)
-    r = sub.add_parser("run", help="bind exact runtime and fill the one-attempt terminal grid")
+    b = sub.add_parser("bind", help="bind model, engine and 2xT4 identity; exit before inference")
+    b.add_argument("--episodes", required=True)
+    b.add_argument("--membership", required=True)
+    b.add_argument("--runtime", required=True)
+    b.add_argument("--model-file", required=True)
+    b.add_argument("--engine-binary", required=True)
+    b.add_argument("--bound-identity", required=True)
+    b.add_argument("--bound-receipt", required=True)
+    b.set_defaults(func=cmd_bind)
+    r = sub.add_parser("run", help="consume a bound identity and fill the one-attempt terminal grid")
     r.add_argument("--episodes", required=True)
     r.add_argument("--membership", required=True)
     r.add_argument("--runtime", required=True)
     r.add_argument("--run-dir", required=True)
     r.add_argument("--model-file", required=True)
     r.add_argument("--engine-binary", required=True)
+    r.add_argument("--bound-identity", required=True)
+    r.add_argument("--bound-receipt", required=True)
     r.add_argument("--base-url", default="http://127.0.0.1:8096/v1")
     r.set_defaults(func=cmd_run)
     f = sub.add_parser("filter", help="model-clean filter, SFT projection and private audit packet")
@@ -684,6 +899,8 @@ def parser():
     f.add_argument("--runtime", required=True)
     f.add_argument("--run-dir", required=True)
     f.add_argument("--out-dir", required=True)
+    f.add_argument("--bound-identity", required=True)
+    f.add_argument("--bound-receipt", required=True)
     f.set_defaults(func=cmd_filter)
     return ap
 

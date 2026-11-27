@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Kaggle 2xT4 launcher for the frozen Qwen3.6-35B W2 teacher lane.
 
-This script is execution support only.  It downloads the exact pinned GGUF revision,
-starts one literal-loopback llama.cpp b11146 server with the preregistered settings,
-and delegates terminal-grid semantics to w2_local_teacher.py.
+This script is execution support only.  ``bind`` downloads the exact pinned GGUF,
+measures the model/engine/2xT4 identity, writes immutable receipts and exits without
+starting llama-server.  A later explicit ``run`` verifies that binding before starting
+one literal-loopback server and delegates terminal-grid semantics to
+``w2_local_teacher.py``.
 """
 from __future__ import annotations
 
@@ -37,21 +39,51 @@ def download_model(cache_dir):
                                         revision=w2.MODEL_REVISION, cache_dir=cache_dir))
 
 
+def binding_paths(args):
+    root = pathlib.Path(args.run_dir)
+    identity = (pathlib.Path(args.bound_identity) if args.bound_identity
+                else root / "bound-execution-identity.private.json")
+    receipt = (pathlib.Path(args.bound_receipt) if args.bound_receipt
+               else root / "bound-pre-run.public.json")
+    return identity, receipt
+
+
+def common_args(parser):
+    parser.add_argument("--episodes", required=True)
+    parser.add_argument("--membership", required=True)
+    parser.add_argument("--runtime", required=True)
+    parser.add_argument("--run-dir", required=True)
+    parser.add_argument("--llama-server", required=True)
+    parser.add_argument("--cache-dir", required=True)
+    parser.add_argument("--bound-identity")
+    parser.add_argument("--bound-receipt")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--episodes", required=True)
-    ap.add_argument("--membership", required=True)
-    ap.add_argument("--runtime", required=True)
-    ap.add_argument("--run-dir", required=True)
-    ap.add_argument("--llama-server", required=True)
-    ap.add_argument("--cache-dir", required=True)
-    ap.add_argument("--port", type=int, default=8096)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    bind = sub.add_parser("bind", help="download, bind and exit without inference")
+    common_args(bind)
+    run = sub.add_parser("run", help="verify the prior binding, start server and execute")
+    common_args(run)
+    run.add_argument("--port", type=int, default=8096)
     args = ap.parse_args(argv)
     engine = pathlib.Path(args.llama_server).resolve()
     if not engine.is_file():
         raise SystemExit("llama-server binary is missing")
     model = download_model(args.cache_dir)
-    # Hash binding happens inside `run` before the first chat-completion request.
+    identity_path, receipt_path = binding_paths(args)
+    if args.cmd == "bind":
+        return w2.main(["bind", "--episodes", args.episodes, "--membership", args.membership,
+                        "--runtime", args.runtime, "--model-file", str(model),
+                        "--engine-binary", str(engine), "--bound-identity", str(identity_path),
+                        "--bound-receipt", str(receipt_path)])
+
+    # Fail closed against the immutable binding before llama-server is even started.
+    runtime = w2.load_json(args.runtime)
+    membership = w2.verify_runtime(runtime, args.membership, args.episodes)
+    w2.verify_bound_artifacts(runtime, membership, model_file=model, engine_binary=engine,
+                              identity_path=identity_path, receipt_path=receipt_path)
     cmd = [str(engine), "-m", str(model), "--host", "127.0.0.1", "--port", str(args.port),
            "--alias", w2.TEACHER, "-ngl", "999", "-np", "8", "-c", "65536",
            "--jinja", "--flash-attn", "on"]
@@ -72,6 +104,7 @@ def main(argv=None):
         rc = w2.main(["run", "--episodes", args.episodes, "--membership", args.membership,
                       "--runtime", args.runtime, "--run-dir", args.run_dir,
                       "--model-file", str(model), "--engine-binary", str(engine),
+                      "--bound-identity", str(identity_path), "--bound-receipt", str(receipt_path),
                       "--base-url", f"http://127.0.0.1:{args.port}/v1"])
         print(json.dumps({"runner_returncode": rc, "server_command": cmd}, indent=2))
         return rc
