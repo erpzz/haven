@@ -258,13 +258,42 @@ class W2LocalTeacherTests(unittest.TestCase):
             model.write_bytes(b"model")
             engine.write_bytes(b"engine")
             runtime = full_runtime()
-            version = mock.Mock(returncode=0, stdout="llama.cpp build 11146 (frozen)\n")
+            version = mock.Mock(returncode=0, stdout="0.00.000.721 I srv  llama_server: initializing ...\nversion: 0.5.0-dev (build 11146, commit 7fe450e19)\nbuilt with GNU 13.3.0 for Linux x86_64\n")
             with mock.patch.object(w2.subprocess, "run", return_value=version):
                 identity = w2.execution_identity(runtime, {"commitment": "c"}, model, engine,
                                                  hardware=valid_hardware())
             self.assertEqual(identity["model"]["sha256"], w2.sha256_file(model))
             self.assertEqual(identity["engine"]["binary_sha256"], w2.sha256_file(engine))
-            self.assertEqual(identity["engine"]["reported_version"], "llama.cpp build 11146 (frozen)")
+            self.assertEqual(identity["engine"]["reported_version"], "version: 0.5.0-dev (build 11146, commit 7fe450e19)")
+
+    def test_engine_version_normalizes_transient_prefix(self):
+        first = mock.Mock(
+            returncode=0,
+            stdout=("0.00.000.721 I srv  llama_server: initializing ...\n"
+                    "version: 0.5.0-dev (build 11146, commit 7fe450e19)\n"
+                    "built with GNU 13.3.0 for Linux x86_64\n"),
+        )
+        second = mock.Mock(
+            returncode=0,
+            stdout=("0.00.000.917 I srv  llama_server: initializing ...\n"
+                    "version: 0.5.0-dev (build 11146, commit 7fe450e19)\n"
+                    "built with GNU 13.3.0 for Linux x86_64\n"),
+        )
+        with mock.patch.object(w2.subprocess, "run", side_effect=[first, second]):
+            a = w2.engine_version("llama-server")
+            b = w2.engine_version("llama-server")
+        self.assertEqual(a, b)
+        self.assertEqual(a[0], "version: 0.5.0-dev (build 11146, commit 7fe450e19)")
+
+    def test_engine_version_rejects_ambiguous_matching_lines(self):
+        ambiguous = mock.Mock(
+            returncode=0,
+            stdout=("version: 0.5.0-dev (build 11146, commit 7fe450e19)\n"
+                    "version: 0.5.0-dev (build 11146, commit 7fe450e19)\n"),
+        )
+        with mock.patch.object(w2.subprocess, "run", return_value=ambiguous):
+            with self.assertRaisesRegex(w2.LocalTeacherError, "unambiguous"):
+                w2.engine_version("llama-server")
 
     def test_bind_preflight_writes_receipts_without_model_request(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -329,7 +358,7 @@ class W2LocalTeacherTests(unittest.TestCase):
             model.write_bytes(b"model-v1")
             engine.write_bytes(b"engine-v1")
             runtime, membership = full_runtime(), full_membership()
-            version = mock.Mock(returncode=0, stdout="llama.cpp build 11146\n")
+            version = mock.Mock(returncode=0, stdout="version: 0.5.0-dev (build 11146, commit 7fe450e19)\n")
             with mock.patch.object(w2.subprocess, "run", return_value=version):
                 identity = w2.execution_identity(runtime, membership, model, engine,
                                                  hardware=valid_hardware())
@@ -361,7 +390,7 @@ class W2LocalTeacherTests(unittest.TestCase):
                 with self.assertRaisesRegex(w2.LocalTeacherError, "b11146"):
                     w2.execution_identity(full_runtime(), full_membership(), model, engine,
                                           hardware=valid_hardware())
-            version = mock.Mock(returncode=0, stdout="llama.cpp build 11146\n")
+            version = mock.Mock(returncode=0, stdout="version: 0.5.0-dev (build 11146, commit 7fe450e19)\n")
             bad_hardware = {**valid_hardware(), "gpu_count": 1, "gpu_models": ["NVIDIA T4"],
                             "gpu_uuids": ["GPU-one"]}
             with mock.patch.object(w2.subprocess, "run", return_value=version):
