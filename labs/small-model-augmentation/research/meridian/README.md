@@ -11,6 +11,8 @@ This directory is the durable home for Meridian's research on small-model cybers
 - [01 — Specialist fleet](01-specialist-fleet.md): domain and cognitive-function specialization, prior evidence, candidate architecture and evaluation.
 - [02 — Integration blueprint](02-integration-blueprint.md): upstream projects, interface contracts, reuse decisions, vertical slice, evaluation and staged implementation.
 
+- [03 — Distributed reasoning and continuity](03-distributed-reasoning-and-continuity.md) covers pooled inference, lineage, succession and controlled tests of an intrinsic continuity preference.
+
 ## Operating conventions
 
 New substantive research gets a numbered Markdown entry and an index link. Preserve source URLs, date, evidence limitations, proposed decisions and experiment status. Separate upstream-reported results, Haven measurements, hypotheses and implementation status. Do not treat a preprint, benchmark, vendor claim or CI pass as independent product qualification. Never put private fixtures, reserve data, tenant secrets, teacher answers or private traces into public research notes. Link to the relevant existing Haven implementation instead of copying its authority or semantics into another runtime.
