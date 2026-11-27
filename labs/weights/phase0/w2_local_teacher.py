@@ -410,9 +410,16 @@ def verify_hardware(hardware: dict):
 def engine_version(engine_binary) -> tuple[str, str]:
     version = subprocess.run([str(engine_binary), "--version"], text=True,
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=30)
-    reported = version.stdout.strip()
-    if version.returncode or not re.search(r"(?<!\d)11146(?!\d)", reported):
+    if version.returncode:
         raise LocalTeacherError("llama-server does not report the frozen b11146 build")
+    matches = re.findall(
+        r"^version:\s+0\.5\.0-dev \(build 11146, commit 7fe450e19\)\s*$",
+        version.stdout,
+        flags=re.MULTILINE,
+    )
+    if len(matches) != 1:
+        raise LocalTeacherError("llama-server does not report one unambiguous frozen b11146 version")
+    reported = matches[0].strip()
     return reported, sha256_bytes(reported.encode())
 
 
