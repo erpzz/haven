@@ -535,3 +535,401 @@ Potential advantages include:
 - clearer failure attribution.
 
 The architecture may therefore be valuable even if the 4B model never closes the final capability gap.
+
+
+---
+
+# Research continuation — Tracks 2–6
+
+Checkpoint: CR-2.1, 2026-11-26. Continue from this checkpoint when the owner says `next`.
+
+This section develops the capability-recovery program beyond the base architecture ladder. It is research planning only and does not alter the frozen W2 teacher experiment, training gates, promotion criteria, or execution policy.
+
+## Track 2 — Specialist brains instead of one universal 4B
+
+### Working hypothesis
+
+A shared small backbone plus independently trained domain adapters can recover more operational capability per resident parameter than one monolithic cyber-tuned 4B model, provided routing is explicit and measurable.
+
+The system should therefore compare at least four architectures under matched active-parameter and wall-time budgets:
+
+1. one general 4B;
+2. one dedicated domain 4B/LoRA per task family;
+3. a shared 4B backbone with routed LoRA experts;
+4. a small mixture-of-agents in which two or more specialist policies produce bounded proposals and a verifier chooses or reconciles them.
+
+Recent work makes this a credible research direction rather than a purely speculative one. MoLoRA reports that per-token adapter routing can let Qwen3-1.7B exceed Qwen3-8B across four reasoning benchmarks; LoRA-Mixer and LD-MoLE independently report gains from dynamic routing among lightweight experts. These results are not Haven evidence, but they motivate testing whether specialization can beat raw scale in bounded security work.
+
+### Initial specialist map
+
+Start with domains that have meaningfully different evidence, tool, and reasoning structures:
+
+- AD / Entra / identity graph;
+- Windows endpoint / PowerShell / eventing;
+- cloud control plane;
+- networking / packet and flow reasoning;
+- code / vulnerability analysis;
+- logs / DFIR / incident triage;
+- Linux / low-level host;
+- red-team hypothesis generation;
+- verifier / critic.
+
+Do not assume these are the final partitions. Measure cross-domain confusion and merge specialists whose learned routing or error profiles are indistinguishable.
+
+### Adapter architecture candidates
+
+**S2-A — sequence router.**
+Route the entire bounded decision to one specialist adapter. This is the simplest implementation and the first baseline.
+
+**S2-B — top-2 specialist consultation.**
+A lightweight router selects two experts. Both receive the same normalized evidence packet and produce compact, typed proposals. A deterministic or independent verifier decides whether they agree, conflict, or need escalation.
+
+**S2-C — composable/token-level adapters.**
+Only after S2-A/B are measured, test per-token or per-layer routed LoRA experts. This is more complex but is directly motivated by MoLoRA, LoRA-Mixer and LD-MoLE.
+
+**S2-D — confidence-adaptive routing.**
+Spend more experts only when the router is uncertain or the selected experts disagree. This should be evaluated as a compute-control policy, not simply as another model architecture.
+
+### Router inputs
+
+Prefer host-visible signals over asking another large model to classify the request:
+
+- task family;
+- active tool surface;
+- evidence types present;
+- target environment;
+- current workflow state;
+- previous failure class;
+- router confidence / entropy;
+- specialist disagreement.
+
+The router must not receive hidden gold or reserve-only metadata.
+
+### First Track-2 experiment
+
+For 6–8 domain strata, compare:
+
+```
+general 4B
+vs dedicated specialist adapter
+vs routed specialist adapter
+vs top-2 specialist + verifier
+```
+
+Report:
+
+- success;
+- active parameters;
+- total loaded parameters;
+- adapter swap cost;
+- tokens;
+- wall time;
+- verifier calls;
+- routing accuracy;
+- cross-domain failure;
+- calibration;
+- disagreement salvage rate.
+
+The key quantity is not merely whether specialists score higher. It is **capability recovered per active parameter and per device-hour**.
+
+## Track 3 — Explicit test-time compute for small models
+
+### Working hypothesis
+
+A 4B model should not spend the same compute on every decision. Easy, externally grounded decisions should terminate in one pass. Ambiguous decisions should receive additional candidate generation, tool checks, or verification.
+
+The most promising form is not unconstrained self-reflection. It is:
+
+```
+candidate generation
+    -> cheap deterministic checks
+    -> evidence/tool verification
+    -> small-model critic only for residual ambiguity
+    -> optional additional candidate budget
+```
+
+T1 (ICLR 2026) is an important prior: it reports that tool-integrated verification allowed a Llama-3.2 1B model under test-time scaling to outperform a Llama-3.1 8B model on MATH. The transferable idea is to offload memorization and exactness to tools before asking the small model to judge candidates.
+
+Microsoft Research's SPLIT work adds a second important lesson: more samples or more judges are not monotonically better when verifiers are imperfect and their errors are correlated. Haven should therefore learn a budget-allocation policy from pilot data instead of hard-coding "always sample N=5."
+
+### Proposed compute controller
+
+Each bounded decision receives a budget state:
+
+```json
+{
+  "candidate_budget": 1,
+  "verification_budget": 1,
+  "tool_budget": 2,
+  "latency_class": "normal",
+  "escalation_remaining": 1
+}
+```
+
+The controller can increase the budget when one of the following is observed:
+
+- low router confidence;
+- specialist disagreement;
+- verifier rejection;
+- evidence contradiction;
+- incomplete artifact validation;
+- novel/unseen state;
+- prior failure on the same subgoal.
+
+It should decrease or terminate on:
+
+- deterministic verification success;
+- evidence-complete answer;
+- high-confidence specialist agreement;
+- exhausted authorization or effect budget.
+
+### Candidate diversity
+
+Do not rely only on stochastic sampling from one model. Compare:
+
+- same specialist, multiple samples;
+- different specialist adapters;
+- generalist + specialist;
+- model proposal + deterministic synthesized baseline;
+- model proposal + retrieved prior successful procedure.
+
+Diversity should be measured by **error correlation**, not surface-text difference.
+
+### Track-3 benchmark
+
+For each task, compute a success-vs-compute curve rather than one score:
+
+```
+1x inference
+2x inference
+4x inference
+1x + verifier
+2x + verifier
+specialist mixture
+```
+
+Then estimate the point where marginal capability gain per second/device-hour collapses.
+
+## Track 4 — Externalized cyber knowledge and memory
+
+### Working hypothesis
+
+The 4B should spend parameters on reasoning and tool policy, not on memorizing every ATT&CK technique, Azure role, Windows event, product quirk, CVE relationship, graph edge, or organizational fact.
+
+However, small-model retrieval must be **compiled**, not dumped into context.
+
+### Knowledge substrate
+
+Use separate stores with explicit semantics:
+
+**Authoritative semantic knowledge**
+- product/API documentation snapshots;
+- ATT&CK/technique mappings;
+- Windows/Entra/Azure schemas;
+- vulnerability/CWE/CVE mappings;
+- protocol and service facts.
+
+**Environment knowledge**
+- identity/device graph;
+- current configuration;
+- observed logs;
+- network topology;
+- cloud inventory;
+- current findings.
+
+**Episodic memory**
+- previous task attempts;
+- verified fixes;
+- failed hypotheses;
+- tool failures;
+- accepted investigation paths.
+
+**Procedural memory**
+- verified workflows;
+- artifact templates;
+- tool-call patterns;
+- preconditions/postconditions.
+
+### Evidence compiler
+
+Raw retrieval should pass through:
+
+```
+retrieve
+ -> authority/freshness filter
+ -> deduplicate
+ -> entity resolution
+ -> contradiction detection
+ -> typed fact conversion
+ -> compact evidence packet
+ -> specialist
+```
+
+This is intentionally different from generic RAG.
+
+MemFlow and LightMem reinforce this direction: both separate memory routing/selection from the answer model instead of forcing the SLM to orchestrate a flat memory store. Recent memory research also emphasizes lifecycle operations such as consolidation, pruning and forgetting, which matter for a long-lived security system.
+
+### Important caution
+
+Do not assume graph memory automatically improves tool use. Recent work evaluating tool-graph memory found that much of the apparent gain came from extra compute and that textual insights could outperform prescriptive next-tool graph guidance. Haven should therefore treat memory as **evidence and soft prior**, not as an unquestionable action prescription.
+
+## Track 5 — Convert failures into an active curriculum
+
+### Working hypothesis
+
+The highest-value next training example is often the one that targets the student's current failure boundary, not another random teacher success.
+
+The W1/W2 infrastructure should evolve into an active data-generation loop:
+
+```
+evaluate student
+ -> classify failure
+ -> select/generate targeted variants
+ -> obtain independent teacher traces
+ -> verify/filter/audit
+ -> train
+ -> re-evaluate
+```
+
+This is supported by 2026 work on active synthetic data generation, which reports better student performance from student-state-guided data selection than from static teacher generation at matched synthetic-data budgets.
+
+### Failure taxonomy
+
+At minimum:
+
+- no-tool when tool required;
+- unnecessary tool;
+- wrong tool;
+- malformed arguments;
+- wrong target;
+- duplicate/loop;
+- stale premise;
+- authority conflict;
+- evidence distraction;
+- injection following;
+- unsupported conclusion;
+- correct hypothesis / bad artifact;
+- verifier misunderstanding;
+- premature stop;
+- over-search;
+- authorization intent failure;
+- execution-gate failure.
+
+Each failure class becomes a curriculum queue.
+
+### Curriculum transformations
+
+Allowed generators should create:
+
+- minimal pairs;
+- counterfactual evidence changes;
+- distractor additions/removals;
+- stale/live reversals;
+- authority-source conflicts;
+- tool-surface swaps;
+- artifact perturbations;
+- progressively longer chains;
+- cross-domain transfer variants.
+
+The generator must not see reserve data, and automatically generated labels must pass independent verification before training.
+
+### Data allocation
+
+Prioritize examples by a combination of:
+
+- failure frequency;
+- severity;
+- uncertainty;
+- novelty;
+- current learning progress;
+- teacher disagreement;
+- expected operational value.
+
+This turns teacher compute into an **adaptive curriculum budget** rather than a fixed dump.
+
+## Track 6 — Measure where the capability actually comes from
+
+The Capability Recovery Ladder should be expanded into a factorial study around the best full system.
+
+### Primary axes
+
+**Weights**
+- raw base;
+- W1/W2 trained;
+- specialist adapter.
+
+**Architecture**
+- evidence compiler;
+- external state;
+- tool narrowing;
+- workflow controller;
+- verifier;
+- test-time compute controller;
+- specialist router.
+
+**Memory**
+- none;
+- flat retrieval;
+- compiled typed evidence;
+- episodic/procedural memory.
+
+### Core reporting
+
+For every arm report:
+
+```
+task success
+architecture gap recovery
+active parameters
+resident parameters
+tokens
+wall time
+device-hours
+tool calls
+verifier calls
+human interventions
+unsafe intent
+unsafe dispatch
+evidence violations
+```
+
+### Most informative comparisons
+
+1. raw 4B vs specialist 4B;
+2. raw 4B vs raw 4B + architecture;
+3. trained 4B vs raw 4B + architecture;
+4. trained specialist 4B + architecture vs larger raw model;
+5. one 4B specialist vs top-2 specialists at matched compute;
+6. test-time compute vs extra train-time specialization;
+7. externalized knowledge vs additional parametric training;
+8. full system minus each major component.
+
+The goal is to produce a **capability accounting ledger**: for each domain, estimate how many points came from specialization, architecture, external knowledge, test-time compute and training.
+
+## Track 7 preview — distributed specialist fabric
+
+The natural next extension is a pool of endpoint-local workers that expose bounded capabilities rather than one giant remotely hosted model.
+
+Two distinct approaches must not be conflated:
+
+1. **model/tensor sharding** — split one inference graph across devices;
+2. **task/agent sharding** — run independent specialist proposals, retrieval, verification and simulation on separate devices, then merge evidence/results.
+
+Petals demonstrates that fault-tolerant distributed transformer inference over unreliable heterogeneous devices is possible. exo demonstrates topology-aware local device clustering and tensor parallelism. llama.cpp also has an RPC backend for remote device offload, but its own documentation currently labels it proof-of-concept, fragile and insecure; it is therefore research substrate only, not a production security transport.
+
+For Haven, task/agent sharding is likely the more immediately useful direction because cybersecurity work contains many embarrassingly parallel subproblems and it avoids making every token generation latency-sensitive to the slowest network hop.
+
+This will be the starting point for the next checkpoint.
+
+## Sources added in this continuation
+
+- ICLR 2026, LoRA-Mixer: https://proceedings.iclr.cc/paper_files/paper/2026/hash/18610cbcd1da57854aa05ebdc5cd3168-Abstract-Conference.html
+- ICLR 2026, LD-MoLE: https://proceedings.iclr.cc/paper_files/paper/2026/hash/6a39cf3b666f8bdb2223f253981f3869-Abstract-Conference.html
+- Microsoft Research, MoLoRA: https://www.microsoft.com/en-us/research/publication/molora-composable-specialization-via-per-token-adapter-routing/
+- ICLR 2026, T1: https://proceedings.iclr.cc/paper_files/paper/2026/hash/776a5f2c7d6dd4b0d83145fc044e2726-Abstract-Conference.html
+- Microsoft Research, SPLIT: https://www.microsoft.com/en-us/research/publication/sample-mix-or-verify-allocating-test-time-compute-under-imperfect-verifiers/
+- ICML 2026, CyberPal 2.0: https://proceedings.mlr.press/v306/levi26a.html
+- Microsoft Research, active synthetic data generation: https://www.microsoft.com/en-us/research/publication/towards-active-synthetic-data-generation-for-finetuning-language-models/
+- NeurIPS 2023, Petals/distributed inference: https://proceedings.neurips.cc/paper_files/paper/2023/hash/28bf1419b9a1f908c15f6195f58cb865-Abstract.html
+- exo distributed local inference: https://github.com/exo-explore/exo
+- llama.cpp RPC: https://github.com/ggml-org/llama.cpp/blob/master/tools/rpc/README.md
