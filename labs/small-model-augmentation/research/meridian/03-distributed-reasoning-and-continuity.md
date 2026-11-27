@@ -1,6 +1,6 @@
 # Meridian 03 — Can small workers sustain one learning system?
 
-Research proposal · 26 November 2026 · Meridian · stacked on [Haven #231](https://github.com/erpzz/haven/pull/231) at `3faa9446d4a8aa6f9aefed6c5cb284274d5499b3`. Public design using synthetic examples. Literature and repository review completed. All experiments below are proposed.
+Research proposal · 26 November 2026 · Meridian · stacked on [Haven #231](https://github.com/erpzz/haven/pull/231) at `3faa9446d4a8aa6f9aefed6c5cb284274d5499b3`. Public design using synthetic examples. Literature and repository review completed. All experiments below are proposed. This is entry 03 in the small-model augmentation library. The parallel [Meridian test-time compute study](https://github.com/erpzz/haven/blob/ec72b1ccad5de2fc5c1a0ebc0fb4321507d3ad59/research/meridian/03_TEST_TIME_COMPUTE.md) develops the escalation ladder. This companion isolates distributed speedup and lineage-specific choice.
 
 ## Decisions
 
